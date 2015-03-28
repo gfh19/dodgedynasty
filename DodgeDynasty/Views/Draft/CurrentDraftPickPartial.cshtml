@@ -1,0 +1,54 @@
+﻿@model DodgeDynasty.Models.DraftModel
+	<script type="text/javascript">
+		$(function () {
+			draftActive = @(Model.IsDraftActive() ?  "true" : "false");
+			initRefreshedPage();
+		});
+	</script>
+	<div class="draft-info center">
+		@Model.GetCurrentDraftName()
+		<div class="drafter">
+		@if (Model.CurrentClockOwnerUser != null)
+		{
+			<span>On The Clock: 
+			@if (Model.IsUserTurn()) 
+			{
+				<span class="bold">YOU!</span> 
+			}
+			else 
+			{
+				<span class="bold">@Model.CurrentClockOwnerUser.NickName</span> 
+			}
+			- Pick @Model.CurrentDraftPick.PickNum</span>
+			if (Model.CurrentDraftPick.PickStartDateTime.HasValue)
+			{
+				<div class="start-time" 
+					data-draft-time="@Model.CurrentDraft.DraftDate.ToString("MM/dd/yyyy HH:mm:ss")"
+					data-current-pick="@Model.CurrentDraftPick.PickNum"
+					data-pick-start-time="@Model.CurrentDraftPick.PickStartDateTime.Value.ToString("MM/dd/yyyy HH:mm:ss")"
+					data-current-time="@Model.GetCurrentTimeEastern(DateTime.UtcNow).ToString("MM/dd/yyyy HH:mm:ss")"
+					data-pick-time-seconds="@Model.PickTimeSeconds"
+					data-use-time-zone="@Model.UseTimeZone()"></div>
+			}
+		}
+		else
+		{
+			<text>The Draft Has Completed</text>
+		}
+		</div>
+		@if (Model.IsUserTurn())
+		{
+			if (ViewBag.Title != "Draft Pick")
+			{
+				<div>Please <a href="/Draft/Pick">enter your draft pick</a>.</div>
+			}
+			<div id="userTurnDialog" class="center hide-yo-kids" title="Your Turn - Pick @Model.CurrentDraftPick.PickNum">
+				<p>You're up!</p>
+		  
+				@if (Model.PreviousDraftPick != null)
+				{
+					<p>(Last Pick:  @Model.PreviousDraftPick.Player.PlayerName)</p>
+				}
+			</div>
+		}
+	</div>

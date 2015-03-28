@@ -1,0 +1,11 @@
+﻿@model DodgeDynasty.Models.PlayerRankModel
+@{
+    ViewBag.Title = "All Players";
+}
+@section scripts {
+	<script type="text/javascript" src="../../Scripts/PlayerRanks.js"></script>
+	<script type="text/javascript" src="../../Scripts/PlayerRanksShared.js"></script>
+}
+<div id="allPlayerRanks">
+	@Html.Partial("PlayerRanksPartial", Model)
+</div>

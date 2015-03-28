@@ -1,0 +1,56 @@
+﻿@model DodgeDynasty.Models.DraftSetupModel
+@{
+    ViewBag.Title = "Draft Setup";
+}
+@section scripts {
+	<script type="text/javascript" src="../../Scripts/SetupDraft.js"></script>
+}
+<div id="setupDraft" data-draft-id="@Model.DraftId.Value">
+	<h2>Draft Setup - @Model.GetCurrentDraftName() Draft</h2>
+
+	<script type="text/javascript">
+		$(function () {
+			ownerHints = @Html.Raw(@Model.GetOwnerHints());
+		});
+	</script>
+	<div class="draft clear-fix">
+	
+		<div class="buttons"><button id="submitDraftPicks1" class="submitDraftPicks" type="button">Update Draft</button></div>
+		<div class="round-picks">
+		@foreach (var pick in Model.GetDraftSetupPicks())
+		{
+			var isNewRound = Model.IsNewRound(pick.RoundNum);
+			if (isNewRound)
+			{
+				@Html.Raw("</div>");
+				@Html.Raw("<div class=\"round-picks\">");
+				Model.CurrentRoundNum = pick.RoundNum;
+				<div class="round" data-round-num="@Model.CurrentRoundNum">
+				<span class="round-right">Round <span class="round-num">@Model.CurrentRoundNum</span>
+					<a href="#" class="delete-round-right @(Model.CurrentRoundNum == 1 ? "hide-yo-wives" : "")" tabindex="-1"><img src="../../Content/images/minus.png" alt="Delete Round"/></a>
+					<a href="#" class="add-round-right" tabindex="-1"><img src="../../Content/images/plus.png" alt="Add Round"/></a>
+					(<a href="#" class="reverse-round" tabindex="-1">Reverse</a>)
+				</span></div>
+			}
+				<span class="pick" data-pick-id="@pick.DraftPickId" data-pick-num="@pick.PickNum">
+					<div class="setup-pick-outline outline">
+					@if (pick.OwnerId != 0)
+					{
+						 Model.SetCurrentGridOwnerUser(pick.OwnerId);
+						 Model.SetCurrentGridPlayer(pick.PlayerId);
+						<span class="pick-num">@pick.PickNum</span>@Html.DropDownListFor(m => m.CurrentGridOwnerUser.OwnerId, Model.GetDraftOwnerListItems(), new { @class = "pick-owner" })<a href="#" class="delete-pick-right @(pick.PickNum == 1 ? "hide-yo-kids" : "")" tabindex="-1"><img src="../../Content/images/minus.png" alt="Delete Pick"/></a>
+					}
+					else
+					{
+						<span class="pick-num">@pick.PickNum</span>@Html.DropDownList("OwnerId", Model.GetDraftOwnerListItems(), new { @class = "pick-owner" })<a href="#" class="delete-pick-right @(pick.PickNum == 1 ? "hide-yo-kids" : "")" tabindex="-1"><img src="../../Content/images/minus.png" alt="Delete Pick"/></a>
+					}
+					</div><span class="picks-right"><a href="#" class="add-pick-right" tabindex="-1"><img src="../../Content/images/plus.png" alt="Add Pick"/></a></span>
+				</span>
+		}
+		</div>
+			@using (Html.BeginForm("SetupDraft", "Admin", FormMethod.Get, new { id="setupDraftForm"}))
+			   {
+			   }
+			<div class="buttons"><button id="submitDraftPicks2" class="submitDraftPicks" type="submit">Update Draft</button></div>
+	</div>
+</div>

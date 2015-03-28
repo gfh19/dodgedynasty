@@ -1,0 +1,41 @@
+﻿@model DodgeDynasty.Models.DraftTeamDisplayModel
+@{
+	ViewBag.Title = "Team Display";
+}
+@section scripts {
+	<script type="text/javascript" src="../../Scripts/TeamDisplay.js"></script>
+}
+<div id="teamDisplay">
+	<script type="text/javascript">
+		$(function () {
+		});
+	</script>
+	@Html.Partial("CurrentDraftPickPartial", Model)
+	<div class="clear-fix team-content">
+	@foreach (var owner in Model.GetTeamDraftOwners())
+	{	 
+		Model.SetCurrentGridOwnerUser(owner.OwnerId);
+		<div class="clear-fix team">
+			<div class="team-name-outline outline"><div class="team-name @Model.CurrentGridOwnerUser.CssClass">@Model.CurrentGridOwnerUser.NickName</div></div>
+			@foreach (var pick in Model.GetTeamDraftPicks(owner.OwnerId))
+			{
+			Model.SetCurrentGridPlayer(pick.PlayerId);
+			<div class="draft-pick-outline outline">
+			<div class="team-draft-pick @Model.CurrentGridOwnerUser.CssClass">
+				<div class="clear-fix draft-pick-meta">
+					<span class="pick-info"><span class="pick-num">@pick.PickNum</span></span>
+					<span class="player-info">
+					@if (!string.IsNullOrEmpty(Model.CurrentGridPlayer.Position))
+					{
+						<span>@Model.CurrentGridPlayer.NFLTeam-<span class="pos">@Model.CurrentGridPlayer.Position</span></span>
+					}
+					</span>
+				</div>
+				<span class="player-name">@Model.CurrentGridPlayer.PlayerName</span>
+			</div>
+			</div>
+			}
+		</div>
+	}
+	</div>
+</div>

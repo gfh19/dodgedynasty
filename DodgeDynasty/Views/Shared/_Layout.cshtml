@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title - Dodge Dynasty League</title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <meta name="viewport" content="width=device-width" />
+        @Styles.Render("~/Content/css")
+        @Styles.Render("~/Content/themes/base/css")
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/jqueryval")
+        @Scripts.Render("~/bundles/modernizr")
+		<script type="text/javascript" src="../../Scripts/lib/moment.min.js"></script>
+		<script type="text/javascript" src="../../Scripts/Site.js"></script>
+    </head>
+	   <body>
+        <header>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p class="site-title"></p>
+                </div>
+                <div class="float-right">
+                    <!-- <section id="login">
+                    </section> -->
+                    <nav>
+                        <ul id="menu">
+							@if (DodgeDynasty.Shared.Utilities.IsUserLoggedIn())
+	   {
+								<li>@Html.ActionLink("Pick", "Pick", "Draft")</li>
+								<li>@Html.ActionLink("Draft", "Display", "Draft")</li>
+								<li>@Html.ActionLink("Teams", "TeamDisplay", "Draft")</li>
+								<li>@Html.ActionLink("Ranks", "BestAvailable", "Draft")</li>
+								<li>@Html.ActionLink("Logout", "Logout", "Account")</li>
+	   }
+	   else
+	   {
+								<li>@Html.ActionLink("Home", "Index", "Home")</li>
+								<li>@Html.ActionLink("About", "About", "Home")</li>
+								<li>@Html.ActionLink("Login", "Login", "Account")</li>
+	   }
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
+		<div class="content-width">
+			<div id="body">
+				@RenderSection("featured", required: false)
+				<section class="content-wrapper main-content clear-fix">
+					@RenderBody()
+				</section>
+			</div>
+			<footer>
+				<div class="content-wrapper">
+					<div class="float-left">
+						<p>&copy; @DateTime.Now.Year - Dodge Dynasty League</p>
+					</div>
+				</div>
+			</footer>
+		</div>
+		<script type="text/javascript">
+			var baseURL = '@Url.Content("~")';
+		</script>
+        @RenderSection("scripts", required: false)
+    </body>
+</html>

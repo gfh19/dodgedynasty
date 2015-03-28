@@ -1,0 +1,48 @@
+﻿@model DodgeDynasty.Models.DraftDisplayModel
+@{
+	ViewBag.Title = "Display";
+}
+@section scripts {
+	<script type="text/javascript" src="../../Scripts/Display.js"></script>
+}
+<div id="draftDisplay">
+	<script type="text/javascript">
+		$(function () {
+		});
+	</script>
+	@Html.Partial("CurrentDraftPickPartial", Model)
+	<div class="draft">
+		<div class="round-picks">
+	@foreach (var pick in Model.DraftPicks)
+	{
+		if (Model.CurrentRoundNum != pick.RoundNum)
+		{
+			@Html.Raw("</div>");
+			@Html.Raw("<div class=\"round-picks\">");
+			Model.CurrentRoundNum = pick.RoundNum;
+			<div class="clear-fix round">Round <span class="round-num">@Model.CurrentRoundNum</span>
+				@if(Model.CurrentDraft.NumKeepers >= pick.RoundNum) { 
+					<text>(Keeper)</text>
+				}
+			</div>
+		}
+		Model.SetCurrentGridOwnerUser(pick.OwnerId);
+		Model.SetCurrentGridPlayer(pick.PlayerId);
+		<div class="draft-pick-outline @(Model.IsSnakeRound(pick.RoundNum) ? "snake-pick" : (Model.IsLastPickBeforeSnakeRound(pick) ? "pre-snake-pick" : "")) outline">
+		<div class="draft-pick @Model.CurrentGridOwnerUser.CssClass @(!string.IsNullOrEmpty(Model.CurrentGridPlayer.PlayerName) ? "filled" : "")">
+			<div class="clear-fix draft-pick-meta">
+				<span class="pick-info"><span class="pick-num">@pick.PickNum</span> @Model.CurrentGridOwnerUser.NickName</span>
+				<span class="player-info">
+				@if (!string.IsNullOrEmpty(Model.CurrentGridPlayer.Position))
+				{
+					<span>@Model.GetNFLTeamDisplay(Model.CurrentGridPlayer.NFLTeam)-<span class="pos">@Model.CurrentGridPlayer.Position</span></span>
+				}
+				</span>
+			</div>
+			<span class="player-name">@Model.CurrentGridPlayer.PlayerName</span>
+		</div>
+		</div>
+	}
+		</div>
+	</div>
+</div>
