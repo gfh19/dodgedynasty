@@ -16,6 +16,10 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>false</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -180,6 +184,10 @@
     <Compile Include="Controllers\RankController.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap\css\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap\css\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap\css\bootstrap.css" />
+    <Content Include="Content\bootstrap\css\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\images\down.png" />
     <Content Include="Content\images\minus.png" />
@@ -252,6 +260,9 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\BestAvail.js" />
+    <Content Include="Scripts\lib\bootstrap\config.json" />
+    <Content Include="Scripts\lib\bootstrap\js\bootstrap.js" />
+    <Content Include="Scripts\lib\bootstrap\js\bootstrap.min.js" />
     <Content Include="Scripts\lib\jquery-ui-1.10.4.js" />
     <Content Include="Scripts\lib\jquery-ui-1.10.4.min.js" />
     <Content Include="Scripts\lib\jquery.cookie.js" />

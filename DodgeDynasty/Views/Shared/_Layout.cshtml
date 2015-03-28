@@ -6,11 +6,8 @@
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <meta name="viewport" content="width=device-width" />
         @Styles.Render("~/Content/css")
-        @Styles.Render("~/Content/themes/base/css")
-        @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/jqueryval")
-        @Scripts.Render("~/bundles/modernizr")
-		<script type="text/javascript" src="../../Scripts/lib/moment.min.js"></script>
+        @Styles.Render("~/Content/css/lib")
+        @Scripts.Render("~/bundles/lib")
 		<script type="text/javascript" src="../../Scripts/Site.js"></script>
     </head>
 	   <body>
@@ -31,7 +28,7 @@
 								<li>@Html.ActionLink("Teams", "TeamDisplay", "Draft")</li>
 								<li>@Html.ActionLink("Ranks", "BestAvailable", "Draft")</li>
 								<li class="desktopNav">@Html.ActionLink("Logout", "Logout", "Account")</li>
-                                <li class="mobileNav"><a>&#9776;</a></li>
+
        }
        else
        {
