@@ -30,10 +30,11 @@
 								<li>@Html.ActionLink("Draft", "Display", "Draft")</li>
 								<li>@Html.ActionLink("Teams", "TeamDisplay", "Draft")</li>
 								<li>@Html.ActionLink("Ranks", "BestAvailable", "Draft")</li>
-								<li>@Html.ActionLink("Logout", "Logout", "Account")</li>
-	   }
-	   else
-	   {
+								<li class="desktopNav">@Html.ActionLink("Logout", "Logout", "Account")</li>
+                                <li class="mobileNav"><a>&#9776;</a></li>
+       }
+       else
+       {
 								<li>@Html.ActionLink("Home", "Index", "Home")</li>
 								<li>@Html.ActionLink("About", "About", "Home")</li>
 								<li>@Html.ActionLink("Login", "Login", "Account")</li>

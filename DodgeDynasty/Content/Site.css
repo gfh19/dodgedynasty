@@ -236,6 +236,20 @@ ul#menu li a:hover
 	text-decoration: none;
 }
 
+ul#menu li.desktopNav
+{
+	display: inline;
+}
+
+ul#menu li.mobileNav
+{
+	display: none;
+	font-size: 16px;
+	padding-right: 5px;
+}
+ul#menu li.mobileNav a {
+	color: #333;
+}
 
 /* page elements
 ----------------------------------------------------------*/
@@ -1294,6 +1308,12 @@ span.player-select
 
 @media screen and (max-width: 600px)
 {
+	ul#menu li.desktopNav {
+		display: none;
+	}
+	ul#menu li.mobileNav {
+		display: inline;
+	}
 	.draft
 	{
 		margin-top: 5px;
