@@ -12,15 +12,13 @@ namespace DodgeDynasty
 						"~/Scripts/lib/jquery-{version}.js",
 						"~/Scripts/lib/jquery-ui-{version}.js",
 						"~/Scripts/lib/jquery.cookie.js",
-						"~/Scripts/lib/jquery.unobtrusive*",
 						"~/Scripts/lib/jquery.validate*",
 						"~/Scripts/lib/moment.min.js"));
 
 			bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css"));
 
 			bundles.Add(new StyleBundle("~/Content/css/lib").Include(
-						"~/Content/themes/base/jquery-ui-1.10.4.custom.css",
-						"~/Content/bootstrap/css/bootstrap*"));
+						"~/Content/themes/base/jquery-ui-1.10.4.custom.css"));
 		}
 	}
 }

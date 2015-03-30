@@ -263,6 +263,8 @@
     <Content Include="Scripts\lib\bootstrap\config.json" />
     <Content Include="Scripts\lib\bootstrap\js\bootstrap.js" />
     <Content Include="Scripts\lib\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Scripts\lib\jquery-1.11.2.js" />
+    <Content Include="Scripts\lib\jquery-1.11.2.min.js" />
     <Content Include="Scripts\lib\jquery-ui-1.10.4.js" />
     <Content Include="Scripts\lib\jquery-ui-1.10.4.min.js" />
     <Content Include="Scripts\lib\jquery.cookie.js" />
@@ -278,9 +280,6 @@
     <Content Include="Scripts\TeamDisplay.js" />
     <Content Include="Scripts\Input.js" />
     <Content Include="Scripts\Display.js" />
-    <Content Include="Scripts\lib\jquery-1.7.1-vsdoc.js" />
-    <Content Include="Scripts\lib\jquery-1.7.1.js" />
-    <Content Include="Scripts\lib\jquery-1.7.1.min.js" />
     <Content Include="Scripts\lib\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\lib\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\lib\jquery.validate-vsdoc.js" />
