@@ -1,81 +1,91 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <title>@ViewBag.Title - Dodge Dynasty League</title>
-        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-        <meta name="viewport" content="width=device-width" />
-        @Styles.Render("~/Content/css")
-        @Styles.Render("~/Content/css/lib")
-        @Scripts.Render("~/bundles/lib")
-		<script type="text/javascript" src="../../Scripts/Site.js"></script>
-    </head>
-	   <body>
-        <header>
-            <div class="content-wrapper">
-                <div class="float-left">
-                    <p class="site-title"></p>
-                </div>
-                <div>
-                    <nav>
-                        <ul class="menu">
-							@if (DodgeDynasty.Shared.Utilities.IsUserLoggedIn())
-	   {
-								<li>@Html.ActionLink("Pick", "Pick", "Draft")</li>
-								<li>@Html.ActionLink("Draft", "Display", "Draft")</li>
-								<li>@Html.ActionLink("Teams", "TeamDisplay", "Draft")</li>
-								<li>@Html.ActionLink("Ranks", "BestAvailable", "Draft")</li>
-								<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-									<span class="icon-bar"></span>
-									<span class="icon-bar"></span>
-									<span class="icon-bar"></span>
-								</button>
-
-	   }
-	   else
-	   {
-								<li>@Html.ActionLink("Home", "Index", "Home")</li>
-								<li>@Html.ActionLink("About", "About", "Home")</li>
-								<li>@Html.ActionLink("Login", "Login", "Account")</li>
-	   }
-                        </ul>
-						<div class="navbar-collapse collapse">
-							<ul class="menu nav navbar-nav">
-								<li>@Html.ActionLink("History", "Index", "Home")</li>
-								<li class="dropdown" id="liOpen">
-									<a id="aOpen" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-									   aria-expanded="false">Settings<span class="caret"></span></a>
-									<ul class="dropdown-menu" role="menu">
-										<li><a href="#">Change Password</a></li>
-										<li><a href="#">User Settings</a></li>
-										<li><a href="#">Logout</a></li>
-										<!--<li class="divider"></li>-->
-									</ul>
-								</li>
-							</ul>
-						</div>
-                    </nav>
-                </div>
-            </div>
-        </header>
-		<div class="content-width">
-			<div id="body">
-				@RenderSection("featured", required: false)
-				<section class="content-wrapper main-content clear-fix">
-					@RenderBody()
-				</section>
+<head>
+	<meta charset="utf-8" />
+	<title>@ViewBag.Title - Dodge Dynasty League</title>
+	<link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+	<meta name="viewport" content="width=device-width" />
+	@Styles.Render("~/Content/css")
+	@Styles.Render("~/Content/css/lib")
+	@Scripts.Render("~/bundles/lib")
+	<script type="text/javascript" src="../../Scripts/Site.js"></script>
+</head>
+<body>
+	<header>
+		<div class="content-wrapper">
+			<div class="float-left">
+				<p class="site-title"></p>
 			</div>
-			<footer>
-				<div class="content-wrapper">
-					<div class="float-left">
-						<p>&copy; @DateTime.Now.Year - Dodge Dynasty League</p>
+			<div>
+				<nav>
+					<ul class="menu">
+						@if (DodgeDynasty.Shared.Utilities.IsUserLoggedIn())
+						{
+							<li>@Html.ActionLink("Pick", "Pick", "Draft")</li>
+							<li>@Html.ActionLink("Draft", "Display", "Draft")</li>
+							<li>@Html.ActionLink("Teams", "TeamDisplay", "Draft")</li>
+							<li>@Html.ActionLink("Ranks", "BestAvailable", "Draft")</li>
+							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+							</button>
+
+						}
+						else
+						{
+							<li>@Html.ActionLink("Home", "Index", "Home")</li>
+							<li>@Html.ActionLink("About", "About", "Home")</li>
+							<li>@Html.ActionLink("Login", "Login", "Account")</li>
+						}
+					</ul>
+					<div class="navbar-collapse collapse">
+						<ul class="menu nav navbar-nav">
+							<li>@Html.ActionLink("History", "Index", "Home")</li>
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+								   aria-expanded="false">Settings<span class="caret"></span></a>
+								<ul class="dropdown-menu" role="menu">
+									<li><a href="#">Change Password</a></li>
+									<li><a href="#">User Settings</a></li>
+									<li><a href="#">Logout</a></li>
+									<!--<li class="divider"></li>-->
+								</ul>
+							</li>
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+								   aria-expanded="false">Admin<span class="caret"></span></a>
+								<ul class="dropdown-menu" role="menu">
+									<li><a href="#">Change Password</a></li>
+									<li><a href="#">User Settings</a></li>
+									<li><a href="#">Logout</a></li>
+									<!--<li class="divider"></li>-->
+								</ul>
+							</li>
+						</ul>
 					</div>
-				</div>
-			</footer>
+				</nav>
+			</div>
 		</div>
-		<script type="text/javascript">
-			var baseURL = '@Url.Content("~")';
-		</script>
-        @RenderSection("scripts", required: false)
-    </body>
+	</header>
+	<div class="content-width">
+		<div id="body">
+			@RenderSection("featured", required: false)
+			<section class="content-wrapper main-content clear-fix">
+				@RenderBody()
+			</section>
+		</div>
+		<footer>
+			<div class="content-wrapper">
+				<div class="float-left">
+					<p>&copy; @DateTime.Now.Year - Dodge Dynasty League</p>
+				</div>
+			</div>
+		</footer>
+	</div>
+	<script type="text/javascript">
+		var baseURL = '@Url.Content("~")';
+	</script>
+	@RenderSection("scripts", required: false)
+</body>
 </html>
