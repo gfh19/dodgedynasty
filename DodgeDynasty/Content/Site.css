@@ -210,8 +210,8 @@ nav{
 }
 ul.menu
 {
-	font-size: 18px;
-	font-weight: 600;
+	font-size: 17px;
+	font-weight: 500;
 	margin: 0px;
 	padding-left: 5px;
 	padding-bottom: 7px;
@@ -261,8 +261,8 @@ ul.menu li.mobileNav a {
 .navbar-toggle {
   position: relative;
   float: right;
-  padding: 5px 4px;
-  margin: 0px 7px 4px 11px;
+  padding: 4px 4px;
+  margin: 0px 7px 0px 11px;
   background-color: transparent;
   background-image: none;
   border: 1px solid #999;
@@ -476,29 +476,6 @@ ul.dropdown-menu li {
   top: auto;
   bottom: 100%;
   margin-bottom: 2px;
-}
-@media (max-width: 767px) {
-  .navbar-nav .open .dropdown-menu {
-    position: static;
-    float: none;
-    width: auto;
-    margin-top: 0;
-    background-color: transparent;
-    border: 0;
-    -webkit-box-shadow: none;
-            box-shadow: none;
-  }
-  .navbar-nav .open .dropdown-menu > li > a,
-  .navbar-nav .open .dropdown-menu .dropdown-header {
-    padding: 5px 15px 5px 25px;
-  }
-  .navbar-nav .open .dropdown-menu > li > a {
-    line-height: 20px;
-  }
-  .navbar-nav .open .dropdown-menu > li > a:hover,
-  .navbar-nav .open .dropdown-menu > li > a:focus {
-    background-image: none;
-  }
 }
 
 /* page elements
@@ -1902,6 +1879,48 @@ span.player-select
   }
 }
 
+@media (max-width: 600px) {
+  ul.navbar-nav {
+	padding-left: 0px;
+  }
+  ul.navbar-nav > li {
+    display: block;
+	margin-top: 10px;
+	margin-left: 0px;
+	padding-left: 0px;
+  }
+	.navbar-collapse {
+		padding-right: 0px;
+	}
+	.navbar-collapse .menu {
+		float: none;
+		padding-bottom: 14px;
+	}
+	.nav > li > a {
+		padding-right: 48px;
+	}
 
-
-
+  .navbar-nav .open .dropdown-menu {
+    position: static;
+    float: none;
+    width: auto;
+    margin-top: 0;
+    background-color: transparent;
+    border: 0;
+    -webkit-box-shadow: none;
+            box-shadow: none;
+	text-align: right;
+  }
+  .navbar-nav .open .dropdown-menu > li > a,
+  .navbar-nav .open .dropdown-menu .dropdown-header {
+    /*padding: 5px 15px 5px 25px;*/
+	padding-right: 53px;
+  }
+  .navbar-nav .open .dropdown-menu > li > a {
+    line-height: 20px;
+  }
+  .navbar-nav .open .dropdown-menu > li > a:hover,
+  .navbar-nav .open .dropdown-menu > li > a:focus {
+    background-image: none;
+  }
+}
