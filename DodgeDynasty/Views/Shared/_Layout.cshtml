@@ -47,8 +47,8 @@
 								   aria-expanded="false">Settings<span class="caret"></span></a>
 								<ul class="dropdown-menu" role="menu">
 									<li><a href="#">Change Password</a></li>
-									<li><a href="#">User Settings</a></li>
-									<li><a href="#">Logout</a></li>
+									<li><a href="#">My Info</a></li>
+									<li>@Html.ActionLink("Logout", "Logout", "Account")</li>
 									<!--<li class="divider"></li>-->
 								</ul>
 							</li>
@@ -56,9 +56,12 @@
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
 								   aria-expanded="false">Admin<span class="caret"></span></a>
 								<ul class="dropdown-menu" role="menu">
-									<li><a href="#">Change Password</a></li>
-									<li><a href="#">User Settings</a></li>
-									<li><a href="#">Logout</a></li>
+									<li><a href="#">Change User Password</a></li>
+									<li>@Html.ActionLink("Add/Edit League", "SetupDraft", "Admin")</li>
+									<li>@Html.ActionLink("Add/Edit Draft", "SetupDraft", "Admin")</li>
+									<li>@Html.ActionLink("Setup Draft", "SetupDraft", "Admin")</li>
+									<li>@Html.ActionLink("Activate Draft", "SetupDraft", "Admin")</li>
+									<li>@Html.ActionLink("Enter Draft Pick", "Input", "Admin")</li>
 									<!--<li class="divider"></li>-->
 								</ul>
 							</li>
