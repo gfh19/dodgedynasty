@@ -9,5 +9,9 @@ namespace DodgeDynasty.Mappers
 {
 	public class AddLeagueMapper<T> : MapperBase<T> where T : AddLeagueModel, new()
 	{
+		public override void UpdateModel()
+		{
+			Model.NumOwners = 4;
+		}
 	}
 }

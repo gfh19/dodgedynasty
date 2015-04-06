@@ -17,14 +17,5 @@ namespace DodgeDynasty.Models
 		[Display(Name = "Number of Owners")]
 		[Required]
 		public int NumOwners { get; set; }
-
-		public List<SelectListItem> GetNumOwnersListItems()
-		{
-			var numOwnersList = new List<int>();
-			for (int i=1; i<21; i++) {
-				numOwnersList.Add(i);
-			}
-			return Utilities.GetListItems<int>(numOwnersList, i => i.ToString(), i => i.ToString());
-		}
 	}
 }

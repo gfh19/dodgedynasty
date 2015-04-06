@@ -1,7 +1,7 @@
 ﻿@model DodgeDynasty.Models.ManageLeaguesModel
 
 @{
-    ViewBag.Title = "Manage Leagues";
+	ViewBag.Title = "Manage Leagues";
 }
 @section scripts {
 }
@@ -12,14 +12,17 @@
 	</script>
 	<div class="large-page-header">Manage Leagues</div>
 	<div class="page-entries">
-		<div class="page-section page-entry">
+		<div class="page-entry">
 			<a href="AddLeague">&lt;Add New League&gt;</a>
 		</div>
-		@foreach (var league in Model.AllLeagues.OrderBy(o=>o.LastUpdateTimestamp))
-		{
-			<div class="page-entry">
-				<a data-league-id="@league.LeagueId" href="ManageLeague/@league.LeagueId">@league.LeagueName</a>
-			</div>
-		}
+		<div class="page-section">
+			@foreach (var league in Model.AllLeagues.OrderBy(o => o.LastUpdateTimestamp))
+			{
+				<div class="page-entry">
+					<a data-league-id="@league.LeagueId" href="ManageLeague/@league.LeagueId">@league.LeagueName</a>
+				</div>
+			}
+		</div>
 	</div>
+
 </div>

@@ -21,6 +21,30 @@ body
     min-width: 100%;
 }
 
+.page-header, .large-page-header {
+	text-align: center;
+	margin-top: 18px;
+	margin-bottom: 12px;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.large-page-header {
+	font-size: 24px;
+}
+
+.page-entries {
+	text-align: center;
+}
+
+.page-section-large {
+	margin-top: 18px;
+}
+
+.page-section {
+	margin-top: 12px;
+}
+
 a
 {
 	color: #333;
@@ -632,26 +656,6 @@ aside ul li
 .bold
 {
 	font-weight: bold;
-}
-
-.page-header, .large-page-header {
-	text-align: center;
-	margin-top: 18px;
-	margin-bottom: 12px;
-	font-size: 16px;
-	font-weight: bold;
-}
-
-.large-page-header {
-	font-size: 24px;
-}
-
-.page-entries {
-	text-align: center;
-}
-
-.page-section {
-	margin-bottom: 12px;
 }
 
 .inline-label {
@@ -1570,7 +1574,7 @@ span.player-select
 	margin: 0 auto;
 }
 
-.num-input
+#addLeague .num-input
 {
 	width: 50px;
 }
