@@ -142,11 +142,17 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Filters\OwnerUpdateRankAccessAttribute.cs" />
     <Compile Include="Filters\OwnerRankAccessAttribute.cs" />
+    <Compile Include="Mappers\AddLeagueMapper.cs" />
     <Compile Include="Mappers\DraftSetupMapper.cs" />
+    <Compile Include="Mappers\ManageLeaguesMapper.cs" />
+    <Compile Include="Mappers\MapperBase.cs" />
     <Compile Include="Mappers\RankSetupMapper.cs" />
+    <Compile Include="Models\AddLeagueModel.cs" />
     <Compile Include="Models\DraftPicksSetupModel.cs" />
     <Compile Include="Models\DraftSetupModel.cs" />
     <Compile Include="Models\AccessModel.cs" />
+    <Compile Include="Models\IManageLeaguesModel.cs" />
+    <Compile Include="Models\ManageLeaguesModel.cs" />
     <Compile Include="Models\RankIdModel.cs" />
     <Compile Include="Models\RankingsListModel.cs" />
     <Compile Include="Models\RankSetupModel.cs" />
@@ -184,6 +190,7 @@
     <Compile Include="Controllers\RankController.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="2015 SQL Changes.sql" />
     <Content Include="Content\bootstrap\css\bootstrap-theme.css" />
     <Content Include="Content\bootstrap\css\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap\css\bootstrap.css" />
@@ -301,6 +308,9 @@
     <Content Include="Views\Draft\PlayerRanksPartial.cshtml" />
     <Content Include="Views\Draft\RankingsList.cshtml" />
     <Content Include="Views\Rank\SetupRank.cshtml" />
+    <Content Include="Views\Admin\ManageLeagues.cshtml" />
+    <Content Include="Views\Admin\ManageLeague.cshtml" />
+    <Content Include="Views\Admin\AddLeague.cshtml" />
     <None Include="Web.local.config">
       <SubType>Designer</SubType>
     </None>
@@ -338,7 +348,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Command\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

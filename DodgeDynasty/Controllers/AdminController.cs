@@ -75,5 +75,21 @@ namespace DodgeDynasty.Controllers
 			nextDraftInputModel.ResetCurrentPickPlayerModel();
 			return PartialView(Constants.Views.Input, nextDraftInputModel);
 		}
+
+		[HttpGet]
+		[AdminAccess]
+		public ActionResult ManageLeagues()
+		{
+			var mapper = new ManageLeaguesMapper<ManageLeaguesModel>();
+			return View(mapper.GetModel());
+		}
+
+		[HttpGet]
+		[AdminAccess]
+		public ActionResult AddLeague()
+		{
+			var mapper = new AddLeagueMapper<AddLeagueModel>();
+			return View(mapper.GetModel());
+		}
 	}
 }

@@ -1,0 +1,22 @@
+﻿@model DodgeDynasty.Models.ManageLeaguesModel
+
+@{
+    ViewBag.Title = "Manage Leagues";
+}
+@section scripts {
+}
+<div id="manageLeagues">
+	<script type="text/javascript">
+		$(function () {
+		});
+	</script>
+	<div class="large-page-header">Manage Leagues</div>
+	<div class="page-entries">
+		@foreach (var league in Model.AllLeagues.OrderBy(o=>o.LastUpdateTimestamp))
+		{
+			<div class="page-entry">
+				<a data-league-id="@league.LeagueId" href="ManageLeague/@league.LeagueId">@league.LeagueName</a>
+			</div>
+		}
+	</div>
+</div>

@@ -213,22 +213,6 @@ namespace DodgeDynasty.Entities
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<League> Leagues
-        {
-            get
-            {
-                if ((_Leagues == null))
-                {
-                    _Leagues = base.CreateObjectSet<League>("Leagues");
-                }
-                return _Leagues;
-            }
-        }
-        private ObjectSet<League> _Leagues;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<LeagueOwner> LeagueOwners
         {
             get
@@ -449,6 +433,22 @@ namespace DodgeDynasty.Entities
             }
         }
         private ObjectSet<UserRole> _UserRoles;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<League> Leagues
+        {
+            get
+            {
+                if ((_Leagues == null))
+                {
+                    _Leagues = base.CreateObjectSet<League>("Leagues");
+                }
+                return _Leagues;
+            }
+        }
+        private ObjectSet<League> _Leagues;
 
         #endregion
 
@@ -516,14 +516,6 @@ namespace DodgeDynasty.Entities
         public void AddToDraftRounds(DraftRound draftRound)
         {
             base.AddObject("DraftRounds", draftRound);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the Leagues EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToLeagues(League league)
-        {
-            base.AddObject("Leagues", league);
         }
     
         /// <summary>
@@ -636,6 +628,14 @@ namespace DodgeDynasty.Entities
         public void AddToUserRoles(UserRole userRole)
         {
             base.AddObject("UserRoles", userRole);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Leagues EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToLeagues(League league)
+        {
+            base.AddObject("Leagues", league);
         }
 
         #endregion
@@ -2628,6 +2628,30 @@ namespace DodgeDynasty.Entities
         private global::System.String _LeagueName;
         partial void OnLeagueNameChanging(global::System.String value);
         partial void OnLeagueNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> AddTimestamp
+        {
+            get
+            {
+                return _AddTimestamp;
+            }
+            set
+            {
+                OnAddTimestampChanging(value);
+                ReportPropertyChanging("AddTimestamp");
+                _AddTimestamp = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("AddTimestamp");
+                OnAddTimestampChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _AddTimestamp;
+        partial void OnAddTimestampChanging(Nullable<global::System.DateTime> value);
+        partial void OnAddTimestampChanged();
     
         /// <summary>
         /// No Metadata Documentation available.

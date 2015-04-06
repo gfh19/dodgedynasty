@@ -77,10 +77,9 @@ function displayDraftTime() {
 }
 
 function highlightCurrentPageLink() {
-	var url = location.pathname;
-	var menuLinks = $("#menu a");
-	var currentLink = $("#menu a").filter(function () {
+	var currentLink = $(".menu a").filter(function () {
 		return ($(this).prop('pathname').length > 0
+			&& $(this).attr("href") != "#"
 			&& $(this).prop('pathname') == location.pathname 
 			&& $(this).prop('id') != "more-nav");
 	});

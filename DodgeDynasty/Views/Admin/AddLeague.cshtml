@@ -1,0 +1,24 @@
+﻿@model DodgeDynasty.Models.AddLeagueModel
+
+@{
+	ViewBag.Title = "AddLeague";
+}
+
+<div id="addLeague">
+	<script type="text/javascript">
+		$(function () {
+		});
+	</script>
+	<div class="large-page-header">Add New League</div>
+	<div class="page-entries">
+		<div>
+			@Html.LabelFor(m => m.LeagueName):
+			@Html.TextBoxFor(m => m.LeagueName, new { maxLength = "50" })
+		</div>
+		<div>
+			@Html.LabelFor(m => m.NumOwners):
+			@Html.TextBoxFor(m => m.NumOwners, new { maxLength = "2" })
+		</div>
+		<div>
+	</div>
+</div>

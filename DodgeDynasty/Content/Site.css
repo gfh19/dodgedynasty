@@ -16,6 +16,11 @@ body
 	padding: 0;
 }
 
+.content-width {
+    float: left;
+    min-width: 100%;
+}
+
 a
 {
 	color: #333;
@@ -109,7 +114,6 @@ h5 a:link, h5 a:visited, h5 a:active
 .content-wrapper
 {
 	margin: 0 auto;
-	max-width: 1600px;
 }
 
 #body
@@ -630,6 +634,30 @@ aside ul li
 	font-weight: bold;
 }
 
+.page-header, .large-page-header {
+	text-align: center;
+	margin-top: 18px;
+	margin-bottom: 12px;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.large-page-header {
+	font-size: 24px;
+}
+
+.page-entries {
+	text-align: center;
+}
+
+.page-section {
+	margin-bottom: 12px;
+}
+
+.inline-label {
+	display: inline;
+}
+
 /* login page */
 
 #loginForm .validation-error
@@ -992,7 +1020,7 @@ ul.menu li a.current-page
 .dave
 {
 	/* orange */
-	border-color: #FF914B;
+	border-color: #FF612B;
 }
 .hawke
 {
@@ -1214,7 +1242,7 @@ ul.menu li a.current-page
 	display: inline-block;
 	vertical-align: top;
 	margin-top: 5px;
-	margin-bottom: 5px;
+	margin-bottom: 30px;
 }
 
 #teamDisplay .outline 
@@ -1521,6 +1549,30 @@ span.player-select
 .round-picks img 
 {
 	vertical-align: middle;
+}
+
+
+/* Manage Leagues
+----------------------------------------------------------*/
+#addLeague label
+{
+	display: inline-block;
+}
+
+#addLeague input
+{
+	width: 180px;
+}
+
+#addLeague page-entries
+{
+	width: 350px;
+	margin: 0 auto;
+}
+
+.num-input
+{
+	width: 50px;
 }
 
 /* RESPONSIVE STYLES
