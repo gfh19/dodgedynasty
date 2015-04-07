@@ -3,10 +3,14 @@
 @{
 	ViewBag.Title = "Add League";
 }
+@section scripts {
+	<script type="text/javascript" src="../../Scripts/AddLeague.js"></script>
+}
 
 <div id="addLeague">
 	<script type="text/javascript">
 		$(function () {
+			initAddLeague();
 		});
 	</script>
 	<div class="large-page-header">Add New League</div>

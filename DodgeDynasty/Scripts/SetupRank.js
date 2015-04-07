@@ -15,10 +15,8 @@ function initSetupRank() {
 	bindSubmitRankings();
 	bindAddNewPlayerLink();
 	saveCookieRankId();
-	$('html').live({
-		keydown: handleKeys,
-		keypress: handleKeys
-	})
+	$('html').keydown(preventBackspaceNav);
+	$('html').keypress(preventBackspaceNav);
 }
 
 function displaySavedMessage() {
@@ -332,20 +330,4 @@ function showAddNewPlayerDialog() {
 					},
 				]
 	});
-}
-
-function handleKeys(e) {
-    var evt = e || window.event;
-    var key = evt.charCode || evt.keyCode;
-
-    if (evt.type == "keydown" && ($('input:focus').length == 0)) {
-    	if (key == 8 && !$.browser.mozilla) {
-    		evt.preventDefault();
-    	}
-    }
-    else if (evt.type == "keypress" && ($('input:focus').length == 0)) {
-		if (key == 8) {
-			evt.preventDefault();
-		}
-    }
 }

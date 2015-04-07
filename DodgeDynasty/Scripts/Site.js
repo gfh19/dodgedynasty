@@ -258,3 +258,14 @@ function isElementInView(el) {
         rect.right <= (window.innerWidth || document.documentElement.clientWidth) /*or $(window).width() */
     );
 }
+
+function preventBackspaceNav(e) {
+	var evt = e || window.event;
+	var key = evt.charCode || evt.keyCode;
+
+	if ((evt.type == "keydown" || evt.type == "keypress") && ($('input:focus').length == 0)) {
+		if (key == 8) {
+			evt.preventDefault();
+		}
+	}
+}
