@@ -99,7 +99,7 @@ namespace DodgeDynasty.Models
 			CurrentDraft = Drafts.First(d => d.DraftId == DraftId);
 			CurrentLeagueOwners = LeagueOwners.Where(lo => lo.LeagueId == CurrentDraft.LeagueId).ToList();
 			var leagueOwner = CurrentLeagueOwners.FirstOrDefault(lo => lo.OwnerId == owner.OwnerId);
-			CurrentLoggedInOwnerUser = GetOwnerUser(owner, user, leagueOwner);
+			CurrentLoggedInOwnerUser = OwnerUserMapper.GetOwnerUser(owner, user, leagueOwner);
 			return DraftId;
 		}
 
@@ -131,7 +131,7 @@ namespace DodgeDynasty.Models
 				NextDraftPick = DraftPicks.FirstOrDefault(p => p.PickNum == (currentPickNum + 1));
 				var currentClockOwner = Owners.FirstOrDefault(o => o.OwnerId == CurrentDraftPick.OwnerId);
 				var currentClockLeagueOwner = CurrentLeagueOwners.FirstOrDefault(lo => lo.OwnerId == CurrentDraftPick.OwnerId);
-				CurrentClockOwnerUser = GetOwnerUser(currentClockOwner,
+				CurrentClockOwnerUser = OwnerUserMapper.GetOwnerUser(currentClockOwner,
 					Users.FirstOrDefault(u => u.UserId == currentClockOwner.UserId), currentClockLeagueOwner);
 			}
 		}
@@ -147,31 +147,8 @@ namespace DodgeDynasty.Models
 			var ownerUsers = from o in draftOwners
 							 join u in Users on o.UserId equals u.UserId
 							 join lo in CurrentLeagueOwners on u.UserId equals lo.UserId
-							 select GetOwnerUser(o, u, lo);
+							 select OwnerUserMapper.GetOwnerUser(o, u, lo);
 			return ownerUsers.ToList();
-		}
-
-		public OwnerUser GetOwnerUser(Owner o, User u, LeagueOwner lo)
-		{
-			o = o ?? new Owner();
-			u = u ?? new User();
-			lo = lo ?? new LeagueOwner();
-			return new OwnerUser
-			{
-				OwnerId = o.OwnerId,
-				UserId = u.UserId,
-				UserName = u.UserName,
-				Password = u.Password,
-				Salt = u.Salt,
-				FirstName = u.FirstName,
-				LastName = u.LastName,
-				NickName = o.NickName,
-				CssClass = lo.CssClass,
-				TeamName = lo.TeamName ?? o.NickName,
-				AddDateTime = u.AddDateTime,
-				LastLogin = u.LastLogin,
-				LastUpdateTimestamp = o.LastUpdateTimestamp
-			};
 		}
 
 		public List<DraftPick> GetDraftPicks()
@@ -222,7 +199,7 @@ namespace DodgeDynasty.Models
 			var currentGridOwner = Owners.First(o => o.OwnerId == ownerId);
 			var currentGridUser = Users.First(u => u.UserId == currentGridOwner.UserId);
 			var currentGridLeagueOwner = CurrentLeagueOwners.First(lo => lo.UserId == currentGridOwner.UserId);
-			CurrentGridOwnerUser = GetOwnerUser(currentGridOwner, currentGridUser, currentGridLeagueOwner);
+			CurrentGridOwnerUser = OwnerUserMapper.GetOwnerUser(currentGridOwner, currentGridUser, currentGridLeagueOwner);
 		}
 
 		public string ShowCurrentGridPlayerInfo()

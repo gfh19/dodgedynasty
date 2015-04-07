@@ -23,3 +23,14 @@ GO
 ALTER TABLE dbo.Draft
 ADD LeagueName AS dbo.GetLeagueName(LeagueId)
 GO
+
+
+/* 4/6/2015 */
+
+ALTER TABLE dbo.[User]
+ADD [FullName]  AS (([FirstName]+' ')+[LastName]) PERSISTED NOT NULL
+GO
+
+ALTER TABLE dbo.[Owner]
+ADD [IsActive] [bit] NOT NULL DEFAULT(1)
+GO

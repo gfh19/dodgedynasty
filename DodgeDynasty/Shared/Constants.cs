@@ -11,6 +11,11 @@ namespace DodgeDynasty.Shared
 		public static readonly int? DraftId = null;
 		public const int NewPlayerId = -1;
 
+		public static class AppSettings
+		{
+			public const string DefaultNumOwners = "DefaultNumOwners";
+		}
+
 		public static class Cookies
 		{
 			public const string PlayerRankOptions = "playerRankOptions";

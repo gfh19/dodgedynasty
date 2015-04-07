@@ -41,10 +41,10 @@ namespace DodgeDynasty.Shared
 			return name.ToUpper().Replace(" ", "").Replace("'", "").Replace("-", "").Replace(".", "");
 		}
 
-		public static List<SelectListItem> GetListItems<T>(List<T> stringList,
-			Func<T, string> text, Func<T, string> value, bool blankEntry = true, string selected = null)
+		public static List<SelectListItem> GetListItems<T>(List<T> items,
+			Func<T, string> textFn, Func<T, string> valueCodeFn, bool blankEntry = true, string selected = null)
 		{
-			var listItems = stringList.Select(s => new SelectListItem { Text = text(s), Value = value(s) }).ToList();
+			var listItems = items.Select(s => new SelectListItem { Text = textFn(s), Value = valueCodeFn(s) }).ToList();
 			if (blankEntry)
 			{
 				listItems.Insert(0, new SelectListItem());

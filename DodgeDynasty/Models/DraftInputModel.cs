@@ -37,7 +37,7 @@ namespace DodgeDynasty.Models
 		private void SetCurrentDraftPickOwnerUser()
 		{
 			var owner = Owners.First(o => o.OwnerId == CurrentDraftPick.OwnerId);
-			CurrentDraftPickOwnerUser = GetOwnerUser(owner,
+			CurrentDraftPickOwnerUser = OwnerUserMapper.GetOwnerUser(owner,
 										Users.First(u=>u.UserId == owner.UserId),
 										CurrentLeagueOwners.First(lo=>lo.OwnerId == owner.OwnerId));
 		}

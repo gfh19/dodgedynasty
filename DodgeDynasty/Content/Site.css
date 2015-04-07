@@ -1556,16 +1556,17 @@ span.player-select
 }
 
 
-/* Manage Leagues
+/* Manage/Add Leagues
 ----------------------------------------------------------*/
 #addLeague label
 {
+	font-size: 14px;
 	display: inline-block;
 }
 
 #addLeague input
 {
-	width: 180px;
+	width: 172px;
 }
 
 #addLeague page-entries
@@ -1576,7 +1577,11 @@ span.player-select
 
 #addLeague .num-input
 {
-	width: 50px;
+	width: 20px;
+}
+
+.league-owner, .owner-controls {
+	display: inline-block;
 }
 
 /* RESPONSIVE STYLES

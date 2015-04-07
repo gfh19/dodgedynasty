@@ -140,19 +140,27 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\DraftController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Mappers\AddLeagueMapper.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Filters\OwnerUpdateRankAccessAttribute.cs" />
     <Compile Include="Filters\OwnerRankAccessAttribute.cs" />
-    <Compile Include="Mappers\AddLeagueMapper.cs" />
     <Compile Include="Mappers\DraftSetupMapper.cs" />
     <Compile Include="Mappers\ManageLeaguesMapper.cs" />
-    <Compile Include="Mappers\MapperBase.cs" />
+    <Compile Include="Mappers\MapperBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Mappers\RankSetupMapper.cs" />
     <Compile Include="Models\AddLeagueModel.cs" />
     <Compile Include="Models\DraftPicksSetupModel.cs" />
     <Compile Include="Models\DraftSetupModel.cs" />
     <Compile Include="Models\AccessModel.cs" />
+    <Compile Include="Models\Factory.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Models\IManageLeaguesModel.cs" />
     <Compile Include="Models\ManageLeaguesModel.cs" />
+    <Compile Include="Mappers\OwnerUserMapper.cs" />
     <Compile Include="Models\RankIdModel.cs" />
     <Compile Include="Models\RankingsListModel.cs" />
     <Compile Include="Models\RankSetupModel.cs" />
