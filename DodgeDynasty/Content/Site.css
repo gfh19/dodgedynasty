@@ -1564,11 +1564,6 @@ span.player-select
 	display: inline-block;
 }
 
-#addLeague input
-{
-	width: 172px;
-}
-
 #addLeague page-entries
 {
 	width: 350px;
@@ -1580,10 +1575,38 @@ span.player-select
 	width: 20px;
 }
 
+.league-name
+{
+	width: 172px;
+}
+
 .league-owner, .owner-controls {
 	display: inline-block;
 }
 
+.lo-entry-header {
+	display: block;
+}
+
+.lo-owner-header, .lo-active-header, .lo-active {
+	display: inline-block;
+}
+
+.lo-owner-header {
+	width: 190px;
+}
+
+.lo-select {
+	width: 145px;
+}
+
+.owner-controls, .lo-active {
+	width: 40px;
+}
+
+.lo-active-header, .lo-active {
+	margin-left: 20px;
+}
 /* RESPONSIVE STYLES
    Display
 ----------------------------------------------------------*/

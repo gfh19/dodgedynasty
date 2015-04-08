@@ -17,29 +17,50 @@
 	<div class="page-entries">
 		<div>
 			@Html.LabelFor(m => m.LeagueName):
-			@Html.TextBoxFor(m => m.LeagueName, new { maxLength = "50" })
+			@Html.TextBoxFor(m => m.LeagueName, new { @class = "league-name", maxLength = "50" })
 		</div>
 		<div>
 			@Html.LabelFor(m => m.NumOwners):
 			@Html.TextBoxFor(m => m.NumOwners, new { @class = "num-input", maxLength = "2" })
 		</div>
-		<div class="league-owners page-section">
+		<div class="page-section">
+			<div class="lo-entry-header">
+				<label class="lo-owner-header">League Owners</label>
+				<label class="lo-active-header">Active?</label>
+			</div>
+			<div class="copy-lo-entry clear-fix hide-yo-wives">
+				<div class="league-owner-entry">
+					<div class="league-owner">
+						@Html.DropDownList("PlayerId", Model.GetActiveOwnerUsers(), new { @class = "lo-select" })
+					</div>
+					<div class="owner-controls">
+						<a href="#" class="league-remove-owner" tabindex="-1"><img src="../../Content/images/minus.png" alt="Remove Owner" /></a>
+						<a href="#" class="league-add-owner" tabindex="-1"><img src="../../Content/images/plus.png" alt="Add Owner" /></a>
+					</div>
+					<div class="lo-active">
+						@Html.CheckBox("IsActive", new { @checked = "checked" })
+					</div>
+				</div>
+			</div>
 			@foreach (var ownerUser in Model.NewOwnerUsers)
 			{
 				//TODO:
 				//Add league owners HTML markup
 				//Add OwnerUser functionality to AddLeagueModel, possibly pull out of DraftModel and share between both
-				//  (i.e. OwnerUserModel/Mapper?)
+				//  (i.e. OwnerUserMapper/Model?)
 				//Add javascript for Add/Delete Users
 				//Add "Add New OwnerUser" jQuery UI dialog & functionality
 				//  - Extract to separate partial view & js file/fns in Site.js (for use in AddDraft page)
 				<div class="league-owner-entry">
 					<div class="league-owner">
-						@Html.DropDownListFor(o => ownerUser.OwnerId, Model.GetActiveOwnerUsers())
+						@Html.DropDownListFor(o => ownerUser.OwnerId, Model.GetActiveOwnerUsers(), new { @class="lo-select" })
 					</div>
 					<div class="owner-controls">
 						<a href="#" class="league-remove-owner" tabindex="-1"><img src="../../Content/images/minus.png" alt="Remove Owner" /></a>
 						<a href="#" class="league-add-owner" tabindex="-1"><img src="../../Content/images/plus.png" alt="Add Owner" /></a>
+					</div>
+					<div class="lo-active">
+						@Html.CheckBoxFor(o => ownerUser.IsActive, new { @checked = "checked" })
 					</div>
 				</div>
 			}

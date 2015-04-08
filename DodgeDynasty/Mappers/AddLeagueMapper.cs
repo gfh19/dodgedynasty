@@ -22,7 +22,7 @@ namespace DodgeDynasty.Mappers
 				ConfigurationManager.AppSettings[Constants.AppSettings.DefaultNumOwners] ?? "4");
 			Model.NewOwnerUsers = new List<OwnerUser>();
 			for (int i=0; i<Model.NumOwners; i++) {
-				Model.NewOwnerUsers.Add(new OwnerUser());
+				Model.NewOwnerUsers.Add(new OwnerUser { IsActive=true });
 			}
 		}
 
