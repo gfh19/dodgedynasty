@@ -8,7 +8,7 @@ namespace DodgeDynasty.Mappers
 {
 	public class ManageLeaguesMapper<T> : MapperBase<T> where T : ManageLeaguesModel, new()
 	{
-		public override void UpdateModel()
+		public override void PopulateModel()
 		{
 			using (HomeEntity = new Entities.HomeEntity())
 			{

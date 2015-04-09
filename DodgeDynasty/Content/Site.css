@@ -1016,7 +1016,7 @@ ul.menu li a.current-page
 /* Owner Styles
 ----------------------------------------------------------*/
 
-.bk
+.brian
 {
 	/* light green */
 	border-color: #00FF00;
@@ -1026,7 +1026,7 @@ ul.menu li a.current-page
 	/* orange */
 	border-color: #FF612B;
 }
-.hawke
+.hawkeman
 {
 	/* aqua */
 	border-color: #19E1CC;
@@ -1036,7 +1036,7 @@ ul.menu li a.current-page
 	/* pink */
 	border-color: #FFA5FF;
 }
-.jm
+.jeremiah
 {
 	/* yellow */
 	border-color: #FFE100;
@@ -1061,7 +1061,7 @@ ul.menu li a.current-page
 	/* brown */
 	border-color: #C58A4F;
 }
-.mills
+.steve
 {
 	/* green */
 	border-color: #50A57F;
@@ -1575,37 +1575,52 @@ span.player-select
 	width: 20px;
 }
 
-.league-name
+.league-name, .lo-team-input
 {
 	width: 172px;
 }
 
-.league-owner, .owner-controls {
-	display: inline-block;
-}
-
-.lo-entry-header {
-	display: block;
-}
-
-.lo-owner-header, .lo-active-header, .lo-active {
-	display: inline-block;
-}
-
-.lo-owner-header {
-	width: 190px;
+.lo-team-input {
+	margin: 2px 0px;
 }
 
 .lo-select {
 	width: 145px;
 }
 
+.league-owner, .lo-team-name, .owner-controls, .lo-active {
+	display: inline-block;
+}
+
+.lo-owner-header, .lo-teamname-header, .lo-active-header {
+	display: inline-block;
+}
+
+.league-owner-entry {
+	min-width: 470px;
+}
+
+.lo-entry-header {
+	display: block;
+}
+
+.lo-owner-header {
+	width: 145px;
+}
+.lo-teamname-header {
+	width: 177px;
+}
+.lo-controls-header {
+	width: 32px;
+}
+
 .owner-controls, .lo-active {
 	width: 40px;
 }
 
-.lo-active-header, .lo-active {
-	margin-left: 20px;
+.lo-teamname-header, .lo-active-header, .lo-controls-header, 
+.lo-team-name, .lo-active, .owner-controls {
+	margin-left: 5px;
 }
 /* RESPONSIVE STYLES
    Display

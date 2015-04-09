@@ -7,7 +7,7 @@ using DodgeDynasty.Models.Types;
 
 namespace DodgeDynasty.Models
 {
-	public class OwnerUserMapper : ModelBase
+	public class OwnerUserMapper
 	{
 		public static OwnerUser GetOwnerUser(Owner o, User u, LeagueOwner lo)
 		{
@@ -26,8 +26,8 @@ namespace DodgeDynasty.Models
 				FullName = u.FullName,
 				NickName = o.NickName,
 				CssClass = lo.CssClass,
-				TeamName = lo.TeamName ?? string.Format("Team {0}", o.NickName),
-				IsActive = o.IsActive,
+				TeamName = lo.TeamName ?? u.FullName,
+				IsActive = lo.IsActive,
 				AddDateTime = u.AddDateTime,
 				LastLogin = u.LastLogin,
 				LastUpdateTimestamp = o.LastUpdateTimestamp

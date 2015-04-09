@@ -15,15 +15,10 @@ namespace DodgeDynasty.Models
 		[Display(Name = "League Name")]
 		[Required]
 		public string LeagueName { get; set; }
-		[Display(Name = "Number of Owners")]
-		[Required]
-		public int NumOwners { get; set; }
+		public List<OwnerUser> LeagueOwnerUsers { get; set; }
 
-		public List<User> Users { get; set; }
-		public List<Owner> Owners { get; set; }
 		public List<OwnerUser> OwnerUsers { get; set; }
 		public List<OwnerUser> ActiveOwnerUsers { get; set; }
-		public List<OwnerUser> NewOwnerUsers { get; set; }
 
 		public List<SelectListItem> GetActiveOwnerUsers()
 		{

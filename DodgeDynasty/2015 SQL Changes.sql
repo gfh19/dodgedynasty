@@ -31,6 +31,14 @@ ALTER TABLE dbo.[User]
 ADD [FullName]  AS (([FirstName]+' ')+[LastName]) PERSISTED NOT NULL
 GO
 
-ALTER TABLE dbo.[Owner]
+ALTER TABLE dbo.[LeagueOwner]
 ADD [IsActive] [bit] NOT NULL DEFAULT(1)
 GO
+
+
+/* 4/8/15 */
+
+UPDATE lo
+SET lo.CssClass = u.UserName
+FROM dbo.LeagueOwner lo
+INNER JOIN dbo.[User] u ON lo.UserId = u.UserId

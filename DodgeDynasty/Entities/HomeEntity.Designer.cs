@@ -213,22 +213,6 @@ namespace DodgeDynasty.Entities
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<LeagueOwner> LeagueOwners
-        {
-            get
-            {
-                if ((_LeagueOwners == null))
-                {
-                    _LeagueOwners = base.CreateObjectSet<LeagueOwner>("LeagueOwners");
-                }
-                return _LeagueOwners;
-            }
-        }
-        private ObjectSet<LeagueOwner> _LeagueOwners;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<NFLTeam> NFLTeams
         {
             get
@@ -437,6 +421,22 @@ namespace DodgeDynasty.Entities
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        public ObjectSet<LeagueOwner> LeagueOwners
+        {
+            get
+            {
+                if ((_LeagueOwners == null))
+                {
+                    _LeagueOwners = base.CreateObjectSet<LeagueOwner>("LeagueOwners");
+                }
+                return _LeagueOwners;
+            }
+        }
+        private ObjectSet<LeagueOwner> _LeagueOwners;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         public ObjectSet<Owner> Owners
         {
             get
@@ -516,14 +516,6 @@ namespace DodgeDynasty.Entities
         public void AddToDraftRounds(DraftRound draftRound)
         {
             base.AddObject("DraftRounds", draftRound);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the LeagueOwners EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToLeagueOwners(LeagueOwner leagueOwner)
-        {
-            base.AddObject("LeagueOwners", leagueOwner);
         }
     
         /// <summary>
@@ -628,6 +620,14 @@ namespace DodgeDynasty.Entities
         public void AddToUserRoles(UserRole userRole)
         {
             base.AddObject("UserRoles", userRole);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the LeagueOwners EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToLeagueOwners(LeagueOwner leagueOwner)
+        {
+            base.AddObject("LeagueOwners", leagueOwner);
         }
     
         /// <summary>
@@ -2724,9 +2724,10 @@ namespace DodgeDynasty.Entities
         /// <param name="userId">Initial value of the UserId property.</param>
         /// <param name="leagueId">Initial value of the LeagueId property.</param>
         /// <param name="teamName">Initial value of the TeamName property.</param>
+        /// <param name="isActive">Initial value of the IsActive property.</param>
         /// <param name="addTimestamp">Initial value of the AddTimestamp property.</param>
         /// <param name="lastUpdateTimestamp">Initial value of the LastUpdateTimestamp property.</param>
-        public static LeagueOwner CreateLeagueOwner(global::System.Int32 leagueOwnerId, global::System.Int32 ownerId, global::System.Int32 userId, global::System.Int32 leagueId, global::System.String teamName, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp)
+        public static LeagueOwner CreateLeagueOwner(global::System.Int32 leagueOwnerId, global::System.Int32 ownerId, global::System.Int32 userId, global::System.Int32 leagueId, global::System.String teamName, global::System.Boolean isActive, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp)
         {
             LeagueOwner leagueOwner = new LeagueOwner();
             leagueOwner.LeagueOwnerId = leagueOwnerId;
@@ -2734,6 +2735,7 @@ namespace DodgeDynasty.Entities
             leagueOwner.UserId = userId;
             leagueOwner.LeagueId = leagueId;
             leagueOwner.TeamName = teamName;
+            leagueOwner.IsActive = isActive;
             leagueOwner.AddTimestamp = addTimestamp;
             leagueOwner.LastUpdateTimestamp = lastUpdateTimestamp;
             return leagueOwner;
@@ -2889,6 +2891,30 @@ namespace DodgeDynasty.Entities
         private global::System.String _CssClass;
         partial void OnCssClassChanging(global::System.String value);
         partial void OnCssClassChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean IsActive
+        {
+            get
+            {
+                return _IsActive;
+            }
+            set
+            {
+                OnIsActiveChanging(value);
+                ReportPropertyChanging("IsActive");
+                _IsActive = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsActive");
+                OnIsActiveChanged();
+            }
+        }
+        private global::System.Boolean _IsActive;
+        partial void OnIsActiveChanging(global::System.Boolean value);
+        partial void OnIsActiveChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -3194,12 +3220,10 @@ namespace DodgeDynasty.Entities
         /// Create a new Owner object.
         /// </summary>
         /// <param name="ownerId">Initial value of the OwnerId property.</param>
-        /// <param name="isActive">Initial value of the IsActive property.</param>
-        public static Owner CreateOwner(global::System.Int32 ownerId, global::System.Boolean isActive)
+        public static Owner CreateOwner(global::System.Int32 ownerId)
         {
             Owner owner = new Owner();
             owner.OwnerId = ownerId;
-            owner.IsActive = isActive;
             return owner;
         }
 
@@ -3281,30 +3305,6 @@ namespace DodgeDynasty.Entities
         private global::System.String _NickName;
         partial void OnNickNameChanging(global::System.String value);
         partial void OnNickNameChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Boolean IsActive
-        {
-            get
-            {
-                return _IsActive;
-            }
-            set
-            {
-                OnIsActiveChanging(value);
-                ReportPropertyChanging("IsActive");
-                _IsActive = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("IsActive");
-                OnIsActiveChanged();
-            }
-        }
-        private global::System.Boolean _IsActive;
-        partial void OnIsActiveChanging(global::System.Boolean value);
-        partial void OnIsActiveChanged();
     
         /// <summary>
         /// No Metadata Documentation available.

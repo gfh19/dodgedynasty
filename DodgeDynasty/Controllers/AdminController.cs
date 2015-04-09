@@ -91,5 +91,14 @@ namespace DodgeDynasty.Controllers
 			var mapper = new AddLeagueMapper<AddLeagueModel>();
 			return View(mapper.GetModel());
 		}
+
+		[HttpPost]
+		[AdminAccess]
+		public ActionResult AddLeague(AddLeagueModel addLeagueModel)
+		{
+			var mapper = new AddLeagueMapper<AddLeagueModel>();
+			mapper.UpdateEntity(addLeagueModel);
+			return View(mapper.GetModel());
+		}
 	}
 }

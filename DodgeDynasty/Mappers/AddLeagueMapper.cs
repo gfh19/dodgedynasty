@@ -12,25 +12,65 @@ namespace DodgeDynasty.Mappers
 {
 	public class AddLeagueMapper<T> : MapperBase<T> where T : AddLeagueModel, new()
 	{
-		public override void UpdateModel()
+		public override void PopulateModel()
 		{
-			Model.Users = HomeEntity.Users.ToList();
-			Model.Owners = HomeEntity.Owners.ToList();
-			Model.OwnerUsers =  GetOwnerUsers(Model.Users, Model.Owners);
+			Model.OwnerUsers = GetOwnerUsers();
 			Model.ActiveOwnerUsers = Model.OwnerUsers.Where(o => o.IsActive).ToList();
-			Model.NumOwners = Int32.Parse(
+			var numOwners = Int32.Parse(
 				ConfigurationManager.AppSettings[Constants.AppSettings.DefaultNumOwners] ?? "4");
-			Model.NewOwnerUsers = new List<OwnerUser>();
-			for (int i=0; i<Model.NumOwners; i++) {
-				Model.NewOwnerUsers.Add(new OwnerUser { IsActive=true });
+			Model.LeagueOwnerUsers = new List<OwnerUser>();
+			for (int i = 0; i < numOwners; i++)
+			{
+				Model.LeagueOwnerUsers.Add(new OwnerUser { IsActive=true });
 			}
 		}
 
-		private List<OwnerUser> GetOwnerUsers(List<User> users, List<Owner> owners)
+		public override void DoUpdate(T model)
 		{
-			var ownerUsers = from o in owners
-							 join u in users on o.UserId equals u.UserId
-							 select OwnerUserMapper.GetOwnerUser(o, u, null);
+			League league = new Entities.League
+			{
+				LeagueName = model.LeagueName,
+				AddTimestamp = DateTime.Now,
+				LastUpdateTimestamp = DateTime.Now
+			};
+			HomeEntity.Leagues.AddObject(league);
+			HomeEntity.SaveChanges();
+
+			foreach (var lo in model.LeagueOwnerUsers)
+			{
+				var ou = (from o in HomeEntity.Owners.AsEnumerable()
+						  join u in HomeEntity.Users.AsEnumerable() on o.UserId equals u.UserId
+						  where u.UserId == lo.UserId
+						  select OwnerUserMapper.GetOwnerUser(o, u, null)).FirstOrDefault();
+				lo.OwnerId = ou.OwnerId;
+				lo.CssClass = ou.UserName;
+				//Someday add more in depth CssClass assignment & lookup i.e. CssClass SQL table)
+
+				//TODO:  Consolidate into one table!
+				LeagueOwner owner = new LeagueOwner
+				{
+					OwnerId = lo.OwnerId,
+					UserId = lo.UserId,
+					LeagueId = league.LeagueId,
+					TeamName = lo.TeamName,
+					CssClass = lo.CssClass,
+					IsActive = lo.IsActive,
+					AddTimestamp = DateTime.Now,
+					LastUpdateTimestamp = DateTime.Now
+				};
+				HomeEntity.LeagueOwners.AddObject(owner);
+			}
+			HomeEntity.SaveChanges();
+		}
+
+		private List<OwnerUser> GetOwnerUsers()
+		{
+			var leagueOwners = HomeEntity.LeagueOwners.ToList();
+			var ownerUsers = from o in HomeEntity.Owners.AsEnumerable()
+							 join u in HomeEntity.Users.AsEnumerable() on o.UserId equals u.UserId
+							 select OwnerUserMapper.GetOwnerUser(o, u,
+								leagueOwners.Where(l => l.UserId == l.UserId)
+								.OrderByDescending(l => l.IsActive).FirstOrDefault());
 			return ownerUsers.ToList();
 		}
 	}

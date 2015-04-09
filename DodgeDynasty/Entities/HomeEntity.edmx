@@ -129,6 +129,7 @@
           <Property Name="LeagueId" Type="int" Nullable="false" />
           <Property Name="TeamName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CssClass" Type="varchar" MaxLength="20" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
           <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
         </EntityType>
@@ -151,7 +152,6 @@
           <Property Name="OwnerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserId" Type="int" />
           <Property Name="NickName" Type="varchar" MaxLength="10" />
-          <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="AddTimestamp" Type="datetime" />
           <Property Name="LastUpdateTimestamp" Type="datetime" />
         </EntityType>
@@ -518,7 +518,6 @@
           <EntitySet Name="DraftPickHistories" EntityType="HomeModel.DraftPickHistory" />
           <EntitySet Name="DraftRanks" EntityType="HomeModel.DraftRank" />
           <EntitySet Name="DraftRounds" EntityType="HomeModel.DraftRound" />
-          <EntitySet Name="LeagueOwners" EntityType="HomeModel.LeagueOwner" />
           <EntitySet Name="NFLTeams" EntityType="HomeModel.NFLTeam" />
           <EntitySet Name="Players" EntityType="HomeModel.Player" />
           <EntitySet Name="PlayerAdjustments" EntityType="HomeModel.PlayerAdjustment" />
@@ -576,6 +575,7 @@
             <End Role="UserRole" EntitySet="UserRoles" />
             <End Role="UserRole1" EntitySet="UserRoles" />
           </AssociationSet>
+          <EntitySet Name="LeagueOwners" EntityType="HomeModel.LeagueOwner" />
           <EntitySet Name="Owners" EntityType="HomeModel.Owner" />
           <AssociationSet Name="FK_Owner_User" Association="HomeModel.FK_Owner_User">
             <End Role="User" EntitySet="Users" />
@@ -689,19 +689,6 @@
           <Property Type="String" Name="DraftOrderType" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Type="Int16" Name="ContinueForRounds" />
           <Property Type="DateTime" Name="LastUpdateTimestamp" Precision="3" />
-        </EntityType>
-        <EntityType Name="LeagueOwner">
-          <Key>
-            <PropertyRef Name="LeagueOwnerId" />
-          </Key>
-          <Property Type="Int32" Name="LeagueOwnerId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="OwnerId" Nullable="false" />
-          <Property Type="Int32" Name="UserId" Nullable="false" />
-          <Property Type="Int32" Name="LeagueId" Nullable="false" />
-          <Property Type="String" Name="TeamName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="CssClass" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="AddTimestamp" Nullable="false" Precision="3" />
-          <Property Type="DateTime" Name="LastUpdateTimestamp" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="NFLTeam">
           <Key>
@@ -1009,6 +996,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="LeagueOwner">
+          <Key>
+            <PropertyRef Name="LeagueOwnerId" />
+          </Key>
+          <Property Name="LeagueOwnerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OwnerId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="LeagueId" Type="Int32" Nullable="false" />
+          <Property Name="TeamName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CssClass" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
         <EntityType Name="Owner">
           <Key>
             <PropertyRef Name="OwnerId" />
@@ -1016,7 +1017,6 @@
           <Property Name="OwnerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserId" Type="Int32" />
           <Property Name="NickName" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="AddTimestamp" Type="DateTime" Precision="3" />
           <Property Name="LastUpdateTimestamp" Type="DateTime" Precision="3" />
           <NavigationProperty Name="User" Relationship="HomeModel.FK_Owner_User" FromRole="Owner" ToRole="User" />
@@ -1146,20 +1146,6 @@
                 <ScalarProperty Name="StartPickId" ColumnName="StartPickId" />
                 <ScalarProperty Name="RoundId" ColumnName="RoundId" />
                 <ScalarProperty Name="DraftId" ColumnName="DraftId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="LeagueOwners">
-            <EntityTypeMapping TypeName="HomeModel.LeagueOwner">
-              <MappingFragment StoreEntitySet="LeagueOwner">
-                <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
-                <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
-                <ScalarProperty Name="CssClass" ColumnName="CssClass" />
-                <ScalarProperty Name="TeamName" ColumnName="TeamName" />
-                <ScalarProperty Name="LeagueId" ColumnName="LeagueId" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
-                <ScalarProperty Name="LeagueOwnerId" ColumnName="LeagueOwnerId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1327,12 +1313,26 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="LeagueOwners">
+            <EntityTypeMapping TypeName="HomeModel.LeagueOwner">
+              <MappingFragment StoreEntitySet="LeagueOwner">
+                <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
+                <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CssClass" ColumnName="CssClass" />
+                <ScalarProperty Name="TeamName" ColumnName="TeamName" />
+                <ScalarProperty Name="LeagueId" ColumnName="LeagueId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
+                <ScalarProperty Name="LeagueOwnerId" ColumnName="LeagueOwnerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Owners">
             <EntityTypeMapping TypeName="HomeModel.Owner">
               <MappingFragment StoreEntitySet="Owner">
                 <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
                 <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="NickName" ColumnName="NickName" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
@@ -1369,7 +1369,6 @@
         <EntityTypeShape EntityType="HomeModel.DraftPickHistory" Width="1.5" PointX="10.75" PointY="4.25" Height="3.1340950520833246" />
         <EntityTypeShape EntityType="HomeModel.DraftRank" Width="1.5" PointX="10.75" PointY="8.25" Height="2.3648893229166674" />
         <EntityTypeShape EntityType="HomeModel.DraftRound" Width="1.5" PointX="12.75" PointY="1.25" Height="2.3648893229166674" />
-        <EntityTypeShape EntityType="HomeModel.LeagueOwner" Width="1.5" PointX="12.75" PointY="8.25" Height="2.5571907552083246" />
         <EntityTypeShape EntityType="HomeModel.NFLTeam" Width="1.5" PointX="0.75" PointY="6.25" Height="2.5571907552083255" />
         <EntityTypeShape EntityType="HomeModel.Player" Width="1.5" PointX="3" PointY="5.375" Height="4.2879036458333246" />
         <EntityTypeShape EntityType="HomeModel.PlayerAdjustment" Width="1.5" PointX="5.25" PointY="9.875" Height="3.5186979166666674" />
@@ -1424,7 +1423,8 @@
         <AssociationConnector Association="HomeModel.FK_UserRole_Role" />
         <AssociationConnector Association="HomeModel.FK_UserRole_User" />
         <AssociationConnector Association="HomeModel.FK_UserRole_UserRole" />
-        <EntityTypeShape EntityType="HomeModel.Owner" Width="1.5" PointX="10" PointY="15.25" />
+        <EntityTypeShape EntityType="HomeModel.LeagueOwner" Width="1.5" PointX="13.375" PointY="7.75" />
+        <EntityTypeShape EntityType="HomeModel.Owner" Width="1.5" PointX="10" PointY="14.375" />
         <AssociationConnector Association="HomeModel.FK_Owner_User" />
       </Diagram>
     </Diagrams>

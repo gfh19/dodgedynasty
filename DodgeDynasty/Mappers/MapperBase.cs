@@ -15,11 +15,19 @@ namespace DodgeDynasty.Mappers
 			Model = new T();
 			using (HomeEntity = new Entities.HomeEntity())
 			{
-				UpdateModel();
+				PopulateModel();
 			}
 			return Model;
 		}
-		
-		public virtual void UpdateModel() {}
+		public virtual void PopulateModel() { }
+
+		public virtual void UpdateEntity(T model)
+		{
+			using (HomeEntity = new Entities.HomeEntity())
+			{
+				DoUpdate(model);
+			}
+		}
+		public virtual void DoUpdate(T model) { }
 	}
 }
