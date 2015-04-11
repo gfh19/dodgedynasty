@@ -21,7 +21,7 @@ namespace DodgeDynasty.Shared
 			public const string PlayerRankOptions = "playerRankOptions";
 		}
 
-		public static class DraftFormats
+		public class DraftFormats
 		{
 			public const string Repeat = "repeat";
 			public const string Snake = "snake";

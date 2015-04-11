@@ -140,6 +140,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\DraftController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Mappers\AddDraftMapper.cs" />
     <Compile Include="Mappers\AddLeagueMapper.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -151,6 +152,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Mappers\RankSetupMapper.cs" />
+    <Compile Include="Models\AddDraftModel.cs" />
     <Compile Include="Models\AddLeagueModel.cs" />
     <Compile Include="Models\DraftPicksSetupModel.cs" />
     <Compile Include="Models\DraftSetupModel.cs" />
@@ -324,6 +326,7 @@
     <Content Include="Views\Admin\ManageLeague.cshtml" />
     <Content Include="Views\Admin\AddLeague.cshtml" />
     <Content Include="OwnerCss.ashx" />
+    <Content Include="Views\Admin\AddDraft.cshtml" />
     <None Include="Web.local.config">
       <SubType>Designer</SubType>
     </None>

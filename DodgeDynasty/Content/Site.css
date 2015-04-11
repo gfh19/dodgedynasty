@@ -1606,7 +1606,7 @@ span.player-select
 }
 
 .league-owner-entry {
-	min-width: 470px;
+	min-width: 428px;
 }
 
 .lo-entry-header {
@@ -1631,6 +1631,30 @@ span.player-select
 .lo-team-name, .lo-active, .owner-controls {
 	margin-left: 5px;
 }
+
+
+/* Manage/Add Drafts
+----------------------------------------------------------*/
+#addDraft label {
+	display: inline-block;
+}
+.draft-date {
+	width: 125px;
+}
+.draft-time {
+	width: 100px;
+}
+.draft-year {
+	width: 50px;
+}
+.draft-location {
+	width: 150px;
+}
+
+
+
+
+
 /* RESPONSIVE STYLES
    Display
 ----------------------------------------------------------*/

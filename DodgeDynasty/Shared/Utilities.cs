@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 
@@ -74,6 +76,16 @@ namespace DodgeDynasty.Shared
 		{
 			string response = (!string.IsNullOrEmpty(val)) ? val.Replace("\"", "'") : val;
 			return response;
+		}
+
+		public static Dictionary<string, string> GetStringProperties(object type)
+		{
+			var fields = type.GetType()
+			  .GetFields(BindingFlags.Public | BindingFlags.Static)
+			  .Where(f => f.FieldType == typeof(string))
+			  .ToDictionary(f => (string)f.GetValue(null),
+							f => f.Name);
+			return fields;
 		}
 	}
 }
