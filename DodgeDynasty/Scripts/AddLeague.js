@@ -69,7 +69,9 @@ function bindSubmitLeague() {
 		$(".submit-league").first().focus();
 		resetValidations();
 		var addLeagueModel = getAddLeagueModel();
-		if (validateAddLeagueModel(addLeagueModel)) {
+		var leagueFormValid = $('#leagueForm').valid()
+		var ownersValid = validateAddLeagueModel(addLeagueModel);
+		if (leagueFormValid && ownersValid) {
 			updateAddLeagueModel(addLeagueModel);
 		}
 	});
@@ -96,13 +98,51 @@ function getAddLeagueModel() {
 }
 
 function validateAddLeagueModel(addLeagueModel) {
-	//TODO:  Validate inputs
-	return true;
+	var isValid = true;
+	leagueUserIds.sort();
+	var blankOwner = $.inArray("", leagueUserIds);
+	if (blankOwner > -1) {
+		$(".blank-owner-msg").removeClass("hide-yo-wives");
+		markInvalidOwnerId("");
+		isValid = false;
+	}
+	for (var i = 0; i < (leagueUserIds.length - 1) ; i++) {
+		if (leagueUserIds[i] != undefined && leagueUserIds[i] == leagueUserIds[i + 1]) {
+			$(".dup-owner-msg").removeClass("hide-yo-wives");
+			markInvalidOwnerId(leagueUserIds[i]);
+			isValid = false;
+		}
+	}
+	$.each($(".league-owner-entry .lo-team-input"), function (index, team) {
+		if ($(team).val().trim() === "") {
+			$(".blank-team-msg").removeClass("hide-yo-wives");
+			$(team).addClass("invalid-border");
+			isValid = false;
+		}
+	});
+	return isValid;
+}
+
+function markInvalidOwnerId(ownerId) {
+	if (ownerId === "") {
+		//Find any blank spans
+		$.each($("select"), function (index, owner) {
+			if ($(owner).val() === "") {
+				$(owner).addClass("invalid-border");
+			}
+		});
+	}
+	else {
+		//Find any matching selected options
+		var invalidEntries = $("select option:selected[value=" + ownerId + "]").closest("select");
+		$(invalidEntries).addClass("invalid-border");
+	}
 }
 
 function resetValidations() {
-	//TODO:  Reset validations
-};
+	$(".blank-owner-msg, .blank-team-msg, .dup-owner-msg").addClass("hide-yo-wives");
+	$(".invalid-border").removeClass("invalid-border");
+}
 
 function updateAddLeagueModel(addLeagueModel) {
 	ajaxPost(addLeagueModel, "Admin/AddLeague", function () {

@@ -85,6 +85,11 @@ mark
 	float: right;
 }
 
+.new-line
+{
+	display: block;
+}
+
 .clear-fix:after
 {
 	content: ".";
@@ -849,7 +854,7 @@ td input[type="submit"], td input[type="button"], td button
 /* styles for validation helpers */
 .field-validation-error
 {
-	color: #e80c4d;
+	color: #FF0000;
 	font-weight: bold;
 }
 
@@ -1451,7 +1456,10 @@ span.player-select
 }
 .messages-ph
 {
-	min-height: 19px;
+	min-height: 20px;
+}
+.error-messages, .error-messages {
+	text-align: center;
 }
 .rank-saved 
 {
@@ -1460,6 +1468,7 @@ span.player-select
 .invalid 
 {
 	color: #FF0000;
+	font-weight: bold;
 }
 .invalid-border 
 {

@@ -6,7 +6,6 @@
 @section scripts {
 	<script type="text/javascript" src="../../Scripts/AddLeague.js"></script>
 }
-
 <div id="addLeague">
 	<script type="text/javascript">
 		$(function () {
@@ -14,10 +13,21 @@
 		});
 	</script>
 	<div class="large-page-header">Add New League</div>
+	@{ Html.EnableClientValidation(true); }
+	@Html.ValidationSummary(false)
+	<div class="error-messages">
+		<div class="blank-owner-msg invalid hide-yo-wives">Error - Owner cannot be left blank.</div>
+		<div class="blank-team-msg invalid hide-yo-wives">Error - Team Name cannot be left blank.</div>
+		<div class="dup-owner-msg invalid hide-yo-wives">Error - Owner selected more than once.</div>
+	</div>
 	<div class="page-entries">
+			@using (Html.BeginForm("ValidateLeague", "Admin", FormMethod.Post, new { id="leagueForm" }))
+   {
 		<div>
 			@Html.LabelFor(m => m.LeagueName): @Html.TextBoxFor(m => m.LeagueName, new { @class = "league-name autofocus", maxLength = "50" })
+			<span class="new-line">@Html.ValidationMessageFor(m => m.LeagueName)</span>
 		</div>
+   }
 		<div class="page-section">
 			<div class="copy-lo-entry hide-yo-wives">
 				<div class="league-owner">
@@ -42,16 +52,16 @@
 					<label class="lo-controls-header"> </label>
 				</div>
 				@foreach (var ownerUser in Model.LeagueOwnerUsers)
-				{
-					//TODO:
-					//Add league owners HTML markup
-					//Add OwnerUser functionality to AddLeagueModel, possibly pull out of DraftModel and share between both
-					//  (i.e. OwnerUserMapper/Model?)
-					//Add javascript for Add/Delete Users
-					//Add "Add New OwnerUser" jQuery UI dialog & functionality
-					//  - Extract to separate partial view & js file/fns in Site.js (for use in AddDraft page)
-					//Eliminate need for Owner table (yuck)
-					//New CssClass SQL table?
+	{
+		//TODO:
+		//Add league owners HTML markup
+		//Add OwnerUser functionality to AddLeagueModel, possibly pull out of DraftModel and share between both
+		//  (i.e. OwnerUserMapper/Model?)
+		//Add javascript for Add/Delete Users
+		//Add "Add New OwnerUser" jQuery UI dialog & functionality
+		//  - Extract to separate partial view & js file/fns in Site.js (for use in AddDraft page)
+		//Eliminate need for Owner table (yuck)
+		//New CssClass SQL table?
 					<div class="league-owner-entry">
 						<div class="league-owner">
 							@Html.DropDownListFor(o => ownerUser.UserId, Model.GetActiveOwnerUsers(), new { @class = "lo-select" })
@@ -67,12 +77,9 @@
 							<a href="#" class="league-add-owner" tabindex="-1"><img src="../../Content/images/plus.png" alt="Add Owner" /></a>
 						</div>
 					</div>
-				}
+	}
 			</div>
-			@using (Html.BeginForm("AddLeague", "Admin"))
-			{
 				<div class="page-section"><button class="submit-league" type="submit">Submit</button></div>
-			}
 		</div>
 	</div>
 </div>

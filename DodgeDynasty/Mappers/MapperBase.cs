@@ -6,19 +6,25 @@ using DodgeDynasty.Models;
 
 namespace DodgeDynasty.Mappers
 {
-	public class MapperBase<T> : ModelBase where T : new()
+	public class MapperBase<T> : ModelBase where T : class, new()
 	{
 		public T Model { get; set; }
-
-		public virtual T GetModel()
+		
+		public virtual T GetModel(T model)
 		{
-			Model = new T();
+			Model = model ?? new T();
 			using (HomeEntity = new Entities.HomeEntity())
 			{
 				PopulateModel();
 			}
 			return Model;
 		}
+
+		public virtual T GetModel()
+		{
+			return GetModel((T)null);
+		}
+
 		public virtual void PopulateModel() { }
 
 		public virtual void UpdateEntity(T model)
