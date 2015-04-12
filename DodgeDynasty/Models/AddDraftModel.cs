@@ -25,16 +25,16 @@ namespace DodgeDynasty.Models
 		[Display(Name = "Draft Year")]
 		[Required]
 		public int DraftYear { get; set; }
-		[Display(Name = "Number of Owners")]
+		[Display(Name = "Owners")]
 		[Required]
 		public int NumOwners { get; set; }
-		[Display(Name = "Number of Rounds")]
+		[Display(Name = "Rounds")]
 		[Required]
 		public int NumRounds { get; set; }
-		[Display(Name = "Number of Keepers")]
+		[Display(Name = "Keepers")]
 		[Required]
 		public int NumKeepers { get; set; }
-		[Display(Name = "Draft Format")]
+		[Display(Name = "Format")]
 		[Required]
 		public string Format { get; set; }
 		[Display(Name = "Active?")]
@@ -56,6 +56,13 @@ namespace DodgeDynasty.Models
 			draftFormats.Keys.ToList().ForEach(prop=>
 				items.Add(new SelectListItem() { Text=draftFormats[prop], Value=prop }));
 			return items;
+		}
+
+		public List<SelectListItem> GetLeagueOwnerUserItems(OwnerUser ownerUser=null)
+		{
+			var selectedOwnerId = (ownerUser==null) ? string.Empty : ownerUser.OwnerId.ToString();
+			return Utilities.GetListItems<OwnerUser>(LeagueOwnerUsers.OrderBy(u => u.FirstName).ToList(),
+				u => u.FullName, u => u.OwnerId.ToString(), true, selectedOwnerId);
 		}
 	}
 }

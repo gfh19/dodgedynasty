@@ -33,5 +33,21 @@ namespace DodgeDynasty.Models
 				LastUpdateTimestamp = o.LastUpdateTimestamp
 			};
 		}
+
+		public static List<OwnerUser> GetOwnerUsers(List<LeagueOwner> leagueOwners, List<Owner> owners,	List<User> users,
+			int? leagueId = null)
+		{
+			var leagueOwnerUsers = (leagueId == null)
+				? users.Select(u => new { u.UserId }) 
+				: leagueOwners.Where(lo => lo.LeagueId == leagueId).Select(lo => new { lo.UserId });
+
+			var ownerUsers = from o in owners
+							 join u in users on o.UserId equals u.UserId
+							 join lo in leagueOwnerUsers on o.UserId equals lo.UserId
+							 select OwnerUserMapper.GetOwnerUser(o, u,
+								leagueOwners.Where(l => l.UserId == u.UserId)
+								.OrderByDescending(l => l.IsActive).FirstOrDefault());
+			return ownerUsers.ToList();
+		}
 	}
 }

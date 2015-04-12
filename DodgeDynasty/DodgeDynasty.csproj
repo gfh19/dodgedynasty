@@ -279,7 +279,9 @@
     <Content Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\AddDraft.js" />
     <Content Include="Scripts\AddLeague.js" />
+    <Content Include="Scripts\LeagueOwnerUser.js" />
     <Content Include="Scripts\BestAvail.js" />
     <Content Include="Scripts\lib\bootstrap\config.json" />
     <Content Include="Scripts\lib\bootstrap\js\bootstrap.js" />

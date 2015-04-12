@@ -14,7 +14,8 @@ namespace DodgeDynasty.Mappers
 	{
 		public override void PopulateModel()
 		{
-			Model.OwnerUsers = GetOwnerUsers();
+			Model.OwnerUsers = OwnerUserMapper.GetOwnerUsers(HomeEntity.LeagueOwners.ToList(), HomeEntity.Owners.ToList(), 
+				HomeEntity.Users.ToList());
 			Model.ActiveOwnerUsers = Model.OwnerUsers.Where(o => o.IsActive).ToList();
 			var numOwners = Int32.Parse(
 				ConfigurationManager.AppSettings[Constants.AppSettings.DefaultNumOwners] ?? "4");
@@ -61,17 +62,6 @@ namespace DodgeDynasty.Mappers
 				HomeEntity.LeagueOwners.AddObject(owner);
 			}
 			HomeEntity.SaveChanges();
-		}
-
-		private List<OwnerUser> GetOwnerUsers()
-		{
-			var leagueOwners = HomeEntity.LeagueOwners.ToList();
-			var ownerUsers = from o in HomeEntity.Owners.AsEnumerable()
-							 join u in HomeEntity.Users.AsEnumerable() on o.UserId equals u.UserId
-							 select OwnerUserMapper.GetOwnerUser(o, u,
-								leagueOwners.Where(l => l.UserId == l.UserId)
-								.OrderByDescending(l => l.IsActive).FirstOrDefault());
-			return ownerUsers.ToList();
 		}
 	}
 }

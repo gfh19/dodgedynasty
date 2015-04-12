@@ -10,7 +10,7 @@ namespace DodgeDynasty.Mappers
 	{
 		public T Model { get; set; }
 		
-		public virtual T GetModel(T model)
+		public T GetModel(T model)
 		{
 			Model = model ?? new T();
 			using (HomeEntity = new Entities.HomeEntity())
@@ -20,14 +20,14 @@ namespace DodgeDynasty.Mappers
 			return Model;
 		}
 
-		public virtual T GetModel()
+		public T GetModel()
 		{
 			return GetModel((T)null);
 		}
 
 		public virtual void PopulateModel() { }
 
-		public virtual void UpdateEntity(T model)
+		public void UpdateEntity(T model)
 		{
 			using (HomeEntity = new Entities.HomeEntity())
 			{

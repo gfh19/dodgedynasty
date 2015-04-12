@@ -5,94 +5,81 @@
 }
 @section scripts {
 	<script type="text/javascript" src="../../Scripts/AddDraft.js"></script>
+	<script type="text/javascript" src="../../Scripts/LeagueOwnerUser.js"></script>
 }
 <div id="addDraft">
 	<script type="text/javascript">
 		$(function () {
-			//initAddDraft();
+			initAddDraft();
 		});
 	</script>
-	<div class="large-page-header">Add New Draft</div>
+	<div class="large-page-header">Add New Draft
+		<div class="header-subtext">@Model.LeagueName</div>
+	</div>
 	@{ Html.EnableClientValidation(true); }
 	@Html.ValidationSummary(false)
 	<div class="error-messages">
-		<div class="blank-date-msg invalid hide-yo-wives">Draft Date cannot be left blank.</div>
-		<div class="dup-owner-msg invalid hide-yo-wives">Owner selected more than once.</div>
+		<div class="blank-owner-msg invalid hide-yo-wives">Error - Owner cannot be left blank.</div>
+		<div class="dup-owner-msg invalid hide-yo-wives">Error - Owner selected more than once.</div>
 	</div>
 	<div class="page-entries">
-		@using (Html.BeginForm("ValidateDraft", "Admin", FormMethod.Post, new { id = "draftForm" }))
+		@using (Html.BeginForm("AddDraft", "Admin", FormMethod.Post, new { id = "draftForm" }))
 		{
 			<div>
+				@Html.HiddenFor(m => m.LeagueId)
 				<div>
-					@Html.LabelFor(m => m.DraftDate): @Html.TextBoxFor(m => m.DraftDate, new { @class = "draft-date", type = "date", maxLength = "10" })
-					@Html.TextBoxFor(m => m.DraftTime, new { @class = "draft-time", type = "time", maxLength = "10" })
+					@Html.LabelFor(m => m.DraftDate): @Html.TextBoxFor(m => m.DraftDate, new { @class = "add-draft-date", type = "date", maxLength = "10" })
+					@Html.TextBoxFor(m => m.DraftTime, new { @class = "add-draft-time", type = "time", maxLength = "10" })
 				</div>
 				<div>@Html.ValidationMessageFor(m => m.DraftDate)</div>
 				<div>@Html.ValidationMessageFor(m => m.DraftTime)</div>
 				<div>
-					@Html.LabelFor(m => m.DraftYear): @Html.TextBoxFor(m => m.DraftYear, new { @class = "draft-year", maxLength = "4" })
-					@Html.LabelFor(m => m.DraftLocation): @Html.TextBoxFor(m => m.DraftLocation, new { @class = "draft-location", maxLength = "50" })
+					@Html.LabelFor(m => m.DraftYear): @Html.TextBoxFor(m => m.DraftYear, new { @class = "add-draft-year", maxLength = "4" })
+					@Html.LabelFor(m => m.DraftLocation): @Html.TextBoxFor(m => m.DraftLocation, new { @class = "add-draft-location", maxLength = "50" })
 				</div>
 				<div>@Html.ValidationMessageFor(m => m.DraftYear)</div>
 				<div>@Html.ValidationMessageFor(m => m.DraftLocation)</div>
 				<div>
-					@Html.LabelFor(m => m.Format): @Html.DropDownListFor(m => m.Format, Model.GetDraftFormatItems(), new { @class = "draft-format" })
+					@Html.LabelFor(m => m.NumOwners): @Html.TextBoxFor(m => m.NumOwners, new { @class = "ad-num-owners" })
+					@Html.LabelFor(m => m.NumRounds): @Html.TextBoxFor(m => m.NumRounds, new { @class = "ad-num-rounds" })
+					@Html.LabelFor(m => m.NumKeepers): @Html.TextBoxFor(m => m.NumKeepers, new { @class = "ad-num-keepers" })
+					@Html.LabelFor(m => m.Format): @Html.DropDownListFor(m => m.Format, Model.GetDraftFormatItems(), new { @class = "add-draft-format" })
 				</div>
+				<div>@Html.ValidationMessageFor(m => m.NumOwners)</div>
+				<div>@Html.ValidationMessageFor(m => m.NumRounds)</div>
+				<div>@Html.ValidationMessageFor(m => m.NumKeepers)</div>
 				<div>@Html.ValidationMessageFor(m => m.Format)</div>
 			</div>
 		}
-		@*<div class="page-section">
-				<div class="copy-lo-entry hide-yo-wives">
-					<div class="league-owner">
-						@Html.DropDownList("PlayerId", Model.GetActiveOwnerUsers(), new { @class = "lo-select" })
-					</div>
-					<div class="lo-team-name">
-						@Html.TextBox("TeamName", "", new { @class = "lo-team-input" })
-					</div>
-					<div class="lo-active">
-						@Html.CheckBox("IsActive", new { @class = "lo-active-chkbx", @checked = "checked" })
-					</div>
-					<div class="owner-controls">
-						<a href="#" class="league-remove-owner" tabindex="-1"><img src="../../Content/images/minus.png" alt="Remove Owner" /></a>
-						<a href="#" class="league-add-owner" tabindex="-1"><img src="../../Content/images/plus.png" alt="Add Owner" /></a>
-					</div>
+		<div class="page-section">
+			<div class="copy-lo-entry hide-yo-wives">
+				<div class="league-owner">
+					@Html.DropDownList("UserId", Model.GetLeagueOwnerUserItems(), new { @class = "lo-select" })
 				</div>
-				<div class="league-owners">
-					<div class="lo-entry-header">
-						<label class="lo-owner-header">League Owners</label>
-						<label class="lo-teamname-header">Team Name</label>
-						<label class="lo-active-header">Active?</label>
-						<label class="lo-controls-header"> </label>
-					</div>
-					@foreach (var ownerUser in Model.LeagueOwnerUsers)
-					{
-						//TODO:
-						//Add league owners HTML markup
-						//Add OwnerUser functionality to AddLeagueModel, possibly pull out of DraftModel and share between both
-						//  (i.e. OwnerUserMapper/Model?)
-						//Add javascript for Add/Delete Users
-						//Add "Add New OwnerUser" jQuery UI dialog & functionality
-						//  - Extract to separate partial view & js file/fns in Site.js (for use in AddDraft page)
-						//Eliminate need for Owner table (yuck)
-						//New CssClass SQL table?
-						<div class="league-owner-entry">
-							<div class="league-owner">
-								@Html.DropDownListFor(o => ownerUser.UserId, Model.GetActiveOwnerUsers(), new { @class = "lo-select" })
-							</div>
-							<div class="lo-team-name">
-								@Html.TextBoxFor(o => ownerUser.TeamName, new { @class = "lo-team-input" })
-							</div>
-							<div class="lo-active">
-								@Html.CheckBoxFor(o => ownerUser.IsActive, new { @class = "lo-active-chkbx", @checked = "checked" })
-							</div>
-							<div class="owner-controls">
-								<a href="#" class="league-remove-owner" tabindex="-1"><img src="../../Content/images/minus.png" alt="Remove Owner" /></a>
-								<a href="#" class="league-add-owner" tabindex="-1"><img src="../../Content/images/plus.png" alt="Add Owner" /></a>
-							</div>
+				<div class="owner-controls">
+					<a href="#" class="league-remove-owner" tabindex="-1"><img src="../../Content/images/minus.png" alt="Remove Owner" /></a>
+					<a href="#" class="league-add-owner" tabindex="-1"><img src="../../Content/images/plus.png" alt="Add Owner" /></a>
+				</div>
+			</div>
+			<div class="league-owners">
+				<div class="lo-entry-header">
+					<label class="lo-owner-header">Draft Owners</label>
+					<label class="lo-controls-header"> </label>
+				</div>
+				@foreach (var ownerUser in Model.DraftOwnerUsers)
+				{
+					<div class="league-owner-entry">
+						<div class="league-owner">
+							@Html.DropDownListFor(o => ownerUser.UserId, Model.GetLeagueOwnerUserItems(ownerUser), new { @class = "lo-select" })
 						</div>
-					}
-				</div>
-				<div class="page-section"><button class="submit-league" type="submit">Submit</button></div>
-			</div>*@
+						<div class="owner-controls">
+							<a href="#" class="league-remove-owner" tabindex="-1"><img src="../../Content/images/minus.png" alt="Remove Owner" /></a>
+							<a href="#" class="league-add-owner" tabindex="-1"><img src="../../Content/images/plus.png" alt="Add Owner" /></a>
+						</div>
+					</div>
+				}
+			</div>
+			<div class="page-section"><button class="submit-draft" type="submit">Submit</button></div>
+		</div>
 	</div>
 </div>

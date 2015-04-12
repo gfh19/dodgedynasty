@@ -33,6 +33,11 @@ body
 	font-size: 24px;
 }
 
+.page-header .header-subtext, .large-page-header .header-subtext {
+	font-size: 16px;
+	font-weight: normal;
+}
+
 .page-entries {
 	text-align: center;
 }
@@ -1638,19 +1643,21 @@ span.player-select
 #addDraft label {
 	display: inline-block;
 }
-.draft-date {
+.add-draft-date {
 	width: 125px;
 }
-.draft-time {
+.add-draft-time {
 	width: 100px;
 }
-.draft-year {
+.add-draft-year {
 	width: 50px;
 }
-.draft-location {
+.add-draft-location {
 	width: 150px;
 }
-
+.ad-num-owners, .ad-num-rounds, .ad-num-keepers {
+	width: 30px;
+}
 
 
 

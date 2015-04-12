@@ -42,3 +42,14 @@ UPDATE lo
 SET lo.CssClass = u.UserName
 FROM dbo.LeagueOwner lo
 INNER JOIN dbo.[User] u ON lo.UserId = u.UserId
+
+
+/* 4/12/15 */
+
+ALTER TABLE dbo.[Draft]
+ADD [AddTimestamp] [datetime] NOT NULL
+GO
+
+UPDATE Draft
+SET AddTimestamp = LastUpdateTimestamp
+GO
