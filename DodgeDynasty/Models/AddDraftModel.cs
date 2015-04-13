@@ -48,6 +48,7 @@ namespace DodgeDynasty.Models
 		public int LeagueId { get; set; }
 		public string LeagueName { get; set; }
 		public List<OwnerUser> LeagueOwnerUsers { get; set; }
+		public int DraftId { get; set; }
 
 		public List<SelectListItem> GetDraftFormatItems()
 		{

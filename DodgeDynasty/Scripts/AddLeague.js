@@ -4,9 +4,20 @@ function initAddLeague() {
 	displayLinks();
 	bindAddOwnerLinks();
 	bindRemoveOwnerLinks();
+	bindSelectOwner();
 	bindSubmitLeague();
 	$('html').keydown(preventBackspaceNav);
 	$('html').keypress(preventBackspaceNav);
+}
+
+function bindSelectOwner() {
+	var loSelects = $(".lo-select");
+	$.each(loSelects, function (index, loSelect) {
+		$(loSelect).change(function (e) {
+			var loEntry = $(loSelect).closest(".league-owner-entry");
+			$(".lo-team-input", loEntry).val("Team " + $("option:selected", loSelect).text());
+		});
+	})
 }
 
 function bindSubmitLeague() {
@@ -91,7 +102,8 @@ function resetValidations() {
 }
 
 function updateAddLeagueModel(addLeagueModel) {
-	ajaxPost(addLeagueModel, "Admin/AddLeague", function () {
-		alert("League created");
+	ajaxPost(addLeagueModel, "Admin/AddLeague", function (data) {
+		var response = JSON.parse(data);
+		location.href = baseURL + "Admin/AddDraft/" + response.leagueId;
 	}, null, null, true);
 }

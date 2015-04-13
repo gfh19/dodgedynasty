@@ -52,6 +52,8 @@ namespace DodgeDynasty.Mappers
 			HomeEntity.Drafts.AddObject(draft);
 			HomeEntity.SaveChanges();
 
+			model.DraftId = draft.DraftId;
+
 			foreach (var ownerUser in model.DraftOwnerUsers)
 			{
 				DraftOwner owner = new DraftOwner

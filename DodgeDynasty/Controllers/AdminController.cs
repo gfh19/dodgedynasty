@@ -14,10 +14,15 @@ namespace DodgeDynasty.Controllers
 	{
 		[HttpGet]
 		[AdminAccess]
-		public ActionResult SetupDraft()
+		public ActionResult SetupDraft(string id)
 		{
 			DraftSetupModel model = new DraftSetupModel();
-			model.GetDraftInfo();
+			int? draftId = null;
+			if (!string.IsNullOrEmpty(id))
+			{
+				draftId = Int32.Parse(id);
+			}
+			model.GetDraftInfo(draftId);
 			return View(model);
 		}
 
@@ -102,8 +107,11 @@ namespace DodgeDynasty.Controllers
 				return View(mapper.GetModel(addLeagueModel));
 			}
 			mapper.UpdateEntity(addLeagueModel);
-			return View(mapper.GetModel());
+			//return RedirectToAction(Constants.Views.AddDraft, new { id = mapper.LeagueId });
+			return Json(new { leagueId = addLeagueModel.LeagueId });
 		}
+
+
 
 		[HttpPost]
 		[AdminAccess]
@@ -132,7 +140,8 @@ namespace DodgeDynasty.Controllers
 				return View(mapper.GetModel(model));
 			}
 			mapper.UpdateEntity(model);
-			return View(mapper.GetModel());
+			//return RedirectToAction(Constants.Views.SetupDraft, new { id = mapper.DraftId });
+			return Json(new { draftId = model.DraftId });
 		}
 	}
 }

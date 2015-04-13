@@ -37,6 +37,8 @@ namespace DodgeDynasty.Mappers
 			HomeEntity.Leagues.AddObject(league);
 			HomeEntity.SaveChanges();
 
+			model.LeagueId = league.LeagueId;
+
 			foreach (var lo in model.LeagueOwnerUsers)
 			{
 				var ou = (from o in HomeEntity.Owners.AsEnumerable()

@@ -53,3 +53,5 @@ GO
 UPDATE Draft
 SET AddTimestamp = LastUpdateTimestamp
 GO
+
+/*** ! ADD ForeignKey Constraint to the LeagueOwner table for LeagueId!!! ***/

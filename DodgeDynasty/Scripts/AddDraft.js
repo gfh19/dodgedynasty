@@ -81,7 +81,8 @@ function resetValidations() {
 }
 
 function updateAddDraftModel(addDraftModel) {
-	ajaxPost(addDraftModel, "Admin/AddDraft", function () {
-		alert("League created");
+	ajaxPost(addDraftModel, "Admin/AddDraft", function (data) {
+		var response = JSON.parse(data);
+		location.href = baseURL + "Admin/SetupDraft/" + response.draftId;
 	}, null, null, true);
 }

@@ -43,6 +43,9 @@ namespace DodgeDynasty.Shared
 			public const string SetupRank = "SetupRank";
 			public const string RankingsList = "RankingsList";
 			public const string CurrentDraftPickPartial = "CurrentDraftPickPartial";
+			public const string AddLeague = "AddLeague";
+			public const string AddDraft = "AddDraft";
+			public const string SetupDraft = "SetupDraft";
 		}
 	}
 }

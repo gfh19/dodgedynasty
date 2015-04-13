@@ -62,7 +62,7 @@ namespace DodgeDynasty.Models
 			return Drafts.First(d => d.DraftId == DraftId);
 		}
 
-		public void GetDraftInfo()
+		public void GetDraftInfo(int? draftId = null)
 		{
 			if (Drafts == null)
 			{
@@ -79,16 +79,20 @@ namespace DodgeDynasty.Models
 					DraftRanks = HomeEntity.DraftRanks.ToList();
 					Ranks = HomeEntity.Ranks.ToList();
 
-					SetCurrentDraftInfo();
+					SetCurrentDraftInfo(draftId);
 				}
 			}
 		}
 
-		private int? SetCurrentDraft()
+		private int? SetCurrentDraft(int? draftId)
 		{
 			var userName = Utilities.GetLoggedInUserName();
 			var user = HomeEntity.Users.FirstOrDefault(u => u.UserName == userName);
 			var owner = HomeEntity.Owners.FirstOrDefault(o => o.UserId == user.UserId);
+			if (draftId != null)
+			{
+				DraftId = draftId.Value;
+			}
 			if (DraftId == null)
 			{
 				var ownerDraftIds = HomeEntity.DraftOwners.Where(o => o.OwnerId == owner.OwnerId).Select(o => o.DraftId).ToList();
@@ -103,9 +107,9 @@ namespace DodgeDynasty.Models
 			return DraftId;
 		}
 
-		private void SetCurrentDraftInfo()
+		private void SetCurrentDraftInfo(int? draftId = null)
 		{
-			DraftId = SetCurrentDraft();
+			DraftId = SetCurrentDraft(draftId);
 
 			DraftRounds = HomeEntity.DraftRounds.Where(d => d.DraftId == DraftId).ToList();
 			DraftOrders = HomeEntity.DraftOrders.Where(d => d.DraftId == DraftId).ToList();

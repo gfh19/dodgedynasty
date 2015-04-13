@@ -22,7 +22,7 @@
 		<div class="dup-owner-msg invalid hide-yo-wives">Error - Owner selected more than once.</div>
 	</div>
 	<div class="page-entries">
-			@using (Html.BeginForm("ValidateLeague", "Admin", FormMethod.Post, new { id="leagueForm" }))
+			@using (Html.BeginForm("AddLeague", "Admin", FormMethod.Post, new { id="leagueForm" }))
    {
 		<div>
 			@Html.LabelFor(m => m.LeagueName): @Html.TextBoxFor(m => m.LeagueName, new { @class = "league-name", maxLength = "50", autofocus = "autofocus" })

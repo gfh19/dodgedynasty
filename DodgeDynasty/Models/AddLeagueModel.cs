@@ -16,6 +16,7 @@ namespace DodgeDynasty.Models
 		[Required]
 		public string LeagueName { get; set; }
 		public List<OwnerUser> LeagueOwnerUsers { get; set; }
+		public int LeagueId { get; set; }
 
 		public List<OwnerUser> OwnerUsers { get; set; }
 		public List<OwnerUser> ActiveOwnerUsers { get; set; }
