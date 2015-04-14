@@ -25,7 +25,7 @@ namespace DodgeDynasty.Mappers
 			return GetModel((T)null);
 		}
 
-		public virtual void PopulateModel() { }
+		protected virtual void PopulateModel() { }
 
 		public void UpdateEntity(T model)
 		{
@@ -34,6 +34,6 @@ namespace DodgeDynasty.Mappers
 				DoUpdate(model);
 			}
 		}
-		public virtual void DoUpdate(T model) { }
+		protected virtual void DoUpdate(T model) { }
 	}
 }

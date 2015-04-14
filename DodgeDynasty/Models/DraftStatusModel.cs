@@ -6,8 +6,10 @@ using DodgeDynasty.Entities;
 
 namespace DodgeDynasty.Models
 {
-	public class ModelBase
+	public class DraftStatusModel
 	{
-		protected HomeEntity HomeEntity { get; set; }
+		public int DraftId { get; set; }
+		public bool? IsActive { get; set; }
+		public bool? IsComplete { get; set; }
 	}
 }

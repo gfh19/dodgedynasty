@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
+using DodgeDynasty.Models;
 
 namespace DodgeDynasty.Shared
 {
@@ -70,6 +71,12 @@ namespace DodgeDynasty.Shared
 		public static bool IsUserLoggedIn()
 		{
 			return System.Web.HttpContext.Current.User != null && System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
+		}
+
+		public static bool IsUserAdmin()
+		{
+			LoginModel model = new LoginModel { UserName = Utilities.GetLoggedInUserName() };
+			return model.IsUserAdmin();
 		}
 
 		public static string JsonEncode(string val)

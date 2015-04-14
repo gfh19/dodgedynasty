@@ -32,6 +32,12 @@ namespace DodgeDynasty.Shared
 			public const int Admin = 1;
 		}
 
+		public static class QS
+		{
+			public const string IsActive = "isActive";
+			public const string IsComplete = "isComplete";
+		}
+
 		public static class Views
 		{
 			public const string Display = "Display";
@@ -46,6 +52,7 @@ namespace DodgeDynasty.Shared
 			public const string AddLeague = "AddLeague";
 			public const string AddDraft = "AddDraft";
 			public const string SetupDraft = "SetupDraft";
+			public const string ActivateDraft = "ActivateDraft";
 		}
 	}
 }

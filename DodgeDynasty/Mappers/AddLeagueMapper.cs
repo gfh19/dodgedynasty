@@ -12,7 +12,7 @@ namespace DodgeDynasty.Mappers
 {
 	public class AddLeagueMapper<T> : MapperBase<T> where T : AddLeagueModel, new()
 	{
-		public override void PopulateModel()
+		protected override void PopulateModel()
 		{
 			Model.OwnerUsers = OwnerUserMapper.GetOwnerUsers(HomeEntity.LeagueOwners.ToList(), HomeEntity.Owners.ToList(), 
 				HomeEntity.Users.ToList());
@@ -26,7 +26,7 @@ namespace DodgeDynasty.Mappers
 			}
 		}
 
-		public override void DoUpdate(T model)
+		protected override void DoUpdate(T model)
 		{
 			League league = new Entities.League
 			{

@@ -97,8 +97,15 @@ namespace DodgeDynasty.Models
 			{
 				var ownerDraftIds = HomeEntity.DraftOwners.Where(o => o.OwnerId == owner.OwnerId).Select(o => o.DraftId).ToList();
 				var ownerDrafts = Drafts.Where(d => ownerDraftIds.Contains(d.DraftId))
-					.OrderByDescending(o=>o.IsActive).ThenBy(o=>o.IsComplete).ThenByDescending(o=>o.DraftDate).ToList();
-				DraftId = ownerDrafts.Select(d=>d.DraftId).FirstOrDefault();
+					.OrderByDescending(o=>o.IsActive).ThenBy(o=>o.IsComplete).ThenBy(o=>o.DraftDate).ToList();
+				if (ownerDrafts.Any(o => !o.IsComplete))
+				{
+					DraftId = ownerDrafts.Select(d => d.DraftId).FirstOrDefault();
+				}
+				else
+				{
+					DraftId = ownerDrafts.Select(d => d.DraftId).Last();
+				}
 			}
 			CurrentDraft = Drafts.First(d => d.DraftId == DraftId);
 			CurrentLeagueOwners = LeagueOwners.Where(lo => lo.LeagueId == CurrentDraft.LeagueId).ToList();
@@ -286,12 +293,6 @@ namespace DodgeDynasty.Models
 				return "true";
 			}
 			return "false";
-		}
-
-		public void GenerateDraft()
-		{
-			GetCurrentDraft();
-			throw new NotImplementedException();
 		}
 
 		public DateTime GetCurrentTimeEastern(DateTime utcTime)

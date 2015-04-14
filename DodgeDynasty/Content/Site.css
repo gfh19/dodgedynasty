@@ -7,13 +7,16 @@
 
 body
 {
-	background-color: #fff;
 	border-top: solid 6px #000;
 	color: #333;
 	font-size: 0.9em;
 	font-family: "Segoe UI" , Verdana, Helvetica, Sans-Serif;
 	margin: 0;
 	padding: 0;
+}
+
+header {
+	background-color: #fff;
 }
 
 .content-width {
@@ -25,8 +28,11 @@ body
 	text-align: center;
 	margin-top: 18px;
 	margin-bottom: 12px;
-	font-size: 16px;
 	font-weight: bold;
+}
+
+.page-header {
+	font-size: 16px;
 }
 
 .large-page-header {
@@ -1660,6 +1666,32 @@ span.player-select
 }
 
 
+/* Activate Draft
+----------------------------------------------------------*/
+.act-draft {
+	display: inline-block;
+	width: 240px;
+	text-align: right;
+}
+
+.act-draft-links {
+	display: inline-block;
+	font-size: 12px;
+	font-weight: bold;
+	width: 240px;
+	text-align: left;
+}
+
+.act-draft-links a {
+	margin-left: 5px;
+}
+
+.act-draft-links .activate {
+	color: #10B910;	/* green */
+}
+.act-draft-links .deactivate {
+	color: #FF0000;	/* red */
+}
 
 
 /* RESPONSIVE STYLES

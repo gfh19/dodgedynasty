@@ -11,7 +11,7 @@ namespace DodgeDynasty.Mappers
 	{
 		public int LeagueId { get; set; }
 
-		public override void PopulateModel()
+		protected override void PopulateModel()
 		{
 			Model.LeagueId = LeagueId;
 			var league = HomeEntity.Leagues.AsEnumerable().Where(o => o.LeagueId == LeagueId).FirstOrDefault();
@@ -31,7 +31,7 @@ namespace DodgeDynasty.Mappers
 			Model.DraftOwnerUsers = Model.LeagueOwnerUsers;
 		}
 
-		public override void DoUpdate(T model)
+		protected override void DoUpdate(T model)
 		{
 			Draft draft = new Draft {
 				LeagueId = model.LeagueId,

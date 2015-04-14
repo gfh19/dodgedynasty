@@ -107,7 +107,6 @@ namespace DodgeDynasty.Controllers
 				return View(mapper.GetModel(addLeagueModel));
 			}
 			mapper.UpdateEntity(addLeagueModel);
-			//return RedirectToAction(Constants.Views.AddDraft, new { id = mapper.LeagueId });
 			return Json(new { leagueId = addLeagueModel.LeagueId });
 		}
 
@@ -140,8 +139,25 @@ namespace DodgeDynasty.Controllers
 				return View(mapper.GetModel(model));
 			}
 			mapper.UpdateEntity(model);
-			//return RedirectToAction(Constants.Views.SetupDraft, new { id = mapper.DraftId });
 			return Json(new { draftId = model.DraftId });
+		}
+
+		[HttpGet]
+		[AdminAccess]
+		public ActionResult ActivateDraft()
+		{
+			var mapper = new ActivateDraftMapper<ActivateDraftModel>();
+			return View(mapper.GetModel());
+		}
+
+		[HttpGet]
+		[AdminAccess]
+		public ActionResult SetDraftStatus(string id)
+		{
+			var mapper = new DraftStatusMapper<DraftStatusModel>(id, 
+				Request.QueryString[Constants.QS.IsActive], Request.QueryString[Constants.QS.IsComplete]);
+			mapper.UpdateEntity(mapper.Model);
+			return RedirectToAction(Constants.Views.ActivateDraft);
 		}
 	}
 }

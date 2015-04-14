@@ -1,0 +1,53 @@
+﻿@model DodgeDynasty.Models.ActivateDraftModel
+
+@{
+	ViewBag.Title = "Manage Leagues";
+}
+@section scripts {
+}
+<div id="activateDraft">
+	<script type="text/javascript">
+		$(function () {
+		});
+	</script>
+	<div class="page-entries">
+		<div class="page-section">
+			<div class="page-header">Active Drafts</div>
+			@foreach (var draft in Model.ActiveDrafts)
+			{
+				<div class="page-entry">
+					<div class="act-draft">@draft.DraftYear @draft.LeagueName</div>
+					<div class="act-draft-links">
+						<a class="deactivate" href="SetDraftStatus/@draft.DraftId?isActive=false">&lt;Deactivate&gt;</a>
+					</div>
+				</div>
+			}
+		</div>
+		<div class="page-section">
+			<div class="page-header">Scheduled Drafts</div>
+			@foreach (var draft in Model.ScheduledDrafts)
+			{
+				<div class="page-entry">
+					<div class="act-draft">@draft.DraftYear @draft.LeagueName</div>
+					<div class="act-draft-links">
+						<a class="activate" href="SetDraftStatus/@draft.DraftId?isActive=true">&lt;Activate&gt;</a>
+						<a class ="mark-complete" href="SetDraftStatus/@draft.DraftId?isComplete=true">&lt;Mark Complete&gt;</a>
+					</div>
+				</div>
+			}
+		</div>
+		<div class="page-section">
+			<div class="page-header">Complete Drafts</div>
+			@foreach (var draft in Model.CompleteDrafts)
+			{
+				<div class="page-entry">
+					<div class="act-draft">@draft.DraftYear @draft.LeagueName</div>
+					<div class="act-draft-links">
+						<a class="mark-incomplete" href="SetDraftStatus/@draft.DraftId?isComplete=false">&lt;Mark Incomplete&gt;</a>
+					</div>
+				</div>
+			}
+		</div>
+	</div>
+
+</div>

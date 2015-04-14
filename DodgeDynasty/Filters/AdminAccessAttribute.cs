@@ -13,8 +13,7 @@ namespace DodgeDynasty.Filters
 	{
 		public override void OnActionExecuting(ActionExecutingContext filterContext)
 		{
-			LoginModel model = new LoginModel { UserName = Utilities.GetLoggedInUserName() };
-			if (!model.IsUserAdmin())
+			if (!Utilities.IsUserAdmin())
 			{
 				filterContext.Result = new RedirectToRouteResult(
 					new RouteValueDictionary(new { action = "Unauthorized", controller = "Shared" }));

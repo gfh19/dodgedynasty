@@ -169,11 +169,5 @@ namespace DodgeDynasty.Controllers
 			model.GetCurrentDraft();
 			return PartialView(Constants.Views.CurrentDraftPickPartial, model);
 		}
-
-		public void GenerateDraft()
-		{
-			DraftModel model = new DraftModel(_draftId);
-			model.GenerateDraft();
-		}
 	}
 }
