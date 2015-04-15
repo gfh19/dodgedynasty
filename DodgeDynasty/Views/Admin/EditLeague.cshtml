@@ -1,10 +1,10 @@
 ﻿@model DodgeDynasty.Models.LeagueModel
 
 @{
-	ViewBag.Title = "Add League";
+	ViewBag.Title = "Edit League";
 }
 @section scripts {
-	<script type="text/javascript" src="../../Scripts/AddLeague.js"></script>
+	<script type="text/javascript" src="../../Scripts/EditLeague.js"></script>
 	<script type="text/javascript" src="../../Scripts/AddEditLeague.js"></script>
 	<script type="text/javascript" src="../../Scripts/LeagueOwnerUser.js"></script>
 }
@@ -14,7 +14,7 @@
 			initAddEditLeague();
 		});
 	</script>
-	<div class="large-page-header">Add New League</div>
+	<div class="large-page-header">Edit League</div>
 	@{ Html.EnableClientValidation(true); }
 	@Html.ValidationSummary(false)
 	<div class="error-messages">
@@ -23,8 +23,9 @@
 		<div class="dup-owner-msg invalid hide-yo-wives">Error - Owner selected more than once.</div>
 	</div>
 	<div class="page-entries">
-		@using (Html.BeginForm("AddLeague", "Admin", FormMethod.Post, new { id = "leagueForm" }))
+		@using (Html.BeginForm("EditLeague", "Admin", FormMethod.Post, new { id = "leagueForm" }))
 		{
+			@Html.HiddenFor(m => m.LeagueId, new { @class = "league-id" })
 			<div>
 				@Html.LabelFor(m => m.LeagueName): @Html.TextBoxFor(m => m.LeagueName, new { @class = "league-name", maxLength = "50", autofocus = "autofocus" })
 				<div>@Html.ValidationMessageFor(m => m.LeagueName)</div>
@@ -55,14 +56,10 @@
 				</div>
 				@foreach (var ownerUser in Model.LeagueOwnerUsers)
 				{
-					//TODO:
-					//Add "Add New OwnerUser" jQuery UI dialog & functionality
-					//  - Extract to separate partial view & js file/fns in Site.js (for use in AddDraft page)
-					//Eliminate need for Owner table (yuck)
-					//New CssClass SQL table?
 					<div class="league-owner-entry">
 						<div class="league-owner">
-							@Html.DropDownListFor(o => ownerUser.UserId, Model.GetActiveOwnerUsers(), new { @class = "lo-select" })
+							@Html.DropDownListFor(o => ownerUser.UserId, Model.GetActiveOwnerUsers(ownerUser.UserId.ToString()), 
+								new { @class = "lo-select" })
 						</div>
 						<div class="lo-team-name">
 							@Html.TextBoxFor(o => ownerUser.TeamName, new { @class = "lo-team-input" })

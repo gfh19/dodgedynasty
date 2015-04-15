@@ -10,7 +10,7 @@ using DodgeDynasty.Models.Types;
 
 namespace DodgeDynasty.Models
 {
-	public class AddLeagueModel
+	public class LeagueModel
 	{
 		[Display(Name = "League Name")]
 		[Required]
@@ -21,10 +21,10 @@ namespace DodgeDynasty.Models
 		public List<OwnerUser> OwnerUsers { get; set; }
 		public List<OwnerUser> ActiveOwnerUsers { get; set; }
 
-		public List<SelectListItem> GetActiveOwnerUsers()
+		public List<SelectListItem> GetActiveOwnerUsers(string userId=null)
 		{
 			return Utilities.GetListItems<OwnerUser>(ActiveOwnerUsers.OrderBy(u=>u.FirstName).ToList(),
-				u => u.FullName, u => u.OwnerId.ToString());
+				u => u.FullName, u => u.OwnerId.ToString(), true, userId);
 		}
 
 	}

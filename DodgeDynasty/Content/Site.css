@@ -1578,19 +1578,19 @@ span.player-select
 
 /* Manage/Add Leagues
 ----------------------------------------------------------*/
-#addLeague label
+#addEditLeague label
 {
 	font-size: 14px;
 	display: inline-block;
 }
 
-#addLeague page-entries
+#addEditLeague page-entries
 {
 	width: 350px;
 	margin: 0 auto;
 }
 
-#addLeague .num-input
+#addEditLeague .num-input
 {
 	width: 20px;
 }

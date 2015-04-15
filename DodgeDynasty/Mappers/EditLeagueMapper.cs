@@ -10,34 +10,36 @@ using DodgeDynasty.Shared;
 
 namespace DodgeDynasty.Mappers
 {
-	public class AddLeagueMapper<T> : MapperBase<T> where T : LeagueModel, new()
+	public class EditLeagueMapper<T> : MapperBase<T> where T : LeagueModel, new()
 	{
+		public string LeagueId { get; set; }
+
 		protected override void PopulateModel()
 		{
-			Model.OwnerUsers = OwnerUserMapper.GetOwnerUsers(HomeEntity.LeagueOwners.ToList(), HomeEntity.Owners.ToList(), 
-				HomeEntity.Users.ToList());
+			Model.LeagueId = Int32.Parse(LeagueId);
+			var owners = HomeEntity.Owners.ToList();
+			var users = HomeEntity.Users.ToList();
+			var allLeagueOwners = HomeEntity.LeagueOwners.ToList();
+			Model.OwnerUsers = OwnerUserMapper.GetOwnerUsers(allLeagueOwners, owners, users);
 			Model.ActiveOwnerUsers = Model.OwnerUsers.Where(o => o.IsActive).ToList();
-			var numOwners = Int32.Parse(
-				ConfigurationManager.AppSettings[Constants.AppSettings.DefaultNumOwners] ?? "4");
-			Model.LeagueOwnerUsers = new List<OwnerUser>();
-			for (int i = 0; i < numOwners; i++)
-			{
-				Model.LeagueOwnerUsers.Add(new OwnerUser { IsActive=true });
-			}
+			var leagueOwners = allLeagueOwners.Where(o=>o.LeagueId == Model.LeagueId).ToList();
+			Model.LeagueOwnerUsers = OwnerUserMapper.GetOwnerUsers(leagueOwners, owners, users, Model.LeagueId);
+			Model.LeagueName = HomeEntity.Leagues.Where(o => o.LeagueId == Model.LeagueId).FirstOrDefault().LeagueName;
 		}
 
 		protected override void DoUpdate(T model)
 		{
-			League league = new Entities.League
-			{
-				LeagueName = model.LeagueName,
-				AddTimestamp = DateTime.Now,
-				LastUpdateTimestamp = DateTime.Now
-			};
-			HomeEntity.Leagues.AddObject(league);
+			League league = HomeEntity.Leagues.Where(l=>l.LeagueId == model.LeagueId).FirstOrDefault();
+			league.LeagueName = model.LeagueName;
+			league.LastUpdateTimestamp = DateTime.Now;
 			HomeEntity.SaveChanges();
 
-			model.LeagueId = league.LeagueId;
+			var leagueOwners = HomeEntity.LeagueOwners.Where(o => o.LeagueId == model.LeagueId).ToList();
+
+			foreach (var oldOwner in leagueOwners)
+			{
+				HomeEntity.LeagueOwners.DeleteObject(oldOwner);
+			}
 
 			foreach (var lo in model.LeagueOwnerUsers)
 			{
@@ -54,7 +56,7 @@ namespace DodgeDynasty.Mappers
 				{
 					OwnerId = lo.OwnerId,
 					UserId = lo.UserId,
-					LeagueId = league.LeagueId,
+					LeagueId = model.LeagueId,
 					TeamName = lo.TeamName,
 					CssClass = lo.CssClass,
 					IsActive = lo.IsActive,

@@ -38,9 +38,24 @@ function bindRemoveOwnerLink(link) {
 	});
 }
 
+function bindSetOwnerSelects() {
+	var loSelects = $(".lo-select");
+	$.each(loSelects, function (index, loSelect) {
+		bindSetOwner(loSelect);
+	})
+}
+
+function bindSetOwner(select) {
+	$(select).change(function (e) {
+		var loEntry = $(select).closest(".league-owner-entry");
+		$(".lo-team-input", loEntry).val("Team " + $("option:selected", select).text());
+	});
+}
+
 function bindNewEntryLinks(entry) {
 	bindAddOwnerLink($(".league-add-owner", $(entry)));
 	bindRemoveOwnerLink($(".league-remove-owner", $(entry)));
+	bindSetOwner($(".lo-select", $(entry)));
 }
 
 function copyLeagueOwnerEntry() {
