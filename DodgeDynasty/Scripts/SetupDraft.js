@@ -2,7 +2,6 @@
 
  $(function () {
 	bindActionLinks();
-	setOwnerAutoComplete();
 });
 
 function bindActionLinks() {
@@ -13,6 +12,7 @@ function bindActionLinks() {
 	bindDeletePickLinks();
 	bindSubmitDraftPicks();
 	bindOwnerSelects($("select"));
+	bindDeletePlayers();
 };
 
 function bindAddRoundLinks() {
@@ -124,10 +124,10 @@ function bindAddPickLink(link) {
 		$(newPick).insertAfter(pick);
 		setNewPickNum(newPick, pickNum + 1);
 		clearNewPickAttributes(newPick);
-		if ($(".delete-pick-right", newPick).hasClass("hide-yo-kids")) {
-			$(".delete-pick-right", newPick).removeClass("hide-yo-kids");
+		if ($(".delete-pick-right", newPick).hasClass("hide-yo-husbands-too")) {
+			$(".delete-pick-right", newPick).removeClass("hide-yo-husbands-too");
 			if (pickNum != 1) {
-				$(".delete-pick-right", pick).removeClass("hide-yo-kids");
+				$(".delete-pick-right", pick).removeClass("hide-yo-husbands-too");
 			}
 		}
 		bindAddPickLink($(".add-pick-right", newPick));
@@ -152,7 +152,7 @@ function bindDeletePickLink(link) {
 		var roundPicks = $(pick).closest('.round-picks');
 		$(pick).remove();
 		if ($('.pick', roundPicks).length == 1) {
-			$(".delete-pick-right", $('.pick', roundPicks)).addClass("hide-yo-kids");
+			$(".delete-pick-right", $('.pick', roundPicks)).addClass("hide-yo-husbands-too");
 		}
 	});
 };
@@ -191,6 +191,7 @@ function clearNewPickAttributes(pick) {
 	var pickSelect = $(".pick-owner", pick);
 	pickSelect.val("");
 	$("option", pickSelect).removeAttr("selected");
+	$(".picked-player", pick).remove();
 };
 
 function changeRoundNums(roundNum, offset) {
@@ -221,42 +222,79 @@ function clearNewRoundPickAttributes(newRoundPicks) {
 	var picks = $(".pick", newRoundPicks);
 	$.each(picks, function (index, pick) {
 		$(pick).attr("data-pick-id", 0);
-		$(".delete-pick-right", newRoundPicks).removeClass("hide-yo-kids");
+		$(".delete-pick-right", newRoundPicks).removeClass("hide-yo-husbands-too");
+		$(".picked-player", pick).remove();
 	});
 	$(".delete-round-right", newRoundPicks).removeClass("hide-yo-wives");
 }
 
-function setOwnerAutoComplete() {
-	$.each($(".pick-owner"), function (index, input) {
-		$(input).autocomplete({
-			source: ownerHints
-		});
-	});
-};
-
 function bindSubmitDraftPicks() {
 	$(".submitDraftPicks").click(function () {
+		resetValidations();
 		var draftPicksModel = {};
 		draftPicksModel.DraftId = $("#setupDraft").attr("data-draft-id");
 		var draftPicks = new Array();
+		var ownerIds = new Array();
 		$.each($(".round-picks"), function (index, roundPicks) {
 			var roundNum = parseInt($(".round", roundPicks).attr("data-round-num"));
 			$.each($(".pick", roundPicks), function (index, pick) {
 				var draftPickId = parseInt($(pick).attr("data-pick-id"));
 				var pickNum = parseInt($(pick).attr("data-pick-num"));
 				var ownerId = $("select option:selected", pick).val();
+				var playerId = null;
+				var pickedPlayer = $(".picked-player", pick);
+				if (pickedPlayer.length > 0) {
+					playerId = $(pickedPlayer).attr("data-player-id");
+				}
 				draftPicks.push({
 					DraftPickId: draftPickId,
 					DraftId: draftPicksModel.DraftId,
 					PickNum: pickNum,
 					RoundNum: roundNum,
-					OwnerId: ownerId
+					OwnerId: ownerId,
+					PlayerId: playerId
 				});
+				ownerIds.push(ownerId);
 			});
 		});
 		draftPicksModel.DraftPicks = draftPicks;
-		ajaxPost(draftPicksModel, "Admin/SetupDraft", function (response) {
-			$("#setupDraftForm").submit();
-		}, null, null, true);
+		if (validateDraftPicksModel(ownerIds)) {
+			ajaxPost(draftPicksModel, "Admin/SetupDraft", function (response) {
+				$("#setupDraftForm").submit();
+			}, null, null, true);
+		}
 	});
 };
+
+function bindDeletePlayers() {
+	var links = $(".delete-picked-player");
+	$.each(links, function (index, link) {
+		bindDeletePlayer(link);
+	});
+}
+
+function bindDeletePlayer(link) {
+	$(link).click(function (e) {
+		e.preventDefault();
+		var player = $(link).closest('.picked-player');
+		var playerId = parseInt(player.attr("data-player-id"));
+		//popup confirmation?
+		$(player).remove();
+	});
+};
+
+function validateDraftPicksModel(ownerIds) {
+	var isValid = true;
+	var blankOwner = $.inArray("", ownerIds);
+	if (blankOwner > -1) {
+		$(".blank-owner-msg").removeClass("hide-yo-wives");
+		markInvalidOwnerId("");
+		isValid = false;
+	}
+	return isValid;
+}
+
+function resetValidations() {
+	$(".blank-owner-msg").addClass("hide-yo-wives");
+	$(".invalid-border").removeClass("invalid-border");
+}

@@ -11,7 +11,7 @@ namespace DodgeDynasty.Mappers
 	{
 		public void UpdateDraftPicks(DraftPicksModel picksModel)
 		{
-			DraftSetupModel currentModel = DraftFactory.GetDraftSetupModel();
+			DraftSetupModel currentModel = DraftFactory.GetDraftSetupModel(picksModel.DraftId);
 			currentModel.GetCurrentDraft();
 			using (HomeEntity = new HomeEntity())
 			{
@@ -40,6 +40,7 @@ namespace DodgeDynasty.Mappers
 					draftPick.PickNum = pick.PickNum;
 					draftPick.RoundNum = pick.RoundNum;
 					draftPick.OwnerId = pick.OwnerId;
+					draftPick.PlayerId = pick.PlayerId;
 					draftPick.LastUpdateTimestamp = DateTime.Now;
 				}
 				HomeEntity.SaveChanges();

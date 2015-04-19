@@ -270,6 +270,22 @@ function preventBackspaceNav(e) {
 	}
 }
 
+function markInvalidOwnerId(ownerId) {
+	if (ownerId === "") {
+		//Find any blank spans
+		$.each($("select"), function (index, owner) {
+			if ($(owner).val() === "") {
+				$(owner).addClass("invalid-border");
+			}
+		});
+	}
+	else {
+		//Find any matching selected options
+		var invalidEntries = $("select option:selected[value=" + ownerId + "]").closest("select");
+		$(invalidEntries).addClass("invalid-border");
+	}
+}
+
 $.fn.serializeObject = function () {
 	var o = {};
 	var a = this.serializeArray();

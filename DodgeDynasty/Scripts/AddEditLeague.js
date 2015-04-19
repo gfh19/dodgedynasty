@@ -71,30 +71,7 @@ function validateAddEditLeagueModel() {
 	return isValid;
 }
 
-function markInvalidOwnerId(ownerId) {
-	if (ownerId === "") {
-		//Find any blank spans
-		$.each($("select"), function (index, owner) {
-			if ($(owner).val() === "") {
-				$(owner).addClass("invalid-border");
-			}
-		});
-	}
-	else {
-		//Find any matching selected options
-		var invalidEntries = $("select option:selected[value=" + ownerId + "]").closest("select");
-		$(invalidEntries).addClass("invalid-border");
-	}
-}
-
 function resetValidations() {
 	$(".blank-owner-msg, .blank-team-msg, .dup-owner-msg").addClass("hide-yo-wives");
 	$(".invalid-border").removeClass("invalid-border");
 }
-
-//function updateAddLeagueModel(addLeagueModel) {
-//	ajaxPost(addLeagueModel, "Admin/AddLeague", function (data) {
-//		var response = JSON.parse(data);
-//		location.href = baseURL + "Admin/AddDraft/" + response.leagueId;
-//	}, null, null, true);
-//}

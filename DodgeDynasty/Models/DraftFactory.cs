@@ -32,9 +32,9 @@ namespace DodgeDynasty.Models
 			return model;
 		}
 
-		public static DraftSetupModel GetDraftSetupModel()
+		public static DraftSetupModel GetDraftSetupModel(int draftId)
 		{
-			DraftSetupModel model = new DraftSetupModel();
+			DraftSetupModel model = new DraftSetupModel(draftId);
 			return model;
 		}
 

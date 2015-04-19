@@ -29,21 +29,6 @@ namespace DodgeDynasty.Models
 			return CurrentRoundNum != roundNum;
 		}
 
-		public string GetOwnerHints()
-		{
-			StringBuilder ownerHints = new StringBuilder("[");
-			var ownerIds = DraftOwners.Select(o => o.OwnerId).ToList();
-			var draftOwners = Owners.OrderBy(o => o.NickName).Where(o => ownerIds.Contains(o.OwnerId)).ToList();
-			foreach (var owner in draftOwners)
-			{
-				ownerHints.Append(string.Format(
-						"{{value:\"{0}\",ownerId:\"{1}\"}},",
-						Utilities.JsonEncode(owner.NickName), owner.OwnerId.ToString()));
-			}
-			ownerHints.Append("]");
-			return ownerHints.ToString();
-		}
-
 		public List<SelectListItem> GetDraftOwnerListItems()
 		{
 			return Utilities.GetListItems<Owner>(DraftOwners, o => o.NickName, o => o.OwnerId.ToString());

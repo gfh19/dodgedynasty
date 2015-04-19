@@ -1588,6 +1588,7 @@ span.player-select
 }
 .delete-picked-player {
 	font-size: 11px;
+	margin-left: 2px;
 }
 
 
