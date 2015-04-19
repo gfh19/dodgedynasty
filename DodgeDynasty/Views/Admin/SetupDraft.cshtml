@@ -44,6 +44,13 @@
 					{
 						<span class="pick-num">@pick.PickNum</span>@Html.DropDownList("OwnerId", Model.GetDraftOwnerListItems(), new { @class = "pick-owner" })<a href="#" class="delete-pick-right @(pick.PickNum == 1 ? "hide-yo-kids" : "")" tabindex="-1"><img src="../../Content/images/minus.png" alt="Delete Pick"/></a>
 					}
+					@if (Model.CurrentGridPlayer != null && !string.IsNullOrEmpty(Model.CurrentGridPlayer.PlayerName))
+					{
+						<div class="picked-player">
+							<span class="picked-player-name">@Model.CurrentGridPlayer.PlayerName</span>
+							<span><a href="#" class="delete-picked-player">X</a></span>
+						</div>
+					}
 					</div><span class="picks-right"><a href="#" class="add-pick-right" tabindex="-1"><img src="../../Content/images/plus.png" alt="Add Pick"/></a></span>
 				</span>
 		}

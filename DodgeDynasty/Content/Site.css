@@ -1544,6 +1544,7 @@ span.player-select
 	margin-right: 2px;
 	vertical-align: middle;
 	width: 113px;
+	height: 35px;
 }
 #setupDraft .setup-pick-outline img
 {
@@ -1573,6 +1574,20 @@ span.player-select
 .round-picks img 
 {
 	vertical-align: middle;
+}
+.picked-player {
+	width: 113px;
+}
+.picked-player-name {
+	float: left;
+	display: inline-block;
+	font-size: 10px;
+	margin-left: 1px;
+	width: 100px;
+	overflow: hidden;
+}
+.delete-picked-player {
+	font-size: 11px;
 }
 
 
