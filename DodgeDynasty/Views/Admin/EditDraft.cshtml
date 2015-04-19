@@ -1,10 +1,10 @@
 ﻿@model DodgeDynasty.Models.AddEditDraftModel
 
 @{
-	ViewBag.Title = "Add Draft";
+	ViewBag.Title = "Edit Draft";
 }
 @section scripts {
-	<script type="text/javascript" src="../../Scripts/AddDraft.js"></script>
+	<script type="text/javascript" src="../../Scripts/EditDraft.js"></script>
 	<script type="text/javascript" src="../../Scripts/AddEditDraft.js"></script>
 	<script type="text/javascript" src="../../Scripts/LeagueOwnerUser.js"></script>
 }
@@ -14,7 +14,7 @@
 			initAddEditDraft();
 		});
 	</script>
-	<div class="large-page-header">Add New Draft
+	<div class="large-page-header">Edit Draft
 		<div class="header-subtext">@Model.LeagueName</div>
 	</div>
 	@{ Html.EnableClientValidation(true); }
@@ -24,10 +24,11 @@
 		<div class="dup-owner-msg invalid hide-yo-wives">Error - Owner selected more than once.</div>
 	</div>
 	<div class="page-entries">
-		@using (Html.BeginForm("AddDraft", "Admin", FormMethod.Post, new { id = "draftForm" }))
+		@using (Html.BeginForm("EditDraft", "Admin", FormMethod.Post, new { id = "draftForm" }))
 		{
 			<div>
 				@Html.HiddenFor(m => m.LeagueId)
+				@Html.HiddenFor(m => m.DraftId)
 				<div>
 					@Html.LabelFor(m => m.DraftDate): @Html.TextBoxFor(m => m.DraftDate, new { @class = "add-draft-date", type = "date", maxLength = "10" })
 					@Html.TextBoxFor(m => m.DraftTime, new { @class = "add-draft-time", type = "time", maxLength = "10" })

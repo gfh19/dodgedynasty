@@ -10,7 +10,7 @@ using DodgeDynasty.Shared;
 
 namespace DodgeDynasty.Mappers
 {
-	public class EditLeagueMapper<T> : MapperBase<T> where T : LeagueModel, new()
+	public class EditLeagueMapper<T> : MapperBase<T> where T : AddEditLeagueModel, new()
 	{
 		public string LeagueId { get; set; }
 

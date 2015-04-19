@@ -9,13 +9,14 @@
 	<div class="large-page-header">Manage Leagues</div>
 	<div class="page-entries">
 		<div class="page-entry">
-			<a href="AddLeague">&lt;Add New League&gt;</a>
+			<a href="@Url.Content("/Admin/AddLeague")">&lt;Add New League&gt;</a>
 		</div>
 		<div class="page-section">
 			@foreach (var league in Model.AllLeagues.OrderBy(o => o.LastUpdateTimestamp))
 			{
 				<div class="page-entry">
-					<a data-league-id="@league.LeagueId" href="EditLeague/@league.LeagueId">@league.LeagueName</a>
+					<a href="@Url.Content("/Admin/ManageDrafts/" + @league.LeagueId)">@league.LeagueName</a>
+					(<a href="@Url.Content("/Admin/EditLeague/" + @league.LeagueId)">Edit</a>)
 				</div>
 			}
 		</div>

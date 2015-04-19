@@ -91,17 +91,25 @@ namespace DodgeDynasty.Controllers
 
 		[HttpGet]
 		[AdminAccess]
+		public ActionResult ManageDrafts(string id)
+		{
+			var mapper = new ManageDraftsMapper<ManageDraftsModel> { LeagueId = id };
+			return View(mapper.GetModel());
+		}
+
+		[HttpGet]
+		[AdminAccess]
 		public ActionResult AddLeague()
 		{
-			var mapper = new AddLeagueMapper<LeagueModel>();
+			var mapper = new AddLeagueMapper<AddEditLeagueModel>();
 			return View(mapper.GetModel());
 		}
 
 		[HttpPost]
 		[AdminAccess]
-		public ActionResult AddLeague(LeagueModel model)
+		public ActionResult AddLeague(AddEditLeagueModel model)
 		{
-			var mapper = new AddLeagueMapper<LeagueModel>();
+			var mapper = new AddLeagueMapper<AddEditLeagueModel>();
 			if (!ModelState.IsValid)
 			{
 				return View(mapper.GetModel(model));
@@ -114,15 +122,15 @@ namespace DodgeDynasty.Controllers
 		[AdminAccess]
 		public ActionResult EditLeague(string id)
 		{
-			var mapper = new EditLeagueMapper<LeagueModel> { LeagueId = id };
+			var mapper = new EditLeagueMapper<AddEditLeagueModel> { LeagueId = id };
 			return View(mapper.GetModel());
 		}
 
 		[HttpPost]
 		[AdminAccess]
-		public ActionResult EditLeague(LeagueModel model)
+		public ActionResult EditLeague(AddEditLeagueModel model)
 		{
-			var mapper = new EditLeagueMapper<LeagueModel>();
+			var mapper = new EditLeagueMapper<AddEditLeagueModel>();
 			if (!ModelState.IsValid)
 			{
 				return View(mapper.GetModel(model));
@@ -135,16 +143,38 @@ namespace DodgeDynasty.Controllers
 		[AdminAccess]
 		public ActionResult AddDraft(string id)
 		{
-			var mapper = new AddDraftMapper<AddDraftModel>();
+			var mapper = new AddDraftMapper<AddEditDraftModel>();
 			mapper.LeagueId = Int32.Parse(id);
 			return View(mapper.GetModel());
 		}
 
 		[HttpPost]
 		[AdminAccess]
-		public ActionResult AddDraft(AddDraftModel model)
+		public ActionResult AddDraft(AddEditDraftModel model)
 		{
-			var mapper = new AddDraftMapper<AddDraftModel>();
+			var mapper = new AddDraftMapper<AddEditDraftModel>();
+			if (!ModelState.IsValid)
+			{
+				return View(mapper.GetModel(model));
+			}
+			mapper.UpdateEntity(model);
+			return Json(new { draftId = model.DraftId });
+		}
+
+		[HttpGet]
+		[AdminAccess]
+		public ActionResult EditDraft(string id)
+		{
+			var mapper = new EditDraftMapper<AddEditDraftModel>();
+			mapper.DraftId = Int32.Parse(id);
+			return View(mapper.GetModel());
+		}
+
+		[HttpPost]
+		[AdminAccess]
+		public ActionResult EditDraft(AddEditDraftModel model)
+		{
+			var mapper = new EditDraftMapper<AddEditDraftModel>();
 			if (!ModelState.IsValid)
 			{
 				return View(mapper.GetModel(model));

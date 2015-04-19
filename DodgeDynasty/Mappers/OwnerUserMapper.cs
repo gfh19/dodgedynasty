@@ -38,7 +38,7 @@ namespace DodgeDynasty.Models
 			int? leagueId = null)
 		{
 			var leagueOwnerUsers = (leagueId == null)
-				? users.Select(u => new { u.UserId }) 
+				? leagueOwners.Select(lo => new { lo.UserId }).Distinct()
 				: leagueOwners.Where(lo => lo.LeagueId == leagueId).Select(lo => new { lo.UserId });
 
 			var ownerUsers = from o in owners

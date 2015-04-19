@@ -10,7 +10,7 @@ using DodgeDynasty.Shared;
 
 namespace DodgeDynasty.Mappers
 {
-	public class AddLeagueMapper<T> : MapperBase<T> where T : LeagueModel, new()
+	public class AddLeagueMapper<T> : MapperBase<T> where T : AddEditLeagueModel, new()
 	{
 		protected override void PopulateModel()
 		{

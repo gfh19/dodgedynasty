@@ -10,10 +10,7 @@ namespace DodgeDynasty.Mappers
 	{
 		protected override void PopulateModel()
 		{
-			using (HomeEntity = new Entities.HomeEntity())
-			{
-				Model.AllLeagues = HomeEntity.Leagues.ToList();
-			}
+			Model.AllLeagues = HomeEntity.Leagues.ToList();
 		}
 	}
 }

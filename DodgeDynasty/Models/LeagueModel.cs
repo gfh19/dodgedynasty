@@ -10,7 +10,7 @@ using DodgeDynasty.Models.Types;
 
 namespace DodgeDynasty.Models
 {
-	public class LeagueModel
+	public class AddEditLeagueModel
 	{
 		[Display(Name = "League Name")]
 		[Required]

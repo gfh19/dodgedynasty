@@ -7,7 +7,7 @@ using DodgeDynasty.Models;
 
 namespace DodgeDynasty.Mappers
 {
-	public class AddDraftMapper<T> : MapperBase<T> where T : AddDraftModel, new()
+	public class AddDraftMapper<T> : MapperBase<T> where T : AddEditDraftModel, new()
 	{
 		public int LeagueId { get; set; }
 
@@ -24,7 +24,7 @@ namespace DodgeDynasty.Mappers
 			Model.DraftTime = defaultDraftDate.ToString("HH:mm");
 			Model.DraftYear = defaultDraftDate.Year;
 			Model.DraftLocation = "Online";
-			Model.NumOwners = 4;
+			Model.NumOwners = Model.LeagueOwnerUsers.Count;
 			Model.NumRounds = 15;
 			Model.NumKeepers = 0;
 			Model.Format = DodgeDynasty.Shared.Constants.DraftFormats.Snake;

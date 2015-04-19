@@ -13,8 +13,8 @@ namespace DodgeDynasty
 						"~/Scripts/lib/jquery-ui-{version}.js",
 						"~/Scripts/lib/jquery.cookie.js",
 						"~/Scripts/lib/jquery.validate*",
-						"~/Scripts/lib/bootstrap/js/bootstrap.js",
-						"~/Scripts/lib/moment.min.js"));
+						"~/Scripts/lib/moment.js",
+						"~/Scripts/lib/bootstrap/js/bootstrap.js"));
 
 			bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css"));
 

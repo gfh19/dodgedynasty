@@ -11,7 +11,7 @@ using DraftFormats = DodgeDynasty.Shared.Constants.DraftFormats;
 
 namespace DodgeDynasty.Models
 {
-	public class AddDraftModel
+	public class AddEditDraftModel
 	{
 		[Display(Name = "Draft Date/Time")]
 		[Required]

@@ -49,6 +49,19 @@ namespace DodgeDynasty.Mappers
 					HomeEntity.DraftPicks.DeleteObject(draftPick);
 				}
 				HomeEntity.SaveChanges();
+
+				SetFirstPickStartTime(currentModel, picksModel);
+			}
+		}
+
+		private void SetFirstPickStartTime(DraftSetupModel currentModel, DraftPicksModel picksModel)
+		{
+			var firstDraftPick = HomeEntity.DraftPicks.Where(p => p.DraftId == picksModel.DraftId && p.PlayerId == null)
+				.OrderBy(p => p.PickNum).FirstOrDefault();
+			if (firstDraftPick != null)
+			{
+				firstDraftPick.PickStartDateTime = currentModel.CurrentDraft.DraftDate;
+				HomeEntity.SaveChanges();
 			}
 		}
 	}

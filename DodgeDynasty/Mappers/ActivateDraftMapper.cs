@@ -10,14 +10,11 @@ namespace DodgeDynasty.Mappers
 	{
 		protected override void PopulateModel()
 		{
-			using (HomeEntity = new Entities.HomeEntity())
-			{
-				Model.AllDrafts = HomeEntity.Drafts.OrderBy(d => d.DraftDate).ToList();
-				Model.ActiveDrafts = Model.AllDrafts.Where(d => d.IsActive).ToList();
-				Model.ScheduledDrafts = Model.AllDrafts.Where(d => !d.IsActive && !d.IsComplete).ToList();
-				Model.CompleteDrafts = Model.AllDrafts.Where(d => !d.IsActive && d.IsComplete)
-					.OrderByDescending(d => d.DraftDate).ToList();
-			}
+			Model.AllDrafts = HomeEntity.Drafts.OrderBy(d => d.DraftDate).ToList();
+			Model.ActiveDrafts = Model.AllDrafts.Where(d => d.IsActive).ToList();
+			Model.ScheduledDrafts = Model.AllDrafts.Where(d => !d.IsActive && !d.IsComplete).ToList();
+			Model.CompleteDrafts = Model.AllDrafts.Where(d => !d.IsActive && d.IsComplete)
+				.OrderByDescending(d => d.DraftDate).ToList();
 		}
 	}
 }

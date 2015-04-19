@@ -26,7 +26,7 @@ header {
 
 .page-header, .large-page-header {
 	text-align: center;
-	margin-top: 18px;
+	margin-top: 5px;
 	margin-bottom: 12px;
 	font-weight: bold;
 }
@@ -1597,7 +1597,7 @@ span.player-select
 
 .league-name, .lo-team-input
 {
-	width: 172px;
+	width: 180px;
 }
 
 .lo-team-input {
@@ -1617,7 +1617,7 @@ span.player-select
 }
 
 .league-owner-entry {
-	min-width: 428px;
+	min-width: 436px;
 }
 
 .lo-entry-header {
@@ -1628,7 +1628,7 @@ span.player-select
 	width: 145px;
 }
 .lo-teamname-header {
-	width: 177px;
+	width: 185px;
 }
 .lo-controls-header {
 	width: 32px;
