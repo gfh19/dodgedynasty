@@ -1,4 +1,5 @@
-﻿/* 4/4/2015 */
+﻿
+/* 4/4/2015 */
 
 ALTER TABLE [dbo].[League]
 ADD [AddTimestamp] datetime NULL
@@ -54,4 +55,8 @@ UPDATE Draft
 SET AddTimestamp = LastUpdateTimestamp
 GO
 
-/*** ! ADD ForeignKey Constraint to the LeagueOwner table for LeagueId!!! ***/
+/*** ! ADD ForeignKey Constraint to:
+	LeagueOwner table for LeagueId, 
+	DraftOwner table for DraftId, 
+	!!!
+***/

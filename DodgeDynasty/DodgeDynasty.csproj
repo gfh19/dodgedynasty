@@ -158,7 +158,7 @@
     </Compile>
     <Compile Include="Mappers\RankSetupMapper.cs" />
     <Compile Include="Models\AddEditDraftModel.cs" />
-    <Compile Include="Models\LeagueModel.cs" />
+    <Compile Include="Models\AddEditLeagueModel.cs" />
     <Compile Include="Models\DraftPicksSetupModel.cs" />
     <Compile Include="Models\DraftSetupModel.cs" />
     <Compile Include="Models\AccessModel.cs" />
@@ -343,6 +343,8 @@
     <Content Include="Views\Admin\EditLeague.cshtml" />
     <Content Include="Views\Admin\ManageDrafts.cshtml" />
     <Content Include="Views\Admin\EditDraft.cshtml" />
+    <Content Include="Views\Admin\AddEditLeaguePartial.cshtml" />
+    <Content Include="Views\Admin\AddEditDraftPartial.cshtml" />
     <None Include="Web.local.config">
       <SubType>Designer</SubType>
     </None>
