@@ -276,6 +276,7 @@ ul.menu li a, ul.dropdown-menu li
 	background: none;
 	color: #999;
 	text-decoration: none;
+	padding-bottom: 2px;
 }
 
 ul.menu li a:hover

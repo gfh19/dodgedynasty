@@ -14,38 +14,38 @@ namespace DodgeDynasty.Controllers
 	{
 		[HttpGet]
 		[OwnerRankAccess]
-		public ActionResult AddRank(string id, string copyCount)
+		public ActionResult AddRank(string rankId, string copyCount)
 		{
 			int newRankId;
 			RankingsListModel model = DraftFactory.GetRankingsListModel();
 			model.GetCurrentDraft();
 			RankSetupMapper mapper = DraftFactory.GetRankSetupMapper();
-			if (!string.IsNullOrEmpty(id))
+			if (!string.IsNullOrEmpty(rankId))
 			{
-				newRankId = mapper.CopyRankFrom(Convert.ToInt32(id), copyCount, model);
+				newRankId = mapper.CopyRankFrom(Convert.ToInt32(rankId), copyCount, model);
 			}
 			else
 			{
 				newRankId = mapper.AddRank(model);
 			}
-			return RedirectToAction(Constants.Views.SetupRank, new { id = newRankId });
+			return RedirectToAction(Constants.Views.SetupRank, new { rankId = newRankId });
 		}
 
 		[HttpGet]
 		[OwnerUpdateRankAccess]
-		public ActionResult SetupRank(int id)
+		public ActionResult SetupRank(int rankId)
 		{
 			GetPlayerRankOptions();
-			PlayerRankModel model = DraftFactory.GetPlayerRankModel(id);
+			PlayerRankModel model = DraftFactory.GetPlayerRankModel(rankId);
 			model.GetAllPlayerRanks();
 			return View(model);
 		}
 
 		[HttpPost]
 		[OwnerUpdateRankAccess]
-		public ActionResult SetupRank(int id, string rankStatus)
+		public ActionResult SetupRank(int rankId, string rankStatus)
 		{
-			PlayerRankModel model = DraftFactory.GetPlayerRankModel(id);
+			PlayerRankModel model = DraftFactory.GetPlayerRankModel(rankId);
 			model.GetAllPlayerRanks();
 			model.RankStatus = rankStatus;
 			return View(model);

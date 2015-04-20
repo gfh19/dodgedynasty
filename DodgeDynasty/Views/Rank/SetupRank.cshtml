@@ -105,7 +105,7 @@
 		</div>
 	}
 	</div>
-	@using (Html.BeginForm("SetupRank", "Rank", FormMethod.Post, new { id = "setupRankForm" }))
+	@using (Html.BeginForm("SetupRank", "Rank", new { rankId = Model.RankId }, FormMethod.Post, new { id = "setupRankForm" }))
  {
 		<input type=hidden id="rankStatus" name="rankStatus" value="saved" />
  }

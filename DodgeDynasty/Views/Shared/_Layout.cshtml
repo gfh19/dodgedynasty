@@ -20,10 +20,21 @@
 					<ul class="menu top-nav">
 						@if (DodgeDynasty.Shared.Utilities.IsUserLoggedIn())
 						{
-							<li>@Html.ActionLink("Pick", "Pick", "Draft")</li>
-							<li>@Html.ActionLink("Draft", "Display", "Draft")</li>
-							<li>@Html.ActionLink("Teams", "TeamDisplay", "Draft")</li>
-							<li>@Html.ActionLink("Ranks", "BestAvailable", "Draft")</li>
+							var draftId = Url.RequestContext.RouteData.Values["id"];
+							if (draftId != null)
+							{
+								<li>@Html.ActionLink("Pick", "Pick/" + draftId, "Draft")</li>
+								<li>@Html.ActionLink("Draft", "Display/" + draftId, "Draft")</li>
+								<li>@Html.ActionLink("Teams", "TeamDisplay/" + draftId, "Draft")</li>
+								<li>@Html.ActionLink("Ranks", "BestAvailable/" + draftId, "Draft")</li>
+							}
+							else
+							{
+								<li>@Html.ActionLink("Pick", "Pick", "Draft")</li>
+								<li>@Html.ActionLink("Draft", "Display", "Draft")</li>
+								<li>@Html.ActionLink("Teams", "TeamDisplay", "Draft")</li>
+								<li>@Html.ActionLink("Ranks", "BestAvailable", "Draft")</li>
+							}
 							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 								<span class="icon-bar"></span>
 								<span class="icon-bar"></span>

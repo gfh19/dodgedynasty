@@ -23,7 +23,7 @@
 		@foreach (var list in Model.GetPublicRankings())
 		{
 			<div class="rank-list-entry">
-				<a class="rank-link" data-rank-id="@list.RankId" href="BestAvailable/@list.RankId">@list.RankName</a>
+				<a class="rank-link" data-rank-id="@list.RankId" href="BestAvailable?rankId=@list.RankId">@list.RankName</a>
 			</div>
 		}
 		</div>
@@ -35,8 +35,8 @@
 		@foreach (var list in Model.GetPrivateRankings())
 		{
 			<div class="rank-list-entry">
-				<a class="rank-link" data-rank-id="@list.RankId" href="BestAvailable/@list.RankId">@list.RankName</a>
-					(<a class="update-rank-link" href="../Rank/SetupRank/@list.RankId">Edit</a>)
+				<a class="rank-link" data-rank-id="@list.RankId" href="BestAvailable?rankId=@list.RankId">@list.RankName</a>
+					(<a class="update-rank-link" href="../Rank/SetupRank?rankId=@list.RankId">Edit</a>)
 			</div>
 		}
 		</div>

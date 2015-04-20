@@ -70,11 +70,11 @@ namespace DodgeDynasty.Controllers
 
 		[HttpGet]
 		[OwnerRankAccess]
-		public ActionResult BestAvailable(string id)
+		public ActionResult BestAvailable(string rankId)
 		{
 			var options = GetPlayerRankOptions();
-			int rankId = DetermineRankId(id, options);
-			PlayerRankModel playerRankModel = DraftFactory.GetPlayerRankModel(rankId);
+			int currentRankId = DetermineRankId(rankId, options);
+			PlayerRankModel playerRankModel = DraftFactory.GetPlayerRankModel(currentRankId);
 			playerRankModel.Options = options;
 			playerRankModel.GetBestAvailPlayerRanks();
 			return View(playerRankModel);
@@ -82,11 +82,11 @@ namespace DodgeDynasty.Controllers
 
 		[HttpGet]
 		[OwnerRankAccess]
-		public ActionResult BestAvailablePartial(string id)
+		public ActionResult BestAvailablePartial(string rankId)
 		{
 			var options = GetPlayerRankOptions();
-			int rankId = DetermineRankId(id, options, false);
-			PlayerRankModel playerRankModel = DraftFactory.GetPlayerRankModel(rankId);
+			int currentRankId = DetermineRankId(rankId, options, false);
+			PlayerRankModel playerRankModel = DraftFactory.GetPlayerRankModel(currentRankId);
 			playerRankModel.Options = options;
 			playerRankModel.GetBestAvailPlayerRanks();
 			return PartialView(Constants.Views.BestAvailable, playerRankModel);
@@ -94,11 +94,11 @@ namespace DodgeDynasty.Controllers
 
 		[HttpGet]
 		[OwnerRankAccess]
-		public ActionResult PlayerRanks(string id)
+		public ActionResult PlayerRanks(string rankId)
 		{
 			var options = GetPlayerRankOptions();
-			int rankId = DetermineRankId(id, options);
-			PlayerRankModel playerRankModel = DraftFactory.GetPlayerRankModel(rankId);
+			int currentRankId = DetermineRankId(rankId, options);
+			PlayerRankModel playerRankModel = DraftFactory.GetPlayerRankModel(currentRankId);
 			playerRankModel.Options = options;
 			playerRankModel.GetAllPlayerRanksByPosition();
 			return View(playerRankModel);
@@ -106,11 +106,11 @@ namespace DodgeDynasty.Controllers
 
 		[HttpGet]
 		[OwnerRankAccess]
-		public ActionResult PlayerRanksPartial(string id)
+		public ActionResult PlayerRanksPartial(string rankId)
 		{
 			var options = GetPlayerRankOptions();
-			int rankId = DetermineRankId(id, options, false);
-			PlayerRankModel playerRankModel = DraftFactory.GetPlayerRankModel(rankId);
+			int currentRankId = DetermineRankId(rankId, options, false);
+			PlayerRankModel playerRankModel = DraftFactory.GetPlayerRankModel(currentRankId);
 			playerRankModel.Options = options;
 			playerRankModel.GetAllPlayerRanksByPosition();
 			return PartialView(Constants.Views.PlayerRanks, playerRankModel);

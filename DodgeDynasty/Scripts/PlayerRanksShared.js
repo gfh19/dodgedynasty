@@ -80,7 +80,7 @@ function syncCookies() {
 function getRankIdUrlPath() {
 	var rankId = $(".rank-name").attr("data-rank-id");
 	if (rankId != undefined && rankId.length > 0) {
-		return "/" + rankId;
+		return "/rankId=" + rankId;
 	}
 	return "";
 }

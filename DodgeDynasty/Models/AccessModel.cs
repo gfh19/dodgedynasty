@@ -27,11 +27,11 @@ namespace DodgeDynasty.Models
 					{
 						var draftRank = HomeEntity.DraftRanks.FirstOrDefault(dr => dr.RankId == rankId);
 						hasAccess = draftRank != null && (draftRank.OwnerId == owner.OwnerId || (draftRank.OwnerId == null && !isUpdate));
-						if (!hasAccess)
+						if (!hasAccess && isUpdate && draftRank.OwnerId == null)
 						{
 							var isAdmin = HomeEntity.UserRoles
-								.Where(ur => ur.UserId == user.UserId && ur.RoleId == Constants.Roles.Admin).Count() > 0;
-							hasAccess = (draftRank.OwnerId == null && isAdmin);
+								.Where(ur => ur.UserId == user.UserId && ur.RoleId == Constants.Roles.Admin).Any();
+							hasAccess = isAdmin;
 						}
 					}
 				}

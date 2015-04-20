@@ -15,18 +15,18 @@ namespace DodgeDynasty.Filters
 		{
 			bool validate = false;
 			int rankId = 0;
-			if (filterContext.ActionParameters.ContainsKey("id"))
+			if (filterContext.ActionParameters.ContainsKey("rankId"))
 			{
-				if (filterContext.ActionParameters["id"] != null)
+				if (filterContext.ActionParameters["rankId"] != null)
 				{
 					validate = true;
-					if (filterContext.ActionParameters["id"] is string)
+					if (filterContext.ActionParameters["rankId"] is string)
 					{
-						rankId = Convert.ToInt32((string)filterContext.ActionParameters["id"]);
+						rankId = Convert.ToInt32((string)filterContext.ActionParameters["rankId"]);
 					}
 					else
 					{
-						rankId = (int)filterContext.ActionParameters["id"];
+						rankId = (int)filterContext.ActionParameters["rankId"];
 					}
 				}
 			}
