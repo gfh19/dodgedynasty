@@ -1,6 +1,6 @@
 ﻿$(function () {
 	setPickTimer(true);
-	callRefreshPageWithPickTimer("Draft/RankingsListPartial", "#rankingsList");
+	//callRefreshPageWithPickTimer("Draft/RankingsListPartial", "#rankingsList");
 });
 
 function initRankingsList() {

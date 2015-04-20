@@ -1,4 +1,4 @@
 ﻿$(function () {
 	setPickTimer(true);
-	callRefreshPageWithPickTimer("Draft/TeamDisplayPartial", '#teamDisplay');
+	//callRefreshPageWithPickTimer("Draft/TeamDisplayPartial", '#teamDisplay');
 });
