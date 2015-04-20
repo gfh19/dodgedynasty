@@ -31,6 +31,9 @@
           <Property Name="Format" Type="varchar" MaxLength="10" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="IsComplete" Type="bit" Nullable="false" />
+          <Property Name="WinnerId" Type="int" />
+          <Property Name="RunnerUpId" Type="int" />
+          <Property Name="HasCoWinners" Type="bit" />
           <Property Name="AddTimestamp" Type="datetime" />
           <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
         </EntityType>
@@ -1019,6 +1022,9 @@
           <Property Name="Format" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="IsComplete" Type="Boolean" Nullable="false" />
+          <Property Name="WinnerId" Type="Int32" />
+          <Property Name="RunnerUpId" Type="Int32" />
+          <Property Name="HasCoWinners" Type="Boolean" />
           <Property Name="AddTimestamp" Type="DateTime" Precision="3" />
           <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="DraftPicks" Relationship="HomeModel.FK_DraftPick_Draft" FromRole="Draft" ToRole="DraftPick" />
@@ -1327,6 +1333,9 @@
               <MappingFragment StoreEntitySet="Draft">
                 <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
                 <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
+                <ScalarProperty Name="HasCoWinners" ColumnName="HasCoWinners" />
+                <ScalarProperty Name="RunnerUpId" ColumnName="RunnerUpId" />
+                <ScalarProperty Name="WinnerId" ColumnName="WinnerId" />
                 <ScalarProperty Name="IsComplete" ColumnName="IsComplete" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="Format" ColumnName="Format" />
@@ -1423,7 +1432,7 @@
         <EntityTypeShape EntityType="HomeModel.LeagueOwner" Width="1.5" PointX="13.375" PointY="7.75" />
         <EntityTypeShape EntityType="HomeModel.Owner" Width="1.5" PointX="10" PointY="14.375" />
         <AssociationConnector Association="HomeModel.FK_Owner_User" />
-        <EntityTypeShape EntityType="HomeModel.Draft" Width="1.5" PointX="3.75" PointY="0.75" />
+        <EntityTypeShape EntityType="HomeModel.Draft" Width="1.5" PointX="3.375" PointY="0.625" />
         <AssociationConnector Association="HomeModel.FK_DraftPick_Draft" />
       </Diagram>
     </Diagrams>

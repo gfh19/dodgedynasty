@@ -1710,6 +1710,24 @@ span.player-select
 }
 
 
+/* Draft History
+----------------------------------------------------------*/
+.dh-header {
+	font-weight: bold;
+}
+.dh-year, .dh-winner, .dh-runner-up {
+	display: inline-block;
+	width: 140px;
+}
+.dh-year {
+	width: 210px;
+}
+.dh-header {
+}
+
+
+
+
 /* RESPONSIVE STYLES
    Display
 ----------------------------------------------------------*/
@@ -1839,8 +1857,19 @@ span.player-select
 	{
 		width: 250px;
 	}
+	
+	/* Activate Draft
+	------------------------------------*/
+	.act-draft, .act-draft-links
+	{
+		width: auto;
+		text-align: center;
+	}
+	.act-draft-links
+	{
+		display: block;
+	}
 }
-
 
 
 

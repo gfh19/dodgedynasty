@@ -1136,6 +1136,78 @@ namespace DodgeDynasty.Entities
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
+        public Nullable<global::System.Int32> WinnerId
+        {
+            get
+            {
+                return _WinnerId;
+            }
+            set
+            {
+                OnWinnerIdChanging(value);
+                ReportPropertyChanging("WinnerId");
+                _WinnerId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("WinnerId");
+                OnWinnerIdChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _WinnerId;
+        partial void OnWinnerIdChanging(Nullable<global::System.Int32> value);
+        partial void OnWinnerIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> RunnerUpId
+        {
+            get
+            {
+                return _RunnerUpId;
+            }
+            set
+            {
+                OnRunnerUpIdChanging(value);
+                ReportPropertyChanging("RunnerUpId");
+                _RunnerUpId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("RunnerUpId");
+                OnRunnerUpIdChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _RunnerUpId;
+        partial void OnRunnerUpIdChanging(Nullable<global::System.Int32> value);
+        partial void OnRunnerUpIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> HasCoWinners
+        {
+            get
+            {
+                return _HasCoWinners;
+            }
+            set
+            {
+                OnHasCoWinnersChanging(value);
+                ReportPropertyChanging("HasCoWinners");
+                _HasCoWinners = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("HasCoWinners");
+                OnHasCoWinnersChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _HasCoWinners;
+        partial void OnHasCoWinnersChanging(Nullable<global::System.Boolean> value);
+        partial void OnHasCoWinnersChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
         public Nullable<global::System.DateTime> AddTimestamp
         {
             get

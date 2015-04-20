@@ -55,6 +55,15 @@ UPDATE Draft
 SET AddTimestamp = LastUpdateTimestamp
 GO
 
+
+/* 4/19/15 */
+
+ALTER TABLE dbo.[Draft]
+ADD [WinnerId] [int] NULL,
+	[RunnerUpId] [int] NULL,
+	[HasCoWinners] [bit] NULL
+GO
+
 /*** ! ADD ForeignKey Constraint to:
 	LeagueOwner table for LeagueId, 
 	DraftOwner table for DraftId, 

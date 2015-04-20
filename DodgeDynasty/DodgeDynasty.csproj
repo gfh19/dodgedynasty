@@ -140,6 +140,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\DraftController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Mappers\DraftHistoryMapper.cs" />
     <Compile Include="Mappers\EditDraftMapper.cs" />
     <Compile Include="Mappers\AddDraftMapper.cs" />
     <Compile Include="Mappers\EditLeagueMapper.cs" />
@@ -159,6 +160,7 @@
     <Compile Include="Mappers\RankSetupMapper.cs" />
     <Compile Include="Models\AddEditDraftModel.cs" />
     <Compile Include="Models\AddEditLeagueModel.cs" />
+    <Compile Include="Models\DraftHistoryModel.cs" />
     <Compile Include="Models\DraftPicksSetupModel.cs" />
     <Compile Include="Models\DraftSetupModel.cs" />
     <Compile Include="Models\AccessModel.cs" />
@@ -345,6 +347,7 @@
     <Content Include="Views\Admin\EditDraft.cshtml" />
     <Content Include="Views\Admin\AddEditLeaguePartial.cshtml" />
     <Content Include="Views\Admin\AddEditDraftPartial.cshtml" />
+    <Content Include="Views\Draft\History.cshtml" />
     <None Include="Web.local.config">
       <SubType>Designer</SubType>
     </None>

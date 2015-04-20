@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DodgeDynasty.Models;
+using DodgeDynasty.Mappers;
 using DodgeDynasty.Shared;
 using DodgeDynasty.Filters;
 using DodgeDynasty.Shared.Exceptions;
@@ -168,6 +169,13 @@ namespace DodgeDynasty.Controllers
 			DraftModel model = new DraftModel(_draftId);
 			model.GetCurrentDraft();
 			return PartialView(Constants.Views.CurrentDraftPickPartial, model);
+		}
+
+		[HttpGet]
+		public ActionResult History()
+		{
+			var mapper = new DraftHistoryMapper<DraftHistoryModel>();
+			return View(mapper.GetModel());
 		}
 	}
 }
