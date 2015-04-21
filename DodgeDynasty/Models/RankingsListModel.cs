@@ -9,6 +9,9 @@ namespace DodgeDynasty.Models
 {
 	public class RankingsListModel : DraftModel
 	{
+		public RankingsListModel(int? draftId = null) : base(draftId)
+		{}
+
 		public List<DraftRankModel> GetCurrentAvailableDraftRanks()
 		{
 			var fullDraftRanks = from dr in DraftRanks

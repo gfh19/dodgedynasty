@@ -8,27 +8,27 @@ namespace DodgeDynasty.Models
 {
 	public class DraftFactory
 	{
-		public static DraftInputModel GetCurrentDraftInputModel()
+		public static DraftInputModel GetCurrentDraftInputModel(int? draftId = null)
 		{
-			DraftInputModel model = new DraftInputModel();
+			DraftInputModel model = new DraftInputModel(draftId);
 			return model;
 		}
 
-		public static DraftDisplayModel GetDraftDisplayModel()
+		public static DraftDisplayModel GetDraftDisplayModel(int? draftId = null)
 		{
-			DraftDisplayModel model = new DraftDisplayModel();
+			DraftDisplayModel model = new DraftDisplayModel(draftId);
 			return model;
 		}
 
-		public static DraftTeamDisplayModel GetDraftTeamDisplayModel()
+		public static DraftTeamDisplayModel GetDraftTeamDisplayModel(int? draftId = null)
 		{
-			DraftTeamDisplayModel model = new DraftTeamDisplayModel();
+			DraftTeamDisplayModel model = new DraftTeamDisplayModel(draftId);
 			return model;
 		}
 
-		public static PlayerRankModel GetPlayerRankModel(int rankId)
+		public static PlayerRankModel GetPlayerRankModel(int rankId, int? draftId = null)
 		{
-			PlayerRankModel model = new PlayerRankModel(rankId);
+			PlayerRankModel model = new PlayerRankModel(rankId, draftId);
 			return model;
 		}
 
@@ -44,9 +44,9 @@ namespace DodgeDynasty.Models
 			return mapper;
 		}
 
-		public static RankingsListModel GetRankingsListModel()
+		public static RankingsListModel GetRankingsListModel(int? draftId = null)
 		{
-			RankingsListModel model = new RankingsListModel();
+			RankingsListModel model = new RankingsListModel(draftId);
 			return model;
 		}
 

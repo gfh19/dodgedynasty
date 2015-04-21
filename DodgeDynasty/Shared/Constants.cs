@@ -8,7 +8,6 @@ namespace DodgeDynasty.Shared
 	public static class Constants
 	{
 		//TODO:  SQL-ize
-		public static readonly int? DraftId = null;
 		public const int NewPlayerId = -1;
 
 		public static class AppSettings

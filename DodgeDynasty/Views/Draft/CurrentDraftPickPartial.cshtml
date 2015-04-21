@@ -11,8 +11,8 @@
 		if (draftId != null)
 		{
 			<div class="draft-history-alert">
-				You're currently viewing draft history pages.
-				<a href="@Url.Content("/Draft/Display")">Click here for the latest draft.</a>
+				You're currently viewing <a href="@Url.Content("/Draft/History")">draft history</a> pages.
+				<a class="latest-draft-link" href="@Url.Content("/Draft/Display")">Click here for the latest draft.</a>
 			</div>
 		}
 	}

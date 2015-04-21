@@ -31,7 +31,7 @@ function bindPlayerLinks() {
 			e.preventDefault();
 			var playerCol = $(link).closest('.ba-player-name');
 			var playerId = $(playerCol).data('player-id');
-			location.href = baseURL + "Draft/Pick/" + playerId;
+			location.href = baseURL + "Draft/Pick?playerId=" + playerId;
 		});
 	});
 }

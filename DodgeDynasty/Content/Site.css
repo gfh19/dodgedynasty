@@ -1029,6 +1029,16 @@ ul.menu li a.current-page
 	text-align: center;
 	font-size: 14px;
 }
+.draft-history-alert {
+	background: #f5d89e;
+	padding: 4px 5px;
+	margin-bottom: 10px;
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+.latest-draft-link {
+	font-weight: bold;
+}
 
 /* Owner Styles
 ----------------------------------------------------------*/

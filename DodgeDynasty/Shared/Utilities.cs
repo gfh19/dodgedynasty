@@ -94,5 +94,14 @@ namespace DodgeDynasty.Shared
 							f => f.Name);
 			return fields;
 		}
+
+		public static int? ToNullInt(string id)
+		{
+			if (!string.IsNullOrEmpty(id))
+			{
+				return Convert.ToInt32(id);
+			}
+			return null;
+		}
 	}
 }

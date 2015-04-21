@@ -9,9 +9,9 @@ namespace DodgeDynasty.Models
 {
 	public class DraftDisplayModel : DraftModel
 	{
-		public DraftDisplayModel()
+		public DraftDisplayModel(int? draftId=null)
 		{
-			base.GetCurrentDraft();
+			base.GetCurrentDraft(draftId);
 		}
 
 		public bool IsSnakeRound(int roundNum)

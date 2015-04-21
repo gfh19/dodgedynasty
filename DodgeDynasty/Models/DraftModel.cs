@@ -13,6 +13,8 @@ namespace DodgeDynasty.Models
 {
 	public class DraftModel : ModelBase
 	{
+		private int? _latestOwnerDraftId;
+
 		public int? DraftId { get; set; }
 		public int PickTimeSeconds { get; set; }
 
@@ -31,6 +33,20 @@ namespace DodgeDynasty.Models
 		public List<Position> Positions { get; set; }
 		public List<League> Leagues { get; set; }
 
+		public int? LatestOwnerDraftId
+		{
+			get
+			{
+				if (_latestOwnerDraftId == null)
+				{
+					using (HomeEntity = new HomeEntity())
+					{
+						_latestOwnerDraftId = GetLatestOwnerDraftId();
+					}
+				}
+				return _latestOwnerDraftId;
+			}
+		}
 		public Draft CurrentDraft { get; set; }
 		public List<LeagueOwner> CurrentLeagueOwners { get; set; }
 		public DraftPick CurrentDraftPick { get; set; }
@@ -56,9 +72,9 @@ namespace DodgeDynasty.Models
 			PickTimeSeconds = int.TryParse(ConfigurationManager.AppSettings["PickTimeSeconds"], out seconds) ? seconds : 0;
 		}
 
-		public Draft GetCurrentDraft()
+		public Draft GetCurrentDraft(int? draftId = null)
 		{
-			GetDraftInfo();
+			GetDraftInfo(draftId);
 			return Drafts.First(d => d.DraftId == DraftId);
 		}
 
@@ -95,23 +111,31 @@ namespace DodgeDynasty.Models
 			}
 			if (DraftId == null)
 			{
-				var ownerDraftIds = HomeEntity.DraftOwners.Where(o => o.OwnerId == owner.OwnerId).Select(o => o.DraftId).ToList();
-				var ownerDrafts = Drafts.Where(d => ownerDraftIds.Contains(d.DraftId))
-					.OrderByDescending(o=>o.IsActive).ThenBy(o=>o.IsComplete).ThenBy(o=>o.DraftDate).ToList();
-				if (ownerDrafts.Any(o => !o.IsComplete))
-				{
-					DraftId = ownerDrafts.Select(d => d.DraftId).FirstOrDefault();
-				}
-				else
-				{
-					DraftId = ownerDrafts.Select(d => d.DraftId).Last();
-				}
+				DraftId = GetLatestOwnerDraftId(userName, user, owner);
 			}
 			CurrentDraft = Drafts.First(d => d.DraftId == DraftId);
 			CurrentLeagueOwners = LeagueOwners.Where(lo => lo.LeagueId == CurrentDraft.LeagueId).ToList();
 			var leagueOwner = CurrentLeagueOwners.FirstOrDefault(lo => lo.OwnerId == owner.OwnerId);
 			CurrentLoggedInOwnerUser = OwnerUserMapper.GetOwnerUser(owner, user, leagueOwner);
 			return DraftId;
+		}
+
+		private int GetLatestOwnerDraftId(string userName = null, User user = null, Owner owner = null)
+		{
+			userName = userName ?? Utilities.GetLoggedInUserName();
+			user = user ?? HomeEntity.Users.FirstOrDefault(u => u.UserName == userName);
+			owner = owner ?? HomeEntity.Owners.FirstOrDefault(o => o.UserId == user.UserId);
+			var ownerDraftIds = HomeEntity.DraftOwners.Where(o => o.OwnerId == owner.OwnerId).Select(o => o.DraftId).ToList();
+			var ownerDrafts = Drafts.Where(d => ownerDraftIds.Contains(d.DraftId))
+				.OrderByDescending(o => o.IsActive).ThenBy(o => o.IsComplete).ThenBy(o => o.DraftDate).ToList();
+			if (ownerDrafts.Any(o => !o.IsComplete))
+			{
+				return ownerDrafts.Select(d => d.DraftId).FirstOrDefault();
+			}
+			else
+			{
+				return ownerDrafts.Select(d => d.DraftId).Last();
+			}
 		}
 
 		private void SetCurrentDraftInfo(int? draftId = null)

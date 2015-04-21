@@ -16,17 +16,16 @@ namespace DodgeDynasty.Controllers
 {
 	public class DraftController : BaseController
 	{
-		//TODO:  Hard-coded draft for testing; make accurate
-		private int? _draftId = Constants.DraftId;
+		//TODO:  Test playerId passed during draft
 
 		[HttpGet]
-		public ActionResult Pick(string id)
+		public ActionResult Pick(string playerId, string id)
 		{
-			DraftInputModel draftInputModel = DraftFactory.GetCurrentDraftInputModel();
-			if (!string.IsNullOrEmpty(id))
+			DraftInputModel draftInputModel = DraftFactory.GetCurrentDraftInputModel(Utilities.ToNullInt(id));
+			if (!string.IsNullOrEmpty(playerId))
 			{
-				int playerId = Convert.ToInt32(id);
-				draftInputModel.PreloadPlayerModel(playerId);
+				int pickPlayerId = Convert.ToInt32(playerId);
+				draftInputModel.PreloadPlayerModel(pickPlayerId);
 			}
 			return View(draftInputModel);
 		}
@@ -44,9 +43,9 @@ namespace DodgeDynasty.Controllers
 			return InputDraftPick(Constants.Views.Pick, draftInputModel, false);
 		}
 
-		public ActionResult Display()
+		public ActionResult Display(string id)
 		{
-			DraftDisplayModel draftDisplayModel = DraftFactory.GetDraftDisplayModel();
+			DraftDisplayModel draftDisplayModel = DraftFactory.GetDraftDisplayModel(Utilities.ToNullInt(id));
 			return View(draftDisplayModel);
 		}
 
@@ -56,9 +55,9 @@ namespace DodgeDynasty.Controllers
 			return PartialView(Constants.Views.Display, draftDisplayModel);
 		}
 
-		public ActionResult TeamDisplay()
+		public ActionResult TeamDisplay(string id)
 		{
-			DraftTeamDisplayModel draftTeamDisplayModel = DraftFactory.GetDraftTeamDisplayModel();
+			DraftTeamDisplayModel draftTeamDisplayModel = DraftFactory.GetDraftTeamDisplayModel(Utilities.ToNullInt(id));
 			return View(draftTeamDisplayModel);
 		}
 
@@ -70,11 +69,11 @@ namespace DodgeDynasty.Controllers
 
 		[HttpGet]
 		[OwnerRankAccess]
-		public ActionResult BestAvailable(string rankId)
+		public ActionResult BestAvailable(string rankId, string id)
 		{
 			var options = GetPlayerRankOptions();
 			int currentRankId = DetermineRankId(rankId, options);
-			PlayerRankModel playerRankModel = DraftFactory.GetPlayerRankModel(currentRankId);
+			PlayerRankModel playerRankModel = DraftFactory.GetPlayerRankModel(currentRankId, Utilities.ToNullInt(id));
 			playerRankModel.Options = options;
 			playerRankModel.GetBestAvailPlayerRanks();
 			return View(playerRankModel);
@@ -94,11 +93,11 @@ namespace DodgeDynasty.Controllers
 
 		[HttpGet]
 		[OwnerRankAccess]
-		public ActionResult PlayerRanks(string rankId)
+		public ActionResult PlayerRanks(string rankId, string id)
 		{
 			var options = GetPlayerRankOptions();
 			int currentRankId = DetermineRankId(rankId, options);
-			PlayerRankModel playerRankModel = DraftFactory.GetPlayerRankModel(currentRankId);
+			PlayerRankModel playerRankModel = DraftFactory.GetPlayerRankModel(currentRankId, Utilities.ToNullInt(id));
 			playerRankModel.Options = options;
 			playerRankModel.GetAllPlayerRanksByPosition();
 			return View(playerRankModel);
@@ -117,10 +116,10 @@ namespace DodgeDynasty.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult RankingsList()
+		public ActionResult RankingsList(string id)
 		{
 			GetPlayerRankOptions();
-			RankingsListModel model = DraftFactory.GetRankingsListModel();
+			RankingsListModel model = DraftFactory.GetRankingsListModel(Utilities.ToNullInt(id));
 			model.GetCurrentDraft();
 			return View(model);
 		}
@@ -166,7 +165,7 @@ namespace DodgeDynasty.Controllers
 		[HttpGet]
 		public ActionResult CurrentDraftPickPartial()
 		{
-			DraftModel model = new DraftModel(_draftId);
+			DraftModel model = new DraftModel();
 			model.GetCurrentDraft();
 			return PartialView(Constants.Views.CurrentDraftPickPartial, model);
 		}

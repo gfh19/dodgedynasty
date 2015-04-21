@@ -10,8 +10,8 @@ namespace DodgeDynasty.Models
 	{
 		public List<DraftPick> TeamDraftPicks { get; set; }
 		public List<Player> TeamPlayers { get; set; }
-		
-		public DraftTeamDisplayModel()
+
+		public DraftTeamDisplayModel(int? draftId = null) : base(draftId)
 		{}
 
 		public List<DraftPick> GetTeamDraftPicks(int ownerId)

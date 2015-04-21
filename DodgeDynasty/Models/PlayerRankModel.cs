@@ -27,9 +27,9 @@ namespace DodgeDynasty.Models
 		public string RankStatus { get; set; }
 		public PlayerModel Player { get; set; }
 
-		public PlayerRankModel(int rankId)
+		public PlayerRankModel(int rankId, int? draftId = null)
 		{
-			base.GetCurrentDraft();
+			base.GetCurrentDraft(draftId);
 			RankId = rankId;
 			int window;
 			RanksWindow = int.TryParse(ConfigurationManager.AppSettings["RanksWindow"], out window) ? window : 12;

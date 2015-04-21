@@ -1,6 +1,6 @@
 ﻿@model DodgeDynasty.Models.RankingsListModel
 @{
-    ViewBag.Title = "Other Player Rankings";
+	ViewBag.Title = "Other Player Rankings";
 }
 
 @section scripts {
@@ -14,42 +14,63 @@
 		});
 	</script>
 	@Html.Partial("CurrentDraftPickPartial", Model)
+	@{var draftId = Url.RequestContext.RouteData.Values["id"];}
 	<div class="rlist-header">
 		<div class="rankings-list">Other Player Rankings</div>
 	</div>
 	<div class="rlist-header">
 		<div class="rlist-section bold">Public Rankings:</div>
 		<div class="rlist-entries">
-		@foreach (var list in Model.GetPublicRankings())
-		{
-			<div class="rank-list-entry">
-				<a class="rank-link" data-rank-id="@list.RankId" href="BestAvailable?rankId=@list.RankId">@list.RankName</a>
-			</div>
-		}
+			@foreach (var list in Model.GetPublicRankings())
+			{
+				<div class="rank-list-entry">
+					@if (draftId != null)
+					{
+						<a class="rank-link" data-rank-id="@list.RankId" href="@Url.Content("/Draft/BestAvailable/" + draftId + "?rankId=" + list.RankId)">@list.RankName</a>
+					}
+					else
+					{
+						<a class="rank-link" data-rank-id="@list.RankId" href="@Url.Content("/Draft/BestAvailable?rankId=" + list.RankId)">@list.RankName</a>
+					}
+				</div>
+			}
 		</div>
 	</div>
 	<div class="rlist-header">
 		<div class="rlist-section bold">Your Personal Rankings:</div>
 		<div class="note-text">(These lists are only visible to you)</div>
 		<div class="rlist-entries">
-		@foreach (var list in Model.GetPrivateRankings())
-		{
-			<div class="rank-list-entry">
-				<a class="rank-link" data-rank-id="@list.RankId" href="BestAvailable?rankId=@list.RankId">@list.RankName</a>
-					(<a class="update-rank-link" href="../Rank/SetupRank?rankId=@list.RankId">Edit</a>)
-			</div>
-		}
+			@foreach (var list in Model.GetPrivateRankings())
+			{
+				<div class="rank-list-entry">
+					@if (draftId != null)
+					{
+						<a class="rank-link" data-rank-id="@list.RankId" href="@Url.Content("/Draft/BestAvailable/" + draftId + "?rankId=" + list.RankId)">@list.RankName</a>
+					}
+					else
+					{
+						<a class="rank-link" data-rank-id="@list.RankId" href="@Url.Content("/Draft/BestAvailable?rankId=" + list.RankId)">@list.RankName</a>
+						<text>(<a class="update-rank-link" href="@Url.Content("/Rank/SetupRank?rankId=" + list.RankId)">Edit</a>)</text>
+					}
+				</div>
+			}
 		</div>
-		<a class="add-rank" href="#">&lt;Add Personal Ranking&gt;</a>
+		@if (draftId == null)
+		{
+			<a class="add-rank" href="#">&lt;Add Personal Ranking&gt;</a>
+		}
 		<div id="addRankDialog" class="center hide-yo-kids" title="Add New Ranking">
-			<p>Would you like to Copy from an Existing Ranking, or Create New?
-			@Html.DropDownList("CopyFromRanks", 
-				DodgeDynasty.Shared.Utilities.GetListItems(Model.GetCurrentAvailableDraftRanks(), r => r.RankName, r => r.RankId.ToString(), false), 
-				new { @class="rank-copy-select" })
-			<br />Copy first <input type="text" id="copyRowCount" name="copyRowCount" class="copy-row-count" value="200" maxlength="3" /> rows</p>
+			<p>
+				Would you like to Copy from an Existing Ranking, or Create New?
+				@Html.DropDownList("CopyFromRanks",
+				DodgeDynasty.Shared.Utilities.GetListItems(Model.GetCurrentAvailableDraftRanks(), r => r.RankName, r => r.RankId.ToString(), false),
+				new { @class = "rank-copy-select" })
+				<br />Copy first <input type="text" id="copyRowCount" name="copyRowCount" class="copy-row-count" value="200" maxlength="3" /> rows
+			</p>
 			<p class="note-text">(This may take a few moments...)</p>
 		</div>
-		@using (Html.BeginForm("AddRank", "Rank", FormMethod.Post, new {id="copyFromRanksForm"})) {
+		@using (Html.BeginForm("AddRank", "Rank", FormMethod.Post, new { id = "copyFromRanksForm" }))
+		{
 			<input type="hidden" id="id" name="id" />
 			<input type="hidden" id="copyCount" name="copyCount" />
 		}
