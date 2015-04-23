@@ -13,6 +13,7 @@ namespace DodgeDynasty
 						"~/Scripts/lib/jquery-ui-{version}.js",
 						"~/Scripts/lib/jquery.cookie.js",
 						"~/Scripts/lib/jquery.validate*",
+						"~/Scripts/lib/jquery.signalR-{version}.js",
 						"~/Scripts/lib/moment.js",
 						"~/Scripts/lib/bootstrap/js/bootstrap.js"));
 

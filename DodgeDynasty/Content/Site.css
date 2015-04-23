@@ -1728,15 +1728,20 @@ span.player-select
 }
 .dh-year, .dh-winner, .dh-runner-up {
 	display: inline-block;
-	width: 140px;
+
+}
+.dh-header .dh-year, .dh-header .dh-winner, .dh-header .dh-runner-up {
+	border: 1px dotted black;
 }
 .dh-year {
 	width: 210px;
 }
-.dh-header {
+.dh-winner {
+	width: 140px;
 }
-
-
+.dh-runner-up {
+	width: 140px;
+}
 
 
 /* RESPONSIVE STYLES
@@ -1879,6 +1884,12 @@ span.player-select
 	.act-draft-links
 	{
 		display: block;
+	}
+
+	/* Draft History
+	------------------------------------*/
+	.dh-header, .dh-winner, .dh-runner-up {
+		display: none;
 	}
 }
 

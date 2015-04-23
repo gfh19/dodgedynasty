@@ -2266,7 +2266,7 @@ namespace DodgeDynasty.Entities
         /// Create a new DraftRank object.
         /// </summary>
         /// <param name="draftRankId">Initial value of the DraftRankId property.</param>
-        /// <param name="currentRankId">Initial value of the RankId property.</param>
+        /// <param name="rankId">Initial value of the RankId property.</param>
         /// <param name="addTimestamp">Initial value of the AddTimestamp property.</param>
         /// <param name="lastUpdateTimestamp">Initial value of the LastUpdateTimestamp property.</param>
         public static DraftRank CreateDraftRank(global::System.Int32 draftRankId, global::System.Int32 rankId, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp)
@@ -4385,7 +4385,7 @@ namespace DodgeDynasty.Entities
         /// Create a new PlayerRank object.
         /// </summary>
         /// <param name="playerRankId">Initial value of the PlayerRankId property.</param>
-        /// <param name="currentRankId">Initial value of the RankId property.</param>
+        /// <param name="rankId">Initial value of the RankId property.</param>
         /// <param name="playerId">Initial value of the PlayerId property.</param>
         /// <param name="addTimestamp">Initial value of the AddTimestamp property.</param>
         /// <param name="lastUpdateTimestamp">Initial value of the LastUpdateTimestamp property.</param>
@@ -4698,7 +4698,7 @@ namespace DodgeDynasty.Entities
         /// Create a new PlayerRankHistory object.
         /// </summary>
         /// <param name="playerRankId">Initial value of the PlayerRankId property.</param>
-        /// <param name="currentRankId">Initial value of the RankId property.</param>
+        /// <param name="rankId">Initial value of the RankId property.</param>
         /// <param name="playerId">Initial value of the PlayerId property.</param>
         /// <param name="addTimestamp">Initial value of the AddTimestamp property.</param>
         /// <param name="lastUpdateTimestamp">Initial value of the LastUpdateTimestamp property.</param>
@@ -5063,7 +5063,7 @@ namespace DodgeDynasty.Entities
         /// <summary>
         /// Create a new Rank object.
         /// </summary>
-        /// <param name="currentRankId">Initial value of the RankId property.</param>
+        /// <param name="rankId">Initial value of the RankId property.</param>
         /// <param name="rankName">Initial value of the RankName property.</param>
         /// <param name="year">Initial value of the Year property.</param>
         /// <param name="rankDate">Initial value of the RankDate property.</param>

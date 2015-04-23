@@ -9,9 +9,28 @@
 <div id="draftDisplay">
 	<script type="text/javascript">
 		$(function () {
+			var chat = $.connection.chatHub;
+
+			chat.client.broadcastMessage = function (message) {
+				//var encodedMsg = $('<div />').text(message).html();
+				alert('Message received!  It said "' + message + '"!');
+			};
+
+			$.connection.hub.start().done(function () {
+				$('#sr-submit').click(function () {
+					chat.server.send($('#sr-message').val());
+					$('#sr-message').val('').focus();
+					alert('Clicked');
+				});
+			});
 		});
 	</script>
 	@Html.Partial("CurrentDraftPickPartial", Model)
+	<div>
+		<label>SignalR Message:</label>
+		<input id="sr-message" />
+		<button type="submit" id="sr-submit">Submit</button>
+	</div>
 	<div class="draft">
 		<div class="round-picks">
 	@foreach (var pick in Model.DraftPicks)
@@ -22,7 +41,7 @@
 			@Html.Raw("<div class=\"round-picks\">");
 			Model.CurrentRoundNum = pick.RoundNum;
 			<div class="clear-fix round">Round <span class="round-num">@Model.CurrentRoundNum</span>
-				@if(Model.CurrentDraft.NumKeepers >= pick.RoundNum) { 
+				@if(Model.CurrentDraft.NumKeepers >= pick.RoundNum) {
 					<text>(Keeper)</text>
 				}
 			</div>
