@@ -233,7 +233,7 @@
     <Compile Include="Shared\Exceptions\DuplicatePickException.cs" />
     <Compile Include="Shared\Utilities.cs" />
     <Compile Include="Controllers\RankController.cs" />
-    <Compile Include="SignalR\ChatHub.cs" />
+    <Compile Include="SignalR\DraftHub.cs" />
     <Compile Include="SignalR\SignalRChat.cs" />
   </ItemGroup>
   <ItemGroup>

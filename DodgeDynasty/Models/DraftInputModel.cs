@@ -19,6 +19,7 @@ namespace DodgeDynasty.Models
 		public OwnerUser CurrentDraftPickOwnerUser { get; set; }
 		public PlayerModel Player { get; set; }
 		public string Message { get; set; }
+		public bool PickMade { get; set; }
 
 		public DraftInputModel() : this(null)
 		{}

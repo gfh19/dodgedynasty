@@ -7,8 +7,7 @@
 </script>
 <div class="draft-info center">
 	@{
-		var draftId = Url.RequestContext.RouteData.Values["id"];
-		if (draftId != null)
+		if (DodgeDynasty.Shared.Utilities.GetRouteDraftId(Url.RequestContext.RouteData) != null)
 		{
 			<div class="draft-history-alert">
 				You're currently viewing <a href="@Url.Content("/Draft/History")">draft history</a> pages.

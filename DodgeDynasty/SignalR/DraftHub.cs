@@ -6,12 +6,12 @@ using Microsoft.AspNet.SignalR;
 
 namespace DodgeDynasty.SignalR
 {
-	public class ChatHub : Hub
+	public class DraftHub : Hub
 	{
-		public void Send(string message)
+		public void Pick()
 		{
 			// Call the broadcastMessage method to update clients.
-			Clients.All.broadcastMessage(message);
+			Clients.All.broadcastDraft();
 		}
 	}
 }

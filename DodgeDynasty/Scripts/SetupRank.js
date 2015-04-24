@@ -3,7 +3,11 @@
  $(function () {
 	setPickTimer(true);
 	callRefreshPageWithPickTimer("Draft/CurrentDraftPickPartial", ".draft-info");
-});
+ });
+
+function broadcastDraft() {
+	callRefreshPage("Draft/CurrentDraftPickPartial", ".draft-info");
+}
 
 function initSetupRank() {
 	displaySavedMessage();

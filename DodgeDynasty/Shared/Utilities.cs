@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using DodgeDynasty.Models;
 
 namespace DodgeDynasty.Shared
@@ -100,6 +101,17 @@ namespace DodgeDynasty.Shared
 			if (!string.IsNullOrEmpty(id))
 			{
 				return Convert.ToInt32(id);
+			}
+			return null;
+		}
+
+		public static string GetRouteDraftId(RouteData routeData)
+		{
+			int draftId;
+			var routeId = routeData.Values["id"];
+			if (routeId != null && Int32.TryParse(routeId.ToString(), out draftId))
+			{
+				return routeId.ToString();
 			}
 			return null;
 		}

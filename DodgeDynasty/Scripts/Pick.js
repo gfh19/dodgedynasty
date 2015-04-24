@@ -15,6 +15,10 @@
 	}
 });
 
+function broadcastDraft() {
+	getPickInfo();
+}
+
 function refreshUserPickWithPickTimer() {
 	setTimeout(function () {
 		callRefreshUserPickWithPickTimer();

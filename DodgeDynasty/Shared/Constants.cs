@@ -13,6 +13,7 @@ namespace DodgeDynasty.Shared
 		public static class AppSettings
 		{
 			public const string DefaultNumOwners = "DefaultNumOwners";
+			public const string RefreshTimer = "RefreshTimer";
 		}
 
 		public static class Cookies

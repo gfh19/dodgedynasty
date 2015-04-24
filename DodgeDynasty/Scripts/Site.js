@@ -1,4 +1,4 @@
-﻿var refreshTimer = 5000;
+﻿//var refreshTimer = 60000;
 var pickTimeSeconds = 0;
 var playerHints = [];
 var hasModelErrors = false;
@@ -6,6 +6,7 @@ var isUserTurn = false;
 var draftActive = false;
 var currentServerTime = null;
 var clientServerTimeOffset = null;
+var draftHub;
 
 $(function () {
 	$.ajaxSetup({
@@ -16,7 +17,23 @@ $(function () {
 
 function initRefreshedPage() {
 	checkUserTurnDialog();
+	if (draftActive) {
+		startHubConnection();
+		draftHub.client.broadcastDraft = broadcastDraft;
+	}
 };
+
+function startHubConnection(startFn) {
+	draftHub = $.connection.draftHub;
+	if ($.connection.hub.state == $.signalR.connectionState.disconnected) {
+		$.connection.hub.start().done(function () {
+			if (startFn) startFn();
+		});
+	}
+	else {
+		if (startFn) startFn();
+	}
+}
 
 function setPickTimer(recursive) {
 	var hasTimer = $(".start-time").length > 0;
@@ -137,45 +154,18 @@ function refreshPageWithPickTimer(url, elementId, timer) {
 };
 
 function callRefreshPageWithPickTimer(url, elementId) {
+	if (draftHistoryId == '') {
+		if (draftActive) {
+			callRefreshPage(url, elementId);
+			refreshPageWithPickTimer(url, elementId);
+		}
+	}
+};
+
+function callRefreshPage(url, elementId) {
 	ajaxGetReplace(url, elementId, function () {
 		setPickTimer(false);
 	});
-	if (draftActive) {
-		refreshPageWithPickTimer(url, elementId);
-	}
-};
-
-//TODO:  Replace with refactored functions
-//function refreshDraft() {
-//	setTimeout(function () {
-//		callRefreshDraft();
-//	},
-//	refreshTimer);
-//};
-
-//function callRefreshDraft() {
-//	ajaxGet("Draft/DisplayPartial", function (response) {
-//		replaceWith('#draftDisplay', response);
-//	});
-//	if (draftActive) {
-//		refreshDraft();
-//	}
-//}
-
-function refreshTeamDraft() {
-	setTimeout(function () {
-		callRefreshTeamDraft();
-	},
-	refreshTimer);
-};
-
-function callRefreshTeamDraft() {
-	ajaxGet("Draft/TeamDisplayPartial", function (response) {
-		replaceWith('#teamDisplay', response);
-	});
-	if (draftActive) {
-		refreshTeamDraft();
-	}
 }
 
 function setPlayerAutoComplete(fname, lname, pos, nfl) {
@@ -300,4 +290,9 @@ $.fn.serializeObject = function () {
 		}
 	});
 	return o;
+};
+
+function broadcastPickMade() {
+	startHubConnection(function () { draftHub.server.pick(); });
+	return true;
 };

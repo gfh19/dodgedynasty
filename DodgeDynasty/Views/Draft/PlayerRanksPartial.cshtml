@@ -21,7 +21,7 @@
 		</div>
 		<div class="more-rank-opts">
 			@{
-				var draftId = Url.RequestContext.RouteData.Values["id"];
+				var draftId = DodgeDynasty.Shared.Utilities.GetRouteDraftId(Url.RequestContext.RouteData);
 				if (draftId != null)
 				{
 					if (ViewBag.Title == "Best Available")

@@ -21,7 +21,7 @@
 					<ul class="menu top-nav">
 						@if (DodgeDynasty.Shared.Utilities.IsUserLoggedIn())
 						{
-							var draftId = Url.RequestContext.RouteData.Values["id"];
+							var draftId = DodgeDynasty.Shared.Utilities.GetRouteDraftId(Url.RequestContext.RouteData);
 							if (draftId != null)
 							{
 								<li>@Html.ActionLink("Pick", "Pick/" + draftId, "Draft")</li>
@@ -100,6 +100,8 @@
 	</div>
 	<script type="text/javascript">
 		var baseURL = '@Url.Content("~")';
+		var refreshTimer = @System.Configuration.ConfigurationManager.AppSettings[DodgeDynasty.Shared.Constants.AppSettings.RefreshTimer];
+		var draftHistoryId = '@DodgeDynasty.Shared.Utilities.GetRouteDraftId(Url.RequestContext.RouteData)';
 	</script>
 	@RenderSection("scripts", required: false)
 </body>

@@ -1,39 +1,40 @@
 ﻿@model DodgeDynasty.Models.DraftInputModel
 @{
-    ViewBag.Title = "Admin Input";
+	ViewBag.Title = "Admin Input";
 }
 
 @section scripts {
-    @Scripts.Render("~/bundles/jqueryval")
 	<script type="text/javascript" src="../../Scripts/Input.js"></script>
 }
 
 <div id="pickInfo">
 	<script type="text/javascript">
 		$(function () {
+			var pickMade = @(Model.PickMade ? "broadcastPickMade()" : "false");
 			playerHints = @Html.Raw(@Model.GetPlayerHints(true));
 			initInput();
 		});
 	</script>
 	<div id="playerEntry">
-	<div>@Model.GetCurrentDraftName()
-		<div class="draftGlance"> 
-		@if (Model.CurrentClockOwnerUser != null)
-		{
-			<text>Pick #@Model.CurrentDraftPick.PickNum, Current Team: @Model.CurrentDraftPickOwnerUser.TeamName</text>
-		}
-		else
-		{
-			<text>The Draft Has Completed</text>
-		}
+		<div>
+			@Model.GetCurrentDraftName()
+		<div class="draftGlance">
+			@if (Model.CurrentClockOwnerUser != null)
+			{
+				<text>Pick #@Model.CurrentDraftPick.PickNum, Current Team: @Model.CurrentDraftPickOwnerUser.TeamName</text>
+			}
+			else
+			{
+				<text>The Draft Has Completed</text>
+			}
 		</div>
 	</div>
-	@using (Html.BeginForm("Input", "Admin", FormMethod.Post, new { id="draftInputForm" }))
- {
+	@using (Html.BeginForm("Input", "Admin", FormMethod.Post, new { id = "draftInputForm" }))
+	{
 		@Html.ValidationSummary(true)
 
 		<a href="#" id="inputPrevious" class="navLink">Previous</a><a href="#" id="inputNext" class="navLink">Next</a>
-	 
+
 		@Html.LabelFor(m => m.Player.FirstName)
 		@Html.TextBoxFor(m => m.Player.FirstName, new { list = "playerHints", maxLength = "25" });
 		@Html.ValidationMessageFor(m => m.Player.FirstName)
@@ -47,23 +48,23 @@
 		@Html.DropDownListFor(m => m.Player.NFLTeam, Model.GetNFLListItems());
 		@Html.ValidationMessageFor(m => m.Player.NFLTeam)
 
-		@Html.HiddenFor(m => m.Player.TeamName);	
+		@Html.HiddenFor(m => m.Player.TeamName);
 		@Html.HiddenFor(m => m.Player.DraftId);
 		@Html.HiddenFor(m => m.Player.DraftPickId);
 		<div class="buttons">
 			<button id="inputSubmit" type="submit">Submit</button>
 			@if (Model.CurrentDraftPick != null && Model.CurrentDraftPick.PlayerId.HasValue)
 			{
-			<button id="inputDelete" type="button">Delete</button>
-	   		<div id="confirmDelete" class="center hide-yo-kids" title="Delete Pick?">
-				<p>Are you sure you want to delete this pick?</p>
-			</div>
+				<button id="inputDelete" type="button">Delete</button>
+				<div id="confirmDelete" class="center hide-yo-kids" title="Delete Pick?">
+					<p>Are you sure you want to delete this pick?</p>
+				</div>
 			}
 		</div>
- }
+	}
 	@if (!string.IsNullOrEmpty(Model.Message))
- {
-	<div>@Model.Message</div>
- }
-	</div>
+	{
+		<div>@Model.Message</div>
+	}
+</div>
 </div>
