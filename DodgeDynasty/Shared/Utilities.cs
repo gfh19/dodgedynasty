@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using DodgeDynasty.Entities;
 using DodgeDynasty.Models;
 
 namespace DodgeDynasty.Shared
@@ -67,6 +68,11 @@ namespace DodgeDynasty.Shared
 				return string.Empty;
 			}
 			return System.Web.HttpContext.Current.User.Identity.Name;
+		}
+		
+		public static int GetLoggedInUserId(IEnumerable<User> users)
+		{
+			return users.FirstOrDefault(u => u.UserName == GetLoggedInUserName()).UserId;
 		}
 
 		public static bool IsUserLoggedIn()

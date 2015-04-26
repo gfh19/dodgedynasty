@@ -200,5 +200,51 @@ namespace DodgeDynasty.Controllers
 			mapper.UpdateEntity(mapper.Model);
 			return RedirectToAction(Constants.Views.ActivateDraft);
 		}
+
+		[HttpGet]
+		[AdminAccess]
+		public ActionResult ChangePassword(ManageMessageId? message)
+		{
+			ViewBag.StatusMessage =
+				message == ManageMessageId.ChangePasswordSuccess ? "The password has been changed."
+				: "";
+			ViewBag.ReturnUrl = Url.Action("ChangePassword");
+			var mapper = new AdminPasswordMapper();
+			return View(mapper.GetModel());
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult ChangePassword(AdminPasswordModel model)
+		{
+			ViewBag.ReturnUrl = Url.Action("ChangePassword");
+			var mapper = new AdminPasswordMapper();
+			if (ModelState.IsValid)
+			{
+				bool changePasswordSucceeded;
+				try
+				{
+					mapper.UpdateEntity(model);
+					changePasswordSucceeded = mapper.ChangePasswordSucceeded;
+				}
+				catch (Exception)
+				{
+					changePasswordSucceeded = false;
+				}
+
+				if (changePasswordSucceeded)
+				{
+					return RedirectToAction("ChangePassword", new { Message = ManageMessageId.ChangePasswordSuccess });
+				}
+				else
+				{
+					ModelState.AddModelError("", "The password was not changed - user was not found.");
+					return View(mapper.GetModel());
+				}
+			}
+
+			// If we got this far, something failed, redisplay form
+			return View(mapper.GetModel());
+		}
 	}
 }

@@ -58,25 +58,25 @@ namespace DodgeDynasty.Models
 			return isUserAdmin;
 		}
 
-		public bool ChangePassword()
-		{
-			using (HomeEntity = new Entities.HomeEntity())
-			{
-				var passwordInfo = EncryptUtil.EncryptPasswordForStorage(Password);
+		//public bool ChangePassword()
+		//{
+		//	using (HomeEntity = new Entities.HomeEntity())
+		//	{
+		//		var passwordInfo = EncryptUtil.EncryptPasswordForStorage(Password);
 
-				var user = HomeEntity.Users.FirstOrDefault(u => u.UserName == UserName);
-				if (user != null)
-				{
-					user.Password = passwordInfo.PasswordHash;
-					user.Salt = passwordInfo.Salt;
-				}
-				else
-				{
-					return false;
-				}
-				HomeEntity.SaveChanges();
-			}
-			return true;
-		}
+		//		var user = HomeEntity.Users.FirstOrDefault(u => u.UserName == UserName);
+		//		if (user != null)
+		//		{
+		//			user.Password = passwordInfo.PasswordHash;
+		//			user.Salt = passwordInfo.Salt;
+		//		}
+		//		else
+		//		{
+		//			return false;
+		//		}
+		//		HomeEntity.SaveChanges();
+		//	}
+		//	return true;
+		//}
 	}
 }

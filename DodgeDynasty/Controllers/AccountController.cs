@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using WebMatrix.WebData;
 using DodgeDynasty.Models;
+using DodgeDynasty.Mappers;
 using DodgeDynasty.Shared;
 using DodgeDynasty.Filters;
 
@@ -55,16 +56,14 @@ namespace DodgeDynasty.Controllers
 		////
 		//// GET: /Account/Manage
 
-		public ActionResult Manage(ManageMessageId? message)
+		public ActionResult ChangePassword(ManageMessageId? message)
 		{
 			ViewBag.StatusMessage =
 				message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-				: message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
-				: message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
 				: "";
 			//ViewBag.HasLocalPassword = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
 			ViewBag.HasLocalPassword = Utilities.IsUserLoggedIn();
-			ViewBag.ReturnUrl = Url.Action("Manage");
+			ViewBag.ReturnUrl = Url.Action("ChangePassword");
 			return View();
 		}
 
@@ -73,16 +72,18 @@ namespace DodgeDynasty.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Manage(LocalPasswordModel mapper)
+		public ActionResult ChangePassword(LocalPasswordModel model)
 		{
-			ViewBag.ReturnUrl = Url.Action("Manage");
+			ViewBag.ReturnUrl = Url.Action("ChangePassword");
 			if (ModelState.IsValid)
 			{
 				bool changePasswordSucceeded;
 				try
 				{
-					var loginModel = new LoginModel{UserName = User.Identity.Name, Password = mapper.NewPassword};
-					changePasswordSucceeded = loginModel.ChangePassword();
+					var mapper = new PasswordMapper<LocalPasswordModel>();
+					mapper.UserName = User.Identity.Name;
+					mapper.UpdateEntity(model);
+					changePasswordSucceeded = mapper.ChangePasswordSucceeded;
 				}
 				catch (Exception)
 				{
@@ -91,7 +92,7 @@ namespace DodgeDynasty.Controllers
 
 				if (changePasswordSucceeded)
 				{
-					return RedirectToAction("Manage", new { Message = ManageMessageId.ChangePasswordSuccess });
+					return RedirectToAction("ChangePassword", new { Message = ManageMessageId.ChangePasswordSuccess });
 				}
 				else
 				{
@@ -100,7 +101,7 @@ namespace DodgeDynasty.Controllers
 			}
 
 			// If we got this far, something failed, redisplay form
-			return View(mapper);
+			return View(model);
 		}
 
 		#region Helpers
@@ -114,13 +115,6 @@ namespace DodgeDynasty.Controllers
 			{
 				return RedirectToAction("Index", "Home");
 			}
-		}
-
-		public enum ManageMessageId
-		{
-			ChangePasswordSuccess,
-			SetPasswordSuccess,
-			RemoveLoginSuccess,
 		}
 
 		private static string ErrorCodeToString(MembershipCreateStatus createStatus)

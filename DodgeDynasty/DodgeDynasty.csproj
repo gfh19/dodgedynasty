@@ -161,6 +161,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\DraftController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Mappers\AdminPasswordMapper.cs" />
     <Compile Include="Mappers\DraftHistoryMapper.cs" />
     <Compile Include="Mappers\EditDraftMapper.cs" />
     <Compile Include="Mappers\AddDraftMapper.cs" />
@@ -178,9 +179,11 @@
     <Compile Include="Mappers\MapperBase.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Mappers\PasswordMapper.cs" />
     <Compile Include="Mappers\RankSetupMapper.cs" />
     <Compile Include="Models\AddEditDraftModel.cs" />
     <Compile Include="Models\AddEditLeagueModel.cs" />
+    <Compile Include="Models\AdminPasswordModel.cs" />
     <Compile Include="Models\DraftHistoryModel.cs" />
     <Compile Include="Models\DraftPicksSetupModel.cs" />
     <Compile Include="Models\DraftSetupModel.cs" />
@@ -374,6 +377,7 @@
     <Content Include="Views\Admin\AddEditLeaguePartial.cshtml" />
     <Content Include="Views\Admin\AddEditDraftPartial.cshtml" />
     <Content Include="Views\Draft\History.cshtml" />
+    <Content Include="Views\Admin\ChangePassword.cshtml" />
     <None Include="Web.local.config">
       <SubType>Designer</SubType>
     </None>
@@ -398,11 +402,8 @@
     <Content Include="Images\orderedList8.png" />
     <Content Include="Images\orderedList9.png" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
-    <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Manage.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
