@@ -22,17 +22,13 @@ namespace DodgeDynasty.Models
 				var user = HomeEntity.Users.FirstOrDefault(u => u.UserName == identity.Name);
 				if (user != null)
 				{
-					var owner = HomeEntity.Owners.FirstOrDefault(o => o.UserId == user.UserId);
-					if (owner != null)
+					var draftRank = HomeEntity.DraftRanks.FirstOrDefault(dr => dr.RankId == rankId);
+					hasAccess = draftRank != null && (draftRank.UserId == user.UserId || (draftRank.UserId == null && !isUpdate));
+					if (!hasAccess && isUpdate && draftRank.UserId == null)
 					{
-						var draftRank = HomeEntity.DraftRanks.FirstOrDefault(dr => dr.RankId == rankId);
-						hasAccess = draftRank != null && (draftRank.OwnerId == owner.OwnerId || (draftRank.OwnerId == null && !isUpdate));
-						if (!hasAccess && isUpdate && draftRank.OwnerId == null)
-						{
-							var isAdmin = HomeEntity.UserRoles
-								.Where(ur => ur.UserId == user.UserId && ur.RoleId == Constants.Roles.Admin).Any();
-							hasAccess = isAdmin;
-						}
+						var isAdmin = HomeEntity.UserRoles
+							.Where(ur => ur.UserId == user.UserId && ur.RoleId == Constants.Roles.Admin).Any();
+						hasAccess = isAdmin;
 					}
 				}
 			}

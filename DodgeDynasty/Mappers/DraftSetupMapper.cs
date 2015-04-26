@@ -27,7 +27,7 @@ namespace DodgeDynasty.Mappers
 						DraftId = picksModel.DraftId,
 						PickNum = pick.PickNum,
 						RoundNum = pick.RoundNum,
-						OwnerId = pick.OwnerId,
+						UserId = pick.UserId,
 						AddTimestamp = DateTime.Now,
 						LastUpdateTimestamp = DateTime.Now
 					};
@@ -39,7 +39,7 @@ namespace DodgeDynasty.Mappers
 					var draftPick = HomeEntity.DraftPicks.First(p => p.DraftPickId == pick.DraftPickId);
 					draftPick.PickNum = pick.PickNum;
 					draftPick.RoundNum = pick.RoundNum;
-					draftPick.OwnerId = pick.OwnerId;
+					draftPick.UserId = pick.UserId;
 					draftPick.PlayerId = pick.PlayerId;
 					draftPick.LastUpdateTimestamp = DateTime.Now;
 				}

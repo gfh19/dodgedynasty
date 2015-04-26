@@ -16,8 +16,7 @@ namespace DodgeDynasty.Mappers
 			Model.LeagueId = LeagueId;
 			var league = HomeEntity.Leagues.AsEnumerable().Where(o => o.LeagueId == LeagueId).FirstOrDefault();
 			Model.LeagueName = league.LeagueName;
-			Model.LeagueOwnerUsers = OwnerUserMapper.GetOwnerUsers(HomeEntity.LeagueOwners.ToList(), HomeEntity.Owners.ToList(),
-				HomeEntity.Users.ToList(), LeagueId);
+			Model.LeagueOwnerUsers = OwnerUserMapper.GetOwnerUsers(HomeEntity.LeagueOwners.ToList(), HomeEntity.Users.ToList(), LeagueId);
 
 			var defaultDraftDate = DateTime.Now.AddDays(1).Date + new TimeSpan(20, 0, 0);
 			Model.DraftDate = defaultDraftDate.ToString("yyyy-MM-dd");
@@ -58,7 +57,7 @@ namespace DodgeDynasty.Mappers
 			{
 				DraftOwner owner = new DraftOwner
 				{
-					OwnerId = ownerUser.UserId,
+					UserId = ownerUser.UserId,
 					DraftId = draft.DraftId,
 					AddTimestamp = DateTime.Now,
 					LastUpdateTimestamp = DateTime.Now

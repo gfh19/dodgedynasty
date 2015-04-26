@@ -14,7 +14,7 @@ namespace DodgeDynasty.Models
 		[Required]
 		[DataType(DataType.Text)]
 		[Display(Name = "User Name")]
-		public new string UserName { get; set; }
+		public string UserName { get; set; }
 
 		public List<User> Users { get; set; }
 

@@ -37,10 +37,9 @@ namespace DodgeDynasty.Models
 
 		private void SetCurrentDraftPickOwnerUser()
 		{
-			var owner = Owners.First(o => o.OwnerId == CurrentDraftPick.OwnerId);
-			CurrentDraftPickOwnerUser = OwnerUserMapper.GetOwnerUser(owner,
-										Users.First(u=>u.UserId == owner.UserId),
-										CurrentLeagueOwners.First(lo=>lo.OwnerId == owner.OwnerId));
+			var user = Users.First(u => u.UserId == CurrentDraftPick.UserId);
+			CurrentDraftPickOwnerUser = OwnerUserMapper.GetOwnerUser(user,
+										CurrentLeagueOwners.First(lo=>lo.UserId == user.UserId));
 		}
 
 		public void ResetCurrentPickPlayerModel()
@@ -126,7 +125,7 @@ namespace DodgeDynasty.Models
 		public string GetTeamName(int ownerId)
 		{
 			string teamName = "N/A";
-			var ownerUser = DraftOwnerUsers.FirstOrDefault(ou => ou.OwnerId == ownerId);
+			var ownerUser = DraftOwnerUsers.FirstOrDefault(ou => ou.UserId == ownerId);
 			if (ownerUser != null)
 			{
 				teamName = ownerUser.TeamName;
@@ -139,7 +138,7 @@ namespace DodgeDynasty.Models
 			if (CurrentDraftPick != null)
 			{
 				var loggedInUser = DraftOwnerUsers.FirstOrDefault(ou => ou.UserName == Utilities.GetLoggedInUserName());
-				var currentDraftPickUser = DraftOwnerUsers.FirstOrDefault(ou => ou.OwnerId == CurrentDraftPick.OwnerId);
+				var currentDraftPickUser = DraftOwnerUsers.FirstOrDefault(ou => ou.UserId == CurrentDraftPick.UserId);
 				if (loggedInUser != null && currentDraftPickUser != null)
 				{
 					return loggedInUser.UserId == currentDraftPickUser.UserId;

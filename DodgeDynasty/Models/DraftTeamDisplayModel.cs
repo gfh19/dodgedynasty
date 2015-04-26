@@ -14,17 +14,17 @@ namespace DodgeDynasty.Models
 		public DraftTeamDisplayModel(int? draftId = null) : base(draftId)
 		{}
 
-		public List<DraftPick> GetTeamDraftPicks(int ownerId)
+		public List<DraftPick> GetTeamDraftPicks(int userId)
 		{
-			TeamDraftPicks = DraftPicks.Where(dp=>dp.OwnerId == ownerId).OrderBy(dp=>dp.PickNum).ToList();
+			TeamDraftPicks = DraftPicks.Where(dp => dp.UserId == userId).OrderBy(dp => dp.PickNum).ToList();
 			var playerIds = TeamDraftPicks.Select(dp=>dp.PlayerId).ToList();
 			TeamPlayers = DraftedPlayers.Where(p => playerIds.Contains(p.PlayerId)).ToList();
 			return TeamDraftPicks;
 		}
 
-		public List<Owner> GetTeamDraftOwners()
+		public List<User> GetTeamDraftOwners()
 		{
-			return DraftOwners.OrderBy(o => o.OwnerId == CurrentLoggedInOwnerUser.OwnerId ? 1 : 2)
+			return DraftUsers.OrderBy(o => o.UserId == CurrentLoggedInOwnerUser.UserId ? 1 : 2)
 				.ThenBy(o => o.NickName).ToList();
 		}
 	}

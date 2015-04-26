@@ -60,7 +60,7 @@ namespace DodgeDynasty.Mappers
 				{
 					RankId = rankId,
 					PrimaryDraftRanking = true,
-					OwnerId = model.OwnerId,
+					UserId = model.UserId,
 					AddTimestamp = DateTime.Now,
 					LastUpdateTimestamp = DateTime.Now
 				};
@@ -89,7 +89,7 @@ namespace DodgeDynasty.Mappers
 		{
 			rankSetupModel.DraftId = model.DraftId;
 			rankSetupModel.DraftYear = model.CurrentDraft.DraftYear ?? Convert.ToInt16(DateTime.Now.Year);
-			rankSetupModel.OwnerId = model.CurrentLoggedInOwnerUser.OwnerId;
+			rankSetupModel.UserId = model.CurrentLoggedInOwnerUser.UserId;
 			SetAddRankName(model, rankSetupModel);
 		}
 

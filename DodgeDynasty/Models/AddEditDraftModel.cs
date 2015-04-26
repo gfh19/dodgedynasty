@@ -61,9 +61,9 @@ namespace DodgeDynasty.Models
 
 		public List<SelectListItem> GetLeagueOwnerUserItems(OwnerUser ownerUser=null)
 		{
-			var selectedOwnerId = (ownerUser==null) ? string.Empty : ownerUser.OwnerId.ToString();
+			var selectedUserId = (ownerUser==null) ? string.Empty : ownerUser.UserId.ToString();
 			return Utilities.GetListItems<OwnerUser>(LeagueOwnerUsers.OrderBy(u => u.FirstName).ToList(),
-				u => u.FullName, u => u.OwnerId.ToString(), true, selectedOwnerId);
+				u => u.FullName, u => u.UserId.ToString(), true, selectedUserId);
 		}
 	}
 }

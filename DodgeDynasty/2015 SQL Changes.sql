@@ -1,4 +1,5 @@
-﻿
+﻿BEGIN TRANSACTION;
+
 /* 4/4/2015 */
 
 ALTER TABLE [dbo].[League]
@@ -48,13 +49,16 @@ INNER JOIN dbo.[User] u ON lo.UserId = u.UserId
 /* 4/12/15 */
 
 ALTER TABLE dbo.[Draft]
-ADD [AddTimestamp] [datetime] NOT NULL
+ADD [AddTimestamp] [datetime] NULL
 GO
 
 UPDATE Draft
 SET AddTimestamp = LastUpdateTimestamp
 GO
 
+ALTER TABLE dbo.[Draft]
+ALTER COLUMN [AddTimestamp] [datetime] NOT NULL
+GO
 
 /* 4/19/15 */
 
@@ -69,3 +73,51 @@ GO
 	DraftOwner table for DraftId, 
 	!!!
 ***/
+
+
+/* 4/25/15 */
+
+ALTER TABLE dbo.[User]
+ADD [IsActive] [bit] NOT NULL DEFAULT(1),
+	[LastUpdateTimestamp] [datetime] NULL
+GO
+
+EXEC sp_RENAME '[User].AddDateTime', 'AddTimestamp', 'COLUMN'
+GO
+
+UPDATE dbo.[User]
+SET LastUpdateTimestamp = AddTimestamp
+GO
+
+ALTER TABLE dbo.[User]
+ALTER COLUMN [LastUpdateTimestamp] [datetime] NOT NULL
+ALTER TABLE dbo.[User]
+ALTER COLUMN [AddTimestamp] [datetime] NOT NULL
+GO
+
+ALTER TABLE dbo.[User]
+ADD [NickName] varchar(10) NULL
+GO
+
+UPDATE u
+SET u.NickName = o.NickName
+FROM dbo.[User] u, dbo.[Owner] o
+WHERE u.UserId = o.UserId
+GO
+
+EXEC sp_RENAME '[DraftRank].OwnerId', 'UserId', 'COLUMN'
+GO
+
+ALTER TABLE dbo.[LeagueOwner]
+DROP COLUMN [OwnerId]
+GO
+
+EXEC sp_RENAME '[DraftOwner].OwnerId', 'UserId', 'COLUMN'
+GO
+
+EXEC sp_RENAME '[DraftPick].OwnerId', 'UserId', 'COLUMN'
+GO
+
+
+
+COMMIT TRANSACTION;

@@ -22,10 +22,9 @@ namespace DodgeDynasty.Models
 		public List<DraftRound> DraftRounds { get; set; }
 		public List<DraftOrder> DraftOrders { get; set; }
 		public List<DraftPick> DraftPicks { get; set; }
-		public List<Owner> DraftOwners { get; set; }
+		public List<User> DraftUsers { get; set; }
 		public List<OwnerUser> DraftOwnerUsers { get; set; }
 		public List<User> Users { get; set; }
-		public List<Owner> Owners { get; set; }
 		public List<LeagueOwner> LeagueOwners { get; set; }
 		public List<NFLTeam> NFLTeams { get; set; }
 		public List<Player> Players { get; set; }
@@ -89,7 +88,6 @@ namespace DodgeDynasty.Models
 					Players = HomeEntity.Players.Where(p => p.IsActive).ToList();
 					Positions = HomeEntity.Positions.ToList();
 					Leagues = HomeEntity.Leagues.ToList();
-					Owners = HomeEntity.Owners.ToList();
 					Users = HomeEntity.Users.ToList();
 					LeagueOwners = HomeEntity.LeagueOwners.ToList();
 					DraftRanks = HomeEntity.DraftRanks.ToList();
@@ -104,28 +102,26 @@ namespace DodgeDynasty.Models
 		{
 			var userName = Utilities.GetLoggedInUserName();
 			var user = HomeEntity.Users.FirstOrDefault(u => u.UserName == userName);
-			var owner = HomeEntity.Owners.FirstOrDefault(o => o.UserId == user.UserId);
 			if (draftId != null)
 			{
 				DraftId = draftId.Value;
 			}
 			if (DraftId == null)
 			{
-				DraftId = GetLatestOwnerDraftId(userName, user, owner);
+				DraftId = GetLatestOwnerDraftId(userName, user);
 			}
 			CurrentDraft = Drafts.First(d => d.DraftId == DraftId);
 			CurrentLeagueOwners = LeagueOwners.Where(lo => lo.LeagueId == CurrentDraft.LeagueId).ToList();
-			var leagueOwner = CurrentLeagueOwners.FirstOrDefault(lo => lo.OwnerId == owner.OwnerId);
-			CurrentLoggedInOwnerUser = OwnerUserMapper.GetOwnerUser(owner, user, leagueOwner);
+			var leagueOwner = CurrentLeagueOwners.FirstOrDefault(lo => lo.UserId == user.UserId);
+			CurrentLoggedInOwnerUser = OwnerUserMapper.GetOwnerUser(user, leagueOwner);
 			return DraftId;
 		}
 
-		private int GetLatestOwnerDraftId(string userName = null, User user = null, Owner owner = null)
+		private int GetLatestOwnerDraftId(string userName = null, User user = null)
 		{
 			userName = userName ?? Utilities.GetLoggedInUserName();
 			user = user ?? HomeEntity.Users.FirstOrDefault(u => u.UserName == userName);
-			owner = owner ?? HomeEntity.Owners.FirstOrDefault(o => o.UserId == user.UserId);
-			var ownerDraftIds = HomeEntity.DraftOwners.Where(o => o.OwnerId == owner.OwnerId).Select(o => o.DraftId).ToList();
+			var ownerDraftIds = HomeEntity.DraftOwners.Where(o => o.UserId == user.UserId).Select(o => o.DraftId).ToList();
 			var ownerDrafts = Drafts.Where(d => ownerDraftIds.Contains(d.DraftId))
 				.OrderByDescending(o => o.IsActive).ThenBy(o => o.IsComplete).ThenBy(o => o.DraftDate).ToList();
 			if (ownerDrafts.Any(o => !o.IsComplete))
@@ -146,17 +142,15 @@ namespace DodgeDynasty.Models
 			DraftOrders = HomeEntity.DraftOrders.Where(d => d.DraftId == DraftId).ToList();
 			DraftPicks = HomeEntity.DraftPicks.Where(d => d.DraftId == DraftId).OrderBy(d => d.PickNum).ToList();
 
-			var draftOwnerIds = HomeEntity.DraftOwners.Where(d => d.DraftId == DraftId).Select(d => d.OwnerId).ToList();
-			DraftOwners = HomeEntity.Owners.Where(o => draftOwnerIds.Contains(o.OwnerId)).OrderBy(o=>o.NickName).ToList();
-			DraftOwnerUsers = GetOwnerUsers(DraftOwners);
+			var draftUserIds = HomeEntity.DraftOwners.Where(d => d.DraftId == DraftId).Select(d => d.UserId).ToList();
+			DraftUsers = HomeEntity.Users.Where(u => draftUserIds.Contains(u.UserId)).OrderBy(o => o.NickName).ToList();
+			DraftOwnerUsers = GetOwnerUsers(DraftUsers);
 
 			DraftPicks = GetDraftPicks();
 			var playerIds = DraftPicks.Select(dp => dp.PlayerId).ToList();
 			DraftedPlayers = HomeEntity.Players.Where(p =>
 				playerIds.Contains(p.PlayerId)).ToList();
-			var userIds = Owners.Select(o => o.UserId).ToList();
-			Users = HomeEntity.Users.Where(u =>
-				userIds.Contains(u.UserId)).ToList();
+			Users = HomeEntity.Users.ToList();
 			CurrentDraftPick = DraftPicks.OrderBy(p => p.PickNum)
 				.FirstOrDefault(p => p.PlayerId == null);
 			if (CurrentDraftPick != null)
@@ -164,10 +158,9 @@ namespace DodgeDynasty.Models
 				var currentPickNum = CurrentDraftPick.PickNum;
 				PreviousDraftPick = DraftPicks.FirstOrDefault(p => p.PickNum == (currentPickNum - 1));
 				NextDraftPick = DraftPicks.FirstOrDefault(p => p.PickNum == (currentPickNum + 1));
-				var currentClockOwner = Owners.FirstOrDefault(o => o.OwnerId == CurrentDraftPick.OwnerId);
-				var currentClockLeagueOwner = CurrentLeagueOwners.FirstOrDefault(lo => lo.OwnerId == CurrentDraftPick.OwnerId);
-				CurrentClockOwnerUser = OwnerUserMapper.GetOwnerUser(currentClockOwner,
-					Users.FirstOrDefault(u => u.UserId == currentClockOwner.UserId), currentClockLeagueOwner);
+				var currentClockUser = Users.FirstOrDefault(u => u.UserId == CurrentDraftPick.UserId);
+				var currentClockLeagueOwner = CurrentLeagueOwners.FirstOrDefault(lo => lo.UserId == CurrentDraftPick.UserId);
+				CurrentClockOwnerUser = OwnerUserMapper.GetOwnerUser(currentClockUser, currentClockLeagueOwner);
 			}
 		}
 
@@ -177,12 +170,12 @@ namespace DodgeDynasty.Models
 			GetDraftInfo();
 		}
 
-		private List<OwnerUser> GetOwnerUsers(List<Owner> draftOwners)
+		private List<OwnerUser> GetOwnerUsers(List<User> draftUsers)
 		{
-			var ownerUsers = from o in draftOwners
+			var ownerUsers = from o in draftUsers
 							 join u in Users on o.UserId equals u.UserId
 							 join lo in CurrentLeagueOwners on u.UserId equals lo.UserId
-							 select OwnerUserMapper.GetOwnerUser(o, u, lo);
+							 select OwnerUserMapper.GetOwnerUser(u, lo);
 			return ownerUsers.ToList();
 		}
 
@@ -192,23 +185,23 @@ namespace DodgeDynasty.Models
 			return DraftPicks.ToList();
 		}
 
-		public List<DraftOrderUserModel> GetDraftOrderForRound(int roundId)
-		{
-			//var draftSpots = DraftOrders.Where(d=>d.RoundId == roundId).OrderBy(d=>d.OrderId)
-			var draftSpots = from d in DraftOrders
-							 join u in Users on d.OwnerId equals u.UserId
-							 where d.RoundId == roundId
-							 select new DraftOrderUserModel
-							 {
-								 DraftId = d.DraftId,
-								 RoundId = d.RoundId,
-								 OrderId = d.OrderId,
-								 OwnerId = d.OwnerId,
-								 FirstName = u.FirstName,
-								 LastName = u.LastName
-							 };
-			return draftSpots.ToList();
-		}
+		//public List<DraftOrderUserModel> GetDraftOrderForRound(int roundId)
+		//{
+		//	//var draftSpots = DraftOrders.Where(d=>d.RoundId == roundId).OrderBy(d=>d.OrderId)
+		//	var draftSpots = from d in DraftOrders
+		//					 join u in Users on d.UserId equals u.UserId
+		//					 where d.RoundId == roundId
+		//					 select new DraftOrderUserModel
+		//					 {
+		//						 DraftId = d.DraftId,
+		//						 RoundId = d.RoundId,
+		//						 OrderId = d.OrderId,
+		//						 UserId = d.UserId,
+		//						 FirstName = u.FirstName,
+		//						 LastName = u.LastName
+		//					 };
+		//	return draftSpots.ToList();
+		//}
 
 		public void SetCurrentGridPlayer(int? playerId)
 		{
@@ -229,12 +222,11 @@ namespace DodgeDynasty.Models
 			return player;
 		}
 
-		public void SetCurrentGridOwnerUser(int ownerId)
+		public void SetCurrentGridOwnerUser(int userId)
 		{
-			var currentGridOwner = Owners.First(o => o.OwnerId == ownerId);
-			var currentGridUser = Users.First(u => u.UserId == currentGridOwner.UserId);
-			var currentGridLeagueOwner = CurrentLeagueOwners.First(lo => lo.UserId == currentGridOwner.UserId);
-			CurrentGridOwnerUser = OwnerUserMapper.GetOwnerUser(currentGridOwner, currentGridUser, currentGridLeagueOwner);
+			var currentGridUser = Users.First(u => u.UserId == userId);
+			var currentGridLeagueOwner = CurrentLeagueOwners.First(lo => lo.UserId == currentGridUser.UserId);
+			CurrentGridOwnerUser = OwnerUserMapper.GetOwnerUser(currentGridUser, currentGridLeagueOwner);
 		}
 
 		public string ShowCurrentGridPlayerInfo()
@@ -258,7 +250,7 @@ namespace DodgeDynasty.Models
 				}
 				var ownerUser = DraftOwnerUsers.FirstOrDefault(ou => ou.UserName == userName);
 				var nextUserPick = 
-					DraftPicks.FirstOrDefault(p => p.PickNum > CurrentDraftPick.PickNum && p.OwnerId == ownerUser.OwnerId);
+					DraftPicks.FirstOrDefault(p => p.PickNum > CurrentDraftPick.PickNum && p.UserId == ownerUser.UserId);
 				if (nextUserPick != null)
 				{
 					return nextUserPick.PickNum - CurrentDraftPick.PickNum;
@@ -300,14 +292,10 @@ namespace DodgeDynasty.Models
 			return (CurrentClockOwnerUser != null && CurrentClockOwnerUser.UserName == currentUserName);
 		}
 
-		public bool IsLoggedInUser(string ownerId)
+		public bool IsLoggedInUser(string userId)
 		{
-			//if (!string.IsNullOrEmpty(ownerId)) {
-			//    var ownerUser = DraftOwnerUsers.First(ou => ou.OwnerId == Convert.ToInt32(ownerId));
-			//    return (ownerUser.UserName == Utilities.GetLoggedInUserName());
-			//}
-			if (!string.IsNullOrEmpty(ownerId)) {
-				return CurrentLoggedInOwnerUser.OwnerId.ToString() == ownerId;
+			if (!string.IsNullOrEmpty(userId)) {
+				return CurrentLoggedInOwnerUser.UserId.ToString() == userId;
 			}
 			return false;
 		}

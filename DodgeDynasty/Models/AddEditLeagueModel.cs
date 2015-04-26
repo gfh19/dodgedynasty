@@ -24,7 +24,7 @@ namespace DodgeDynasty.Models
 		public List<SelectListItem> GetActiveOwnerUsers(string userId=null)
 		{
 			return Utilities.GetListItems<OwnerUser>(ActiveOwnerUsers.OrderBy(u=>u.FirstName).ToList(),
-				u => u.FullName, u => u.OwnerId.ToString(), true, userId);
+				u => u.FullName, u => u.UserId.ToString(), true, userId);
 		}
 
 	}

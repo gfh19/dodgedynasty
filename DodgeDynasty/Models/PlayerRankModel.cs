@@ -78,15 +78,15 @@ namespace DodgeDynasty.Models
 							 join t in NFLTeams on p.NFLTeam equals t.TeamAbbr
 							 join pick in DraftPicks on pr.PlayerId equals pick.PlayerId into dpLeft	//Left Outer Join
 							 from pick in dpLeft.DefaultIfEmpty()
-							 join o in Owners on ((pick != null) ? pick.OwnerId : -1) equals o.OwnerId into oLeft	//Left Outer Join
-							 from o in oLeft.DefaultIfEmpty()
-							 join lo in CurrentLeagueOwners on ((pick != null) ? pick.OwnerId : -1) equals lo.OwnerId into loLeft
+							 join u in Users on ((pick != null) ? pick.UserId : -1) equals u.UserId into uLeft	//Left Outer Join
+							 from u in uLeft.DefaultIfEmpty()
+							 join lo in CurrentLeagueOwners on ((pick != null) ? pick.UserId : -1) equals lo.UserId into loLeft
 							 from lo in loLeft.DefaultIfEmpty()
-							 select GetRankedPlayer(pr, p, t, pick, o, lo)).OrderBy(p => p.RankNum).ToList();
+							 select GetRankedPlayer(pr, p, t, pick, u, lo)).OrderBy(p => p.RankNum).ToList();
 			return RankedPlayers;
 		}
 
-		private RankedPlayer GetRankedPlayer(PlayerRank pr, Player p, NFLTeam t, DraftPick pick=null, Owner o=null, LeagueOwner lo=null)
+		private RankedPlayer GetRankedPlayer(PlayerRank pr, Player p, NFLTeam t, DraftPick pick=null, User u=null, LeagueOwner lo=null)
 		{
 			return new RankedPlayer
 			{
@@ -103,9 +103,9 @@ namespace DodgeDynasty.Models
 				PosRankNum = pr.PosRankNum,
 				AuctionValue = pr.AuctionValue,
 				PickNum = (pick != null) ? pick.PickNum.ToString() : null,
-				OwnerId = (o != null) ? o.OwnerId.ToString() : null,
-				NickName = (o != null) ? o.NickName : null,
-				CssClass = (o != null) ? lo.CssClass : null
+				UserId = (u != null) ? u.UserId.ToString() : null,
+				NickName = (u != null) ? u.NickName : null,
+				CssClass = (u != null) ? lo.CssClass : null
 			};
 		}
 

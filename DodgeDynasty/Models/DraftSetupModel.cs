@@ -31,7 +31,7 @@ namespace DodgeDynasty.Models
 
 		public List<SelectListItem> GetDraftOwnerListItems()
 		{
-			return Utilities.GetListItems<Owner>(DraftOwners, o => o.NickName, o => o.OwnerId.ToString());
+			return Utilities.GetListItems<User>(DraftUsers, u => u.NickName, u => u.UserId.ToString());
 		}
 
 		public bool IsSnakeDraft()

@@ -11,7 +11,7 @@ namespace DodgeDynasty.Models.Types
 		public int RankId { get; set; }
 		public int? DraftId { get; set; }
 		public bool? PrimaryDraftRanking { get; set; }
-		public int? OwnerId { get; set; }
+		public int? UserId { get; set; }
 		public string RankName { get; set; }
 		public short Year { get; set; }
 		public DateTime RankDate { get; set; }

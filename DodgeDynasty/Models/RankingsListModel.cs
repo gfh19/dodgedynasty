@@ -17,7 +17,7 @@ namespace DodgeDynasty.Models
 			var fullDraftRanks = from dr in DraftRanks
 									  join r in Ranks on dr.RankId equals r.RankId
 									  where ((dr.DraftId == null && r.Year == CurrentDraft.DraftYear) || dr.DraftId == DraftId)
-										&& (dr.OwnerId == null || dr.OwnerId == CurrentLoggedInOwnerUser.OwnerId)
+										&& (dr.UserId == null || dr.UserId == CurrentLoggedInOwnerUser.UserId)
 									  select GetDraftRankModel(dr, r);
 			return fullDraftRanks.ToList();
 		}
@@ -30,7 +30,7 @@ namespace DodgeDynasty.Models
 				RankId = r.RankId,
 				DraftId = dr.DraftId,
 				PrimaryDraftRanking = dr.PrimaryDraftRanking,
-				OwnerId = dr.OwnerId,
+				UserId = dr.UserId,
 				RankName = r.RankName,
 				Year = r.Year,
 				RankDate = r.RankDate,
@@ -45,9 +45,9 @@ namespace DodgeDynasty.Models
 			List<DraftRankModel> publicRankings = new List<DraftRankModel>();
 			var currentDraftRanks = GetCurrentAvailableDraftRanks();
 
-			var allLeaguesRanks = currentDraftRanks.Where(dr => dr.DraftId == null && dr.OwnerId == null);
-			var thisLeagueRanks = currentDraftRanks.Where(dr => dr.DraftId == DraftId && dr.OwnerId == null);
-			var primaryCurrentLeagueRanks = currentDraftRanks.Where(dr => dr.OwnerId == null &&
+			var allLeaguesRanks = currentDraftRanks.Where(dr => dr.DraftId == null && dr.UserId == null);
+			var thisLeagueRanks = currentDraftRanks.Where(dr => dr.DraftId == DraftId && dr.UserId == null);
+			var primaryCurrentLeagueRanks = currentDraftRanks.Where(dr => dr.UserId == null &&
 				(dr.PrimaryDraftRanking.HasValue && dr.PrimaryDraftRanking.Value));
 			
 			publicRankings.AddRange(primaryCurrentLeagueRanks
@@ -63,7 +63,7 @@ namespace DodgeDynasty.Models
 		public List<DraftRankModel> GetPrivateRankings()
 		{
 			var currentDraftRanks = GetCurrentAvailableDraftRanks();
-			var privateRankings = currentDraftRanks.Where(dr => dr.OwnerId == CurrentLoggedInOwnerUser.OwnerId)
+			var privateRankings = currentDraftRanks.Where(dr => dr.UserId == CurrentLoggedInOwnerUser.UserId)
 				.OrderByDescending(r => r.RankDate).ThenByDescending(r => r.LastUpdateTimestamp).ToList();
 			return privateRankings.ToList();
 		}

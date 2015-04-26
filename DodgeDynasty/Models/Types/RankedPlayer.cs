@@ -20,7 +20,7 @@ namespace DodgeDynasty.Models.Types
 		public int? PosRankNum { get; set; }
 		public decimal? AuctionValue { get; set; }
 		public string PickNum { get; set; }
-		public string OwnerId { get; set; }
+		public string UserId { get; set; }
 		public string NickName { get; set; }
 		public string CssClass { get; set; }
 	}

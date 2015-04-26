@@ -19,13 +19,12 @@ namespace DodgeDynasty.Mappers
 			var draft = HomeEntity.Drafts.Where(o => o.DraftId == DraftId).FirstOrDefault();
 			var league = HomeEntity.Leagues.AsEnumerable().Where(o => o.LeagueId == draft.LeagueId).FirstOrDefault();
 			Model.LeagueId = league.LeagueId;
-			var owners = HomeEntity.Owners.ToList();
 			var users = HomeEntity.Users.ToList();
 			var allLeagueOwners = HomeEntity.LeagueOwners.ToList();
 			var leagueOwners = allLeagueOwners.Where(o => o.LeagueId == Model.LeagueId).ToList();
 
 			Model.LeagueName = league.LeagueName;
-			Model.LeagueOwnerUsers = OwnerUserMapper.GetOwnerUsers(leagueOwners, owners, users);
+			Model.LeagueOwnerUsers = OwnerUserMapper.GetOwnerUsers(leagueOwners, users);
 
 			Model.DraftDate = draft.DraftDate.ToString("yyyy-MM-dd");
 			Model.DraftTime = draft.DraftDate.ToString("HH:mm");
@@ -36,11 +35,10 @@ namespace DodgeDynasty.Mappers
 			Model.NumKeepers = draft.NumKeepers.Value;
 			Model.Format = draft.Format;
 			Model.DraftOwnerUsers = (from dro in HomeEntity.DraftOwners.AsEnumerable()
-									 join o in owners on dro.OwnerId equals o.OwnerId
-									 join u in users on o.UserId equals u.UserId
-									 join lo in leagueOwners on o.UserId equals lo.UserId
+									 join u in users on dro.UserId equals u.UserId
+									 join lo in leagueOwners on u.UserId equals lo.UserId
 									 where dro.DraftId == Model.DraftId
-									 select OwnerUserMapper.GetOwnerUser(o, u, lo)).ToList();
+									 select OwnerUserMapper.GetOwnerUser(u, lo)).ToList();
 		}
 
 		protected override void DoUpdate(T model)
@@ -72,7 +70,7 @@ namespace DodgeDynasty.Mappers
 			{
 				DraftOwner owner = new DraftOwner
 				{
-					OwnerId = ownerUser.UserId,
+					UserId = ownerUser.UserId,
 					DraftId = draft.DraftId,
 					AddTimestamp = DateTime.Now,
 					LastUpdateTimestamp = DateTime.Now

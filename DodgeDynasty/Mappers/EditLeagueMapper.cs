@@ -17,13 +17,12 @@ namespace DodgeDynasty.Mappers
 		protected override void PopulateModel()
 		{
 			Model.LeagueId = Int32.Parse(LeagueId);
-			var owners = HomeEntity.Owners.ToList();
 			var users = HomeEntity.Users.ToList();
 			var allLeagueOwners = HomeEntity.LeagueOwners.ToList();
-			Model.OwnerUsers = OwnerUserMapper.GetOwnerUsers(allLeagueOwners, owners, users);
+			Model.OwnerUsers = OwnerUserMapper.GetOwnerUsers(allLeagueOwners, users);
 			Model.ActiveOwnerUsers = Model.OwnerUsers.Where(o => o.IsActive).ToList();
 			var leagueOwners = allLeagueOwners.Where(o=>o.LeagueId == Model.LeagueId).ToList();
-			Model.LeagueOwnerUsers = OwnerUserMapper.GetOwnerUsers(leagueOwners, owners, users, Model.LeagueId);
+			Model.LeagueOwnerUsers = OwnerUserMapper.GetOwnerUsers(leagueOwners, users, Model.LeagueId);
 			Model.LeagueName = HomeEntity.Leagues.Where(o => o.LeagueId == Model.LeagueId).FirstOrDefault().LeagueName;
 		}
 
@@ -43,18 +42,16 @@ namespace DodgeDynasty.Mappers
 
 			foreach (var lo in model.LeagueOwnerUsers)
 			{
-				var ou = (from o in HomeEntity.Owners.AsEnumerable()
-						  join u in HomeEntity.Users.AsEnumerable() on o.UserId equals u.UserId
+				var user = (from u in HomeEntity.Users.AsEnumerable()
 						  where u.UserId == lo.UserId
-						  select new { OwnerId = o.OwnerId, UserName = u.UserName }).FirstOrDefault();
-				lo.OwnerId = ou.OwnerId;
-				lo.CssClass = ou.UserName;
-				//Someday add more in depth CssClass assignment & lookup i.e. CssClass SQL table)
+						  select u).FirstOrDefault();
+				lo.UserId = user.UserId;
+				lo.CssClass = user.UserName;
+				//TODO:  Someday add more in depth CssClass assignment & lookup i.e. CssClass SQL table)
 
 				//TODO:  Consolidate into one table!
 				LeagueOwner owner = new LeagueOwner
 				{
-					OwnerId = lo.OwnerId,
 					UserId = lo.UserId,
 					LeagueId = model.LeagueId,
 					TeamName = lo.TeamName,

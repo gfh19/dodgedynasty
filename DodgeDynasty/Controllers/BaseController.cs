@@ -40,7 +40,7 @@ namespace DodgeDynasty.Controllers
 				var pick = ex.DuplicatePick;
 				ModelState.AddModelError("", string.Format("Error - {0} {1} has already been drafted (Pick #{2}, by {3}).",
 						playerModel.FirstName, playerModel.LastName, pick.PickNum, 
-						nextDraftInputModel.GetTeamName(pick.OwnerId)));
+						nextDraftInputModel.GetTeamName(pick.UserId)));
 				nextDraftInputModel = DraftFactory.GetCurrentDraftInputModel();
 				return View(nextDraftInputModel);
 			}

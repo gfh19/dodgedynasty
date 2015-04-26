@@ -7,7 +7,6 @@ namespace DodgeDynasty.Models.Types
 {
 	public class OwnerUser
 	{
-		public int OwnerId { get; set; }
 		public int UserId { get; set; }
 		public string UserName { get; set; }
 		public byte[] Password { get; set; }
