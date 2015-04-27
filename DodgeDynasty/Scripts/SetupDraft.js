@@ -234,13 +234,13 @@ function bindSubmitDraftPicks() {
 		var draftPicksModel = {};
 		draftPicksModel.DraftId = $("#setupDraft").attr("data-draft-id");
 		var draftPicks = new Array();
-		var ownerIds = new Array();
+		var userIds = new Array();
 		$.each($(".round-picks"), function (index, roundPicks) {
 			var roundNum = parseInt($(".round", roundPicks).attr("data-round-num"));
 			$.each($(".pick", roundPicks), function (index, pick) {
 				var draftPickId = parseInt($(pick).attr("data-pick-id"));
 				var pickNum = parseInt($(pick).attr("data-pick-num"));
-				var ownerId = $("select option:selected", pick).val();
+				var userId = $("select option:selected", pick).val();
 				var playerId = null;
 				var pickedPlayer = $(".picked-player", pick);
 				if (pickedPlayer.length > 0) {
@@ -251,14 +251,14 @@ function bindSubmitDraftPicks() {
 					DraftId: draftPicksModel.DraftId,
 					PickNum: pickNum,
 					RoundNum: roundNum,
-					OwnerId: ownerId,
+					UserId: userId,
 					PlayerId: playerId
 				});
-				ownerIds.push(ownerId);
+				userIds.push(userId);
 			});
 		});
 		draftPicksModel.DraftPicks = draftPicks;
-		if (validateDraftPicksModel(ownerIds)) {
+		if (validateDraftPicksModel(userIds)) {
 			ajaxPost(draftPicksModel, "Admin/SetupDraft", function (response) {
 				$("#setupDraftForm").submit();
 			}, null, null, true);
@@ -283,12 +283,12 @@ function bindDeletePlayer(link) {
 	});
 };
 
-function validateDraftPicksModel(ownerIds) {
+function validateDraftPicksModel(userIds) {
 	var isValid = true;
-	var blankOwner = $.inArray("", ownerIds);
+	var blankOwner = $.inArray("", userIds);
 	if (blankOwner > -1) {
 		$(".blank-owner-msg").removeClass("hide-yo-wives");
-		markInvalidOwnerId("");
+		markInvalidUserId("");
 		isValid = false;
 	}
 	return isValid;

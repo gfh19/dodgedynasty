@@ -219,7 +219,6 @@
     <Compile Include="Models\DraftFactory.cs" />
     <Compile Include="Models\DraftInputModel.cs" />
     <Compile Include="Models\DraftModel.cs" />
-    <Compile Include="Models\DraftOrderUserModel.cs" />
     <Compile Include="Models\DraftTeamDisplayModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\ModelBase.cs" />

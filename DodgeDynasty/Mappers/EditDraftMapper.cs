@@ -54,8 +54,6 @@ namespace DodgeDynasty.Mappers
 			draft.NumRounds = Convert.ToInt16(model.NumRounds);
 			draft.NumKeepers = Convert.ToInt16(model.NumKeepers);
 			draft.Format = model.Format;
-			draft.IsActive = model.IsActive;
-			draft.IsComplete = model.IsComplete;
 			draft.LastUpdateTimestamp = DateTime.Now;
 			HomeEntity.SaveChanges();
 

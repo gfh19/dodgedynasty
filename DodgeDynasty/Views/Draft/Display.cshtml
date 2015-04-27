@@ -23,7 +23,7 @@
 				}
 			</div>
 		}
-		Model.SetCurrentGridOwnerUser(pick.OwnerId);
+		Model.SetCurrentGridOwnerUser(pick.UserId);
 		Model.SetCurrentGridPlayer(pick.PlayerId);
 		<div class="draft-pick-outline @(Model.IsSnakeRound(pick.RoundNum) ? "snake-pick" : (Model.IsLastPickBeforeSnakeRound(pick) ? "pre-snake-pick" : "")) outline">
 		<div class="draft-pick @Model.CurrentGridOwnerUser.CssClass @(!string.IsNullOrEmpty(Model.CurrentGridPlayer.PlayerName) ? "filled" : "")">

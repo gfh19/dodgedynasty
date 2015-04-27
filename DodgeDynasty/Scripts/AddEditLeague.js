@@ -51,13 +51,13 @@ function validateAddEditLeagueModel() {
 	var blankOwner = $.inArray("", leagueUserIds);
 	if (blankOwner > -1) {
 		$(".blank-owner-msg").removeClass("hide-yo-wives");
-		markInvalidOwnerId("");
+		markInvalidUserId("");
 		isValid = false;
 	}
 	for (var i = 0; i < (leagueUserIds.length - 1) ; i++) {
 		if (leagueUserIds[i] != undefined && leagueUserIds[i] == leagueUserIds[i + 1]) {
 			$(".dup-owner-msg").removeClass("hide-yo-wives");
-			markInvalidOwnerId(leagueUserIds[i]);
+			markInvalidUserId(leagueUserIds[i]);
 			isValid = false;
 		}
 	}

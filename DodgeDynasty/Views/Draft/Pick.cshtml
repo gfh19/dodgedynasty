@@ -78,15 +78,15 @@
 		@{var prevPick = Model.PreviousDraftPick; var currPick = Model.CurrentDraftPick; var nextPick = Model.NextDraftPick; }
 		@if (prevPick != null)
 		{
-			<div class="glance"><span class="pick-glance">Previous pick (Round @prevPick.RoundNum, Pick #@prevPick.PickNum):</span> <span class="team-glance">@Model.GetTeamName(prevPick.OwnerId) - @Model.GetPlayer(prevPick.PlayerId).PlayerName</span></div>
+			<div class="glance"><span class="pick-glance">Previous pick (Round @prevPick.RoundNum, Pick #@prevPick.PickNum):</span> <span class="team-glance">@Model.GetTeamName(prevPick.UserId) - @Model.GetPlayer(prevPick.PlayerId).PlayerName</span></div>
 		}
 		@if (currPick != null)
 		{
-			<div class="glance current-pick"><span class="pick-glance">Current pick (Round @currPick.RoundNum, Pick #@currPick.PickNum):</span> <span class="team-glance">@Model.GetTeamName(currPick.OwnerId)</span></div>
+			<div class="glance current-pick"><span class="pick-glance">Current pick (Round @currPick.RoundNum, Pick #@currPick.PickNum):</span> <span class="team-glance">@Model.GetTeamName(currPick.UserId)</span></div>
 		}
 		@if (nextPick != null)
 		{
-			<div class="glance"><span class="pick-glance">Next pick (Round @nextPick.RoundNum, Pick #@nextPick.PickNum):</span> <span class="team-glance">@Model.GetTeamName(nextPick.OwnerId)</span></div>
+			<div class="glance"><span class="pick-glance">Next pick (Round @nextPick.RoundNum, Pick #@nextPick.PickNum):</span> <span class="team-glance">@Model.GetTeamName(nextPick.UserId)</span></div>
 		}
 	</div>
 	<div class="view-draft"><a href="/Draft/Display">View Draft</a> for full details.</div>

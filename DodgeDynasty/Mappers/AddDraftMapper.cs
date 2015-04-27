@@ -43,8 +43,6 @@ namespace DodgeDynasty.Mappers
 				NumRounds = Convert.ToInt16(model.NumRounds),
 				NumKeepers = Convert.ToInt16(model.NumKeepers),
 				Format = model.Format,
-				IsActive = model.IsActive,
-				IsComplete = model.IsComplete,
 				AddTimestamp = DateTime.Now,
 				LastUpdateTimestamp = DateTime.Now
 			};

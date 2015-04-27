@@ -260,18 +260,18 @@ function preventBackspaceNav(e) {
 	}
 }
 
-function markInvalidOwnerId(ownerId) {
-	if (ownerId === "") {
+function markInvalidUserId(userId) {
+	if (userId === "") {
 		//Find any blank spans
-		$.each($("select"), function (index, owner) {
-			if ($(owner).val() === "") {
-				$(owner).addClass("invalid-border");
+		$.each($("select"), function (index, user) {
+			if ($(user).val() === "") {
+				$(user).addClass("invalid-border");
 			}
 		});
 	}
 	else {
 		//Find any matching selected options
-		var invalidEntries = $("select option:selected[value=" + ownerId + "]").closest("select");
+		var invalidEntries = $("select option:selected[value=" + userId + "]").closest("select");
 		$(invalidEntries).addClass("invalid-border");
 	}
 }

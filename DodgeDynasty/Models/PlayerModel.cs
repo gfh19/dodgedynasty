@@ -24,8 +24,8 @@ namespace DodgeDynasty.Models
 		[Display(Name = "NFL Team")]
 		[Required]
 		public string NFLTeam { get; set; }
-		[Display(Name = "Owner")]
-		public int OwnerId { get; set; }
+		[Display(Name = "User")]
+		public int UserId { get; set; }
 
 		public string TeamName { get; set; }
 		public int DraftId { get; set; }

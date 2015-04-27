@@ -122,10 +122,10 @@ namespace DodgeDynasty.Models
 			}
 		}
 
-		public string GetTeamName(int ownerId)
+		public string GetTeamName(int userId)
 		{
 			string teamName = "N/A";
-			var ownerUser = DraftOwnerUsers.FirstOrDefault(ou => ou.UserId == ownerId);
+			var ownerUser = DraftOwnerUsers.FirstOrDefault(ou => ou.UserId == userId);
 			if (ownerUser != null)
 			{
 				teamName = ownerUser.TeamName;

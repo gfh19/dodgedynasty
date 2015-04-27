@@ -13,11 +13,11 @@
 	@Html.Partial("CurrentDraftPickPartial", Model)
 	<div class="clear-fix team-content">
 	@foreach (var owner in Model.GetTeamDraftOwners())
-	{	 
-		Model.SetCurrentGridOwnerUser(owner.OwnerId);
+	{
+		Model.SetCurrentGridOwnerUser(owner.UserId);
 		<div class="clear-fix team">
 			<div class="team-name-outline outline"><div class="team-name @Model.CurrentGridOwnerUser.CssClass">@Model.CurrentGridOwnerUser.NickName</div></div>
-			@foreach (var pick in Model.GetTeamDraftPicks(owner.OwnerId))
+			@foreach (var pick in Model.GetTeamDraftPicks(owner.UserId))
 			{
 			Model.SetCurrentGridPlayer(pick.PlayerId);
 			<div class="draft-pick-outline outline">

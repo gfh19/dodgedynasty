@@ -12,11 +12,11 @@
 		<div class="rank-name" data-rank-id="@Model.CurrentRank.RankId">
 			@if (!string.IsNullOrEmpty(Model.CurrentRank.Url))
 			{
-				<a href="@Model.CurrentRank.Url" target="_blank">@Model.CurrentRank.RankName</a><text> - @ViewBag.Title (@Model.CurrentRank.RankDate.ToString("M/d"))</text>
+				<a href="@Model.CurrentRank.Url" target="_blank">@Model.CurrentRank.RankName</a><text> - @ViewBag.Title (@Model.CurrentRank.RankDate.ToString("M/d/yy"))</text>
 			}
 			else
 			{
-				<text>@Model.CurrentRank.RankName - @ViewBag.Title (@Model.CurrentRank.RankDate.ToString("M/dd"))</text>
+				<text>@Model.CurrentRank.RankName - @ViewBag.Title (@Model.CurrentRank.RankDate.ToString("M/d/yy"))</text>
 			}
 		</div>
 		<div class="more-rank-opts">
@@ -62,7 +62,7 @@
 					</tr>
 					@foreach (var player in Model.OverallRankedPlayers)
 					{
-						<tr class="@((player.PickNum != null) ? ("ba-selected " + player.CssClass + ((Model.IsLoggedInUser(player.OwnerId) ? " you" : ""))) : "") ">
+						<tr class="@((player.PickNum != null) ? ("ba-selected " + player.CssClass + ((Model.IsLoggedInUser(player.UserId) ? " you" : ""))) : "") ">
 							<td>@player.RankNum</td>
 							<td class="ba-player-name" data-player-id="@player.PlayerId">
 								@if (Model.IsDraftActive() && Model.IsUserTurn() && player.PickNum == null)
@@ -104,7 +104,7 @@
 					</tr>
 					@foreach (var player in Model.QBRankedPlayers)
 					{
-						<tr class="@((player.PickNum != null) ? ("ba-selected " + player.CssClass + ((Model.IsLoggedInUser(player.OwnerId) ? " you" : ""))) : "") ">
+						<tr class="@((player.PickNum != null) ? ("ba-selected " + player.CssClass + ((Model.IsLoggedInUser(player.UserId) ? " you" : ""))) : "") ">
 							<td>@player.RankNum</td>
 							<td class="ba-player-name" data-player-id="@player.PlayerId">
 								@if (Model.IsDraftActive() && Model.IsUserTurn() && player.PickNum == null)
@@ -145,7 +145,7 @@
 					</tr>
 					@foreach (var player in Model.RBRankedPlayers)
 					{
-						<tr class="@((player.PickNum != null) ? ("ba-selected " + player.CssClass + ((Model.IsLoggedInUser(player.OwnerId) ? " you" : ""))) : "") ">
+						<tr class="@((player.PickNum != null) ? ("ba-selected " + player.CssClass + ((Model.IsLoggedInUser(player.UserId) ? " you" : ""))) : "") ">
 							<td>@player.RankNum</td>
 							<td class="ba-player-name" data-player-id="@player.PlayerId">
 								@if (Model.IsDraftActive() && Model.IsUserTurn() && player.PickNum == null)
@@ -187,7 +187,7 @@
 					</tr>
 					@foreach (var player in Model.WRTERankedPlayers)
 					{
-						<tr class="@((player.PickNum != null) ? ("ba-selected " + player.CssClass + ((Model.IsLoggedInUser(player.OwnerId) ? " you" : ""))) : "") ">
+						<tr class="@((player.PickNum != null) ? ("ba-selected " + player.CssClass + ((Model.IsLoggedInUser(player.UserId) ? " you" : ""))) : "") ">
 							<td>@player.RankNum</td>
 							<td class="ba-player-name" data-player-id="@player.PlayerId">
 								@if (Model.IsDraftActive() && Model.IsUserTurn() && player.PickNum == null)
@@ -229,7 +229,7 @@
 					</tr>
 					@foreach (var player in Model.DEFRankedPlayers)
 					{
-						<tr class="@((player.PickNum != null) ? ("ba-selected " + player.CssClass + ((Model.IsLoggedInUser(player.OwnerId) ? " you" : ""))) : "") ">
+						<tr class="@((player.PickNum != null) ? ("ba-selected " + player.CssClass + ((Model.IsLoggedInUser(player.UserId) ? " you" : ""))) : "") ">
 							<td>@player.RankNum</td>
 							<td class="ba-player-name" data-player-id="@player.PlayerId">
 								@if (Model.IsDraftActive() && Model.IsUserTurn() && player.PickNum == null)
@@ -270,7 +270,7 @@
 					</tr>
 					@foreach (var player in Model.KRankedPlayers)
 					{
-						<tr class="@((player.PickNum != null) ? ("ba-selected " + player.CssClass + ((Model.IsLoggedInUser(player.OwnerId) ? " you" : ""))) : "") ">
+						<tr class="@((player.PickNum != null) ? ("ba-selected " + player.CssClass + ((Model.IsLoggedInUser(player.UserId) ? " you" : ""))) : "") ">
 							<td>@player.RankNum</td>
 							<td class="ba-player-name" data-player-id="@player.PlayerId">
 								@if (Model.IsDraftActive() && Model.IsUserTurn() && player.PickNum == null)

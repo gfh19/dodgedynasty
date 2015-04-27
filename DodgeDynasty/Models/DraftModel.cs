@@ -19,8 +19,6 @@ namespace DodgeDynasty.Models
 		public int PickTimeSeconds { get; set; }
 
 		public List<Draft> Drafts { get; set; }
-		public List<DraftRound> DraftRounds { get; set; }
-		public List<DraftOrder> DraftOrders { get; set; }
 		public List<DraftPick> DraftPicks { get; set; }
 		public List<User> DraftUsers { get; set; }
 		public List<OwnerUser> DraftOwnerUsers { get; set; }
@@ -138,8 +136,6 @@ namespace DodgeDynasty.Models
 		{
 			DraftId = SetCurrentDraft(draftId);
 
-			DraftRounds = HomeEntity.DraftRounds.Where(d => d.DraftId == DraftId).ToList();
-			DraftOrders = HomeEntity.DraftOrders.Where(d => d.DraftId == DraftId).ToList();
 			DraftPicks = HomeEntity.DraftPicks.Where(d => d.DraftId == DraftId).OrderBy(d => d.PickNum).ToList();
 
 			var draftUserIds = HomeEntity.DraftOwners.Where(d => d.DraftId == DraftId).Select(d => d.UserId).ToList();
@@ -184,24 +180,6 @@ namespace DodgeDynasty.Models
 			GetDraftInfo();
 			return DraftPicks.ToList();
 		}
-
-		//public List<DraftOrderUserModel> GetDraftOrderForRound(int roundId)
-		//{
-		//	//var draftSpots = DraftOrders.Where(d=>d.RoundId == roundId).OrderBy(d=>d.OrderId)
-		//	var draftSpots = from d in DraftOrders
-		//					 join u in Users on d.UserId equals u.UserId
-		//					 where d.RoundId == roundId
-		//					 select new DraftOrderUserModel
-		//					 {
-		//						 DraftId = d.DraftId,
-		//						 RoundId = d.RoundId,
-		//						 OrderId = d.OrderId,
-		//						 UserId = d.UserId,
-		//						 FirstName = u.FirstName,
-		//						 LastName = u.LastName
-		//					 };
-		//	return draftSpots.ToList();
-		//}
 
 		public void SetCurrentGridPlayer(int? playerId)
 		{

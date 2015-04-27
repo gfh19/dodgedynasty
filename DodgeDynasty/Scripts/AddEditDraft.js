@@ -46,13 +46,13 @@ function validateAddEditDraftModel() {
 	var blankOwner = $.inArray("", draftUserIds);
 	if (blankOwner > -1) {
 		$(".blank-owner-msg").removeClass("hide-yo-wives");
-		markInvalidOwnerId("");
+		markInvalidUserId("");
 		isValid = false;
 	}
 	for (var i = 0; i < (draftUserIds.length - 1) ; i++) {
 		if (draftUserIds[i] != undefined && draftUserIds[i] == draftUserIds[i + 1]) {
 			$(".dup-owner-msg").removeClass("hide-yo-wives");
-			markInvalidOwnerId(draftUserIds[i]);
+			markInvalidUserId(draftUserIds[i]);
 			isValid = false;
 		}
 	}

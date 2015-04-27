@@ -100,54 +100,6 @@ namespace DodgeDynasty.Entities
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<DraftOrder> DraftOrders
-        {
-            get
-            {
-                if ((_DraftOrders == null))
-                {
-                    _DraftOrders = base.CreateObjectSet<DraftOrder>("DraftOrders");
-                }
-                return _DraftOrders;
-            }
-        }
-        private ObjectSet<DraftOrder> _DraftOrders;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<DraftPickHistory> DraftPickHistories
-        {
-            get
-            {
-                if ((_DraftPickHistories == null))
-                {
-                    _DraftPickHistories = base.CreateObjectSet<DraftPickHistory>("DraftPickHistories");
-                }
-                return _DraftPickHistories;
-            }
-        }
-        private ObjectSet<DraftPickHistory> _DraftPickHistories;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<DraftRound> DraftRounds
-        {
-            get
-            {
-                if ((_DraftRounds == null))
-                {
-                    _DraftRounds = base.CreateObjectSet<DraftRound>("DraftRounds");
-                }
-                return _DraftRounds;
-            }
-        }
-        private ObjectSet<DraftRound> _DraftRounds;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<NFLTeam> NFLTeams
         {
             get
@@ -432,6 +384,22 @@ namespace DodgeDynasty.Entities
             }
         }
         private ObjectSet<DraftPick> _DraftPicks;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<DraftPickHistory> DraftPickHistories
+        {
+            get
+            {
+                if ((_DraftPickHistories == null))
+                {
+                    _DraftPickHistories = base.CreateObjectSet<DraftPickHistory>("DraftPickHistories");
+                }
+                return _DraftPickHistories;
+            }
+        }
+        private ObjectSet<DraftPickHistory> _DraftPickHistories;
 
         #endregion
 
@@ -443,30 +411,6 @@ namespace DodgeDynasty.Entities
         public void AddToBadTeamsDrafts(BadTeamsDraft badTeamsDraft)
         {
             base.AddObject("BadTeamsDrafts", badTeamsDraft);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the DraftOrders EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToDraftOrders(DraftOrder draftOrder)
-        {
-            base.AddObject("DraftOrders", draftOrder);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the DraftPickHistories EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToDraftPickHistories(DraftPickHistory draftPickHistory)
-        {
-            base.AddObject("DraftPickHistories", draftPickHistory);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the DraftRounds EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToDraftRounds(DraftRound draftRound)
-        {
-            base.AddObject("DraftRounds", draftRound);
         }
     
         /// <summary>
@@ -611,6 +555,14 @@ namespace DodgeDynasty.Entities
         public void AddToDraftPicks(DraftPick draftPick)
         {
             base.AddObject("DraftPicks", draftPick);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the DraftPickHistories EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToDraftPickHistories(DraftPickHistory draftPickHistory)
+        {
+            base.AddObject("DraftPickHistories", draftPickHistory);
         }
 
         #endregion
@@ -1260,147 +1212,6 @@ namespace DodgeDynasty.Entities
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="HomeModel", Name="DraftOrder")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class DraftOrder : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new DraftOrder object.
-        /// </summary>
-        /// <param name="draftId">Initial value of the DraftId property.</param>
-        /// <param name="roundId">Initial value of the RoundId property.</param>
-        /// <param name="orderId">Initial value of the OrderId property.</param>
-        /// <param name="userId">Initial value of the UserId property.</param>
-        public static DraftOrder CreateDraftOrder(global::System.Int16 draftId, global::System.Int16 roundId, global::System.Int16 orderId, global::System.Int32 ownerId)
-        {
-            DraftOrder draftOrder = new DraftOrder();
-            draftOrder.DraftId = draftId;
-            draftOrder.RoundId = roundId;
-            draftOrder.OrderId = orderId;
-            draftOrder.OwnerId = ownerId;
-            return draftOrder;
-        }
-
-        #endregion
-
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int16 DraftId
-        {
-            get
-            {
-                return _DraftId;
-            }
-            set
-            {
-                if (_DraftId != value)
-                {
-                    OnDraftIdChanging(value);
-                    ReportPropertyChanging("DraftId");
-                    _DraftId = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("DraftId");
-                    OnDraftIdChanged();
-                }
-            }
-        }
-        private global::System.Int16 _DraftId;
-        partial void OnDraftIdChanging(global::System.Int16 value);
-        partial void OnDraftIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int16 RoundId
-        {
-            get
-            {
-                return _RoundId;
-            }
-            set
-            {
-                if (_RoundId != value)
-                {
-                    OnRoundIdChanging(value);
-                    ReportPropertyChanging("RoundId");
-                    _RoundId = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("RoundId");
-                    OnRoundIdChanged();
-                }
-            }
-        }
-        private global::System.Int16 _RoundId;
-        partial void OnRoundIdChanging(global::System.Int16 value);
-        partial void OnRoundIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int16 OrderId
-        {
-            get
-            {
-                return _OrderId;
-            }
-            set
-            {
-                if (_OrderId != value)
-                {
-                    OnOrderIdChanging(value);
-                    ReportPropertyChanging("OrderId");
-                    _OrderId = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("OrderId");
-                    OnOrderIdChanged();
-                }
-            }
-        }
-        private global::System.Int16 _OrderId;
-        partial void OnOrderIdChanging(global::System.Int16 value);
-        partial void OnOrderIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 OwnerId
-        {
-            get
-            {
-                return _OwnerId;
-            }
-            set
-            {
-                OnOwnerIdChanging(value);
-                ReportPropertyChanging("UserId");
-                _OwnerId = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("UserId");
-                OnOwnerIdChanged();
-            }
-        }
-        private global::System.Int32 _OwnerId;
-        partial void OnOwnerIdChanging(global::System.Int32 value);
-        partial void OnOwnerIdChanged();
-
-        #endregion
-
-    
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="HomeModel", Name="DraftOwner")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
@@ -1937,7 +1748,7 @@ namespace DodgeDynasty.Entities
         /// <param name="userId">Initial value of the UserId property.</param>
         /// <param name="addTimestamp">Initial value of the AddTimestamp property.</param>
         /// <param name="lastUpdateTimestamp">Initial value of the LastUpdateTimestamp property.</param>
-        public static DraftPickHistory CreateDraftPickHistory(global::System.Int32 draftPickHistoryId, global::System.Int32 draftPickGroupId, global::System.Int32 draftPickId, global::System.Int32 pickNum, global::System.Int32 roundNum, global::System.Int32 ownerId, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp)
+        public static DraftPickHistory CreateDraftPickHistory(global::System.Int32 draftPickHistoryId, global::System.Int32 draftPickGroupId, global::System.Int32 draftPickId, global::System.Int32 pickNum, global::System.Int32 roundNum, global::System.Int32 userId, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp)
         {
             DraftPickHistory draftPickHistory = new DraftPickHistory();
             draftPickHistory.DraftPickHistoryId = draftPickHistoryId;
@@ -1945,7 +1756,7 @@ namespace DodgeDynasty.Entities
             draftPickHistory.DraftPickId = draftPickId;
             draftPickHistory.PickNum = pickNum;
             draftPickHistory.RoundNum = roundNum;
-            draftPickHistory.OwnerId = ownerId;
+            draftPickHistory.UserId = userId;
             draftPickHistory.AddTimestamp = addTimestamp;
             draftPickHistory.LastUpdateTimestamp = lastUpdateTimestamp;
             return draftPickHistory;
@@ -2083,24 +1894,24 @@ namespace DodgeDynasty.Entities
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 OwnerId
+        public global::System.Int32 UserId
         {
             get
             {
-                return _OwnerId;
+                return _UserId;
             }
             set
             {
-                OnOwnerIdChanging(value);
+                OnUserIdChanging(value);
                 ReportPropertyChanging("UserId");
-                _OwnerId = StructuralObject.SetValidValue(value);
+                _UserId = StructuralObject.SetValidValue(value);
                 ReportPropertyChanged("UserId");
-                OnOwnerIdChanged();
+                OnUserIdChanged();
             }
         }
-        private global::System.Int32 _OwnerId;
-        partial void OnOwnerIdChanging(global::System.Int32 value);
-        partial void OnOwnerIdChanged();
+        private global::System.Int32 _UserId;
+        partial void OnUserIdChanging(global::System.Int32 value);
+        partial void OnUserIdChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -2427,218 +2238,6 @@ namespace DodgeDynasty.Entities
         }
         private global::System.DateTime _LastUpdateTimestamp;
         partial void OnLastUpdateTimestampChanging(global::System.DateTime value);
-        partial void OnLastUpdateTimestampChanged();
-
-        #endregion
-
-    
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="HomeModel", Name="DraftRound")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class DraftRound : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new DraftRound object.
-        /// </summary>
-        /// <param name="draftId">Initial value of the DraftId property.</param>
-        /// <param name="roundId">Initial value of the RoundId property.</param>
-        /// <param name="startPickId">Initial value of the StartPickId property.</param>
-        /// <param name="endPickId">Initial value of the EndPickId property.</param>
-        /// <param name="draftOrderType">Initial value of the DraftOrderType property.</param>
-        public static DraftRound CreateDraftRound(global::System.Int32 draftId, global::System.Int32 roundId, global::System.Int16 startPickId, global::System.Int16 endPickId, global::System.String draftOrderType)
-        {
-            DraftRound draftRound = new DraftRound();
-            draftRound.DraftId = draftId;
-            draftRound.RoundId = roundId;
-            draftRound.StartPickId = startPickId;
-            draftRound.EndPickId = endPickId;
-            draftRound.DraftOrderType = draftOrderType;
-            return draftRound;
-        }
-
-        #endregion
-
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 DraftId
-        {
-            get
-            {
-                return _DraftId;
-            }
-            set
-            {
-                if (_DraftId != value)
-                {
-                    OnDraftIdChanging(value);
-                    ReportPropertyChanging("DraftId");
-                    _DraftId = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("DraftId");
-                    OnDraftIdChanged();
-                }
-            }
-        }
-        private global::System.Int32 _DraftId;
-        partial void OnDraftIdChanging(global::System.Int32 value);
-        partial void OnDraftIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 RoundId
-        {
-            get
-            {
-                return _RoundId;
-            }
-            set
-            {
-                if (_RoundId != value)
-                {
-                    OnRoundIdChanging(value);
-                    ReportPropertyChanging("RoundId");
-                    _RoundId = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("RoundId");
-                    OnRoundIdChanged();
-                }
-            }
-        }
-        private global::System.Int32 _RoundId;
-        partial void OnRoundIdChanging(global::System.Int32 value);
-        partial void OnRoundIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int16 StartPickId
-        {
-            get
-            {
-                return _StartPickId;
-            }
-            set
-            {
-                OnStartPickIdChanging(value);
-                ReportPropertyChanging("StartPickId");
-                _StartPickId = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("StartPickId");
-                OnStartPickIdChanged();
-            }
-        }
-        private global::System.Int16 _StartPickId;
-        partial void OnStartPickIdChanging(global::System.Int16 value);
-        partial void OnStartPickIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int16 EndPickId
-        {
-            get
-            {
-                return _EndPickId;
-            }
-            set
-            {
-                OnEndPickIdChanging(value);
-                ReportPropertyChanging("EndPickId");
-                _EndPickId = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("EndPickId");
-                OnEndPickIdChanged();
-            }
-        }
-        private global::System.Int16 _EndPickId;
-        partial void OnEndPickIdChanging(global::System.Int16 value);
-        partial void OnEndPickIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String DraftOrderType
-        {
-            get
-            {
-                return _DraftOrderType;
-            }
-            set
-            {
-                OnDraftOrderTypeChanging(value);
-                ReportPropertyChanging("DraftOrderType");
-                _DraftOrderType = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("DraftOrderType");
-                OnDraftOrderTypeChanged();
-            }
-        }
-        private global::System.String _DraftOrderType;
-        partial void OnDraftOrderTypeChanging(global::System.String value);
-        partial void OnDraftOrderTypeChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Int16> ContinueForRounds
-        {
-            get
-            {
-                return _ContinueForRounds;
-            }
-            set
-            {
-                OnContinueForRoundsChanging(value);
-                ReportPropertyChanging("ContinueForRounds");
-                _ContinueForRounds = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("ContinueForRounds");
-                OnContinueForRoundsChanged();
-            }
-        }
-        private Nullable<global::System.Int16> _ContinueForRounds;
-        partial void OnContinueForRoundsChanging(Nullable<global::System.Int16> value);
-        partial void OnContinueForRoundsChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.DateTime> LastUpdateTimestamp
-        {
-            get
-            {
-                return _LastUpdateTimestamp;
-            }
-            set
-            {
-                OnLastUpdateTimestampChanging(value);
-                ReportPropertyChanging("LastUpdateTimestamp");
-                _LastUpdateTimestamp = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("LastUpdateTimestamp");
-                OnLastUpdateTimestampChanged();
-            }
-        }
-        private Nullable<global::System.DateTime> _LastUpdateTimestamp;
-        partial void OnLastUpdateTimestampChanging(Nullable<global::System.DateTime> value);
         partial void OnLastUpdateTimestampChanged();
 
         #endregion

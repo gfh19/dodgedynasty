@@ -25,7 +25,7 @@ namespace DodgeDynasty.Models
 			using (HomeEntity = new Entities.HomeEntity())
 			{
 				var user = HomeEntity.Users.FirstOrDefault(u => u.UserName == UserName);
-				if (user != null)
+				if (user != null && user.IsActive)
 				{
 					loginSuccess = EncryptUtil.VerifyPassword(Password, user.Password, user.Salt);
 					if (loginSuccess)

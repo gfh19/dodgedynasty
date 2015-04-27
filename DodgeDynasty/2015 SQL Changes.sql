@@ -105,6 +105,18 @@ FROM dbo.[User] u, dbo.[Owner] o
 WHERE u.UserId = o.UserId
 GO
 
+DROP TABLE [dbo].[Owner]
+GO
+
+DROP TABLE [dbo].[DraftRound]
+GO
+
+DROP TABLE [dbo].[DraftOrder]
+GO
+
+DROP TABLE [dbo].[BadTeamsDraft]
+GO
+
 EXEC sp_RENAME '[DraftRank].OwnerId', 'UserId', 'COLUMN'
 GO
 
@@ -117,6 +129,10 @@ GO
 
 EXEC sp_RENAME '[DraftPick].OwnerId', 'UserId', 'COLUMN'
 GO
+
+EXEC sp_RENAME '[DraftPickHistory].OwnerId', 'UserId', 'COLUMN'
+GO
+
 
 
 
