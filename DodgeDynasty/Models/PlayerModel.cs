@@ -12,11 +12,11 @@ namespace DodgeDynasty.Models
 	{
 		[Display(Name = "Player First Name")]
 		[Required]
-		[StringLength(25, ErrorMessage = "The {0} must be between {2} and {1} characters long.", MinimumLength = 1)]
+		[StringLength(25, ErrorMessage = Constants.Messages.StringLength, MinimumLength = 1)]
 		public string FirstName { get; set; }
 		[Display(Name = "Player Last Name")]
 		[Required]
-		[StringLength(25, ErrorMessage = "The {0} must be between {2} and {1} characters long.", MinimumLength = 1)]
+		[StringLength(25, ErrorMessage = Constants.Messages.StringLength, MinimumLength = 1)]
 		public string LastName { get; set; }
 		[Display(Name = "Position")]
 		[Required]

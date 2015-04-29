@@ -27,6 +27,11 @@ namespace DodgeDynasty.Shared
 			public const string Snake = "snake";
 		}
 
+		public static class Messages
+		{
+			public const string StringLength = "The {0} must be between {2} and {1} characters long.";
+		}
+
 		public static class Roles
 		{
 			public const int Admin = 1;
@@ -53,6 +58,7 @@ namespace DodgeDynasty.Shared
 			public const string AddDraft = "AddDraft";
 			public const string SetupDraft = "SetupDraft";
 			public const string ActivateDraft = "ActivateDraft";
+			public const string ColorStyles = "_ColorStyles";
 		}
 	}
 }

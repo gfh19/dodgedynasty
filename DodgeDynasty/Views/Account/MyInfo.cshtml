@@ -1,0 +1,79 @@
+﻿@model DodgeDynasty.Models.Account.UserInfoModel
+@{
+	ViewBag.Title = "My Info";
+}
+@section scripts {
+	<script type="text/javascript" src="@Url.Content("/Scripts/UserInfo.js")"></script>
+}
+<div id="userInfo">
+	<script type="text/javascript">
+		$(function () {
+			initUserInfo();
+		});
+	</script>
+	<div class="large-page-header">@ViewBag.Title</div>
+	@{ Html.EnableClientValidation(true); }
+	@Html.ValidationSummary(false)
+	<div class="error-messages">
+		<div class="blank-team-msg invalid hide-yo-wives">Error - Team Name cannot be left blank.</div>
+		<div class="dup-team-msg invalid hide-yo-wives">Error - Team Name already being used that league.</div>
+		<div class="dup-color-msg invalid hide-yo-wives">Error - Color already being used that league.</div>
+	</div>
+	<div class="page-entries">
+		@using (Html.BeginForm("MyInfo", "Account", FormMethod.Post, new { id = "userInfo" }))
+		{
+			<div class="mi-user-entry-header">
+				@Html.LabelFor(m => m.UserName, new { @class = "mi-user-header" })
+				@Html.LabelFor(m => m.FirstName, new { @class = "mi-first-header" })
+				@Html.LabelFor(m => m.LastName, new { @class = "mi-last-header" })
+				@Html.LabelFor(m => m.NickName, new { @class = "mi-nick-header" })
+			</div>
+			<div>
+				@Html.TextBoxFor(m => m.UserName, new { @class = "mi-user-name", maxLength = "20", autofocus = "autofocus" })
+				@Html.TextBoxFor(m => m.FirstName, new { @class = "mi-first-name", maxLength = "15" })
+				@Html.TextBoxFor(m => m.LastName, new { @class = "mi-last-name", maxLength = "25" })
+				@Html.TextBoxFor(m => m.NickName, new { @class = "mi-nick-name", maxLength = "10" })
+				<div>@Html.ValidationMessageFor(m => m.UserName)</div>
+				<div>@Html.ValidationMessageFor(m => m.UserName)</div>
+				<div>@Html.ValidationMessageFor(m => m.UserName)</div>
+				<div>@Html.ValidationMessageFor(m => m.UserName)</div>
+			</div>
+		}
+		<div class="page-section">
+			<div class="mi-leagues">
+				<div class="mi-league-entry-header">
+					<label class="mi-league-header">League</label>
+					<label class="mi-teamname-header">Team Name</label>
+					<label class="mi-color-header">Color</label>
+					<label class="mi-active-header">Active?</label>
+				</div>
+				@foreach (var ownerUser in Model.OwnerLeagues)
+				{
+					<div class="mi-league-entry">
+						<span class="mi-league">
+							<span class="mi-league-name">@ownerUser.LeagueName</span>
+						</span>
+						<span class="mi-team-name">
+							@Html.TextBoxFor(o => ownerUser.TeamName, new { @class = "mi-team-input", maxLength = "50" })
+						</span>
+						<span class="mi-color">
+							<span>
+								<span class="mi-outer outline">
+									<span class="mi-selected-color @ownerUser.CssClass">
+										@Html.DropDownListFor(o => ownerUser.CssClass,
+											Model.GetLeagueColorOptions(ownerUser.LeagueId, ownerUser.CssClass),
+												new { @class = "mi-color-select" })
+									</span>
+								</span>
+							</span>
+						</span>
+						<span class="mi-active">
+							@Html.CheckBoxFor(o => ownerUser.IsActive, new { @class = "mi-active-chkbx" })
+						</span>
+					</div>
+				}
+			</div>
+			<div class="page-section"><button class="submit-league" type="submit">Submit</button></div>
+		</div>
+	</div>
+</div>

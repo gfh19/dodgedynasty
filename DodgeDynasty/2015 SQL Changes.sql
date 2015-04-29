@@ -1,4 +1,5 @@
-﻿BEGIN TRANSACTION;
+﻿
+BEGIN TRANSACTION;
 
 /* 4/4/2015 */
 
@@ -68,11 +69,6 @@ ADD [WinnerId] [int] NULL,
 	[HasCoWinners] [bit] NULL
 GO
 
-/*** ! ADD ForeignKey Constraint to:
-	LeagueOwner table for LeagueId, 
-	DraftOwner table for DraftId, 
-	!!!
-***/
 
 
 /* 4/25/15 */
@@ -133,7 +129,105 @@ GO
 EXEC sp_RENAME '[DraftPickHistory].OwnerId', 'UserId', 'COLUMN'
 GO
 
+ALTER TABLE [dbo].[LeagueOwner]
+ADD LeagueName AS dbo.GetLeagueName(LeagueId)
+GO
 
+
+/* 4/25/15 */
+
+/****** Object:  Table [dbo].[CssColor]    ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[CssColor](
+	[ClassName] [varchar](20) NOT NULL,
+	[ColorText] varchar(20) NOT NULL,
+	[ColorValue] [varchar](7) NOT NULL,
+	[AddTimestamp] [datetime] NOT NULL,
+	[LastUpdateTimestamp] [datetime] NOT NULL,
+ CONSTRAINT [PK_ClassName] PRIMARY KEY CLUSTERED 
+(
+	[ClassName] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+INSERT INTO [dbo].[CssColor]
+           ([ClassName],[ColorText],[ColorValue],[AddTimestamp],[LastUpdateTimestamp])
+     VALUES	 
+           ('_none','None (Black)','#000000',getdate(),getdate()),
+           ('aqua','Aqua','#19E1CC',getdate(),getdate()),
+           ('blue','Blue','#638BE7',getdate(),getdate()),
+           ('brown','Brown','#C58A4F',getdate(),getdate()),
+           ('dark-gray','Dark Gray','#5D5E65',getdate(),getdate()),
+           ('gold','Gold','#FDBA31',getdate(),getdate()),
+           ('gray','Gray','#B2B2B2',getdate(),getdate()),
+           ('green','Green','#50A57F',getdate(),getdate()),
+           ('light-blue','Light Blue','#87CEEB',getdate(),getdate()),
+           ('light-green','Light Green','#00FF00',getdate(),getdate()),
+           ('maroon','Maroon','#B00000',getdate(),getdate()),
+           ('orange','Orange','#FF612B',getdate(),getdate()),
+           ('peach','Peach','#FFCC99',getdate(),getdate()),
+           ('pink','Pink','#FF69B4',getdate(),getdate()),
+           ('purple','Purple','#551A8B',getdate(),getdate()),
+           ('red','Red','#FF0000',getdate(),getdate()),
+           ('white', 'White','#FFFFFF',getdate(),getdate()),
+           ('yellow','Yellow','#FFE100',getdate(),getdate())
+GO
+
+UPDATE LeagueOwner SET CssClass = 'light-green' WHERE CssClass = 'brian'
+UPDATE LeagueOwner SET CssClass = 'orange' WHERE CssClass = 'dave'
+UPDATE LeagueOwner SET CssClass = 'aqua' WHERE CssClass = 'hawkeman'
+UPDATE LeagueOwner SET CssClass = 'pink' WHERE CssClass = 'jen'
+UPDATE LeagueOwner SET CssClass = 'yellow' WHERE CssClass = 'jeremiah'
+UPDATE LeagueOwner SET CssClass = 'gray' WHERE CssClass = 'joey'
+UPDATE LeagueOwner SET CssClass = 'blue' WHERE CssClass = 'meat'
+UPDATE LeagueOwner SET CssClass = 'red' WHERE CssClass = 'pohlmann'
+UPDATE LeagueOwner SET CssClass = 'brown' WHERE CssClass = 'shannon'
+UPDATE LeagueOwner SET CssClass = 'green' WHERE CssClass = 'steve'
+UPDATE LeagueOwner SET CssClass = 'purple' WHERE CssClass = 'heckler'
+UPDATE LeagueOwner SET CssClass = 'maroon' WHERE CssClass = 'holda'
+UPDATE LeagueOwner SET CssClass = 'yellow' WHERE CssClass = 'trevor'
+UPDATE LeagueOwner SET CssClass = 'brown' WHERE CssClass = 'mitchell'
+
+
+ALTER TABLE [dbo].[LeagueOwner]  WITH CHECK ADD  CONSTRAINT [FK_LeagueOwner_League] FOREIGN KEY([LeagueId])
+REFERENCES [dbo].[League] ([LeagueId])
+GO
+
+ALTER TABLE [dbo].[LeagueOwner] CHECK CONSTRAINT [FK_LeagueOwner_League]
+GO
+
+
+ALTER TABLE [dbo].[LeagueOwner]  WITH CHECK ADD  CONSTRAINT [FK_LeagueOwner_CssColor] FOREIGN KEY([CssClass])
+REFERENCES [dbo].[CssColor] ([ClassName])
+GO
+
+ALTER TABLE [dbo].[LeagueOwner] CHECK CONSTRAINT [FK_LeagueOwner_CssColor]
+GO
+
+
+
+
+
+
+/*** ! ADD ForeignKey Constraint to:
+	LeagueOwner table for LeagueId, 
+	DraftOwner table for DraftId, 
+	view rest in HomeEntity
+	!!!
+***/
 
 
 COMMIT TRANSACTION;

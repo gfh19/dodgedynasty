@@ -1,0 +1,10 @@
+﻿@{var model = new DodgeDynasty.Mappers.Shared.ColorStylesMapper().GetModel(); }
+<style type="text/css">
+@foreach (var color in model.Colors)
+{	<text>
+	.@color.ClassName
+	{
+		border-color: @color.ColorValue;
+	}</text>
+}
+</style>

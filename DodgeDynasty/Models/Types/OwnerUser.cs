@@ -15,11 +15,14 @@ namespace DodgeDynasty.Models.Types
 		public string LastName { get; set; }
 		public string FullName { get; set; }
 		public string NickName { get; set; }
-		public string CssClass { get; set; }
-		public string TeamName { get; set; }
-		public bool IsActive { get; set; }
 		public DateTime? AddDateTime { get; set; }
 		public DateTime? LastLogin { get; set; }
 		public DateTime? LastUpdateTimestamp { get; set; }
+
+		public int LeagueId { get; set; }
+		public string LeagueName { get; set; }
+		public string CssClass { get; set; }
+		public string TeamName { get; set; }
+		public bool IsActive { get; set; }
 	}
 }

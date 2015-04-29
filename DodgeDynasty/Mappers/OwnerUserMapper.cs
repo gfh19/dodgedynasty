@@ -23,12 +23,15 @@ namespace DodgeDynasty.Models
 				LastName = u.LastName,
 				FullName = u.FullName,
 				NickName = u.NickName,
-				CssClass = lo.CssClass,
-				TeamName = lo.TeamName ?? u.FullName,
-				IsActive = lo.IsActive,
 				AddDateTime = u.AddTimestamp,
 				LastLogin = u.LastLogin,
-				LastUpdateTimestamp = u.LastUpdateTimestamp
+				LastUpdateTimestamp = u.LastUpdateTimestamp,
+
+				LeagueId = lo.LeagueId,
+				LeagueName = lo.LeagueName,
+				CssClass = lo.CssClass,
+				TeamName = lo.TeamName ?? u.FullName,
+				IsActive = lo.IsActive
 			};
 		}
 

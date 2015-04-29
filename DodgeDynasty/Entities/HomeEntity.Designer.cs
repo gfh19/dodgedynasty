@@ -30,6 +30,8 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_UserRole_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.User), "UserRole", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.UserRole), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_DraftPick_Draft", "Draft", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Draft), "DraftPick", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.DraftPick), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_DraftPick_Player", "Player", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.Player), "DraftPick", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.DraftPick), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_LeagueOwner_CssColor", "CssColor", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.CssColor), "LeagueOwner", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.LeagueOwner), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_LeagueOwner_League", "League", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.League), "LeagueOwner", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.LeagueOwner), true)]
 
 #endregion
 
@@ -80,22 +82,6 @@ namespace DodgeDynasty.Entities
         #endregion
     
         #region ObjectSet Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<BadTeamsDraft> BadTeamsDrafts
-        {
-            get
-            {
-                if ((_BadTeamsDrafts == null))
-                {
-                    _BadTeamsDrafts = base.CreateObjectSet<BadTeamsDraft>("BadTeamsDrafts");
-                }
-                return _BadTeamsDrafts;
-            }
-        }
-        private ObjectSet<BadTeamsDraft> _BadTeamsDrafts;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -244,22 +230,6 @@ namespace DodgeDynasty.Entities
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<League> Leagues
-        {
-            get
-            {
-                if ((_Leagues == null))
-                {
-                    _Leagues = base.CreateObjectSet<League>("Leagues");
-                }
-                return _Leagues;
-            }
-        }
-        private ObjectSet<League> _Leagues;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<Role> Roles
         {
             get
@@ -356,22 +326,6 @@ namespace DodgeDynasty.Entities
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<LeagueOwner> LeagueOwners
-        {
-            get
-            {
-                if ((_LeagueOwners == null))
-                {
-                    _LeagueOwners = base.CreateObjectSet<LeagueOwner>("LeagueOwners");
-                }
-                return _LeagueOwners;
-            }
-        }
-        private ObjectSet<LeagueOwner> _LeagueOwners;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<DraftPick> DraftPicks
         {
             get
@@ -400,18 +354,58 @@ namespace DodgeDynasty.Entities
             }
         }
         private ObjectSet<DraftPickHistory> _DraftPickHistories;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<CssColor> CssColors
+        {
+            get
+            {
+                if ((_CssColors == null))
+                {
+                    _CssColors = base.CreateObjectSet<CssColor>("CssColors");
+                }
+                return _CssColors;
+            }
+        }
+        private ObjectSet<CssColor> _CssColors;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<League> Leagues
+        {
+            get
+            {
+                if ((_Leagues == null))
+                {
+                    _Leagues = base.CreateObjectSet<League>("Leagues");
+                }
+                return _Leagues;
+            }
+        }
+        private ObjectSet<League> _Leagues;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<LeagueOwner> LeagueOwners
+        {
+            get
+            {
+                if ((_LeagueOwners == null))
+                {
+                    _LeagueOwners = base.CreateObjectSet<LeagueOwner>("LeagueOwners");
+                }
+                return _LeagueOwners;
+            }
+        }
+        private ObjectSet<LeagueOwner> _LeagueOwners;
 
         #endregion
 
         #region AddTo Methods
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the BadTeamsDrafts EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToBadTeamsDrafts(BadTeamsDraft badTeamsDraft)
-        {
-            base.AddObject("BadTeamsDrafts", badTeamsDraft);
-        }
     
         /// <summary>
         /// Deprecated Method for adding a new object to the NFLTeams EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
@@ -486,14 +480,6 @@ namespace DodgeDynasty.Entities
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the Leagues EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToLeagues(League league)
-        {
-            base.AddObject("Leagues", league);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the Roles EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToRoles(Role role)
@@ -542,14 +528,6 @@ namespace DodgeDynasty.Entities
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the LeagueOwners EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToLeagueOwners(LeagueOwner leagueOwner)
-        {
-            base.AddObject("LeagueOwners", leagueOwner);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the DraftPicks EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToDraftPicks(DraftPick draftPick)
@@ -564,6 +542,30 @@ namespace DodgeDynasty.Entities
         {
             base.AddObject("DraftPickHistories", draftPickHistory);
         }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the CssColors EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToCssColors(CssColor cssColor)
+        {
+            base.AddObject("CssColors", cssColor);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Leagues EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToLeagues(League league)
+        {
+            base.AddObject("Leagues", league);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the LeagueOwners EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToLeagueOwners(LeagueOwner leagueOwner)
+        {
+            base.AddObject("LeagueOwners", leagueOwner);
+        }
 
         #endregion
 
@@ -576,30 +578,26 @@ namespace DodgeDynasty.Entities
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="HomeModel", Name="BadTeamsDraft")]
+    [EdmEntityTypeAttribute(NamespaceName="HomeModel", Name="CssColor")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
-    public partial class BadTeamsDraft : EntityObject
+    public partial class CssColor : EntityObject
     {
         #region Factory Method
     
         /// <summary>
-        /// Create a new BadTeamsDraft object.
+        /// Create a new CssColor object.
         /// </summary>
-        /// <param name="draftId">Initial value of the DraftId property.</param>
-        /// <param name="draftYear">Initial value of the DraftYear property.</param>
-        /// <param name="userName">Initial value of the UserName property.</param>
-        /// <param name="pickNumber">Initial value of the PickNumber property.</param>
-        /// <param name="nFLTeam">Initial value of the NFLTeam property.</param>
-        public static BadTeamsDraft CreateBadTeamsDraft(global::System.Int32 draftId, global::System.Int16 draftYear, global::System.String userName, global::System.Int16 pickNumber, global::System.String nFLTeam)
+        /// <param name="className">Initial value of the ClassName property.</param>
+        /// <param name="colorText">Initial value of the ColorText property.</param>
+        /// <param name="lastUpdateTimestamp">Initial value of the LastUpdateTimestamp property.</param>
+        public static CssColor CreateCssColor(global::System.String className, global::System.String colorText, global::System.DateTime lastUpdateTimestamp)
         {
-            BadTeamsDraft badTeamsDraft = new BadTeamsDraft();
-            badTeamsDraft.DraftId = draftId;
-            badTeamsDraft.DraftYear = draftYear;
-            badTeamsDraft.UserName = userName;
-            badTeamsDraft.PickNumber = pickNumber;
-            badTeamsDraft.NFLTeam = nFLTeam;
-            return badTeamsDraft;
+            CssColor cssColor = new CssColor();
+            cssColor.ClassName = className;
+            cssColor.ColorText = colorText;
+            cssColor.LastUpdateTimestamp = lastUpdateTimestamp;
+            return cssColor;
         }
 
         #endregion
@@ -611,127 +609,153 @@ namespace DodgeDynasty.Entities
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 DraftId
+        public global::System.String ClassName
         {
             get
             {
-                return _DraftId;
+                return _ClassName;
             }
             set
             {
-                if (_DraftId != value)
+                if (_ClassName != value)
                 {
-                    OnDraftIdChanging(value);
-                    ReportPropertyChanging("DraftId");
-                    _DraftId = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("DraftId");
-                    OnDraftIdChanged();
+                    OnClassNameChanging(value);
+                    ReportPropertyChanging("ClassName");
+                    _ClassName = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("ClassName");
+                    OnClassNameChanged();
                 }
             }
         }
-        private global::System.Int32 _DraftId;
-        partial void OnDraftIdChanging(global::System.Int32 value);
-        partial void OnDraftIdChanged();
+        private global::System.String _ClassName;
+        partial void OnClassNameChanging(global::System.String value);
+        partial void OnClassNameChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int16 DraftYear
+        public global::System.String ColorText
         {
             get
             {
-                return _DraftYear;
+                return _ColorText;
             }
             set
             {
-                OnDraftYearChanging(value);
-                ReportPropertyChanging("DraftYear");
-                _DraftYear = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("DraftYear");
-                OnDraftYearChanged();
+                OnColorTextChanging(value);
+                ReportPropertyChanging("ColorText");
+                _ColorText = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("ColorText");
+                OnColorTextChanged();
             }
         }
-        private global::System.Int16 _DraftYear;
-        partial void OnDraftYearChanging(global::System.Int16 value);
-        partial void OnDraftYearChanged();
+        private global::System.String _ColorText;
+        partial void OnColorTextChanging(global::System.String value);
+        partial void OnColorTextChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ColorValue
+        {
+            get
+            {
+                return _ColorValue;
+            }
+            set
+            {
+                OnColorValueChanging(value);
+                ReportPropertyChanging("ColorValue");
+                _ColorValue = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ColorValue");
+                OnColorValueChanged();
+            }
+        }
+        private global::System.String _ColorValue;
+        partial void OnColorValueChanging(global::System.String value);
+        partial void OnColorValueChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> AddTimestamp
+        {
+            get
+            {
+                return _AddTimestamp;
+            }
+            set
+            {
+                OnAddTimestampChanging(value);
+                ReportPropertyChanging("AddTimestamp");
+                _AddTimestamp = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("AddTimestamp");
+                OnAddTimestampChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _AddTimestamp;
+        partial void OnAddTimestampChanging(Nullable<global::System.DateTime> value);
+        partial void OnAddTimestampChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String UserName
+        public global::System.DateTime LastUpdateTimestamp
         {
             get
             {
-                return _UserName;
+                return _LastUpdateTimestamp;
             }
             set
             {
-                OnUserNameChanging(value);
-                ReportPropertyChanging("UserName");
-                _UserName = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("UserName");
-                OnUserNameChanged();
+                OnLastUpdateTimestampChanging(value);
+                ReportPropertyChanging("LastUpdateTimestamp");
+                _LastUpdateTimestamp = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LastUpdateTimestamp");
+                OnLastUpdateTimestampChanged();
             }
         }
-        private global::System.String _UserName;
-        partial void OnUserNameChanging(global::System.String value);
-        partial void OnUserNameChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int16 PickNumber
-        {
-            get
-            {
-                return _PickNumber;
-            }
-            set
-            {
-                OnPickNumberChanging(value);
-                ReportPropertyChanging("PickNumber");
-                _PickNumber = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("PickNumber");
-                OnPickNumberChanged();
-            }
-        }
-        private global::System.Int16 _PickNumber;
-        partial void OnPickNumberChanging(global::System.Int16 value);
-        partial void OnPickNumberChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String NFLTeam
-        {
-            get
-            {
-                return _NFLTeam;
-            }
-            set
-            {
-                OnNFLTeamChanging(value);
-                ReportPropertyChanging("NFLTeam");
-                _NFLTeam = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("NFLTeam");
-                OnNFLTeamChanged();
-            }
-        }
-        private global::System.String _NFLTeam;
-        partial void OnNFLTeamChanging(global::System.String value);
-        partial void OnNFLTeamChanged();
+        private global::System.DateTime _LastUpdateTimestamp;
+        partial void OnLastUpdateTimestampChanging(global::System.DateTime value);
+        partial void OnLastUpdateTimestampChanged();
 
         #endregion
 
     
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_LeagueOwner_CssColor", "LeagueOwner")]
+        public EntityCollection<LeagueOwner> LeagueOwners
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<LeagueOwner>("HomeModel.FK_LeagueOwner_CssColor", "LeagueOwner");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<LeagueOwner>("HomeModel.FK_LeagueOwner_CssColor", "LeagueOwner", value);
+                }
+            }
+        }
+
+        #endregion
+
     }
     
     /// <summary>
@@ -2374,6 +2398,32 @@ namespace DodgeDynasty.Entities
         #endregion
 
     
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_LeagueOwner_League", "LeagueOwner")]
+        public EntityCollection<LeagueOwner> LeagueOwners
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<LeagueOwner>("HomeModel.FK_LeagueOwner_League", "LeagueOwner");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<LeagueOwner>("HomeModel.FK_LeagueOwner_League", "LeagueOwner", value);
+                }
+            }
+        }
+
+        #endregion
+
     }
     
     /// <summary>
@@ -2487,6 +2537,30 @@ namespace DodgeDynasty.Entities
         private global::System.Int32 _LeagueId;
         partial void OnLeagueIdChanging(global::System.Int32 value);
         partial void OnLeagueIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String LeagueName
+        {
+            get
+            {
+                return _LeagueName;
+            }
+            set
+            {
+                OnLeagueNameChanging(value);
+                ReportPropertyChanging("LeagueName");
+                _LeagueName = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("LeagueName");
+                OnLeagueNameChanged();
+            }
+        }
+        private global::System.String _LeagueName;
+        partial void OnLeagueNameChanging(global::System.String value);
+        partial void OnLeagueNameChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -2611,6 +2685,86 @@ namespace DodgeDynasty.Entities
         #endregion
 
     
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_LeagueOwner_CssColor", "CssColor")]
+        public CssColor CssColor
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<CssColor>("HomeModel.FK_LeagueOwner_CssColor", "CssColor").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<CssColor>("HomeModel.FK_LeagueOwner_CssColor", "CssColor").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<CssColor> CssColorReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<CssColor>("HomeModel.FK_LeagueOwner_CssColor", "CssColor");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<CssColor>("HomeModel.FK_LeagueOwner_CssColor", "CssColor", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_LeagueOwner_League", "League")]
+        public League League
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<League>("HomeModel.FK_LeagueOwner_League", "League").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<League>("HomeModel.FK_LeagueOwner_League", "League").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<League> LeagueReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<League>("HomeModel.FK_LeagueOwner_League", "League");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<League>("HomeModel.FK_LeagueOwner_League", "League", value);
+                }
+            }
+        }
+
+        #endregion
+
     }
     
     /// <summary>

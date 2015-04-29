@@ -1042,77 +1042,77 @@ ul.menu li a.current-page
 
 /* Owner Styles
 ----------------------------------------------------------*/
-
+/*
 .brian
 {
-	/* light green */
+	** light green ***
 	border-color: #00FF00;
 }
 .dave
 {
-	/* orange */
+	** orange ***
 	border-color: #FF612B;
 }
 .hawkeman
 {
-	/* aqua */
+	** aqua ***
 	border-color: #19E1CC;
 }
 .jen
 {
-	/* pink */
+	** pink ***
 	border-color: #FFA5FF;
 }
 .jeremiah
 {
-	/* yellow */
+	** yellow ***
 	border-color: #FFE100;
 }
 .joey
 {
-	/* gray */
+	** gray ***
 	border-color: #B2B2B2;
 }
 .meat
 {
-	/* dark blue */
+	** dark blue ***
 	border-color: #638BE7;
 }
 .pohlmann
 {
-	/* red */
+	** red ***
 	border-color: #FF0000;
 }
 .shannon
 {
-	/* brown */
+	** brown ***
 	border-color: #C58A4F;
 }
 .steve
 {
-	/* green */
+	** green ***
 	border-color: #50A57F;
 }
 .heckler
 {
-	/* purple */
+	** purple ***
 	border-color: #551A8B;
 }
 .holda
 {
-	/* maroon */
+	** maroon ***
 	border-color: #B00000;
 }
 .trevor
 {
-	/* yellow */
+	** yellow ***
 	border-color: #FFE100;
 }
 .mitchell
 {
-	/* brown */
+	** brown ***
 	border-color: #C58A4F;
-}
+}*/
 
 .you 
 {
@@ -1742,6 +1742,53 @@ span.player-select
 .dh-runner-up {
 	width: 140px;
 }
+
+
+/* User Info
+----------------------------------------------------------*/
+
+#userInfo {
+	min-width: 592px;
+}
+
+#userInfo label, #userInfo span {
+	display: inline-block;
+}
+
+.mi-user-header, .mi-user-name {
+	width: 110px;
+}
+.mi-first-header, .mi-first-name {
+	width: 110px;
+}
+.mi-last-header, .mi-last-name {
+	width: 140px;
+}
+.mi-nick-header, .mi-nick-name {
+	width: 100px;
+}
+
+.mi-league-header, .mi-league {
+	width: 180px;
+}
+.mi-teamname-header, .mi-team-name {
+	width: 200px;
+}
+.mi-color-header, .mi-color {
+	width: 140px;
+}
+.mi-active-header, .mi-active {
+	width: 60px;
+}
+
+.mi-outer {
+}
+.mi-selected-color {
+	border: 3px solid;
+	padding: 1px 1px;
+}
+
+
 
 
 /* RESPONSIVE STYLES

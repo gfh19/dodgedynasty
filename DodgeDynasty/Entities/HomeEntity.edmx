@@ -5,15 +5,15 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="HomeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
-        <EntityType Name="BadTeamsDraft">
+        <EntityType Name="CssColor">
           <Key>
-            <PropertyRef Name="DraftId" />
+            <PropertyRef Name="ClassName" />
           </Key>
-          <Property Name="DraftId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DraftYear" Type="smallint" Nullable="false" />
-          <Property Name="UserName" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="PickNumber" Type="smallint" Nullable="false" />
-          <Property Name="NFLTeam" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="ClassName" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="ColorText" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="ColorValue" Type="varchar" MaxLength="7" />
+          <Property Name="AddTimestamp" Type="datetime" />
+          <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Draft">
           <Key>
@@ -106,6 +106,7 @@
           <Property Name="LeagueOwnerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="LeagueId" Type="int" Nullable="false" />
+          <Property Name="LeagueName" Type="varchar" MaxLength="50" StoreGeneratedPattern="Computed" />
           <Property Name="TeamName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CssClass" Type="varchar" MaxLength="20" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
@@ -282,6 +283,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_LeagueOwner_CssColor">
+          <End Role="CssColor" Type="Self.CssColor" Multiplicity="0..1" />
+          <End Role="LeagueOwner" Type="Self.LeagueOwner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CssColor">
+              <PropertyRef Name="ClassName" />
+            </Principal>
+            <Dependent Role="LeagueOwner">
+              <PropertyRef Name="CssClass" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LeagueOwner_League">
+          <End Role="League" Type="Self.League" Multiplicity="1" />
+          <End Role="LeagueOwner" Type="Self.LeagueOwner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="League">
+              <PropertyRef Name="LeagueId" />
+            </Principal>
+            <Dependent Role="LeagueOwner">
+              <PropertyRef Name="LeagueId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Player_NFLTeam">
           <End Role="NFLTeam" Type="Self.NFLTeam" Multiplicity="1" />
           <End Role="Player" Type="Self.Player" Multiplicity="*" />
@@ -393,7 +418,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="HomeModelStoreContainer">
-          <EntitySet Name="BadTeamsDraft" EntityType="Self.BadTeamsDraft" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CssColor" EntityType="Self.CssColor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Draft" EntityType="Self.Draft" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DraftOwner" EntityType="Self.DraftOwner" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DraftPick" EntityType="Self.DraftPick" Schema="dbo" store:Type="Tables" />
@@ -420,6 +445,14 @@
           <AssociationSet Name="FK_DraftPick_Player" Association="Self.FK_DraftPick_Player">
             <End Role="Player" EntitySet="Player" />
             <End Role="DraftPick" EntitySet="DraftPick" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LeagueOwner_CssColor" Association="Self.FK_LeagueOwner_CssColor">
+            <End Role="CssColor" EntitySet="CssColor" />
+            <End Role="LeagueOwner" EntitySet="LeagueOwner" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LeagueOwner_League" Association="Self.FK_LeagueOwner_League">
+            <End Role="League" EntitySet="League" />
+            <End Role="LeagueOwner" EntitySet="LeagueOwner" />
           </AssociationSet>
           <AssociationSet Name="FK_Player_NFLTeam" Association="Self.FK_Player_NFLTeam">
             <End Role="NFLTeam" EntitySet="NFLTeam" />
@@ -463,7 +496,6 @@
     <edmx:ConceptualModels>
       <Schema Namespace="HomeModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
         <EntityContainer Name="HomeEntity" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="BadTeamsDrafts" EntityType="HomeModel.BadTeamsDraft" />
           <EntitySet Name="NFLTeams" EntityType="HomeModel.NFLTeam" />
           <EntitySet Name="Players" EntityType="HomeModel.Player" />
           <EntitySet Name="PlayerAdjustments" EntityType="HomeModel.PlayerAdjustment" />
@@ -497,7 +529,6 @@
             <End Role="Rank" EntitySet="Ranks" />
             <End Role="PlayerRank" EntitySet="PlayerRanks" />
           </AssociationSet>
-          <EntitySet Name="Leagues" EntityType="HomeModel.League" />
           <EntitySet Name="Roles" EntityType="HomeModel.Role" />
           <EntitySet Name="UserRoles" EntityType="HomeModel.UserRole" />
           <AssociationSet Name="FK_UserRole_Role" Association="HomeModel.FK_UserRole_Role">
@@ -516,7 +547,6 @@
           </AssociationSet>
           <EntitySet Name="DraftRanks" EntityType="HomeModel.DraftRank" />
           <EntitySet Name="DraftOwners" EntityType="HomeModel.DraftOwner" />
-          <EntitySet Name="LeagueOwners" EntityType="HomeModel.LeagueOwner" />
           <EntitySet Name="DraftPicks" EntityType="HomeModel.DraftPick" />
           <AssociationSet Name="FK_DraftPick_Draft" Association="HomeModel.FK_DraftPick_Draft">
             <End Role="Draft" EntitySet="Drafts" />
@@ -527,17 +557,18 @@
             <End Role="DraftPick" EntitySet="DraftPicks" />
           </AssociationSet>
           <EntitySet Name="DraftPickHistories" EntityType="HomeModel.DraftPickHistory" />
+          <EntitySet Name="CssColors" EntityType="HomeModel.CssColor" />
+          <EntitySet Name="Leagues" EntityType="HomeModel.League" />
+          <EntitySet Name="LeagueOwners" EntityType="HomeModel.LeagueOwner" />
+          <AssociationSet Name="FK_LeagueOwner_CssColor" Association="HomeModel.FK_LeagueOwner_CssColor">
+            <End Role="CssColor" EntitySet="CssColors" />
+            <End Role="LeagueOwner" EntitySet="LeagueOwners" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LeagueOwner_League" Association="HomeModel.FK_LeagueOwner_League">
+            <End Role="League" EntitySet="Leagues" />
+            <End Role="LeagueOwner" EntitySet="LeagueOwners" />
+          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="BadTeamsDraft">
-          <Key>
-            <PropertyRef Name="DraftId" />
-          </Key>
-          <Property Type="Int32" Name="DraftId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int16" Name="DraftYear" Nullable="false" />
-          <Property Type="String" Name="UserName" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Type="Int16" Name="PickNumber" Nullable="false" />
-          <Property Type="String" Name="NFLTeam" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="NFLTeam">
           <Key>
             <PropertyRef Name="TeamAbbr" />
@@ -737,15 +768,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="League">
-          <Key>
-            <PropertyRef Name="LeagueId" />
-          </Key>
-          <Property Name="LeagueId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="LeagueName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="AddTimestamp" Type="DateTime" Precision="3" />
-          <Property Name="LastUpdateTimestamp" Type="DateTime" Precision="3" />
-        </EntityType>
         <EntityType Name="Role">
           <Key>
             <PropertyRef Name="RoleId" />
@@ -867,19 +889,6 @@
           <Property Name="AddTimestamp" Type="DateTime" Precision="3" />
           <Property Name="LastUpdateTimestamp" Type="DateTime" Precision="3" />
         </EntityType>
-        <EntityType Name="LeagueOwner">
-          <Key>
-            <PropertyRef Name="LeagueOwnerId" />
-          </Key>
-          <Property Name="LeagueOwnerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="LeagueId" Type="Int32" Nullable="false" />
-          <Property Name="TeamName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CssClass" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
         <EntityType Name="DraftPick">
           <Key>
             <PropertyRef Name="DraftPickId" />
@@ -937,23 +946,73 @@
           <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
+        <EntityType Name="CssColor">
+          <Key>
+            <PropertyRef Name="ClassName" />
+          </Key>
+          <Property Name="ClassName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ColorText" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ColorValue" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="AddTimestamp" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="LeagueOwners" Relationship="HomeModel.FK_LeagueOwner_CssColor" FromRole="CssColor" ToRole="LeagueOwner" />
+        </EntityType>
+        <EntityType Name="League">
+          <Key>
+            <PropertyRef Name="LeagueId" />
+          </Key>
+          <Property Name="LeagueId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LeagueName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AddTimestamp" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdateTimestamp" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="LeagueOwners" Relationship="HomeModel.FK_LeagueOwner_League" FromRole="League" ToRole="LeagueOwner" />
+        </EntityType>
+        <EntityType Name="LeagueOwner">
+          <Key>
+            <PropertyRef Name="LeagueOwnerId" />
+          </Key>
+          <Property Name="LeagueOwnerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="LeagueId" Type="Int32" Nullable="false" />
+          <Property Name="LeagueName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="TeamName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CssClass" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="CssColor" Relationship="HomeModel.FK_LeagueOwner_CssColor" FromRole="LeagueOwner" ToRole="CssColor" />
+          <NavigationProperty Name="League" Relationship="HomeModel.FK_LeagueOwner_League" FromRole="LeagueOwner" ToRole="League" />
+        </EntityType>
+        <Association Name="FK_LeagueOwner_CssColor">
+          <End Type="HomeModel.CssColor" Role="CssColor" Multiplicity="0..1" />
+          <End Type="HomeModel.LeagueOwner" Role="LeagueOwner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CssColor">
+              <PropertyRef Name="ClassName" />
+            </Principal>
+            <Dependent Role="LeagueOwner">
+              <PropertyRef Name="CssClass" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LeagueOwner_League">
+          <End Type="HomeModel.League" Role="League" Multiplicity="1" />
+          <End Type="HomeModel.LeagueOwner" Role="LeagueOwner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="League">
+              <PropertyRef Name="LeagueId" />
+            </Principal>
+            <Dependent Role="LeagueOwner">
+              <PropertyRef Name="LeagueId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="HomeModelStoreContainer" CdmEntityContainer="HomeEntity">
-          <EntitySetMapping Name="BadTeamsDrafts">
-            <EntityTypeMapping TypeName="HomeModel.BadTeamsDraft">
-              <MappingFragment StoreEntitySet="BadTeamsDraft">
-                <ScalarProperty Name="NFLTeam" ColumnName="NFLTeam" />
-                <ScalarProperty Name="PickNumber" ColumnName="PickNumber" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="DraftYear" ColumnName="DraftYear" />
-                <ScalarProperty Name="DraftId" ColumnName="DraftId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="NFLTeams">
             <EntityTypeMapping TypeName="HomeModel.NFLTeam">
               <MappingFragment StoreEntitySet="NFLTeam">
@@ -1077,16 +1136,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Leagues">
-            <EntityTypeMapping TypeName="HomeModel.League">
-              <MappingFragment StoreEntitySet="League">
-                <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
-                <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
-                <ScalarProperty Name="LeagueName" ColumnName="LeagueName" />
-                <ScalarProperty Name="LeagueId" ColumnName="LeagueId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Roles">
             <EntityTypeMapping TypeName="HomeModel.Role">
               <MappingFragment StoreEntitySet="Role">
@@ -1168,20 +1217,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="LeagueOwners">
-            <EntityTypeMapping TypeName="HomeModel.LeagueOwner">
-              <MappingFragment StoreEntitySet="LeagueOwner">
-                <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
-                <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="CssClass" ColumnName="CssClass" />
-                <ScalarProperty Name="TeamName" ColumnName="TeamName" />
-                <ScalarProperty Name="LeagueId" ColumnName="LeagueId" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="LeagueOwnerId" ColumnName="LeagueOwnerId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="DraftPicks">
             <EntityTypeMapping TypeName="HomeModel.DraftPick">
               <MappingFragment StoreEntitySet="DraftPick">
@@ -1212,6 +1247,42 @@
                 <ScalarProperty Name="DraftPickId" ColumnName="DraftPickId" />
                 <ScalarProperty Name="DraftPickGroupId" ColumnName="DraftPickGroupId" />
                 <ScalarProperty Name="DraftPickHistoryId" ColumnName="DraftPickHistoryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CssColors">
+            <EntityTypeMapping TypeName="HomeModel.CssColor">
+              <MappingFragment StoreEntitySet="CssColor">
+                <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
+                <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
+                <ScalarProperty Name="ColorValue" ColumnName="ColorValue" />
+                <ScalarProperty Name="ColorText" ColumnName="ColorText" />
+                <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Leagues">
+            <EntityTypeMapping TypeName="HomeModel.League">
+              <MappingFragment StoreEntitySet="League">
+                <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
+                <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
+                <ScalarProperty Name="LeagueName" ColumnName="LeagueName" />
+                <ScalarProperty Name="LeagueId" ColumnName="LeagueId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LeagueOwners">
+            <EntityTypeMapping TypeName="HomeModel.LeagueOwner">
+              <MappingFragment StoreEntitySet="LeagueOwner">
+                <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
+                <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CssClass" ColumnName="CssClass" />
+                <ScalarProperty Name="TeamName" ColumnName="TeamName" />
+                <ScalarProperty Name="LeagueName" ColumnName="LeagueName" />
+                <ScalarProperty Name="LeagueId" ColumnName="LeagueId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="LeagueOwnerId" ColumnName="LeagueOwnerId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1276,7 +1347,6 @@
           <ConnectorPoint PointX="7.15625" PointY="8.40211826822918" />
           <ConnectorPoint PointX="8.25" PointY="8.40211826822918" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="HomeModel.League" Width="1.5" PointX="13" PointY="4.875" />
         <EntityTypeShape EntityType="HomeModel.Role" Width="1.5" PointX="7.75" PointY="16.75" />
         <EntityTypeShape EntityType="HomeModel.UserRole" Width="1.5" PointX="10" PointY="11.375" />
         <AssociationConnector Association="HomeModel.FK_UserRole_Role" />
@@ -1286,11 +1356,15 @@
         <AssociationConnector Association="HomeModel.FK_UserRole_User" />
         <EntityTypeShape EntityType="HomeModel.DraftRank" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="HomeModel.DraftOwner" Width="1.5" PointX="0.75" PointY="10.75" />
-        <EntityTypeShape EntityType="HomeModel.LeagueOwner" Width="1.5" PointX="2.75" PointY="10.75" />
         <EntityTypeShape EntityType="HomeModel.DraftPick" Width="1.5" PointX="5.625" PointY="5.5" />
         <AssociationConnector Association="HomeModel.FK_DraftPick_Draft" />
         <AssociationConnector Association="HomeModel.FK_DraftPick_Player" />
         <EntityTypeShape EntityType="HomeModel.DraftPickHistory" Width="1.5" PointX="11.375" PointY="0.75" />
+        <EntityTypeShape EntityType="HomeModel.CssColor" Width="1.5" PointX="10.375" PointY="14.5" />
+        <EntityTypeShape EntityType="HomeModel.League" Width="1.5" PointX="10.375" PointY="5.5" />
+        <EntityTypeShape EntityType="HomeModel.LeagueOwner" Width="1.5" PointX="12.625" PointY="5" />
+        <AssociationConnector Association="HomeModel.FK_LeagueOwner_CssColor" />
+        <AssociationConnector Association="HomeModel.FK_LeagueOwner_League" />
       </Diagram>
     </Diagrams>
   </Designer>
