@@ -121,6 +121,15 @@ namespace DodgeDynasty.Controllers
 			return View(model);
 		}
 
+		[HttpPost]
+		public ActionResult MyInfo(UserInfoModel model)
+		{
+			var mapper = new UserInfoMapper();
+			mapper.ModelState = ModelState;
+			mapper.UpdateEntity(model);
+			return View(mapper.GetModel());
+		}
+
 		//private static string ErrorCodeToString(MembershipCreateStatus createStatus)
 		//{
 		//	// See http://go.microsoft.com/fwlink/?LinkID=177550 for

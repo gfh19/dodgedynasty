@@ -260,7 +260,7 @@ function preventBackspaceNav(e) {
 	}
 }
 
-function markInvalidUserId(userId) {
+function markInvalidId(userId) {
 	if (userId === "") {
 		//Find any blank spans
 		$.each($("select"), function (index, user) {

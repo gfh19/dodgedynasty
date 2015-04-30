@@ -321,9 +321,9 @@
     <Content Include="Scripts\EditDraft.js" />
     <Content Include="Scripts\AddEditDraft.js" />
     <Content Include="Scripts\AddDraft.js" />
-    <Content Include="Scripts\EditLeague.js" />
     <Content Include="Scripts\AddEditLeague.js" />
     <Content Include="Scripts\AddLeague.js" />
+    <Content Include="Scripts\EditLeague.js" />
     <Content Include="Scripts\lib\jquery.signalR-2.2.0.js" />
     <Content Include="Scripts\lib\jquery.signalR-2.2.0.min.js" />
     <Content Include="Scripts\LeagueOwnerUser.js" />
@@ -340,6 +340,7 @@
     <Content Include="Scripts\lib\moment-with-locales.min.js" />
     <Content Include="Scripts\lib\moment.js" />
     <Content Include="Scripts\lib\moment.min.js" />
+    <Content Include="Scripts\MyInfo.js" />
     <Content Include="Scripts\PlayerRanks.js" />
     <Content Include="Scripts\PlayerRanksShared.js" />
     <Content Include="Scripts\RankingsList.js" />

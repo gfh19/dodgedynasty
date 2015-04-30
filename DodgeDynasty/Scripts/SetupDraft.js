@@ -288,7 +288,7 @@ function validateDraftPicksModel(userIds) {
 	var blankOwner = $.inArray("", userIds);
 	if (blankOwner > -1) {
 		$(".blank-owner-msg").removeClass("hide-yo-wives");
-		markInvalidUserId("");
+		markInvalidId("");
 		isValid = false;
 	}
 	return isValid;

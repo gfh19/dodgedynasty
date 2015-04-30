@@ -13,14 +13,15 @@
 	</script>
 	<div class="large-page-header">@ViewBag.Title</div>
 	@{ Html.EnableClientValidation(true); }
-	@Html.ValidationSummary(false)
+	@Html.ValidationSummary(true)
 	<div class="error-messages">
 		<div class="blank-team-msg invalid hide-yo-wives">Error - Team Name cannot be left blank.</div>
-		<div class="dup-team-msg invalid hide-yo-wives">Error - Team Name already being used that league.</div>
-		<div class="dup-color-msg invalid hide-yo-wives">Error - Color already being used that league.</div>
+		@*<div class="dup-team-msg invalid hide-yo-wives">Error - Team Name already being used that league.</div>*@
+		@*<div class="blank-color-msg invalid hide-yo-wives">Error - Color cannot be left blank.</div>*@
+		@*<div class="dup-color-msg invalid hide-yo-wives">Error - Color already being used that league.</div>*@
 	</div>
 	<div class="page-entries">
-		@using (Html.BeginForm("MyInfo", "Account", FormMethod.Post, new { id = "userInfo" }))
+		@using (Html.BeginForm("MyInfo", "Account", FormMethod.Post, new { id = "userInfoForm" }))
 		{
 			<div class="mi-user-entry-header">
 				@Html.LabelFor(m => m.UserName, new { @class = "mi-user-header" })
@@ -49,7 +50,7 @@
 				</div>
 				@foreach (var ownerUser in Model.OwnerLeagues)
 				{
-					<div class="mi-league-entry">
+					<div class="mi-league-entry" data-league-id="@ownerUser.LeagueId">
 						<span class="mi-league">
 							<span class="mi-league-name">@ownerUser.LeagueName</span>
 						</span>
@@ -73,7 +74,7 @@
 					</div>
 				}
 			</div>
-			<div class="page-section"><button class="submit-league" type="submit">Submit</button></div>
+			<div class="page-section"><button class="submit-info" type="submit">Submit</button></div>
 		</div>
 	</div>
 </div>

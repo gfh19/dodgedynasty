@@ -28,8 +28,8 @@ namespace DodgeDynasty.Models.Account
 		[Required]
 		[StringLength(10, ErrorMessage = Constants.Messages.StringLength, MinimumLength = 1)]
 		public string NickName { get; set; }
-
 		public List<LeagueOwner> OwnerLeagues { get; set; }
+
 		public Dictionary<int,List<CssColor>> AvailableLeagueColors { get; set; }
 
 		public List<SelectListItem> GetLeagueColorOptions(int leagueId, string selectedClassName)
