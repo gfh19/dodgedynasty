@@ -10,7 +10,6 @@ namespace DodgeDynasty.Mappers
 	public class PasswordMapper<T> : MapperBase<T> where T : LocalPasswordModel, new()
 	{
 		public string UserName { get; set; }
-		public bool ChangePasswordSucceeded { get; set; }
 
 		protected override void DoUpdate(T model)
 		{
@@ -22,11 +21,11 @@ namespace DodgeDynasty.Mappers
 				user.Password = passwordInfo.PasswordHash;
 				user.Salt = passwordInfo.Salt;
 				HomeEntity.SaveChanges();
-				ChangePasswordSucceeded = true;
+				UpdateSucceeded = true;
 			}
 			else
 			{
-				ChangePasswordSucceeded = false;
+				UpdateSucceeded = false;
 			}
 		}
 	}

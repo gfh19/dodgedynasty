@@ -1755,6 +1755,13 @@ span.player-select
 	display: inline-block;
 }
 
+.mi-user-name {
+	font-size: 14px;
+	font-weight: normal;
+}
+.mi-user-header, .mi-user-name {
+	width: 110px;
+}
 .mi-first-header, .mi-first-name {
 	width: 110px;
 }
@@ -1783,7 +1790,10 @@ span.player-select
 	padding: 1px 1px;
 }
 
-
+.error-messages .validation-summary-errors {
+	display:table;
+	margin:0 auto;
+}
 
 
 /* RESPONSIVE STYLES

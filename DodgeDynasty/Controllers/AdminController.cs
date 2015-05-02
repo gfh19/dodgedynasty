@@ -225,7 +225,7 @@ namespace DodgeDynasty.Controllers
 				try
 				{
 					mapper.UpdateEntity(model);
-					changePasswordSucceeded = mapper.ChangePasswordSucceeded;
+					changePasswordSucceeded = mapper.UpdateSucceeded;
 				}
 				catch (Exception)
 				{

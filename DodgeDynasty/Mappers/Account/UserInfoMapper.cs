@@ -49,22 +49,23 @@ namespace DodgeDynasty.Mappers.Account
 					.Select(lo => lo.TeamName).ToList();
 				if (leagueColors.Contains(ownerLeague.CssClass))
 				{
-					ModelState.AddModelError("DupColor", "Error - Color already being used that league.");
+					ModelState.AddModelError("", "Error - Color already being used that league.");
 					isValid = false;
 				}
 				if (string.IsNullOrEmpty(ownerLeague.CssClass))
 				{
-					ModelState.AddModelError("BlankColor", "Error - Color cannot be left blank.");
+					ModelState.AddModelError("", "Error - Color cannot be left blank.");
 					isValid = false;
 				}
 				if (leagueTeamNames.Contains(ownerLeague.TeamName))
 				{
-					ModelState.AddModelError("DupTeam", "Error - Team Name already being used that league.");
+					ModelState.AddModelError("", 
+						string.Format("Error - Team Name '{0}' already being used that league.", ownerLeague.TeamName));
 					isValid = false;
 				}
 				if (string.IsNullOrEmpty(ownerLeague.TeamName))
 				{
-					ModelState.AddModelError("BlankTeam", "Error - Team Name cannot be left blank.");
+					ModelState.AddModelError("", "Error - Team Name cannot be left blank.");
 					isValid = false;
 				}
 			}
@@ -78,6 +79,7 @@ namespace DodgeDynasty.Mappers.Account
 			user.FirstName = model.FirstName;
 			user.LastName = model.LastName;
 			user.NickName = model.NickName;
+			user.LastUpdateTimestamp = DateTime.Now;
 			HomeEntity.SaveChanges();
 
 			foreach (var ownerLeague in model.OwnerLeagues)
@@ -88,6 +90,7 @@ namespace DodgeDynasty.Mappers.Account
 				leagueOwner.TeamName = ownerLeague.TeamName;
 				leagueOwner.CssClass = ownerLeague.CssClass;
 				leagueOwner.IsActive = ownerLeague.IsActive;
+				leagueOwner.LastUpdateTimestamp = DateTime.Now;
 			}
 			HomeEntity.SaveChanges();
 		}

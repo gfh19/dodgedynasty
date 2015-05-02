@@ -70,10 +70,11 @@ function validateUserInfoModel(userInfoModel) {
 }
 
 function updateUserInfoModel(userInfoModel) {
-	ajaxPost(userInfoModel, "Account/MyInfo", function (data) {
-		console.log(data);
-	}, function (data) {
-		console.log("failed");
-		console.log(data);
-	});
+	//ajaxPost(userInfoModel, "Account/MyInfo", function (data) {
+	//	console.log(data);
+	//}, function (data) {
+	//	console.log("failed");
+	//	console.log(data);
+	//});
+	$("#userInfoForm").submit();
 }

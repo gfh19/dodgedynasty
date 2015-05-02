@@ -79,7 +79,7 @@ namespace DodgeDynasty.Controllers
 					var mapper = new PasswordMapper<LocalPasswordModel>();
 					mapper.UserName = User.Identity.Name;
 					mapper.UpdateEntity(model);
-					changePasswordSucceeded = mapper.ChangePasswordSucceeded;
+					changePasswordSucceeded = mapper.UpdateSucceeded;
 				}
 				catch (Exception)
 				{
@@ -126,7 +126,10 @@ namespace DodgeDynasty.Controllers
 		{
 			var mapper = new UserInfoMapper();
 			mapper.ModelState = ModelState;
-			mapper.UpdateEntity(model);
+			if (!mapper.UpdateEntity(model))
+			{
+				return View(mapper.GetUpdatedModel(model));
+			}
 			return View(mapper.GetModel());
 		}
 
