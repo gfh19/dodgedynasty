@@ -71,6 +71,9 @@ function validateUserInfoModel(userInfoModel) {
 
 function updateUserInfoModel(userInfoModel) {
 	ajaxPost(userInfoModel, "Account/MyInfo", function (data) {
-
-	}, null, null, true);
+		console.log(data);
+	}, function (data) {
+		console.log("failed");
+		console.log(data);
+	});
 }

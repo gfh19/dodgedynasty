@@ -24,20 +24,17 @@
 		@using (Html.BeginForm("MyInfo", "Account", FormMethod.Post, new { id = "userInfoForm" }))
 		{
 			<div class="mi-user-entry-header">
-				@Html.LabelFor(m => m.UserName, new { @class = "mi-user-header" })
 				@Html.LabelFor(m => m.FirstName, new { @class = "mi-first-header" })
 				@Html.LabelFor(m => m.LastName, new { @class = "mi-last-header" })
 				@Html.LabelFor(m => m.NickName, new { @class = "mi-nick-header" })
 			</div>
 			<div>
-				@Html.TextBoxFor(m => m.UserName, new { @class = "mi-user-name", maxLength = "20", autofocus = "autofocus" })
 				@Html.TextBoxFor(m => m.FirstName, new { @class = "mi-first-name", maxLength = "15" })
 				@Html.TextBoxFor(m => m.LastName, new { @class = "mi-last-name", maxLength = "25" })
 				@Html.TextBoxFor(m => m.NickName, new { @class = "mi-nick-name", maxLength = "10" })
-				<div>@Html.ValidationMessageFor(m => m.UserName)</div>
-				<div>@Html.ValidationMessageFor(m => m.UserName)</div>
-				<div>@Html.ValidationMessageFor(m => m.UserName)</div>
-				<div>@Html.ValidationMessageFor(m => m.UserName)</div>
+				<div>@Html.ValidationMessageFor(m => m.FirstName)</div>
+				<div>@Html.ValidationMessageFor(m => m.LastName)</div>
+				<div>@Html.ValidationMessageFor(m => m.NickName)</div>
 			</div>
 		}
 		<div class="page-section">

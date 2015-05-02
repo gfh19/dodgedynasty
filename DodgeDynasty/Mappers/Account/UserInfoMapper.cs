@@ -38,6 +38,7 @@ namespace DodgeDynasty.Mappers.Account
 		{
 			var isValid = true;
 			var userId = Utilities.GetLoggedInUserId(HomeEntity.Users.AsEnumerable());
+			ModelState.Clear();
 			foreach (var ownerLeague in model.OwnerLeagues)
 			{
 				var leagueColors = HomeEntity.LeagueOwners
@@ -48,26 +49,22 @@ namespace DodgeDynasty.Mappers.Account
 					.Select(lo => lo.TeamName).ToList();
 				if (leagueColors.Contains(ownerLeague.CssClass))
 				{
-					ModelState.Clear();
-					ModelState.AddModelError("", "Error - Color already being used that league.");
+					ModelState.AddModelError("DupColor", "Error - Color already being used that league.");
 					isValid = false;
 				}
-				if (ownerLeague.CssClass == string.Empty)
+				if (string.IsNullOrEmpty(ownerLeague.CssClass))
 				{
-					ModelState.Clear();
-					ModelState.AddModelError("", "Error - Color cannot be left blank.");
+					ModelState.AddModelError("BlankColor", "Error - Color cannot be left blank.");
 					isValid = false;
 				}
 				if (leagueTeamNames.Contains(ownerLeague.TeamName))
 				{
-					ModelState.Clear();
-					ModelState.AddModelError("", "Error - Team Name already being used that league.");
+					ModelState.AddModelError("DupTeam", "Error - Team Name already being used that league.");
 					isValid = false;
 				}
-				if (ownerLeague.TeamName == string.Empty)
+				if (string.IsNullOrEmpty(ownerLeague.TeamName))
 				{
-					ModelState.Clear();
-					ModelState.AddModelError("", "Error - Team Name cannot be left blank.");
+					ModelState.AddModelError("BlankTeam", "Error - Team Name cannot be left blank.");
 					isValid = false;
 				}
 			}
@@ -76,21 +73,23 @@ namespace DodgeDynasty.Mappers.Account
 
 		protected override void DoUpdate(UserInfoModel model)
 		{
-			var user = HomeEntity.Users.Where(u => u.UserName == Utilities.GetLoggedInUserName()).FirstOrDefault();
-			user.UserName = model.UserName;
+			var userName = Utilities.GetLoggedInUserName();
+			var user = HomeEntity.Users.Where(u => u.UserName == userName).FirstOrDefault();
 			user.FirstName = model.FirstName;
 			user.LastName = model.LastName;
 			user.NickName = model.NickName;
 			HomeEntity.SaveChanges();
 
-			foreach (var ownerLeague in Model.OwnerLeagues)
+			foreach (var ownerLeague in model.OwnerLeagues)
 			{
-				var leagueOwner = HomeEntity.LeagueOwners.Where(lo => lo.LeagueId == ownerLeague.LeagueId)
+				var leagueOwner = HomeEntity.LeagueOwners
+					.Where(lo => lo.LeagueId == ownerLeague.LeagueId && lo.UserId == user.UserId)
 					.FirstOrDefault();
 				leagueOwner.TeamName = ownerLeague.TeamName;
 				leagueOwner.CssClass = ownerLeague.CssClass;
 				leagueOwner.IsActive = ownerLeague.IsActive;
 			}
+			HomeEntity.SaveChanges();
 		}
 	}
 }

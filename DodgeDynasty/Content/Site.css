@@ -1755,9 +1755,6 @@ span.player-select
 	display: inline-block;
 }
 
-.mi-user-header, .mi-user-name {
-	width: 110px;
-}
 .mi-first-header, .mi-first-name {
 	width: 110px;
 }
@@ -1781,8 +1778,6 @@ span.player-select
 	width: 60px;
 }
 
-.mi-outer {
-}
 .mi-selected-color {
 	border: 3px solid;
 	padding: 1px 1px;
