@@ -8,13 +8,15 @@ using DodgeDynasty.Shared;
 
 namespace DodgeDynasty.Mappers.Account
 {
-	public class UserInfoMapper : MapperBase<UserInfoModel>
+	public class SharedUserInfoMapper<T> : MapperBase<T> where T : UserInfoModel, new()
 	{
+		public string UserName { get; set; }
+
 		protected override void PopulateModel()
 		{
-			var allUsers = HomeEntity.Users.ToList();
+			Model.AllUsers = HomeEntity.Users.ToList();
 			var userId = Utilities.GetLoggedInUserId(HomeEntity.Users.ToList());
-			var user = allUsers.FirstOrDefault(u => u.UserId == userId);
+			var user = Model.AllUsers.FirstOrDefault(u => u.UserId == userId);
 			Model.UserName = user.UserName;
 			Model.FirstName = user.FirstName;
 			Model.LastName = user.LastName;
@@ -34,10 +36,11 @@ namespace DodgeDynasty.Mappers.Account
 			}
 		}
 
-		protected override bool ValidateModel(UserInfoModel model)
+		protected override bool ValidateModel(T model)
 		{
+			var userId = HomeEntity.Users.Where(u => u.UserName == UserName).Select(u=>u.UserId).FirstOrDefault();
+
 			var isValid = true;
-			var userId = Utilities.GetLoggedInUserId(HomeEntity.Users.AsEnumerable());
 			ModelState.Clear();
 			foreach (var ownerLeague in model.OwnerLeagues)
 			{
@@ -72,10 +75,9 @@ namespace DodgeDynasty.Mappers.Account
 			return isValid && base.ValidateModel(model);
 		}
 
-		protected override void DoUpdate(UserInfoModel model)
+		protected override void DoUpdate(T model)
 		{
-			var userName = Utilities.GetLoggedInUserName();
-			var user = HomeEntity.Users.Where(u => u.UserName == userName).FirstOrDefault();
+			var user = HomeEntity.Users.Where(u => u.UserName == UserName).FirstOrDefault();
 			user.FirstName = model.FirstName;
 			user.LastName = model.LastName;
 			user.NickName = model.NickName;

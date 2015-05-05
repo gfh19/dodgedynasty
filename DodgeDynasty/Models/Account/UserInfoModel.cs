@@ -12,6 +12,7 @@ namespace DodgeDynasty.Models.Account
 {
 	public class UserInfoModel
 	{
+		[Display(Name = "User Name")]
 		public string UserName { get; set; }
 		[Display(Name = "First Name")]
 		[Required]
@@ -27,6 +28,8 @@ namespace DodgeDynasty.Models.Account
 		public string NickName { get; set; }
 		public List<LeagueOwner> OwnerLeagues { get; set; }
 
+		public bool AdminMode { get; set; }
+		public List<User> AllUsers { get; set; }
 		public Dictionary<int,List<CssColor>> AvailableLeagueColors { get; set; }
 
 		public List<SelectListItem> GetLeagueColorOptions(int leagueId, string selectedClassName)

@@ -161,8 +161,9 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\DraftController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Mappers\Account\UserInfoMapper.cs" />
+    <Compile Include="Mappers\Account\MyInfoMapper.cs" />
     <Compile Include="Mappers\AdminPasswordMapper.cs" />
+    <Compile Include="Mappers\Admin\UserInfoMapper.cs" />
     <Compile Include="Mappers\DraftHistoryMapper.cs" />
     <Compile Include="Mappers\EditDraftMapper.cs" />
     <Compile Include="Mappers\AddDraftMapper.cs" />
@@ -183,6 +184,7 @@
     <Compile Include="Mappers\PasswordMapper.cs" />
     <Compile Include="Mappers\RankSetupMapper.cs" />
     <Compile Include="Mappers\Shared\ColorStylesMapper.cs" />
+    <Compile Include="Mappers\Shared\SharedUserInfoMapper.cs" />
     <Compile Include="Models\Account\UserInfoModel.cs" />
     <Compile Include="Models\AddEditDraftModel.cs" />
     <Compile Include="Models\AddEditLeagueModel.cs" />
@@ -384,6 +386,8 @@
     <Content Include="Views\Admin\ChangePassword.cshtml" />
     <Content Include="Views\Account\MyInfo.cshtml" />
     <Content Include="Views\Shared\_ColorStyles.cshtml" />
+    <Content Include="Views\Admin\UserInfo.cshtml" />
+    <Content Include="Views\Shared\UserInfoPartial.cshtml" />
     <None Include="Web.local.config">
       <SubType>Designer</SubType>
     </None>

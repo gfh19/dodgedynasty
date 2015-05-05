@@ -116,7 +116,7 @@ namespace DodgeDynasty.Controllers
 		[HttpGet]
 		public ActionResult MyInfo()
 		{
-			var mapper = new UserInfoMapper();
+			var mapper = new MyInfoMapper();
 			var model = mapper.GetModel();
 			return View(model);
 		}
@@ -124,7 +124,7 @@ namespace DodgeDynasty.Controllers
 		[HttpPost]
 		public ActionResult MyInfo(UserInfoModel model)
 		{
-			var mapper = new UserInfoMapper();
+			var mapper = new MyInfoMapper();
 			mapper.ModelState = ModelState;
 			if (!mapper.UpdateEntity(model))
 			{

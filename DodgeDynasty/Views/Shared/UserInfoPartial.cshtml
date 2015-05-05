@@ -1,10 +1,4 @@
 ﻿@model DodgeDynasty.Models.Account.UserInfoModel
-@{
-	ViewBag.Title = "My Info";
-}
-@section scripts {
-	<script type="text/javascript" src="@Url.Content("/Scripts/UserInfo.js")"></script>
-}
 <div id="userInfo">
 	<script type="text/javascript">
 		$(function () {
@@ -27,7 +21,13 @@
 				@Html.LabelFor(m => m.NickName, new { @class = "mi-nick-header" })
 			</div>
 			<div>
-				@Html.Label(Model.UserName, new { @class = "mi-user-name" })
+				@if (Model.AdminMode) {
+					@Html.Label(Model.UserName, new { @class = "mi-user-name" })
+				}
+				else
+				{
+					@Html.DropDownListFor(Model.UserName, Model.AllUsers, new { @class = "mi-user-name" })
+				}
 				@Html.TextBoxFor(m => m.FirstName, new { @class = "mi-first-name", maxLength = "15", autofocus = "autofocus" })
 				@Html.TextBoxFor(m => m.LastName, new { @class = "mi-last-name", maxLength = "25" })
 				@Html.TextBoxFor(m => m.NickName, new { @class = "mi-nick-name", maxLength = "10" })
