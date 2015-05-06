@@ -59,6 +59,7 @@ namespace DodgeDynasty.Shared
 			public const string SetupDraft = "SetupDraft";
 			public const string ActivateDraft = "ActivateDraft";
 			public const string ColorStyles = "_ColorStyles";
+			public const string UserInfoPartial = "UserInfoPartial";
 		}
 	}
 }

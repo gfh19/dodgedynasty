@@ -163,6 +163,8 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Mappers\Account\MyInfoMapper.cs" />
     <Compile Include="Mappers\AdminPasswordMapper.cs" />
+    <Compile Include="Mappers\Admin\AddUserMapper.cs" />
+    <Compile Include="Mappers\Admin\ManageUsersMapper.cs" />
     <Compile Include="Mappers\Admin\UserInfoMapper.cs" />
     <Compile Include="Mappers\DraftHistoryMapper.cs" />
     <Compile Include="Mappers\EditDraftMapper.cs" />
@@ -189,6 +191,8 @@
     <Compile Include="Models\AddEditDraftModel.cs" />
     <Compile Include="Models\AddEditLeagueModel.cs" />
     <Compile Include="Models\AdminPasswordModel.cs" />
+    <Compile Include="Models\Admin\AddUserModel.cs" />
+    <Compile Include="Models\Admin\ManageUsersModel.cs" />
     <Compile Include="Models\DraftHistoryModel.cs" />
     <Compile Include="Models\DraftPicksSetupModel.cs" />
     <Compile Include="Models\DraftSetupModel.cs" />
@@ -363,6 +367,7 @@
     <Content Include="Scripts\lib\modernizr-2.5.3.js" />
     <Content Include="Scripts\Pick.js" />
     <Content Include="Scripts\Site.js" />
+    <Content Include="Scripts\AddUser.js" />
     <Content Include="Scripts\UserInfo.js" />
     <Content Include="Views\Shared\Unauthorized.cshtml" />
     <Content Include="Views\Draft\Pick.cshtml" />
@@ -388,6 +393,8 @@
     <Content Include="Views\Shared\_ColorStyles.cshtml" />
     <Content Include="Views\Admin\UserInfo.cshtml" />
     <Content Include="Views\Shared\UserInfoPartial.cshtml" />
+    <Content Include="Views\Admin\ManageUsers.cshtml" />
+    <Content Include="Views\Admin\AddUser.cshtml" />
     <None Include="Web.local.config">
       <SubType>Designer</SubType>
     </None>

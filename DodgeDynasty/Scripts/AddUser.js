@@ -2,7 +2,6 @@
 	bindColorSelects();
 	bindSubmitUserInfo();
 	bindUserNameSelect();
-	window.location
 }
 
 function bindColorSelects() {

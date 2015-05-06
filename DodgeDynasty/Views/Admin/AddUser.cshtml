@@ -1,0 +1,45 @@
+﻿@model DodgeDynasty.Models.Admin.AddUserModel
+@{
+	ViewBag.Title = "Add New User";
+}
+@section scripts {
+	<script type="text/javascript" src="@Url.Content("/Scripts/AddUser.js")"></script>
+}
+<div class="large-page-header">@ViewBag.Title</div>
+<div id="userInfo">
+	<script type="text/javascript">
+		$(function () {
+			initUserInfo();
+		});
+	</script>
+	@{ Html.EnableClientValidation(true); }
+	<div class="error-messages">
+		@Html.ValidationSummary(true)
+	</div>
+	<div class="page-entries">
+		<div class="page-section">
+			@using (Html.BeginForm("AddUser", "Admin", FormMethod.Post, new { id = "userInfoForm" }))
+			{
+				<div class="mi-user-entry-header">
+					@Html.LabelFor(m => m.UserName, new { @class = "mi-user-header" })
+					@Html.LabelFor(m => m.FirstName, new { @class = "mi-first-header" })
+					@Html.LabelFor(m => m.LastName, new { @class = "mi-last-header" })
+					@Html.LabelFor(m => m.NickName, new { @class = "mi-nick-header" })
+					@Html.LabelFor(m => m.IsActive, new { @class = "mi-active-header" })
+				</div>
+				<div>
+					@Html.TextBoxFor(m => m.UserName, new { @class = "mi-user-name", maxLength = "20", autofocus = "autofocus" })
+					@Html.TextBoxFor(m => m.FirstName, new { @class = "mi-first-name", maxLength = "15" })
+					@Html.TextBoxFor(m => m.LastName, new { @class = "mi-last-name", maxLength = "25" })
+					@Html.TextBoxFor(m => m.NickName, new { @class = "mi-nick-name", maxLength = "10" })
+					<span class="mi-active">@Html.CheckBoxFor(m => m.IsActive, new { @class = "mi-active-chkbx" })</span>
+					<div>@Html.ValidationMessageFor(m => m.UserName)</div>
+					<div>@Html.ValidationMessageFor(m => m.FirstName)</div>
+					<div>@Html.ValidationMessageFor(m => m.LastName)</div>
+					<div>@Html.ValidationMessageFor(m => m.NickName)</div>
+				</div>
+			}
+		</div>
+		<div class="page-section"><button class="submit-info" type="submit">Submit</button></div>
+	</div>
+</div>

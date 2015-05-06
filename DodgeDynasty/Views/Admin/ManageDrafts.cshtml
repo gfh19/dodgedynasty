@@ -1,12 +1,12 @@
 ﻿@model DodgeDynasty.Models.ManageDraftsModel
 
 @{
-	ViewBag.Title = "Manage Leagues";
+	ViewBag.Title = "Manage Drafts";
 }
 @section scripts {
 }
-<div id="manageLeagues">
-	<div class="large-page-header">Manage Drafts</div>
+<div id="manageDrafts">
+	<div class="large-page-header">@ViewBag.Title</div>
 	<div class="page-entries">
 		@{if (Model.LeagueId != null) {
 			<div class="page-entry">

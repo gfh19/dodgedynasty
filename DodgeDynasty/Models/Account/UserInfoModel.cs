@@ -37,5 +37,11 @@ namespace DodgeDynasty.Models.Account
 			return Utilities.GetListItems<CssColor>(AvailableLeagueColors[leagueId], cc => cc.ColorText, cc => cc.ClassName,
 				false, selectedClassName);
 		}
+
+		public List<SelectListItem> GetUserListItems(string userName)
+		{
+			return Utilities.GetListItems<User>(AllUsers, u => u.UserName, u => u.UserName, false, 
+				userName ?? Utilities.GetLoggedInUserName());
+		}
 	}
 }

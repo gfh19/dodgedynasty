@@ -100,19 +100,6 @@ namespace DodgeDynasty.Controllers
 			return View(model);
 		}
 
-		#region Helpers
-		private ActionResult RedirectToLocal(string returnUrl)
-		{
-			if (Url.IsLocalUrl(returnUrl))
-			{
-				return Redirect(returnUrl);
-			}
-			else
-			{
-				return RedirectToAction("Index", "Home");
-			}
-		}
-
 		[HttpGet]
 		public ActionResult MyInfo()
 		{
@@ -131,6 +118,19 @@ namespace DodgeDynasty.Controllers
 				return View(mapper.GetUpdatedModel(model));
 			}
 			return View(mapper.GetModel());
+		}
+
+		#region Helpers
+		private ActionResult RedirectToLocal(string returnUrl)
+		{
+			if (Url.IsLocalUrl(returnUrl))
+			{
+				return Redirect(returnUrl);
+			}
+			else
+			{
+				return RedirectToAction("Index", "Home");
+			}
 		}
 
 		//private static string ErrorCodeToString(MembershipCreateStatus createStatus)

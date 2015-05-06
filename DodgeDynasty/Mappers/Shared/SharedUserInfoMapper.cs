@@ -15,13 +15,13 @@ namespace DodgeDynasty.Mappers.Account
 		protected override void PopulateModel()
 		{
 			Model.AllUsers = HomeEntity.Users.ToList();
-			var userId = Utilities.GetLoggedInUserId(HomeEntity.Users.ToList());
-			var user = Model.AllUsers.FirstOrDefault(u => u.UserId == userId);
+			var userName = UserName ?? Utilities.GetLoggedInUserName();
+			var user = Model.AllUsers.FirstOrDefault(u => u.UserName == userName);
 			Model.UserName = user.UserName;
 			Model.FirstName = user.FirstName;
 			Model.LastName = user.LastName;
 			Model.NickName = user.NickName;
-			Model.OwnerLeagues = HomeEntity.LeagueOwners.Where(lo => lo.UserId == userId).ToList();
+			Model.OwnerLeagues = HomeEntity.LeagueOwners.Where(lo => lo.UserId == user.UserId).ToList();
 			var cssColors = HomeEntity.CssColors.ToList();
 			Model.AvailableLeagueColors = new Dictionary<int, List<CssColor>>();
 			foreach (var ownerLeague in Model.OwnerLeagues)

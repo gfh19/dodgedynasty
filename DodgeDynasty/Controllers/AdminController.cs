@@ -5,7 +5,10 @@ using System.Web;
 using System.Web.Mvc;
 using DodgeDynasty.Filters;
 using DodgeDynasty.Mappers;
+using DodgeDynasty.Mappers.Admin;
 using DodgeDynasty.Models;
+using DodgeDynasty.Models.Account;
+using DodgeDynasty.Models.Admin;
 using DodgeDynasty.Shared;
 
 namespace DodgeDynasty.Controllers
@@ -244,6 +247,66 @@ namespace DodgeDynasty.Controllers
 			}
 
 			// If we got this far, something failed, redisplay form
+			return View(mapper.GetModel());
+		}
+
+		[HttpGet]
+		[AdminAccess]
+		public ActionResult UserInfo(string userName)
+		{
+			var mapper = new UserInfoMapper { UserName = userName };
+			var model = mapper.GetModel();
+			return View(model);
+		}
+
+		[HttpGet]
+		[AdminAccess]
+		public ActionResult UserInfoPartial(string userName)
+		{
+			var mapper = new UserInfoMapper { UserName = userName };
+			var model = mapper.GetModel();
+			return PartialView(Constants.Views.UserInfoPartial, model);
+		}
+
+		[HttpPost]
+		public ActionResult UserInfo(UserInfoModel model)
+		{
+			var mapper = new UserInfoMapper();
+			mapper.ModelState = ModelState;
+			if (!mapper.UpdateEntity(model))
+			{
+				return View(mapper.GetUpdatedModel(model));
+			}
+			return View(mapper.GetModel());
+		}
+
+		[HttpGet]
+		[AdminAccess]
+		public ActionResult ManageUsers()
+		{
+			var mapper = new ManageUsersMapper();
+			var model = mapper.GetModel();
+			return View(model);
+		}
+
+		[HttpGet]
+		[AdminAccess]
+		public ActionResult AddUser()
+		{
+			var mapper = new AddUserMapper();
+			var model = mapper.GetModel();
+			return View(model);
+		}
+
+		[HttpPost]
+		[AdminAccess]
+		public ActionResult AddUser(AddUserModel model)
+		{
+			var mapper = new AddUserMapper();
+			if (!mapper.UpdateEntity(model))
+			{
+				return View(mapper.GetUpdatedModel(model));
+			}
 			return View(mapper.GetModel());
 		}
 	}
