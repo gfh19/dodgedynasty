@@ -166,6 +166,7 @@
     <Compile Include="Mappers\Admin\AddUserMapper.cs" />
     <Compile Include="Mappers\Admin\ManageUsersMapper.cs" />
     <Compile Include="Mappers\Admin\UserInfoMapper.cs" />
+    <Compile Include="Mappers\Admin\UserStatusMapper.cs" />
     <Compile Include="Mappers\DraftHistoryMapper.cs" />
     <Compile Include="Mappers\EditDraftMapper.cs" />
     <Compile Include="Mappers\AddDraftMapper.cs" />
@@ -193,6 +194,7 @@
     <Compile Include="Models\AdminPasswordModel.cs" />
     <Compile Include="Models\Admin\AddUserModel.cs" />
     <Compile Include="Models\Admin\ManageUsersModel.cs" />
+    <Compile Include="Models\Admin\UserStatusModel.cs" />
     <Compile Include="Models\DraftHistoryModel.cs" />
     <Compile Include="Models\DraftPicksSetupModel.cs" />
     <Compile Include="Models\DraftSetupModel.cs" />
@@ -211,6 +213,7 @@
     <Compile Include="Models\RankingsListModel.cs" />
     <Compile Include="Models\RankSetupModel.cs" />
     <Compile Include="Models\Shared\ColorStylesModel.cs" />
+    <Compile Include="Models\Shared\LeagueOwnerHelper.cs" />
     <Compile Include="Models\Types\DraftRankModel.cs" />
     <Compile Include="Models\Types\PlayerRankOptions.cs" />
     <Compile Include="Controllers\SharedController.cs" />

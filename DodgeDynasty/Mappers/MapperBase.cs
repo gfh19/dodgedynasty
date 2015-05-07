@@ -16,7 +16,7 @@ namespace DodgeDynasty.Mappers
 
 		public T GetModel(T model)
 		{
-			Model = model ?? new T();
+			CreateModel(model);
 			using (HomeEntity = new Entities.HomeEntity())
 			{
 				PopulateModel();
@@ -47,6 +47,12 @@ namespace DodgeDynasty.Mappers
 					}
 				}
 			}
+			return Model;
+		}
+
+		public T CreateModel(T model = null)
+		{
+			Model = model ?? new T();
 			return Model;
 		}
 

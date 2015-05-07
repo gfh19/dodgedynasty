@@ -30,11 +30,11 @@ namespace DodgeDynasty.Models.Account
 
 		public bool AdminMode { get; set; }
 		public List<User> AllUsers { get; set; }
-		public Dictionary<int,List<CssColor>> AvailableLeagueColors { get; set; }
+		public Dictionary<int,List<CssColor>> AvailableLeaguesColors { get; set; }
 
 		public List<SelectListItem> GetLeagueColorOptions(int leagueId, string selectedClassName)
 		{
-			return Utilities.GetListItems<CssColor>(AvailableLeagueColors[leagueId], cc => cc.ColorText, cc => cc.ClassName,
+			return Utilities.GetListItems<CssColor>(AvailableLeaguesColors[leagueId], cc => cc.ColorText, cc => cc.ClassName,
 				false, selectedClassName);
 		}
 

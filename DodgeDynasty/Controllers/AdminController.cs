@@ -198,7 +198,7 @@ namespace DodgeDynasty.Controllers
 		[AdminAccess]
 		public ActionResult SetDraftStatus(string id)
 		{
-			var mapper = new DraftStatusMapper<DraftStatusModel>(id, 
+			var mapper = new DraftStatusMapper(id, 
 				Request.QueryString[Constants.QS.IsActive], Request.QueryString[Constants.QS.IsComplete]);
 			mapper.UpdateEntity(mapper.Model);
 			return RedirectToAction(Constants.Views.ActivateDraft);
@@ -302,12 +302,22 @@ namespace DodgeDynasty.Controllers
 		[AdminAccess]
 		public ActionResult AddUser(AddUserModel model)
 		{
-			var mapper = new AddUserMapper();
+			var mapper = new AddUserMapper { ModelState = ModelState };
 			if (!mapper.UpdateEntity(model))
 			{
 				return View(mapper.GetUpdatedModel(model));
 			}
 			return View(mapper.GetModel());
 		}
+
+		[HttpGet]
+		[AdminAccess]
+		public ActionResult SetUserStatus(string id)
+		{
+			var mapper = new UserStatusMapper(id, Request.QueryString[Constants.QS.IsActive]);
+			mapper.UpdateEntity(mapper.Model);
+			return RedirectToAction(Constants.Views.ManageUsers);
+		}
+
 	}
 }

@@ -1622,51 +1622,61 @@ span.player-select
 	width: 20px;
 }
 
-.league-name, .lo-team-input
-{
-	width: 180px;
-}
-
-.lo-team-input {
-	margin: 2px 0px;
-}
-
-.lo-select {
-	width: 145px;
-}
-
-.league-owner, .lo-team-name, .owner-controls, .lo-active {
+#addEditLeague span {
 	display: inline-block;
 }
 
-.lo-owner-header, .lo-teamname-header, .lo-active-header {
+.league-owner, .lo-team-name, .owner-controls, .lo-active, .lo-color {
+	display: inline-block;
+}
+.lo-owner-header, .lo-teamname-header, .lo-active-header, .lo-color-header {
 	display: inline-block;
 }
 
 .league-owner-entry {
 	min-width: 436px;
 }
-
 .lo-entry-header {
 	display: block;
 }
-
 .lo-owner-header {
 	width: 145px;
 }
 .lo-teamname-header {
-	width: 185px;
+	width: 196px;
+}
+.lo-active-header {
+	width: 46px;
+}
+.lo-color-header {
+	width: 140px;
 }
 .lo-controls-header {
 	width: 32px;
+}
+
+.league-name, .lo-team-input
+{
+	width: 200px;
+}
+.lo-team-input {
+	margin: 2px 0px;
+}
+.lo-select {
+	width: 145px;
+}
+
+.lo-selected-color {
+	border: 3px solid;
+	padding: 1px 1px;
 }
 
 .owner-controls, .lo-active {
 	width: 40px;
 }
 
-.lo-teamname-header, .lo-active-header, .lo-controls-header, 
-.lo-team-name, .lo-active, .owner-controls {
+.lo-teamname-header, .lo-active-header, .lo-color, .lo-controls-header, 
+.lo-team-name, .lo-active, .lo-color, .owner-controls {
 	margin-left: 5px;
 }
 

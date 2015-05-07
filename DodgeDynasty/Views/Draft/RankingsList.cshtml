@@ -14,7 +14,7 @@
 		});
 	</script>
 	@Html.Partial("CurrentDraftPickPartial", Model)
-	@{var draftId = Url.RequestContext.RouteData.Values["id"];}
+	@{var draftId = DodgeDynasty.Shared.Utilities.GetRouteDraftId(Url.RequestContext.RouteData);}
 	<div class="rlist-header">
 		<div class="rankings-list">Other Player Rankings</div>
 	</div>
@@ -26,7 +26,7 @@
 				<div class="rank-list-entry">
 					@if (draftId != null)
 					{
-						<a class="rank-link" data-rank-id="@list.RankId" href="@Url.Content("/Draft/BestAvailable/" + draftId + "?rankId=" + list.RankId)">@list.RankName</a>
+						<a class="rank-link" data-rank-id="@list.RankId" href="@Url.Content("/Draft/BestAvailable/" + draftId + "?rankId=" + list.RankId + "&historyMode=true")">@list.RankName</a>
 					}
 					else
 					{
@@ -45,7 +45,7 @@
 				<div class="rank-list-entry">
 					@if (draftId != null)
 					{
-						<a class="rank-link" data-rank-id="@list.RankId" href="@Url.Content("/Draft/BestAvailable/" + draftId + "?rankId=" + list.RankId)">@list.RankName</a>
+						<a class="rank-link" data-rank-id="@list.RankId" href="@Url.Content("/Draft/BestAvailable/" + draftId + "?rankId=" + list.RankId + "&historyMode=true")">@list.RankName</a>
 					}
 					else
 					{

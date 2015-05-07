@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using DodgeDynasty.Entities;
 using DodgeDynasty.Models.Account;
+using DodgeDynasty.Models.Shared;
 using DodgeDynasty.Shared;
 
 namespace DodgeDynasty.Mappers.Account
@@ -23,16 +24,12 @@ namespace DodgeDynasty.Mappers.Account
 			Model.NickName = user.NickName;
 			Model.OwnerLeagues = HomeEntity.LeagueOwners.Where(lo => lo.UserId == user.UserId).ToList();
 			var cssColors = HomeEntity.CssColors.ToList();
-			Model.AvailableLeagueColors = new Dictionary<int, List<CssColor>>();
+			Model.AvailableLeaguesColors = new Dictionary<int, List<CssColor>>();
 			foreach (var ownerLeague in Model.OwnerLeagues)
 			{
-				List<CssColor> availableLeagueColors = (from cc in HomeEntity.CssColors.AsEnumerable()
-														where (!(from lo in HomeEntity.LeagueOwners.AsEnumerable()
-																 where lo.LeagueId == ownerLeague.LeagueId
-																 select lo.CssClass).Contains(cc.ClassName) ||
-																cc.ClassName == ownerLeague.CssClass)
-														select cc).ToList();
-				Model.AvailableLeagueColors.Add(ownerLeague.LeagueId, availableLeagueColors);
+				List<CssColor> availableLeagueColors = LeagueOwnerHelper.GetAvailableLeagueColors(ownerLeague, 
+					HomeEntity.CssColors.AsEnumerable(), HomeEntity.LeagueOwners.AsEnumerable());
+				Model.AvailableLeaguesColors.Add(ownerLeague.LeagueId, availableLeagueColors);
 			}
 		}
 

@@ -89,5 +89,14 @@
 			<div class="glance"><span class="pick-glance">Next pick (Round @nextPick.RoundNum, Pick #@nextPick.PickNum):</span> <span class="team-glance">@Model.GetTeamName(nextPick.UserId)</span></div>
 		}
 	</div>
-	<div class="view-draft"><a href="/Draft/Display">View Draft</a> for full details.</div>
+	@{var draftId = DodgeDynasty.Shared.Utilities.GetRouteDraftId(Url.RequestContext.RouteData);}
+	@if (draftId != null)
+	{
+		<div class="view-draft"><a href=@Url.Content("/Draft/Display/" + draftId + "?historyMode=true")>View Draft</a> for full details.</div>
+	}
+	else
+	{
+		<div class="view-draft"><a href=@Url.Content("/Draft/Display/")>View Draft</a> for full details.</div>
+	}
+
 </div>

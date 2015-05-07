@@ -111,6 +111,17 @@ namespace DodgeDynasty.Shared
 			return null;
 		}
 
+		public static bool ToBool(string val)
+		{
+			bool result;
+			if (!string.IsNullOrEmpty(val))
+			{
+				Boolean.TryParse(val.ToLower(), out result);
+				return result;
+			}
+			return false;
+		}
+
 		public static string GetRouteDraftId(RouteData routeData)
 		{
 			int draftId;

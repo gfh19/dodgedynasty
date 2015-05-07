@@ -26,12 +26,13 @@
 						@if (DodgeDynasty.Shared.Utilities.IsUserLoggedIn())
 						{
 							var draftId = DodgeDynasty.Shared.Utilities.GetRouteDraftId(Url.RequestContext.RouteData);
-							if (draftId != null)
+							var historyMode = Request.QueryString[DodgeDynasty.Shared.Constants.QS.HistoryMode];
+							if (draftId != null	&& DodgeDynasty.Shared.Utilities.ToBool(historyMode))
 							{
-								<li>@Html.ActionLink("Pick", "Pick/" + draftId, "Draft")</li>
-								<li>@Html.ActionLink("Draft", "Display/" + draftId, "Draft")</li>
-								<li>@Html.ActionLink("Teams", "TeamDisplay/" + draftId, "Draft")</li>
-								<li>@Html.ActionLink("Ranks", "BestAvailable/" + draftId, "Draft")</li>
+								<li>@Html.ActionLink("Pick", "Pick/" + draftId, "Draft", new { historyMode=true }, null)</li>
+								<li>@Html.ActionLink("Draft", "Display/" + draftId, "Draft", new { historyMode = true }, null)</li>
+								<li>@Html.ActionLink("Teams", "TeamDisplay/" + draftId, "Draft", new { historyMode = true }, null)</li>
+								<li>@Html.ActionLink("Ranks", "BestAvailable/" + draftId, "Draft", new { historyMode = true }, null)</li>
 							}
 							else
 							{

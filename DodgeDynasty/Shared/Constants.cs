@@ -41,6 +41,7 @@ namespace DodgeDynasty.Shared
 		{
 			public const string IsActive = "isActive";
 			public const string IsComplete = "isComplete";
+			public const string HistoryMode = "historyMode";
 		}
 
 		public static class Views
@@ -60,6 +61,7 @@ namespace DodgeDynasty.Shared
 			public const string ActivateDraft = "ActivateDraft";
 			public const string ColorStyles = "_ColorStyles";
 			public const string UserInfoPartial = "UserInfoPartial";
+			public const string ManageUsers = "ManageUsers";
 		}
 	}
 }

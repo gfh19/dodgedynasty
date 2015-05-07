@@ -4,7 +4,9 @@ using System.Configuration;
 using System.Linq;
 using System.Web;
 using DodgeDynasty.Entities;
+using DodgeDynasty.Mappers.Account;
 using DodgeDynasty.Models;
+using DodgeDynasty.Models.Shared;
 using DodgeDynasty.Models.Types;
 using DodgeDynasty.Shared;
 
@@ -15,14 +17,15 @@ namespace DodgeDynasty.Mappers
 		protected override void PopulateModel()
 		{
 			Model.OwnerUsers = OwnerUserMapper.GetOwnerUsers(HomeEntity.LeagueOwners.ToList(), HomeEntity.Users.ToList());
-			Model.ActiveOwnerUsers = Model.OwnerUsers.Where(o => o.IsActive).ToList();
+			Model.ActiveLeagueUsers = HomeEntity.Users.Where(o => o.IsActive).ToList();
 			var numOwners = Int32.Parse(
 				ConfigurationManager.AppSettings[Constants.AppSettings.DefaultNumOwners] ?? "4");
 			Model.LeagueOwnerUsers = new List<OwnerUser>();
 			for (int i = 0; i < numOwners; i++)
 			{
-				Model.LeagueOwnerUsers.Add(new OwnerUser { IsActive=true });
+				Model.LeagueOwnerUsers.Add(new OwnerUser { UserId = 0, IsActive = true });
 			}
+			Model.CssColors = HomeEntity.CssColors.ToList();
 		}
 
 		protected override void DoUpdate(T model)

@@ -12,7 +12,7 @@
 			<a href="@Url.Content("/Admin/AddLeague")">&lt;Add New League&gt;</a>
 		</div>
 		<div class="page-section">
-			@foreach (var league in Model.AllLeagues.OrderBy(o => o.LastUpdateTimestamp))
+			@foreach (var league in Model.AllLeagues.OrderBy(o => o.AddTimestamp))
 			{
 				<div class="page-entry">
 					<a href="@Url.Content("/Admin/ManageDrafts/" + @league.LeagueId)">@league.LeagueName</a>

@@ -8,9 +8,6 @@
 <div class="large-page-header">@ViewBag.Title</div>
 <div id="userInfo">
 	<script type="text/javascript">
-		$(function () {
-			initUserInfo();
-		});
 	</script>
 	@{ Html.EnableClientValidation(true); }
 	<div class="error-messages">
@@ -38,8 +35,8 @@
 					<div>@Html.ValidationMessageFor(m => m.LastName)</div>
 					<div>@Html.ValidationMessageFor(m => m.NickName)</div>
 				</div>
+				<div class="page-section"><button class="submit-info" type="submit">Submit</button></div>
 			}
 		</div>
-		<div class="page-section"><button class="submit-info" type="submit">Submit</button></div>
 	</div>
 </div>

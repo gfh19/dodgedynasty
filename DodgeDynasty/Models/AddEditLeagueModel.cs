@@ -19,12 +19,19 @@ namespace DodgeDynasty.Models
 		public int LeagueId { get; set; }
 
 		public List<OwnerUser> OwnerUsers { get; set; }
-		public List<OwnerUser> ActiveOwnerUsers { get; set; }
+		public List<User> ActiveLeagueUsers { get; set; }
+		public List<CssColor> CssColors { get; set; }
 
-		public List<SelectListItem> GetActiveOwnerUsers(string userId=null)
+		public List<SelectListItem> GetActiveLeagueUsers(string userId = null)
 		{
-			return Utilities.GetListItems<OwnerUser>(ActiveOwnerUsers.OrderBy(u=>u.FirstName).ToList(),
+			return Utilities.GetListItems<User>(ActiveLeagueUsers.OrderBy(u => u.FirstName).ToList(),
 				u => u.FullName, u => u.UserId.ToString(), true, userId);
+		}
+
+		public List<SelectListItem> GetLeagueColorOptions(string selectedClassName)
+		{
+			return Utilities.GetListItems<CssColor>(CssColors, cc => cc.ColorText, cc => cc.ClassName,
+				false, selectedClassName);
 		}
 
 	}

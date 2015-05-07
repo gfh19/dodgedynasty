@@ -41,12 +41,15 @@
 			</div>
 			<div class="page-section">
 				<div class="mi-leagues">
-					<div class="mi-league-entry-header">
-						<label class="mi-league-header">League</label>
-						<label class="mi-teamname-header">Team Name</label>
-						<label class="mi-color-header">Color</label>
-						<label class="mi-active-header">Active?</label>
-					</div>
+					@if (Model.OwnerLeagues.Count > 0)
+					{
+						<div class="mi-league-entry-header">
+							<label class="mi-league-header">League</label>
+							<label class="mi-teamname-header">Team Name</label>
+							<label class="mi-color-header">Color</label>
+							<label class="mi-active-header">Active?</label>
+						</div>
+					}
 					@for (int i = 0; i < Model.OwnerLeagues.Count; i++)
 					{
 						<div class="mi-league-entry" data-league-id="@Model.OwnerLeagues[i].LeagueId">
@@ -59,13 +62,11 @@
 								@Html.TextBoxFor(o => Model.OwnerLeagues[i].TeamName, new { @class = "mi-team-input", maxLength = "50" })
 							</span>
 							<span class="mi-color">
-								<span>
-									<span class="mi-outer outline">
-										<span class="mi-selected-color @Model.OwnerLeagues[i].CssClass">
-											@Html.DropDownListFor(o => Model.OwnerLeagues[i].CssClass,
+								<span class="mi-outer outline">
+									<span class="mi-selected-color @Model.OwnerLeagues[i].CssClass">
+										@Html.DropDownListFor(o => Model.OwnerLeagues[i].CssClass,
 												  Model.GetLeagueColorOptions(Model.OwnerLeagues[i].LeagueId, Model.OwnerLeagues[i].CssClass),
 												new { @class = "mi-color-select" })
-										</span>
 									</span>
 								</span>
 							</span>

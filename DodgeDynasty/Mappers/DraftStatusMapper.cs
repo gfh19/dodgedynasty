@@ -6,11 +6,11 @@ using DodgeDynasty.Models;
 
 namespace DodgeDynasty.Mappers
 {
-	public class DraftStatusMapper<T> : MapperBase<T> where T : DraftStatusModel, new()
+	public class DraftStatusMapper : MapperBase<DraftStatusModel>
 	{
 		public DraftStatusMapper(string draftId, string isActive, string isComplete)
 		{
-			Model = new T();
+			CreateModel();
 			Model.DraftId = Int32.Parse(draftId);
 			if (!string.IsNullOrEmpty(isActive)) {
 				Model.IsActive = Convert.ToBoolean(isActive);
@@ -21,7 +21,7 @@ namespace DodgeDynasty.Mappers
 			}
 		}
 
-		protected override void DoUpdate(T model)
+		protected override void DoUpdate(DraftStatusModel model)
 		{
 			var draft = HomeEntity.Drafts.Where(d => d.DraftId == model.DraftId).FirstOrDefault();
 			if (model.IsActive != null)

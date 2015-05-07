@@ -10,6 +10,22 @@ namespace DodgeDynasty.Mappers.Admin
 {
 	public class AddUserMapper : MapperBase<AddUserModel>
 	{
+		protected override void PopulateModel()
+		{
+			Model.IsActive = true;
+		}
+
+		protected override bool ValidateModel(AddUserModel model)
+		{
+			ModelState.Clear();
+			var isValid = !HomeEntity.Users.Any(u=>u.UserName == model.UserName);
+			if (!isValid)
+			{
+				ModelState.AddModelError("", string.Format("Error - User Name '{0}' is already used.", model.UserName));
+			}
+			return isValid && base.ValidateModel(model);
+		}
+
 		protected override void DoUpdate(AddUserModel model)
 		{
 			User newUser = new User

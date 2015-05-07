@@ -17,6 +17,7 @@
 			{
 				<div class="page-entry">
 					<a href="@Url.Content("/Admin/UserInfo?userName=" + user.UserName)">@user.FullName</a>
+					(<a href="SetUserStatus/@user.UserId?isActive=false">Deactivate</a>)
 				</div>
 			}
 		</div>
@@ -26,6 +27,7 @@
 			{
 				<div class="page-entry">
 					<a href="@Url.Content("/Admin/UserInfo?userName=" + user.UserName)">@user.FullName</a>
+					(<a href="SetUserStatus/@user.UserId?isActive=true">Activate</a>)
 				</div>
 			}
 		</div>

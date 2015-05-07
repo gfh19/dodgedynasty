@@ -19,11 +19,12 @@ namespace DodgeDynasty.Mappers
 			Model.LeagueId = Int32.Parse(LeagueId);
 			var users = HomeEntity.Users.ToList();
 			var allLeagueOwners = HomeEntity.LeagueOwners.ToList();
-			Model.OwnerUsers = OwnerUserMapper.GetOwnerUsers(allLeagueOwners, users);
-			Model.ActiveOwnerUsers = Model.OwnerUsers.Where(o => o.IsActive).ToList();
-			var leagueOwners = allLeagueOwners.Where(o=>o.LeagueId == Model.LeagueId).ToList();
+			var leagueOwners = allLeagueOwners.Where(o => o.LeagueId == Model.LeagueId).ToList();
+			var leagueUserIds = leagueOwners.Select(o => o.UserId);
+			Model.ActiveLeagueUsers = HomeEntity.Users.Where(o => o.IsActive || leagueUserIds.Contains(o.UserId)).ToList();
 			Model.LeagueOwnerUsers = OwnerUserMapper.GetOwnerUsers(leagueOwners, users, Model.LeagueId);
 			Model.LeagueName = HomeEntity.Leagues.Where(o => o.LeagueId == Model.LeagueId).FirstOrDefault().LeagueName;
+			Model.CssColors = HomeEntity.CssColors.ToList();
 		}
 
 		protected override void DoUpdate(T model)
@@ -46,8 +47,6 @@ namespace DodgeDynasty.Mappers
 						  where u.UserId == lo.UserId
 						  select u).FirstOrDefault();
 				lo.UserId = user.UserId;
-				lo.CssClass = user.UserName;
-				//TODO:  Someday add more in depth CssClass assignment & lookup i.e. CssClass SQL table)
 
 				//TODO:  Consolidate into one table!
 				LeagueOwner owner = new LeagueOwner

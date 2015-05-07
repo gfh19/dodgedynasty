@@ -23,7 +23,7 @@
 					{
 						<div class="page-entry">
 							<span class="dh-year">
-								<a href="@Url.Content("/Draft/Display/" + draft.DraftId)">@draft.DraftYear @draft.LeagueName</a>
+								<a href="@Url.Content("/Draft/Display/" + draft.DraftId + "?historyMode=true")">@draft.DraftYear @draft.LeagueName</a>
 							</span>
 
 							@if (leagueContainsWinner)

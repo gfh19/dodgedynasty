@@ -26,10 +26,19 @@
 		<div class="page-section">
 			<div class="copy-lo-entry hide-yo-wives">
 				<div class="league-owner">
-					@Html.DropDownList("UserId", Model.GetActiveOwnerUsers(), new { @class = "lo-select" })
+					@Html.DropDownList("UserId", Model.GetActiveLeagueUsers(), new { @class = "lo-select" })
 				</div>
 				<div class="lo-team-name">
 					@Html.TextBox("TeamName", "", new { @class = "lo-team-input" })
+				</div>
+				<div class="lo-color">
+					<span class="lo-outer outline">
+						<span class="lo-selected-color _none">
+							@Html.DropDownList("CssClass",
+												Model.GetLeagueColorOptions(""),
+												new { @class = "lo-color-select" })
+						</span>
+					</span>
 				</div>
 				<div class="lo-active">
 					@Html.CheckBox("IsActive", new { @class = "lo-active-chkbx", @checked = "checked" })
@@ -43,6 +52,7 @@
 				<div class="lo-entry-header">
 					<label class="lo-owner-header">League Owners</label>
 					<label class="lo-teamname-header">Team Name</label>
+					<label class="lo-color-header">Color</label>
 					<label class="lo-active-header">Active?</label>
 					<label class="lo-controls-header"> </label>
 				</div>
@@ -50,12 +60,21 @@
 				{
 					<div class="league-owner-entry">
 						<div class="league-owner">
-							@Html.DropDownListFor(o => ownerUser.UserId, Model.GetActiveOwnerUsers(
+							@Html.DropDownListFor(o => ownerUser.UserId, Model.GetActiveLeagueUsers(
 								ownerUser.UserId == null ? null : ownerUser.UserId.ToString()),
 								new { @class = "lo-select" })
 						</div>
 						<div class="lo-team-name">
 							@Html.TextBoxFor(o => ownerUser.TeamName, new { @class = "lo-team-input" })
+						</div>
+						<div class="lo-color">
+							<span class="lo-outer outline">
+								<span class="lo-selected-color @ownerUser.CssClass">
+									@Html.DropDownListFor(o => ownerUser.CssClass,
+												Model.GetLeagueColorOptions(ownerUser.CssClass),
+												new { @class = "lo-color-select" })
+								</span>
+							</span>
 						</div>
 						<div class="lo-active">
 							@Html.CheckBoxFor(o => ownerUser.IsActive, new { @class = "lo-active-chkbx", @checked = "checked" })
