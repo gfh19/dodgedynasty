@@ -47,7 +47,6 @@ namespace DodgeDynasty.Mappers
 							where u.UserId == lo.UserId
 							select u).FirstOrDefault();
 				lo.UserId = user.UserId;
-				lo.CssClass = user.UserName;
 				//TODO:  Someday add more in depth CssClass assignment & lookup i.e. CssClass SQL table)
 
 				//TODO:  Consolidate into one table!

@@ -34,5 +34,9 @@ namespace DodgeDynasty.Models
 				false, selectedClassName);
 		}
 
+		public string GetColorText(string cssClass)
+		{
+			return CssColors.FirstOrDefault(o=>o.ClassName == (cssClass ?? Constants.CssClass.None)).ColorText;
+		}
 	}
 }

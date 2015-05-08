@@ -21,6 +21,12 @@ namespace DodgeDynasty.Shared
 			public const string PlayerRankOptions = "playerRankOptions";
 		}
 
+		public static class CssClass
+		{
+			public const string None = "_none";
+			public const string NoneText = "None (Black)";
+		}
+
 		public class DraftFormats
 		{
 			public const string Repeat = "repeat";

@@ -22,71 +22,82 @@
 				@Html.LabelFor(m => m.LeagueName): @Html.TextBoxFor(m => m.LeagueName, new { @class = "league-name", maxLength = "50", autofocus = "autofocus" })
 				<div>@Html.ValidationMessageFor(m => m.LeagueName)</div>
 			</div>
-		}
-		<div class="page-section">
-			<div class="copy-lo-entry hide-yo-wives">
-				<div class="league-owner">
-					@Html.DropDownList("UserId", Model.GetActiveLeagueUsers(), new { @class = "lo-select" })
-				</div>
-				<div class="lo-team-name">
-					@Html.TextBox("TeamName", "", new { @class = "lo-team-input" })
-				</div>
-				<div class="lo-color">
-					<span class="lo-outer outline">
-						<span class="lo-selected-color _none">
-							@Html.DropDownList("CssClass",
-												Model.GetLeagueColorOptions(""),
-												new { @class = "lo-color-select" })
-						</span>
-					</span>
-				</div>
-				<div class="lo-active">
-					@Html.CheckBox("IsActive", new { @class = "lo-active-chkbx", @checked = "checked" })
-				</div>
-				<div class="owner-controls">
-					<a href="#" class="league-remove-owner" tabindex="-1"><img src="../../Content/images/minus.png" alt="Remove Owner" /></a>
-					<a href="#" class="league-add-owner" tabindex="-1"><img src="../../Content/images/plus.png" alt="Add Owner" /></a>
-				</div>
-			</div>
-			<div class="league-owners">
-				<div class="lo-entry-header">
-					<label class="lo-owner-header">League Owners</label>
-					<label class="lo-teamname-header">Team Name</label>
-					<label class="lo-color-header">Color</label>
-					<label class="lo-active-header">Active?</label>
-					<label class="lo-controls-header"> </label>
-				</div>
-				@foreach (var ownerUser in Model.LeagueOwnerUsers)
-				{
-					<div class="league-owner-entry">
-						<div class="league-owner">
-							@Html.DropDownListFor(o => ownerUser.UserId, Model.GetActiveLeagueUsers(
-								ownerUser.UserId == null ? null : ownerUser.UserId.ToString()),
-								new { @class = "lo-select" })
-						</div>
-						<div class="lo-team-name">
-							@Html.TextBoxFor(o => ownerUser.TeamName, new { @class = "lo-team-input" })
-						</div>
-						<div class="lo-color">
-							<span class="lo-outer outline">
-								<span class="lo-selected-color @ownerUser.CssClass">
-									@Html.DropDownListFor(o => ownerUser.CssClass,
-												Model.GetLeagueColorOptions(ownerUser.CssClass),
-												new { @class = "lo-color-select" })
-								</span>
-							</span>
-						</div>
-						<div class="lo-active">
-							@Html.CheckBoxFor(o => ownerUser.IsActive, new { @class = "lo-active-chkbx", @checked = "checked" })
-						</div>
-						<div class="owner-controls">
-							<a href="#" class="league-remove-owner" tabindex="-1"><img src="../../Content/images/minus.png" alt="Remove Owner" /></a>
-							<a href="#" class="league-add-owner" tabindex="-1"><img src="../../Content/images/plus.png" alt="Add Owner" /></a>
-						</div>
+			<div class="page-section">
+				<div class="copy-lo-entry hide-yo-wives">
+					<div class="league-owner">
+						@Html.DropDownList("UserId", Model.GetActiveLeagueUsers(), new { @class = "lo-select" })
 					</div>
-				}
+					<div class="lo-team-name">
+						@Html.TextBox("TeamName", "", new { @class = "lo-team-input" })
+					</div>
+					<div class="lo-color">
+						<span class="lo-outer outline">
+							<span class="lo-selected-color _none">
+								@Html.DropDownList("CssClass",
+												Model.GetLeagueColorOptions(""),
+												new
+												{
+													@class = "lo-color-select",
+													data_prev_color = DodgeDynasty.Shared.Constants.CssClass.None,
+													data_prev_text = DodgeDynasty.Shared.Constants.CssClass.NoneText
+												})
+							</span>
+						</span>
+					</div>
+					<div class="lo-active">
+						@Html.CheckBox("IsActive", new { @class = "lo-active-chkbx", @checked = "checked" })
+					</div>
+					<div class="owner-controls">
+						<a href="#" class="league-remove-owner" tabindex="-1"><img src="../../Content/images/minus.png" alt="Remove Owner" /></a>
+						<a href="#" class="league-add-owner" tabindex="-1"><img src="../../Content/images/plus.png" alt="Add Owner" /></a>
+					</div>
+				</div>
+				<div class="league-owners">
+					<div class="lo-entry-header">
+						<label class="lo-owner-header">League Owners</label>
+						<label class="lo-teamname-header">Team Name</label>
+						<label class="lo-color-header">Color</label>
+						<label class="lo-active-header">Active?</label>
+						<label class="lo-controls-header"> </label>
+					</div>
+					@for (int i = 0; i < Model.LeagueOwnerUsers.Count; i++)
+					{
+						<div class="league-owner-entry">
+							<div class="league-owner">
+								@Html.DropDownListFor(o => Model.LeagueOwnerUsers[i].UserId, Model.GetActiveLeagueUsers(
+								Model.LeagueOwnerUsers[i].UserId == null ? null : Model.LeagueOwnerUsers[i].UserId.ToString()),
+								new { @class = "lo-select" })
+							</div>
+							<div class="lo-team-name">
+								@Html.TextBoxFor(o => Model.LeagueOwnerUsers[i].TeamName, new { @class = "lo-team-input" })
+							</div>
+							<div class="lo-color">
+								<span class="lo-outer outline">
+									@{ var cssClass = Model.LeagueOwnerUsers[i].CssClass; }
+									<span class="lo-selected-color @cssClass">
+										@Html.DropDownListFor(o => cssClass,
+											Model.GetLeagueColorOptions(cssClass),
+											new
+											{
+												@class = "lo-color-select",
+												data_prev_color = cssClass,
+												data_prev_text = Model.GetColorText(cssClass)
+											})
+									</span>
+								</span>
+							</div>
+							<div class="lo-active">
+								@Html.CheckBoxFor(o => Model.LeagueOwnerUsers[i].IsActive, new { @class = "lo-active-chkbx", @checked = "checked" })
+							</div>
+							<div class="owner-controls">
+								<a href="#" class="league-remove-owner" tabindex="-1"><img src="../../Content/images/minus.png" alt="Remove Owner" /></a>
+								<a href="#" class="league-add-owner" tabindex="-1"><img src="../../Content/images/plus.png" alt="Add Owner" /></a>
+							</div>
+						</div>
+					}
+				</div>
+				<div class="page-section"><button class="submit-league" type="submit">Submit</button></div>
 			</div>
-			<div class="page-section"><button class="submit-league" type="submit">Submit</button></div>
-		</div>
+		}
 	</div>
 </div>

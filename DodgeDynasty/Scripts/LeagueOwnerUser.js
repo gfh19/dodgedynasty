@@ -56,6 +56,9 @@ function bindNewEntryLinks(entry) {
 	bindAddOwnerLink($(".league-add-owner", $(entry)));
 	bindRemoveOwnerLink($(".league-remove-owner", $(entry)));
 	bindSetOwner($(".lo-select", $(entry)));
+	if (bindNewOwnerMisc) {
+		bindNewOwnerMisc(entry);
+	}
 }
 
 function copyLeagueOwnerEntry() {

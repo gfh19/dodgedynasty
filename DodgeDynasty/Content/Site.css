@@ -1649,7 +1649,7 @@ span.player-select
 	width: 46px;
 }
 .lo-color-header {
-	width: 140px;
+	width: 120px;
 }
 .lo-controls-header {
 	width: 32px;
@@ -1664,6 +1664,9 @@ span.player-select
 }
 .lo-select {
 	width: 145px;
+}
+.lo-color-select {
+	width: 105px;
 }
 
 .lo-selected-color {

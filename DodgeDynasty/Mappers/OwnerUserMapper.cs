@@ -41,11 +41,11 @@ namespace DodgeDynasty.Models
 				? leagueOwners.Select(lo => new { lo.UserId }).Distinct()
 				: leagueOwners.Where(lo => lo.LeagueId == leagueId).Select(lo => new { lo.UserId });
 
-			var ownerUsers = from u in users
+			var ownerUsers = (from u in users
 							 join lo in leagueOwnerUsers on u.UserId equals lo.UserId
 							 select OwnerUserMapper.GetOwnerUser(u,
-								leagueOwners.Where(l => l.UserId == u.UserId)
-								.OrderByDescending(l => l.IsActive).FirstOrDefault());
+								leagueOwners.FirstOrDefault(l => l.UserId == u.UserId)))
+									.OrderByDescending(l => l.IsActive);
 			return ownerUsers.ToList();
 		}
 	}

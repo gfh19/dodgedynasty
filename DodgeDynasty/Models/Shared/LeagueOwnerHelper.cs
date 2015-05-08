@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using DodgeDynasty.Entities;
+using DodgeDynasty.Shared;
 
 namespace DodgeDynasty.Models.Shared
 {
@@ -15,7 +16,8 @@ namespace DodgeDynasty.Models.Shared
 													where (!(from lo in leagueOwners
 															 where lo.LeagueId == ownerLeague.LeagueId
 															 select lo.CssClass).Contains(cc.ClassName) ||
-															cc.ClassName == ownerLeague.CssClass)
+															cc.ClassName == ownerLeague.CssClass ||
+															cc.ClassName == Constants.CssClass.None)
 													select cc).ToList();
 			return availableLeagueColors;
 		}

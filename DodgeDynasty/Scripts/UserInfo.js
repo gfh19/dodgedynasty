@@ -47,7 +47,7 @@ function getUserInfoModel() {
 		lo.LeagueId = $(ownerLeague).attr("data-league-id");
 		lo.TeamName = $(".mi-team-input", ownerLeague).val();
 		lo.CssClass = $(".mi-color-select option:selected", ownerLeague).val();
-		lo.IsActive = $(".mi-active-chkbx", ownerLeague).val();
+		lo.IsActive = $(".mi-active-chkbx", ownerLeague).prop('checked');
 
 		ownerLeagues.push(lo);
 	});
