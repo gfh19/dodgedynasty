@@ -292,6 +292,10 @@ $.fn.serializeObject = function () {
 	return o;
 };
 
+function toBool(val) {
+	return val == true || (val != null && val != undefined && val.toLowerCase() == "true");
+}
+
 function broadcastPickMade() {
 	startHubConnection(function () { draftHub.server.pick(); });
 	return true;

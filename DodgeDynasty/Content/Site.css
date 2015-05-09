@@ -1394,7 +1394,10 @@ ul.menu li a.current-page
 	border-style: solid;
 	background-color: #DFDFDF;
 }
-
+.pr-toggle-links {
+	margin-top: 4px;
+	font-size: 10px;
+}
 
 /* RankingsList / Setup Rank
 ----------------------------------------------------------*/

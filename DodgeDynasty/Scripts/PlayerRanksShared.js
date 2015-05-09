@@ -3,6 +3,7 @@ var clientCookieOptions = null;
 
 function initPlayerRanksShared() {
 	bindExpandLinks();
+	bindToggleAllLinks();
 	syncCookies();
 	toggleRanksWindows();
 	bindPlayerLinks();
@@ -11,15 +12,36 @@ function initPlayerRanksShared() {
 function bindExpandLinks() {
 	var expandLinks = $(".expand-link");
 	$.each(expandLinks, function (index, link) {
-		$(link).click(function (e) {
-			e.preventDefault();
-			var linkId = $(link).attr('id');
-			var table = $("table[data-link='" + linkId + "']");
+		bindToggleLink(link);
+	});
+}
 
-			$(link).attr("data-expand", !$(link).attr("data-expand"));
-			var expandRows = flipCookieValue(linkId);
+function bindToggleLink(link) {
+	$(link).click(function (e) {
+		e.preventDefault();
+		var linkId = $(link).attr('id');
+		var table = $("table[data-link='" + linkId + "']");
 
-			toggleExpandTableRows(table, expandRows, linkId);
+		$(link).attr("data-expand", !toBool($(link).attr("data-expand")));
+		var expandRows = flipCookieValue(linkId);
+
+		toggleExpandTableRows(table, expandRows, linkId);
+	});
+}
+
+function bindToggleAllLinks() {
+	$(".pr-expand-all").click(function (e) {
+		e.preventDefault();
+		var collapsedLinks = $(".expand-link[data-expand=false]");
+		$.each(collapsedLinks, function (index, link) {
+			$(link).click();
+		});
+	});
+	$(".pr-collapse-all").click(function (e) {
+		e.preventDefault();
+		var expandedLinks = $(".expand-link[data-expand=true]");
+		$.each(expandedLinks, function (index, link) {
+			$(link).click();
 		});
 	});
 }
