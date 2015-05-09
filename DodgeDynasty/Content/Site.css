@@ -1,4 +1,10 @@
-﻿html
+﻿*
+{
+  -webkit-box-sizing: content-box;
+     -moz-box-sizing: content-box;
+          box-sizing: content-box;
+}
+html
 {
 	background-color: #efeeef;
 	margin: 0;
@@ -1506,7 +1512,7 @@ span.player-select
 }
 .copy-row-count 
 {
-	width: 35px;
+	width: 27px;
 }
 #addNewPlayerDialog 
 {
