@@ -27,7 +27,7 @@ namespace DodgeDynasty.Mappers.Account
 			Model.AvailableLeaguesColors = new Dictionary<int, List<CssColor>>();
 			foreach (var ownerLeague in Model.OwnerLeagues)
 			{
-				List<CssColor> availableLeagueColors = LeagueOwnerHelper.GetAvailableLeagueColors(ownerLeague, 
+				List<CssColor> availableLeagueColors = LeagueOwnerHelper.GetAvailableLeagueColors(ownerLeague,
 					HomeEntity.CssColors.AsEnumerable(), HomeEntity.LeagueOwners.AsEnumerable());
 				Model.AvailableLeaguesColors.Add(ownerLeague.LeagueId, availableLeagueColors);
 			}
@@ -35,7 +35,8 @@ namespace DodgeDynasty.Mappers.Account
 
 		protected override bool ValidateModel(T model)
 		{
-			var userId = HomeEntity.Users.Where(u => u.UserName == UserName).Select(u=>u.UserId).FirstOrDefault();
+			var users = HomeEntity.Users.ToList();
+			var userId = users.Where(u => u.UserName == UserName).Select(u => u.UserId).FirstOrDefault();
 
 			var isValid = true;
 			ModelState.Clear();
@@ -47,9 +48,19 @@ namespace DodgeDynasty.Mappers.Account
 				var leagueTeamNames = HomeEntity.LeagueOwners
 					.Where(lo => lo.LeagueId == ownerLeague.LeagueId && lo.UserId != userId)
 					.Select(lo => lo.TeamName).ToList();
+				var leagueNickNames = HomeEntity.LeagueOwners.ToList()
+					.Join(users, lo => lo.UserId, u => u.UserId,
+						(lo, u) => new
+						{
+							LeagueId = lo.LeagueId,
+							UserId = lo.UserId,
+							NickName = u.NickName
+						})
+					.Where(lo => lo.LeagueId == ownerLeague.LeagueId && lo.UserId != userId)
+					.Select(lo => lo.NickName).ToList();
 				if (leagueColors.Contains(ownerLeague.CssClass))
 				{
-					ModelState.AddModelError("", "Error - Color already being used that league.");
+					ModelState.AddModelError("", "Error - Color already being used in that league.");
 					isValid = false;
 				}
 				if (string.IsNullOrEmpty(ownerLeague.CssClass))
@@ -59,13 +70,20 @@ namespace DodgeDynasty.Mappers.Account
 				}
 				if (leagueTeamNames.Contains(ownerLeague.TeamName))
 				{
-					ModelState.AddModelError("", 
-						string.Format("Error - Team Name '{0}' already being used that league.", ownerLeague.TeamName));
+					ModelState.AddModelError("",
+						string.Format("Error - Team Name '{0}' already being used in that league.", ownerLeague.TeamName));
 					isValid = false;
 				}
 				if (string.IsNullOrEmpty(ownerLeague.TeamName))
 				{
 					ModelState.AddModelError("", "Error - Team Name cannot be left blank.");
+					isValid = false;
+				}
+				if (leagueNickNames.Contains(model.NickName))
+				{
+					ModelState.AddModelError("",
+						string.Format("Error - Nick Name '{0}' already used in league '{1}'.", 
+							model.NickName, ownerLeague.LeagueName));
 					isValid = false;
 				}
 			}
