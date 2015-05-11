@@ -52,7 +52,7 @@
 	{
 		if (ViewBag.Title != "Draft Pick")
 		{
-			<div>Please <a href="/Draft/Pick">enter your draft pick</a>.</div>
+			<div>Please <a href="@Url.Content("/Draft/Pick")">enter your draft pick</a>.</div>
 		}
 		<div id="userTurnDialog" class="center hide-yo-kids" title="Your Turn - Pick @Model.CurrentDraftPick.PickNum">
 			<p>You're up!</p>

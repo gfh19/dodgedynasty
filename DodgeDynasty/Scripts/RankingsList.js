@@ -42,7 +42,7 @@ function showAddRankDialog() {
 							var copyFromRankId = $("select option:selected", $("#addRankDialog")).val();
 							var copyCount = $("#copyRowCount", $("#addRankDialog")).val();
 							$("body").css("cursor", "progress");
-							location.href = baseURL + "Rank/AddRank/" + copyFromRankId + "?copyCount=" + copyCount;
+							location.href = baseURL + "Rank/AddRank?rankId=" + copyFromRankId + "&copyCount=" + copyCount;
 						}
 					},
 					{
