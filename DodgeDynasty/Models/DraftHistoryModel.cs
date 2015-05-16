@@ -19,16 +19,12 @@ namespace DodgeDynasty.Models
 			return leagueDrafts;
 		}
 
-		public string GetDraftWinnerName(int? userId, bool? hasCoWinners)
+		public string GetDraftWinnerName(int? userId)
 		{
 			var userName = string.Empty;
 			if (userId != null)
 			{
 				userName = AllUsers.Where(u => u.UserId == userId.Value).Select(u => u.FullName).FirstOrDefault();
-				if (hasCoWinners != null && hasCoWinners.Value)
-				{
-					userName = string.Format("{0} (Co-Winner)", userName);
-				}
 			}
 			return userName;
 		}

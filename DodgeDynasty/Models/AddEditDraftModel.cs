@@ -43,6 +43,13 @@ namespace DodgeDynasty.Models
 		[Display(Name = "Complete?")]
 		[Required]
 		public bool IsComplete { get; set; }
+		[Display(Name = "Winner")]
+		public int? WinnerId { get; set; }
+		[Display(Name = "Runner Up")]
+		public int? RunnerUpId { get; set; }
+		[Display(Name = "Co Winners?")]
+		public bool HasCoWinners { get; set; }
+
 		public List<OwnerUser> DraftOwnerUsers { get; set; }
 
 		public int LeagueId { get; set; }
@@ -61,8 +68,19 @@ namespace DodgeDynasty.Models
 
 		public List<SelectListItem> GetLeagueOwnerUserItems(OwnerUser ownerUser=null)
 		{
-			var selectedUserId = (ownerUser==null) ? string.Empty : ownerUser.UserId.ToString();
-			return Utilities.GetListItems<OwnerUser>(LeagueOwnerUsers.OrderBy(u => u.FirstName).ToList(),
+			var selectedUserId = (ownerUser == null) ? string.Empty : ownerUser.UserId.ToString();
+			return GetOwnerUserItems(LeagueOwnerUsers, selectedUserId);
+		}
+
+		public List<SelectListItem> GetDraftOwnerUserItems(int? userId = null)
+		{
+			var selectedUserId = (userId == null) ? string.Empty : userId.ToString();
+			return GetOwnerUserItems(DraftOwnerUsers, selectedUserId);
+		}
+
+		public List<SelectListItem> GetOwnerUserItems(List<OwnerUser> ownerUsers, string selectedUserId=null)
+		{
+			return Utilities.GetListItems<OwnerUser>(ownerUsers.OrderBy(u => u.FirstName).ToList(),
 				u => u.FullName, u => u.UserId.ToString(), true, selectedUserId);
 		}
 	}

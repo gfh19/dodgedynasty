@@ -39,6 +39,9 @@ namespace DodgeDynasty.Mappers
 									 join lo in leagueOwners on u.UserId equals lo.UserId
 									 where dro.DraftId == Model.DraftId
 									 select OwnerUserMapper.GetOwnerUser(u, lo)).ToList();
+			Model.WinnerId = draft.WinnerId;
+			Model.RunnerUpId = draft.RunnerUpId;
+			Model.HasCoWinners = draft.HasCoWinners.GetValueOrDefault();
 		}
 
 		protected override void DoUpdate(T model)
@@ -54,6 +57,9 @@ namespace DodgeDynasty.Mappers
 			draft.NumRounds = Convert.ToInt16(model.NumRounds);
 			draft.NumKeepers = Convert.ToInt16(model.NumKeepers);
 			draft.Format = model.Format;
+			draft.WinnerId = model.WinnerId;
+			draft.RunnerUpId = model.RunnerUpId;
+			draft.HasCoWinners = model.HasCoWinners;
 			draft.LastUpdateTimestamp = DateTime.Now;
 			HomeEntity.SaveChanges();
 

@@ -180,6 +180,7 @@ namespace DodgeDynasty.Controllers
 			var mapper = new EditDraftMapper<AddEditDraftModel>();
 			if (!ModelState.IsValid)
 			{
+				mapper.DraftId = model.DraftId;
 				return View(mapper.GetModel(model));
 			}
 			mapper.UpdateEntity(model);

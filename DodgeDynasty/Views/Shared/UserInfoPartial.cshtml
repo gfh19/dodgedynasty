@@ -27,7 +27,7 @@
 				@Html.LabelFor(m => m.LastName, new { @class = "mi-last-header" })
 				@Html.LabelFor(m => m.NickName, new { @class = "mi-nick-header" })
 			</div>
-			<div>
+			<div class="block-error">
 				@if (Model.AdminMode)
 				{
 					@Html.DropDownListFor(u => u.UserName, Model.GetUserListItems(Model.UserName), new { @class = "mi-user-name" })
@@ -35,9 +35,9 @@
 				@Html.TextBoxFor(m => m.FirstName, new { @class = "mi-first-name", maxLength = "15", autofocus = "autofocus" })
 				@Html.TextBoxFor(m => m.LastName, new { @class = "mi-last-name", maxLength = "25" })
 				@Html.TextBoxFor(m => m.NickName, new { @class = "mi-nick-name", maxLength = "10" })
-				<div>@Html.ValidationMessageFor(m => m.FirstName)</div>
-				<div>@Html.ValidationMessageFor(m => m.LastName)</div>
-				<div>@Html.ValidationMessageFor(m => m.NickName)</div>
+				@Html.ValidationMessageFor(m => m.FirstName)
+				@Html.ValidationMessageFor(m => m.LastName)
+				@Html.ValidationMessageFor(m => m.NickName)
 			</div>
 			<div class="page-section">
 				<div class="mi-leagues">

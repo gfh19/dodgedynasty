@@ -14,7 +14,7 @@
 			</div>
 		}}
 		<div class="page-section">
-			@foreach (var draft in Model.LeagueDrafts.OrderByDescending(o => o.LastUpdateTimestamp))
+			@foreach (var draft in Model.LeagueDrafts.OrderByDescending(o => o.DraftDate))
 			{
 				<div class="page-entry">
 					<a href="@Url.Content("/Admin/EditDraft/" + draft.DraftId)">@draft.DraftYear @draft.LeagueName</a>

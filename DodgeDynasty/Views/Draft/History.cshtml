@@ -9,7 +9,7 @@
 		{
 			<div class="page-section">
 				<div class="page-header">@league.LeagueName</div>
-				<div class="lh-entry">
+				<div class="dh-entry">
 					@{var leagueContainsWinner = Model.LeagueContainsWinner(league.LeagueId);}
 					@if (leagueContainsWinner)
 					{
@@ -28,8 +28,10 @@
 
 							@if (leagueContainsWinner)
 							{
-								@Html.Raw("</span>");<span class="dh-winner">@Model.GetDraftWinnerName(draft.WinnerId, draft.HasCoWinners)
-								</span><span class="dh-runner-up">@Model.GetDraftWinnerName(draft.RunnerUpId, draft.HasCoWinners)</span>
+								@Html.Raw("</span>");<span class="dh-winner">@Model.GetDraftWinnerName(draft.WinnerId)
+									@if (draft.HasCoWinners.GetValueOrDefault()) { <span class="new-line">(Co-Winner)</span> }
+								</span><span class="dh-runner-up">@Model.GetDraftWinnerName(draft.RunnerUpId)
+									@if (draft.HasCoWinners.GetValueOrDefault()) {  <span class="new-line">(Co-Winner)</span> }</span>
 							}
 							else
 							{

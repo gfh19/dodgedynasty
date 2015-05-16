@@ -43,6 +43,14 @@
 				<div>@Html.ValidationMessageFor(m => m.NumRounds)</div>
 				<div>@Html.ValidationMessageFor(m => m.NumKeepers)</div>
 				<div>@Html.ValidationMessageFor(m => m.Format)</div>
+				@if (Model.DraftId != 0)
+				{
+				<div>
+					@Html.LabelFor(m => m.WinnerId): @Html.DropDownListFor(m => Model.WinnerId, Model.GetDraftOwnerUserItems(Model.WinnerId), new { @class = "ad-winner" })
+					@Html.LabelFor(m => m.RunnerUpId): @Html.DropDownListFor(m => Model.RunnerUpId, Model.GetDraftOwnerUserItems(Model.RunnerUpId), new { @class = "ad-runner-up" })
+					@Html.LabelFor(m => m.HasCoWinners): @Html.CheckBoxFor(m => m.HasCoWinners, new { @class = "ad-co-winners" })
+				</div>
+				}
 			</div>
 		}
 		<div class="page-section">

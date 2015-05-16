@@ -1,4 +1,26 @@
-﻿
+﻿BEGIN TRANSACTION;
+
+/*** ! ADD ForeignKey Constraint to:
+	LeagueOwner table for LeagueId, 
+	DraftOwner table for DraftId, 
+	view rest in HomeEntity
+	!!!
+***/
+
+
+
+COMMIT TRANSACTION;
+
+
+
+
+
+
+
+
+
+
+/* Below Run in Production on 5/12/15 */
 BEGIN TRANSACTION;
 
 /* 4/4/2015 */
@@ -219,15 +241,6 @@ GO
 
 
 
-
-
-
-/*** ! ADD ForeignKey Constraint to:
-	LeagueOwner table for LeagueId, 
-	DraftOwner table for DraftId, 
-	view rest in HomeEntity
-	!!!
-***/
 
 
 COMMIT TRANSACTION;
