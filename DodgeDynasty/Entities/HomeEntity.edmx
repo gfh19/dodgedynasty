@@ -113,6 +113,21 @@
           <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
           <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="MessageId" />
+          </Key>
+          <Property Name="MessageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AuthorId" Type="int" Nullable="false" />
+          <Property Name="AuthorName" Type="varchar" MaxLength="41" StoreGeneratedPattern="Computed" />
+          <Property Name="Title" Type="varchar" MaxLength="50" />
+          <Property Name="MessageText" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="AllUsers" Type="bit" Nullable="false" />
+          <Property Name="LeagueId" Type="int" />
+          <Property Name="LeagueName" Type="varchar" MaxLength="50" StoreGeneratedPattern="Computed" />
+          <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
+          <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="NFLTeam">
           <Key>
             <PropertyRef Name="TeamAbbr" />
@@ -223,6 +238,7 @@
           <Property Name="Password" Type="varbinary" MaxLength="128" />
           <Property Name="Salt" Type="binary" MaxLength="8" />
           <Property Name="LastLogin" Type="datetime" />
+          <Property Name="LastMessageView" Type="datetime" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
           <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
@@ -304,6 +320,30 @@
             </Principal>
             <Dependent Role="LeagueOwner">
               <PropertyRef Name="LeagueId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Message_League">
+          <End Role="League" Type="Self.League" Multiplicity="0..1" />
+          <End Role="Message" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="League">
+              <PropertyRef Name="LeagueId" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="LeagueId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Message_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Message" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="AuthorId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -426,6 +466,7 @@
           <EntitySet Name="DraftRank" EntityType="Self.DraftRank" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="League" EntityType="Self.League" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LeagueOwner" EntityType="Self.LeagueOwner" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Message" EntityType="Self.Message" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NFLTeam" EntityType="Self.NFLTeam" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Player" EntityType="Self.Player" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PlayerAdjustment" EntityType="Self.PlayerAdjustment" Schema="dbo" store:Type="Tables" />
@@ -453,6 +494,14 @@
           <AssociationSet Name="FK_LeagueOwner_League" Association="Self.FK_LeagueOwner_League">
             <End Role="League" EntitySet="League" />
             <End Role="LeagueOwner" EntitySet="LeagueOwner" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Message_League" Association="Self.FK_Message_League">
+            <End Role="League" EntitySet="League" />
+            <End Role="Message" EntitySet="Message" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Message_User" Association="Self.FK_Message_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Message" EntitySet="Message" />
           </AssociationSet>
           <AssociationSet Name="FK_Player_NFLTeam" Association="Self.FK_Player_NFLTeam">
             <End Role="NFLTeam" EntitySet="NFLTeam" />
@@ -568,7 +617,16 @@
             <End Role="League" EntitySet="Leagues" />
             <End Role="LeagueOwner" EntitySet="LeagueOwners" />
           </AssociationSet>
-        </EntityContainer>
+          <EntitySet Name="Messages" EntityType="HomeModel.Message" />
+          <AssociationSet Name="FK_Message_League" Association="HomeModel.FK_Message_League">
+            <End Role="League" EntitySet="Leagues" />
+            <End Role="Message" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Message_User" Association="HomeModel.FK_Message_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Message" EntitySet="Messages" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="NFLTeam">
           <Key>
             <PropertyRef Name="TeamAbbr" />
@@ -854,6 +912,8 @@
           <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="UserRoles" Relationship="HomeModel.FK_UserRole_User" FromRole="User" ToRole="UserRole" />
+          <Property Name="LastMessageView" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Messages" Relationship="HomeModel.FK_Message_User" FromRole="User" ToRole="Message" />
         </EntityType>
         <Association Name="FK_UserRole_User">
           <End Type="HomeModel.User" Role="User" Multiplicity="1" />
@@ -966,6 +1026,7 @@
           <Property Name="AddTimestamp" Type="DateTime" Precision="3" />
           <Property Name="LastUpdateTimestamp" Type="DateTime" Precision="3" />
           <NavigationProperty Name="LeagueOwners" Relationship="HomeModel.FK_LeagueOwner_League" FromRole="League" ToRole="LeagueOwner" />
+          <NavigationProperty Name="Messages" Relationship="HomeModel.FK_Message_League" FromRole="League" ToRole="Message" />
         </EntityType>
         <EntityType Name="LeagueOwner">
           <Key>
@@ -1004,6 +1065,47 @@
             </Principal>
             <Dependent Role="LeagueOwner">
               <PropertyRef Name="LeagueId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="MessageId" />
+          </Key>
+          <Property Name="MessageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AuthorId" Type="Int32" Nullable="false" />
+          <Property Name="AuthorName" Type="String" MaxLength="41" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MessageText" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="AllUsers" Type="Boolean" Nullable="false" />
+          <Property Name="LeagueId" Type="Int32" />
+          <Property Name="LeagueName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="League" Relationship="HomeModel.FK_Message_League" FromRole="Message" ToRole="League" />
+          <NavigationProperty Name="User" Relationship="HomeModel.FK_Message_User" FromRole="Message" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Message_League">
+          <End Type="HomeModel.League" Role="League" Multiplicity="0..1" />
+          <End Type="HomeModel.Message" Role="Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="League">
+              <PropertyRef Name="LeagueId" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="LeagueId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Message_User">
+          <End Type="HomeModel.User" Role="User" Multiplicity="1" />
+          <End Type="HomeModel.Message" Role="Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="AuthorId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1178,6 +1280,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="HomeModel.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="LastMessageView" ColumnName="LastMessageView" />
                 <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
                 <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
@@ -1286,6 +1389,22 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Messages">
+            <EntityTypeMapping TypeName="HomeModel.Message">
+              <MappingFragment StoreEntitySet="Message">
+                <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
+                <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
+                <ScalarProperty Name="LeagueName" ColumnName="LeagueName" />
+                <ScalarProperty Name="LeagueId" ColumnName="LeagueId" />
+                <ScalarProperty Name="AllUsers" ColumnName="AllUsers" />
+                <ScalarProperty Name="MessageText" ColumnName="MessageText" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="AuthorName" ColumnName="AuthorName" />
+                <ScalarProperty Name="AuthorId" ColumnName="AuthorId" />
+                <ScalarProperty Name="MessageId" ColumnName="MessageId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -1307,7 +1426,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="HomeEntity" ZoomLevel="74">
+      <Diagram Name="HomeEntity" ZoomLevel="85">
         <EntityTypeShape EntityType="HomeModel.BadTeamsDraft" Width="1.5" PointX="8.75" PointY="1.25" Height="1.9802864583333282" />
         <EntityTypeShape EntityType="HomeModel.NFLTeam" Width="1.5" PointX="0.75" PointY="6.25" Height="2.5571907552083255" />
         <EntityTypeShape EntityType="HomeModel.Player" Width="1.5" PointX="3" PointY="5.375" Height="4.2879036458333246" />
@@ -1365,7 +1484,10 @@
         <EntityTypeShape EntityType="HomeModel.LeagueOwner" Width="1.5" PointX="12.625" PointY="5" />
         <AssociationConnector Association="HomeModel.FK_LeagueOwner_CssColor" />
         <AssociationConnector Association="HomeModel.FK_LeagueOwner_League" />
-      </Diagram>
+        <EntityTypeShape EntityType="HomeModel.Message" Width="1.5" PointX="15.625" PointY="8.375" />
+        <AssociationConnector Association="HomeModel.FK_Message_League" />
+        <AssociationConnector Association="HomeModel.FK_Message_User" />
+        </Diagram>
     </Diagrams>
   </Designer>
 </edmx:Edmx>

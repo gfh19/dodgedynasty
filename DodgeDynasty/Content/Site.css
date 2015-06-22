@@ -30,17 +30,19 @@ header {
     min-width: 100%;
 }
 
-.page-header, .large-page-header {
+.small-page-header, .page-header, .large-page-header {
 	text-align: center;
 	margin-top: 5px;
 	margin-bottom: 12px;
 	font-weight: bold;
 }
 
+.small-page-header {
+	font-size: 13px;
+}
 .page-header {
 	font-size: 16px;
 }
-
 .large-page-header {
 	font-size: 24px;
 }
@@ -257,7 +259,7 @@ footer
 /* menu
 ----------------------------------------------------------*/
 .top-nav{
-	min-width: 256px;
+	min-width: 265px;
 }
 ul.menu
 {
@@ -355,7 +357,7 @@ tbody.collapse.in {
 
 .navbar-collapse {
   max-height: 340px;
-  padding-right: 49px;
+  padding-right: 42px;
   overflow-x: visible;
   border-top: 1px solid transparent;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
@@ -992,7 +994,6 @@ tr.pager td
 {
 	background: #FFFFFF;
 }
-
 
 
 
@@ -1831,9 +1832,8 @@ span.player-select
 /* Messages
 ----------------------------------------------------------*/
 
-.menu-msgs {
+.toggle-msgs, .menu-msgs {
 	font-size: 10px;
-	font-weight: bold;
 	color: white;
 	background-color: skyblue;
 	border-radius: 10px;
@@ -1841,7 +1841,6 @@ span.player-select
 	padding: 1px;
 	display: inline-block;
 	vertical-align: top;
-	margin: 1px;
 	height: 15px;
 	width: 15px;
 	text-align: center;
@@ -1864,15 +1863,58 @@ span.player-select
           transition-property: width, display;
 }
 
-.menu-msgs-section {
+.toggle-msgs-section {
 	display: inline-block;
-	margin-left: -4px;
-	min-width: 4px;
+	margin-left: -5px;
+	min-width: 5px;
 }
 
-#menu-msgs-link:hover
+.menu-msgs-section {
+	margin-left: -3px;
+}
+
+#toggle-msgs-link:hover
 {
 	background-color: inherit;
+}
+
+#messages .ui-state-default, .ui-state-hover {
+	background: #F5F5F5;
+}
+
+#messages .ui-state-active {
+	background: #FFFFFF;
+}
+
+#messages .ui-widget-header {
+	background-color: skyblue;
+	border: none;
+}
+
+#messages .ui-widget {
+	font-family: "Segoe UI" , Verdana, Helvetica, Sans-Serif;
+	font-size: 15px;
+}
+
+#messages #tabs {
+	min-height: 250px;
+}
+
+#messages-tab, #draft-chat-tab {
+	padding-top: 25px;
+}
+
+.message-entry {
+	margin-bottom: 20px;
+}
+
+.message-header {
+	font-size: 11px;
+	font-weight: bold;
+}
+
+.message-title {
+	font-size: 15px;
 }
 
 
@@ -2024,6 +2066,15 @@ span.player-select
 	.dh-header, .dh-winner, .dh-runner-up {
 		display: none;
 	}
+
+	/* Messages
+	------------------------------------*/
+	.message-meta-hyphen {
+		display: none;
+	}
+	.message-datetime {
+		display: block;
+	}
 }
 
 
@@ -2079,7 +2130,7 @@ span.player-select
 }
 .nav > li > a {
   position: relative;
-  display: block;
+  display: inline-block;
 }
 .nav > li > a:hover,
 .nav > li > a:focus {
@@ -2115,8 +2166,8 @@ span.player-select
 		float: none;
 		padding-bottom: 14px;
 	}
-	.nav > li > a {
-		padding-right: 49px;
+	.nav > li {
+		padding-right: 42px;
 	}
 
   .navbar-nav .open .dropdown-menu {

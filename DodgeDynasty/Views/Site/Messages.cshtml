@@ -1,0 +1,51 @@
+﻿@model DodgeDynasty.Models.Site.MessagesModel
+@{
+	ViewBag.Title = "Messages";
+}
+@section scripts {
+	<script type="text/javascript" src="../../Scripts/Messages.js"></script>
+}
+<div id="messages">
+	<div id="tabs">
+
+		<ul>
+			<li><a href="#messages-tab">Messages</a></li>
+			<li><a href="#draft-chat-tab">Draft Chats</a></li>
+		</ul>
+
+		<div id="messages-tab">
+			@foreach (var message in Model.Messages.OrderByDescending(o => o.AddTimestamp))
+			{
+				<div class="message-entry">
+					<div class="message-header">
+						@if (!string.IsNullOrEmpty(message.Title))
+						{
+							<div class="message-title">@message.Title</div>
+						}
+						<div class="message-meta">
+							<span class="message-author">@message.AuthorName</span>
+							@if (message.LeagueId != null)
+							{
+							<span class="message-to">(to @message.LeagueName)</span>
+							}
+							else
+							{
+							<span class="message-to">(to everyone)</span>
+							}
+							<span class="message-meta-hyphen"> - </span>
+							<span class="message-datetime">@message.AddTimestamp.ToString("ddd, M/dd/yy @ h:mm tt")</span>
+						</div>
+					</div>
+					<div class="message-text">@message.MessageText</div>
+				</div>
+			}
+		</div>
+
+		<div id="draft-chat-tab">
+			Content for Tab 2 goes here.<br />
+			Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
+			sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+		</div>
+
+	</div>
+</div>

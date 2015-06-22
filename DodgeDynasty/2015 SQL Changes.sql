@@ -1,15 +1,91 @@
 ﻿BEGIN TRANSACTION;
 
-/*** ! ADD ForeignKey Constraint to:
-	LeagueOwner table for LeagueId, 
-	DraftOwner table for DraftId, 
-	view rest in HomeEntity
-	!!!
-***/
+
+GO
+ 
+CREATE FUNCTION dbo.GetUserFullName (@UserId INT)
+RETURNS VARCHAR(41) 
+AS BEGIN
+    DECLARE @FullName VARCHAR(41)
+
+    SELECT @FullName = FullName FROM dbo.[User] WHERE UserId = @UserId
+
+    RETURN @FullName
+END
+GO
+
+
+
+
+
+/****** Object:  Table [dbo].[Message] ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[Message](
+	[MessageId] [int] IDENTITY(1,1) NOT NULL,
+	[AuthorId] [int] NOT NULL,
+	[AuthorName]  AS ([dbo].[GetUserFullName]([AuthorId])),
+	[Title] [varchar](50) NULL,
+	[MessageText] [varchar](1000) NOT NULL,
+	[AllUsers] [bit] NOT NULL,
+	[LeagueId] [int] NULL,
+	[AddTimestamp] [datetime] NOT NULL,
+	[LastUpdateTimestamp] [datetime] NOT NULL,
+ CONSTRAINT [PK_Message] PRIMARY KEY CLUSTERED 
+(
+	[MessageId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+ALTER TABLE [dbo].[Message] ADD  CONSTRAINT [DF_Message_AllUsers]  DEFAULT ((0)) FOR [AllUsers]
+GO
+
+ALTER TABLE [dbo].[Message]  WITH CHECK ADD  CONSTRAINT [FK_Message_League] FOREIGN KEY([LeagueId])
+REFERENCES [dbo].[League] ([LeagueId])
+GO
+
+ALTER TABLE [dbo].[Message] CHECK CONSTRAINT [FK_Message_League]
+GO
+
+ALTER TABLE [dbo].[Message]  WITH CHECK ADD  CONSTRAINT [FK_Message_User] FOREIGN KEY([AuthorId])
+REFERENCES [dbo].[User] ([UserId])
+GO
+
+ALTER TABLE [dbo].[Message] CHECK CONSTRAINT [FK_Message_User]
+GO
+
+
+
+ALTER TABLE dbo.[User]
+ADD [LastMessageView] [datetime] NULL
+GO
+
 
 
 
 COMMIT TRANSACTION;
+
+
+
+
+
+
+
+
+
+
 
 
 

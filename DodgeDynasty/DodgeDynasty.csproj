@@ -161,6 +161,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\DraftController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SiteController.cs" />
     <Compile Include="Mappers\Account\MyInfoMapper.cs" />
     <Compile Include="Mappers\AdminPasswordMapper.cs" />
     <Compile Include="Mappers\Admin\AddUserMapper.cs" />
@@ -188,6 +189,7 @@
     <Compile Include="Mappers\RankSetupMapper.cs" />
     <Compile Include="Mappers\Shared\ColorStylesMapper.cs" />
     <Compile Include="Mappers\Shared\SharedUserInfoMapper.cs" />
+    <Compile Include="Mappers\Site\MessagesMapper.cs" />
     <Compile Include="Models\Account\UserInfoModel.cs" />
     <Compile Include="Models\AddEditDraftModel.cs" />
     <Compile Include="Models\AddEditLeagueModel.cs" />
@@ -209,6 +211,8 @@
     <Compile Include="Models\ManageDraftsModel.cs" />
     <Compile Include="Models\ManageLeaguesModel.cs" />
     <Compile Include="Mappers\OwnerUserMapper.cs" />
+    <Compile Include="Models\Site\MessageModel.cs" />
+    <Compile Include="Models\Site\MessagesModel.cs" />
     <Compile Include="Models\RankIdModel.cs" />
     <Compile Include="Models\RankingsListModel.cs" />
     <Compile Include="Models\RankSetupModel.cs" />
@@ -346,6 +350,7 @@
     <Content Include="Scripts\lib\moment-with-locales.min.js" />
     <Content Include="Scripts\lib\moment.js" />
     <Content Include="Scripts\lib\moment.min.js" />
+    <Content Include="Scripts\Messages.js" />
     <Content Include="Scripts\MyInfo.js" />
     <Content Include="Scripts\PlayerRanks.js" />
     <Content Include="Scripts\PlayerRanksShared.js" />
@@ -397,6 +402,7 @@
     <None Include="Properties\PublishProfiles\WinHost 2013 Local Folder.pubxml" />
     <None Include="Properties\PublishProfiles\WinHost FTP.pubxml" />
     <None Include="Properties\PublishProfiles\WinHost Local Folder.pubxml" />
+    <Content Include="Views\Site\Messages.cshtml" />
     <None Include="Web.local.config">
       <SubType>Designer</SubType>
     </None>

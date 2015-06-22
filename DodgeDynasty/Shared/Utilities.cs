@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Objects;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -11,7 +12,7 @@ using DodgeDynasty.Models;
 
 namespace DodgeDynasty.Shared
 {
-	public class Utilities
+	public static class Utilities
 	{
 		public static string FormatName(string dbName)
 		{
@@ -72,7 +73,12 @@ namespace DodgeDynasty.Shared
 		
 		public static int GetLoggedInUserId(IEnumerable<User> users)
 		{
-			return users.FirstOrDefault(u => u.UserName == GetLoggedInUserName()).UserId;
+			return users.GetLoggedInUser().UserId;
+		}
+
+		public static User GetLoggedInUser(this IEnumerable<User> users)
+		{
+			return users.FirstOrDefault(u => u.UserName == GetLoggedInUserName());
 		}
 
 		public static bool IsUserLoggedIn()
