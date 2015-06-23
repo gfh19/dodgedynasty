@@ -14,6 +14,9 @@
 		</ul>
 
 		<div id="messages-tab">
+			<div class="msg-add-section">
+				&lt;<a class="msg-add-link" href="#">Add New Message</a>&gt;
+			</div>
 			@foreach (var message in Model.Messages.OrderByDescending(o => o.AddTimestamp))
 			{
 				<div class="message-entry">
@@ -26,11 +29,11 @@
 							<span class="message-author">@message.AuthorName</span>
 							@if (message.LeagueId != null)
 							{
-							<span class="message-to">(to @message.LeagueName)</span>
+								<span class="message-to">(to @message.LeagueName)</span>
 							}
 							else
 							{
-							<span class="message-to">(to everyone)</span>
+								<span class="message-to">(to everyone)</span>
 							}
 							<span class="message-meta-hyphen"> - </span>
 							<span class="message-datetime">@message.AddTimestamp.ToString("ddd, M/dd/yy @ h:mm tt")</span>
@@ -47,5 +50,22 @@
 			sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
 		</div>
 
+		<div id="addMessageDialog" class="center hide-yo-kids" title="Add Message">
+			<p>
+				<button class="action-bold" title="Bold">B</button>
+				<button class="action-italic" title="Italics">I</button>
+				<button class="action-underline" title="Underline">U</button>
+				<button class="action-unformat" title="Remove Formatting">✘</button>
+				<button class="action-link btn glyphicon glyphicon-link" title="Create Link"></button>
+				<button class="action-ol btn glyphicon glyphicon-list" title="Ordered List"></button>
+				<button class="action-ul btn glyphicon glyphicon-list" title="Unordered List"></button>
+
+				<div>
+					<input type="text" placeholder="Title (optional)" />
+				</div>
+				<div>
+					<textarea class="editable"></textarea>
+				</div>
+			</p>
+		</div>
 	</div>
-</div>

@@ -1,4 +1,4 @@
-﻿*
+﻿input
 {
   -webkit-box-sizing: content-box;
      -moz-box-sizing: content-box;
@@ -1592,7 +1592,11 @@ span.player-select
 {
 	margin-top: 10px;
 }
-.hide-yo-kids, .hide-yo-wives
+.hide-yo-kids
+{
+	display: none;
+}
+.hide-yo-wives
 {
 	display: none !important;
 }
@@ -1900,7 +1904,7 @@ span.player-select
 	min-height: 250px;
 }
 
-#messages-tab, #draft-chat-tab {
+#draft-chat-tab {
 	padding-top: 25px;
 }
 
@@ -1914,10 +1918,17 @@ span.player-select
 }
 
 .message-title {
-	font-size: 15px;
+	font-size: 16px;
 }
 
+.msg-add-section {
+	text-align: center;
+	margin-bottom: 15px;
+}
 
+.msg-add-link {
+	font-size: 14px;
+}
 
 /* RESPONSIVE STYLES
    Display
