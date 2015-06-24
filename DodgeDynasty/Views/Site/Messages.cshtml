@@ -51,21 +51,33 @@
 		</div>
 
 		<div id="addMessageDialog" class="center hide-yo-kids" title="Add Message">
-			<p>
-				<button class="action-bold" title="Bold">B</button>
-				<button class="action-italic" title="Italics">I</button>
-				<button class="action-underline" title="Underline">U</button>
-				<button class="action-unformat" title="Remove Formatting">✘</button>
-				<button class="action-link btn glyphicon glyphicon-link" title="Create Link"></button>
-				<button class="action-ol btn glyphicon glyphicon-list" title="Ordered List"></button>
-				<button class="action-ul btn glyphicon glyphicon-list" title="Unordered List"></button>
-
-				<div>
-					<input type="text" placeholder="Title (optional)" />
-				</div>
-				<div>
-					<textarea class="editable"></textarea>
-				</div>
-			</p>
+			@using (Html.BeginForm("Messages", "Site", FormMethod.Post, new { id = "messageForm" }))
+			{
+				@Html.HiddenFor(o=>o.MessageId)
+				<p>
+					<!--
+					TODO:  RTE editing
+	
+					<button class="rte action-bold" title="Bold"><b>B</b></button>
+					<button class="rte action-italic" title="Italics"><i>I</i></button>
+					<button class="rte action-underline" title="Underline"><u>U</u></button>
+					<button class="rte action-unformat" title="Remove Formatting">X</button>
+					<button class="rte action-link btn glyphicon glyphicon-link" title="Create Link">L</button>
+					<button class="rte action-ol btn glyphicon glyphicon-list" title="Ordered List"></button>
+					<button class="rte action-ul btn glyphicon glyphicon-list" title="Unordered List"></button>-->
+					<div class="msg-to-section">
+						<span>To:</span>
+						@Html.DropDownListFor(o => o.LeagueId, Model.GetAudienceLeagues(),
+							new { @class = "add-msg-league" })
+					</div>
+					<div class="msg-title-section">
+						@Html.TextBoxFor(o=>o.Title, new { @class = "add-msg-title", type = "text", 
+							maxLength = "50", placeholder="Title (optional)"})
+					</div>
+					<div class="msg-text-section">
+						@Html.TextAreaFor(o => o.MessageText, new {	 @class = "add-msg-text editable", maxLength = "1000" })
+					</div>
+				</p>
+			}
 		</div>
 	</div>

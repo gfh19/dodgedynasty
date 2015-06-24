@@ -33,6 +33,35 @@ namespace DodgeDynasty.Mappers.Site
 									   select lo.UserId).Contains(m.AuthorId))
 								select m).ToList();
 			Model.Messages = userMessages;
+
+			Model.OwnerLeagues = HomeEntity.LeagueOwners.Where(lo => lo.UserId == user.UserId).ToList();
+		}
+
+		protected override void DoUpdate(MessagesModel model)
+		{
+			var user = HomeEntity.Users.GetLoggedInUser();
+			Message message = new Message{
+				AuthorId = user.UserId,
+				Title = model.Title,
+				MessageText = model.MessageText,
+				AllUsers = false,
+				AddTimestamp = DateTime.Now,
+				LastUpdateTimestamp = DateTime.Now
+			};
+			if (model.LeagueId < 0)
+			{
+				message.AllUsers = true;
+			}
+			if (model.LeagueId <= 0)
+			{
+				message.LeagueId = null;
+			}
+			else
+			{
+				message.LeagueId = model.LeagueId;
+			}
+			HomeEntity.Messages.AddObject(message);
+			HomeEntity.SaveChanges();
 		}
 	}
 }

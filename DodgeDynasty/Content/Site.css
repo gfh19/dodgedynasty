@@ -1,4 +1,4 @@
-﻿input
+﻿*
 {
   -webkit-box-sizing: content-box;
      -moz-box-sizing: content-box;
@@ -1928,6 +1928,22 @@ span.player-select
 
 .msg-add-link {
 	font-size: 14px;
+}
+
+.add-msg-title, .add-msg-text {
+	width: 750px;
+}
+.add-msg-text {
+	height: 150px;
+}
+.rte {
+	height: 20px;
+	width: 15px;
+	margin-right: 0px;
+	vertical-align: bottom;
+}
+.msg-to-section {
+	margin-bottom: 5px;
 }
 
 /* RESPONSIVE STYLES

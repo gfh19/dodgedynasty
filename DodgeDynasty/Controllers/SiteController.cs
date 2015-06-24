@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DodgeDynasty.Mappers.Site;
+using DodgeDynasty.Models.Site;
 
 namespace DodgeDynasty.Controllers
 {
@@ -16,5 +17,16 @@ namespace DodgeDynasty.Controllers
 			return View(mapper.GetModel());
         }
 
+		[HttpPost]
+		public ActionResult Messages(MessagesModel model)
+		{
+			var mapper = new MessagesMapper();
+			mapper.ModelState = ModelState;
+			if (!mapper.UpdateEntity(model))
+			{
+				return View(mapper.GetUpdatedModel(model));
+			}
+			return View(mapper.GetModel());
+		}
     }
 }
