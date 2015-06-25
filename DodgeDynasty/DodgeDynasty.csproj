@@ -189,6 +189,10 @@
     <Compile Include="Mappers\RankSetupMapper.cs" />
     <Compile Include="Mappers\Shared\ColorStylesMapper.cs" />
     <Compile Include="Mappers\Shared\SharedUserInfoMapper.cs" />
+    <Compile Include="Mappers\Site\MessagesCountMapper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mappers\Site\MessagesHelper.cs" />
     <Compile Include="Mappers\Site\MessagesMapper.cs" />
     <Compile Include="Models\Account\UserInfoModel.cs" />
     <Compile Include="Models\AddEditDraftModel.cs" />
@@ -211,7 +215,7 @@
     <Compile Include="Models\ManageDraftsModel.cs" />
     <Compile Include="Models\ManageLeaguesModel.cs" />
     <Compile Include="Mappers\OwnerUserMapper.cs" />
-    <Compile Include="Models\Site\MessageModel.cs" />
+    <Compile Include="Models\Site\MessagesCountModel.cs" />
     <Compile Include="Models\Site\MessagesModel.cs" />
     <Compile Include="Models\RankIdModel.cs" />
     <Compile Include="Models\RankingsListModel.cs" />
@@ -242,6 +246,7 @@
     <Compile Include="Models\Types\OwnerUser.cs" />
     <Compile Include="Models\Types\RankedPlayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Shared\DBUtilities.cs" />
     <Compile Include="Shared\Security\EncryptUtil.cs" />
     <Compile Include="Shared\Security\PasswordInfo.cs" />
     <Compile Include="Shared\Constants.cs" />

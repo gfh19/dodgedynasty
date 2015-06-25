@@ -8,12 +8,16 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using DodgeDynasty.Entities;
+using DodgeDynasty.Mappers.Site;
 using DodgeDynasty.Models;
+using DodgeDynasty.Models.Site;
 
 namespace DodgeDynasty.Shared
 {
 	public static class Utilities
 	{
+		/* Helper methods */
+
 		public static string FormatName(string dbName)
 		{
 			if (!string.IsNullOrEmpty(dbName))
@@ -36,15 +40,10 @@ namespace DodgeDynasty.Shared
 
 		public static Func<Entities.Player, bool> FindPlayerMatch(string firstName, string lastName, string position, string nflTeam)
 		{
-			return p => GetPlayerName(p.FirstName) == GetPlayerName(firstName)
-									&& GetPlayerName(p.LastName) == GetPlayerName(lastName)
+			return p => FormatName(p.FirstName) == FormatName(firstName)
+									&& FormatName(p.LastName) == FormatName(lastName)
 									&& p.Position.ToUpper() == position.ToUpper()
 									&& p.NFLTeam.ToUpper() == nflTeam.ToUpper();
-		}
-
-		public static string GetPlayerName(string name)
-		{
-			return name.ToUpper().Replace(" ", "").Replace("'", "").Replace("-", "").Replace(".", "");
 		}
 
 		public static List<SelectListItem> GetListItems<T>(List<T> items,
@@ -60,36 +59,6 @@ namespace DodgeDynasty.Shared
 				listItems.ForEach(s => s.Selected = FormatName(s.Value) == FormatName(selected) ? true : false);
 			}
 			return listItems;
-		}
-
-		public static string GetLoggedInUserName()
-		{
-			if (System.Web.HttpContext.Current.User == null) 
-			{
-				return string.Empty;
-			}
-			return System.Web.HttpContext.Current.User.Identity.Name;
-		}
-		
-		public static int GetLoggedInUserId(IEnumerable<User> users)
-		{
-			return users.GetLoggedInUser().UserId;
-		}
-
-		public static User GetLoggedInUser(this IEnumerable<User> users)
-		{
-			return users.FirstOrDefault(u => u.UserName == GetLoggedInUserName());
-		}
-
-		public static bool IsUserLoggedIn()
-		{
-			return System.Web.HttpContext.Current.User != null && System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
-		}
-
-		public static bool IsUserAdmin()
-		{
-			LoginModel model = new LoginModel { UserName = Utilities.GetLoggedInUserName() };
-			return model.IsUserAdmin();
 		}
 
 		public static string JsonEncode(string val)
@@ -137,6 +106,39 @@ namespace DodgeDynasty.Shared
 				return routeId.ToString();
 			}
 			return null;
+		}
+
+		public static string GetLoggedInUserName()
+		{
+			if (System.Web.HttpContext.Current.User == null)
+			{
+				return string.Empty;
+			}
+			return System.Web.HttpContext.Current.User.Identity.Name;
+		}
+
+		public static int GetLoggedInUserId(IEnumerable<User> users)
+		{
+			return users.GetLoggedInUser().UserId;
+		}
+
+		public static User GetLoggedInUser(this IEnumerable<User> users)
+		{
+			return users.FirstOrDefault(u => u.UserName == GetLoggedInUserName());
+		}
+
+		public static bool IsUserLoggedIn()
+		{
+			return System.Web.HttpContext.Current.User != null && System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
+		}
+
+
+		/* DB Helper Methods */
+
+		public static bool IsUserAdmin()
+		{
+			LoginModel model = new LoginModel { UserName = Utilities.GetLoggedInUserName() };
+			return model.IsUserAdmin();
 		}
 	}
 }

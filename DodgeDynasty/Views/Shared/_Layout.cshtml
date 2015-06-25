@@ -24,11 +24,17 @@
 			</div>
 			<div>
 				<nav>
+					@{
+						var msgCount = 0;
+						var msgCountDisplay = "";
+					}
 					<ul class="menu top-nav">
 						@if (DodgeDynasty.Shared.Utilities.IsUserLoggedIn())
 						{
 							var draftId = DodgeDynasty.Shared.Utilities.GetRouteDraftId(Url.RequestContext.RouteData);
 							var historyMode = Request.QueryString[DodgeDynasty.Shared.Constants.QS.HistoryMode];
+							msgCount = DodgeDynasty.Shared.DBUtilities.GetMessageCountModel().NewMessages.Count;
+							msgCountDisplay = DodgeDynasty.Shared.DBUtilities.GetMessageCountDisplay(msgCount);
 							if (draftId != null && DodgeDynasty.Shared.Utilities.ToBool(historyMode))
 							{
 								<li>@Html.ActionLink("Pick", "Pick/" + draftId, "Draft", new { historyMode = true }, null)</li>
@@ -50,9 +56,12 @@
 									<span class="icon-bar"></span>
 								</button>
 								<span class="toggle-msgs-section">
+									@if (msgCount > 0)
+									{
 									<a id="toggle-msgs-link" href="#">
-										<span class="toggle-msgs">2</span>
+										<span class="toggle-msgs">@msgCountDisplay</span>
 									</a>
+									}
 								</span>
 							</li>
 						}
@@ -69,10 +78,12 @@
 							<li>
 								<a href="@Url.Action("Messages", "Site")">
 									Messages
-									@* if messages check *@
+									@if (msgCount > 0)
+									{
 									<span class="menu-msgs-section">
-										<span class="menu-msgs">3+</span>
+										<span class="menu-msgs">@msgCountDisplay</span>
 									</span>
+									}
 								</a>
 							</li>
 							<li class="dropdown">
