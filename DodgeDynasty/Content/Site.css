@@ -185,7 +185,7 @@ h5 a:link, h5 a:visited, h5 a:active
 
 header .content-wrapper
 {
-	padding-top: 4px;
+	padding-top: 3px;
 }
 
 footer
@@ -267,7 +267,7 @@ ul.menu
 	font-weight: 500;
 	margin: 0px;
 	padding-left: 5px;
-	padding-bottom: 5px;
+	padding-bottom: 4px;
 	text-align: right;
 }
 
@@ -284,7 +284,7 @@ ul.menu li a, ul.dropdown-menu li
 	background: none;
 	color: #999;
 	text-decoration: none;
-	padding-bottom: 2px;
+	padding-bottom: 1px;
 }
 
 ul.menu li a:hover
@@ -316,9 +316,9 @@ ul.menu li.mobileNav a {
   padding: 4px 4px;
   background-color: transparent;
   background-image: none;
-  border: 1px solid #999;
-  border-radius: 4px;
-  -webkit-border-radius: 4px;
+  border: none;
+  border-radius: 2px;
+  -webkit-border-radius: 2px;
   margin-right: 0px;
 }
 .navbar-toggle:focus {
@@ -330,7 +330,7 @@ ul.menu li.mobileNav a {
 .navbar-toggle .icon-bar {
   display: block;
   width: 17px;
-  height: 2px;
+  height: 3px;
   border-radius: 1px;
   -webkit-border-radius: 1px;
   background-color: #999;
@@ -393,7 +393,7 @@ tbody.collapse.in {
 }
 .navbar-collapse .menu {
   padding-top: 3px;
-  padding-bottom: 5px;
+  padding-bottom: 4px;
   float: right;
 }
 .collapsing {
@@ -2193,7 +2193,7 @@ span.player-select
 		float: none;
 		padding-bottom: 14px;
 	}
-	.nav > li {
+	.nav > li > a {
 		padding-right: 42px;
 	}
 

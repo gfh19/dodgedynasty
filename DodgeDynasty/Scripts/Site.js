@@ -8,11 +8,14 @@ var currentServerTime = null;
 var clientServerTimeOffset = null;
 var draftHub;
 
+/* Init functions */
+
 $(function () {
 	$.ajaxSetup({
 		cache: false
 	});
 	highlightCurrentPageLink();
+	bindMenuMsgsLink();
 });
 
 function initRefreshedPage() {
@@ -97,52 +100,11 @@ function highlightCurrentPageLink() {
 	var currentLink = $(".menu a").filter(function () {
 		return ($(this).prop('pathname').length > 0
 			&& $(this).attr("href") != "#"
-			&& $(this).prop('pathname') == location.pathname 
+			&& $(this).prop('pathname') == location.pathname
 			&& $(this).prop('id') != "more-nav");
 	});
 	$(currentLink).addClass("current-page");
 	return;
-}
-
-function ajaxGet(url, successFn) {
-	$.get(baseURL + url, successFn);
-};
-
-function ajaxPost(model, url, successFn, errorFn, dataType, makeSync) {
-	dataType = dataType || "html";
-	makeSync = makeSync || false;
-	$.ajax({
-		url: baseURL + url,
-		type: "POST",
-		data: JSON.stringify(model),
-		dataType: dataType,
-		contentType: "application/json; charset=utf-8",
-		success: successFn,
-		error: errorFn,
-		async: !makeSync
-	});
-};
-
-function ajaxGetReplace(url, elementId, successFn) {
-	ajaxGet(url, function (response) {
-		replaceWith(elementId, response);
-		if (successFn) {
-			successFn();
-		}
-	});
-}
-
-function ajaxPostReplace(model, url, elementId, successFn, errorFn, dataType, makeSync) {
-	ajaxPost(model, url, function (response) {
-		replaceWith(elementId, response);
-		if (successFn) {
-			successFn();
-		}
-	}, errorFn, dataType, makeSync);
-}
-
-function replaceWith(elementId, contents) {
-	$(elementId).replaceWith(contents);
 }
 
 function refreshPageWithPickTimer(url, elementId, timer) {
@@ -232,8 +194,91 @@ function showUserTurnDialog() {
 		buttons: [
 					{ text: "Make Pick", click: function () { location.href = baseURL + "Draft/Pick"; $(this).dialog("close"); } },
 					{ text: "Close", click: function () { $(this).dialog("close"); } },
-				]
+		]
 	});
+}
+
+function markInvalidId(userId) {
+	if (userId === "") {
+		//Find any blank spans
+		$.each($("select"), function (index, user) {
+			if ($(user).val() === "") {
+				$(user).addClass("invalid-border");
+			}
+		});
+	}
+	else {
+		//Find any matching selected options
+		var invalidEntries = $("select option:selected[value=" + userId + "]").closest("select");
+		$(invalidEntries).addClass("invalid-border");
+	}
+}
+
+function broadcastPickMade() {
+	startHubConnection(function () { draftHub.server.pick(); });
+	return true;
+};
+
+function bindMenuMsgsLink() {
+	$("#toggle-msgs-link").click(function (e) {
+		e.preventDefault();
+		$(".navbar-toggle").click();
+	});
+	$(".navbar-toggle").click(function (e) {
+		easeHideToggleMsgs()
+	});
+}
+
+function easeHideToggleMsgs() {
+	if (!$("#toggle-msgs-link").hasClass("hide-yo-wives")) {
+		$(".toggle-msgs").addClass("ease-hide");
+		setTimeout(function () {
+			$("#toggle-msgs-link").addClass("hide-yo-wives");
+		}, 250);
+	}
+}
+
+/* Helper functions */
+
+function ajaxGet(url, successFn) {
+	$.get(baseURL + url, successFn);
+};
+
+function ajaxPost(model, url, successFn, errorFn, dataType, makeSync) {
+	dataType = dataType || "html";
+	makeSync = makeSync || false;
+	$.ajax({
+		url: baseURL + url,
+		type: "POST",
+		data: JSON.stringify(model),
+		dataType: dataType,
+		contentType: "application/json; charset=utf-8",
+		success: successFn,
+		error: errorFn,
+		async: !makeSync
+	});
+};
+
+function ajaxGetReplace(url, elementId, successFn) {
+	ajaxGet(url, function (response) {
+		replaceWith(elementId, response);
+		if (successFn) {
+			successFn();
+		}
+	});
+}
+
+function ajaxPostReplace(model, url, elementId, successFn, errorFn, dataType, makeSync) {
+	ajaxPost(model, url, function (response) {
+		replaceWith(elementId, response);
+		if (successFn) {
+			successFn();
+		}
+	}, errorFn, dataType, makeSync);
+}
+
+function replaceWith(elementId, contents) {
+	$(elementId).replaceWith(contents);
 }
 
 function isElementInView(el) {
@@ -260,22 +305,6 @@ function preventBackspaceNav(e) {
 	}
 }
 
-function markInvalidId(userId) {
-	if (userId === "") {
-		//Find any blank spans
-		$.each($("select"), function (index, user) {
-			if ($(user).val() === "") {
-				$(user).addClass("invalid-border");
-			}
-		});
-	}
-	else {
-		//Find any matching selected options
-		var invalidEntries = $("select option:selected[value=" + userId + "]").closest("select");
-		$(invalidEntries).addClass("invalid-border");
-	}
-}
-
 $.fn.serializeObject = function () {
 	var o = {};
 	var a = this.serializeArray();
@@ -288,8 +317,7 @@ $.fn.serializeObject = function () {
 		} else {
 			o[this.name] = this.value || '';
 		}
-		if ($("#" + this.name) !== undefined && $("#" + this.name).attr("type") == "checkbox")
-		{
+		if ($("#" + this.name) !== undefined && $("#" + this.name).attr("type") == "checkbox") {
 			o[this.name] = $("#" + this.name).prop('checked');
 		}
 	});
@@ -299,8 +327,3 @@ $.fn.serializeObject = function () {
 function toBool(val) {
 	return val == true || (val != null && val != undefined && val.toLowerCase() == "true");
 }
-
-function broadcastPickMade() {
-	startHubConnection(function () { draftHub.server.pick(); });
-	return true;
-};
