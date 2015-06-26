@@ -1946,6 +1946,32 @@ span.player-select
 	margin-bottom: 5px;
 }
 
+
+/* Draft Chat
+----------------------------------------------------------*/
+.dchat-window {
+    position:fixed;
+    bottom:1px;
+    right:10px;
+	height: 20px;
+	width: 140px;
+	border: 1px solid darkgray;
+	background-color: lightgray;
+	border-radius: 4px;
+	webkit-border-radius: 4px;
+	vertical-align: top;
+}
+.dchat-toggle, .dchat-close {
+	float: right;
+	display: inline-block;
+}
+.dchat-close {
+	padding: 1px 2px;
+}
+.dchat-toggle {
+	padding: 1px 2px;
+}
+
 /* RESPONSIVE STYLES
    Display
 ----------------------------------------------------------*/

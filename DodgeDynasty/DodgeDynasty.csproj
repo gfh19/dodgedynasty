@@ -262,6 +262,9 @@
     <Content Include="Content\bootstrap\css\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap\css\bootstrap.css" />
     <Content Include="Content\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Content\images\Close.png" />
+    <Content Include="Content\images\Collapse.png" />
+    <Content Include="Content\images\Expand.png" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\images\down.png" />
     <Content Include="Content\images\minus.png" />

@@ -58,9 +58,9 @@
 								<span class="toggle-msgs-section">
 									@if (msgCount > 0)
 									{
-									<a id="toggle-msgs-link" href="#">
-										<span class="toggle-msgs">@msgCountDisplay</span>
-									</a>
+										<a id="toggle-msgs-link" href="#">
+											<span class="toggle-msgs">@msgCountDisplay</span>
+										</a>
 									}
 								</span>
 							</li>
@@ -80,9 +80,9 @@
 									Messages
 									@if (msgCount > 0)
 									{
-									<span class="menu-msgs-section">
-										<span class="menu-msgs">@msgCountDisplay</span>
-									</span>
+										<span class="menu-msgs-section">
+											<span class="menu-msgs">@msgCountDisplay</span>
+										</span>
 									}
 								</a>
 							</li>
@@ -124,6 +124,13 @@
 			<section class="content-wrapper main-content clear-fix">
 				@RenderBody()
 			</section>
+			@if (DodgeDynasty.Shared.Utilities.IsUserLoggedIn())
+			{
+				<div class="dchat-window">
+					<span class="dchat-close"><img src="@Url.Content("/Content/images/close.png")" alt="Close" /></span>
+					<span class="dchat-toggle"><img src="@Url.Content("/Content/images/expand.png")" alt="Close" /></span>
+				</div>
+			}
 		</div>
 		<footer>
 			<div class="content-wrapper">
