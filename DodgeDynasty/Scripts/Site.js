@@ -255,11 +255,21 @@ function toggleDraftChatView() {
 	var toggleImg = expanded ? "expand.png" : "collapse.png";
 	//var dchatHeight = expanded ? "20px" : "175px";
 	$(".dchat-toggle-img").attr("src", contentImagesPath + toggleImg);
+	if (expanded) {
+		$(".dchat-window").removeClass("dchat-ease-expand");
+		$(".dchat-window").addClass("dchat-ease-collapse");
+		$(".dchat-preview").removeClass("hide-yo-wives");
+		$(".dchat-body").addClass("hide-yo-wives");
+		$(".dchat-footer").addClass("hide-yo-wives");
+	}
+	else {
+		$(".dchat-window").removeClass("dchat-ease-collapse");
+		$(".dchat-window").addClass("dchat-ease-expand");
+		$(".dchat-preview").addClass("hide-yo-wives");
+		$(".dchat-body").removeClass("hide-yo-wives");
+		$(".dchat-footer").removeClass("hide-yo-wives");
+	}
 	$(".dchat-toggle-link").attr("data-expand", !expanded);
-	var oldClass = expanded ? "dchat-ease-expand" : "dchat-ease-collapse";
-	var newClass = expanded ? "dchat-ease-collapse" : "dchat-ease-expand";
-	$(".dchat-window").removeClass(oldClass);
-	$(".dchat-window").addClass(newClass);
 }
 
 
