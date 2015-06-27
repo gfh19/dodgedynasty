@@ -16,6 +16,7 @@ $(function () {
 	});
 	highlightCurrentPageLink();
 	bindMenuMsgsLink();
+	bindDraftChatWindow();
 });
 
 function initRefreshedPage() {
@@ -236,7 +237,31 @@ function easeHideToggleMsgs() {
 			$("#toggle-msgs-link").addClass("hide-yo-wives");
 		}, 250);
 	}
+		}
+
+function bindDraftChatWindow() {
+	$(".dchat-close-link").click(function (e) {
+		e.preventDefault();
+		$(".dchat-window").hide();
+	});
+	$(".dchat-toggle-link").click(function (e) {
+		e.preventDefault();
+		toggleDraftChatView();
+	});
 }
+
+function toggleDraftChatView() {
+	var expanded = toBool($(".dchat-toggle-link").attr("data-expand"));
+	var toggleImg = expanded ? "expand.png" : "collapse.png";
+	//var dchatHeight = expanded ? "20px" : "175px";
+	$(".dchat-toggle-img").attr("src", contentImagesPath + toggleImg);
+	$(".dchat-toggle-link").attr("data-expand", !expanded);
+	var oldClass = expanded ? "dchat-ease-expand" : "dchat-ease-collapse";
+	var newClass = expanded ? "dchat-ease-collapse" : "dchat-ease-expand";
+	$(".dchat-window").removeClass(oldClass);
+	$(".dchat-window").addClass(newClass);
+}
+
 
 /* Helper functions */
 

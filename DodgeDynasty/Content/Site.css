@@ -1951,10 +1951,10 @@ span.player-select
 ----------------------------------------------------------*/
 .dchat-window {
     position:fixed;
-    bottom:1px;
-    right:10px;
-	height: 20px;
-	width: 140px;
+    bottom:5px;
+    right:15px;
+	height: 22px;
+	width: 280px;
 	border: 1px solid darkgray;
 	background-color: lightgray;
 	border-radius: 4px;
@@ -1968,8 +1968,36 @@ span.player-select
 .dchat-close {
 	padding: 1px 2px;
 }
-.dchat-toggle {
-	padding: 1px 2px;
+.dchat-toggle-link {
+	display: inline-block;
+	padding: 1px 15px;
+}
+.dchat-ease-expand {
+	height: 200px;
+    -webkit-transition: height 0.10s linear;
+    -moz-transition: height 0.10s linear;
+    -o-transition: height 0.10s linear;
+    transition: height 0.10s linear;
+}
+.dchat-ease-collapse {
+	height: 22px;
+    -webkit-transition: height 0.10s linear;
+    -moz-transition: height 0.10s linear;
+    -o-transition: height 0.10s linear;
+    transition: height 0.10s linear;
+}
+.dchat-preview {
+	font-size: 12px;
+	padding-left: 3px;
+}
+.dchat-prev-stamp {
+	display: inline-block;
+	font-weight: bold;
+	border: 3px solid;
+	border-color: #FF0000;
+	border-radius: 8px;
+	webkit-border-radius: 8px;
+
 }
 
 /* RESPONSIVE STYLES

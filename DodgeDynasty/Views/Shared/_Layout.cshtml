@@ -127,8 +127,20 @@
 			@if (DodgeDynasty.Shared.Utilities.IsUserLoggedIn())
 			{
 				<div class="dchat-window">
-					<span class="dchat-close"><img src="@Url.Content("/Content/images/close.png")" alt="Close" /></span>
-					<span class="dchat-toggle"><img src="@Url.Content("/Content/images/expand.png")" alt="Close" /></span>
+					<div class="dchat-header">
+						<span class="dchat-close">
+							<a href="#" class="dchat-close-link"><img src="@Url.Content("/Content/images/close.png")" alt="Close" /></a>
+						</span>
+						<span class="dchat-toggle">
+							<a href="#" class="dchat-toggle-link" data-expand="false"><img class="dchat-toggle-img" src="@Url.Content("/Content/images/expand.png")" alt="Close" /></a>
+						</span>
+						<span class="dchat-preview">
+							<span class=""><span class="dchat-prev-stamp">Pohlmann (11:57pm):</span></span>
+							For a new pick... the moment that everybody has been patiently and anxiously awaiting is here.  I'll take... screw it, all of them.  Check out http://www.dodgedynasty.com for more details.
+						</span>
+					</div>
+					<div class="dchat-body"></div>
+					<div class="dchat-footer"></div>
 				</div>
 			}
 		</div>
@@ -144,6 +156,7 @@
 		var baseURL = '@Url.Content("~")';
 		var refreshTimer = @System.Configuration.ConfigurationManager.AppSettings[DodgeDynasty.Shared.Constants.AppSettings.RefreshTimer];
 		var draftHistoryId = '@DodgeDynasty.Shared.Utilities.GetRouteDraftId(Url.RequestContext.RouteData)';
+		var contentImagesPath = '@Url.Content("/Content/images/")';
 	</script>
 	@RenderSection("scripts", required: false)
 </body>
