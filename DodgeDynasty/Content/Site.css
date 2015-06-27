@@ -2243,7 +2243,7 @@ span.player-select
 }
 .nav > li > a {
   position: relative;
-  display: inline-block;
+  display: block;
 }
 .nav > li > a:hover,
 .nav > li > a:focus {
