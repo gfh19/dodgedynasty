@@ -34,6 +34,8 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_LeagueOwner_League", "League", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.League), "LeagueOwner", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.LeagueOwner), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_Message_League", "League", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.League), "Message", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.Message), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_Message_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.User), "Message", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.Message), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_DraftChat_Draft", "Draft", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Draft), "DraftChat", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.DraftChat), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_DraftChat_League", "League", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.League), "DraftChat", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.DraftChat), true)]
 
 #endregion
 
@@ -420,6 +422,22 @@ namespace DodgeDynasty.Entities
             }
         }
         private ObjectSet<Message> _Messages;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<DraftChat> DraftChats
+        {
+            get
+            {
+                if ((_DraftChats == null))
+                {
+                    _DraftChats = base.CreateObjectSet<DraftChat>("DraftChats");
+                }
+                return _DraftChats;
+            }
+        }
+        private ObjectSet<DraftChat> _DraftChats;
 
         #endregion
 
@@ -591,6 +609,14 @@ namespace DodgeDynasty.Entities
         public void AddToMessages(Message message)
         {
             base.AddObject("Messages", message);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the DraftChats EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToDraftChats(DraftChat draftChat)
+        {
+            base.AddObject("DraftChats", draftChat);
         }
 
         #endregion
@@ -1251,6 +1277,321 @@ namespace DodgeDynasty.Entities
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DraftPick>("HomeModel.FK_DraftPick_Draft", "DraftPick", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_DraftChat_Draft", "DraftChat")]
+        public EntityCollection<DraftChat> DraftChats
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<DraftChat>("HomeModel.FK_DraftChat_Draft", "DraftChat");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DraftChat>("HomeModel.FK_DraftChat_Draft", "DraftChat", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="HomeModel", Name="DraftChat")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class DraftChat : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new DraftChat object.
+        /// </summary>
+        /// <param name="draftChatId">Initial value of the DraftChatId property.</param>
+        /// <param name="draftId">Initial value of the DraftId property.</param>
+        /// <param name="leagueId">Initial value of the LeagueId property.</param>
+        /// <param name="authorId">Initial value of the AuthorId property.</param>
+        /// <param name="messageText">Initial value of the MessageText property.</param>
+        /// <param name="addTimestamp">Initial value of the AddTimestamp property.</param>
+        /// <param name="lastUpdateTimestamp">Initial value of the LastUpdateTimestamp property.</param>
+        public static DraftChat CreateDraftChat(global::System.Int32 draftChatId, global::System.Int32 draftId, global::System.Int32 leagueId, global::System.Int32 authorId, global::System.String messageText, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp)
+        {
+            DraftChat draftChat = new DraftChat();
+            draftChat.DraftChatId = draftChatId;
+            draftChat.DraftId = draftId;
+            draftChat.LeagueId = leagueId;
+            draftChat.AuthorId = authorId;
+            draftChat.MessageText = messageText;
+            draftChat.AddTimestamp = addTimestamp;
+            draftChat.LastUpdateTimestamp = lastUpdateTimestamp;
+            return draftChat;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 DraftChatId
+        {
+            get
+            {
+                return _DraftChatId;
+            }
+            set
+            {
+                if (_DraftChatId != value)
+                {
+                    OnDraftChatIdChanging(value);
+                    ReportPropertyChanging("DraftChatId");
+                    _DraftChatId = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("DraftChatId");
+                    OnDraftChatIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _DraftChatId;
+        partial void OnDraftChatIdChanging(global::System.Int32 value);
+        partial void OnDraftChatIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 DraftId
+        {
+            get
+            {
+                return _DraftId;
+            }
+            set
+            {
+                OnDraftIdChanging(value);
+                ReportPropertyChanging("DraftId");
+                _DraftId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DraftId");
+                OnDraftIdChanged();
+            }
+        }
+        private global::System.Int32 _DraftId;
+        partial void OnDraftIdChanging(global::System.Int32 value);
+        partial void OnDraftIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 LeagueId
+        {
+            get
+            {
+                return _LeagueId;
+            }
+            set
+            {
+                OnLeagueIdChanging(value);
+                ReportPropertyChanging("LeagueId");
+                _LeagueId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LeagueId");
+                OnLeagueIdChanged();
+            }
+        }
+        private global::System.Int32 _LeagueId;
+        partial void OnLeagueIdChanging(global::System.Int32 value);
+        partial void OnLeagueIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 AuthorId
+        {
+            get
+            {
+                return _AuthorId;
+            }
+            set
+            {
+                OnAuthorIdChanging(value);
+                ReportPropertyChanging("AuthorId");
+                _AuthorId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("AuthorId");
+                OnAuthorIdChanged();
+            }
+        }
+        private global::System.Int32 _AuthorId;
+        partial void OnAuthorIdChanging(global::System.Int32 value);
+        partial void OnAuthorIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String MessageText
+        {
+            get
+            {
+                return _MessageText;
+            }
+            set
+            {
+                OnMessageTextChanging(value);
+                ReportPropertyChanging("MessageText");
+                _MessageText = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("MessageText");
+                OnMessageTextChanged();
+            }
+        }
+        private global::System.String _MessageText;
+        partial void OnMessageTextChanging(global::System.String value);
+        partial void OnMessageTextChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime AddTimestamp
+        {
+            get
+            {
+                return _AddTimestamp;
+            }
+            set
+            {
+                OnAddTimestampChanging(value);
+                ReportPropertyChanging("AddTimestamp");
+                _AddTimestamp = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("AddTimestamp");
+                OnAddTimestampChanged();
+            }
+        }
+        private global::System.DateTime _AddTimestamp;
+        partial void OnAddTimestampChanging(global::System.DateTime value);
+        partial void OnAddTimestampChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime LastUpdateTimestamp
+        {
+            get
+            {
+                return _LastUpdateTimestamp;
+            }
+            set
+            {
+                OnLastUpdateTimestampChanging(value);
+                ReportPropertyChanging("LastUpdateTimestamp");
+                _LastUpdateTimestamp = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LastUpdateTimestamp");
+                OnLastUpdateTimestampChanged();
+            }
+        }
+        private global::System.DateTime _LastUpdateTimestamp;
+        partial void OnLastUpdateTimestampChanging(global::System.DateTime value);
+        partial void OnLastUpdateTimestampChanged();
+
+        #endregion
+
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_DraftChat_Draft", "Draft")]
+        public Draft Draft
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Draft>("HomeModel.FK_DraftChat_Draft", "Draft").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Draft>("HomeModel.FK_DraftChat_Draft", "Draft").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Draft> DraftReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Draft>("HomeModel.FK_DraftChat_Draft", "Draft");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Draft>("HomeModel.FK_DraftChat_Draft", "Draft", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_DraftChat_League", "League")]
+        public League League
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<League>("HomeModel.FK_DraftChat_League", "League").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<League>("HomeModel.FK_DraftChat_League", "League").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<League> LeagueReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<League>("HomeModel.FK_DraftChat_League", "League");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<League>("HomeModel.FK_DraftChat_League", "League", value);
                 }
             }
         }
@@ -2466,6 +2807,28 @@ namespace DodgeDynasty.Entities
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Message>("HomeModel.FK_Message_League", "Message", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_DraftChat_League", "DraftChat")]
+        public EntityCollection<DraftChat> DraftChats
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<DraftChat>("HomeModel.FK_DraftChat_League", "DraftChat");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DraftChat>("HomeModel.FK_DraftChat_League", "DraftChat", value);
                 }
             }
         }

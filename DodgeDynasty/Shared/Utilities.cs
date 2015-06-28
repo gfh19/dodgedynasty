@@ -132,6 +132,25 @@ namespace DodgeDynasty.Shared
 			return System.Web.HttpContext.Current.User != null && System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
 		}
 
+		public static string GetMessageCountDisplay(int newMessageCount)
+		{
+			return (newMessageCount > 3) ? "3+" : newMessageCount.ToString();
+		}
+
+		public static int GetLatestUserDraftId(User user, List<Draft> drafts, List<DraftOwner> draftOwners)
+		{
+			var ownerDraftIds = draftOwners.Where(o => o.UserId == user.UserId).Select(o => o.DraftId).ToList();
+			var ownerDrafts = drafts.Where(d => ownerDraftIds.Contains(d.DraftId))
+				.OrderByDescending(o => o.IsActive).ThenBy(o => o.IsComplete).ThenBy(o => o.DraftDate).ToList();
+			if (ownerDrafts.Any(o => !o.IsComplete))
+			{
+				return ownerDrafts.Select(d => d.DraftId).FirstOrDefault();
+			}
+			else
+			{
+				return ownerDrafts.Select(d => d.DraftId).Last();
+			}
+		}
 
 		/* DB Helper Methods */
 

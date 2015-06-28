@@ -34,7 +34,7 @@
 							var draftId = DodgeDynasty.Shared.Utilities.GetRouteDraftId(Url.RequestContext.RouteData);
 							var historyMode = Request.QueryString[DodgeDynasty.Shared.Constants.QS.HistoryMode];
 							msgCount = DodgeDynasty.Shared.DBUtilities.GetMessageCountModel().NewMessages.Count;
-							msgCountDisplay = DodgeDynasty.Shared.DBUtilities.GetMessageCountDisplay(msgCount);
+							msgCountDisplay = DodgeDynasty.Shared.Utilities.GetMessageCountDisplay(msgCount);
 							if (draftId != null && DodgeDynasty.Shared.Utilities.ToBool(historyMode))
 							{
 								<li>@Html.ActionLink("Pick", "Pick/" + draftId, "Draft", new { historyMode = true }, null)</li>
@@ -135,38 +135,39 @@
 							<a href="#" class="dchat-toggle-link" data-expand="false"><img class="dchat-toggle-img" src="@Url.Content("/Content/images/expand.png")" alt="Close" /></a>
 						</span>
 						<span class="dchat-preview">
-							<span class="dchat-prev-stamp red"><span class="dchat-prev-outline">Pohlmann (11:57am):</span></span>
+							<span class="dchat-prev-outline"><span class="dchat-prev-stamp red">Pohlmann (11:57am):</span></span>
 							For the next a b c d e f g h i message it begins here and ends later.
 						</span>
 					</div>
 					<div class="dchat-body hide-yo-wives">
 						<div class="dchat-entry">
-							<span class="dchat-prev-stamp red"><span class="dchat-prev-outline">Pohlmann (11:57am):</span></span>
+							<span class="dchat-prev-outline"><span class="dchat-prev-stamp red">Pohlmann (11:57am):</span></span>
 							For the next pick, the moment that everybody has been patiently and anxiously awaiting is here.  I'll take... screw it, all of them.  Check out http://www.dodgedynasty.com for more details.
 						</div>
 						<div class="dchat-entry">
-							<span class="dchat-prev-stamp yellow"><span class="dchat-prev-outline">Jeremiah (12:02pm):</span></span>
+							<span class="dchat-prev-outline"><span class="dchat-prev-stamp yellow">Jeremiah (12:02pm):</span></span>
 							How's it?
 						</div>
 						<div class="dchat-entry">
-							<span class="dchat-prev-stamp orange"><span class="dchat-prev-outline">Dave (12:02pm):</span></span>
+							<span class="dchat-prev-outline"><span class="dchat-prev-stamp orange">Dave (12:02pm):</span></span>
 							Good.
 						</div>
 						<div class="dchat-entry">
-							<span class="dchat-prev-stamp gray"><span class="dchat-prev-outline">Joe (12:03pm):</span></span>
+							<span class="dchat-prev-outline"><span class="dchat-prev-stamp gray">Joe (12:03pm):</span></span>
 							Same
 						</div>
 						<div class="dchat-entry">
-							<span class="dchat-prev-stamp aqua"><span class="dchat-prev-outline">George (12:04pm):</span></span>
+							<span class="dchat-prev-outline"><span class="dchat-prev-stamp aqua">George (12:04pm):</span></span>
 							Me too. Long text is being displayed here for css styling and design purposes and this concludes the really long text message, next time wrap it up sooner.
 						</div>
 						<div class="dchat-entry">
-							<span class="dchat-prev-stamp yellow"><span class="dchat-prev-outline">Jeremiah (12:05pm):</span></span>
+							<span class="dchat-prev-outline"><span class="dchat-prev-stamp yellow">Jeremiah (12:05pm):</span></span>
 							Cool.
 						</div>
 					</div>
 					<div class="dchat-footer hide-yo-wives">
 						<input type="text" class="dchat-input" placeholder="Enter message" maxlength="200" />
+						<button class="dchat-send-msg" type="submit" disabled>Send</button>
 					</div>
 				</div>
 			}

@@ -1,7 +1,55 @@
-﻿BEGIN TRANSACTION;
+﻿
+BEGIN TRANSACTION;
 
+
+/* 6/27/2015 */
+
+/****** Object:  Table [dbo].[DraftChat]    Script Date: 6/27/2015 5:29:44 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[DraftChat](
+	[DraftChatId] [int] IDENTITY(1,1) NOT NULL,
+	[DraftId] [int] NOT NULL,
+	[LeagueId] [int] NOT NULL,
+	[AuthorId] [int] NOT NULL,
+	[MessageText] [varchar](200) NOT NULL,
+	[AddTimestamp] [datetime] NOT NULL,
+	[LastUpdateTimestamp] [datetime] NOT NULL,
+ CONSTRAINT [PK_DraftChat] PRIMARY KEY CLUSTERED 
+(
+	[DraftChatId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
 
 GO
+
+SET ANSI_PADDING OFF
+GO
+
+ALTER TABLE [dbo].[DraftChat]  WITH CHECK ADD  CONSTRAINT [FK_DraftChat_Draft] FOREIGN KEY([DraftId])
+REFERENCES [dbo].[Draft] ([DraftId])
+GO
+
+ALTER TABLE [dbo].[DraftChat] CHECK CONSTRAINT [FK_DraftChat_Draft]
+GO
+
+ALTER TABLE [dbo].[DraftChat]  WITH CHECK ADD  CONSTRAINT [FK_DraftChat_League] FOREIGN KEY([LeagueId])
+REFERENCES [dbo].[League] ([LeagueId])
+GO
+
+ALTER TABLE [dbo].[DraftChat] CHECK CONSTRAINT [FK_DraftChat_League]
+GO
+
+
+
+
  
 CREATE FUNCTION dbo.GetUserFullName (@UserId INT)
 RETURNS VARCHAR(41) 

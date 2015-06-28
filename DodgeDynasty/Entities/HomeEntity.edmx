@@ -37,6 +37,18 @@
           <Property Name="AddTimestamp" Type="datetime" />
           <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="DraftChat">
+          <Key>
+            <PropertyRef Name="DraftChatId" />
+          </Key>
+          <Property Name="DraftChatId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DraftId" Type="int" Nullable="false" />
+          <Property Name="LeagueId" Type="int" Nullable="false" />
+          <Property Name="AuthorId" Type="int" Nullable="false" />
+          <Property Name="MessageText" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
+          <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="DraftOwner">
           <Key>
             <PropertyRef Name="DraftOwnerId" />
@@ -275,6 +287,30 @@
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="RoleId" Type="int" Nullable="false" />
         </EntityType>
+        <Association Name="FK_DraftChat_Draft">
+          <End Role="Draft" Type="Self.Draft" Multiplicity="1" />
+          <End Role="DraftChat" Type="Self.DraftChat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Draft">
+              <PropertyRef Name="DraftId" />
+            </Principal>
+            <Dependent Role="DraftChat">
+              <PropertyRef Name="DraftId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DraftChat_League">
+          <End Role="League" Type="Self.League" Multiplicity="1" />
+          <End Role="DraftChat" Type="Self.DraftChat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="League">
+              <PropertyRef Name="LeagueId" />
+            </Principal>
+            <Dependent Role="DraftChat">
+              <PropertyRef Name="LeagueId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_DraftPick_Draft">
           <End Role="Draft" Type="Self.Draft" Multiplicity="1" />
           <End Role="DraftPick" Type="Self.DraftPick" Multiplicity="*" />
@@ -460,6 +496,7 @@
         <EntityContainer Name="HomeModelStoreContainer">
           <EntitySet Name="CssColor" EntityType="Self.CssColor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Draft" EntityType="Self.Draft" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DraftChat" EntityType="Self.DraftChat" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DraftOwner" EntityType="Self.DraftOwner" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DraftPick" EntityType="Self.DraftPick" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DraftPickHistory" EntityType="Self.DraftPickHistory" Schema="dbo" store:Type="Tables" />
@@ -479,6 +516,14 @@
           <EntitySet Name="UserApplicant" EntityType="Self.UserApplicant" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserProfile" EntityType="Self.UserProfile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_DraftChat_Draft" Association="Self.FK_DraftChat_Draft">
+            <End Role="Draft" EntitySet="Draft" />
+            <End Role="DraftChat" EntitySet="DraftChat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DraftChat_League" Association="Self.FK_DraftChat_League">
+            <End Role="League" EntitySet="League" />
+            <End Role="DraftChat" EntitySet="DraftChat" />
+          </AssociationSet>
           <AssociationSet Name="FK_DraftPick_Draft" Association="Self.FK_DraftPick_Draft">
             <End Role="Draft" EntitySet="Draft" />
             <End Role="DraftPick" EntitySet="DraftPick" />
@@ -625,6 +670,15 @@
           <AssociationSet Name="FK_Message_User" Association="HomeModel.FK_Message_User">
             <End Role="User" EntitySet="Users" />
             <End Role="Message" EntitySet="Messages" />
+          </AssociationSet>
+          <EntitySet Name="DraftChats" EntityType="HomeModel.DraftChat" />
+          <AssociationSet Name="FK_DraftChat_Draft" Association="HomeModel.FK_DraftChat_Draft">
+            <End Role="Draft" EntitySet="Drafts" />
+            <End Role="DraftChat" EntitySet="DraftChats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DraftChat_League" Association="HomeModel.FK_DraftChat_League">
+            <End Role="League" EntitySet="Leagues" />
+            <End Role="DraftChat" EntitySet="DraftChats" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="NFLTeam">
@@ -894,6 +948,7 @@
           <Property Name="AddTimestamp" Type="DateTime" Precision="3" />
           <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="DraftPicks" Relationship="HomeModel.FK_DraftPick_Draft" FromRole="Draft" ToRole="DraftPick" />
+          <NavigationProperty Name="DraftChats" Relationship="HomeModel.FK_DraftChat_Draft" FromRole="Draft" ToRole="DraftChat" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -1027,6 +1082,7 @@
           <Property Name="LastUpdateTimestamp" Type="DateTime" Precision="3" />
           <NavigationProperty Name="LeagueOwners" Relationship="HomeModel.FK_LeagueOwner_League" FromRole="League" ToRole="LeagueOwner" />
           <NavigationProperty Name="Messages" Relationship="HomeModel.FK_Message_League" FromRole="League" ToRole="Message" />
+          <NavigationProperty Name="DraftChats" Relationship="HomeModel.FK_DraftChat_League" FromRole="League" ToRole="DraftChat" />
         </EntityType>
         <EntityType Name="LeagueOwner">
           <Key>
@@ -1106,6 +1162,44 @@
             </Principal>
             <Dependent Role="Message">
               <PropertyRef Name="AuthorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="DraftChat">
+          <Key>
+            <PropertyRef Name="DraftChatId" />
+          </Key>
+          <Property Name="DraftChatId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DraftId" Type="Int32" Nullable="false" />
+          <Property Name="LeagueId" Type="Int32" Nullable="false" />
+          <Property Name="AuthorId" Type="Int32" Nullable="false" />
+          <Property Name="MessageText" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Draft" Relationship="HomeModel.FK_DraftChat_Draft" FromRole="DraftChat" ToRole="Draft" />
+          <NavigationProperty Name="League" Relationship="HomeModel.FK_DraftChat_League" FromRole="DraftChat" ToRole="League" />
+        </EntityType>
+        <Association Name="FK_DraftChat_Draft">
+          <End Type="HomeModel.Draft" Role="Draft" Multiplicity="1" />
+          <End Type="HomeModel.DraftChat" Role="DraftChat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Draft">
+              <PropertyRef Name="DraftId" />
+            </Principal>
+            <Dependent Role="DraftChat">
+              <PropertyRef Name="DraftId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DraftChat_League">
+          <End Type="HomeModel.League" Role="League" Multiplicity="1" />
+          <End Type="HomeModel.DraftChat" Role="DraftChat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="League">
+              <PropertyRef Name="LeagueId" />
+            </Principal>
+            <Dependent Role="DraftChat">
+              <PropertyRef Name="LeagueId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1405,6 +1499,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="DraftChats">
+            <EntityTypeMapping TypeName="HomeModel.DraftChat">
+              <MappingFragment StoreEntitySet="DraftChat">
+                <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
+                <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
+                <ScalarProperty Name="MessageText" ColumnName="MessageText" />
+                <ScalarProperty Name="AuthorId" ColumnName="AuthorId" />
+                <ScalarProperty Name="LeagueId" ColumnName="LeagueId" />
+                <ScalarProperty Name="DraftId" ColumnName="DraftId" />
+                <ScalarProperty Name="DraftChatId" ColumnName="DraftChatId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -1487,6 +1594,9 @@
         <EntityTypeShape EntityType="HomeModel.Message" Width="1.5" PointX="15.625" PointY="8.375" />
         <AssociationConnector Association="HomeModel.FK_Message_League" />
         <AssociationConnector Association="HomeModel.FK_Message_User" />
+        <EntityTypeShape EntityType="HomeModel.DraftChat" Width="1.5" PointX="13.75" PointY="0.75" />
+        <AssociationConnector Association="HomeModel.FK_DraftChat_Draft" />
+        <AssociationConnector Association="HomeModel.FK_DraftChat_League" />
         </Diagram>
     </Diagrams>
   </Designer>

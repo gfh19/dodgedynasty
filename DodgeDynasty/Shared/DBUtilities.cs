@@ -14,10 +14,5 @@ namespace DodgeDynasty.Shared
 			var messagesCountMapper = new MessagesCountMapper();
 			return messagesCountMapper.GetModel();
 		}
-
-		public static string GetMessageCountDisplay(int newMessageCount)
-		{
-			return (newMessageCount > 3) ? "3+" : newMessageCount.ToString();
-		}
 	}
 }

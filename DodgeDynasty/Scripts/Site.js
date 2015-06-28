@@ -242,7 +242,7 @@ function easeHideToggleMsgs() {
 function bindDraftChatWindow() {
 	$(".dchat-close-link").click(function (e) {
 		e.preventDefault();
-		$(".dchat-window").hide();
+		$(".dchat-window").addClass("hide-yo-wives");
 	});
 	$(".dchat-toggle-link").click(function (e) {
 		e.preventDefault();
