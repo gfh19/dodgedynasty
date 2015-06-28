@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using DodgeDynasty.Mappers.Shared;
 using DodgeDynasty.Mappers.Site;
+using DodgeDynasty.Models.Shared;
 using DodgeDynasty.Models.Site;
 
 namespace DodgeDynasty.Controllers
@@ -27,6 +29,23 @@ namespace DodgeDynasty.Controllers
 				return View(mapper.GetUpdatedModel(model));
 			}
 			return View(mapper.GetModel());
+		}
+
+		[HttpPost]
+		public JsonResult DraftChat(DraftChatModel model)
+		{
+			var updateSucceeded = false;
+			var mapper = new DraftChatMapper();
+			mapper.ModelState = ModelState;
+			try
+			{
+				if (mapper.UpdateEntity(model))
+				{
+					updateSucceeded = true;
+				}
+			}
+			catch { }
+			return Json(new { updateSucceeded = updateSucceeded });
 		}
     }
 }

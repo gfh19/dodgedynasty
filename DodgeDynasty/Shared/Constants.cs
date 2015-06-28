@@ -9,6 +9,8 @@ namespace DodgeDynasty.Shared
 	{
 		//TODO:  SQL-ize
 		public const int NewPlayerId = -1;
+		public static string ChatTimeFormat = "h:mmtt";
+
 
 		public static class AppSettings
 		{

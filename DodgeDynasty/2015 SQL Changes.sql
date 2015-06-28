@@ -2,6 +2,16 @@
 BEGIN TRANSACTION;
 
 
+
+/* MIGHT HAVE TO DO THIS VIA DESIGN (FOR SOME REASON...) */
+
+ALTER TABLE dbo.[Draft]
+ALTER COLUMN [LeagueId] [int] NOT NULL
+GO
+
+
+
+
 /* 6/27/2015 */
 
 

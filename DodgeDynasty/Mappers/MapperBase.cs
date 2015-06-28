@@ -56,12 +56,21 @@ namespace DodgeDynasty.Mappers
 			return Model;
 		}
 
+		public virtual T CreateModelForUpdate() 
+		{
+			return null;
+		}
+
 		protected virtual void PopulateModel() { }
 
-		public bool UpdateEntity(T model)
+		public bool UpdateEntity(T model=null)
 		{
 			using (HomeEntity = new Entities.HomeEntity())
 			{
+				if (model == null)
+				{
+					model = CreateModelForUpdate();
+				}
 				if (ValidateModel(model))
 				{
 					DoUpdate(model);
@@ -73,7 +82,7 @@ namespace DodgeDynasty.Mappers
 
 		protected virtual bool ValidateModel(T model)
 		{
-			return (ModelState != null) ? ModelState.IsValid : true;
+			return model != null && (ModelState != null) ? ModelState.IsValid : true;
 		}
 
 		protected virtual void DoUpdate(T model) { }

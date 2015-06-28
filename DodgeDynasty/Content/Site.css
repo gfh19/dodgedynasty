@@ -1961,7 +1961,7 @@ span.player-select
 	width: 280px;
 	font-size: 12px;
 	border: 1px solid darkgray;
-	background-color: #E8E8E8;
+	background-color: #EEEEEE;
 	border-radius: 4px;
 	webkit-border-radius: 4px;
 	vertical-align: top;
@@ -1972,6 +1972,9 @@ span.player-select
 .dchat-toggle, .dchat-close {
 	float: right;
 	display: inline-block;
+	border: 1px solid darkgray;
+	border-radius: 3px;
+	webkit-border-radius: 3px;
 }
 .dchat-close {
 	padding: 1px 2px;
@@ -1981,7 +1984,7 @@ span.player-select
 	padding: 1px 10px;
 }
 .dchat-ease-expand {
-	height: 200px;
+	height: 215px;
     -webkit-transition: height 0.10s linear;
     -moz-transition: height 0.10s linear;
     -o-transition: height 0.10s linear;
@@ -1996,7 +1999,7 @@ span.player-select
 }
 .dchat-preview {
 	font-size: 12px;
-	width: 222px;
+	width: 220px;
 	display: inline-block;
 	overflow: hidden;
 	white-space: nowrap;
@@ -2018,7 +2021,7 @@ span.player-select
 }
 .dchat-body {
 	padding: 1px;
-	height: 151px;
+	height: 164px;
 	width: 278px;
 	overflow-y: scroll;
 	border-top: 1px solid darkgray;
@@ -2038,14 +2041,17 @@ span.player-select
 	webkit-border-radius: 3px;
 }
 .dchat-send-msg {
-	height: 19px;
-	width: 40px;
+	height: 20px;
+	width: 41px;
 	padding: 1px;
 	margin: 1px -3px;
 	font-size: 13px;
 	border: 1px solid darkgray;
 	border-radius: 3px;
 	webkit-border-radius: 3px;
+}
+.dchat-controls {
+	display: inline;
 }
 
 

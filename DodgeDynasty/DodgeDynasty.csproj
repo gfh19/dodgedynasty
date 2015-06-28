@@ -224,6 +224,7 @@
     <Compile Include="Models\RankSetupModel.cs" />
     <Compile Include="Models\Shared\ColorStylesModel.cs" />
     <Compile Include="Models\Shared\LeagueOwnerHelper.cs" />
+    <Compile Include="Models\Types\ChatJson.cs" />
     <Compile Include="Models\Types\DraftRankModel.cs" />
     <Compile Include="Models\Types\PlayerRankOptions.cs" />
     <Compile Include="Controllers\SharedController.cs" />

@@ -21,11 +21,17 @@ $(function () {
 
 function initRefreshedPage() {
 	checkUserTurnDialog();
+};
+
+/*		--- WebSockets */
+
+function initPage(draftActive) {
 	if (draftActive) {
 		startHubConnection();
-		draftHub.client.broadcastDraft = broadcastDraft;
+		draftHub.client.broadcastDraft = broadcastDraft || function () { };
+		draftHub.client.broadcastChat = broadcastChat || function (chat) { };
 	}
-};
+}
 
 function startHubConnection(startFn) {
 	draftHub = $.connection.draftHub;
@@ -38,6 +44,23 @@ function startHubConnection(startFn) {
 		if (startFn) startFn();
 	}
 }
+
+function broadcastPickMade() {
+	startHubConnection(function () { draftHub.server.pick(); });
+	return true;
+};
+
+function broadcastChatMessage(msg) {
+	startHubConnection(function () { draftHub.server.chat(msg); });
+	return true;
+};
+
+//Function bound to server-side (C#) hub client handle
+function broadcastChat(chat) {
+	console.log(chat);
+}
+
+/*		--- End WebSockets */
 
 function setPickTimer(recursive) {
 	var hasTimer = $(".start-time").length > 0;
@@ -215,11 +238,6 @@ function markInvalidId(userId) {
 	}
 }
 
-function broadcastPickMade() {
-	startHubConnection(function () { draftHub.server.pick(); });
-	return true;
-};
-
 function bindMenuMsgsLink() {
 	$("#toggle-msgs-link").click(function (e) {
 		e.preventDefault();
@@ -248,6 +266,10 @@ function bindDraftChatWindow() {
 		e.preventDefault();
 		toggleDraftChatView();
 	});
+	$(".dchat-send-msg").click(function (e) {
+		e.preventDefault();
+		sendDraftChat();
+	});
 }
 
 function toggleDraftChatView() {
@@ -261,6 +283,7 @@ function toggleDraftChatView() {
 		$(".dchat-preview").removeClass("hide-yo-wives");
 		$(".dchat-body").addClass("hide-yo-wives");
 		$(".dchat-footer").addClass("hide-yo-wives");
+		$(".dchat-input").removeClass("invalid-border-small");
 	}
 	else {
 		$(".dchat-window").removeClass("dchat-ease-collapse");
@@ -273,6 +296,19 @@ function toggleDraftChatView() {
 	}
 	$(".dchat-toggle-link").attr("data-expand", !expanded);
 }
+
+function sendDraftChat() {
+	var msg = $(".dchat-input").val();
+	if (msg != undefined && msg.trim().length > 0) {
+		broadcastChatMessage(msg);
+		$(".dchat-input").removeClass("invalid-border-small");
+	}
+	else {
+		$(".dchat-input").addClass("invalid-border-small");
+	}
+}
+
+
 
 
 /* Helper functions */

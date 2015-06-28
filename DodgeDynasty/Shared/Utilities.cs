@@ -38,29 +38,6 @@ namespace DodgeDynasty.Shared
 			return dbName.StartsWith(inputName);
 		}
 
-		public static Func<Entities.Player, bool> FindPlayerMatch(string firstName, string lastName, string position, string nflTeam)
-		{
-			return p => FormatName(p.FirstName) == FormatName(firstName)
-									&& FormatName(p.LastName) == FormatName(lastName)
-									&& p.Position.ToUpper() == position.ToUpper()
-									&& p.NFLTeam.ToUpper() == nflTeam.ToUpper();
-		}
-
-		public static List<SelectListItem> GetListItems<T>(List<T> items,
-			Func<T, string> textFn, Func<T, string> valueCodeFn, bool blankEntry = true, string selected = null)
-		{
-			var listItems = items.Select(s => new SelectListItem { Text = textFn(s), Value = valueCodeFn(s) }).ToList();
-			if (blankEntry)
-			{
-				listItems.Insert(0, new SelectListItem());
-			}
-			if (selected != null)
-			{
-				listItems.ForEach(s => s.Selected = FormatName(s.Value) == FormatName(selected) ? true : false);
-			}
-			return listItems;
-		}
-
 		public static string JsonEncode(string val)
 		{
 			string response = (!string.IsNullOrEmpty(val)) ? val.Replace("\"", "'") : val;
@@ -97,6 +74,37 @@ namespace DodgeDynasty.Shared
 			return false;
 		}
 
+		public static bool IsTrimEmpty(string text)
+		{
+			return string.IsNullOrEmpty(text) || text.Trim().Length == 0;
+		}
+
+
+		/* Data Access Methods */
+
+		public static Func<Entities.Player, bool> FindPlayerMatch(string firstName, string lastName, string position, string nflTeam)
+		{
+			return p => FormatName(p.FirstName) == FormatName(firstName)
+									&& FormatName(p.LastName) == FormatName(lastName)
+									&& p.Position.ToUpper() == position.ToUpper()
+									&& p.NFLTeam.ToUpper() == nflTeam.ToUpper();
+		}
+
+		public static List<SelectListItem> GetListItems<T>(List<T> items,
+			Func<T, string> textFn, Func<T, string> valueCodeFn, bool blankEntry = true, string selected = null)
+		{
+			var listItems = items.Select(s => new SelectListItem { Text = textFn(s), Value = valueCodeFn(s) }).ToList();
+			if (blankEntry)
+			{
+				listItems.Insert(0, new SelectListItem());
+			}
+			if (selected != null)
+			{
+				listItems.ForEach(s => s.Selected = FormatName(s.Value) == FormatName(selected) ? true : false);
+			}
+			return listItems;
+		}
+
 		public static string GetRouteDraftId(RouteData routeData)
 		{
 			int draftId;
@@ -107,7 +115,6 @@ namespace DodgeDynasty.Shared
 			}
 			return null;
 		}
-
 		public static string GetLoggedInUserName()
 		{
 			if (System.Web.HttpContext.Current.User == null)
@@ -148,9 +155,6 @@ namespace DodgeDynasty.Shared
 			}
 			return ownerDrafts.Select(d => d.DraftId).Last();
 		}
-
-
-		/* DB Helper Methods */
 
 		public static bool IsUserAdmin()
 		{

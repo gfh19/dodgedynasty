@@ -128,20 +128,29 @@
 			{
 				var draftChatModel = DodgeDynasty.Shared.DBUtilities.GetCurrentDraftChatModel();
 				if (draftChatModel.IsDraftActive) {
+					<script type="text/javascript">
+						$(function () {
+							initPage(true);
+						});
+					</script>
 					var chatMessages = draftChatModel.ChatMessages;
 					var lastChat = chatMessages.LastOrDefault();
 					<div class="dchat-window">
+						<input type="hidden" value="@draftChatModel.DraftId" class="dchat-draft-id" />
+						<input type="hidden" value="@draftChatModel.LeagueId" class="dchat-league-id" />
 						<div class="dchat-header">
-							<span class="dchat-close">
-								<a href="#" class="dchat-close-link"><img src="@Url.Content("/Content/images/close.png")" alt="Close" /></a>
-							</span>
-							<span class="dchat-toggle">
-								<a href="#" class="dchat-toggle-link" data-expand="false"><img class="dchat-toggle-img" src="@Url.Content("/Content/images/expand.png")" alt="Close" /></a>
+							<span class="dchat-controls">
+								<span class="dchat-close">
+									<a href="#" class="dchat-close-link"><img src="@Url.Content("/Content/images/close.png")" alt="Close" /></a>
+								</span>
+								<span class="dchat-toggle">
+									<a href="#" class="dchat-toggle-link" data-expand="false"><img class="dchat-toggle-img" src="@Url.Content("/Content/images/expand.png")" alt="Close" /></a>
+								</span>
 							</span>
 							<span class="dchat-preview">
 								@if (lastChat != null) {
 								<span class="dchat-prev-outline">
-									<span class="dchat-prev-stamp @lastChat.CssClass">@lastChat.NickName (@lastChat.AddTimestamp.ToString("h:mmtt")):</span>
+									<span class="dchat-prev-stamp @lastChat.CssClass">@lastChat.NickName (@lastChat.AddTimestamp.ToString(DodgeDynasty.Shared.Constants.ChatTimeFormat)):</span>
 								</span>
 								@lastChat.MessageText
 								}
@@ -151,7 +160,7 @@
 							@foreach (var chat in chatMessages) {
 							<div class="dchat-entry">
 								<span class="dchat-prev-outline">
-									<span class="dchat-prev-stamp @chat.CssClass">@chat.NickName (@chat.AddTimestamp.ToString("h:mmtt")):</span>
+									<span class="dchat-prev-stamp @chat.CssClass">@chat.NickName (@chat.AddTimestamp.ToString(DodgeDynasty.Shared.Constants.ChatTimeFormat)):</span>
 								</span>
 								@chat.MessageText
 							</div>
@@ -159,7 +168,7 @@
 						</div>
 						<div class="dchat-footer hide-yo-wives">
 							<input type="text" class="dchat-input" placeholder="Enter message" maxlength="200" />
-							<button class="dchat-send-msg" type="submit" disabled>Send</button>
+							<button class="dchat-send-msg" type="submit">Send</button>
 						</div>
 					</div>
 				}
