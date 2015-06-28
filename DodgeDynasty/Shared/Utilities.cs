@@ -142,15 +142,13 @@ namespace DodgeDynasty.Shared
 			var ownerDraftIds = draftOwners.Where(o => o.UserId == user.UserId).Select(o => o.DraftId).ToList();
 			var ownerDrafts = drafts.Where(d => ownerDraftIds.Contains(d.DraftId))
 				.OrderByDescending(o => o.IsActive).ThenBy(o => o.IsComplete).ThenBy(o => o.DraftDate).ToList();
-			if (ownerDrafts.Any(o => !o.IsComplete))
+			if (ownerDrafts.Any(o => o.IsActive || !o.IsComplete))
 			{
 				return ownerDrafts.Select(d => d.DraftId).FirstOrDefault();
 			}
-			else
-			{
-				return ownerDrafts.Select(d => d.DraftId).Last();
-			}
+			return ownerDrafts.Select(d => d.DraftId).Last();
 		}
+
 
 		/* DB Helper Methods */
 

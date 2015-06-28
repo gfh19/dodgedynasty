@@ -268,6 +268,8 @@ function toggleDraftChatView() {
 		$(".dchat-preview").addClass("hide-yo-wives");
 		$(".dchat-body").removeClass("hide-yo-wives");
 		$(".dchat-footer").removeClass("hide-yo-wives");
+		var d = $('.dchat-body');
+		d.scrollTop(d.prop("scrollHeight"));
 	}
 	$(".dchat-toggle-link").attr("data-expand", !expanded);
 }

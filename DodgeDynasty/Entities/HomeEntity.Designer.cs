@@ -1446,6 +1446,30 @@ namespace DodgeDynasty.Entities
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String NickName
+        {
+            get
+            {
+                return _NickName;
+            }
+            set
+            {
+                OnNickNameChanging(value);
+                ReportPropertyChanging("NickName");
+                _NickName = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("NickName");
+                OnNickNameChanged();
+            }
+        }
+        private global::System.String _NickName;
+        partial void OnNickNameChanging(global::System.String value);
+        partial void OnNickNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
         public global::System.String MessageText

@@ -4,6 +4,32 @@ BEGIN TRANSACTION;
 
 /* 6/27/2015 */
 
+
+USE [Home]
+GO
+
+/****** Object:  UserDefinedFunction [dbo].[GetUserNickName] ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE FUNCTION [dbo].[GetUserNickName] (@UserId INT)
+RETURNS VARCHAR(41) 
+AS BEGIN
+    DECLARE @NickName VARCHAR(41)
+
+    SELECT @NickName = NickName FROM dbo.[User] WHERE UserId = @UserId
+
+    RETURN @NickName
+END
+
+GO
+
+
+
+
 /****** Object:  Table [dbo].[DraftChat]    Script Date: 6/27/2015 5:29:44 PM ******/
 SET ANSI_NULLS ON
 GO
@@ -19,6 +45,7 @@ CREATE TABLE [dbo].[DraftChat](
 	[DraftId] [int] NOT NULL,
 	[LeagueId] [int] NOT NULL,
 	[AuthorId] [int] NOT NULL,
+	[NickName]  AS ([dbo].[GetUserNickName]([AuthorId])),
 	[MessageText] [varchar](200) NOT NULL,
 	[AddTimestamp] [datetime] NOT NULL,
 	[LastUpdateTimestamp] [datetime] NOT NULL,

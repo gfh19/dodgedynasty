@@ -45,6 +45,7 @@
           <Property Name="DraftId" Type="int" Nullable="false" />
           <Property Name="LeagueId" Type="int" Nullable="false" />
           <Property Name="AuthorId" Type="int" Nullable="false" />
+          <Property Name="NickName" Type="varchar" MaxLength="41" StoreGeneratedPattern="Computed" />
           <Property Name="MessageText" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
           <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
@@ -1173,6 +1174,7 @@
           <Property Name="DraftId" Type="Int32" Nullable="false" />
           <Property Name="LeagueId" Type="Int32" Nullable="false" />
           <Property Name="AuthorId" Type="Int32" Nullable="false" />
+          <Property Name="NickName" Type="String" MaxLength="41" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="MessageText" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
@@ -1505,6 +1507,7 @@
                 <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
                 <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
                 <ScalarProperty Name="MessageText" ColumnName="MessageText" />
+                <ScalarProperty Name="NickName" ColumnName="NickName" />
                 <ScalarProperty Name="AuthorId" ColumnName="AuthorId" />
                 <ScalarProperty Name="LeagueId" ColumnName="LeagueId" />
                 <ScalarProperty Name="DraftId" ColumnName="DraftId" />
@@ -1594,7 +1597,7 @@
         <EntityTypeShape EntityType="HomeModel.Message" Width="1.5" PointX="15.625" PointY="8.375" />
         <AssociationConnector Association="HomeModel.FK_Message_League" />
         <AssociationConnector Association="HomeModel.FK_Message_User" />
-        <EntityTypeShape EntityType="HomeModel.DraftChat" Width="1.5" PointX="13.75" PointY="0.75" />
+        <EntityTypeShape EntityType="HomeModel.DraftChat" Width="1.5" PointX="13.625" PointY="0.75" />
         <AssociationConnector Association="HomeModel.FK_DraftChat_Draft" />
         <AssociationConnector Association="HomeModel.FK_DraftChat_League" />
         </Diagram>
