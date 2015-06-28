@@ -117,7 +117,7 @@ namespace DodgeDynasty.Shared
 		}
 		public static string GetLoggedInUserName()
 		{
-			if (System.Web.HttpContext.Current.User == null)
+			if (System.Web.HttpContext.Current == null || System.Web.HttpContext.Current.User == null)
 			{
 				return string.Empty;
 			}

@@ -136,8 +136,13 @@
 					var chatMessages = draftChatModel.ChatMessages;
 					var lastChat = chatMessages.LastOrDefault();
 					<div class="dchat-window">
-						<input type="hidden" value="@draftChatModel.DraftId" class="dchat-draft-id" />
-						<input type="hidden" value="@draftChatModel.LeagueId" class="dchat-league-id" />
+						<div class="dchat-template hide-yo-wives">
+							<div class="dchat-entry">
+								<span class="dchat-prev-outline">
+									<span class="dchat-prev-stamp "></span>
+								</span>
+							</div>
+						</div>
 						<div class="dchat-header">
 							<span class="dchat-controls">
 								<span class="dchat-close">
@@ -157,15 +162,16 @@
 							</span>
 						</div>
 						<div class="dchat-body hide-yo-wives">
+							<div class="dchat-entry"></div>
 							@foreach (var chat in chatMessages) {
-							<div class="dchat-entry">
-								<span class="dchat-prev-outline">
-									<span class="dchat-prev-stamp @chat.CssClass">@chat.NickName (@chat.AddTimestamp.ToString(DodgeDynasty.Shared.Constants.ChatTimeFormat)):</span>
-								</span>
-								@chat.MessageText
-							</div>
+								<div class="dchat-entry">
+									<span class="dchat-prev-outline">
+										<span class="dchat-prev-stamp @chat.CssClass">@chat.NickName (@chat.AddTimestamp.ToString(DodgeDynasty.Shared.Constants.ChatTimeFormat)):</span>
+									</span>
+									@chat.MessageText
+								</div>
 							}
-						</div>
+							</div>
 						<div class="dchat-footer hide-yo-wives">
 							<input type="text" class="dchat-input" placeholder="Enter message" maxlength="200" />
 							<button class="dchat-send-msg" type="submit">Send</button>

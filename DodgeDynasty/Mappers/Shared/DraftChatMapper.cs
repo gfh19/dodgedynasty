@@ -11,18 +11,20 @@ namespace DodgeDynasty.Mappers.Shared
 {
 	public class DraftChatMapper : MapperBase<DraftChatModel>
 	{
+		public string UserName { get; set; }
 		public string MessageText { get; set; }
 		public ChatJson ChatJsonResult { get; set; }
 
 		public DraftChatMapper() { }
-		public DraftChatMapper(string text)
+		public DraftChatMapper(string userName, string text)
 		{
+			UserName = userName;
 			MessageText = text;
 		}
 
 		protected override void PopulateModel()
 		{
-			var currentDraft = GetUserCurrentDraft();
+			var currentDraft = GetUserCurrentDraft(Utilities.GetLoggedInUserName());
 			var currentLeagueId = currentDraft.LeagueId;
 
 			Model.IsDraftActive = currentDraft.IsActive;
@@ -54,7 +56,7 @@ namespace DodgeDynasty.Mappers.Shared
 		{
 			try
 			{
-				var currentDraft = GetUserCurrentDraft();
+				var currentDraft = GetUserCurrentDraft(UserName);
 				if (currentDraft.IsActive && !Utilities.IsTrimEmpty(MessageText))
 				{
 					Model = new DraftChatModel
@@ -73,7 +75,7 @@ namespace DodgeDynasty.Mappers.Shared
 
 		protected override void DoUpdate(DraftChatModel model)
 		{
-			var user = Utilities.GetLoggedInUser(HomeEntity.Users);
+			var user = HomeEntity.Users.FirstOrDefault(u => u.UserName == UserName);
 			DraftChat chatMessage = new DraftChat
 			{
 				DraftId = model.DraftId,
@@ -101,9 +103,9 @@ namespace DodgeDynasty.Mappers.Shared
 			};
 		}
 
-		private Draft GetUserCurrentDraft()
+		private Draft GetUserCurrentDraft(string userName)
 		{
-			var user = Utilities.GetLoggedInUser(HomeEntity.Users);
+			var user = HomeEntity.Users.FirstOrDefault(u => u.UserName == userName);
 			var drafts = HomeEntity.Drafts.ToList();
 			var currentUserDraftId = Utilities.GetLatestUserDraftId(user, drafts, HomeEntity.DraftOwners.ToList());
 			var currentDraft = drafts.First(d => d.DraftId == currentUserDraftId);

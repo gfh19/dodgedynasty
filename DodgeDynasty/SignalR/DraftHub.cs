@@ -17,7 +17,8 @@ namespace DodgeDynasty.SignalR
 
 		public void Chat(string text)
 		{
-			var mapper = new DraftChatMapper(text);
+			string userName = Context.User.Identity.Name;
+			var mapper = new DraftChatMapper(userName, text);
 			mapper.UpdateEntity();
 			Clients.All.broadcastChat(mapper.ChatJsonResult);
 		}

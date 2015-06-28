@@ -28,8 +28,8 @@ function initRefreshedPage() {
 function initPage(draftActive) {
 	if (draftActive) {
 		startHubConnection();
-		draftHub.client.broadcastDraft = broadcastDraft || function () { };
-		draftHub.client.broadcastChat = broadcastChat || function (chat) { };
+		draftHub.client.broadcastDraft = (typeof broadcastDraft !== "undefined") ? broadcastDraft : function () { };
+		draftHub.client.broadcastChat = (typeof broadcastChat !== "undefined") ? broadcastChat : function () { };
 	}
 }
 
@@ -57,7 +57,18 @@ function broadcastChatMessage(msg) {
 
 //Function bound to server-side (C#) hub client handle
 function broadcastChat(chat) {
-	console.log(chat);
+	chat.msg = htmlEncode(chat.msg);
+	var copy = $(".dchat-template .dchat-entry").clone();
+	$(".dchat-prev-stamp", copy).addClass(chat.css);
+	$(".dchat-prev-stamp", copy).text(chat.author + " (" + chat.time + "):");
+	$(".dchat-prev-outline", copy).after(" " + chat.msg);
+
+	$(".dchat-body .dchat-entry").last().append($(copy));
+	$(".dchat-preview").html($(copy).html())
+
+	scrollDraftChatBottom();
+	$(".dchat-input").val("");
+	$(".dchat-input").focus();
 }
 
 /*		--- End WebSockets */
@@ -291,8 +302,7 @@ function toggleDraftChatView() {
 		$(".dchat-preview").addClass("hide-yo-wives");
 		$(".dchat-body").removeClass("hide-yo-wives");
 		$(".dchat-footer").removeClass("hide-yo-wives");
-		var d = $('.dchat-body');
-		d.scrollTop(d.prop("scrollHeight"));
+		scrollDraftChatBottom();
 	}
 	$(".dchat-toggle-link").attr("data-expand", !expanded);
 }
@@ -308,6 +318,10 @@ function sendDraftChat() {
 	}
 }
 
+function scrollDraftChatBottom() {
+	var d = $('.dchat-body');
+	d.scrollTop(d.prop("scrollHeight"));
+}
 
 
 
@@ -399,4 +413,11 @@ $.fn.serializeObject = function () {
 
 function toBool(val) {
 	return val == true || (val != null && val != undefined && val.toLowerCase() == "true");
+}
+function htmlEncode(val) {
+	return $('<div/>').text(val).html();
+}
+
+function htmlDecode(val) {
+	return $('<div/>').html(val).text();
 }
