@@ -4,8 +4,8 @@
 	ViewBag.Title = "Add New League";
 }
 @section scripts {
-	<script type="text/javascript" src="../../Scripts/AddLeague.js"></script>
-	<script type="text/javascript" src="../../Scripts/AddEditLeague.js"></script>
-	<script type="text/javascript" src="../../Scripts/LeagueOwnerUser.js"></script>
+	<script type="text/javascript" src="@Url.Content("~/Scripts/AddLeague.js")"></script>
+	<script type="text/javascript" src="@Url.Content("~/Scripts/AddEditLeague.js")"></script>
+	<script type="text/javascript" src="@Url.Content("~/Scripts/LeagueOwnerUser.js")"></script>
 }
 @Html.Partial("AddEditLeaguePartial", Model)

@@ -3,7 +3,7 @@
     ViewBag.Title = "Draft Setup";
 }
 @section scripts {
-	<script type="text/javascript" src="../../Scripts/SetupDraft.js"></script>
+	<script type="text/javascript" src="@Url.Content("~/Scripts/SetupDraft.js")"></script>
 }
 <div id="setupDraft" data-draft-id="@Model.DraftId.Value">
 	<h2>Draft Setup - @Model.GetCurrentDraftName() Draft</h2>
@@ -25,8 +25,8 @@
 				Model.CurrentRoundNum = pick.RoundNum;
 				<div class="round" data-round-num="@Model.CurrentRoundNum">
 				<span class="round-right">Round <span class="round-num">@Model.CurrentRoundNum</span>
-					<a href="#" class="delete-round-right @(Model.CurrentRoundNum == 1 ? "hide-yo-wives" : "")" tabindex="-1"><img src="../../Content/images/minus.png" alt="Delete Round"/></a>
-					<a href="#" class="add-round-right" tabindex="-1"><img src="../../Content/images/plus.png" alt="Add Round"/></a>
+					<a href="#" class="delete-round-right @(Model.CurrentRoundNum == 1 ? "hide-yo-wives" : "")" tabindex="-1"><img src="@Url.Content("~/Content/images/minus.png")" alt="Delete Round" /></a>
+					<a href="#" class="add-round-right" tabindex="-1"><img src="@Url.Content("~/Content/images/plus.png")" alt="Add Round" /></a>
 					(<a href="#" class="reverse-round" tabindex="-1">Reverse</a>)
 				</span></div>
 			}
@@ -36,11 +36,11 @@
 					{
 						 Model.SetCurrentGridOwnerUser(pick.UserId);
 						 Model.SetCurrentGridPlayer(pick.PlayerId);
-						 <span class="pick-num">@pick.PickNum</span>@Html.DropDownListFor(m => m.CurrentGridOwnerUser.UserId, Model.GetDraftOwnerListItems(), new { @class = "pick-owner" })<a href="#" class="delete-pick-right @(pick.PickNum == 1 ? "hide-yo-husbands-too" : "")" tabindex="-1"><img src="../../Content/images/minus.png" alt="Delete Pick"/></a>
+						 <span class="pick-num">@pick.PickNum</span>@Html.DropDownListFor(m => m.CurrentGridOwnerUser.UserId, Model.GetDraftOwnerListItems(), new { @class = "pick-owner" })<a href="#" class="delete-pick-right @(pick.PickNum == 1 ? "hide-yo-husbands-too" : "")" tabindex="-1"><img src="@Url.Content("~/Content/images/minus.png")" alt="Delete Pick"/></a>
 					}
 					else
 					{
-						<span class="pick-num">@pick.PickNum</span>@Html.DropDownList("UserId", Model.GetDraftOwnerListItems(), new { @class = "pick-owner" })<a href="#" class="delete-pick-right @(pick.PickNum == 1 ? "hide-yo-husbands-too" : "")" tabindex="-1"><img src="../../Content/images/minus.png" alt="Delete Pick"/></a>
+						<span class="pick-num">@pick.PickNum</span>@Html.DropDownList("UserId", Model.GetDraftOwnerListItems(), new { @class = "pick-owner" })<a href="#" class="delete-pick-right @(pick.PickNum == 1 ? "hide-yo-husbands-too" : "")" tabindex="-1"><img src="@Url.Content("~/Content/images/minus.png")" alt="Delete Pick"/></a>
 					}
 					@if (Model.CurrentGridPlayer != null && !string.IsNullOrEmpty(Model.CurrentGridPlayer.PlayerName))
 					{
@@ -49,7 +49,7 @@
 							<span style="display: flex"><a href="#" class="delete-picked-player">X</a></span>
 						</div>
 					}
-					</div><span class="picks-right"><a href="#" class="add-pick-right" tabindex="-1"><img src="../../Content/images/plus.png" alt="Add Pick"/></a></span>
+					</div><span class="picks-right"><a href="#" class="add-pick-right" tabindex="-1"><img src="@Url.Content("~/Content/images/plus.png")" alt="Add Pick"/></a></span>
 				</span>
 		}
 		</div>

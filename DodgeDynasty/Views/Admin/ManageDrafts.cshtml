@@ -10,14 +10,14 @@
 	<div class="page-entries">
 		@{if (Model.LeagueId != null) {
 			<div class="page-entry">
-				<a href="../AddDraft/@Model.LeagueId">&lt;Add New Draft&gt;</a>
+				<a href="@Url.Content("~/Admin/AddDraft/" + Model.LeagueId)">&lt;Add New Draft&gt;</a>
 			</div>
 		}}
 		<div class="page-section">
 			@foreach (var draft in Model.LeagueDrafts.OrderByDescending(o => o.DraftDate))
 			{
 				<div class="page-entry">
-					<a href="@Url.Content("/Admin/EditDraft/" + draft.DraftId)">@draft.DraftYear @draft.LeagueName</a>
+					<a href="@Url.Content("~/Admin/EditDraft/" + draft.DraftId)">@draft.DraftYear @draft.LeagueName</a>
 				</div>
 			}
 		</div>

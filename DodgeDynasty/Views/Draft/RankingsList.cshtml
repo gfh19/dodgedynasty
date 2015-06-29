@@ -4,8 +4,8 @@
 }
 
 @section scripts {
-	<script type="text/javascript" src="../../Scripts/PlayerRanksShared.js"></script>
-	<script type="text/javascript" src="../../Scripts/RankingsList.js"></script>
+	<script type="text/javascript" src="@Url.Content("~/Scripts/PlayerRanksShared.js")"></script>
+	<script type="text/javascript" src="@Url.Content("~/Scripts/RankingsList.js")"></script>
 }
 <div id="rankingsList">
 	<script type="text/javascript">
@@ -26,11 +26,11 @@
 				<div class="rank-list-entry">
 					@if (draftId != null)
 					{
-						<a class="rank-link" data-rank-id="@list.RankId" href="@Url.Content("/Draft/BestAvailable/" + draftId + "?rankId=" + list.RankId + "&historyMode=true")">@list.RankName</a>
+						<a class="rank-link" data-rank-id="@list.RankId" href="@Url.Content("~/Draft/BestAvailable/" + draftId + "?rankId=" + list.RankId + "&historyMode=true")">@list.RankName</a>
 					}
 					else
 					{
-						<a class="rank-link" data-rank-id="@list.RankId" href="@Url.Content("/Draft/BestAvailable?rankId=" + list.RankId)">@list.RankName</a>
+						<a class="rank-link" data-rank-id="@list.RankId" href="@Url.Content("~/Draft/BestAvailable?rankId=" + list.RankId)">@list.RankName</a>
 					}
 				</div>
 			}
@@ -45,12 +45,12 @@
 				<div class="rank-list-entry">
 					@if (draftId != null)
 					{
-						<a class="rank-link" data-rank-id="@list.RankId" href="@Url.Content("/Draft/BestAvailable/" + draftId + "?rankId=" + list.RankId + "&historyMode=true")">@list.RankName</a>
+						<a class="rank-link" data-rank-id="@list.RankId" href="@Url.Content("~/Draft/BestAvailable/" + draftId + "?rankId=" + list.RankId + "&historyMode=true")">@list.RankName</a>
 					}
 					else
 					{
-						<a class="rank-link" data-rank-id="@list.RankId" href="@Url.Content("/Draft/BestAvailable?rankId=" + list.RankId)">@list.RankName</a>
-						<text>(<a class="update-rank-link" href="@Url.Content("/Rank/SetupRank?rankId=" + list.RankId)">Edit</a>)</text>
+						<a class="rank-link" data-rank-id="@list.RankId" href="@Url.Content("~/Draft/BestAvailable?rankId=" + list.RankId)">@list.RankName</a>
+						<text>(<a class="update-rank-link" href="@Url.Content("~/Rank/SetupRank?rankId=" + list.RankId)">Edit</a>)</text>
 					}
 				</div>
 			}

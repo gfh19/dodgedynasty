@@ -59,8 +59,8 @@
 					@Html.DropDownList("UserId", Model.GetLeagueOwnerUserItems(), new { @class = "lo-select" })
 				</div>
 				<div class="owner-controls">
-					<a href="#" class="league-remove-owner" tabindex="-1"><img src="../../Content/images/minus.png" alt="Remove Owner" /></a>
-					<a href="#" class="league-add-owner" tabindex="-1"><img src="../../Content/images/plus.png" alt="Add Owner" /></a>
+					<a href="#" class="league-remove-owner" tabindex="-1"><img src="@Url.Content("~/Content/images/minus.png")" alt="Remove Owner" /></a>
+					<a href="#" class="league-add-owner" tabindex="-1"><img src="@Url.Content("~/Content/images/plus.png")" alt="Add Owner" /></a>
 				</div>
 			</div>
 			<div class="league-owners">
@@ -75,8 +75,8 @@
 							@Html.DropDownListFor(o => ownerUser.UserId, Model.GetLeagueOwnerUserItems(ownerUser), new { @class = "lo-select" })
 						</div>
 						<div class="owner-controls">
-							<a href="#" class="league-remove-owner" tabindex="-1"><img src="../../Content/images/minus.png" alt="Remove Owner" /></a>
-							<a href="#" class="league-add-owner" tabindex="-1"><img src="../../Content/images/plus.png" alt="Add Owner" /></a>
+							<a href="#" class="league-remove-owner" tabindex="-1"><img src="@Url.Content("~/Content/images/minus.png")" alt="Remove Owner" /></a>
+							<a href="#" class="league-add-owner" tabindex="-1"><img src="@Url.Content("~/Content/images/plus.png")" alt="Add Owner" /></a>
 						</div>
 					</div>
 				}

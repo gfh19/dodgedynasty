@@ -4,8 +4,8 @@
 	ViewBag.Title = "Edit Draft";
 }
 @section scripts {
-	<script type="text/javascript" src="../../Scripts/EditDraft.js"></script>
-	<script type="text/javascript" src="../../Scripts/AddEditDraft.js"></script>
-	<script type="text/javascript" src="../../Scripts/LeagueOwnerUser.js"></script>
+	<script type="text/javascript" src="@Url.Content("~/Scripts/EditDraft.js")"></script>
+	<script type="text/javascript" src="@Url.Content("~/Scripts/AddEditDraft.js")"></script>
+	<script type="text/javascript" src="@Url.Content("~/Scripts/LeagueOwnerUser.js")"></script>
 }
 @Html.Partial("AddEditDraftPartial", Model)

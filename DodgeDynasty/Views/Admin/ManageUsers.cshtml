@@ -9,14 +9,14 @@
 	<div class="large-page-header">@ViewBag.Title</div>
 	<div class="page-entries">
 		<div class="page-entry">
-			<a href="@Url.Content("/Admin/AddUser")">&lt;Add New User&gt;</a>
+			<a href="@Url.Content("~/Admin/AddUser")">&lt;Add New User&gt;</a>
 		</div>
 		<div class="page-section">
 			<div class="page-header">Active Users</div>
 			@foreach (var user in Model.ActiveUsers)
 			{
 				<div class="page-entry">
-					<a href="@Url.Content("/Admin/UserInfo?userName=" + user.UserName)">@user.FullName</a>
+					<a href="@Url.Content("~/Admin/UserInfo?userName=" + user.UserName)">@user.FullName</a>
 					(<a href="SetUserStatus/@user.UserId?isActive=false">Deactivate</a>)
 				</div>
 			}
@@ -26,7 +26,7 @@
 			@foreach (var user in Model.InactiveUsers)
 			{
 				<div class="page-entry">
-					<a href="@Url.Content("/Admin/UserInfo?userName=" + user.UserName)">@user.FullName</a>
+					<a href="@Url.Content("~/Admin/UserInfo?userName=" + user.UserName)">@user.FullName</a>
 					(<a href="SetUserStatus/@user.UserId?isActive=true">Activate</a>)
 				</div>
 			}

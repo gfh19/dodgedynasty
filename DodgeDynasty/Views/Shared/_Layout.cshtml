@@ -10,7 +10,7 @@
 	@Scripts.Render("~/bundles/jquery")
 	@Scripts.Render("~/bundles/lib")
 	<script src="@Url.Content("~/signalr/hubs")"></script>
-	<script type="text/javascript" src="../../Scripts/Site.js"></script>
+	<script type="text/javascript" src="@Url.Content("~/Scripts/Site.js")"></script>
 	@if (DodgeDynasty.Shared.Utilities.IsUserLoggedIn())
 	{
 		@Html.Partial(DodgeDynasty.Shared.Constants.Views.ColorStyles)
@@ -146,10 +146,10 @@
 						<div class="dchat-header">
 							<span class="dchat-controls">
 								<span class="dchat-close">
-									<a href="#" class="dchat-close-link"><img src="@Url.Content("/Content/images/close.png")" alt="Close" /></a>
+									<a href="#" class="dchat-close-link"><img src="@Url.Content("~/Content/images/close.png")" alt="Close" /></a>
 								</span>
 								<span class="dchat-toggle">
-									<a href="#" class="dchat-toggle-link" data-expand="false"><img class="dchat-toggle-img" src="@Url.Content("/Content/images/expand.png")" alt="Close" /></a>
+									<a href="#" class="dchat-toggle-link" data-expand="false"><img class="dchat-toggle-img" src="@Url.Content("~/Content/images/expand.png")" alt="Close" /></a>
 								</span>
 							</span>
 							<span class="dchat-preview">
@@ -192,7 +192,7 @@
 		var baseURL = '@Url.Content("~")';
 		var refreshTimer = @System.Configuration.ConfigurationManager.AppSettings[DodgeDynasty.Shared.Constants.AppSettings.RefreshTimer];
 		var draftHistoryId = '@DodgeDynasty.Shared.Utilities.GetRouteDraftId(Url.RequestContext.RouteData)';
-		var contentImagesPath = '@Url.Content("/Content/images/")';
+		var contentImagesPath = '@Url.Content("~/Content/images/")';
 	</script>
 	@RenderSection("scripts", required: false)
 </body>

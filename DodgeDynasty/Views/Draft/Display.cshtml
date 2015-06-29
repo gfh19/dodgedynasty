@@ -3,7 +3,7 @@
 	ViewBag.Title = "Draft";
 }
 @section scripts {
-	<script type="text/javascript" src="../../Scripts/Display.js"></script>
+	<script type="text/javascript" src="@Url.Content("~/Scripts/Display.js")"></script>
 }
 <div id="draftDisplay">
 	@Html.Partial("CurrentDraftPickPartial", Model)
