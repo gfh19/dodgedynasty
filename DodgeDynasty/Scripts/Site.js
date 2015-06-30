@@ -67,8 +67,6 @@ function broadcastChat(chat) {
 	$(".dchat-preview").html($(copy).html())
 
 	scrollDraftChatBottom();
-	$(".dchat-input").val("");
-	$(".dchat-input").focus();
 }
 
 /*		--- End WebSockets */
@@ -266,7 +264,7 @@ function easeHideToggleMsgs() {
 			$("#toggle-msgs-link").addClass("hide-yo-wives");
 		}, 250);
 	}
-		}
+}
 
 function bindDraftChatWindow() {
 	$(".dchat-close-link").click(function (e) {
@@ -280,6 +278,17 @@ function bindDraftChatWindow() {
 	$(".dchat-send-msg").click(function (e) {
 		e.preventDefault();
 		sendDraftChat();
+	});
+	$('.dchat-input').keypress(function (e) {
+		var evt = e || window.event;
+		var key = evt.charCode || evt.keyCode;
+
+		if ((evt.type == "keydown" || evt.type == "keypress")) {
+			if (key == 13) {
+				evt.preventDefault();
+				$(".dchat-send-msg").click();
+			}
+		}
 	});
 }
 
@@ -312,6 +321,8 @@ function sendDraftChat() {
 	if (msg != undefined && msg.trim().length > 0) {
 		broadcastChatMessage(msg);
 		$(".dchat-input").removeClass("invalid-border-small");
+		$(".dchat-input").val("");
+		$(".dchat-input").focus();
 	}
 	else {
 		$(".dchat-input").addClass("invalid-border-small");

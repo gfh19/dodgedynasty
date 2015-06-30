@@ -1981,7 +1981,7 @@ span.player-select
 }
 .dchat-toggle-link {
 	display: inline-block;
-	padding: 1px 10px;
+	padding: 1px 20px;
 }
 .dchat-ease-expand {
 	height: 215px;
@@ -1999,7 +1999,7 @@ span.player-select
 }
 .dchat-preview {
 	font-size: 12px;
-	width: 220px;
+	width: 200px;
 	display: inline-block;
 	overflow: hidden;
 	white-space: nowrap;
@@ -2024,6 +2024,7 @@ span.player-select
 	height: 164px;
 	width: 278px;
 	overflow-y: scroll;
+	-webkit-overflow-scrolling: touch;
 	border-top: 1px solid darkgray;
 	border-bottom: 1px solid darkgray;
 }

@@ -131,7 +131,8 @@ namespace DodgeDynasty.Shared
 
 		public static User GetLoggedInUser(this IEnumerable<User> users)
 		{
-			return users.FirstOrDefault(u => u.UserName == GetLoggedInUserName());
+			var userName = GetLoggedInUserName();
+			return users.FirstOrDefault(u => u.UserName == userName);
 		}
 
 		public static bool IsUserLoggedIn()

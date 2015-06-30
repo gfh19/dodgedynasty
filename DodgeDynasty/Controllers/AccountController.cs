@@ -36,6 +36,10 @@ namespace DodgeDynasty.Controllers
 		[ValidateAntiForgeryToken]
 		public ActionResult Login(LoginModel model, string returnUrl)
 		{
+			if (model != null && model.UserName != null)
+			{
+				model.UserName = model.UserName.Trim().ToLower();
+			}
 			if (ModelState.IsValid && model.Login())
 			{
 				FormsAuthentication.SetAuthCookie(model.UserName, true);
