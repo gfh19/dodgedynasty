@@ -1,5 +1,15 @@
 ﻿
+
+
+
+/* Below Run in Production on 6/29/15 */
 BEGIN TRANSACTION;
+
+
+
+ALTER TABLE dbo.[Message]
+ADD [LeagueName] AS dbo.GetLeagueName(LeagueId)
+GO
 
 
 

@@ -93,7 +93,8 @@ namespace DodgeDynasty.Mappers.Shared
 
 		private ChatJson CreateChatJsonResult(DraftChat chatMessage, User user)
 		{
-			var leagueOwner = HomeEntity.LeagueOwners.First(o=>o.UserId == user.UserId);
+			var leagueOwners = HomeEntity.LeagueOwners.Where(lo => lo.LeagueId == chatMessage.LeagueId);
+			var leagueOwner = leagueOwners.First(o => o.UserId == user.UserId);
 			return new ChatJson
 			{
 				author = user.NickName,
