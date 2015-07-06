@@ -8,13 +8,9 @@ namespace DodgeDynasty.Models.Types
 {
 	public class PickInfoJson
 	{
-		[JsonProperty("turn")]
-		public bool IsUserTurn { get; set; }
-		[JsonProperty("num")]
-		public int PickNum { get; set; }
-		[JsonProperty("hasPrev")]
-		public bool HasPreviousPick { get; set; }
-		[JsonProperty("prevName")]
-		public string PreviousPlayerName { get; set; }
+		public bool turn { get; set; }
+		public int num { get; set; }
+		public bool hasPrev { get; set; }
+		public string prevName { get; set; }
 	}
 }

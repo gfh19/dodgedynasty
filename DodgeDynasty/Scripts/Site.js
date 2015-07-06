@@ -249,7 +249,7 @@ function setLatestUserTurnPickInfo(showFn) {
 			if (!isElementInView($(".drafter"))) {
 				$("#userTurnDialog").attr("title", "Your Turn - Pick #" + pickInfo.num);
 				if (pickInfo.hasPrev) {
-					$(".ut-last-pick").text("(Last Pick: " + pickInfo.prevName);
+					$(".ut-last-pick").text("(Last Pick: " + pickInfo.prevName + ")");
 				}
 				if (showFn) showFn();
 			}
@@ -421,6 +421,9 @@ function replaceWith(elementId, contents) {
 function isElementInView(el) {
 	if (el instanceof jQuery) {
 		el = el[0];
+	}
+	if (!el) {
+		return false;
 	}
 	var rect = el.getBoundingClientRect();
 	return (
