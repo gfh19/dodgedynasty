@@ -13,8 +13,6 @@ namespace DodgeDynasty.Models
 {
 	public class DraftModel : ModelBase
 	{
-		private int? _latestOwnerDraftId;
-
 		public int? DraftId { get; set; }
 		public int PickTimeSeconds { get; set; }
 

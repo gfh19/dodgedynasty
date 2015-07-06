@@ -5,7 +5,7 @@
 	callRefreshPageWithPickTimer("Draft/CurrentDraftPickPartial", ".draft-info");
  });
 
-function broadcastDraft() {
+ function pageBroadcastDraftHandler() {
 	callRefreshPage("Draft/CurrentDraftPickPartial", ".draft-info");
 }
 

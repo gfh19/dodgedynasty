@@ -3,7 +3,7 @@
 	callRefreshPageWithPickTimer("Draft/RankingsListPartial", "#rankingsList");
 });
 
-function broadcastDraft() {
+function pageBroadcastDraftHandler() {
 	callRefreshPage("Draft/RankingsListPartial", "#rankingsList");
 }
 

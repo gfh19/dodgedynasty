@@ -176,5 +176,19 @@ namespace DodgeDynasty.Controllers
 			var mapper = new DraftHistoryMapper<DraftHistoryModel>();
 			return View(mapper.GetModel());
 		}
+
+		[HttpGet]
+		public JsonResult GetUserTurnPickInfo()
+		{
+			DraftDisplayModel model = DraftFactory.GetDraftDisplayModel();
+			PickInfoJson pickInfo = new PickInfoJson
+			{
+				IsUserTurn = model.IsUserTurn(),
+				PickNum = model.CurrentDraftPick.PickNum,
+				HasPreviousPick = (model.PreviousDraftPick != null),
+				PreviousPlayerName = (model.PreviousDraftPick != null) ? model.PreviousDraftPick.Player.PlayerName : null
+			};
+			return Json(pickInfo, JsonRequestBehavior.AllowGet);
+		}
 	}
 }

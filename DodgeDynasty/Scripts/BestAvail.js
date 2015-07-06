@@ -3,6 +3,6 @@
 	callRefreshPageWithPickTimer("Draft/BestAvailablePartial" + getRankIdUrlPath(), "#bestAvailable");
 });
 
-function broadcastDraft() {
+function pageBroadcastDraftHandler() {
 	callRefreshPage("Draft/BestAvailablePartial" + getRankIdUrlPath(), "#bestAvailable");
 }

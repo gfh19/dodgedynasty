@@ -2,8 +2,9 @@
 var pickTimeSeconds = 0;
 var playerHints = [];
 var hasModelErrors = false;
-var isUserTurn = false;
+var isRefreshPage = false;
 var draftActive = false;
+var isUserTurn = false;
 var currentServerTime = null;
 var clientServerTimeOffset = null;
 var draftHub;
@@ -15,11 +16,13 @@ $(function () {
 		cache: false
 	});
 	highlightCurrentPageLink();
-	bindMenuMsgsLink();
+	bindMenuLinks();
 	bindDraftChatWindow();
+	checkUserTurnDialog();
 });
 
 function initRefreshedPage() {
+	isRefreshPage = true;
 	checkUserTurnDialog();
 };
 
@@ -29,6 +32,7 @@ function initPage(draftActive) {
 	if (draftActive) {
 		startHubConnection();
 		draftHub.client.broadcastDraft = (typeof broadcastDraft !== "undefined") ? broadcastDraft : function () { };
+		//Check draftChat config entry
 		draftHub.client.broadcastChat = (typeof broadcastChat !== "undefined") ? broadcastChat : function () { };
 	}
 }
@@ -45,17 +49,25 @@ function startHubConnection(startFn) {
 	}
 }
 
+//From client to server
 function broadcastPickMade() {
 	startHubConnection(function () { draftHub.server.pick(); });
 	return true;
 };
 
+//From client to server
 function broadcastChatMessage(msg) {
 	startHubConnection(function () { draftHub.server.chat(msg); });
 	return true;
 };
 
-//Function bound to server-side (C#) hub client handle
+//Draft Pick broadcast-received:  Function bound to server-side (C#) hub client handle
+function broadcastDraft() {
+	if (typeof pageBroadcastDraftHandler !== "undefined") pageBroadcastDraftHandler();
+	checkUserTurnDialog();
+}
+
+//Chat broadcast-received:  Function bound to server-side (C#) hub client handle
 function broadcastChat(chat) {
 	chat.msg = htmlEncode(chat.msg);
 	var copy = $(".dchat-template .dchat-entry").clone();
@@ -194,41 +206,60 @@ function setPlayerAutoComplete(fname, lname, pos, nfl) {
 };
 
 function checkUserTurnDialog() {
-	if ($("#userTurnDialog").length > 0) {
-		if ($.cookie("userTurnSettings")) {
-			var settings = jQuery.parseJSON($.cookie("userTurnSettings"));
-			if (!settings.shown && !settings.neverShowAgain) {
-				setUserTurnCookie(true, false);
-				if (!isElementInView($(".drafter"))) {
-					showUserTurnDialog();
-				}
-			}
-		}
-		else {
-			setUserTurnCookie(true, false);
-			if (!isElementInView($(".drafter"))) {
-				showUserTurnDialog();
-			}
+	if ((isRefreshPage && isUserTurn) 	//Either we know is user turn on refreshed page
+		|| !isRefreshPage)				//Or user turn is unknown, i.e. not on refreshed page
+	{
+		tryShowUserTurnDialog();
+	}
+}
+
+function tryShowUserTurnDialog() {
+	if ($.cookie("userTurnSettings")) {
+		var settings = jQuery.parseJSON($.cookie("userTurnSettings"));
+		if (!settings.shown && !settings.neverShowAgain) {
+			showUserTurnDialog();
 		}
 	}
+	else {
+		showUserTurnDialog();
+	}
+}
+
+function showUserTurnDialog() {
+	if ($("#userTurnDialog").length > 0) {
+		setLatestUserTurnPickInfo(function () {
+			$("#userTurnDialog").dialog({
+				resizable: false,
+				height: 'auto',
+				width: '250px',
+				modal: false,
+				buttons: [
+							{ text: "Make Pick", click: function () { location.href = baseURL + "Draft/Pick"; $(this).dialog("close"); } },
+							{ text: "Close", click: function () { $(this).dialog("close"); } },
+				]
+			});
+		});
+	}
+}
+
+function setLatestUserTurnPickInfo(showFn) {
+	ajaxGetJson("Draft/GetUserTurnPickInfo", function (pickInfo) {
+		if (pickInfo && pickInfo.turn) {
+			setUserTurnCookie(true, false);
+			if (!isElementInView($(".drafter"))) {
+				$("#userTurnDialog").attr("title", "Your Turn - Pick #" + pickInfo.num);
+				if (pickInfo.hasPrev) {
+					$(".ut-last-pick").text("(Last Pick: " + pickInfo.prevName);
+				}
+				if (showFn) showFn();
+			}
+		}
+	});
 }
 
 function setUserTurnCookie(shown, neverShowAgain) {
 	var settings = { shown: shown, neverShowAgain: neverShowAgain };
 	$.cookie("userTurnSettings", JSON.stringify(settings), { path: baseURL });
-}
-
-function showUserTurnDialog() {
-	$("#userTurnDialog").dialog({
-		resizable: false,
-		height: 'auto',
-		width: '250px',
-		modal: false,
-		buttons: [
-					{ text: "Make Pick", click: function () { location.href = baseURL + "Draft/Pick"; $(this).dialog("close"); } },
-					{ text: "Close", click: function () { $(this).dialog("close"); } },
-		]
-	});
 }
 
 function markInvalidId(userId) {
@@ -247,13 +278,17 @@ function markInvalidId(userId) {
 	}
 }
 
-function bindMenuMsgsLink() {
+function bindMenuLinks() {
 	$("#toggle-msgs-link").click(function (e) {
 		e.preventDefault();
 		$(".navbar-toggle").click();
 	});
 	$(".navbar-toggle").click(function (e) {
 		easeHideToggleMsgs()
+	});
+	$(".menu-broadcast-draft").click(function (e) {
+		e.preventDefault();
+		broadcastPickMade();
 	});
 }
 
@@ -337,6 +372,10 @@ function scrollDraftChatBottom() {
 
 
 /* Helper functions */
+
+function ajaxGetJson(url, successFn) {
+	$.get(baseURL + url, {}, successFn, "JSON");
+};
 
 function ajaxGet(url, successFn) {
 	$.get(baseURL + url, successFn);

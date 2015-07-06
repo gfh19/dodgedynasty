@@ -15,7 +15,7 @@
 	}
 });
 
-function broadcastDraft() {
+function pageBroadcastDraftHandler() {
 	getPickInfo();
 }
 

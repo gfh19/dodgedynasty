@@ -1,4 +1,86 @@
-﻿
+﻿SET XACT_ABORT ON
+BEGIN TRANSACTION;
+
+/* 7/4/15 */
+
+/****** Object:  Table [dbo].[DraftPickHistory]    Script Date: 7/4/2015 2:24:50 PM ******/
+DROP TABLE [dbo].[DraftPickHistory]
+GO
+
+
+
+ALTER TABLE [dbo].[Draft] WITH CHECK ADD  CONSTRAINT [FK_Draft_League] FOREIGN KEY([LeagueId])
+REFERENCES [dbo].[League] ([LeagueId])
+GO
+
+ALTER TABLE [dbo].[Draft] CHECK CONSTRAINT [FK_Draft_League]
+GO
+
+ALTER TABLE [dbo].[Draft] WITH CHECK ADD  CONSTRAINT [FK_Draft_Winner] FOREIGN KEY([WinnerId])
+REFERENCES [dbo].[User] ([UserId])
+GO
+
+ALTER TABLE [dbo].[Draft] CHECK CONSTRAINT [FK_Draft_Winner]
+GO
+
+ALTER TABLE [dbo].[Draft] WITH CHECK ADD  CONSTRAINT [FK_Draft_RunnerUp] FOREIGN KEY([RunnerUpId])
+REFERENCES [dbo].[User] ([UserId])
+GO
+
+ALTER TABLE [dbo].[Draft] CHECK CONSTRAINT [FK_Draft_RunnerUp]
+GO
+
+
+ALTER TABLE [dbo].[DraftChat] WITH CHECK ADD  CONSTRAINT [FK_DraftChat_User] FOREIGN KEY([AuthorId])
+REFERENCES [dbo].[User] ([UserId])
+GO
+
+
+ALTER TABLE [dbo].[DraftOwner] WITH CHECK ADD  CONSTRAINT [FK_DraftOwner_Draft] FOREIGN KEY([DraftId])
+REFERENCES [dbo].[Draft] ([DraftId])
+GO
+
+ALTER TABLE [dbo].[DraftOwner] WITH CHECK ADD  CONSTRAINT [FK_DraftOwner_User] FOREIGN KEY([UserId])
+REFERENCES [dbo].[User] ([UserId])
+GO
+
+
+ALTER TABLE [dbo].[DraftPick] WITH CHECK ADD  CONSTRAINT [FK_DraftPick_User] FOREIGN KEY([UserId])
+REFERENCES [dbo].[User] ([UserId])
+GO
+
+
+ALTER TABLE [dbo].[DraftRank] WITH CHECK ADD  CONSTRAINT [FK_DraftRank_Draft] FOREIGN KEY([DraftId])
+REFERENCES [dbo].[Draft] ([DraftId])
+GO
+
+ALTER TABLE [dbo].[DraftRank] WITH CHECK ADD  CONSTRAINT [FK_DraftRank_User] FOREIGN KEY([UserId])
+REFERENCES [dbo].[User] ([UserId])
+GO
+
+
+ALTER TABLE [dbo].[LeagueOwner] WITH CHECK ADD  CONSTRAINT [FK_LeagueOwner_User] FOREIGN KEY([UserId])
+REFERENCES [dbo].[User] ([UserId])
+GO
+
+
+ALTER TABLE [dbo].[PlayerAdjustment] WITH CHECK ADD  CONSTRAINT [FK_PlayerAdjustment_User] FOREIGN KEY([UserId])
+REFERENCES [dbo].[User] ([UserId])
+GO
+
+
+
+COMMIT TRANSACTION;
+
+
+
+
+
+
+
+
+
+
 
 
 

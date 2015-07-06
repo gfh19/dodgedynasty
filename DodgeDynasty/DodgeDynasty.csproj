@@ -226,6 +226,7 @@
     <Compile Include="Models\Shared\LeagueOwnerHelper.cs" />
     <Compile Include="Models\Types\ChatJson.cs" />
     <Compile Include="Models\Types\DraftRankModel.cs" />
+    <Compile Include="Models\Types\PickInfoJson.cs" />
     <Compile Include="Models\Types\PlayerRankOptions.cs" />
     <Compile Include="Controllers\SharedController.cs" />
     <Compile Include="Entities\HomeEntity.Designer.cs">
@@ -289,6 +290,7 @@
     <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Content\themes\base\jquery-ui-1.10.4.custom.css" />
+    <Content Include="Content\themes\base\jquery-ui-1.10.4.custom.min.css" />
     <Content Include="Content\themes\base\jquery-ui.css" />
     <Content Include="Content\themes\base\jquery.ui.accordion.css" />
     <Content Include="Content\themes\base\jquery.ui.all.css" />

@@ -1,6 +1,6 @@
 ﻿@model DodgeDynasty.Models.PlayerRankModel
 @{
-    ViewBag.Title = "Update Rankings";
+	ViewBag.Title = "Update Rankings";
 }
 @section scripts {
 	<script type="text/javascript" src="@Url.Content("~/Scripts/PlayerRanksShared.js")"></script>
@@ -23,18 +23,22 @@
 	<div class="messages-ph">
 		<div class="rank-saved @((Model.RankStatus == "saved") ? "" : "hide-yo-kids")">Your rankings have been saved.</div>
 		<div class="rank-saved @((Model.RankStatus == "player-added") ? "" : "hide-yo-kids")">
-			@if (Model.Player != null) {
+			@if (Model.Player != null)
+			{
 				<text>@(string.Format("{0} {1}", Model.Player.FirstName, Model.Player.LastName)) has been added, and your rankings have been saved.</text>
 			}
-			else {
+			else
+			{
 				<text>Player has been added, and your rankings have been saved.</text>
 			}
 		</div>
 		<div class="rank-saved @((Model.RankStatus == "player-existed") ? "" : "hide-yo-kids")">
-			@if (Model.Player != null) {
+			@if (Model.Player != null)
+			{
 				<text>@(string.Format("{0} {1}", Model.Player.FirstName, Model.Player.LastName)) already existed and was not added.  Your rankings have been saved.</text>
 			}
-			else {
+			else
+			{
 				<text>Player already existed and was not added.  Your rankings have been saved.</text>
 			}
 		</div>
@@ -42,16 +46,15 @@
 		<div class="dup-player-msg invalid hide-yo-wives">Error - Player selected more than once.</div>
 	</div>
 
-	<div class="personal-rank-name bold">Name: 
-		<div class="rname-input-div"><input type="text" value="@Model.CurrentRank.RankName" maxlength="100"/></div>
+	<div class="personal-rank-name bold">
+		Name:
+		<div class="rname-input-div"><input type="text" value="@Model.CurrentRank.RankName" maxlength="100" /></div>
 	</div>
 
 	<div class="buttons"><button type="submit" class="submit-rankings">Update Rankings</button></div>
 
 	<div class="rank-setup-section clear-fix">
 		<div class="note-text">Player not available?  <a href="#" class="add-new-player">Add New Player</a></div>
-	@if (Model.RankedPlayers.Count > 0)
-	{
 		<div class="copy-pr-entry clear-fix hide-yo-kids">
 			<div class="rank-vertical-controls">
 				<a href="#" class="rank-move-up" tabindex="-1"><img src="@Url.Content("~/Content/images/up.png")" alt="Move Up" /></a>
@@ -67,7 +70,28 @@
 				<a href="#" class="rank-add-player" tabindex="-1"><img src="@Url.Content("~/Content/images/plus.png")" alt="Add Player" /></a>
 			</div>
 		</div>
-		foreach (var player in Model.RankedPlayers)
+		@if (Model.RankedPlayers.Count > 0)
+		{
+			foreach (var player in Model.RankedPlayers)
+			{
+				<div class="player-rank-entry clear-fix">
+					<div class="rank-vertical-controls">
+						<a href="#" class="rank-move-up" tabindex="-1"><img src="@Url.Content("~/Content/images/up.png")" alt="Move Up" /></a>
+						<a href="#" class="rank-move-down" tabindex="-1"><img src="@Url.Content("~/Content/images/down.png")" alt="Move Down" /></a>
+					</div>
+
+					<div class="ranked-player">
+						<span class="player-rank-num">@player.RankNum</span>
+						<span class="player-select" data-player-id="@player.PlayerId">@Model.GetPlayerDetails(player.PlayerName, player.NFLTeam, player.Position)</span>
+					</div>
+					<div class="rank-change-controls">
+						<a href="#" class="rank-remove-player" tabindex="-1"><img src="@Url.Content("~/Content/images/minus.png")" alt="Remove Player" /></a>
+						<a href="#" class="rank-add-player" tabindex="-1"><img src="@Url.Content("~/Content/images/plus.png")" alt="Add Player" /></a>
+					</div>
+				</div>
+			}
+		}
+		else
 		{
 			<div class="player-rank-entry clear-fix">
 				<div class="rank-vertical-controls">
@@ -76,8 +100,8 @@
 				</div>
 
 				<div class="ranked-player">
-					<span class="player-rank-num">@player.RankNum</span>
-					<span class="player-select" data-player-id="@player.PlayerId">@Model.GetPlayerDetails(player.PlayerName, player.NFLTeam, player.Position)</span>
+					<span class="player-rank-num">1</span>
+					@Html.DropDownList("PlayerId", Model.GetRankPlayersListItem("0"), new { @class = "player-select" })
 				</div>
 				<div class="rank-change-controls">
 					<a href="#" class="rank-remove-player" tabindex="-1"><img src="@Url.Content("~/Content/images/minus.png")" alt="Remove Player" /></a>
@@ -85,51 +109,32 @@
 				</div>
 			</div>
 		}
-	}
-	else
-	{
-		<div class="player-rank-entry clear-fix">
-				<div class="rank-vertical-controls">
-					<a href="#" class="rank-move-up" tabindex="-1"><img src="@Url.Content("~/Content/images/up.png")" alt="Move Up" /></a>
-					<a href="#" class="rank-move-down" tabindex="-1"><img src="@Url.Content("~/Content/images/down.png")" alt="Move Down" /></a>
-				</div>
-
-			<div class="ranked-player">
-				<span class="player-rank-num">1</span>
-				@Html.DropDownList("PlayerId", Model.GetRankPlayersListItem("0"), new { @class = "player-select" })
-			</div>
-			<div class="rank-change-controls">
-				<a href="#" class="rank-remove-player" tabindex="-1"><img src="@Url.Content("~/Content/images/minus.png")" alt="Remove Player" /></a>
-				<a href="#" class="rank-add-player" tabindex="-1"><img src="@Url.Content("~/Content/images/plus.png")" alt="Add Player" /></a>
-			</div>
-		</div>
-	}
 	</div>
 	@using (Html.BeginForm("SetupRank", "Rank", new { rankId = Model.RankId }, FormMethod.Post, new { id = "setupRankForm" }))
- {
+	{
 		<input type=hidden id="rankStatus" name="rankStatus" value="saved" />
- }
+	}
 	<div class="buttons"><button type="submit" class="submit-rankings">Update Rankings</button></div>
 	<div id="saveRanksDialog" class="center hide-yo-kids" title="Saving Update">
 		<p>Saving...</p>
 		<p class="note-text">(This may take a few moments...)</p>
 	</div>
 	<div id="addNewPlayerDialog" class="center hide-yo-kids" title="Add New Player">
-	@using (Html.BeginForm("AddNewPlayer", "Rank", FormMethod.Post, new { id = "addNewPlayerForm" }))
- {
-		@Html.LabelFor(m => m.Player.FirstName)
-		@Html.TextBoxFor(m => m.Player.FirstName, new { id = "add-plyr-fname", list = "playerHints", maxLength = "25" });
-		@Html.ValidationMessageFor(m => m.Player.FirstName)
-		@Html.LabelFor(m => m.Player.LastName);
-		@Html.TextBoxFor(m => m.Player.LastName, new { id = "add-plyr-lname", maxLength = "25" });
-		@Html.ValidationMessageFor(m => m.Player.LastName)
-		@Html.LabelFor(m => m.Player.Position);
-		@Html.DropDownListFor(m => m.Player.Position, Model.GetPositionListItems(), new { id = "add-plyr-pos" });
-		@Html.ValidationMessageFor(m => m.Player.Position)
-		@Html.LabelFor(m => m.Player.NFLTeam);
-		@Html.DropDownListFor(m => m.Player.NFLTeam, Model.GetNFLListItems(), new { id = "add-plyr-nfl" });
-		@Html.ValidationMessageFor(m => m.Player.NFLTeam)
-	}
+		@using (Html.BeginForm("AddNewPlayer", "Rank", FormMethod.Post, new { id = "addNewPlayerForm" }))
+		{
+			@Html.LabelFor(m => m.Player.FirstName)
+			@Html.TextBoxFor(m => m.Player.FirstName, new { id = "add-plyr-fname", list = "playerHints", maxLength = "25" });
+			@Html.ValidationMessageFor(m => m.Player.FirstName)
+			@Html.LabelFor(m => m.Player.LastName);
+			@Html.TextBoxFor(m => m.Player.LastName, new { id = "add-plyr-lname", maxLength = "25" });
+			@Html.ValidationMessageFor(m => m.Player.LastName)
+			@Html.LabelFor(m => m.Player.Position);
+			@Html.DropDownListFor(m => m.Player.Position, Model.GetPositionListItems(), new { id = "add-plyr-pos" });
+			@Html.ValidationMessageFor(m => m.Player.Position)
+			@Html.LabelFor(m => m.Player.NFLTeam);
+			@Html.DropDownListFor(m => m.Player.NFLTeam, Model.GetNFLListItems(), new { id = "add-plyr-nfl" });
+			@Html.ValidationMessageFor(m => m.Player.NFLTeam)
+		}
 		<p class="note-text">Save your current rankings and Add a New Player (Do not submit if player has already been found)</p>
 	</div>
 </div>

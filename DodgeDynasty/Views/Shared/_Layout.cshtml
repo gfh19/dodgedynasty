@@ -6,7 +6,7 @@
 	<link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 	<meta name="viewport" content="width=device-width" />
 	@Styles.Render("~/Content/css")
-	@Styles.Render("~/Content/css/lib")
+	@Styles.Render("~/Content/themes/base")
 	@Scripts.Render("~/bundles/jquery")
 	@Scripts.Render("~/bundles/lib")
 	<script src="@Url.Content("~/signalr/hubs")"></script>
@@ -108,6 +108,7 @@
 										<li>@Html.ActionLink("Setup Draft", "SetupDraft", "Admin")</li>
 										<li>@Html.ActionLink("Activate Draft", "ActivateDraft", "Admin")</li>
 										<li>@Html.ActionLink("Enter Draft Pick", "Input", "Admin")</li>
+										<li><a href="#" class="menu-broadcast-draft">Broadcast Draft Pick</a></li>
 										<!--<li class="divider"></li>-->
 									</ul>
 								</li>
@@ -126,6 +127,14 @@
 			</section>
 			@if (DodgeDynasty.Shared.Utilities.IsUserLoggedIn())
 			{
+				/* User Turn Dialog */
+				<div id="userTurnDialog" class="center hide-yo-kids" title="Your Turn">
+					<p>You are up!</p>
+
+					<p class="ut-last-pick"></p>
+				</div>
+	   
+				/* Draft Chat */
 				var draftChatModel = DodgeDynasty.Shared.DBUtilities.GetCurrentDraftChatModel();
 				if (draftChatModel.IsDraftActive) {
 					<script type="text/javascript">

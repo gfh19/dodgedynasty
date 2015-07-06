@@ -3,6 +3,6 @@
 	callRefreshPageWithPickTimer("Draft/PlayerRanksPartial" + getRankIdUrlPath(), "#allPlayerRanks");
 });
 
-function broadcastDraft() {
+function pageBroadcastDraftHandler() {
 	callRefreshPage("Draft/PlayerRanksPartial" + getRankIdUrlPath(), "#allPlayerRanks");
 }

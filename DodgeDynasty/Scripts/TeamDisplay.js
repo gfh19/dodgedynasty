@@ -3,6 +3,6 @@
 	callRefreshPageWithPickTimer("Draft/TeamDisplayPartial", '#teamDisplay');
 });
 
-function broadcastDraft() {
+function pageBroadcastDraftHandler() {
 	callRefreshPage("Draft/TeamDisplayPartial", '#teamDisplay');
 }
