@@ -254,7 +254,8 @@
     <Compile Include="Shared\Utilities.cs" />
     <Compile Include="Controllers\RankController.cs" />
     <Compile Include="SignalR\DraftHub.cs" />
-    <Compile Include="SignalR\SignalRChat.cs" />
+    <Compile Include="SignalR\DraftHubHelper.cs" />
+    <Compile Include="SignalR\DD_SignalR.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="2015 SQL Changes.sql" />

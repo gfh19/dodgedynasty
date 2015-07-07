@@ -11,6 +11,7 @@ using System.Linq.Expressions;
 using DodgeDynasty.Shared;
 using DodgeDynasty.Shared.Exceptions;
 using DodgeDynasty.Models.Types;
+using DodgeDynasty.SignalR;
 
 namespace DodgeDynasty.Models
 {
@@ -116,10 +117,11 @@ namespace DodgeDynasty.Models
 				if (nextDraftPick != null)
 				{
 					var currentTime = DateTime.Now;
-					nextDraftPick.PickStartDateTime = GetCurrentTimeEastern(DateTime.UtcNow.AddSeconds(3));
+					nextDraftPick.PickStartDateTime = GetCurrentTimeEastern(DateTime.UtcNow.AddSeconds(2));
 					HomeEntity.SaveChanges();
 				}
 			}
+			DraftHubHelper.BroadcastDraftToClients();
 		}
 
 		public string GetTeamName(int userId)

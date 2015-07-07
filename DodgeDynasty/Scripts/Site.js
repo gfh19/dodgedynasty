@@ -38,15 +38,28 @@ function initPage(draftActive) {
 }
 
 function startHubConnection(startFn) {
+	var connected = false;
 	draftHub = $.connection.draftHub;
 	if ($.connection.hub.state == $.signalR.connectionState.disconnected) {
 		$.connection.hub.start().done(function () {
+console.log('Socket connection started.');
+			connected = true;
 			if (startFn) startFn();
+			refreshTimer = defaultRefreshTimer;
+			//Mark chat available again
 		});
 	}
 	else {
+		connected = true;
 		if (startFn) startFn();
 	}
+	setTimeout(function () {
+		if (!connected && $.connection.hub.state == $.signalR.connectionState.connecting) {
+			$.connection.hub.stop();
+			refreshTimer = fastRefreshTimer;
+			//Mark chat unavailable
+		}
+	}, 12000);
 }
 
 //From client to server
@@ -156,6 +169,7 @@ function refreshPageWithPickTimer(url, elementId, timer) {
 	timer = (timer === undefined) ? refreshTimer : timer;
 	setTimeout(function () {
 		callRefreshPageWithPickTimer(url, elementId);
+console.log("Refreshed page at " + new Date());
 	},
 	timer);
 };

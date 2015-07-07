@@ -20,7 +20,7 @@
 	<header>
 		<div class="content-wrapper">
 			<div class="float-left">
-				<p class="site-title"></p>
+				<p class="site-title">D<span class="mobile-hide">odge</span>D<span class="mobile-hide">ynasty</span></p>
 			</div>
 			<div>
 				<nav>
@@ -133,10 +133,11 @@
 
 					<p class="ut-last-pick"></p>
 				</div>
-	   
+
 				/* Draft Chat */
 				var draftChatModel = DodgeDynasty.Shared.DBUtilities.GetCurrentDraftChatModel();
-				if (draftChatModel.IsDraftActive) {
+				if (draftChatModel.IsDraftActive)
+				{
 					<script type="text/javascript">
 						$(function () {
 							initPage(true);
@@ -162,17 +163,19 @@
 								</span>
 							</span>
 							<span class="dchat-preview">
-								@if (lastChat != null) {
-								<span class="dchat-prev-outline">
-									<span class="dchat-prev-stamp @lastChat.CssClass">@lastChat.NickName (@lastChat.AddTimestamp.ToString(DodgeDynasty.Shared.Constants.ChatTimeFormat)):</span>
-								</span>
-								@lastChat.MessageText
+								@if (lastChat != null)
+								{
+									<span class="dchat-prev-outline">
+										<span class="dchat-prev-stamp @lastChat.CssClass">@lastChat.NickName (@lastChat.AddTimestamp.ToString(DodgeDynasty.Shared.Constants.ChatTimeFormat)):</span>
+									</span>
+									@lastChat.MessageText
 								}
 							</span>
 						</div>
 						<div class="dchat-body hide-yo-wives">
 							<div class="dchat-entry"></div>
-							@foreach (var chat in chatMessages) {
+							@foreach (var chat in chatMessages)
+							{
 								<div class="dchat-entry">
 									<span class="dchat-prev-outline">
 										<span class="dchat-prev-stamp @chat.CssClass">@chat.NickName (@chat.AddTimestamp.ToString(DodgeDynasty.Shared.Constants.ChatTimeFormat)):</span>
@@ -180,7 +183,7 @@
 									@chat.MessageText
 								</div>
 							}
-							</div>
+						</div>
 						<div class="dchat-footer hide-yo-wives">
 							<input type="text" class="dchat-input" placeholder="Enter message" maxlength="200" />
 							<button class="dchat-send-msg" type="submit">Send</button>
@@ -199,7 +202,9 @@
 	</div>
 	<script type="text/javascript">
 		var baseURL = '@Url.Content("~")';
-		var refreshTimer = @System.Configuration.ConfigurationManager.AppSettings[DodgeDynasty.Shared.Constants.AppSettings.RefreshTimer];
+		var defaultRefreshTimer = @System.Configuration.ConfigurationManager.AppSettings[DodgeDynasty.Shared.Constants.AppSettings.RefreshTimer];
+		var fastRefreshTimer = @System.Configuration.ConfigurationManager.AppSettings[DodgeDynasty.Shared.Constants.AppSettings.FastRefreshTimer];
+		var refreshTimer = defaultRefreshTimer;
 		var draftHistoryId = '@DodgeDynasty.Shared.Utilities.GetRouteDraftId(Url.RequestContext.RouteData)';
 		var contentImagesPath = '@Url.Content("~/Content/images/")';
 	</script>
