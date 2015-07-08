@@ -16,7 +16,7 @@ using DodgeDynasty.Models.Account;
 namespace DodgeDynasty.Controllers
 {
 	[Authorize]
-	public class AccountController : Controller
+	public class AccountController : BaseController
 	{
 		//
 		// GET: /Account/Login
@@ -43,6 +43,7 @@ namespace DodgeDynasty.Controllers
 			if (ModelState.IsValid && model.Login())
 			{
 				FormsAuthentication.SetAuthCookie(model.UserName, true);
+				GetDodgeDynastyCookie();
 				return RedirectToLocal(returnUrl);
 			}
 			ModelState.AddModelError("", "The user name or password provided is incorrect.");

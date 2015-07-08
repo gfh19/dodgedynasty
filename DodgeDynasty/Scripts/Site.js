@@ -37,16 +37,31 @@ function initPage(draftActive) {
 	}
 }
 
-function startHubConnection(startFn) {
+function startHubConnection(startFn, forceAttempt) {
 	var connected = false;
 	draftHub = $.connection.draftHub;
 	if ($.connection.hub.state == $.signalR.connectionState.disconnected) {
+console.log("Attempting socket connection");
 		$.connection.hub.start().done(function () {
-console.log('Socket connection started.');
 			connected = true;
+			//Quick send broadcast before closing connection?
 			if (startFn) startFn();
-			refreshTimer = defaultRefreshTimer;
-			//Mark chat available again
+console.log("Calling ajax open conn...");
+			ajaxPost({ connectionId: $.connection.hub.id }, "Site/OpenDraftHubConnection", function (response) {
+				if (response.good) {
+console.log('Socket connection started.  ' + response.conns + ' tabs registered.');
+					refreshTimer = defaultRefreshTimer;
+					//Mark chat available again
+					toggleChatWindowError(false);
+				}
+				else {
+console.log('Too many tabs open.  Closing socket connection. '+ response.conns + ' tabs regged.');
+					$.connection.hub.stop();
+					refreshTimer = fastRefreshTimer;
+					//Mark chat unavailable
+					toggleChatWindowError(true);
+				}
+			}, null, "JSON");
 		});
 	}
 	else {
@@ -55,11 +70,16 @@ console.log('Socket connection started.');
 	}
 	setTimeout(function () {
 		if (!connected && $.connection.hub.state == $.signalR.connectionState.connecting) {
+console.log("Conn timer expired, closing connection.");
 			$.connection.hub.stop();
 			refreshTimer = fastRefreshTimer;
 			//Mark chat unavailable
+			toggleChatWindowError(true);
 		}
-	}, 12000);
+else if (!connected) {
+console.log("No responses, conn state is: " + $.connection.hub.state);
+}
+	}, 15000);
 }
 
 //From client to server
@@ -169,7 +189,7 @@ function refreshPageWithPickTimer(url, elementId, timer) {
 	timer = (timer === undefined) ? refreshTimer : timer;
 	setTimeout(function () {
 		callRefreshPageWithPickTimer(url, elementId);
-console.log("Refreshed page at " + new Date());
+		console.log("Refreshed page at " + new Date());
 	},
 	timer);
 };
@@ -342,27 +362,39 @@ function bindDraftChatWindow() {
 }
 
 function toggleDraftChatView() {
-	var expanded = toBool($(".dchat-toggle-link").attr("data-expand"));
+	var dchatWindow = $(".dchat-window").hasClass("hide-yo-wives") ? $(".dchat-window-error") : $(".dchat-window");
+	var expanded = toBool($(".dchat-toggle-link", dchatWindow).attr("data-expand"));
 	var toggleImg = expanded ? "expand.png" : "collapse.png";
-	//var dchatHeight = expanded ? "20px" : "175px";
-	$(".dchat-toggle-img").attr("src", contentImagesPath + toggleImg);
+	$(".dchat-toggle-img", dchatWindow).attr("src", contentImagesPath + toggleImg);
+
 	if (expanded) {
-		$(".dchat-window").removeClass("dchat-ease-expand");
-		$(".dchat-window").addClass("dchat-ease-collapse");
-		$(".dchat-preview").removeClass("hide-yo-wives");
-		$(".dchat-body").addClass("hide-yo-wives");
-		$(".dchat-footer").addClass("hide-yo-wives");
-		$(".dchat-input").removeClass("invalid-border-small");
+		$(dchatWindow).removeClass("dchat-ease-expand");
+		$(dchatWindow).addClass("dchat-ease-collapse");
+		$(".dchat-preview", dchatWindow).removeClass("hide-yo-wives");
+		$(".dchat-body", dchatWindow).addClass("hide-yo-wives");
+		$(".dchat-footer", dchatWindow).addClass("hide-yo-wives");
+		$(".dchat-input", dchatWindow).removeClass("invalid-border-small");
 	}
 	else {
-		$(".dchat-window").removeClass("dchat-ease-collapse");
-		$(".dchat-window").addClass("dchat-ease-expand");
-		$(".dchat-preview").addClass("hide-yo-wives");
-		$(".dchat-body").removeClass("hide-yo-wives");
-		$(".dchat-footer").removeClass("hide-yo-wives");
+		$(dchatWindow).removeClass("dchat-ease-collapse");
+		$(dchatWindow).addClass("dchat-ease-expand");
+		$(".dchat-preview", dchatWindow).addClass("hide-yo-wives");
+		$(".dchat-body", dchatWindow).removeClass("hide-yo-wives");
+		$(".dchat-footer", dchatWindow).removeClass("hide-yo-wives");
 		scrollDraftChatBottom();
 	}
-	$(".dchat-toggle-link").attr("data-expand", !expanded);
+	$(".dchat-toggle-link", dchatWindow).attr("data-expand", !expanded);
+}
+
+function toggleChatWindowError(hasError) {
+	if (hasError) {
+		$(".dchat-window").addClass("hide-yo-wives");
+		$(".dchat-window-error").removeClass("hide-yo-wives");
+	}
+	else {
+		$(".dchat-window-error").addClass("hide-yo-wives");
+		$(".dchat-window").removeClass("hide-yo-wives");
+	}
 }
 
 function sendDraftChat() {

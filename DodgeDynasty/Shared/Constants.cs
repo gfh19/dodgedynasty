@@ -17,10 +17,12 @@ namespace DodgeDynasty.Shared
 			public const string DefaultNumOwners = "DefaultNumOwners";
 			public const string RefreshTimer = "RefreshTimer";
 			public const string FastRefreshTimer = "FastRefreshTimer";
+			public const string MaxTabConnections = "MaxTabConnections";
 		}
 
 		public static class Cookies
 		{
+			public const string DodgeDynasty = "dodgeDynastyCk";
 			public const string PlayerRankOptions = "playerRankOptions";
 		}
 
@@ -44,6 +46,11 @@ namespace DodgeDynasty.Shared
 		public static class Roles
 		{
 			public const int Admin = 1;
+		}
+
+		public static class Session
+		{
+			public const string HubConnections = "HubConnections";
 		}
 
 		public static class QS

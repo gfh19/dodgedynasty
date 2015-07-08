@@ -220,7 +220,9 @@
     <Compile Include="Models\Shared\ColorStylesModel.cs" />
     <Compile Include="Models\Shared\LeagueOwnerHelper.cs" />
     <Compile Include="Models\Types\ChatJson.cs" />
+    <Compile Include="Models\Types\DodgeDynastyContent.cs" />
     <Compile Include="Models\Types\DraftRankModel.cs" />
+    <Compile Include="Models\Types\HubConnJson.cs" />
     <Compile Include="Models\Types\PickInfoJson.cs" />
     <Compile Include="Models\Types\PlayerRankOptions.cs" />
     <Compile Include="Controllers\SharedController.cs" />
@@ -251,6 +253,7 @@
     <Compile Include="Shared\Security\PasswordInfo.cs" />
     <Compile Include="Shared\Constants.cs" />
     <Compile Include="Shared\Exceptions\DuplicatePickException.cs" />
+    <Compile Include="Shared\Extensions\SessionExtensions.cs" />
     <Compile Include="Shared\Utilities.cs" />
     <Compile Include="Controllers\RankController.cs" />
     <Compile Include="SignalR\DraftHub.cs" />

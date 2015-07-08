@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,6 +10,15 @@ namespace DodgeDynasty.SignalR
 {
 	public class DraftHub : Hub
 	{
+		public static ConcurrentDictionary<string, string> OpenHubConnections = new ConcurrentDictionary<string, string>();
+
+		public override System.Threading.Tasks.Task OnDisconnected(bool stopCalled)
+		{
+			string val;
+			OpenHubConnections.TryRemove(Context.ConnectionId, out val);
+			return base.OnDisconnected(stopCalled);
+		}
+
 		public void Pick()
 		{
 			// Call the broadcastMessage method to update clients.

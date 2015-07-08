@@ -189,6 +189,36 @@
 							<button class="dchat-send-msg" type="submit">Send</button>
 						</div>
 					</div>
+
+					<div class="dchat-window-error hide-yo-wives">
+						<div class="dchat-template hide-yo-wives">
+							<div class="dchat-entry">
+								<span class="dchat-prev-outline">
+									<span class="dchat-prev-stamp "></span>
+								</span>
+							</div>
+						</div>
+						<div class="dchat-header">
+							<span class="dchat-controls">
+								<span class="dchat-close">
+									<a href="#" class="dchat-close-link"><img src="@Url.Content("~/Content/images/close.png")" alt="Close" /></a>
+								</span>
+								<span class="dchat-toggle">
+									<a href="#" class="dchat-toggle-link" data-expand="false"><img class="dchat-toggle-img" src="@Url.Content("~/Content/images/expand.png")" alt="Close" /></a>
+								</span>
+							</span>
+							<span class="dchat-preview invalid-border-small">
+								Too many tabs open.  Chat Disabled.
+							</span>
+						</div>
+						<div class="dchat-body hide-yo-wives invalid-border-small">
+							<div class="dchat-entry">
+								<p>Too many browser tabs are open to @Request.Url.Host.ToLower() at one time.</p>
+								<p>Draft Chat must be disabled on this tab until fewer than 5 tabs are opened.</p>
+								<p>-Force Connection Anyway-</p>
+							</div>
+						</div>
+					</div>
 				}
 			}
 		</div>

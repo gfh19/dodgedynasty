@@ -260,7 +260,7 @@ footer
 /* menu
 ----------------------------------------------------------*/
 .top-nav{
-	min-width: 265px;
+	min-width: 293px;
 }
 ul.menu
 {
@@ -1954,7 +1954,7 @@ span.player-select
 
 /* Draft Chat
 ----------------------------------------------------------*/
-.dchat-window {
+.dchat-window, .dchat-window-error {
     position:fixed;
     bottom:5px;
     right:15px;
@@ -2004,6 +2004,17 @@ span.player-select
 	display: inline-block;
 	overflow: hidden;
 	white-space: nowrap;
+}
+.dchat-window-error .dchat-preview {
+	width: 198px;
+	height: 18px;
+	border-radius: 3px;
+	webkit-border-radius: 3px;
+}
+.dchat-window-error .dchat-body {
+	width: 276px;
+	border-radius: 3px;
+	webkit-border-radius: 3px;
 }
 .dchat-prev-outline {
 	display: inline-block;

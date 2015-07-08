@@ -61,7 +61,7 @@ namespace DodgeDynasty.Controllers
 			var optionsCookie = Request.Cookies[Constants.Cookies.PlayerRankOptions];
 			if (optionsCookie == null)
 			{
-				Response.SetCookie(new HttpCookie("playerRankOptions")
+				Response.SetCookie(new HttpCookie(Constants.Cookies.PlayerRankOptions)
 				{
 					Expires = DateTime.Now.AddDays(100),
 					Value = JsonConvert.SerializeObject(options)
@@ -75,5 +75,25 @@ namespace DodgeDynasty.Controllers
 			return options;
 		}
 
+		public DodgeDynastyContent GetDodgeDynastyCookie()
+		{
+			var dodgeDynastyContent = new DodgeDynastyContent();
+			var dodgeDynastyCookie = Request.Cookies[Constants.Cookies.DodgeDynasty];
+			if (dodgeDynastyCookie == null)
+			{
+				dodgeDynastyContent.SessionId = Guid.NewGuid().ToString();
+				Response.SetCookie(new HttpCookie(Constants.Cookies.DodgeDynasty)
+				{
+					Expires = DateTime.Now.AddDays(100),
+					Value = JsonConvert.SerializeObject(dodgeDynastyContent)
+				});
+			}
+			else
+			{
+				var decodedCookie = HttpUtility.UrlDecode(dodgeDynastyCookie.Value);
+				dodgeDynastyContent = JsonConvert.DeserializeObject<DodgeDynastyContent>(decodedCookie);
+			}
+			return dodgeDynastyContent;
+		}
     }
 }
