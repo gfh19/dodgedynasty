@@ -183,7 +183,7 @@ namespace DodgeDynasty.Controllers
 			DraftDisplayModel model = DraftFactory.GetDraftDisplayModel();
 			PickInfoJson pickInfo = new PickInfoJson
 			{
-				turn = model.IsUserTurn(),
+				turn = model.IsDraftActive() && model.IsUserTurn(),
 				num = model.CurrentDraftPick.PickNum,
 				hasPrev = (model.PreviousDraftPick != null),
 				prevName = (model.PreviousDraftPick != null) ? model.PreviousDraftPick.Player.PlayerName : null

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Configuration;
 using System.Threading.Tasks;
+using DodgeDynasty.Shared;
 using Microsoft.AspNet.SignalR;
 using Microsoft.Owin;
 using Owin;
@@ -12,7 +14,12 @@ namespace DodgeDynasty.SignalR
 	{
 		public void Configuration(IAppBuilder app)
 		{
-			app.MapSignalR();
+			var webSocketsKillSwitch = 
+				ConfigurationManager.AppSettings[DodgeDynasty.Shared.Constants.AppSettings.WebSocketsKillSwitch];
+			if (!Utilities.ToBool(webSocketsKillSwitch))
+			{
+				app.MapSignalR();
+			}
 		}
 	}
 }

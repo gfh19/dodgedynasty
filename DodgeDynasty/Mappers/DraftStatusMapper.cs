@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using DodgeDynasty.Models;
+using DodgeDynasty.SignalR;
 
 namespace DodgeDynasty.Mappers
 {
@@ -12,6 +13,7 @@ namespace DodgeDynasty.Mappers
 		{
 			CreateModel();
 			Model.DraftId = Int32.Parse(draftId);
+			//Leave null if either value not provided
 			if (!string.IsNullOrEmpty(isActive)) {
 				Model.IsActive = Convert.ToBoolean(isActive);
 			}
@@ -23,10 +25,12 @@ namespace DodgeDynasty.Mappers
 
 		protected override void DoUpdate(DraftStatusModel model)
 		{
+			bool broadcastDisconnect=false;
 			var draft = HomeEntity.Drafts.Where(d => d.DraftId == model.DraftId).FirstOrDefault();
 			if (model.IsActive != null)
 			{
 				draft.IsActive = model.IsActive.Value;
+				broadcastDisconnect = true;
 			}
 			if (model.IsComplete != null)
 			{
@@ -34,6 +38,11 @@ namespace DodgeDynasty.Mappers
 			}
 			draft.LastUpdateTimestamp = DateTime.Now;
 			HomeEntity.SaveChanges();
+
+			if (broadcastDisconnect)
+			{
+				DraftHubHelper.BroadcastDisconnectToClients();
+			}
 		}
 	}
 }

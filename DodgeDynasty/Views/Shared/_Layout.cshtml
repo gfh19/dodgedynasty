@@ -9,7 +9,13 @@
 	@Styles.Render("~/Content/themes/base")
 	@Scripts.Render("~/bundles/jquery")
 	@Scripts.Render("~/bundles/lib")
-	<script src="@Url.Content("~/signalr/hubs")"></script>
+	@{
+		var webSocketsKillSwitch = System.Configuration.ConfigurationManager.AppSettings[DodgeDynasty.Shared.Constants.AppSettings.WebSocketsKillSwitch];
+		var draftChatKillSwitch = System.Configuration.ConfigurationManager.AppSettings[DodgeDynasty.Shared.Constants.AppSettings.DraftChatKillSwitch];
+		if (!DodgeDynasty.Shared.Utilities.ToBool(webSocketsKillSwitch)) {
+			<script src="@Url.Content("~/signalr/hubs")"></script>
+		}
+	}
 	<script type="text/javascript" src="@Url.Content("~/Scripts/Site.js")"></script>
 	@if (DodgeDynasty.Shared.Utilities.IsUserLoggedIn())
 	{
@@ -20,7 +26,7 @@
 	<header>
 		<div class="content-wrapper">
 			<div class="float-left">
-				<p class="site-title">D<span class="mobile-hide">odge</span>D<span class="mobile-hide">ynasty</span></p>
+				<p class="site-logo">D<span class="mobile-hide">odge</span>D<span class="mobile-hide">ynasty</span></p>
 			</div>
 			<div>
 				<nav>
@@ -140,85 +146,90 @@
 				{
 					<script type="text/javascript">
 						$(function () {
-							initPage(true);
+							draftActive = true;
+							initPage();
 						});
 					</script>
-					var chatMessages = draftChatModel.ChatMessages;
-					var lastChat = chatMessages.LastOrDefault();
-					<div class="dchat-window">
-						<div class="dchat-template hide-yo-wives">
-							<div class="dchat-entry">
-								<span class="dchat-prev-outline">
-									<span class="dchat-prev-stamp "></span>
-								</span>
-							</div>
-						</div>
-						<div class="dchat-header">
-							<span class="dchat-controls">
-								<span class="dchat-close">
-									<a href="#" class="dchat-close-link"><img src="@Url.Content("~/Content/images/close.png")" alt="Close" /></a>
-								</span>
-								<span class="dchat-toggle">
-									<a href="#" class="dchat-toggle-link" data-expand="false"><img class="dchat-toggle-img" src="@Url.Content("~/Content/images/expand.png")" alt="Close" /></a>
-								</span>
-							</span>
-							<span class="dchat-preview">
-								@if (lastChat != null)
-								{
-									<span class="dchat-prev-outline">
-										<span class="dchat-prev-stamp @lastChat.CssClass">@lastChat.NickName (@lastChat.AddTimestamp.ToString(DodgeDynasty.Shared.Constants.ChatTimeFormat)):</span>
-									</span>
-									@lastChat.MessageText
-								}
-							</span>
-						</div>
-						<div class="dchat-body hide-yo-wives">
-							<div class="dchat-entry"></div>
-							@foreach (var chat in chatMessages)
-							{
+					if (!DodgeDynasty.Shared.Utilities.ToBool(webSocketsKillSwitch)
+						&& !DodgeDynasty.Shared.Utilities.ToBool(draftChatKillSwitch))
+					{
+						var chatMessages = draftChatModel.ChatMessages;
+						var lastChat = chatMessages.LastOrDefault();
+						<div class="dchat-window">
+							<div class="dchat-template hide-yo-wives">
 								<div class="dchat-entry">
 									<span class="dchat-prev-outline">
-										<span class="dchat-prev-stamp @chat.CssClass">@chat.NickName (@chat.AddTimestamp.ToString(DodgeDynasty.Shared.Constants.ChatTimeFormat)):</span>
+										<span class="dchat-prev-stamp "></span>
 									</span>
-									@chat.MessageText
 								</div>
-							}
+							</div>
+							<div class="dchat-header">
+								<span class="dchat-controls">
+									<span class="dchat-close">
+										<a href="#" class="dchat-close-link"><img src="@Url.Content("~/Content/images/close.png")" alt="Close" /></a>
+									</span>
+									<span class="dchat-toggle">
+										<a href="#" class="dchat-toggle-link" data-expand="false"><img class="dchat-toggle-img" src="@Url.Content("~/Content/images/expand.png")" alt="Close" /></a>
+									</span>
+								</span>
+								<span class="dchat-preview">
+									@if (lastChat != null)
+									{
+										<span class="dchat-prev-outline">
+											<span class="dchat-prev-stamp @lastChat.CssClass">@lastChat.NickName (@lastChat.AddTimestamp.ToString(DodgeDynasty.Shared.Constants.ChatTimeFormat)):</span>
+										</span>
+										@lastChat.MessageText
+									}
+								</span>
+							</div>
+							<div class="dchat-body hide-yo-wives">
+								<div class="dchat-entry"></div>
+								@foreach (var chat in chatMessages)
+								{
+									<div class="dchat-entry">
+										<span class="dchat-prev-outline">
+											<span class="dchat-prev-stamp @chat.CssClass">@chat.NickName (@chat.AddTimestamp.ToString(DodgeDynasty.Shared.Constants.ChatTimeFormat)):</span>
+										</span>
+										@chat.MessageText
+									</div>
+								}
+							</div>
+							<div class="dchat-footer hide-yo-wives">
+								<input type="text" class="dchat-input" placeholder="Enter message" maxlength="200" />
+								<button class="dchat-send-msg" type="submit">Send</button>
+							</div>
 						</div>
-						<div class="dchat-footer hide-yo-wives">
-							<input type="text" class="dchat-input" placeholder="Enter message" maxlength="200" />
-							<button class="dchat-send-msg" type="submit">Send</button>
-						</div>
-					</div>
 
-					<div class="dchat-window-error hide-yo-wives">
-						<div class="dchat-template hide-yo-wives">
-							<div class="dchat-entry">
-								<span class="dchat-prev-outline">
-									<span class="dchat-prev-stamp "></span>
+						<div class="dchat-window-error hide-yo-wives">
+							<div class="dchat-template hide-yo-wives">
+								<div class="dchat-entry">
+									<span class="dchat-prev-outline">
+										<span class="dchat-prev-stamp "></span>
+									</span>
+								</div>
+							</div>
+							<div class="dchat-header">
+								<span class="dchat-controls">
+									<span class="dchat-close">
+										<a href="#" class="dchat-close-link"><img src="@Url.Content("~/Content/images/close.png")" alt="Close" /></a>
+									</span>
+									<span class="dchat-toggle">
+										<a href="#" class="dchat-toggle-link" data-expand="false"><img class="dchat-toggle-img" src="@Url.Content("~/Content/images/expand.png")" alt="Close" /></a>
+									</span>
+								</span>
+								<span class="dchat-preview invalid-border-small">
+									Too many tabs open.  Chat Disabled.
 								</span>
 							</div>
-						</div>
-						<div class="dchat-header">
-							<span class="dchat-controls">
-								<span class="dchat-close">
-									<a href="#" class="dchat-close-link"><img src="@Url.Content("~/Content/images/close.png")" alt="Close" /></a>
-								</span>
-								<span class="dchat-toggle">
-									<a href="#" class="dchat-toggle-link" data-expand="false"><img class="dchat-toggle-img" src="@Url.Content("~/Content/images/expand.png")" alt="Close" /></a>
-								</span>
-							</span>
-							<span class="dchat-preview invalid-border-small">
-								Too many tabs open.  Chat Disabled.
-							</span>
-						</div>
-						<div class="dchat-body hide-yo-wives invalid-border-small">
-							<div class="dchat-entry">
-								<p>Too many browser tabs are open to @Request.Url.Host.ToLower() at one time.</p>
-								<p>Draft Chat must be disabled on this tab until fewer than 5 tabs are opened.</p>
-								<p>-Force Connection Anyway-</p>
+							<div class="dchat-body hide-yo-wives invalid-border-small">
+								<div class="dchat-entry">
+									<p>Too many browser tabs are open to @Request.Url.Host.ToLower() at one time.</p>
+									<p>Draft Chat must be disabled on this tab until fewer than 5 tabs are opened.</p>
+									<p>-Force Connection Anyway-</p>
+								</div>
 							</div>
 						</div>
-					</div>
+					}
 				}
 			}
 		</div>
@@ -232,9 +243,11 @@
 	</div>
 	<script type="text/javascript">
 		var baseURL = '@Url.Content("~")';
+		var webSocketsKillSwitch = @webSocketsKillSwitch;
+		var draftChatKillSwitch = @draftChatKillSwitch;
 		var defaultRefreshTimer = @System.Configuration.ConfigurationManager.AppSettings[DodgeDynasty.Shared.Constants.AppSettings.RefreshTimer];
 		var fastRefreshTimer = @System.Configuration.ConfigurationManager.AppSettings[DodgeDynasty.Shared.Constants.AppSettings.FastRefreshTimer];
-		var refreshTimer = defaultRefreshTimer;
+		var refreshTimer = webSocketsKillSwitch ? fastRefreshTimer : defaultRefreshTimer;
 		var draftHistoryId = '@DodgeDynasty.Shared.Utilities.GetRouteDraftId(Url.RequestContext.RouteData)';
 		var contentImagesPath = '@Url.Content("~/Content/images/")';
 	</script>

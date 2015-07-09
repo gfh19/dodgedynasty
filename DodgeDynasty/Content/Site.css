@@ -200,16 +200,17 @@ footer
 
 /* site title
 ----------------------------------------------------------*/
-.site-title
+.site-logo
 {
 	color: #B0E0E6;
-	font-family: 'Brush Script MT', Arial, sans-serif;
+	font-family: 'Brush Script MT', 'Brush Script MT Italic', Arial, sans-serif;
 	font-size: 27px;	
+	height: 32px;
 	margin: -5px 0px 0px 0px;
 	padding-left: 10px;
 }
 
-.site-title a, .site-title a:hover, .site-title a:active
+.site-logo a, .site-logo a:hover, .site-logo a:active
 {
 	background: none;
 	color: #c8c8c8;
@@ -260,7 +261,7 @@ footer
 /* menu
 ----------------------------------------------------------*/
 .top-nav{
-	min-width: 293px;
+	min-width: 297px;
 }
 ul.menu
 {
@@ -320,7 +321,7 @@ ul.menu li.mobileNav a {
   border: none;
   border-radius: 2px;
   -webkit-border-radius: 2px;
-  margin-right: 4px;
+  margin-right: 5px;
 }
 .navbar-toggle:focus {
   outline: 0;
@@ -1874,7 +1875,7 @@ span.player-select
 
 .toggle-msgs-section {
 	display: inline-block;
-	margin-left: -5px;
+	margin-left: -10px;
 	min-width: 5px;
 }
 
@@ -2077,9 +2078,11 @@ span.player-select
 	.mobile-hide {
 		display: none;
 	}
-	.site-title {
+	.site-logo {
+		font-size: 18px;
 		margin-top: -4px;
 		padding-left: 6px;
+		padding-top: 6px;
 	}
 	ul.menu li.desktopNav {
 		display: none;

@@ -8,6 +8,7 @@ var isUserTurn = false;
 var currentServerTime = null;
 var clientServerTimeOffset = null;
 var draftHub;
+var connectionStopped = false;
 
 /* Init functions */
 
@@ -17,69 +18,83 @@ $(function () {
 	});
 	highlightCurrentPageLink();
 	bindMenuLinks();
-	bindDraftChatWindow();
+	if (!draftChatKillSwitch) {
+		bindDraftChatWindow();
+	}
 	checkUserTurnDialog();
 });
 
 function initRefreshedPage() {
 	isRefreshPage = true;
 	checkUserTurnDialog();
+	if (!webSocketsKillSwitch) {
+		setTimeout(function () {
+			if (draftActive && !connectionStopped && $.connection.hub.state == $.signalR.connectionState.disconnected) {
+				console.log("Disconnect detected!  Manual Reconnection Attempted!");
+				startHubConnection(function () { window.location.reload() });
+			}
+		}, 2500);
+	}
 };
 
 /*		--- WebSockets */
 
-function initPage(draftActive) {
-	if (draftActive) {
+function initPage() {
+	if (draftActive && !webSocketsKillSwitch) {
 		startHubConnection();
 		draftHub.client.broadcastDraft = (typeof broadcastDraft !== "undefined") ? broadcastDraft : function () { };
-		//Check draftChat config entry
 		draftHub.client.broadcastChat = (typeof broadcastChat !== "undefined") ? broadcastChat : function () { };
+		draftHub.client.broadcastDisconnect = (typeof broadcastDisconnect !== "undefined") ? broadcastDisconnect : function () { };
 	}
 }
 
 function startHubConnection(startFn, forceAttempt) {
 	var connected = false;
-	draftHub = $.connection.draftHub;
-	if ($.connection.hub.state == $.signalR.connectionState.disconnected) {
-console.log("Attempting socket connection");
-		$.connection.hub.start().done(function () {
-			connected = true;
-			//Quick send broadcast before closing connection?
-			if (startFn) startFn();
-console.log("Calling ajax open conn...");
-			ajaxPost({ connectionId: $.connection.hub.id }, "Site/OpenDraftHubConnection", function (response) {
-				if (response.good) {
-console.log('Socket connection started.  ' + response.conns + ' tabs registered.');
-					refreshTimer = defaultRefreshTimer;
-					//Mark chat available again
-					toggleChatWindowError(false);
-				}
-				else {
-console.log('Too many tabs open.  Closing socket connection. '+ response.conns + ' tabs regged.');
-					$.connection.hub.stop();
-					refreshTimer = fastRefreshTimer;
-					//Mark chat unavailable
-					toggleChatWindowError(true);
-				}
-			}, null, "JSON");
-		});
-	}
-	else {
-		connected = true;
-		if (startFn) startFn();
-	}
-	setTimeout(function () {
-		if (!connected && $.connection.hub.state == $.signalR.connectionState.connecting) {
-console.log("Conn timer expired, closing connection.");
-			$.connection.hub.stop();
-			refreshTimer = fastRefreshTimer;
-			//Mark chat unavailable
-			toggleChatWindowError(true);
+	if (!webSocketsKillSwitch) {
+		draftHub = $.connection.draftHub;
+		if ($.connection.hub.state == $.signalR.connectionState.disconnected) {
+			console.log("Attempting socket connection");
+			$.connection.hub.start().done(function () {
+				connected = true;
+				//Quick send broadcast before closing connection?
+				if (startFn) startFn();
+				console.log("Calling ajax open conn...");
+				ajaxPost({ connectionId: $.connection.hub.id }, "Site/OpenDraftHubConnection", function (response) {
+					if (response.good) {
+						console.log('Socket connection started.  ' + response.conns + ' tabs registered.');
+						refreshTimer = defaultRefreshTimer;
+						//Mark chat available again
+						toggleChatWindowError(false);
+					}
+					else {
+						console.log('Too many tabs open.  Closing socket connection. ' + response.conns + ' tabs regged.');
+						$.connection.hub.stop();
+						refreshTimer = fastRefreshTimer;
+						connectionStopped = true;
+						//Mark chat unavailable
+						toggleChatWindowError(true);
+					}
+				}, null, "JSON");
+			});
 		}
-else if (!connected) {
-console.log("No responses, conn state is: " + $.connection.hub.state);
-}
-	}, 15000);
+		else {
+			connected = true;
+			if (startFn) startFn();
+		}
+		setTimeout(function () {
+			if (!connected && $.connection.hub.state == $.signalR.connectionState.connecting) {
+				console.log("Conn timer expired, closing connection.");
+				$.connection.hub.stop();
+				refreshTimer = fastRefreshTimer;
+				connectionStopped = true;
+				//Mark chat unavailable
+				toggleChatWindowError(true);
+			}
+			else if (!connected) {
+				console.log("No responses, conn state is: " + $.connection.hub.state);
+			}
+		}, 15000);
+	}
 }
 
 //From client to server
@@ -90,26 +105,38 @@ function broadcastPickMade() {
 
 //From client to server
 function broadcastChatMessage(msg) {
-	startHubConnection(function () { draftHub.server.chat(msg); });
-	return true;
+	if (!draftChatKillSwitch) {
+		startHubConnection(function () { draftHub.server.chat(msg); });
+		return true;
+	}
+	return false;
 };
 
-//Draft Pick broadcast-received:  Function bound to server-side (C#) hub client handle
+//Server to client:  Draft Pick broadcast-received.  Bound to server-side (C#) hub client handle
 function broadcastDraft() {
 	if (typeof pageBroadcastDraftHandler !== "undefined") pageBroadcastDraftHandler();
 	checkUserTurnDialog();
 }
 
+//Server to client:  Broadcast to shutdown all open connections. And close draft.
+function broadcastDisconnect() {
+	connectionStopped = true;
+	$(".dchat-close-link").click();
+	$.connection.hub.stop();
+	broadcastDraft();
+}
+
 //Chat broadcast-received:  Function bound to server-side (C#) hub client handle
 function broadcastChat(chat) {
 	chat.msg = htmlEncode(chat.msg);
-	var copy = $(".dchat-template .dchat-entry").clone();
+	var dchatWindow = $(".dchat-window");
+	var copy = $(".dchat-template .dchat-entry", dchatWindow).clone();
 	$(".dchat-prev-stamp", copy).addClass(chat.css);
 	$(".dchat-prev-stamp", copy).text(chat.author + " (" + chat.time + "):");
 	$(".dchat-prev-outline", copy).after(" " + chat.msg);
 
-	$(".dchat-body .dchat-entry").last().append($(copy));
-	$(".dchat-preview").html($(copy).html())
+	$(".dchat-body .dchat-entry", dchatWindow).last().append($(copy));
+	$(".dchat-preview", dchatWindow).html($(copy).html())
 
 	scrollDraftChatBottom();
 }
@@ -240,8 +267,9 @@ function setPlayerAutoComplete(fname, lname, pos, nfl) {
 };
 
 function checkUserTurnDialog() {
-	if ((isRefreshPage && isUserTurn) 	//Either we know is user turn on refreshed page
-		|| !isRefreshPage)				//Or user turn is unknown, i.e. not on refreshed page
+	if (draftActive &&
+		(!isRefreshPage			//Either user turn is unknown, i.e. not on refreshed page  
+		|| isUserTurn))			//Or we know is user turn on refreshed page
 	{
 		tryShowUserTurnDialog();
 	}
@@ -335,10 +363,13 @@ function easeHideToggleMsgs() {
 	}
 }
 
+/*		--- Draft Chat */
+
 function bindDraftChatWindow() {
 	$(".dchat-close-link").click(function (e) {
 		e.preventDefault();
-		$(".dchat-window").addClass("hide-yo-wives");
+		var dchatWindow = getActiveDchatWindow();
+		$(dchatWindow).addClass("hide-yo-wives");
 	});
 	$(".dchat-toggle-link").click(function (e) {
 		e.preventDefault();
@@ -361,8 +392,12 @@ function bindDraftChatWindow() {
 	});
 }
 
+function getActiveDchatWindow() {
+	return $(".dchat-window").hasClass("hide-yo-wives") ? $(".dchat-window-error") : $(".dchat-window");
+}
+
 function toggleDraftChatView() {
-	var dchatWindow = $(".dchat-window").hasClass("hide-yo-wives") ? $(".dchat-window-error") : $(".dchat-window");
+	var dchatWindow = getActiveDchatWindow();
 	var expanded = toBool($(".dchat-toggle-link", dchatWindow).attr("data-expand"));
 	var toggleImg = expanded ? "expand.png" : "collapse.png";
 	$(".dchat-toggle-img", dchatWindow).attr("src", contentImagesPath + toggleImg);
@@ -387,11 +422,11 @@ function toggleDraftChatView() {
 }
 
 function toggleChatWindowError(hasError) {
-	if (hasError) {
+	if (hasError && !$(".dchat-window").hasClass("hide-yo-wives")) {
 		$(".dchat-window").addClass("hide-yo-wives");
 		$(".dchat-window-error").removeClass("hide-yo-wives");
 	}
-	else {
+	else if (!$(".dchat-window-error").hasClass("hide-yo-wives")) {
 		$(".dchat-window-error").addClass("hide-yo-wives");
 		$(".dchat-window").removeClass("hide-yo-wives");
 	}
@@ -411,7 +446,8 @@ function sendDraftChat() {
 }
 
 function scrollDraftChatBottom() {
-	var d = $('.dchat-body');
+	var dchatWindow = getActiveDchatWindow();
+	var d = $('.dchat-body', dchatWindow);
 	d.scrollTop(d.prop("scrollHeight"));
 }
 

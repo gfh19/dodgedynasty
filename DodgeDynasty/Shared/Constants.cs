@@ -18,6 +18,8 @@ namespace DodgeDynasty.Shared
 			public const string RefreshTimer = "RefreshTimer";
 			public const string FastRefreshTimer = "FastRefreshTimer";
 			public const string MaxTabConnections = "MaxTabConnections";
+			public const string WebSocketsKillSwitch = "WebSocketsKillSwitch";
+			public const string DraftChatKillSwitch = "DraftChatKillSwitch";
 		}
 
 		public static class Cookies
