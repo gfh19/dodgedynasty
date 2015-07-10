@@ -13,14 +13,14 @@ using DodgeDynasty.SignalR;
 
 namespace DodgeDynasty.Controllers
 {
-    public class SiteController : BaseController
-    {
+	public class SiteController : BaseController
+	{
 		[HttpGet]
-        public ActionResult Messages()
-        {
+		public ActionResult Messages()
+		{
 			var mapper = new MessagesMapper();
 			return View(mapper.GetModel());
-        }
+		}
 
 		[HttpPost]
 		public ActionResult Messages(MessagesModel model)
@@ -35,7 +35,7 @@ namespace DodgeDynasty.Controllers
 		}
 
 		[HttpPost]
-		public JsonResult OpenDraftHubConnection(string connectionId)
+		public JsonResult OpenDraftHubConnection(string connectionId, bool forceAttempt = false)
 		{
 			HubConnJson response = new HubConnJson { good = true };
 
@@ -48,13 +48,24 @@ namespace DodgeDynasty.Controllers
 			DraftHub.OpenHubConnections[connectionId] = cookieContent.SessionId;
 			var openTabConns = DraftHub.OpenHubConnections.Count(o => o.Value == cookieContent.SessionId);
 			response.conns = openTabConns;
-			if (openTabConns > maxTabConns)
+			if (forceAttempt && openTabConns > 0)
+			{
+				string val;
+				var keys = DraftHub.OpenHubConnections
+					.Where(o => o.Value == cookieContent.SessionId)
+					.Select(o => o.Key).ToList();
+				foreach (var key in keys)
+				{
+					DraftHub.OpenHubConnections.TryRemove(key, out val);
+				}
+				cookieContent = SetNewDodgeDynastyCookie();
+				DraftHub.OpenHubConnections[connectionId] = cookieContent.SessionId;
+			}
+			else if (openTabConns > maxTabConns)
 			{
 				response.good = false;
-				string val;
-				DraftHub.OpenHubConnections.TryRemove(connectionId, out val);
 			}
 			return Json(response);
 		}
-    }
+	}
 }

@@ -12,7 +12,8 @@
 	@{
 		var webSocketsKillSwitch = System.Configuration.ConfigurationManager.AppSettings[DodgeDynasty.Shared.Constants.AppSettings.WebSocketsKillSwitch];
 		var draftChatKillSwitch = System.Configuration.ConfigurationManager.AppSettings[DodgeDynasty.Shared.Constants.AppSettings.DraftChatKillSwitch];
-		if (!DodgeDynasty.Shared.Utilities.ToBool(webSocketsKillSwitch)) {
+		if (!DodgeDynasty.Shared.Utilities.ToBool(webSocketsKillSwitch))
+		{
 			<script src="@Url.Content("~/signalr/hubs")"></script>
 		}
 	}
@@ -173,13 +174,22 @@
 									</span>
 								</span>
 								<span class="dchat-preview">
-									@if (lastChat != null)
-									{
-										<span class="dchat-prev-outline">
-											<span class="dchat-prev-stamp @lastChat.CssClass">@lastChat.NickName (@lastChat.AddTimestamp.ToString(DodgeDynasty.Shared.Constants.ChatTimeFormat)):</span>
-										</span>
-										@lastChat.MessageText
-									}
+									<span class="dchat-prev-content">
+										@if (lastChat != null)
+										{
+											<span class="dchat-prev-outline">
+												<span class="dchat-prev-stamp @lastChat.CssClass">@lastChat.NickName (@lastChat.AddTimestamp.ToString(DodgeDynasty.Shared.Constants.ChatTimeFormat)):</span>
+											</span>
+											@lastChat.MessageText
+										}
+										else
+										{
+											<span class="dchat-prev-outline">
+												<span class="dchat-prev-holder white">Welcome to the Draft. Chat here!</span>
+											</span>
+										}
+									</span>
+									&nbsp;
 								</span>
 							</div>
 							<div class="dchat-body hide-yo-wives">
@@ -218,14 +228,19 @@
 									</span>
 								</span>
 								<span class="dchat-preview invalid-border-small">
-									Too many tabs open.  Chat Disabled.
+									<span class="dchat-prev-content">
+										Too many tabs open.  Chat Disabled.
+									</span>
+									&nbsp;
 								</span>
 							</div>
 							<div class="dchat-body hide-yo-wives invalid-border-small">
 								<div class="dchat-entry">
 									<p>Too many browser tabs are open to @Request.Url.Host.ToLower() at one time.</p>
-									<p>Draft Chat must be disabled on this tab until fewer than 5 tabs are opened.</p>
-									<p>-Force Connection Anyway-</p>
+									<p>Draft Chat will be disabled on this tab until fewer than 5 tabs are opened.</p>
+									<p>
+										-<a href="#" class="force-dchat">Force Connection Attempt Anyway</a>-
+									</p>
 								</div>
 							</div>
 						</div>

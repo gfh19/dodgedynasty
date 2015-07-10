@@ -81,18 +81,25 @@ namespace DodgeDynasty.Controllers
 			var dodgeDynastyCookie = Request.Cookies[Constants.Cookies.DodgeDynasty];
 			if (dodgeDynastyCookie == null)
 			{
-				dodgeDynastyContent.SessionId = Guid.NewGuid().ToString();
-				Response.SetCookie(new HttpCookie(Constants.Cookies.DodgeDynasty)
-				{
-					Expires = DateTime.Now.AddDays(100),
-					Value = JsonConvert.SerializeObject(dodgeDynastyContent)
-				});
+				dodgeDynastyContent = SetNewDodgeDynastyCookie();
 			}
 			else
 			{
 				var decodedCookie = HttpUtility.UrlDecode(dodgeDynastyCookie.Value);
 				dodgeDynastyContent = JsonConvert.DeserializeObject<DodgeDynastyContent>(decodedCookie);
 			}
+			return dodgeDynastyContent;
+		}
+
+		public DodgeDynastyContent SetNewDodgeDynastyCookie()
+		{
+			var dodgeDynastyContent = new DodgeDynastyContent();
+			dodgeDynastyContent.SessionId = Guid.NewGuid().ToString();
+			Response.SetCookie(new HttpCookie(Constants.Cookies.DodgeDynasty)
+			{
+				Expires = DateTime.Now.AddDays(100),
+				Value = JsonConvert.SerializeObject(dodgeDynastyContent)
+			});
 			return dodgeDynastyContent;
 		}
     }

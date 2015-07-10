@@ -1960,7 +1960,7 @@ span.player-select
     bottom:5px;
     right:15px;
 	height: 24px;
-	width: 280px;
+	width: 360px;
 	font-size: 12px;
 	border: 1px solid darkgray;
 	background-color: #EEEEEE;
@@ -1978,15 +1978,16 @@ span.player-select
 	border-radius: 3px;
 	webkit-border-radius: 3px;
 }
-.dchat-close {
-	padding: 1px 2px;
+.dchat-close-link {
+	display: inline-block;
+	padding: 2px 2px;
 }
 .dchat-toggle-link {
 	display: inline-block;
-	padding: 1px 20px;
+	padding: 2px 20px;
 }
 .dchat-ease-expand {
-	height: 215px;
+	height: 252px;
     -webkit-transition: height 0.10s linear;
     -moz-transition: height 0.10s linear;
     -o-transition: height 0.10s linear;
@@ -2000,28 +2001,26 @@ span.player-select
     transition: height 0.10s linear;
 }
 .dchat-preview {
+	width: 280px;
 	font-size: 12px;
-	width: 200px;
 	display: inline-block;
 	overflow: hidden;
 	white-space: nowrap;
-}
-.dchat-window-error .dchat-preview {
-	width: 198px;
-	height: 18px;
-	border-radius: 3px;
-	webkit-border-radius: 3px;
-}
-.dchat-window-error .dchat-body {
-	width: 276px;
-	border-radius: 3px;
-	webkit-border-radius: 3px;
 }
 .dchat-prev-outline {
 	display: inline-block;
 	border: 1px solid black;
 	border-radius: 7px;
 	webkit-border-radius: 7px;
+}
+.dchat-prev-holder {
+	display: inline-block;
+	font-size: 11px;
+	font-weight: bold;
+	border: 2px solid;
+	border-radius: 6px;
+	webkit-border-radius: 6px;
+	padding: 0px 2px;
 }
 .dchat-prev-stamp {
 	display: inline-block;
@@ -2034,8 +2033,7 @@ span.player-select
 }
 .dchat-body {
 	padding: 1px;
-	height: 164px;
-	width: 278px;
+	height: 199px;
 	overflow-y: scroll;
 	-webkit-overflow-scrolling: touch;
 	border-top: 1px solid darkgray;
@@ -2043,13 +2041,15 @@ span.player-select
 }
 .dchat-footer {
 	height: 27px;
-	width: 278px;
+}
+.dchat-body, .dchat-footer {
+	width: 358px;
 }
 .dchat-input {
 	padding: 5px;
 	margin: 1px;
 	height: 12px;
-	width: 220px;
+	width: 300px;
 	border: 1px solid lightgray;
 	border-radius: 3px;
 	webkit-border-radius: 3px;
@@ -2067,6 +2067,23 @@ span.player-select
 .dchat-controls {
 	display: inline;
 }
+
+.dchat-window-error .dchat-preview {
+	width: 278px;
+	height: 18px;
+	padding: 1px;
+	border-radius: 3px;
+	webkit-border-radius: 3px;
+}
+.dchat-window-error .dchat-body {
+	width: 356px;
+	border-radius: 3px;
+	webkit-border-radius: 3px;
+}
+.force-dchat {
+	color: #1111EE !important;
+}
+
 
 
 /* RESPONSIVE STYLES
@@ -2233,6 +2250,33 @@ span.player-select
 	}
 	.message-datetime {
 		display: block;
+	}
+	
+	/* Draft Chat
+	------------------------------------*/
+	.dchat-window, .dchat-window-error {
+		width: 280px;
+	}
+	.dchat-ease-expand {
+		height: 217px;
+	}
+	.dchat-preview {
+		width: 200px;
+	}
+	.dchat-body {
+		height: 164px;
+	}
+	.dchat-body, .dchat-footer {
+		width: 278px;
+	}
+	.dchat-input {
+		width: 202px;
+	}
+	.dchat-window-error .dchat-preview {
+		width: 198px;
+	}
+	.dchat-window-error .dchat-body {
+		width: 276px;
 	}
 }
 

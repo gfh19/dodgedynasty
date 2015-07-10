@@ -59,22 +59,7 @@ function startHubConnection(startFn, forceAttempt) {
 				//Quick send broadcast before closing connection?
 				if (startFn) startFn();
 				console.log("Calling ajax open conn...");
-				ajaxPost({ connectionId: $.connection.hub.id }, "Site/OpenDraftHubConnection", function (response) {
-					if (response.good) {
-						console.log('Socket connection started.  ' + response.conns + ' tabs registered.');
-						refreshTimer = defaultRefreshTimer;
-						//Mark chat available again
-						toggleChatWindowError(false);
-					}
-					else {
-						console.log('Too many tabs open.  Closing socket connection. ' + response.conns + ' tabs regged.');
-						$.connection.hub.stop();
-						refreshTimer = fastRefreshTimer;
-						connectionStopped = true;
-						//Mark chat unavailable
-						toggleChatWindowError(true);
-					}
-				}, null, "JSON");
+				registerHubConnection(forceAttempt);
 			});
 		}
 		else {
@@ -95,6 +80,26 @@ function startHubConnection(startFn, forceAttempt) {
 			}
 		}, 15000);
 	}
+}
+
+function registerHubConnection(forceAttempt) {
+	ajaxPost({ connectionId: $.connection.hub.id, forceAttempt: forceAttempt }, "Site/OpenDraftHubConnection",
+		function (response) {
+			if (response.good) {
+				console.log('Socket connection started.  ' + response.conns + ' tabs registered.');
+				refreshTimer = defaultRefreshTimer;
+				//Mark chat available again
+				toggleChatWindowError(false);
+			}
+			else {
+				console.log('Too many tabs open.  Closing socket connection. ' + response.conns + ' tabs regged.');
+				$.connection.hub.stop();
+				refreshTimer = fastRefreshTimer;
+				connectionStopped = true;
+				//Mark chat unavailable
+				toggleChatWindowError(true);
+			}
+		}, null, "JSON");
 }
 
 //From client to server
@@ -136,7 +141,7 @@ function broadcastChat(chat) {
 	$(".dchat-prev-outline", copy).after(" " + chat.msg);
 
 	$(".dchat-body .dchat-entry", dchatWindow).last().append($(copy));
-	$(".dchat-preview", dchatWindow).html($(copy).html())
+	$(".dchat-prev-content", dchatWindow).html($(copy).html())
 
 	scrollDraftChatBottom();
 }
@@ -375,6 +380,9 @@ function bindDraftChatWindow() {
 		e.preventDefault();
 		toggleDraftChatView();
 	});
+	$(".dchat-preview").click(function (e) {
+		toggleDraftChatView();
+	});
 	$(".dchat-send-msg").click(function (e) {
 		e.preventDefault();
 		sendDraftChat();
@@ -390,6 +398,10 @@ function bindDraftChatWindow() {
 			}
 		}
 	});
+	$('.force-dchat').click(function (e) {
+		e.preventDefault();
+		startHubConnection(null, true);
+	});
 }
 
 function getActiveDchatWindow() {
@@ -397,7 +409,8 @@ function getActiveDchatWindow() {
 }
 
 function toggleDraftChatView() {
-	var dchatWindow = getActiveDchatWindow();
+	var isErrorWindow = $(".dchat-window").hasClass("hide-yo-wives");
+	var dchatWindow = isErrorWindow ? $(".dchat-window-error") : $(".dchat-window");
 	var expanded = toBool($(".dchat-toggle-link", dchatWindow).attr("data-expand"));
 	var toggleImg = expanded ? "expand.png" : "collapse.png";
 	$(".dchat-toggle-img", dchatWindow).attr("src", contentImagesPath + toggleImg);
@@ -405,7 +418,10 @@ function toggleDraftChatView() {
 	if (expanded) {
 		$(dchatWindow).removeClass("dchat-ease-expand");
 		$(dchatWindow).addClass("dchat-ease-collapse");
-		$(".dchat-preview", dchatWindow).removeClass("hide-yo-wives");
+		$(".dchat-prev-content", dchatWindow).removeClass("hide-yo-wives");
+		if (isErrorWindow) {
+			$(".dchat-preview", dchatWindow).addClass("invalid-border-small");
+		}
 		$(".dchat-body", dchatWindow).addClass("hide-yo-wives");
 		$(".dchat-footer", dchatWindow).addClass("hide-yo-wives");
 		$(".dchat-input", dchatWindow).removeClass("invalid-border-small");
@@ -413,7 +429,10 @@ function toggleDraftChatView() {
 	else {
 		$(dchatWindow).removeClass("dchat-ease-collapse");
 		$(dchatWindow).addClass("dchat-ease-expand");
-		$(".dchat-preview", dchatWindow).addClass("hide-yo-wives");
+		$(".dchat-prev-content", dchatWindow).addClass("hide-yo-wives");
+		if (isErrorWindow) {
+			$(".dchat-preview", dchatWindow).removeClass("invalid-border-small");
+		}
 		$(".dchat-body", dchatWindow).removeClass("hide-yo-wives");
 		$(".dchat-footer", dchatWindow).removeClass("hide-yo-wives");
 		scrollDraftChatBottom();
