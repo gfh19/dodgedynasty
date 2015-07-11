@@ -5,9 +5,10 @@ var _msgTextAreaMaxWidth = 750;
 
 $(function () {
 	$("#tabs").tabs();
-	aloha.dom.query('.editable', document).forEach(aloha);
 	bindAddMessageDialog();
-	bindRteButtons();
+	bindDraftChatDisplayLinks();
+	//aloha.dom.query('.editable', document).forEach(aloha);
+	//bindRteButtons();
 });
 
 function bindAddMessageDialog() {
@@ -18,16 +19,6 @@ function bindAddMessageDialog() {
 	$(".add-msg-league").val(0);
 	$(".add-msg-title").val("");
 	$(".add-msg-text").text("");
-}
-
-function bindRteButtons() {
-	$('.action-bold').on('click', aloha.ui.command(aloha.ui.commands.bold));
-	$('.action-italic').on('click', aloha.ui.command(aloha.ui.commands.italic));
-	$('.action-underline').on('click', aloha.ui.command(aloha.ui.commands.underline));
-	$('.action-unformat').on('click', aloha.ui.command(aloha.ui.commands.unformat));
-	$('.action-bold').on('click', aloha.ui.command(aloha.ui.commands.bold));
-	$('.action-bold').on('click', aloha.ui.command(aloha.ui.commands.bold));
-	$('.action-bold').on('click', aloha.ui.command(aloha.ui.commands.bold));
 }
 
 function showAddMessageDialog() {
@@ -60,3 +51,32 @@ function showAddMessageDialog() {
 	$(".add-msg-text").outerWidth(contentWidth > _msgTextAreaMaxWidth ? _msgTextAreaMaxWidth : contentWidth);
 	$(".add-msg-title").focus();
 }
+
+function bindDraftChatDisplayLinks() {
+	$(".draft-chat-link").click(function (e) {
+		e.preventDefault();
+		var draftChatSection = $(e.toElement).closest('.draft-chat-section');
+		var flip = $(".draft-chat-flip", draftChatSection);
+		var expandVal = $(flip).attr("data-chat-expand");
+		if (expandVal == "collapse") {
+			$(flip).attr("data-chat-expand", "expand");
+			$(".draft-chat-entries", draftChatSection).removeClass("hide-yo-wives");
+			$(flip).text("collapse");
+		}
+		else {
+			$(flip).attr("data-chat-expand", "collapse");
+			$(".draft-chat-entries", draftChatSection).addClass("hide-yo-wives");
+			$(flip).text("expand");
+		}
+	});
+}
+
+//function bindRteButtons() {
+//	$('.action-bold').on('click', aloha.ui.command(aloha.ui.commands.bold));
+//	$('.action-italic').on('click', aloha.ui.command(aloha.ui.commands.italic));
+//	$('.action-underline').on('click', aloha.ui.command(aloha.ui.commands.underline));
+//	$('.action-unformat').on('click', aloha.ui.command(aloha.ui.commands.unformat));
+//	$('.action-bold').on('click', aloha.ui.command(aloha.ui.commands.bold));
+//	$('.action-bold').on('click', aloha.ui.command(aloha.ui.commands.bold));
+//	$('.action-bold').on('click', aloha.ui.command(aloha.ui.commands.bold));
+//}

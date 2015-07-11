@@ -30,11 +30,15 @@ header {
     min-width: 100%;
 }
 
-.small-page-header, .page-header, .large-page-header {
+.small-page-header, .page-header, .large-page-header, .left-small-page-header {
 	text-align: center;
 	margin-top: 5px;
 	margin-bottom: 12px;
 	font-weight: bold;
+}
+
+.left-small-page-header {
+	text-align: left;
 }
 
 .small-page-header {
@@ -1839,7 +1843,7 @@ span.player-select
 }
 
 
-/* Messages
+/* Messages (tab)
 ----------------------------------------------------------*/
 
 .toggle-msgs, .menu-msgs {
@@ -1876,7 +1880,7 @@ span.player-select
 .toggle-msgs-section {
 	display: inline-block;
 	margin-left: -10px;
-	min-width: 5px;
+	min-width: 10px;
 }
 
 .menu-msgs-section {
@@ -1952,6 +1956,13 @@ span.player-select
 	margin-bottom: 5px;
 }
 
+/* Draft Chat Messages (tab)----------------------------------------------------------*/
+.draft-chat-section {
+	margin-bottom: 20px;
+}
+.draft-chat-entry {
+	font-size: 12px;
+}
 
 /* Draft Chat
 ----------------------------------------------------------*/
@@ -1987,7 +1998,7 @@ span.player-select
 	padding: 2px 20px;
 }
 .dchat-ease-expand {
-	height: 252px;
+	height: 253px;
     -webkit-transition: height 0.10s linear;
     -moz-transition: height 0.10s linear;
     -o-transition: height 0.10s linear;
@@ -2002,13 +2013,16 @@ span.player-select
 }
 .dchat-preview {
 	width: 280px;
+	min-height: 19px;
 	font-size: 12px;
 	display: inline-block;
 	overflow: hidden;
 	white-space: nowrap;
+	cursor: pointer;
 }
-.dchat-prev-outline {
+.dchat-prev-outline, .draft-chat-outline {
 	display: inline-block;
+	font-size: 10px;
 	border: 1px solid black;
 	border-radius: 7px;
 	webkit-border-radius: 7px;
@@ -2022,7 +2036,7 @@ span.player-select
 	webkit-border-radius: 6px;
 	padding: 0px 2px;
 }
-.dchat-prev-stamp {
+.dchat-prev-stamp, .draft-chat-stamp {
 	display: inline-block;
 	font-size: 10px;
 	font-weight: bold;
@@ -2243,13 +2257,19 @@ span.player-select
 		display: none;
 	}
 
-	/* Messages
+	/* Messages (tab)
 	------------------------------------*/
 	.message-meta-hyphen {
 		display: none;
 	}
 	.message-datetime {
 		display: block;
+	}
+
+	/* Draft Chat Messages (tab)
+	------------------------------------*/
+	.draft-chat-link {
+		font-size: 14px;
 	}
 	
 	/* Draft Chat
@@ -2258,7 +2278,7 @@ span.player-select
 		width: 280px;
 	}
 	.dchat-ease-expand {
-		height: 217px;
+		height: 218px;
 	}
 	.dchat-preview {
 		width: 200px;

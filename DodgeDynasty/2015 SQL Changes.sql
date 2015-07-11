@@ -3,11 +3,6 @@ BEGIN TRANSACTION;
 
 /* 7/4/15 */
 
-/****** Object:  Table [dbo].[DraftPickHistory]    Script Date: 7/4/2015 2:24:50 PM ******/
-DROP TABLE [dbo].[DraftPickHistory]
-GO
-
-
 
 ALTER TABLE [dbo].[Draft] WITH CHECK ADD  CONSTRAINT [FK_Draft_League] FOREIGN KEY([LeagueId])
 REFERENCES [dbo].[League] ([LeagueId])

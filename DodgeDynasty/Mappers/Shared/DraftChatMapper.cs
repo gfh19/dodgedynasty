@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using DodgeDynasty.Entities;
+using DodgeDynasty.Mappers.Site;
 using DodgeDynasty.Models.Shared;
 using DodgeDynasty.Models.Types;
 using DodgeDynasty.Shared;
@@ -30,21 +31,9 @@ namespace DodgeDynasty.Mappers.Shared
 			Model.IsDraftActive = currentDraft.IsActive;
 			if (Model.IsDraftActive)
 			{
-				var leagueOwners = HomeEntity.LeagueOwners.Where(lo => lo.LeagueId == currentLeagueId);
-				Model.ChatMessages = HomeEntity.DraftChats.Where(o => o.DraftId == currentDraft.DraftId)
-					.Join(leagueOwners, dc => dc.AuthorId, lo => lo.UserId,
-					(dc, lo) => new UserChatMessage
-						{
-							DraftId = dc.DraftId,
-							LeagueId = dc.LeagueId,
-							AuthorId = dc.AuthorId,
-							NickName = dc.NickName,
-							CssClass = lo.CssClass,
-							MessageText = dc.MessageText,
-							AddTimestamp = dc.AddTimestamp,
-							LastUpdateTimestamp = dc.LastUpdateTimestamp
-						})
-					.Distinct().OrderBy(o => o.AddTimestamp).ToList();
+				var leagueOwners = HomeEntity.LeagueOwners.Where(lo => lo.LeagueId == currentLeagueId).ToList();
+				var draftChats = HomeEntity.DraftChats.Where(o => o.DraftId == currentDraft.DraftId).ToList();
+				Model.ChatMessages = MessagesHelper.GetChatMessages(leagueOwners, draftChats);
 			}
 			else
 			{

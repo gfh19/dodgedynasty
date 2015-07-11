@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DodgeDynasty.Entities;
+using DodgeDynasty.Models.Types;
 using DodgeDynasty.Shared;
 
 namespace DodgeDynasty.Models.Site
@@ -12,6 +13,8 @@ namespace DodgeDynasty.Models.Site
 	public class MessagesModel
 	{
 		public List<Message> Messages { get; set; }
+		public List<Draft> UserChatDrafts { get; set; }
+		public List<UserChatMessage> DraftChatMessages { get; set; }
 
 		public string MessageId { get; set; }
 		public int LeagueId { get; set; }

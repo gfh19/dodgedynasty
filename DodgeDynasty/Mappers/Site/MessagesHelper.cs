@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using DodgeDynasty.Entities;
+using DodgeDynasty.Models.Types;
 
 namespace DodgeDynasty.Mappers.Site
 {
@@ -10,10 +11,11 @@ namespace DodgeDynasty.Mappers.Site
 	{
 		public static List<Message> GetUserMessages(Entities.HomeEntity homeEntity, User user)
 		{
+			//Get all messages for user's leagues/"all users"/by users in any of user's leagues
+			//TODO:  Optimize someday
 			var userLeagueIds = (from lo in homeEntity.LeagueOwners
 								 where lo.UserId == user.UserId
 								 select lo.LeagueId).ToList();
-			//TODO:  Test all three conditions
 			var userMessages = (from m in homeEntity.Messages
 								where m.AuthorId == user.UserId
 								  || m.AllUsers == true
@@ -25,5 +27,24 @@ namespace DodgeDynasty.Mappers.Site
 								select m).ToList();
 			return userMessages;
 		}
+
+		public static List<UserChatMessage> GetChatMessages(List<LeagueOwner> leagueOwners, List<DraftChat> draftChats)
+		{
+			var chatMessages = draftChats.Join(leagueOwners, dc => dc.AuthorId, lo => lo.UserId,
+				(dc, lo) => new UserChatMessage
+				{
+					DraftId = dc.DraftId,
+					LeagueId = dc.LeagueId,
+					AuthorId = dc.AuthorId,
+					NickName = dc.NickName,
+					CssClass = lo.CssClass,
+					MessageText = dc.MessageText,
+					AddTimestamp = dc.AddTimestamp,
+					LastUpdateTimestamp = dc.LastUpdateTimestamp
+				})
+				.Distinct().OrderBy(o => o.AddTimestamp).ToList();
+			return chatMessages;
+		}
+
 	}
 }

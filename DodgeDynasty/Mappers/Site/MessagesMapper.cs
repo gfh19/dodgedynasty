@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using DodgeDynasty.Entities;
 using DodgeDynasty.Models.Site;
+using DodgeDynasty.Models.Types;
 using DodgeDynasty.Shared;
 
 namespace DodgeDynasty.Mappers.Site
@@ -17,12 +18,29 @@ namespace DodgeDynasty.Mappers.Site
 			var user = HomeEntity.Users.GetLoggedInUser();
 			user.LastMessageView = DateTime.Now;
 			HomeEntity.SaveChanges();
-			//Get all messages for user's leagues/"all users"/by users in any of user's leagues
-			//TODO:  Optimize someday
+
+			//Get User Messages Display
+			Model.OwnerLeagues = HomeEntity.LeagueOwners.Where(lo => lo.UserId == user.UserId).ToList();
 			var userMessages = MessagesHelper.GetUserMessages(HomeEntity, user);
 			Model.Messages = userMessages;
 
-			Model.OwnerLeagues = HomeEntity.LeagueOwners.Where(lo => lo.UserId == user.UserId).ToList();
+			//Get User DraftChats Display
+			var userDraftIds = HomeEntity.DraftOwners.Where(o => o.UserId == user.UserId).Select(o => o.DraftId).ToList();
+			var userChatMessages = HomeEntity.DraftChats.Where(dc => userDraftIds.Contains(dc.DraftId))
+									.OrderBy(dc=>dc.AddTimestamp).ToList();
+			var userChatDraftIds = userChatMessages.Select(dc => dc.DraftId).Distinct().ToList();
+			Model.UserChatDrafts = HomeEntity.Drafts.Where(d => userChatDraftIds.Contains(d.DraftId))
+									.OrderByDescending(o => o.AddTimestamp).ToList();
+
+			Model.DraftChatMessages = new List<UserChatMessage>();
+			foreach (var userDraft in Model.UserChatDrafts)
+			{
+				var leagueOwners = HomeEntity.LeagueOwners.Where(lo => lo.LeagueId == userDraft.LeagueId).ToList();
+				var draftMessages = userChatMessages.Where(dc => dc.DraftId == userDraft.DraftId).ToList();
+				Model.DraftChatMessages.AddRange(MessagesHelper.GetChatMessages(leagueOwners, draftMessages));
+			}
+
+			//Model.DraftChatMessages = HomeEntity.DraftChats.Where(dc => userChatDraftIds.Contains(dc.DraftId)).ToList();
 		}
 
 		protected override void DoUpdate(MessagesModel model)

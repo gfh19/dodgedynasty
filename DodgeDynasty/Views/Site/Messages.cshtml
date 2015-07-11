@@ -45,19 +45,46 @@
 		</div>
 
 		<div id="draft-chat-tab">
-			Content for Tab 2 goes here.<br />
-			Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
-			sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+			@if (Model.UserChatDrafts.Count > 0)
+			{
+				<div class="page-header">Draft Chats</div>
+				foreach (var draft in Model.UserChatDrafts)
+				{
+					<div class="draft-chat-section">
+						<a href="#" class="draft-chat-link">@draft.DraftYear @draft.LeagueName 
+							<span class="mobile-hide">Draft Chat</span> 
+							(<span class="draft-chat-flip" data-chat-expand="collapse">expand</span>)
+						</a>
+						<div class="draft-chat-entries hide-yo-wives">
+							@{var draftChats = Model.DraftChatMessages.Where(o=>o.DraftId == draft.DraftId).ToList();}
+							@foreach (var chat in draftChats) {
+							<div class="draft-chat-entry">
+								<span class="draft-chat-outline">
+									<span class="draft-chat-stamp @chat.CssClass">@chat.NickName (@chat.AddTimestamp.ToString(DodgeDynasty.Shared.Constants.ChatDateTimeFormat)):</span>
+								</span>
+								@chat.MessageText
+							</div>
+							}
+						</div>
+					</div>
+				
+				}
+			}
+		   else
+		   {
+				<div class="page-header">Chat functionality available while live drafting!</div>
+				<div>An interactive draft chat window will appear in the bottom right hand corner of your page during the draft.  After the draft completes, the full draft chat log will be displayed in this tab.</div>
+			}
 		</div>
 
 		<div id="addMessageDialog" class="center hide-yo-kids" title="Add Message">
 			@using (Html.BeginForm("Messages", "Site", FormMethod.Post, new { id = "messageForm" }))
 			{
-				@Html.HiddenFor(o=>o.MessageId)
+				@Html.HiddenFor(o => o.MessageId)
 				<p>
 					<!--
 					TODO:  RTE editing
-	
+
 					<button class="rte action-bold" title="Bold"><b>B</b></button>
 					<button class="rte action-italic" title="Italics"><i>I</i></button>
 					<button class="rte action-underline" title="Underline"><u>U</u></button>
@@ -71,11 +98,16 @@
 							new { @class = "add-msg-league" })
 					</div>
 					<div class="msg-title-section">
-						@Html.TextBoxFor(o=>o.Title, new { @class = "add-msg-title", type = "text", 
-							maxLength = "50", placeholder="Title (optional)"})
+						@Html.TextBoxFor(o => o.Title, new
+						{
+							@class = "add-msg-title",
+							type = "text",
+							maxLength = "50",
+							placeholder = "Title (optional)"
+						})
 					</div>
 					<div class="msg-text-section">
-						@Html.TextAreaFor(o => o.MessageText, new {	 @class = "add-msg-text editable", maxLength = "1000" })
+						@Html.TextAreaFor(o => o.MessageText, new { @class = "add-msg-text editable", maxLength = "1000" })
 					</div>
 				</p>
 			}
