@@ -15,8 +15,8 @@
 			@foreach (var league in Model.AllLeagues.OrderBy(o => o.AddTimestamp))
 			{
 				<div class="page-entry">
-					<a href="@Url.Content("~/Admin/ManageDrafts/" + @league.LeagueId)">@league.LeagueName</a>
-					(<a href="@Url.Content("~/Admin/EditLeague/" + @league.LeagueId)">Edit</a>)
+					<a href="@Url.Content("~/Admin/EditLeague/" + @league.LeagueId)">@league.LeagueName</a>
+					(<a href="@Url.Content("~/Admin/ManageDrafts/" + @league.LeagueId)">Manage Drafts</a>)
 				</div>
 			}
 		</div>

@@ -79,6 +79,16 @@ namespace DodgeDynasty.Shared
 			return string.IsNullOrEmpty(text) || text.Trim().Length == 0;
 		}
 
+		public static DateTime GetEasternTime(DateTime? utcTime = null)
+		{
+			if (!utcTime.HasValue)
+			{
+				utcTime = DateTime.UtcNow;
+			}
+			TimeZoneInfo easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+			return TimeZoneInfo.ConvertTimeFromUtc(utcTime.Value, easternZone);
+		}
+
 
 		/* Data Access Methods */
 

@@ -64,6 +64,7 @@ namespace DodgeDynasty.Mappers.Shared
 
 		protected override void DoUpdate(DraftChatModel model)
 		{
+			var currentTime = Utilities.GetEasternTime();
 			var user = HomeEntity.Users.FirstOrDefault(u => u.UserName == UserName);
 			DraftChat chatMessage = new DraftChat
 			{
@@ -71,8 +72,8 @@ namespace DodgeDynasty.Mappers.Shared
 				LeagueId = model.LeagueId,
 				AuthorId = user.UserId,
 				MessageText = model.MessageText,
-				AddTimestamp = DateTime.Now,
-				LastUpdateTimestamp = DateTime.Now
+				AddTimestamp = currentTime,
+				LastUpdateTimestamp = currentTime
 			};
 			HomeEntity.DraftChats.AddObject(chatMessage);
 			HomeEntity.SaveChanges();

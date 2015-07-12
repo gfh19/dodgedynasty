@@ -1831,10 +1831,20 @@ span.player-select
 .mi-active-header, .mi-active {
 	width: 60px;
 }
+.mi-league, .mi-team-name, .mi-color, .mi-active {
+	vertical-align: middle;
+}
+.mi-league-name {
+	padding-bottom: 2px;
+}
 
 .mi-selected-color {
 	border: 3px solid;
 	padding: 1px 1px;
+	font-size: 12px;
+}
+.mi-color-select {
+	font-size: 12px;
 }
 
 .error-messages .validation-summary-errors {

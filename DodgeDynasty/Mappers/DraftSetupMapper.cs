@@ -12,7 +12,7 @@ namespace DodgeDynasty.Mappers
 		public void UpdateDraftPicks(DraftPicksModel picksModel)
 		{
 			DraftSetupModel currentModel = DraftFactory.GetDraftSetupModel(picksModel.DraftId);
-			currentModel.GetCurrentDraft();
+			currentModel.GetCurrentDraft(picksModel.DraftId);
 			using (HomeEntity = new HomeEntity())
 			{
 				var newDraftPicks = picksModel.DraftPicks.Where(p => p.DraftPickId == 0).ToList();

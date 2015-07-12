@@ -120,7 +120,6 @@ namespace DodgeDynasty.Controllers
 		{
 			GetPlayerRankOptions();
 			RankingsListModel model = DraftFactory.GetRankingsListModel(Utilities.ToNullInt(id));
-			model.GetCurrentDraft();
 			return View(model);
 		}
 
@@ -128,7 +127,6 @@ namespace DodgeDynasty.Controllers
 		public ActionResult RankingsListPartial()
 		{
 			RankingsListModel model = DraftFactory.GetRankingsListModel();
-			model.GetCurrentDraft();
 			return PartialView(Constants.Views.RankingsList, model);
 		}
 
@@ -151,7 +149,6 @@ namespace DodgeDynasty.Controllers
 			if (rankId == 0)
 			{
 				RankingsListModel rankingsListModel = DraftFactory.GetRankingsListModel();
-				rankingsListModel.GetCurrentDraft();
 				rankId = rankingsListModel.GetPrimaryRankId(rankingsListModel);
 			}
 			if (setCookie && options.RankId != rankId.ToString())

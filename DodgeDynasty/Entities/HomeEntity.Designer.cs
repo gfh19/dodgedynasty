@@ -36,6 +36,19 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_DraftChat_League", "League", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.League), "DraftChat", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.DraftChat), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_DraftChat_Draft", "Draft", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Draft), "DraftChat", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.DraftChat), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_DraftPick_Draft", "Draft", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Draft), "DraftPick", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.DraftPick), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_Draft_League", "League", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.League), "Draft", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.Draft), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_Draft_RunnerUp", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.User), "Draft", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.Draft), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_Draft_Season", "Season", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.Season), "Draft", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.Draft), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_Draft_Winner", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.User), "Draft", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.Draft), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_DraftOwner_Draft", "Draft", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Draft), "DraftOwner", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.DraftOwner), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_DraftRank_Draft", "Draft", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.Draft), "DraftRank", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.DraftRank), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_DraftChat_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.User), "DraftChat", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.DraftChat), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_DraftOwner_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.User), "DraftOwner", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.DraftOwner), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_DraftPick_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.User), "DraftPick", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.DraftPick), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_DraftRank_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.User), "DraftRank", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.DraftRank), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_LeagueOwner_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.User), "LeagueOwner", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.LeagueOwner), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerAdjustment_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.User), "PlayerAdjustment", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerAdjustment), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerSeason_Season", "Season", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.Season), "PlayerSeason", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerSeason), true)]
 
 #endregion
 
@@ -438,6 +451,38 @@ namespace DodgeDynasty.Entities
             }
         }
         private ObjectSet<Draft> _Drafts;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Season> Seasons
+        {
+            get
+            {
+                if ((_Seasons == null))
+                {
+                    _Seasons = base.CreateObjectSet<Season>("Seasons");
+                }
+                return _Seasons;
+            }
+        }
+        private ObjectSet<Season> _Seasons;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<PlayerSeason> PlayerSeasons
+        {
+            get
+            {
+                if ((_PlayerSeasons == null))
+                {
+                    _PlayerSeasons = base.CreateObjectSet<PlayerSeason>("PlayerSeasons");
+                }
+                return _PlayerSeasons;
+            }
+        }
+        private ObjectSet<PlayerSeason> _PlayerSeasons;
 
         #endregion
 
@@ -618,6 +663,22 @@ namespace DodgeDynasty.Entities
         {
             base.AddObject("Drafts", draft);
         }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Seasons EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToSeasons(Season season)
+        {
+            base.AddObject("Seasons", season);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the PlayerSeasons EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToPlayerSeasons(PlayerSeason playerSeason)
+        {
+            base.AddObject("PlayerSeasons", playerSeason);
+        }
 
         #endregion
 
@@ -654,7 +715,7 @@ namespace DodgeDynasty.Entities
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -673,7 +734,7 @@ namespace DodgeDynasty.Entities
                 {
                     OnClassNameChanging(value);
                     ReportPropertyChanging("ClassName");
-                    _ClassName = StructuralObject.SetValidValue(value, false);
+                    _ClassName = StructuralObject.SetValidValue(value, false, "ClassName");
                     ReportPropertyChanged("ClassName");
                     OnClassNameChanged();
                 }
@@ -698,7 +759,7 @@ namespace DodgeDynasty.Entities
             {
                 OnColorTextChanging(value);
                 ReportPropertyChanging("ColorText");
-                _ColorText = StructuralObject.SetValidValue(value, false);
+                _ColorText = StructuralObject.SetValidValue(value, false, "ColorText");
                 ReportPropertyChanged("ColorText");
                 OnColorTextChanged();
             }
@@ -722,7 +783,7 @@ namespace DodgeDynasty.Entities
             {
                 OnColorValueChanging(value);
                 ReportPropertyChanging("ColorValue");
-                _ColorValue = StructuralObject.SetValidValue(value, true);
+                _ColorValue = StructuralObject.SetValidValue(value, true, "ColorValue");
                 ReportPropertyChanged("ColorValue");
                 OnColorValueChanged();
             }
@@ -746,7 +807,7 @@ namespace DodgeDynasty.Entities
             {
                 OnAddTimestampChanging(value);
                 ReportPropertyChanging("AddTimestamp");
-                _AddTimestamp = StructuralObject.SetValidValue(value);
+                _AddTimestamp = StructuralObject.SetValidValue(value, "AddTimestamp");
                 ReportPropertyChanged("AddTimestamp");
                 OnAddTimestampChanged();
             }
@@ -770,7 +831,7 @@ namespace DodgeDynasty.Entities
             {
                 OnLastUpdateTimestampChanging(value);
                 ReportPropertyChanging("LastUpdateTimestamp");
-                _LastUpdateTimestamp = StructuralObject.SetValidValue(value);
+                _LastUpdateTimestamp = StructuralObject.SetValidValue(value, "LastUpdateTimestamp");
                 ReportPropertyChanged("LastUpdateTimestamp");
                 OnLastUpdateTimestampChanged();
             }
@@ -781,7 +842,6 @@ namespace DodgeDynasty.Entities
 
         #endregion
 
-    
         #region Navigation Properties
     
         /// <summary>
@@ -845,7 +905,7 @@ namespace DodgeDynasty.Entities
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -864,7 +924,7 @@ namespace DodgeDynasty.Entities
                 {
                     OnDraftIdChanging(value);
                     ReportPropertyChanging("DraftId");
-                    _DraftId = StructuralObject.SetValidValue(value);
+                    _DraftId = StructuralObject.SetValidValue(value, "DraftId");
                     ReportPropertyChanged("DraftId");
                     OnDraftIdChanged();
                 }
@@ -889,7 +949,7 @@ namespace DodgeDynasty.Entities
             {
                 OnLeagueIdChanging(value);
                 ReportPropertyChanging("LeagueId");
-                _LeagueId = StructuralObject.SetValidValue(value);
+                _LeagueId = StructuralObject.SetValidValue(value, "LeagueId");
                 ReportPropertyChanged("LeagueId");
                 OnLeagueIdChanged();
             }
@@ -913,7 +973,7 @@ namespace DodgeDynasty.Entities
             {
                 OnLeagueNameChanging(value);
                 ReportPropertyChanging("LeagueName");
-                _LeagueName = StructuralObject.SetValidValue(value, true);
+                _LeagueName = StructuralObject.SetValidValue(value, true, "LeagueName");
                 ReportPropertyChanged("LeagueName");
                 OnLeagueNameChanged();
             }
@@ -937,7 +997,7 @@ namespace DodgeDynasty.Entities
             {
                 OnDraftDateChanging(value);
                 ReportPropertyChanging("DraftDate");
-                _DraftDate = StructuralObject.SetValidValue(value);
+                _DraftDate = StructuralObject.SetValidValue(value, "DraftDate");
                 ReportPropertyChanged("DraftDate");
                 OnDraftDateChanged();
             }
@@ -961,7 +1021,7 @@ namespace DodgeDynasty.Entities
             {
                 OnDraftLocationChanging(value);
                 ReportPropertyChanging("DraftLocation");
-                _DraftLocation = StructuralObject.SetValidValue(value, true);
+                _DraftLocation = StructuralObject.SetValidValue(value, true, "DraftLocation");
                 ReportPropertyChanged("DraftLocation");
                 OnDraftLocationChanged();
             }
@@ -985,7 +1045,7 @@ namespace DodgeDynasty.Entities
             {
                 OnDraftYearChanging(value);
                 ReportPropertyChanging("DraftYear");
-                _DraftYear = StructuralObject.SetValidValue(value);
+                _DraftYear = StructuralObject.SetValidValue(value, "DraftYear");
                 ReportPropertyChanged("DraftYear");
                 OnDraftYearChanged();
             }
@@ -1009,7 +1069,7 @@ namespace DodgeDynasty.Entities
             {
                 OnNumOwnersChanging(value);
                 ReportPropertyChanging("NumOwners");
-                _NumOwners = StructuralObject.SetValidValue(value);
+                _NumOwners = StructuralObject.SetValidValue(value, "NumOwners");
                 ReportPropertyChanged("NumOwners");
                 OnNumOwnersChanged();
             }
@@ -1033,7 +1093,7 @@ namespace DodgeDynasty.Entities
             {
                 OnNumRoundsChanging(value);
                 ReportPropertyChanging("NumRounds");
-                _NumRounds = StructuralObject.SetValidValue(value);
+                _NumRounds = StructuralObject.SetValidValue(value, "NumRounds");
                 ReportPropertyChanged("NumRounds");
                 OnNumRoundsChanged();
             }
@@ -1057,7 +1117,7 @@ namespace DodgeDynasty.Entities
             {
                 OnNumKeepersChanging(value);
                 ReportPropertyChanging("NumKeepers");
-                _NumKeepers = StructuralObject.SetValidValue(value);
+                _NumKeepers = StructuralObject.SetValidValue(value, "NumKeepers");
                 ReportPropertyChanged("NumKeepers");
                 OnNumKeepersChanged();
             }
@@ -1081,7 +1141,7 @@ namespace DodgeDynasty.Entities
             {
                 OnFormatChanging(value);
                 ReportPropertyChanging("Format");
-                _Format = StructuralObject.SetValidValue(value, true);
+                _Format = StructuralObject.SetValidValue(value, true, "Format");
                 ReportPropertyChanged("Format");
                 OnFormatChanged();
             }
@@ -1105,7 +1165,7 @@ namespace DodgeDynasty.Entities
             {
                 OnIsActiveChanging(value);
                 ReportPropertyChanging("IsActive");
-                _IsActive = StructuralObject.SetValidValue(value);
+                _IsActive = StructuralObject.SetValidValue(value, "IsActive");
                 ReportPropertyChanged("IsActive");
                 OnIsActiveChanged();
             }
@@ -1129,7 +1189,7 @@ namespace DodgeDynasty.Entities
             {
                 OnIsCompleteChanging(value);
                 ReportPropertyChanging("IsComplete");
-                _IsComplete = StructuralObject.SetValidValue(value);
+                _IsComplete = StructuralObject.SetValidValue(value, "IsComplete");
                 ReportPropertyChanged("IsComplete");
                 OnIsCompleteChanged();
             }
@@ -1153,7 +1213,7 @@ namespace DodgeDynasty.Entities
             {
                 OnWinnerIdChanging(value);
                 ReportPropertyChanging("WinnerId");
-                _WinnerId = StructuralObject.SetValidValue(value);
+                _WinnerId = StructuralObject.SetValidValue(value, "WinnerId");
                 ReportPropertyChanged("WinnerId");
                 OnWinnerIdChanged();
             }
@@ -1177,7 +1237,7 @@ namespace DodgeDynasty.Entities
             {
                 OnRunnerUpIdChanging(value);
                 ReportPropertyChanging("RunnerUpId");
-                _RunnerUpId = StructuralObject.SetValidValue(value);
+                _RunnerUpId = StructuralObject.SetValidValue(value, "RunnerUpId");
                 ReportPropertyChanged("RunnerUpId");
                 OnRunnerUpIdChanged();
             }
@@ -1201,7 +1261,7 @@ namespace DodgeDynasty.Entities
             {
                 OnHasCoWinnersChanging(value);
                 ReportPropertyChanging("HasCoWinners");
-                _HasCoWinners = StructuralObject.SetValidValue(value);
+                _HasCoWinners = StructuralObject.SetValidValue(value, "HasCoWinners");
                 ReportPropertyChanged("HasCoWinners");
                 OnHasCoWinnersChanged();
             }
@@ -1225,7 +1285,7 @@ namespace DodgeDynasty.Entities
             {
                 OnAddTimestampChanging(value);
                 ReportPropertyChanging("AddTimestamp");
-                _AddTimestamp = StructuralObject.SetValidValue(value);
+                _AddTimestamp = StructuralObject.SetValidValue(value, "AddTimestamp");
                 ReportPropertyChanged("AddTimestamp");
                 OnAddTimestampChanged();
             }
@@ -1249,7 +1309,7 @@ namespace DodgeDynasty.Entities
             {
                 OnLastUpdateTimestampChanging(value);
                 ReportPropertyChanging("LastUpdateTimestamp");
-                _LastUpdateTimestamp = StructuralObject.SetValidValue(value);
+                _LastUpdateTimestamp = StructuralObject.SetValidValue(value, "LastUpdateTimestamp");
                 ReportPropertyChanged("LastUpdateTimestamp");
                 OnLastUpdateTimestampChanged();
             }
@@ -1257,10 +1317,33 @@ namespace DodgeDynasty.Entities
         private global::System.DateTime _LastUpdateTimestamp;
         partial void OnLastUpdateTimestampChanging(global::System.DateTime value);
         partial void OnLastUpdateTimestampChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> SeasonId
+        {
+            get
+            {
+                return _SeasonId;
+            }
+            set
+            {
+                OnSeasonIdChanging(value);
+                ReportPropertyChanging("SeasonId");
+                _SeasonId = StructuralObject.SetValidValue(value, "SeasonId");
+                ReportPropertyChanged("SeasonId");
+                OnSeasonIdChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _SeasonId;
+        partial void OnSeasonIdChanging(Nullable<global::System.Int32> value);
+        partial void OnSeasonIdChanged();
 
         #endregion
 
-    
         #region Navigation Properties
     
         /// <summary>
@@ -1306,6 +1389,202 @@ namespace DodgeDynasty.Entities
                 }
             }
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_Draft_League", "League")]
+        public League League
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<League>("HomeModel.FK_Draft_League", "League").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<League>("HomeModel.FK_Draft_League", "League").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<League> LeagueReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<League>("HomeModel.FK_Draft_League", "League");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<League>("HomeModel.FK_Draft_League", "League", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_Draft_RunnerUp", "User")]
+        public User User
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_Draft_RunnerUp", "User").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_Draft_RunnerUp", "User").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<User> UserReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_Draft_RunnerUp", "User");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("HomeModel.FK_Draft_RunnerUp", "User", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_Draft_Season", "Season")]
+        public Season Season
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Season>("HomeModel.FK_Draft_Season", "Season").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Season>("HomeModel.FK_Draft_Season", "Season").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Season> SeasonReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Season>("HomeModel.FK_Draft_Season", "Season");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Season>("HomeModel.FK_Draft_Season", "Season", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_Draft_Winner", "User")]
+        public User User1
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_Draft_Winner", "User").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_Draft_Winner", "User").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<User> User1Reference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_Draft_Winner", "User");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("HomeModel.FK_Draft_Winner", "User", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_DraftOwner_Draft", "DraftOwner")]
+        public EntityCollection<DraftOwner> DraftOwners
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<DraftOwner>("HomeModel.FK_DraftOwner_Draft", "DraftOwner");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DraftOwner>("HomeModel.FK_DraftOwner_Draft", "DraftOwner", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_DraftRank_Draft", "DraftRank")]
+        public EntityCollection<DraftRank> DraftRanks
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<DraftRank>("HomeModel.FK_DraftRank_Draft", "DraftRank");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DraftRank>("HomeModel.FK_DraftRank_Draft", "DraftRank", value);
+                }
+            }
+        }
 
         #endregion
 
@@ -1346,7 +1625,7 @@ namespace DodgeDynasty.Entities
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -1365,7 +1644,7 @@ namespace DodgeDynasty.Entities
                 {
                     OnDraftChatIdChanging(value);
                     ReportPropertyChanging("DraftChatId");
-                    _DraftChatId = StructuralObject.SetValidValue(value);
+                    _DraftChatId = StructuralObject.SetValidValue(value, "DraftChatId");
                     ReportPropertyChanged("DraftChatId");
                     OnDraftChatIdChanged();
                 }
@@ -1390,7 +1669,7 @@ namespace DodgeDynasty.Entities
             {
                 OnDraftIdChanging(value);
                 ReportPropertyChanging("DraftId");
-                _DraftId = StructuralObject.SetValidValue(value);
+                _DraftId = StructuralObject.SetValidValue(value, "DraftId");
                 ReportPropertyChanged("DraftId");
                 OnDraftIdChanged();
             }
@@ -1414,7 +1693,7 @@ namespace DodgeDynasty.Entities
             {
                 OnLeagueIdChanging(value);
                 ReportPropertyChanging("LeagueId");
-                _LeagueId = StructuralObject.SetValidValue(value);
+                _LeagueId = StructuralObject.SetValidValue(value, "LeagueId");
                 ReportPropertyChanged("LeagueId");
                 OnLeagueIdChanged();
             }
@@ -1438,7 +1717,7 @@ namespace DodgeDynasty.Entities
             {
                 OnAuthorIdChanging(value);
                 ReportPropertyChanging("AuthorId");
-                _AuthorId = StructuralObject.SetValidValue(value);
+                _AuthorId = StructuralObject.SetValidValue(value, "AuthorId");
                 ReportPropertyChanged("AuthorId");
                 OnAuthorIdChanged();
             }
@@ -1462,7 +1741,7 @@ namespace DodgeDynasty.Entities
             {
                 OnNickNameChanging(value);
                 ReportPropertyChanging("NickName");
-                _NickName = StructuralObject.SetValidValue(value, true);
+                _NickName = StructuralObject.SetValidValue(value, true, "NickName");
                 ReportPropertyChanged("NickName");
                 OnNickNameChanged();
             }
@@ -1486,7 +1765,7 @@ namespace DodgeDynasty.Entities
             {
                 OnMessageTextChanging(value);
                 ReportPropertyChanging("MessageText");
-                _MessageText = StructuralObject.SetValidValue(value, false);
+                _MessageText = StructuralObject.SetValidValue(value, false, "MessageText");
                 ReportPropertyChanged("MessageText");
                 OnMessageTextChanged();
             }
@@ -1510,7 +1789,7 @@ namespace DodgeDynasty.Entities
             {
                 OnAddTimestampChanging(value);
                 ReportPropertyChanging("AddTimestamp");
-                _AddTimestamp = StructuralObject.SetValidValue(value);
+                _AddTimestamp = StructuralObject.SetValidValue(value, "AddTimestamp");
                 ReportPropertyChanged("AddTimestamp");
                 OnAddTimestampChanged();
             }
@@ -1534,7 +1813,7 @@ namespace DodgeDynasty.Entities
             {
                 OnLastUpdateTimestampChanging(value);
                 ReportPropertyChanging("LastUpdateTimestamp");
-                _LastUpdateTimestamp = StructuralObject.SetValidValue(value);
+                _LastUpdateTimestamp = StructuralObject.SetValidValue(value, "LastUpdateTimestamp");
                 ReportPropertyChanged("LastUpdateTimestamp");
                 OnLastUpdateTimestampChanged();
             }
@@ -1545,7 +1824,6 @@ namespace DodgeDynasty.Entities
 
         #endregion
 
-    
         #region Navigation Properties
     
         /// <summary>
@@ -1623,6 +1901,44 @@ namespace DodgeDynasty.Entities
                 }
             }
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_DraftChat_User", "User")]
+        public User User
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_DraftChat_User", "User").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_DraftChat_User", "User").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<User> UserReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_DraftChat_User", "User");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("HomeModel.FK_DraftChat_User", "User", value);
+                }
+            }
+        }
 
         #endregion
 
@@ -1655,7 +1971,7 @@ namespace DodgeDynasty.Entities
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -1674,7 +1990,7 @@ namespace DodgeDynasty.Entities
                 {
                     OnDraftOwnerIdChanging(value);
                     ReportPropertyChanging("DraftOwnerId");
-                    _DraftOwnerId = StructuralObject.SetValidValue(value);
+                    _DraftOwnerId = StructuralObject.SetValidValue(value, "DraftOwnerId");
                     ReportPropertyChanged("DraftOwnerId");
                     OnDraftOwnerIdChanged();
                 }
@@ -1699,7 +2015,7 @@ namespace DodgeDynasty.Entities
             {
                 OnDraftIdChanging(value);
                 ReportPropertyChanging("DraftId");
-                _DraftId = StructuralObject.SetValidValue(value);
+                _DraftId = StructuralObject.SetValidValue(value, "DraftId");
                 ReportPropertyChanged("DraftId");
                 OnDraftIdChanged();
             }
@@ -1723,7 +2039,7 @@ namespace DodgeDynasty.Entities
             {
                 OnUserIdChanging(value);
                 ReportPropertyChanging("UserId");
-                _UserId = StructuralObject.SetValidValue(value);
+                _UserId = StructuralObject.SetValidValue(value, "UserId");
                 ReportPropertyChanged("UserId");
                 OnUserIdChanged();
             }
@@ -1747,7 +2063,7 @@ namespace DodgeDynasty.Entities
             {
                 OnAddTimestampChanging(value);
                 ReportPropertyChanging("AddTimestamp");
-                _AddTimestamp = StructuralObject.SetValidValue(value);
+                _AddTimestamp = StructuralObject.SetValidValue(value, "AddTimestamp");
                 ReportPropertyChanged("AddTimestamp");
                 OnAddTimestampChanged();
             }
@@ -1771,7 +2087,7 @@ namespace DodgeDynasty.Entities
             {
                 OnLastUpdateTimestampChanging(value);
                 ReportPropertyChanging("LastUpdateTimestamp");
-                _LastUpdateTimestamp = StructuralObject.SetValidValue(value);
+                _LastUpdateTimestamp = StructuralObject.SetValidValue(value, "LastUpdateTimestamp");
                 ReportPropertyChanged("LastUpdateTimestamp");
                 OnLastUpdateTimestampChanged();
             }
@@ -1782,7 +2098,86 @@ namespace DodgeDynasty.Entities
 
         #endregion
 
+        #region Navigation Properties
     
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_DraftOwner_Draft", "Draft")]
+        public Draft Draft
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Draft>("HomeModel.FK_DraftOwner_Draft", "Draft").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Draft>("HomeModel.FK_DraftOwner_Draft", "Draft").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Draft> DraftReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Draft>("HomeModel.FK_DraftOwner_Draft", "Draft");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Draft>("HomeModel.FK_DraftOwner_Draft", "Draft", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_DraftOwner_User", "User")]
+        public User User
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_DraftOwner_User", "User").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_DraftOwner_User", "User").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<User> UserReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_DraftOwner_User", "User");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("HomeModel.FK_DraftOwner_User", "User", value);
+                }
+            }
+        }
+
+        #endregion
+
     }
     
     /// <summary>
@@ -1816,7 +2211,7 @@ namespace DodgeDynasty.Entities
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -1835,7 +2230,7 @@ namespace DodgeDynasty.Entities
                 {
                     OnDraftPickIdChanging(value);
                     ReportPropertyChanging("DraftPickId");
-                    _DraftPickId = StructuralObject.SetValidValue(value);
+                    _DraftPickId = StructuralObject.SetValidValue(value, "DraftPickId");
                     ReportPropertyChanged("DraftPickId");
                     OnDraftPickIdChanged();
                 }
@@ -1860,7 +2255,7 @@ namespace DodgeDynasty.Entities
             {
                 OnDraftIdChanging(value);
                 ReportPropertyChanging("DraftId");
-                _DraftId = StructuralObject.SetValidValue(value);
+                _DraftId = StructuralObject.SetValidValue(value, "DraftId");
                 ReportPropertyChanged("DraftId");
                 OnDraftIdChanged();
             }
@@ -1884,7 +2279,7 @@ namespace DodgeDynasty.Entities
             {
                 OnPickNumChanging(value);
                 ReportPropertyChanging("PickNum");
-                _PickNum = StructuralObject.SetValidValue(value);
+                _PickNum = StructuralObject.SetValidValue(value, "PickNum");
                 ReportPropertyChanged("PickNum");
                 OnPickNumChanged();
             }
@@ -1908,7 +2303,7 @@ namespace DodgeDynasty.Entities
             {
                 OnRoundNumChanging(value);
                 ReportPropertyChanging("RoundNum");
-                _RoundNum = StructuralObject.SetValidValue(value);
+                _RoundNum = StructuralObject.SetValidValue(value, "RoundNum");
                 ReportPropertyChanged("RoundNum");
                 OnRoundNumChanged();
             }
@@ -1932,7 +2327,7 @@ namespace DodgeDynasty.Entities
             {
                 OnUserIdChanging(value);
                 ReportPropertyChanging("UserId");
-                _UserId = StructuralObject.SetValidValue(value);
+                _UserId = StructuralObject.SetValidValue(value, "UserId");
                 ReportPropertyChanged("UserId");
                 OnUserIdChanged();
             }
@@ -1956,7 +2351,7 @@ namespace DodgeDynasty.Entities
             {
                 OnPlayerIdChanging(value);
                 ReportPropertyChanging("PlayerId");
-                _PlayerId = StructuralObject.SetValidValue(value);
+                _PlayerId = StructuralObject.SetValidValue(value, "PlayerId");
                 ReportPropertyChanged("PlayerId");
                 OnPlayerIdChanged();
             }
@@ -1980,7 +2375,7 @@ namespace DodgeDynasty.Entities
             {
                 OnPickStartDateTimeChanging(value);
                 ReportPropertyChanging("PickStartDateTime");
-                _PickStartDateTime = StructuralObject.SetValidValue(value);
+                _PickStartDateTime = StructuralObject.SetValidValue(value, "PickStartDateTime");
                 ReportPropertyChanged("PickStartDateTime");
                 OnPickStartDateTimeChanged();
             }
@@ -2004,7 +2399,7 @@ namespace DodgeDynasty.Entities
             {
                 OnPickEndDateTimeChanging(value);
                 ReportPropertyChanging("PickEndDateTime");
-                _PickEndDateTime = StructuralObject.SetValidValue(value);
+                _PickEndDateTime = StructuralObject.SetValidValue(value, "PickEndDateTime");
                 ReportPropertyChanged("PickEndDateTime");
                 OnPickEndDateTimeChanged();
             }
@@ -2028,7 +2423,7 @@ namespace DodgeDynasty.Entities
             {
                 OnAddTimestampChanging(value);
                 ReportPropertyChanging("AddTimestamp");
-                _AddTimestamp = StructuralObject.SetValidValue(value);
+                _AddTimestamp = StructuralObject.SetValidValue(value, "AddTimestamp");
                 ReportPropertyChanged("AddTimestamp");
                 OnAddTimestampChanged();
             }
@@ -2052,7 +2447,7 @@ namespace DodgeDynasty.Entities
             {
                 OnLastUpdateTimestampChanging(value);
                 ReportPropertyChanging("LastUpdateTimestamp");
-                _LastUpdateTimestamp = StructuralObject.SetValidValue(value);
+                _LastUpdateTimestamp = StructuralObject.SetValidValue(value, "LastUpdateTimestamp");
                 ReportPropertyChanged("LastUpdateTimestamp");
                 OnLastUpdateTimestampChanged();
             }
@@ -2063,7 +2458,6 @@ namespace DodgeDynasty.Entities
 
         #endregion
 
-    
         #region Navigation Properties
     
         /// <summary>
@@ -2141,6 +2535,44 @@ namespace DodgeDynasty.Entities
                 }
             }
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_DraftPick_User", "User")]
+        public User User
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_DraftPick_User", "User").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_DraftPick_User", "User").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<User> UserReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_DraftPick_User", "User");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("HomeModel.FK_DraftPick_User", "User", value);
+                }
+            }
+        }
 
         #endregion
 
@@ -2183,7 +2615,7 @@ namespace DodgeDynasty.Entities
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -2202,7 +2634,7 @@ namespace DodgeDynasty.Entities
                 {
                     OnDraftPickHistoryIdChanging(value);
                     ReportPropertyChanging("DraftPickHistoryId");
-                    _DraftPickHistoryId = StructuralObject.SetValidValue(value);
+                    _DraftPickHistoryId = StructuralObject.SetValidValue(value, "DraftPickHistoryId");
                     ReportPropertyChanged("DraftPickHistoryId");
                     OnDraftPickHistoryIdChanged();
                 }
@@ -2227,7 +2659,7 @@ namespace DodgeDynasty.Entities
             {
                 OnDraftPickGroupIdChanging(value);
                 ReportPropertyChanging("DraftPickGroupId");
-                _DraftPickGroupId = StructuralObject.SetValidValue(value);
+                _DraftPickGroupId = StructuralObject.SetValidValue(value, "DraftPickGroupId");
                 ReportPropertyChanged("DraftPickGroupId");
                 OnDraftPickGroupIdChanged();
             }
@@ -2251,7 +2683,7 @@ namespace DodgeDynasty.Entities
             {
                 OnDraftPickIdChanging(value);
                 ReportPropertyChanging("DraftPickId");
-                _DraftPickId = StructuralObject.SetValidValue(value);
+                _DraftPickId = StructuralObject.SetValidValue(value, "DraftPickId");
                 ReportPropertyChanged("DraftPickId");
                 OnDraftPickIdChanged();
             }
@@ -2275,7 +2707,7 @@ namespace DodgeDynasty.Entities
             {
                 OnPickNumChanging(value);
                 ReportPropertyChanging("PickNum");
-                _PickNum = StructuralObject.SetValidValue(value);
+                _PickNum = StructuralObject.SetValidValue(value, "PickNum");
                 ReportPropertyChanged("PickNum");
                 OnPickNumChanged();
             }
@@ -2299,7 +2731,7 @@ namespace DodgeDynasty.Entities
             {
                 OnRoundNumChanging(value);
                 ReportPropertyChanging("RoundNum");
-                _RoundNum = StructuralObject.SetValidValue(value);
+                _RoundNum = StructuralObject.SetValidValue(value, "RoundNum");
                 ReportPropertyChanged("RoundNum");
                 OnRoundNumChanged();
             }
@@ -2323,7 +2755,7 @@ namespace DodgeDynasty.Entities
             {
                 OnUserIdChanging(value);
                 ReportPropertyChanging("UserId");
-                _UserId = StructuralObject.SetValidValue(value);
+                _UserId = StructuralObject.SetValidValue(value, "UserId");
                 ReportPropertyChanged("UserId");
                 OnUserIdChanged();
             }
@@ -2347,7 +2779,7 @@ namespace DodgeDynasty.Entities
             {
                 OnPlayerIdChanging(value);
                 ReportPropertyChanging("PlayerId");
-                _PlayerId = StructuralObject.SetValidValue(value);
+                _PlayerId = StructuralObject.SetValidValue(value, "PlayerId");
                 ReportPropertyChanged("PlayerId");
                 OnPlayerIdChanged();
             }
@@ -2371,7 +2803,7 @@ namespace DodgeDynasty.Entities
             {
                 OnPickStartDateTimeChanging(value);
                 ReportPropertyChanging("PickStartDateTime");
-                _PickStartDateTime = StructuralObject.SetValidValue(value);
+                _PickStartDateTime = StructuralObject.SetValidValue(value, "PickStartDateTime");
                 ReportPropertyChanged("PickStartDateTime");
                 OnPickStartDateTimeChanged();
             }
@@ -2395,7 +2827,7 @@ namespace DodgeDynasty.Entities
             {
                 OnPickEndDateTimeChanging(value);
                 ReportPropertyChanging("PickEndDateTime");
-                _PickEndDateTime = StructuralObject.SetValidValue(value);
+                _PickEndDateTime = StructuralObject.SetValidValue(value, "PickEndDateTime");
                 ReportPropertyChanged("PickEndDateTime");
                 OnPickEndDateTimeChanged();
             }
@@ -2419,7 +2851,7 @@ namespace DodgeDynasty.Entities
             {
                 OnAddTimestampChanging(value);
                 ReportPropertyChanging("AddTimestamp");
-                _AddTimestamp = StructuralObject.SetValidValue(value);
+                _AddTimestamp = StructuralObject.SetValidValue(value, "AddTimestamp");
                 ReportPropertyChanged("AddTimestamp");
                 OnAddTimestampChanged();
             }
@@ -2443,7 +2875,7 @@ namespace DodgeDynasty.Entities
             {
                 OnLastUpdateTimestampChanging(value);
                 ReportPropertyChanging("LastUpdateTimestamp");
-                _LastUpdateTimestamp = StructuralObject.SetValidValue(value);
+                _LastUpdateTimestamp = StructuralObject.SetValidValue(value, "LastUpdateTimestamp");
                 ReportPropertyChanged("LastUpdateTimestamp");
                 OnLastUpdateTimestampChanged();
             }
@@ -2454,7 +2886,6 @@ namespace DodgeDynasty.Entities
 
         #endregion
 
-    
     }
     
     /// <summary>
@@ -2486,7 +2917,7 @@ namespace DodgeDynasty.Entities
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -2505,7 +2936,7 @@ namespace DodgeDynasty.Entities
                 {
                     OnDraftRankIdChanging(value);
                     ReportPropertyChanging("DraftRankId");
-                    _DraftRankId = StructuralObject.SetValidValue(value);
+                    _DraftRankId = StructuralObject.SetValidValue(value, "DraftRankId");
                     ReportPropertyChanged("DraftRankId");
                     OnDraftRankIdChanged();
                 }
@@ -2530,7 +2961,7 @@ namespace DodgeDynasty.Entities
             {
                 OnRankIdChanging(value);
                 ReportPropertyChanging("RankId");
-                _RankId = StructuralObject.SetValidValue(value);
+                _RankId = StructuralObject.SetValidValue(value, "RankId");
                 ReportPropertyChanged("RankId");
                 OnRankIdChanged();
             }
@@ -2554,7 +2985,7 @@ namespace DodgeDynasty.Entities
             {
                 OnDraftIdChanging(value);
                 ReportPropertyChanging("DraftId");
-                _DraftId = StructuralObject.SetValidValue(value);
+                _DraftId = StructuralObject.SetValidValue(value, "DraftId");
                 ReportPropertyChanged("DraftId");
                 OnDraftIdChanged();
             }
@@ -2578,7 +3009,7 @@ namespace DodgeDynasty.Entities
             {
                 OnPrimaryDraftRankingChanging(value);
                 ReportPropertyChanging("PrimaryDraftRanking");
-                _PrimaryDraftRanking = StructuralObject.SetValidValue(value);
+                _PrimaryDraftRanking = StructuralObject.SetValidValue(value, "PrimaryDraftRanking");
                 ReportPropertyChanged("PrimaryDraftRanking");
                 OnPrimaryDraftRankingChanged();
             }
@@ -2602,7 +3033,7 @@ namespace DodgeDynasty.Entities
             {
                 OnUserIdChanging(value);
                 ReportPropertyChanging("UserId");
-                _UserId = StructuralObject.SetValidValue(value);
+                _UserId = StructuralObject.SetValidValue(value, "UserId");
                 ReportPropertyChanged("UserId");
                 OnUserIdChanged();
             }
@@ -2626,7 +3057,7 @@ namespace DodgeDynasty.Entities
             {
                 OnAddTimestampChanging(value);
                 ReportPropertyChanging("AddTimestamp");
-                _AddTimestamp = StructuralObject.SetValidValue(value);
+                _AddTimestamp = StructuralObject.SetValidValue(value, "AddTimestamp");
                 ReportPropertyChanged("AddTimestamp");
                 OnAddTimestampChanged();
             }
@@ -2650,7 +3081,7 @@ namespace DodgeDynasty.Entities
             {
                 OnLastUpdateTimestampChanging(value);
                 ReportPropertyChanging("LastUpdateTimestamp");
-                _LastUpdateTimestamp = StructuralObject.SetValidValue(value);
+                _LastUpdateTimestamp = StructuralObject.SetValidValue(value, "LastUpdateTimestamp");
                 ReportPropertyChanged("LastUpdateTimestamp");
                 OnLastUpdateTimestampChanged();
             }
@@ -2661,7 +3092,86 @@ namespace DodgeDynasty.Entities
 
         #endregion
 
+        #region Navigation Properties
     
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_DraftRank_Draft", "Draft")]
+        public Draft Draft
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Draft>("HomeModel.FK_DraftRank_Draft", "Draft").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Draft>("HomeModel.FK_DraftRank_Draft", "Draft").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Draft> DraftReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Draft>("HomeModel.FK_DraftRank_Draft", "Draft");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Draft>("HomeModel.FK_DraftRank_Draft", "Draft", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_DraftRank_User", "User")]
+        public User User
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_DraftRank_User", "User").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_DraftRank_User", "User").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<User> UserReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_DraftRank_User", "User");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("HomeModel.FK_DraftRank_User", "User", value);
+                }
+            }
+        }
+
+        #endregion
+
     }
     
     /// <summary>
@@ -2689,7 +3199,7 @@ namespace DodgeDynasty.Entities
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -2708,7 +3218,7 @@ namespace DodgeDynasty.Entities
                 {
                     OnLeagueIdChanging(value);
                     ReportPropertyChanging("LeagueId");
-                    _LeagueId = StructuralObject.SetValidValue(value);
+                    _LeagueId = StructuralObject.SetValidValue(value, "LeagueId");
                     ReportPropertyChanged("LeagueId");
                     OnLeagueIdChanged();
                 }
@@ -2733,7 +3243,7 @@ namespace DodgeDynasty.Entities
             {
                 OnLeagueNameChanging(value);
                 ReportPropertyChanging("LeagueName");
-                _LeagueName = StructuralObject.SetValidValue(value, false);
+                _LeagueName = StructuralObject.SetValidValue(value, false, "LeagueName");
                 ReportPropertyChanged("LeagueName");
                 OnLeagueNameChanged();
             }
@@ -2757,7 +3267,7 @@ namespace DodgeDynasty.Entities
             {
                 OnAddTimestampChanging(value);
                 ReportPropertyChanging("AddTimestamp");
-                _AddTimestamp = StructuralObject.SetValidValue(value);
+                _AddTimestamp = StructuralObject.SetValidValue(value, "AddTimestamp");
                 ReportPropertyChanged("AddTimestamp");
                 OnAddTimestampChanged();
             }
@@ -2781,7 +3291,7 @@ namespace DodgeDynasty.Entities
             {
                 OnLastUpdateTimestampChanging(value);
                 ReportPropertyChanging("LastUpdateTimestamp");
-                _LastUpdateTimestamp = StructuralObject.SetValidValue(value);
+                _LastUpdateTimestamp = StructuralObject.SetValidValue(value, "LastUpdateTimestamp");
                 ReportPropertyChanged("LastUpdateTimestamp");
                 OnLastUpdateTimestampChanged();
             }
@@ -2792,7 +3302,6 @@ namespace DodgeDynasty.Entities
 
         #endregion
 
-    
         #region Navigation Properties
     
         /// <summary>
@@ -2860,6 +3369,28 @@ namespace DodgeDynasty.Entities
                 }
             }
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_Draft_League", "Draft")]
+        public EntityCollection<Draft> Drafts
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Draft>("HomeModel.FK_Draft_League", "Draft");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Draft>("HomeModel.FK_Draft_League", "Draft", value);
+                }
+            }
+        }
 
         #endregion
 
@@ -2900,7 +3431,7 @@ namespace DodgeDynasty.Entities
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -2919,7 +3450,7 @@ namespace DodgeDynasty.Entities
                 {
                     OnLeagueOwnerIdChanging(value);
                     ReportPropertyChanging("LeagueOwnerId");
-                    _LeagueOwnerId = StructuralObject.SetValidValue(value);
+                    _LeagueOwnerId = StructuralObject.SetValidValue(value, "LeagueOwnerId");
                     ReportPropertyChanged("LeagueOwnerId");
                     OnLeagueOwnerIdChanged();
                 }
@@ -2944,7 +3475,7 @@ namespace DodgeDynasty.Entities
             {
                 OnUserIdChanging(value);
                 ReportPropertyChanging("UserId");
-                _UserId = StructuralObject.SetValidValue(value);
+                _UserId = StructuralObject.SetValidValue(value, "UserId");
                 ReportPropertyChanged("UserId");
                 OnUserIdChanged();
             }
@@ -2968,7 +3499,7 @@ namespace DodgeDynasty.Entities
             {
                 OnLeagueIdChanging(value);
                 ReportPropertyChanging("LeagueId");
-                _LeagueId = StructuralObject.SetValidValue(value);
+                _LeagueId = StructuralObject.SetValidValue(value, "LeagueId");
                 ReportPropertyChanged("LeagueId");
                 OnLeagueIdChanged();
             }
@@ -2992,7 +3523,7 @@ namespace DodgeDynasty.Entities
             {
                 OnLeagueNameChanging(value);
                 ReportPropertyChanging("LeagueName");
-                _LeagueName = StructuralObject.SetValidValue(value, true);
+                _LeagueName = StructuralObject.SetValidValue(value, true, "LeagueName");
                 ReportPropertyChanged("LeagueName");
                 OnLeagueNameChanged();
             }
@@ -3016,7 +3547,7 @@ namespace DodgeDynasty.Entities
             {
                 OnTeamNameChanging(value);
                 ReportPropertyChanging("TeamName");
-                _TeamName = StructuralObject.SetValidValue(value, false);
+                _TeamName = StructuralObject.SetValidValue(value, false, "TeamName");
                 ReportPropertyChanged("TeamName");
                 OnTeamNameChanged();
             }
@@ -3040,7 +3571,7 @@ namespace DodgeDynasty.Entities
             {
                 OnCssClassChanging(value);
                 ReportPropertyChanging("CssClass");
-                _CssClass = StructuralObject.SetValidValue(value, true);
+                _CssClass = StructuralObject.SetValidValue(value, true, "CssClass");
                 ReportPropertyChanged("CssClass");
                 OnCssClassChanged();
             }
@@ -3064,7 +3595,7 @@ namespace DodgeDynasty.Entities
             {
                 OnIsActiveChanging(value);
                 ReportPropertyChanging("IsActive");
-                _IsActive = StructuralObject.SetValidValue(value);
+                _IsActive = StructuralObject.SetValidValue(value, "IsActive");
                 ReportPropertyChanged("IsActive");
                 OnIsActiveChanged();
             }
@@ -3088,7 +3619,7 @@ namespace DodgeDynasty.Entities
             {
                 OnAddTimestampChanging(value);
                 ReportPropertyChanging("AddTimestamp");
-                _AddTimestamp = StructuralObject.SetValidValue(value);
+                _AddTimestamp = StructuralObject.SetValidValue(value, "AddTimestamp");
                 ReportPropertyChanged("AddTimestamp");
                 OnAddTimestampChanged();
             }
@@ -3112,7 +3643,7 @@ namespace DodgeDynasty.Entities
             {
                 OnLastUpdateTimestampChanging(value);
                 ReportPropertyChanging("LastUpdateTimestamp");
-                _LastUpdateTimestamp = StructuralObject.SetValidValue(value);
+                _LastUpdateTimestamp = StructuralObject.SetValidValue(value, "LastUpdateTimestamp");
                 ReportPropertyChanged("LastUpdateTimestamp");
                 OnLastUpdateTimestampChanged();
             }
@@ -3123,7 +3654,6 @@ namespace DodgeDynasty.Entities
 
         #endregion
 
-    
         #region Navigation Properties
     
         /// <summary>
@@ -3201,6 +3731,44 @@ namespace DodgeDynasty.Entities
                 }
             }
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_LeagueOwner_User", "User")]
+        public User User
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_LeagueOwner_User", "User").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_LeagueOwner_User", "User").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<User> UserReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_LeagueOwner_User", "User");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("HomeModel.FK_LeagueOwner_User", "User", value);
+                }
+            }
+        }
 
         #endregion
 
@@ -3239,7 +3807,7 @@ namespace DodgeDynasty.Entities
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -3258,7 +3826,7 @@ namespace DodgeDynasty.Entities
                 {
                     OnMessageIdChanging(value);
                     ReportPropertyChanging("MessageId");
-                    _MessageId = StructuralObject.SetValidValue(value);
+                    _MessageId = StructuralObject.SetValidValue(value, "MessageId");
                     ReportPropertyChanged("MessageId");
                     OnMessageIdChanged();
                 }
@@ -3283,7 +3851,7 @@ namespace DodgeDynasty.Entities
             {
                 OnAuthorIdChanging(value);
                 ReportPropertyChanging("AuthorId");
-                _AuthorId = StructuralObject.SetValidValue(value);
+                _AuthorId = StructuralObject.SetValidValue(value, "AuthorId");
                 ReportPropertyChanged("AuthorId");
                 OnAuthorIdChanged();
             }
@@ -3307,7 +3875,7 @@ namespace DodgeDynasty.Entities
             {
                 OnAuthorNameChanging(value);
                 ReportPropertyChanging("AuthorName");
-                _AuthorName = StructuralObject.SetValidValue(value, true);
+                _AuthorName = StructuralObject.SetValidValue(value, true, "AuthorName");
                 ReportPropertyChanged("AuthorName");
                 OnAuthorNameChanged();
             }
@@ -3331,7 +3899,7 @@ namespace DodgeDynasty.Entities
             {
                 OnTitleChanging(value);
                 ReportPropertyChanging("Title");
-                _Title = StructuralObject.SetValidValue(value, true);
+                _Title = StructuralObject.SetValidValue(value, true, "Title");
                 ReportPropertyChanged("Title");
                 OnTitleChanged();
             }
@@ -3355,7 +3923,7 @@ namespace DodgeDynasty.Entities
             {
                 OnMessageTextChanging(value);
                 ReportPropertyChanging("MessageText");
-                _MessageText = StructuralObject.SetValidValue(value, false);
+                _MessageText = StructuralObject.SetValidValue(value, false, "MessageText");
                 ReportPropertyChanged("MessageText");
                 OnMessageTextChanged();
             }
@@ -3379,7 +3947,7 @@ namespace DodgeDynasty.Entities
             {
                 OnAllUsersChanging(value);
                 ReportPropertyChanging("AllUsers");
-                _AllUsers = StructuralObject.SetValidValue(value);
+                _AllUsers = StructuralObject.SetValidValue(value, "AllUsers");
                 ReportPropertyChanged("AllUsers");
                 OnAllUsersChanged();
             }
@@ -3403,7 +3971,7 @@ namespace DodgeDynasty.Entities
             {
                 OnLeagueIdChanging(value);
                 ReportPropertyChanging("LeagueId");
-                _LeagueId = StructuralObject.SetValidValue(value);
+                _LeagueId = StructuralObject.SetValidValue(value, "LeagueId");
                 ReportPropertyChanged("LeagueId");
                 OnLeagueIdChanged();
             }
@@ -3427,7 +3995,7 @@ namespace DodgeDynasty.Entities
             {
                 OnLeagueNameChanging(value);
                 ReportPropertyChanging("LeagueName");
-                _LeagueName = StructuralObject.SetValidValue(value, true);
+                _LeagueName = StructuralObject.SetValidValue(value, true, "LeagueName");
                 ReportPropertyChanged("LeagueName");
                 OnLeagueNameChanged();
             }
@@ -3451,7 +4019,7 @@ namespace DodgeDynasty.Entities
             {
                 OnAddTimestampChanging(value);
                 ReportPropertyChanging("AddTimestamp");
-                _AddTimestamp = StructuralObject.SetValidValue(value);
+                _AddTimestamp = StructuralObject.SetValidValue(value, "AddTimestamp");
                 ReportPropertyChanged("AddTimestamp");
                 OnAddTimestampChanged();
             }
@@ -3475,7 +4043,7 @@ namespace DodgeDynasty.Entities
             {
                 OnLastUpdateTimestampChanging(value);
                 ReportPropertyChanging("LastUpdateTimestamp");
-                _LastUpdateTimestamp = StructuralObject.SetValidValue(value);
+                _LastUpdateTimestamp = StructuralObject.SetValidValue(value, "LastUpdateTimestamp");
                 ReportPropertyChanged("LastUpdateTimestamp");
                 OnLastUpdateTimestampChanged();
             }
@@ -3486,7 +4054,6 @@ namespace DodgeDynasty.Entities
 
         #endregion
 
-    
         #region Navigation Properties
     
         /// <summary>
@@ -3602,7 +4169,7 @@ namespace DodgeDynasty.Entities
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -3619,7 +4186,7 @@ namespace DodgeDynasty.Entities
             {
                 OnTeamIdChanging(value);
                 ReportPropertyChanging("TeamId");
-                _TeamId = StructuralObject.SetValidValue(value);
+                _TeamId = StructuralObject.SetValidValue(value, "TeamId");
                 ReportPropertyChanged("TeamId");
                 OnTeamIdChanged();
             }
@@ -3645,7 +4212,7 @@ namespace DodgeDynasty.Entities
                 {
                     OnTeamAbbrChanging(value);
                     ReportPropertyChanging("TeamAbbr");
-                    _TeamAbbr = StructuralObject.SetValidValue(value, false);
+                    _TeamAbbr = StructuralObject.SetValidValue(value, false, "TeamAbbr");
                     ReportPropertyChanged("TeamAbbr");
                     OnTeamAbbrChanged();
                 }
@@ -3670,7 +4237,7 @@ namespace DodgeDynasty.Entities
             {
                 OnAbbrDisplayChanging(value);
                 ReportPropertyChanging("AbbrDisplay");
-                _AbbrDisplay = StructuralObject.SetValidValue(value, true);
+                _AbbrDisplay = StructuralObject.SetValidValue(value, true, "AbbrDisplay");
                 ReportPropertyChanged("AbbrDisplay");
                 OnAbbrDisplayChanged();
             }
@@ -3694,7 +4261,7 @@ namespace DodgeDynasty.Entities
             {
                 OnLocationNameChanging(value);
                 ReportPropertyChanging("LocationName");
-                _LocationName = StructuralObject.SetValidValue(value, false);
+                _LocationName = StructuralObject.SetValidValue(value, false, "LocationName");
                 ReportPropertyChanged("LocationName");
                 OnLocationNameChanged();
             }
@@ -3718,7 +4285,7 @@ namespace DodgeDynasty.Entities
             {
                 OnTeamNameChanging(value);
                 ReportPropertyChanging("TeamName");
-                _TeamName = StructuralObject.SetValidValue(value, false);
+                _TeamName = StructuralObject.SetValidValue(value, false, "TeamName");
                 ReportPropertyChanged("TeamName");
                 OnTeamNameChanged();
             }
@@ -3742,7 +4309,7 @@ namespace DodgeDynasty.Entities
             {
                 OnConferenceChanging(value);
                 ReportPropertyChanging("Conference");
-                _Conference = StructuralObject.SetValidValue(value, false);
+                _Conference = StructuralObject.SetValidValue(value, false, "Conference");
                 ReportPropertyChanged("Conference");
                 OnConferenceChanged();
             }
@@ -3766,7 +4333,7 @@ namespace DodgeDynasty.Entities
             {
                 OnDivisionChanging(value);
                 ReportPropertyChanging("Division");
-                _Division = StructuralObject.SetValidValue(value, false);
+                _Division = StructuralObject.SetValidValue(value, false, "Division");
                 ReportPropertyChanged("Division");
                 OnDivisionChanged();
             }
@@ -3777,7 +4344,6 @@ namespace DodgeDynasty.Entities
 
         #endregion
 
-    
         #region Navigation Properties
     
         /// <summary>
@@ -3827,7 +4393,8 @@ namespace DodgeDynasty.Entities
         /// <param name="nFLTeam">Initial value of the NFLTeam property.</param>
         /// <param name="isActive">Initial value of the IsActive property.</param>
         /// <param name="lastUpdateTimestamp">Initial value of the LastUpdateTimestamp property.</param>
-        public static Player CreatePlayer(global::System.Int32 playerId, global::System.String firstName, global::System.String lastName, global::System.String playerName, global::System.String position, global::System.String nFLTeam, global::System.Boolean isActive, global::System.DateTime lastUpdateTimestamp)
+        /// <param name="truePlayerId">Initial value of the TruePlayerId property.</param>
+        public static Player CreatePlayer(global::System.Int32 playerId, global::System.String firstName, global::System.String lastName, global::System.String playerName, global::System.String position, global::System.String nFLTeam, global::System.Boolean isActive, global::System.DateTime lastUpdateTimestamp, global::System.Int32 truePlayerId)
         {
             Player player = new Player();
             player.PlayerId = playerId;
@@ -3838,12 +4405,13 @@ namespace DodgeDynasty.Entities
             player.NFLTeam = nFLTeam;
             player.IsActive = isActive;
             player.LastUpdateTimestamp = lastUpdateTimestamp;
+            player.TruePlayerId = truePlayerId;
             return player;
         }
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -3862,7 +4430,7 @@ namespace DodgeDynasty.Entities
                 {
                     OnPlayerIdChanging(value);
                     ReportPropertyChanging("PlayerId");
-                    _PlayerId = StructuralObject.SetValidValue(value);
+                    _PlayerId = StructuralObject.SetValidValue(value, "PlayerId");
                     ReportPropertyChanged("PlayerId");
                     OnPlayerIdChanged();
                 }
@@ -3887,7 +4455,7 @@ namespace DodgeDynasty.Entities
             {
                 OnFirstNameChanging(value);
                 ReportPropertyChanging("FirstName");
-                _FirstName = StructuralObject.SetValidValue(value, false);
+                _FirstName = StructuralObject.SetValidValue(value, false, "FirstName");
                 ReportPropertyChanged("FirstName");
                 OnFirstNameChanged();
             }
@@ -3911,7 +4479,7 @@ namespace DodgeDynasty.Entities
             {
                 OnLastNameChanging(value);
                 ReportPropertyChanging("LastName");
-                _LastName = StructuralObject.SetValidValue(value, false);
+                _LastName = StructuralObject.SetValidValue(value, false, "LastName");
                 ReportPropertyChanged("LastName");
                 OnLastNameChanged();
             }
@@ -3935,7 +4503,7 @@ namespace DodgeDynasty.Entities
             {
                 OnPlayerNameChanging(value);
                 ReportPropertyChanging("PlayerName");
-                _PlayerName = StructuralObject.SetValidValue(value, true);
+                _PlayerName = StructuralObject.SetValidValue(value, true, "PlayerName");
                 ReportPropertyChanged("PlayerName");
                 OnPlayerNameChanged();
             }
@@ -3959,7 +4527,7 @@ namespace DodgeDynasty.Entities
             {
                 OnPositionChanging(value);
                 ReportPropertyChanging("Position");
-                _Position = StructuralObject.SetValidValue(value, false);
+                _Position = StructuralObject.SetValidValue(value, false, "Position");
                 ReportPropertyChanged("Position");
                 OnPositionChanged();
             }
@@ -3983,7 +4551,7 @@ namespace DodgeDynasty.Entities
             {
                 OnNFLTeamChanging(value);
                 ReportPropertyChanging("NFLTeam");
-                _NFLTeam = StructuralObject.SetValidValue(value, false);
+                _NFLTeam = StructuralObject.SetValidValue(value, false, "NFLTeam");
                 ReportPropertyChanged("NFLTeam");
                 OnNFLTeamChanged();
             }
@@ -4007,7 +4575,7 @@ namespace DodgeDynasty.Entities
             {
                 OnDateOfBirthChanging(value);
                 ReportPropertyChanging("DateOfBirth");
-                _DateOfBirth = StructuralObject.SetValidValue(value);
+                _DateOfBirth = StructuralObject.SetValidValue(value, "DateOfBirth");
                 ReportPropertyChanged("DateOfBirth");
                 OnDateOfBirthChanged();
             }
@@ -4031,7 +4599,7 @@ namespace DodgeDynasty.Entities
             {
                 OnIsActiveChanging(value);
                 ReportPropertyChanging("IsActive");
-                _IsActive = StructuralObject.SetValidValue(value);
+                _IsActive = StructuralObject.SetValidValue(value, "IsActive");
                 ReportPropertyChanged("IsActive");
                 OnIsActiveChanged();
             }
@@ -4055,7 +4623,7 @@ namespace DodgeDynasty.Entities
             {
                 OnAddTimestampChanging(value);
                 ReportPropertyChanging("AddTimestamp");
-                _AddTimestamp = StructuralObject.SetValidValue(value);
+                _AddTimestamp = StructuralObject.SetValidValue(value, "AddTimestamp");
                 ReportPropertyChanged("AddTimestamp");
                 OnAddTimestampChanged();
             }
@@ -4079,7 +4647,7 @@ namespace DodgeDynasty.Entities
             {
                 OnLastUpdateTimestampChanging(value);
                 ReportPropertyChanging("LastUpdateTimestamp");
-                _LastUpdateTimestamp = StructuralObject.SetValidValue(value);
+                _LastUpdateTimestamp = StructuralObject.SetValidValue(value, "LastUpdateTimestamp");
                 ReportPropertyChanged("LastUpdateTimestamp");
                 OnLastUpdateTimestampChanged();
             }
@@ -4087,10 +4655,33 @@ namespace DodgeDynasty.Entities
         private global::System.DateTime _LastUpdateTimestamp;
         partial void OnLastUpdateTimestampChanging(global::System.DateTime value);
         partial void OnLastUpdateTimestampChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 TruePlayerId
+        {
+            get
+            {
+                return _TruePlayerId;
+            }
+            set
+            {
+                OnTruePlayerIdChanging(value);
+                ReportPropertyChanging("TruePlayerId");
+                _TruePlayerId = StructuralObject.SetValidValue(value, "TruePlayerId");
+                ReportPropertyChanged("TruePlayerId");
+                OnTruePlayerIdChanged();
+            }
+        }
+        private global::System.Int32 _TruePlayerId;
+        partial void OnTruePlayerIdChanging(global::System.Int32 value);
+        partial void OnTruePlayerIdChanged();
 
         #endregion
 
-    
         #region Navigation Properties
     
         /// <summary>
@@ -4326,7 +4917,7 @@ namespace DodgeDynasty.Entities
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -4345,7 +4936,7 @@ namespace DodgeDynasty.Entities
                 {
                     OnAdjustmentIdChanging(value);
                     ReportPropertyChanging("AdjustmentId");
-                    _AdjustmentId = StructuralObject.SetValidValue(value);
+                    _AdjustmentId = StructuralObject.SetValidValue(value, "AdjustmentId");
                     ReportPropertyChanged("AdjustmentId");
                     OnAdjustmentIdChanged();
                 }
@@ -4370,7 +4961,7 @@ namespace DodgeDynasty.Entities
             {
                 OnOldPlayerIdChanging(value);
                 ReportPropertyChanging("OldPlayerId");
-                _OldPlayerId = StructuralObject.SetValidValue(value);
+                _OldPlayerId = StructuralObject.SetValidValue(value, "OldPlayerId");
                 ReportPropertyChanged("OldPlayerId");
                 OnOldPlayerIdChanged();
             }
@@ -4394,7 +4985,7 @@ namespace DodgeDynasty.Entities
             {
                 OnNewPlayerIdChanging(value);
                 ReportPropertyChanging("NewPlayerId");
-                _NewPlayerId = StructuralObject.SetValidValue(value);
+                _NewPlayerId = StructuralObject.SetValidValue(value, "NewPlayerId");
                 ReportPropertyChanged("NewPlayerId");
                 OnNewPlayerIdChanged();
             }
@@ -4418,7 +5009,7 @@ namespace DodgeDynasty.Entities
             {
                 OnNewFirstNameChanging(value);
                 ReportPropertyChanging("NewFirstName");
-                _NewFirstName = StructuralObject.SetValidValue(value, true);
+                _NewFirstName = StructuralObject.SetValidValue(value, true, "NewFirstName");
                 ReportPropertyChanged("NewFirstName");
                 OnNewFirstNameChanged();
             }
@@ -4442,7 +5033,7 @@ namespace DodgeDynasty.Entities
             {
                 OnNewLastNameChanging(value);
                 ReportPropertyChanging("NewLastName");
-                _NewLastName = StructuralObject.SetValidValue(value, true);
+                _NewLastName = StructuralObject.SetValidValue(value, true, "NewLastName");
                 ReportPropertyChanged("NewLastName");
                 OnNewLastNameChanged();
             }
@@ -4466,7 +5057,7 @@ namespace DodgeDynasty.Entities
             {
                 OnNewPositionChanging(value);
                 ReportPropertyChanging("NewPosition");
-                _NewPosition = StructuralObject.SetValidValue(value, true);
+                _NewPosition = StructuralObject.SetValidValue(value, true, "NewPosition");
                 ReportPropertyChanged("NewPosition");
                 OnNewPositionChanged();
             }
@@ -4490,7 +5081,7 @@ namespace DodgeDynasty.Entities
             {
                 OnNewNFLTeamChanging(value);
                 ReportPropertyChanging("NewNFLTeam");
-                _NewNFLTeam = StructuralObject.SetValidValue(value, true);
+                _NewNFLTeam = StructuralObject.SetValidValue(value, true, "NewNFLTeam");
                 ReportPropertyChanged("NewNFLTeam");
                 OnNewNFLTeamChanged();
             }
@@ -4514,7 +5105,7 @@ namespace DodgeDynasty.Entities
             {
                 OnActionChanging(value);
                 ReportPropertyChanging("Action");
-                _Action = StructuralObject.SetValidValue(value, true);
+                _Action = StructuralObject.SetValidValue(value, true, "Action");
                 ReportPropertyChanged("Action");
                 OnActionChanged();
             }
@@ -4538,7 +5129,7 @@ namespace DodgeDynasty.Entities
             {
                 OnUserIdChanging(value);
                 ReportPropertyChanging("UserId");
-                _UserId = StructuralObject.SetValidValue(value);
+                _UserId = StructuralObject.SetValidValue(value, "UserId");
                 ReportPropertyChanged("UserId");
                 OnUserIdChanged();
             }
@@ -4562,7 +5153,7 @@ namespace DodgeDynasty.Entities
             {
                 OnAddTimestampChanging(value);
                 ReportPropertyChanging("AddTimestamp");
-                _AddTimestamp = StructuralObject.SetValidValue(value);
+                _AddTimestamp = StructuralObject.SetValidValue(value, "AddTimestamp");
                 ReportPropertyChanged("AddTimestamp");
                 OnAddTimestampChanged();
             }
@@ -4586,7 +5177,7 @@ namespace DodgeDynasty.Entities
             {
                 OnLastUpdateTimestampChanging(value);
                 ReportPropertyChanging("LastUpdateTimestamp");
-                _LastUpdateTimestamp = StructuralObject.SetValidValue(value);
+                _LastUpdateTimestamp = StructuralObject.SetValidValue(value, "LastUpdateTimestamp");
                 ReportPropertyChanged("LastUpdateTimestamp");
                 OnLastUpdateTimestampChanged();
             }
@@ -4597,7 +5188,6 @@ namespace DodgeDynasty.Entities
 
         #endregion
 
-    
         #region Navigation Properties
     
         /// <summary>
@@ -4675,6 +5265,44 @@ namespace DodgeDynasty.Entities
                 }
             }
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_PlayerAdjustment_User", "User")]
+        public User User
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_PlayerAdjustment_User", "User").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_PlayerAdjustment_User", "User").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<User> UserReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_PlayerAdjustment_User", "User");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("HomeModel.FK_PlayerAdjustment_User", "User", value);
+                }
+            }
+        }
 
         #endregion
 
@@ -4711,7 +5339,7 @@ namespace DodgeDynasty.Entities
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -4730,7 +5358,7 @@ namespace DodgeDynasty.Entities
                 {
                     OnPlayerRankIdChanging(value);
                     ReportPropertyChanging("PlayerRankId");
-                    _PlayerRankId = StructuralObject.SetValidValue(value);
+                    _PlayerRankId = StructuralObject.SetValidValue(value, "PlayerRankId");
                     ReportPropertyChanged("PlayerRankId");
                     OnPlayerRankIdChanged();
                 }
@@ -4755,7 +5383,7 @@ namespace DodgeDynasty.Entities
             {
                 OnRankIdChanging(value);
                 ReportPropertyChanging("RankId");
-                _RankId = StructuralObject.SetValidValue(value);
+                _RankId = StructuralObject.SetValidValue(value, "RankId");
                 ReportPropertyChanged("RankId");
                 OnRankIdChanged();
             }
@@ -4779,7 +5407,7 @@ namespace DodgeDynasty.Entities
             {
                 OnPlayerIdChanging(value);
                 ReportPropertyChanging("PlayerId");
-                _PlayerId = StructuralObject.SetValidValue(value);
+                _PlayerId = StructuralObject.SetValidValue(value, "PlayerId");
                 ReportPropertyChanged("PlayerId");
                 OnPlayerIdChanged();
             }
@@ -4803,7 +5431,7 @@ namespace DodgeDynasty.Entities
             {
                 OnRankNumChanging(value);
                 ReportPropertyChanging("RankNum");
-                _RankNum = StructuralObject.SetValidValue(value);
+                _RankNum = StructuralObject.SetValidValue(value, "RankNum");
                 ReportPropertyChanged("RankNum");
                 OnRankNumChanged();
             }
@@ -4827,7 +5455,7 @@ namespace DodgeDynasty.Entities
             {
                 OnPosRankNumChanging(value);
                 ReportPropertyChanging("PosRankNum");
-                _PosRankNum = StructuralObject.SetValidValue(value);
+                _PosRankNum = StructuralObject.SetValidValue(value, "PosRankNum");
                 ReportPropertyChanged("PosRankNum");
                 OnPosRankNumChanged();
             }
@@ -4851,7 +5479,7 @@ namespace DodgeDynasty.Entities
             {
                 OnAuctionValueChanging(value);
                 ReportPropertyChanging("AuctionValue");
-                _AuctionValue = StructuralObject.SetValidValue(value);
+                _AuctionValue = StructuralObject.SetValidValue(value, "AuctionValue");
                 ReportPropertyChanged("AuctionValue");
                 OnAuctionValueChanged();
             }
@@ -4875,7 +5503,7 @@ namespace DodgeDynasty.Entities
             {
                 OnAddTimestampChanging(value);
                 ReportPropertyChanging("AddTimestamp");
-                _AddTimestamp = StructuralObject.SetValidValue(value);
+                _AddTimestamp = StructuralObject.SetValidValue(value, "AddTimestamp");
                 ReportPropertyChanged("AddTimestamp");
                 OnAddTimestampChanged();
             }
@@ -4899,7 +5527,7 @@ namespace DodgeDynasty.Entities
             {
                 OnLastUpdateTimestampChanging(value);
                 ReportPropertyChanging("LastUpdateTimestamp");
-                _LastUpdateTimestamp = StructuralObject.SetValidValue(value);
+                _LastUpdateTimestamp = StructuralObject.SetValidValue(value, "LastUpdateTimestamp");
                 ReportPropertyChanged("LastUpdateTimestamp");
                 OnLastUpdateTimestampChanged();
             }
@@ -4910,7 +5538,6 @@ namespace DodgeDynasty.Entities
 
         #endregion
 
-    
         #region Navigation Properties
     
         /// <summary>
@@ -5024,7 +5651,7 @@ namespace DodgeDynasty.Entities
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -5043,7 +5670,7 @@ namespace DodgeDynasty.Entities
                 {
                     OnPlayerRankIdChanging(value);
                     ReportPropertyChanging("PlayerRankId");
-                    _PlayerRankId = StructuralObject.SetValidValue(value);
+                    _PlayerRankId = StructuralObject.SetValidValue(value, "PlayerRankId");
                     ReportPropertyChanged("PlayerRankId");
                     OnPlayerRankIdChanged();
                 }
@@ -5068,7 +5695,7 @@ namespace DodgeDynasty.Entities
             {
                 OnPlayerRankGroupIdChanging(value);
                 ReportPropertyChanging("PlayerRankGroupId");
-                _PlayerRankGroupId = StructuralObject.SetValidValue(value);
+                _PlayerRankGroupId = StructuralObject.SetValidValue(value, "PlayerRankGroupId");
                 ReportPropertyChanged("PlayerRankGroupId");
                 OnPlayerRankGroupIdChanged();
             }
@@ -5092,7 +5719,7 @@ namespace DodgeDynasty.Entities
             {
                 OnRankIdChanging(value);
                 ReportPropertyChanging("RankId");
-                _RankId = StructuralObject.SetValidValue(value);
+                _RankId = StructuralObject.SetValidValue(value, "RankId");
                 ReportPropertyChanged("RankId");
                 OnRankIdChanged();
             }
@@ -5116,7 +5743,7 @@ namespace DodgeDynasty.Entities
             {
                 OnPlayerIdChanging(value);
                 ReportPropertyChanging("PlayerId");
-                _PlayerId = StructuralObject.SetValidValue(value);
+                _PlayerId = StructuralObject.SetValidValue(value, "PlayerId");
                 ReportPropertyChanged("PlayerId");
                 OnPlayerIdChanged();
             }
@@ -5140,7 +5767,7 @@ namespace DodgeDynasty.Entities
             {
                 OnRankNumChanging(value);
                 ReportPropertyChanging("RankNum");
-                _RankNum = StructuralObject.SetValidValue(value);
+                _RankNum = StructuralObject.SetValidValue(value, "RankNum");
                 ReportPropertyChanged("RankNum");
                 OnRankNumChanged();
             }
@@ -5164,7 +5791,7 @@ namespace DodgeDynasty.Entities
             {
                 OnPosRankNumChanging(value);
                 ReportPropertyChanging("PosRankNum");
-                _PosRankNum = StructuralObject.SetValidValue(value);
+                _PosRankNum = StructuralObject.SetValidValue(value, "PosRankNum");
                 ReportPropertyChanged("PosRankNum");
                 OnPosRankNumChanged();
             }
@@ -5188,7 +5815,7 @@ namespace DodgeDynasty.Entities
             {
                 OnAuctionValueChanging(value);
                 ReportPropertyChanging("AuctionValue");
-                _AuctionValue = StructuralObject.SetValidValue(value);
+                _AuctionValue = StructuralObject.SetValidValue(value, "AuctionValue");
                 ReportPropertyChanged("AuctionValue");
                 OnAuctionValueChanged();
             }
@@ -5212,7 +5839,7 @@ namespace DodgeDynasty.Entities
             {
                 OnAddTimestampChanging(value);
                 ReportPropertyChanging("AddTimestamp");
-                _AddTimestamp = StructuralObject.SetValidValue(value);
+                _AddTimestamp = StructuralObject.SetValidValue(value, "AddTimestamp");
                 ReportPropertyChanged("AddTimestamp");
                 OnAddTimestampChanged();
             }
@@ -5236,7 +5863,7 @@ namespace DodgeDynasty.Entities
             {
                 OnLastUpdateTimestampChanging(value);
                 ReportPropertyChanging("LastUpdateTimestamp");
-                _LastUpdateTimestamp = StructuralObject.SetValidValue(value);
+                _LastUpdateTimestamp = StructuralObject.SetValidValue(value, "LastUpdateTimestamp");
                 ReportPropertyChanged("LastUpdateTimestamp");
                 OnLastUpdateTimestampChanged();
             }
@@ -5247,7 +5874,206 @@ namespace DodgeDynasty.Entities
 
         #endregion
 
+    }
     
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="HomeModel", Name="PlayerSeason")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class PlayerSeason : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new PlayerSeason object.
+        /// </summary>
+        /// <param name="playerSeasonId">Initial value of the PlayerSeasonId property.</param>
+        /// <param name="playerId">Initial value of the PlayerId property.</param>
+        /// <param name="addTimestamp">Initial value of the AddTimestamp property.</param>
+        /// <param name="lastUpdateTimestamp">Initial value of the LastUpdateTimestamp property.</param>
+        public static PlayerSeason CreatePlayerSeason(global::System.Int32 playerSeasonId, global::System.Int32 playerId, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp)
+        {
+            PlayerSeason playerSeason = new PlayerSeason();
+            playerSeason.PlayerSeasonId = playerSeasonId;
+            playerSeason.PlayerId = playerId;
+            playerSeason.AddTimestamp = addTimestamp;
+            playerSeason.LastUpdateTimestamp = lastUpdateTimestamp;
+            return playerSeason;
+        }
+
+        #endregion
+
+        #region Simple Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 PlayerSeasonId
+        {
+            get
+            {
+                return _PlayerSeasonId;
+            }
+            set
+            {
+                if (_PlayerSeasonId != value)
+                {
+                    OnPlayerSeasonIdChanging(value);
+                    ReportPropertyChanging("PlayerSeasonId");
+                    _PlayerSeasonId = StructuralObject.SetValidValue(value, "PlayerSeasonId");
+                    ReportPropertyChanged("PlayerSeasonId");
+                    OnPlayerSeasonIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _PlayerSeasonId;
+        partial void OnPlayerSeasonIdChanging(global::System.Int32 value);
+        partial void OnPlayerSeasonIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 PlayerId
+        {
+            get
+            {
+                return _PlayerId;
+            }
+            set
+            {
+                OnPlayerIdChanging(value);
+                ReportPropertyChanging("PlayerId");
+                _PlayerId = StructuralObject.SetValidValue(value, "PlayerId");
+                ReportPropertyChanged("PlayerId");
+                OnPlayerIdChanged();
+            }
+        }
+        private global::System.Int32 _PlayerId;
+        partial void OnPlayerIdChanging(global::System.Int32 value);
+        partial void OnPlayerIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> SeasonId
+        {
+            get
+            {
+                return _SeasonId;
+            }
+            set
+            {
+                OnSeasonIdChanging(value);
+                ReportPropertyChanging("SeasonId");
+                _SeasonId = StructuralObject.SetValidValue(value, "SeasonId");
+                ReportPropertyChanged("SeasonId");
+                OnSeasonIdChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _SeasonId;
+        partial void OnSeasonIdChanging(Nullable<global::System.Int32> value);
+        partial void OnSeasonIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime AddTimestamp
+        {
+            get
+            {
+                return _AddTimestamp;
+            }
+            set
+            {
+                OnAddTimestampChanging(value);
+                ReportPropertyChanging("AddTimestamp");
+                _AddTimestamp = StructuralObject.SetValidValue(value, "AddTimestamp");
+                ReportPropertyChanged("AddTimestamp");
+                OnAddTimestampChanged();
+            }
+        }
+        private global::System.DateTime _AddTimestamp;
+        partial void OnAddTimestampChanging(global::System.DateTime value);
+        partial void OnAddTimestampChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime LastUpdateTimestamp
+        {
+            get
+            {
+                return _LastUpdateTimestamp;
+            }
+            set
+            {
+                OnLastUpdateTimestampChanging(value);
+                ReportPropertyChanging("LastUpdateTimestamp");
+                _LastUpdateTimestamp = StructuralObject.SetValidValue(value, "LastUpdateTimestamp");
+                ReportPropertyChanged("LastUpdateTimestamp");
+                OnLastUpdateTimestampChanged();
+            }
+        }
+        private global::System.DateTime _LastUpdateTimestamp;
+        partial void OnLastUpdateTimestampChanging(global::System.DateTime value);
+        partial void OnLastUpdateTimestampChanged();
+
+        #endregion
+
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_PlayerSeason_Season", "Season")]
+        public Season Season
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Season>("HomeModel.FK_PlayerSeason_Season", "Season").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Season>("HomeModel.FK_PlayerSeason_Season", "Season").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Season> SeasonReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Season>("HomeModel.FK_PlayerSeason_Season", "Season");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Season>("HomeModel.FK_PlayerSeason_Season", "Season", value);
+                }
+            }
+        }
+
+        #endregion
+
     }
     
     /// <summary>
@@ -5277,7 +6103,7 @@ namespace DodgeDynasty.Entities
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -5296,7 +6122,7 @@ namespace DodgeDynasty.Entities
                 {
                     OnPosIdChanging(value);
                     ReportPropertyChanging("PosId");
-                    _PosId = StructuralObject.SetValidValue(value);
+                    _PosId = StructuralObject.SetValidValue(value, "PosId");
                     ReportPropertyChanged("PosId");
                     OnPosIdChanged();
                 }
@@ -5321,7 +6147,7 @@ namespace DodgeDynasty.Entities
             {
                 OnPosCodeChanging(value);
                 ReportPropertyChanging("PosCode");
-                _PosCode = StructuralObject.SetValidValue(value, false);
+                _PosCode = StructuralObject.SetValidValue(value, false, "PosCode");
                 ReportPropertyChanged("PosCode");
                 OnPosCodeChanged();
             }
@@ -5345,7 +6171,7 @@ namespace DodgeDynasty.Entities
             {
                 OnPosDescChanging(value);
                 ReportPropertyChanging("PosDesc");
-                _PosDesc = StructuralObject.SetValidValue(value, false);
+                _PosDesc = StructuralObject.SetValidValue(value, false, "PosDesc");
                 ReportPropertyChanged("PosDesc");
                 OnPosDescChanged();
             }
@@ -5356,7 +6182,6 @@ namespace DodgeDynasty.Entities
 
         #endregion
 
-    
     }
     
     /// <summary>
@@ -5392,7 +6217,7 @@ namespace DodgeDynasty.Entities
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -5411,7 +6236,7 @@ namespace DodgeDynasty.Entities
                 {
                     OnRankIdChanging(value);
                     ReportPropertyChanging("RankId");
-                    _RankId = StructuralObject.SetValidValue(value);
+                    _RankId = StructuralObject.SetValidValue(value, "RankId");
                     ReportPropertyChanged("RankId");
                     OnRankIdChanged();
                 }
@@ -5436,7 +6261,7 @@ namespace DodgeDynasty.Entities
             {
                 OnRankNameChanging(value);
                 ReportPropertyChanging("RankName");
-                _RankName = StructuralObject.SetValidValue(value, false);
+                _RankName = StructuralObject.SetValidValue(value, false, "RankName");
                 ReportPropertyChanged("RankName");
                 OnRankNameChanged();
             }
@@ -5460,7 +6285,7 @@ namespace DodgeDynasty.Entities
             {
                 OnYearChanging(value);
                 ReportPropertyChanging("Year");
-                _Year = StructuralObject.SetValidValue(value);
+                _Year = StructuralObject.SetValidValue(value, "Year");
                 ReportPropertyChanged("Year");
                 OnYearChanged();
             }
@@ -5484,7 +6309,7 @@ namespace DodgeDynasty.Entities
             {
                 OnRankDateChanging(value);
                 ReportPropertyChanging("RankDate");
-                _RankDate = StructuralObject.SetValidValue(value);
+                _RankDate = StructuralObject.SetValidValue(value, "RankDate");
                 ReportPropertyChanged("RankDate");
                 OnRankDateChanged();
             }
@@ -5508,7 +6333,7 @@ namespace DodgeDynasty.Entities
             {
                 OnUrlChanging(value);
                 ReportPropertyChanging("Url");
-                _Url = StructuralObject.SetValidValue(value, true);
+                _Url = StructuralObject.SetValidValue(value, true, "Url");
                 ReportPropertyChanged("Url");
                 OnUrlChanged();
             }
@@ -5532,7 +6357,7 @@ namespace DodgeDynasty.Entities
             {
                 OnAddTimestampChanging(value);
                 ReportPropertyChanging("AddTimestamp");
-                _AddTimestamp = StructuralObject.SetValidValue(value);
+                _AddTimestamp = StructuralObject.SetValidValue(value, "AddTimestamp");
                 ReportPropertyChanged("AddTimestamp");
                 OnAddTimestampChanged();
             }
@@ -5556,7 +6381,7 @@ namespace DodgeDynasty.Entities
             {
                 OnLastUpdateTimestampChanging(value);
                 ReportPropertyChanging("LastUpdateTimestamp");
-                _LastUpdateTimestamp = StructuralObject.SetValidValue(value);
+                _LastUpdateTimestamp = StructuralObject.SetValidValue(value, "LastUpdateTimestamp");
                 ReportPropertyChanged("LastUpdateTimestamp");
                 OnLastUpdateTimestampChanged();
             }
@@ -5567,7 +6392,6 @@ namespace DodgeDynasty.Entities
 
         #endregion
 
-    
         #region Navigation Properties
     
         /// <summary>
@@ -5619,7 +6443,7 @@ namespace DodgeDynasty.Entities
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -5638,7 +6462,7 @@ namespace DodgeDynasty.Entities
                 {
                     OnRoleIdChanging(value);
                     ReportPropertyChanging("RoleId");
-                    _RoleId = StructuralObject.SetValidValue(value);
+                    _RoleId = StructuralObject.SetValidValue(value, "RoleId");
                     ReportPropertyChanged("RoleId");
                     OnRoleIdChanged();
                 }
@@ -5663,7 +6487,7 @@ namespace DodgeDynasty.Entities
             {
                 OnRoleDescriptionChanging(value);
                 ReportPropertyChanging("RoleDescription");
-                _RoleDescription = StructuralObject.SetValidValue(value, true);
+                _RoleDescription = StructuralObject.SetValidValue(value, true, "RoleDescription");
                 ReportPropertyChanged("RoleDescription");
                 OnRoleDescriptionChanged();
             }
@@ -5674,7 +6498,6 @@ namespace DodgeDynasty.Entities
 
         #endregion
 
-    
         #region Navigation Properties
     
         /// <summary>
@@ -5695,6 +6518,188 @@ namespace DodgeDynasty.Entities
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UserRole>("HomeModel.FK_UserRole_Role", "UserRole", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="HomeModel", Name="Season")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Season : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Season object.
+        /// </summary>
+        /// <param name="seasonId">Initial value of the SeasonId property.</param>
+        /// <param name="seasonYear">Initial value of the SeasonYear property.</param>
+        /// <param name="addTimestamp">Initial value of the AddTimestamp property.</param>
+        /// <param name="lastUpdateTimestamp">Initial value of the LastUpdateTimestamp property.</param>
+        public static Season CreateSeason(global::System.Int32 seasonId, global::System.Int16 seasonYear, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp)
+        {
+            Season season = new Season();
+            season.SeasonId = seasonId;
+            season.SeasonYear = seasonYear;
+            season.AddTimestamp = addTimestamp;
+            season.LastUpdateTimestamp = lastUpdateTimestamp;
+            return season;
+        }
+
+        #endregion
+
+        #region Simple Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 SeasonId
+        {
+            get
+            {
+                return _SeasonId;
+            }
+            set
+            {
+                if (_SeasonId != value)
+                {
+                    OnSeasonIdChanging(value);
+                    ReportPropertyChanging("SeasonId");
+                    _SeasonId = StructuralObject.SetValidValue(value, "SeasonId");
+                    ReportPropertyChanged("SeasonId");
+                    OnSeasonIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _SeasonId;
+        partial void OnSeasonIdChanging(global::System.Int32 value);
+        partial void OnSeasonIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int16 SeasonYear
+        {
+            get
+            {
+                return _SeasonYear;
+            }
+            set
+            {
+                OnSeasonYearChanging(value);
+                ReportPropertyChanging("SeasonYear");
+                _SeasonYear = StructuralObject.SetValidValue(value, "SeasonYear");
+                ReportPropertyChanged("SeasonYear");
+                OnSeasonYearChanged();
+            }
+        }
+        private global::System.Int16 _SeasonYear;
+        partial void OnSeasonYearChanging(global::System.Int16 value);
+        partial void OnSeasonYearChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime AddTimestamp
+        {
+            get
+            {
+                return _AddTimestamp;
+            }
+            set
+            {
+                OnAddTimestampChanging(value);
+                ReportPropertyChanging("AddTimestamp");
+                _AddTimestamp = StructuralObject.SetValidValue(value, "AddTimestamp");
+                ReportPropertyChanged("AddTimestamp");
+                OnAddTimestampChanged();
+            }
+        }
+        private global::System.DateTime _AddTimestamp;
+        partial void OnAddTimestampChanging(global::System.DateTime value);
+        partial void OnAddTimestampChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime LastUpdateTimestamp
+        {
+            get
+            {
+                return _LastUpdateTimestamp;
+            }
+            set
+            {
+                OnLastUpdateTimestampChanging(value);
+                ReportPropertyChanging("LastUpdateTimestamp");
+                _LastUpdateTimestamp = StructuralObject.SetValidValue(value, "LastUpdateTimestamp");
+                ReportPropertyChanged("LastUpdateTimestamp");
+                OnLastUpdateTimestampChanged();
+            }
+        }
+        private global::System.DateTime _LastUpdateTimestamp;
+        partial void OnLastUpdateTimestampChanging(global::System.DateTime value);
+        partial void OnLastUpdateTimestampChanged();
+
+        #endregion
+
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_Draft_Season", "Draft")]
+        public EntityCollection<Draft> Drafts
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Draft>("HomeModel.FK_Draft_Season", "Draft");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Draft>("HomeModel.FK_Draft_Season", "Draft", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_PlayerSeason_Season", "PlayerSeason")]
+        public EntityCollection<PlayerSeason> PlayerSeasons
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<PlayerSeason>("HomeModel.FK_PlayerSeason_Season", "PlayerSeason");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PlayerSeason>("HomeModel.FK_PlayerSeason_Season", "PlayerSeason", value);
                 }
             }
         }
@@ -5734,7 +6739,7 @@ namespace DodgeDynasty.Entities
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -5753,7 +6758,7 @@ namespace DodgeDynasty.Entities
                 {
                     OnUserIdChanging(value);
                     ReportPropertyChanging("UserId");
-                    _UserId = StructuralObject.SetValidValue(value);
+                    _UserId = StructuralObject.SetValidValue(value, "UserId");
                     ReportPropertyChanged("UserId");
                     OnUserIdChanged();
                 }
@@ -5778,7 +6783,7 @@ namespace DodgeDynasty.Entities
             {
                 OnUserNameChanging(value);
                 ReportPropertyChanging("UserName");
-                _UserName = StructuralObject.SetValidValue(value, false);
+                _UserName = StructuralObject.SetValidValue(value, false, "UserName");
                 ReportPropertyChanged("UserName");
                 OnUserNameChanged();
             }
@@ -5802,7 +6807,7 @@ namespace DodgeDynasty.Entities
             {
                 OnFirstNameChanging(value);
                 ReportPropertyChanging("FirstName");
-                _FirstName = StructuralObject.SetValidValue(value, true);
+                _FirstName = StructuralObject.SetValidValue(value, true, "FirstName");
                 ReportPropertyChanged("FirstName");
                 OnFirstNameChanged();
             }
@@ -5826,7 +6831,7 @@ namespace DodgeDynasty.Entities
             {
                 OnLastNameChanging(value);
                 ReportPropertyChanging("LastName");
-                _LastName = StructuralObject.SetValidValue(value, true);
+                _LastName = StructuralObject.SetValidValue(value, true, "LastName");
                 ReportPropertyChanged("LastName");
                 OnLastNameChanged();
             }
@@ -5850,7 +6855,7 @@ namespace DodgeDynasty.Entities
             {
                 OnFullNameChanging(value);
                 ReportPropertyChanging("FullName");
-                _FullName = StructuralObject.SetValidValue(value, true);
+                _FullName = StructuralObject.SetValidValue(value, true, "FullName");
                 ReportPropertyChanged("FullName");
                 OnFullNameChanged();
             }
@@ -5874,7 +6879,7 @@ namespace DodgeDynasty.Entities
             {
                 OnNickNameChanging(value);
                 ReportPropertyChanging("NickName");
-                _NickName = StructuralObject.SetValidValue(value, true);
+                _NickName = StructuralObject.SetValidValue(value, true, "NickName");
                 ReportPropertyChanged("NickName");
                 OnNickNameChanged();
             }
@@ -5898,7 +6903,7 @@ namespace DodgeDynasty.Entities
             {
                 OnPasswordChanging(value);
                 ReportPropertyChanging("Password");
-                _Password = StructuralObject.SetValidValue(value, true);
+                _Password = StructuralObject.SetValidValue(value, true, "Password");
                 ReportPropertyChanged("Password");
                 OnPasswordChanged();
             }
@@ -5922,7 +6927,7 @@ namespace DodgeDynasty.Entities
             {
                 OnSaltChanging(value);
                 ReportPropertyChanging("Salt");
-                _Salt = StructuralObject.SetValidValue(value, true);
+                _Salt = StructuralObject.SetValidValue(value, true, "Salt");
                 ReportPropertyChanged("Salt");
                 OnSaltChanged();
             }
@@ -5946,7 +6951,7 @@ namespace DodgeDynasty.Entities
             {
                 OnLastLoginChanging(value);
                 ReportPropertyChanging("LastLogin");
-                _LastLogin = StructuralObject.SetValidValue(value);
+                _LastLogin = StructuralObject.SetValidValue(value, "LastLogin");
                 ReportPropertyChanged("LastLogin");
                 OnLastLoginChanged();
             }
@@ -5970,7 +6975,7 @@ namespace DodgeDynasty.Entities
             {
                 OnIsActiveChanging(value);
                 ReportPropertyChanging("IsActive");
-                _IsActive = StructuralObject.SetValidValue(value);
+                _IsActive = StructuralObject.SetValidValue(value, "IsActive");
                 ReportPropertyChanged("IsActive");
                 OnIsActiveChanged();
             }
@@ -5994,7 +6999,7 @@ namespace DodgeDynasty.Entities
             {
                 OnAddTimestampChanging(value);
                 ReportPropertyChanging("AddTimestamp");
-                _AddTimestamp = StructuralObject.SetValidValue(value);
+                _AddTimestamp = StructuralObject.SetValidValue(value, "AddTimestamp");
                 ReportPropertyChanged("AddTimestamp");
                 OnAddTimestampChanged();
             }
@@ -6018,7 +7023,7 @@ namespace DodgeDynasty.Entities
             {
                 OnLastUpdateTimestampChanging(value);
                 ReportPropertyChanging("LastUpdateTimestamp");
-                _LastUpdateTimestamp = StructuralObject.SetValidValue(value);
+                _LastUpdateTimestamp = StructuralObject.SetValidValue(value, "LastUpdateTimestamp");
                 ReportPropertyChanged("LastUpdateTimestamp");
                 OnLastUpdateTimestampChanged();
             }
@@ -6042,7 +7047,7 @@ namespace DodgeDynasty.Entities
             {
                 OnLastMessageViewChanging(value);
                 ReportPropertyChanging("LastMessageView");
-                _LastMessageView = StructuralObject.SetValidValue(value);
+                _LastMessageView = StructuralObject.SetValidValue(value, "LastMessageView");
                 ReportPropertyChanged("LastMessageView");
                 OnLastMessageViewChanged();
             }
@@ -6053,7 +7058,6 @@ namespace DodgeDynasty.Entities
 
         #endregion
 
-    
         #region Navigation Properties
     
         /// <summary>
@@ -6099,6 +7103,182 @@ namespace DodgeDynasty.Entities
                 }
             }
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_Draft_RunnerUp", "Draft")]
+        public EntityCollection<Draft> Drafts
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Draft>("HomeModel.FK_Draft_RunnerUp", "Draft");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Draft>("HomeModel.FK_Draft_RunnerUp", "Draft", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_Draft_Winner", "Draft")]
+        public EntityCollection<Draft> Drafts1
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Draft>("HomeModel.FK_Draft_Winner", "Draft");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Draft>("HomeModel.FK_Draft_Winner", "Draft", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_DraftChat_User", "DraftChat")]
+        public EntityCollection<DraftChat> DraftChats
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<DraftChat>("HomeModel.FK_DraftChat_User", "DraftChat");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DraftChat>("HomeModel.FK_DraftChat_User", "DraftChat", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_DraftOwner_User", "DraftOwner")]
+        public EntityCollection<DraftOwner> DraftOwners
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<DraftOwner>("HomeModel.FK_DraftOwner_User", "DraftOwner");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DraftOwner>("HomeModel.FK_DraftOwner_User", "DraftOwner", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_DraftPick_User", "DraftPick")]
+        public EntityCollection<DraftPick> DraftPicks
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<DraftPick>("HomeModel.FK_DraftPick_User", "DraftPick");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DraftPick>("HomeModel.FK_DraftPick_User", "DraftPick", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_DraftRank_User", "DraftRank")]
+        public EntityCollection<DraftRank> DraftRanks
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<DraftRank>("HomeModel.FK_DraftRank_User", "DraftRank");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DraftRank>("HomeModel.FK_DraftRank_User", "DraftRank", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_LeagueOwner_User", "LeagueOwner")]
+        public EntityCollection<LeagueOwner> LeagueOwners
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<LeagueOwner>("HomeModel.FK_LeagueOwner_User", "LeagueOwner");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<LeagueOwner>("HomeModel.FK_LeagueOwner_User", "LeagueOwner", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_PlayerAdjustment_User", "PlayerAdjustment")]
+        public EntityCollection<PlayerAdjustment> PlayerAdjustments
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<PlayerAdjustment>("HomeModel.FK_PlayerAdjustment_User", "PlayerAdjustment");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PlayerAdjustment>("HomeModel.FK_PlayerAdjustment_User", "PlayerAdjustment", value);
+                }
+            }
+        }
 
         #endregion
 
@@ -6137,7 +7317,7 @@ namespace DodgeDynasty.Entities
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -6156,7 +7336,7 @@ namespace DodgeDynasty.Entities
                 {
                     OnUserIdChanging(value);
                     ReportPropertyChanging("UserId");
-                    _UserId = StructuralObject.SetValidValue(value, false);
+                    _UserId = StructuralObject.SetValidValue(value, false, "UserId");
                     ReportPropertyChanged("UserId");
                     OnUserIdChanged();
                 }
@@ -6181,7 +7361,7 @@ namespace DodgeDynasty.Entities
             {
                 OnPwordChanging(value);
                 ReportPropertyChanging("Pword");
-                _Pword = StructuralObject.SetValidValue(value, false);
+                _Pword = StructuralObject.SetValidValue(value, false, "Pword");
                 ReportPropertyChanged("Pword");
                 OnPwordChanged();
             }
@@ -6205,7 +7385,7 @@ namespace DodgeDynasty.Entities
             {
                 OnFirstNameChanging(value);
                 ReportPropertyChanging("FirstName");
-                _FirstName = StructuralObject.SetValidValue(value, false);
+                _FirstName = StructuralObject.SetValidValue(value, false, "FirstName");
                 ReportPropertyChanged("FirstName");
                 OnFirstNameChanged();
             }
@@ -6229,7 +7409,7 @@ namespace DodgeDynasty.Entities
             {
                 OnLastNameChanging(value);
                 ReportPropertyChanging("LastName");
-                _LastName = StructuralObject.SetValidValue(value, false);
+                _LastName = StructuralObject.SetValidValue(value, false, "LastName");
                 ReportPropertyChanged("LastName");
                 OnLastNameChanged();
             }
@@ -6253,7 +7433,7 @@ namespace DodgeDynasty.Entities
             {
                 OnEmailChanging(value);
                 ReportPropertyChanging("Email");
-                _Email = StructuralObject.SetValidValue(value, true);
+                _Email = StructuralObject.SetValidValue(value, true, "Email");
                 ReportPropertyChanged("Email");
                 OnEmailChanged();
             }
@@ -6277,7 +7457,7 @@ namespace DodgeDynasty.Entities
             {
                 OnAddress1Changing(value);
                 ReportPropertyChanging("Address1");
-                _Address1 = StructuralObject.SetValidValue(value, true);
+                _Address1 = StructuralObject.SetValidValue(value, true, "Address1");
                 ReportPropertyChanged("Address1");
                 OnAddress1Changed();
             }
@@ -6301,7 +7481,7 @@ namespace DodgeDynasty.Entities
             {
                 OnAddress2Changing(value);
                 ReportPropertyChanging("Address2");
-                _Address2 = StructuralObject.SetValidValue(value, true);
+                _Address2 = StructuralObject.SetValidValue(value, true, "Address2");
                 ReportPropertyChanged("Address2");
                 OnAddress2Changed();
             }
@@ -6325,7 +7505,7 @@ namespace DodgeDynasty.Entities
             {
                 OnPhoneChanging(value);
                 ReportPropertyChanging("Phone");
-                _Phone = StructuralObject.SetValidValue(value, true);
+                _Phone = StructuralObject.SetValidValue(value, true, "Phone");
                 ReportPropertyChanged("Phone");
                 OnPhoneChanged();
             }
@@ -6349,7 +7529,7 @@ namespace DodgeDynasty.Entities
             {
                 OnSecretChanging(value);
                 ReportPropertyChanging("Secret");
-                _Secret = StructuralObject.SetValidValue(value, true);
+                _Secret = StructuralObject.SetValidValue(value, true, "Secret");
                 ReportPropertyChanged("Secret");
                 OnSecretChanged();
             }
@@ -6373,7 +7553,7 @@ namespace DodgeDynasty.Entities
             {
                 OnAcceptedChanging(value);
                 ReportPropertyChanging("Accepted");
-                _Accepted = StructuralObject.SetValidValue(value, false);
+                _Accepted = StructuralObject.SetValidValue(value, false, "Accepted");
                 ReportPropertyChanged("Accepted");
                 OnAcceptedChanged();
             }
@@ -6397,7 +7577,7 @@ namespace DodgeDynasty.Entities
             {
                 OnRejectedChanging(value);
                 ReportPropertyChanging("Rejected");
-                _Rejected = StructuralObject.SetValidValue(value, false);
+                _Rejected = StructuralObject.SetValidValue(value, false, "Rejected");
                 ReportPropertyChanged("Rejected");
                 OnRejectedChanged();
             }
@@ -6421,7 +7601,7 @@ namespace DodgeDynasty.Entities
             {
                 OnAddDateTimeChanging(value);
                 ReportPropertyChanging("AddDateTime");
-                _AddDateTime = StructuralObject.SetValidValue(value);
+                _AddDateTime = StructuralObject.SetValidValue(value, "AddDateTime");
                 ReportPropertyChanged("AddDateTime");
                 OnAddDateTimeChanged();
             }
@@ -6432,7 +7612,6 @@ namespace DodgeDynasty.Entities
 
         #endregion
 
-    
     }
     
     /// <summary>
@@ -6458,7 +7637,7 @@ namespace DodgeDynasty.Entities
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -6477,7 +7656,7 @@ namespace DodgeDynasty.Entities
                 {
                     OnUserIdChanging(value);
                     ReportPropertyChanging("UserId");
-                    _UserId = StructuralObject.SetValidValue(value);
+                    _UserId = StructuralObject.SetValidValue(value, "UserId");
                     ReportPropertyChanged("UserId");
                     OnUserIdChanged();
                 }
@@ -6502,7 +7681,7 @@ namespace DodgeDynasty.Entities
             {
                 OnUserNameChanging(value);
                 ReportPropertyChanging("UserName");
-                _UserName = StructuralObject.SetValidValue(value, true);
+                _UserName = StructuralObject.SetValidValue(value, true, "UserName");
                 ReportPropertyChanged("UserName");
                 OnUserNameChanged();
             }
@@ -6513,7 +7692,6 @@ namespace DodgeDynasty.Entities
 
         #endregion
 
-    
     }
     
     /// <summary>
@@ -6541,7 +7719,7 @@ namespace DodgeDynasty.Entities
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -6560,7 +7738,7 @@ namespace DodgeDynasty.Entities
                 {
                     OnUserIdChanging(value);
                     ReportPropertyChanging("UserId");
-                    _UserId = StructuralObject.SetValidValue(value);
+                    _UserId = StructuralObject.SetValidValue(value, "UserId");
                     ReportPropertyChanged("UserId");
                     OnUserIdChanged();
                 }
@@ -6587,7 +7765,7 @@ namespace DodgeDynasty.Entities
                 {
                     OnRoleIdChanging(value);
                     ReportPropertyChanging("RoleId");
-                    _RoleId = StructuralObject.SetValidValue(value);
+                    _RoleId = StructuralObject.SetValidValue(value, "RoleId");
                     ReportPropertyChanged("RoleId");
                     OnRoleIdChanged();
                 }
@@ -6599,7 +7777,6 @@ namespace DodgeDynasty.Entities
 
         #endregion
 
-    
         #region Navigation Properties
     
         /// <summary>
@@ -6760,5 +7937,4 @@ namespace DodgeDynasty.Entities
 
     #endregion
 
-    
 }

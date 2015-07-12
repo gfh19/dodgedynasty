@@ -12,7 +12,7 @@
 	@{
 		var webSocketsKillSwitch = System.Configuration.ConfigurationManager.AppSettings[DodgeDynasty.Shared.Constants.AppSettings.WebSocketsKillSwitch];
 		var draftChatKillSwitch = System.Configuration.ConfigurationManager.AppSettings[DodgeDynasty.Shared.Constants.AppSettings.DraftChatKillSwitch];
-		if (!DodgeDynasty.Shared.Utilities.ToBool(webSocketsKillSwitch))
+		if (DodgeDynasty.Shared.Utilities.IsUserLoggedIn() && !DodgeDynasty.Shared.Utilities.ToBool(webSocketsKillSwitch))
 		{
 			<script src="@Url.Content("~/signalr/hubs")"></script>
 		}
@@ -111,7 +111,7 @@
 									<ul class="dropdown-menu" role="menu">
 										<li>@Html.ActionLink("Change User Password", "ChangePassword", "Admin")</li>
 										<li>@Html.ActionLink("Manage Users", "ManageUsers", "Admin")</li>
-										<li>@Html.ActionLink("Manage Leagues", "ManageLeagues", "Admin")</li>
+										<li>@Html.ActionLink("Manage Leagues/Drafts", "ManageLeagues", "Admin")</li>
 										<li>@Html.ActionLink("Setup Draft", "SetupDraft", "Admin")</li>
 										<li>@Html.ActionLink("Activate Draft", "ActivateDraft", "Admin")</li>
 										<li>@Html.ActionLink("Enter Draft Pick", "Input", "Admin")</li>

@@ -24,7 +24,7 @@ namespace DodgeDynasty.Models
 		public string DraftLocation { get; set; }
 		[Display(Name = "Draft Year")]
 		[Required]
-		public int DraftYear { get; set; }
+		public short DraftYear { get; set; }
 		[Display(Name = "Owners")]
 		[Required]
 		public int NumOwners { get; set; }

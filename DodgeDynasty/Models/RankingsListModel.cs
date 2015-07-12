@@ -10,7 +10,9 @@ namespace DodgeDynasty.Models
 	public class RankingsListModel : DraftModel
 	{
 		public RankingsListModel(int? draftId = null) : base(draftId)
-		{}
+		{
+			GetCurrentDraft(DraftId);
+		}
 
 		public List<DraftRankModel> GetCurrentAvailableDraftRanks()
 		{

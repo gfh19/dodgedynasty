@@ -35,9 +35,11 @@ function getPickInfo() {
 };
 
 function callRefreshUserPickWithPickTimer() {
-	if (draftActive && !isUserTurn) {
-		getPickInfo();
-		refreshUserPickWithPickTimer();
+	if (draftHistoryId == '') {
+		if (draftActive && !isUserTurn) {
+			getPickInfo();
+			refreshUserPickWithPickTimer();
+		}
 	}
 };
 

@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using DodgeDynasty.Entities;
+using DodgeDynasty.Mappers.Shared;
 using DodgeDynasty.Models;
 
-namespace DodgeDynasty.Mappers
+namespace DodgeDynasty.Mappers.Admin
 {
 	public class AddDraftMapper<T> : MapperBase<T> where T : AddEditDraftModel, new()
 	{
@@ -23,7 +24,7 @@ namespace DodgeDynasty.Mappers
 			var defaultDraftDate = DateTime.Now.AddDays(1).Date + new TimeSpan(20, 0, 0);
 			Model.DraftDate = defaultDraftDate.ToString("yyyy-MM-dd");
 			Model.DraftTime = defaultDraftDate.ToString("HH:mm");
-			Model.DraftYear = defaultDraftDate.Year;
+			Model.DraftYear = (short)defaultDraftDate.Year;
 			Model.DraftLocation = "Online";
 			Model.NumOwners = Model.LeagueOwnerUsers.Count;
 			Model.NumRounds = 15;
@@ -34,6 +35,7 @@ namespace DodgeDynasty.Mappers
 
 		protected override void DoUpdate(T model)
 		{
+			var seasonId = PlayerSeasonHelper.GetOrCreateSeason(HomeEntity, model.DraftYear);
 			Draft draft = new Draft {
 				LeagueId = model.LeagueId,
 				DraftDate = DateTime.ParseExact(
@@ -41,6 +43,7 @@ namespace DodgeDynasty.Mappers
 					"yyyy-MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture),
 				DraftLocation = model.DraftLocation,
 				DraftYear = Convert.ToInt16(model.DraftYear),
+				SeasonId = seasonId,
 				NumOwners = Convert.ToInt16(model.NumOwners),
 				NumRounds = Convert.ToInt16(model.NumRounds),
 				NumKeepers = Convert.ToInt16(model.NumKeepers),

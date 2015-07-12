@@ -164,8 +164,8 @@
     <Compile Include="Mappers\Admin\UserInfoMapper.cs" />
     <Compile Include="Mappers\Admin\UserStatusMapper.cs" />
     <Compile Include="Mappers\DraftHistoryMapper.cs" />
-    <Compile Include="Mappers\EditDraftMapper.cs" />
-    <Compile Include="Mappers\AddDraftMapper.cs" />
+    <Compile Include="Mappers\Admin\EditDraftMapper.cs" />
+    <Compile Include="Mappers\Admin\AddDraftMapper.cs" />
     <Compile Include="Mappers\EditLeagueMapper.cs" />
     <Compile Include="Mappers\AddLeagueMapper.cs">
       <SubType>Code</SubType>
@@ -184,6 +184,7 @@
     <Compile Include="Mappers\RankSetupMapper.cs" />
     <Compile Include="Mappers\Shared\ColorStylesMapper.cs" />
     <Compile Include="Mappers\Shared\DraftChatMapper.cs" />
+    <Compile Include="Mappers\Shared\PlayerSeasonHelper.cs" />
     <Compile Include="Mappers\Shared\SharedUserInfoMapper.cs" />
     <Compile Include="Mappers\Site\MessagesCountMapper.cs">
       <SubType>Code</SubType>
@@ -389,6 +390,7 @@
     <Content Include="Scripts\Site.js" />
     <Content Include="Scripts\AddUser.js" />
     <Content Include="Scripts\UserInfo.js" />
+    <Content Include="SQL\usp_LoadPlayerRanks_V2.sql" />
     <Content Include="Views\Shared\Unauthorized.cshtml" />
     <Content Include="Views\Draft\Pick.cshtml" />
     <Content Include="Views\Draft\CurrentDraftPickPartial.cshtml" />

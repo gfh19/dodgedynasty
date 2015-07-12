@@ -1,8 +1,146 @@
 ﻿SET XACT_ABORT ON
 BEGIN TRANSACTION;
 
-/* 7/4/15 */
+/* 7/11/15 */
 
+/****** Object:  Table [dbo].[Season]    Script Date: 7/11/2015 9:30:11 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Season](
+	[SeasonId] [int] IDENTITY(1,1) NOT NULL,
+	[SeasonYear] [smallint] NOT NULL,
+	[AddTimestamp] [datetime] NOT NULL,
+	[LastUpdateTimestamp] [datetime] NOT NULL,
+ CONSTRAINT [PK_Season] PRIMARY KEY CLUSTERED 
+(
+	[SeasonId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+INSERT INTO [dbo].[Season]
+     VALUES (2000, getdate(), getdate()), (2001, getdate(), getdate()), (2002, getdate(), getdate()), (2003, getdate(), getdate())
+			, (2004, getdate(), getdate()), (2005, getdate(), getdate()), (2006, getdate(), getdate()), (2007, getdate(), getdate())
+			, (2008, getdate(), getdate()), (2009, getdate(), getdate()), (2010, getdate(), getdate()), (2011, getdate(), getdate())
+			, (2012, getdate(), getdate()), (2013, getdate(), getdate()), (2014, getdate(), getdate()), (2015, getdate(), getdate())
+			
+GO
+
+
+ALTER TABLE dbo.[Draft]
+ADD [SeasonId] int NULL
+GO
+
+ALTER TABLE [dbo].[Draft]  WITH CHECK ADD  CONSTRAINT [FK_Draft_Season] FOREIGN KEY([SeasonId])
+REFERENCES [dbo].[Season] ([SeasonId])
+GO
+
+ALTER TABLE [dbo].[Draft] CHECK CONSTRAINT [FK_Draft_Season]
+GO
+
+
+ALTER TABLE dbo.[Player]
+ADD [TruePlayerId] int NULL
+GO
+
+UPDATE dbo.[Player]
+SET [TruePlayerId] = [PlayerId]
+WHERE [TruePlayerId] IS NULL
+
+
+/****** Object:  UserDefinedFunction [dbo].[GetPlayerName]    Script Date: 7/12/2015 5:12:48 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE FUNCTION [dbo].[GetPlayerName] (@PlayerId INT)
+RETURNS VARCHAR(51) 
+AS BEGIN
+    DECLARE @PlayerName VARCHAR(41)
+
+    SELECT @PlayerName = PlayerName FROM dbo.[Player] WHERE PlayerId = @PlayerId
+
+    RETURN @PlayerName
+END
+
+GO
+
+
+/*	PlayerSeason table for now to be used for Player Intellisense & Add Personal Rankings options during current drafts.
+	By setting current PlayerSeason now, no need to scrub away old drafts/players every year.
+	Each time New Industry Rankings added, players will be set to current season (i.e. 2015), and new 2015 draft
+	will look for ONLY 2015 season players (or null season, i.e. Team DEFs).  
+	And next year -- these now old players will drop off the radar automatically.	*/
+
+/****** Object:  Table [dbo].[PlayerSeason]    Script Date: 7/11/2015 10:23:35 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[PlayerSeason](
+	[PlayerSeasonId] [int] IDENTITY(1,1) NOT NULL,
+	[PlayerId] [int] NOT NULL,
+	[PlayerName] AS dbo.GetPlayerName(PlayerId),
+	[SeasonId] [int] NULL,
+	[AddTimestamp] [datetime] NOT NULL,
+	[LastUpdateTimestamp] [datetime] NOT NULL,
+ CONSTRAINT [PK_PlayerSeason] PRIMARY KEY CLUSTERED 
+(
+	[PlayerSeasonId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[PlayerSeason]  WITH CHECK ADD  CONSTRAINT [FK_PlayerSeason_Season] FOREIGN KEY([SeasonId])
+REFERENCES [dbo].[Season] ([SeasonId])
+GO
+
+ALTER TABLE [dbo].[PlayerSeason] CHECK CONSTRAINT [FK_PlayerSeason_Season]
+GO
+
+
+ALTER TABLE dbo.[PlayerAdjustment]
+ADD [TruePlayerId] int NULL
+GO
+
+
+
+INSERT INTO [dbo].[PlayerSeason]
+           ([PlayerId],[SeasonId],[AddTimestamp],[LastUpdateTimestamp])
+	SELECT [PlayerId], NULL, getdate(), getdate()
+		FROM [Home].[dbo].[Player]
+		WHERE Position = 'DEF'
+			AND NFLTeam <> 'FA'
+			AND AddTimestamp < '2014-12-31'
+		ORDER BY FirstName, LastName
+GO
+
+
+INSERT INTO [dbo].[PlayerSeason]
+           ([PlayerId],[SeasonId],[AddTimestamp],[LastUpdateTimestamp])
+     SELECT PlayerId, 15, getdate(), getdate()
+		FROM [Player]
+		WHERE PlayerId NOT IN (SELECT PlayerId FROM PlayerSeason)
+GO
+
+UPDATE Player SET FirstName = 'Le''Veon' WHERE FirstName = 'LeVeon'
+UPDATE Player SET FirstName = 'Da''Rick' WHERE FirstName = 'DaRick'
+UPDATE Player SET FirstName = 'Ka''Deem' WHERE FirstName = 'KaDeem'
+
+
+
+
+/* 7/4/15 */
 
 ALTER TABLE [dbo].[Draft] WITH CHECK ADD  CONSTRAINT [FK_Draft_League] FOREIGN KEY([LeagueId])
 REFERENCES [dbo].[League] ([LeagueId])
@@ -66,6 +204,9 @@ GO
 
 
 COMMIT TRANSACTION;
+
+
+
 
 
 

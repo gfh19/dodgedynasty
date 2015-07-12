@@ -28,7 +28,7 @@ namespace DodgeDynasty.Models
 		public DraftInputModel(int? draftId)
 			: base(draftId)
 		{
-			base.GetCurrentDraft();
+			base.GetCurrentDraft(DraftId);
 
 			if (CurrentDraftPick != null)
 			{

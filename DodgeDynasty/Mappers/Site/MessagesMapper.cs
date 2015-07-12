@@ -45,14 +45,15 @@ namespace DodgeDynasty.Mappers.Site
 
 		protected override void DoUpdate(MessagesModel model)
 		{
+			var currentTime = Utilities.GetEasternTime();
 			var user = HomeEntity.Users.GetLoggedInUser();
 			Message message = new Message{
 				AuthorId = user.UserId,
 				Title = model.Title,
 				MessageText = model.MessageText,
 				AllUsers = false,
-				AddTimestamp = DateTime.Now,
-				LastUpdateTimestamp = DateTime.Now
+				AddTimestamp = currentTime,
+				LastUpdateTimestamp = currentTime
 			};
 			if (model.LeagueId < 0)
 			{
