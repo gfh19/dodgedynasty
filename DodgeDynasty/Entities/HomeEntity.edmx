@@ -159,6 +159,7 @@
             <PropertyRef Name="PlayerId" />
           </Key>
           <Property Name="PlayerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TruePlayerId" Type="int" />
           <Property Name="FirstName" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="LastName" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="PlayerName" Type="varchar" MaxLength="51" StoreGeneratedPattern="Computed" Nullable="false" />
@@ -168,7 +169,6 @@
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="AddTimestamp" Type="datetime" />
           <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
-          <Property Name="TruePlayerId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="PlayerAdjustment">
           <Key>
@@ -177,10 +177,12 @@
           <Property Name="AdjustmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="OldPlayerId" Type="int" />
           <Property Name="NewPlayerId" Type="int" />
+          <Property Name="TruePlayerId" Type="int" />
           <Property Name="NewFirstName" Type="varchar" MaxLength="25" />
           <Property Name="NewLastName" Type="varchar" MaxLength="25" />
           <Property Name="NewPosition" Type="varchar" MaxLength="10" />
           <Property Name="NewNFLTeam" Type="varchar" MaxLength="3" />
+          <Property Name="SeasonId" Type="int" />
           <Property Name="Action" Type="varchar" MaxLength="25" />
           <Property Name="UserId" Type="int" />
           <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
@@ -219,6 +221,7 @@
           </Key>
           <Property Name="PlayerSeasonId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PlayerId" Type="int" Nullable="false" />
+          <Property Name="PlayerName" Type="varchar" MaxLength="51" StoreGeneratedPattern="Computed" />
           <Property Name="SeasonId" Type="int" />
           <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
           <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
@@ -1001,7 +1004,7 @@
           <NavigationProperty Name="PlayerAdjustments1" Relationship="HomeModel.FK_PlayerAdjustment_PlayerOld" FromRole="Player" ToRole="PlayerAdjustment" />
           <NavigationProperty Name="PlayerRanks" Relationship="HomeModel.FK_PlayerRank_Player" FromRole="Player" ToRole="PlayerRank" />
           <NavigationProperty Name="DraftPicks" Relationship="HomeModel.FK_DraftPick_Player" FromRole="Player" ToRole="DraftPick" />
-          <Property Name="TruePlayerId" Type="Int32" Nullable="false" />
+          <Property Name="TruePlayerId" Type="Int32" />
         </EntityType>
         <EntityType Name="PlayerAdjustment">
           <Key>
@@ -1021,6 +1024,8 @@
           <NavigationProperty Name="Player" Relationship="HomeModel.FK_PlayerAdjustment_PlayerNew" FromRole="PlayerAdjustment" ToRole="Player" />
           <NavigationProperty Name="Player1" Relationship="HomeModel.FK_PlayerAdjustment_PlayerOld" FromRole="PlayerAdjustment" ToRole="Player" />
           <NavigationProperty Name="User" Relationship="HomeModel.FK_PlayerAdjustment_User" FromRole="PlayerAdjustment" ToRole="User" />
+          <Property Name="TruePlayerId" Type="Int32" />
+          <Property Name="SeasonId" Type="Int32" />
         </EntityType>
         <EntityType Name="PlayerRank">
           <Key>
@@ -1680,6 +1685,7 @@
           <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Season" Relationship="HomeModel.FK_PlayerSeason_Season" FromRole="PlayerSeason" ToRole="Season" />
+          <Property Name="PlayerName" Type="String" MaxLength="51" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
         <Association Name="FK_PlayerSeason_Season">
           <End Type="HomeModel.Season" Role="Season" Multiplicity="0..1" />
@@ -1732,6 +1738,8 @@
           <EntitySetMapping Name="PlayerAdjustments">
             <EntityTypeMapping TypeName="HomeModel.PlayerAdjustment">
               <MappingFragment StoreEntitySet="PlayerAdjustment">
+                <ScalarProperty Name="SeasonId" ColumnName="SeasonId" />
+                <ScalarProperty Name="TruePlayerId" ColumnName="TruePlayerId" />
                 <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
                 <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
@@ -2018,6 +2026,7 @@
           <EntitySetMapping Name="PlayerSeasons">
             <EntityTypeMapping TypeName="HomeModel.PlayerSeason">
               <MappingFragment StoreEntitySet="PlayerSeason">
+                <ScalarProperty Name="PlayerName" ColumnName="PlayerName" />
                 <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
                 <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
                 <ScalarProperty Name="SeasonId" ColumnName="SeasonId" />

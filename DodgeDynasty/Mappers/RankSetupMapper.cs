@@ -6,6 +6,7 @@ using DodgeDynasty.Models;
 using DodgeDynasty.Entities;
 using DodgeDynasty.Shared;
 using DodgeDynasty.Models.Types;
+using DodgeDynasty.Mappers.Shared;
 
 namespace DodgeDynasty.Mappers
 {
@@ -147,7 +148,13 @@ namespace DodgeDynasty.Mappers
 					};
 					HomeEntity.Players.AddObject(player);
 					HomeEntity.SaveChanges();
+					player.TruePlayerId = player.PlayerId;
+					HomeEntity.SaveChanges();
 					playerAdded = true;
+
+					var seasonId = PlayerSeasonHelper.GetOrCreateSeason(HomeEntity,
+						currentModel.CurrentDraft.DraftYear.Value);
+					PlayerSeasonHelper.AddPlayerSeason(HomeEntity, player.PlayerId, seasonId);
 
 					var loggedInUserName = Utilities.GetLoggedInUserName();
 					var playerAdd = new Entities.PlayerAdjustment
@@ -158,6 +165,7 @@ namespace DodgeDynasty.Mappers
 						NewPosition = player.Position,
 						NewNFLTeam = player.NFLTeam,
 						Action = "Rank Add Player",
+						SeasonId = seasonId,
 						UserId = HomeEntity.Users.First(u => u.UserName == loggedInUserName).UserId,
 						AddTimestamp = DateTime.Now,
 						LastUpdateTimestamp = DateTime.Now

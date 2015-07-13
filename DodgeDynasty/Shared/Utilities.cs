@@ -92,12 +92,22 @@ namespace DodgeDynasty.Shared
 
 		/* Data Access Methods */
 
-		public static Func<Entities.Player, bool> FindPlayerMatch(string firstName, string lastName, string position, string nflTeam)
+		public static Func<Entities.Player, bool> FindPlayerMatch(string firstName, string lastName,
+			string position, string nflTeam, bool useNFLTeam = false)
 		{
-			return p => FormatName(p.FirstName) == FormatName(firstName)
-									&& FormatName(p.LastName) == FormatName(lastName)
-									&& p.Position.ToUpper() == position.ToUpper()
-									&& p.NFLTeam.ToUpper() == nflTeam.ToUpper();
+			if (useNFLTeam)
+			{
+				return p => FormatName(p.FirstName) == FormatName(firstName)
+										&& FormatName(p.LastName) == FormatName(lastName)
+										&& p.Position.ToUpper() == position.ToUpper()
+										&& p.NFLTeam.ToUpper() == nflTeam.ToUpper();
+			}
+			else
+			{
+				return p => FormatName(p.FirstName) == FormatName(firstName)
+										&& FormatName(p.LastName) == FormatName(lastName)
+										&& p.Position.ToUpper() == position.ToUpper();
+			}
 		}
 
 		public static List<SelectListItem> GetListItems<T>(List<T> items,

@@ -12,6 +12,7 @@ using DodgeDynasty.Shared;
 using DodgeDynasty.Shared.Exceptions;
 using DodgeDynasty.Models.Types;
 using DodgeDynasty.SignalR;
+using DodgeDynasty.Mappers.Shared;
 
 namespace DodgeDynasty.Models
 {
@@ -80,6 +81,11 @@ namespace DodgeDynasty.Models
 					};
 					HomeEntity.Players.AddObject(draftedPlayer);
 					HomeEntity.SaveChanges();
+					draftedPlayer.TruePlayerId = draftedPlayer.PlayerId;
+					HomeEntity.SaveChanges();
+
+					var seasonId = PlayerSeasonHelper.GetOrCreateSeason(HomeEntity, CurrentDraft.DraftYear.Value);
+					PlayerSeasonHelper.AddPlayerSeason(HomeEntity, draftedPlayer.PlayerId, seasonId);
 
 					string userName = Utilities.GetLoggedInUserName();
 					var playerAdd = new Entities.PlayerAdjustment
@@ -90,6 +96,7 @@ namespace DodgeDynasty.Models
 						NewPosition = draftedPlayer.Position,
 						NewNFLTeam = draftedPlayer.NFLTeam,
 						Action = "Draft Add Player",
+						SeasonId = seasonId,
 						UserId = HomeEntity.Users.First(u => u.UserName == userName).UserId,
 						AddTimestamp = DateTime.Now,
 						LastUpdateTimestamp = DateTime.Now

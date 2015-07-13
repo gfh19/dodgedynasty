@@ -4393,8 +4393,7 @@ namespace DodgeDynasty.Entities
         /// <param name="nFLTeam">Initial value of the NFLTeam property.</param>
         /// <param name="isActive">Initial value of the IsActive property.</param>
         /// <param name="lastUpdateTimestamp">Initial value of the LastUpdateTimestamp property.</param>
-        /// <param name="truePlayerId">Initial value of the TruePlayerId property.</param>
-        public static Player CreatePlayer(global::System.Int32 playerId, global::System.String firstName, global::System.String lastName, global::System.String playerName, global::System.String position, global::System.String nFLTeam, global::System.Boolean isActive, global::System.DateTime lastUpdateTimestamp, global::System.Int32 truePlayerId)
+        public static Player CreatePlayer(global::System.Int32 playerId, global::System.String firstName, global::System.String lastName, global::System.String playerName, global::System.String position, global::System.String nFLTeam, global::System.Boolean isActive, global::System.DateTime lastUpdateTimestamp)
         {
             Player player = new Player();
             player.PlayerId = playerId;
@@ -4405,7 +4404,6 @@ namespace DodgeDynasty.Entities
             player.NFLTeam = nFLTeam;
             player.IsActive = isActive;
             player.LastUpdateTimestamp = lastUpdateTimestamp;
-            player.TruePlayerId = truePlayerId;
             return player;
         }
 
@@ -4659,9 +4657,9 @@ namespace DodgeDynasty.Entities
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Int32 TruePlayerId
+        public Nullable<global::System.Int32> TruePlayerId
         {
             get
             {
@@ -4676,8 +4674,8 @@ namespace DodgeDynasty.Entities
                 OnTruePlayerIdChanged();
             }
         }
-        private global::System.Int32 _TruePlayerId;
-        partial void OnTruePlayerIdChanging(global::System.Int32 value);
+        private Nullable<global::System.Int32> _TruePlayerId;
+        partial void OnTruePlayerIdChanging(Nullable<global::System.Int32> value);
         partial void OnTruePlayerIdChanged();
 
         #endregion
@@ -5185,6 +5183,54 @@ namespace DodgeDynasty.Entities
         private global::System.DateTime _LastUpdateTimestamp;
         partial void OnLastUpdateTimestampChanging(global::System.DateTime value);
         partial void OnLastUpdateTimestampChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> TruePlayerId
+        {
+            get
+            {
+                return _TruePlayerId;
+            }
+            set
+            {
+                OnTruePlayerIdChanging(value);
+                ReportPropertyChanging("TruePlayerId");
+                _TruePlayerId = StructuralObject.SetValidValue(value, "TruePlayerId");
+                ReportPropertyChanged("TruePlayerId");
+                OnTruePlayerIdChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _TruePlayerId;
+        partial void OnTruePlayerIdChanging(Nullable<global::System.Int32> value);
+        partial void OnTruePlayerIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> SeasonId
+        {
+            get
+            {
+                return _SeasonId;
+            }
+            set
+            {
+                OnSeasonIdChanging(value);
+                ReportPropertyChanging("SeasonId");
+                _SeasonId = StructuralObject.SetValidValue(value, "SeasonId");
+                ReportPropertyChanged("SeasonId");
+                OnSeasonIdChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _SeasonId;
+        partial void OnSeasonIdChanging(Nullable<global::System.Int32> value);
+        partial void OnSeasonIdChanged();
 
         #endregion
 
@@ -6029,6 +6075,30 @@ namespace DodgeDynasty.Entities
         private global::System.DateTime _LastUpdateTimestamp;
         partial void OnLastUpdateTimestampChanging(global::System.DateTime value);
         partial void OnLastUpdateTimestampChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String PlayerName
+        {
+            get
+            {
+                return _PlayerName;
+            }
+            set
+            {
+                OnPlayerNameChanging(value);
+                ReportPropertyChanging("PlayerName");
+                _PlayerName = StructuralObject.SetValidValue(value, true, "PlayerName");
+                ReportPropertyChanged("PlayerName");
+                OnPlayerNameChanged();
+            }
+        }
+        private global::System.String _PlayerName;
+        partial void OnPlayerNameChanging(global::System.String value);
+        partial void OnPlayerNameChanged();
 
         #endregion
 

@@ -24,5 +24,16 @@ namespace DodgeDynasty.Mappers.Shared
 			}
 			return season.SeasonId;
 		}
+
+		public static void AddPlayerSeason(HomeEntity homeEntity, int playerId, int seasonId) {
+			homeEntity.PlayerSeasons.AddObject(new PlayerSeason
+			{
+				PlayerId = playerId,
+				SeasonId = seasonId,
+				AddTimestamp = DateTime.Now,
+				LastUpdateTimestamp = DateTime.Now
+			});
+			homeEntity.SaveChanges();
+		}
 	}
 }

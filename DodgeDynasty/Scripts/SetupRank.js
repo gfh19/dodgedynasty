@@ -193,8 +193,6 @@ function bindSubmitRankings() {
 function getRankSetupModel() {
 	var rankSetupModel = {};
 	rankSetupModel.RankId = $("#setupRank").attr("data-rank-id");
-	//TODO:  Remove when draft id sql loaded
-	rankSetupModel.DraftId = $("#setupRank").attr("data-draft-id");
 	rankSetupModel.RankName = $(".personal-rank-name input").val();
 	var rankedPlayers = new Array();
 	playerIds = new Array();

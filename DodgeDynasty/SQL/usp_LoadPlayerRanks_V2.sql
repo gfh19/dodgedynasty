@@ -1,4 +1,6 @@
 ﻿/****** Object:  StoredProcedure [dbo].[usp_LoadPlayerRanks_V2]    Script Date: 7/12/2015 4:17:09 PM ******/
+Use [Home]
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -76,7 +78,7 @@ BEGIN
 		ELSE @Position
 		END
 
-	SELECT @PlayerId = p.PlayerId FROM dbo.Player p
+	SELECT @PlayerId = p.PlayerId, @TruePlayerId=TruePlayerId FROM dbo.Player p
 	WHERE UPPER(REPLACE(REPLACE(p.FirstName, '''', ''), '.', '')) = RTRIM(UPPER(REPLACE(REPLACE(@ScrubbedFirstName, '''', ''), '.', ''))) 
 		AND UPPER(REPLACE(REPLACE(p.LastName, '''', ''), '.', '')) = RTRIM(UPPER(REPLACE(REPLACE(@ScrubbedLastName, '''', ''), '.', ''))) 
 		AND p.Position = RTRIM(@ScrubbedPosition) AND (UPPER(p.NFLTeam) = RTRIM(UPPER(@ScrubbedNFLTeam)) OR @ScrubbedNFLTeam = 'D/ST' OR @ScrubbedNFLTeam = '')
@@ -88,6 +90,16 @@ BEGIN
 			SET IsActive = 1,
 				LastUpdateTimestamp = getdate()
 			WHERE PlayerId = @PlayerId
+
+		--If Player changed NFL team mid-season, remove PlayerSeason entry so old team won't show anymore
+		IF EXISTS (SELECT 1 FROM [dbo].[PlayerSeason]
+					WHERE [PlayerId] IN (SELECT PlayerId FROM Player WHERE TruePlayerId = @TruePlayerId AND PlayerId <> @PlayerId)
+						AND [SeasonId] = @SeasonId)
+			BEGIN
+				DELETE FROM PlayerSeason
+				WHERE SeasonId = @SeasonId 
+					AND PlayerId IN (SELECT PlayerId FROM Player WHERE TruePlayerId = @TruePlayerId)
+			END
 	END		
 	ELSE
 	BEGIN
@@ -100,6 +112,15 @@ BEGIN
 		IF @PlayerId IS NOT NULL
 		BEGIN
 			SET @OldPlayerId = @PlayerId;
+			
+			--If Player changed NFL team mid-season, remove PlayerSeason entry so old team won't show anymore
+			IF EXISTS (SELECT 1 FROM [dbo].[PlayerSeason]
+					WHERE [PlayerId] = @PlayerId AND [SeasonId] = @SeasonId)
+			BEGIN
+				DELETE FROM PlayerSeason
+				WHERE PlayerId = @PlayerId AND SeasonId = @SeasonId
+			END
+
 			INSERT INTO [dbo].[Player]
 				([TruePlayerId]
 				,[FirstName]
@@ -125,17 +146,17 @@ BEGIN
 
 
 			INSERT INTO dbo.PlayerAdjustment ([OldPlayerId]
-			   ,[NewPlayerId]
-			   ,[TruePlayerId]
-			   ,[NewFirstName]
-			   ,[NewLastName]
-			   ,[NewPosition]
-			   ,[NewNFLTeam]
-			   ,[SeasonId]
-			   ,[Action]
-			   ,[UserId]
-			   ,[AddTimestamp]
-			   ,[LastUpdateTimestamp])
+				,[NewPlayerId]
+				,[TruePlayerId]
+				,[NewFirstName]
+				,[NewLastName]
+				,[NewPosition]
+				,[NewNFLTeam]
+				,[SeasonId]
+				,[Action]
+				,[UserId]
+				,[AddTimestamp]
+				,[LastUpdateTimestamp])
 			SELECT @OldPlayerId, @PlayerId, TruePlayerId, FirstName, LastName, Position, NFLTeam, @SeasonId,
 				'Add Player New Team', NULL, getdate(), getdate()
 			FROM dbo.Player
@@ -192,7 +213,7 @@ BEGIN
 
 	--Add PlayerSeason entry if not found for this season/NULL season.
 	IF NOT EXISTS(SELECT 1 FROM [dbo].[PlayerSeason]
-					WHERE [PlayerId] = @PlayerId AND ([SeasonId] IS NULL OR [SeasonId] = @SeasonId))
+					WHERE [PlayerId] = @PlayerId AND [SeasonId] = @SeasonId)
 	BEGIN
 		INSERT INTO [dbo].[PlayerSeason]
 			   ([PlayerId]

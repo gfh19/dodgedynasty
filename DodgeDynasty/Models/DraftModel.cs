@@ -288,14 +288,36 @@ namespace DodgeDynasty.Models
 			return Utilities.GetListItems<NFLTeam>(NFLTeams,
 				t => (string.Format("{0} ({1} {2})", t.AbbrDisplay, t.LocationName, t.TeamName)), t => t.AbbrDisplay);
 		}
-
+		
 		public string GetPlayerHints(bool excludeDrafted)
 		{
 			using (HomeEntity = new HomeEntity())
 			{
+				var season = HomeEntity.Seasons
+					.Where(s => s.SeasonYear == (CurrentDraft.DraftYear ?? DateTime.Now.Year))
+					.FirstOrDefault();
+				int seasonId = (CurrentDraft.SeasonId.HasValue) ? CurrentDraft.SeasonId.Value : season.SeasonId;
 				StringBuilder playerHints = new StringBuilder("[");
 				var draftedPlayers = DraftPicks.Select(p => p.PlayerId).ToList();
-				foreach (var player in Players)
+
+				var currentRankings = GetCurrentAvailableDraftRanks();
+				List<PlayerRank> playerRankings = null;
+				if (currentRankings.Count > 0) {
+					var ranking = currentRankings.OrderBy(r=>r.UserId).ThenByDescending(r=>r.PrimaryDraftRanking)
+						.ThenBy(r=>r.DraftId).FirstOrDefault();
+					playerRankings = HomeEntity.PlayerRanks.Where(r=>r.RankId == ranking.RankId).ToList();
+				}
+				var currentPlayerIds = HomeEntity.PlayerSeasons.Where(ps=>ps.SeasonId == seasonId)
+						.Select(ps=>ps.PlayerId).ToList();
+				var currentPlayers = Players.Where(p=>currentPlayerIds.Contains(p.PlayerId)).ToList();
+				currentPlayers = (playerRankings != null)
+					? (	from p in currentPlayers
+						join r in playerRankings on p.PlayerId equals r.PlayerId into rkPlyrsLeft		//Left outer join
+						from r in rkPlyrsLeft.DefaultIfEmpty()
+						orderby (r!=null?r.RankNum:Int32.MaxValue), p.FirstName, p.LastName
+						select p).ToList()
+					: currentPlayers.OrderBy(p=>p.FirstName).ThenBy(p=>p.LastName).ToList();
+				foreach (var player in currentPlayers)
 				{
 					if (!excludeDrafted || !draftedPlayers.Contains(player.PlayerId))
 					{
@@ -309,6 +331,34 @@ namespace DodgeDynasty.Models
 				playerHints.Append("]");
 				return playerHints.ToString();
 			}
+		}
+
+		public List<DraftRankModel> GetCurrentAvailableDraftRanks()
+		{
+			var fullDraftRanks = from dr in DraftRanks
+								 join r in Ranks on dr.RankId equals r.RankId
+								 where ((dr.DraftId == null && r.Year == CurrentDraft.DraftYear) || dr.DraftId == DraftId)
+								   && (dr.UserId == null || dr.UserId == CurrentLoggedInOwnerUser.UserId)
+								 select GetDraftRankModel(dr, r);
+			return fullDraftRanks.ToList();
+		}
+
+		public DraftRankModel GetDraftRankModel(DraftRank dr, Rank r)
+		{
+			return new DraftRankModel
+			{
+				DraftRankId = dr.DraftRankId,
+				RankId = r.RankId,
+				DraftId = dr.DraftId,
+				PrimaryDraftRanking = dr.PrimaryDraftRanking,
+				UserId = dr.UserId,
+				RankName = r.RankName,
+				Year = r.Year,
+				RankDate = r.RankDate,
+				Url = r.Url,
+				AddTimestamp = r.AddTimestamp,
+				LastUpdateTimestamp = r.LastUpdateTimestamp
+			};
 		}
 	}
 }
