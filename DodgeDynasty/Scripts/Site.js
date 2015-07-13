@@ -313,7 +313,7 @@ function setLatestUserTurnPickInfo(showFn) {
 	ajaxGetJson("Draft/GetUserTurnPickInfo", function (pickInfo) {
 		if (pickInfo && pickInfo.turn) {
 			setUserTurnCookie(true, false);
-			if (!isElementInView($(".drafter"))) {
+			if (!isElementInView($(".current-turn"))) {
 				$("#userTurnDialog").attr("title", "Your Turn - Pick #" + pickInfo.num);
 				if (pickInfo.hasPrev) {
 					$(".ut-last-pick").text("(Last Pick: " + pickInfo.prevName + ")");

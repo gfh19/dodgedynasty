@@ -1212,6 +1212,7 @@ ul.menu li a.current-page
 	padding: 1px;
 	width: 115px;
 	white-space: normal;
+	overflow: hidden;
 }
 
 .draft-pick.filled

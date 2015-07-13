@@ -27,7 +27,7 @@ function displaySavedMessage() {
 	if ($(".rank-saved").is(":visible")) {
 		setTimeout(function () {
 			$(".rank-saved").fadeOut("slow");
-		}, 3000);
+		}, 5000);
 	}
 }
 
@@ -253,12 +253,23 @@ function validateRankSetupModel(rankSetupModel) {
 }
 
 function markInvalidPlayerId(playerId) {
-	//Find any matching selected options
-	var invalidEntries = $("select option:selected[value=" + playerId + "]").closest(".player-rank-entry");
-	$(invalidEntries).addClass("invalid-border");
-	//Find any matching spans
-	invalidEntries = $(".player-select[data-player-id=" + playerId + "]").closest(".player-rank-entry");
-	$(invalidEntries).addClass("invalid-border");
+	if (playerId == "") {
+		//Find any matching selected options
+		$.each($("select.player-select"), function (index, select) {
+			if ($(select).val() == "") {
+				var invalidEntries = $(select).closest(".player-rank-entry");
+				$(invalidEntries).addClass("invalid-border");
+			}
+		});
+	}
+	else {
+		//Find any matching selected options
+		var invalidEntries = $("select option:selected[value=" + playerId + "]").closest(".player-rank-entry");
+		$(invalidEntries).addClass("invalid-border");
+		//Find any matching spans
+		invalidEntries = $(".player-select[data-player-id=" + playerId + "]").closest(".player-rank-entry");
+		$(invalidEntries).addClass("invalid-border");
+	}
 }
 
 function showSavingDialog() {

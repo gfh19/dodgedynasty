@@ -213,7 +213,7 @@ BEGIN
 
 	--Add PlayerSeason entry if not found for this season/NULL season.
 	IF NOT EXISTS(SELECT 1 FROM [dbo].[PlayerSeason]
-					WHERE [PlayerId] = @PlayerId AND [SeasonId] = @SeasonId)
+					WHERE [PlayerId] = @PlayerId AND ([SeasonId] IS NULL OR [SeasonId] = @SeasonId))
 	BEGIN
 		INSERT INTO [dbo].[PlayerSeason]
 			   ([PlayerId]

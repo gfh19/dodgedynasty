@@ -120,7 +120,7 @@ namespace DodgeDynasty.Models
 		{
 			if (SortedPlayers == null)
 			{
-				SortedPlayers = Players.OrderBy(p => p.PlayerName).ToList();
+				SortedPlayers = CurrentSeasonPlayers.OrderBy(p => p.PlayerName).ToList();
 			}
 			return SortedPlayers;
 		}

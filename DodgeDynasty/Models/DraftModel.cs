@@ -24,26 +24,13 @@ namespace DodgeDynasty.Models
 		public List<LeagueOwner> LeagueOwners { get; set; }
 		public List<NFLTeam> NFLTeams { get; set; }
 		public List<Player> Players { get; set; }
+		public List<Player> CurrentSeasonPlayers { get; set; }
 		public List<Player> DraftedPlayers { get; set; }
 		public List<Position> Positions { get; set; }
 		public List<League> Leagues { get; set; }
 
-		//public int? LatestOwnerDraftId
-		//{
-		//	get
-		//	{
-		//		if (_latestOwnerDraftId == null)
-		//		{
-		//			using (HomeEntity = new HomeEntity())
-		//			{
-		//				var user = HomeEntity.Users.GetLoggedInUser();
-		//				_latestOwnerDraftId = GetCurrentDraftId(user);
-		//			}
-		//		}
-		//		return _latestOwnerDraftId;
-		//	}
-		//}
 		public Draft CurrentDraft { get; set; }
+		public Season CurrentSeason { get; set; }
 		public List<LeagueOwner> CurrentLeagueOwners { get; set; }
 		public DraftPick CurrentDraftPick { get; set; }
 		public DraftPick PreviousDraftPick { get; set; }
@@ -101,6 +88,8 @@ namespace DodgeDynasty.Models
 			var user = HomeEntity.Users.FirstOrDefault(u => u.UserName == userName);
 			DraftId = GetCurrentDraftId(user, draftId);
 			CurrentDraft = Drafts.First(d => d.DraftId == DraftId);
+			CurrentSeason = GetCurrentSeason();
+			CurrentSeasonPlayers = GetSeasonPlayers(CurrentSeason.SeasonId);
 			CurrentLeagueOwners = LeagueOwners.Where(lo => lo.LeagueId == CurrentDraft.LeagueId).ToList();
 			var leagueOwner = CurrentLeagueOwners.FirstOrDefault(lo => lo.UserId == user.UserId);
 			CurrentLoggedInOwnerUser = OwnerUserMapper.GetOwnerUser(user, leagueOwner);
@@ -288,15 +277,30 @@ namespace DodgeDynasty.Models
 			return Utilities.GetListItems<NFLTeam>(NFLTeams,
 				t => (string.Format("{0} ({1} {2})", t.AbbrDisplay, t.LocationName, t.TeamName)), t => t.AbbrDisplay);
 		}
-		
+
+		public Season GetCurrentSeason()
+		{
+			var season = (CurrentDraft.SeasonId.HasValue)
+				? HomeEntity.Seasons.Where(s => s.SeasonId == CurrentDraft.SeasonId.Value).FirstOrDefault()
+				: HomeEntity.Seasons.Where(s => s.SeasonYear == (CurrentDraft.DraftYear ?? DateTime.Now.Year))
+					.FirstOrDefault();
+			return season;
+		}
+
+		public List<Player> GetSeasonPlayers(int seasonId)
+		{
+			var currentPlayerIds = HomeEntity.PlayerSeasons
+				.Where(ps => ps.SeasonId == seasonId || ps.SeasonId == null)
+				.Select(ps => ps.PlayerId).ToList();
+			var currentPlayers = Players.Where(p => currentPlayerIds.Contains(p.PlayerId)).ToList();
+			return currentPlayers;
+		}
+
 		public string GetPlayerHints(bool excludeDrafted)
 		{
 			using (HomeEntity = new HomeEntity())
 			{
-				var season = HomeEntity.Seasons
-					.Where(s => s.SeasonYear == (CurrentDraft.DraftYear ?? DateTime.Now.Year))
-					.FirstOrDefault();
-				int seasonId = (CurrentDraft.SeasonId.HasValue) ? CurrentDraft.SeasonId.Value : season.SeasonId;
+				var season = GetCurrentSeason();
 				StringBuilder playerHints = new StringBuilder("[");
 				var draftedPlayers = DraftPicks.Select(p => p.PlayerId).ToList();
 
@@ -307,17 +311,14 @@ namespace DodgeDynasty.Models
 						.ThenBy(r=>r.DraftId).FirstOrDefault();
 					playerRankings = HomeEntity.PlayerRanks.Where(r=>r.RankId == ranking.RankId).ToList();
 				}
-				var currentPlayerIds = HomeEntity.PlayerSeasons.Where(ps=>ps.SeasonId == seasonId)
-						.Select(ps=>ps.PlayerId).ToList();
-				var currentPlayers = Players.Where(p=>currentPlayerIds.Contains(p.PlayerId)).ToList();
-				currentPlayers = (playerRankings != null)
-					? (	from p in currentPlayers
+				var currentPlayersSorted = (playerRankings != null)
+					? (	from p in CurrentSeasonPlayers
 						join r in playerRankings on p.PlayerId equals r.PlayerId into rkPlyrsLeft		//Left outer join
 						from r in rkPlyrsLeft.DefaultIfEmpty()
 						orderby (r!=null?r.RankNum:Int32.MaxValue), p.FirstName, p.LastName
 						select p).ToList()
-					: currentPlayers.OrderBy(p=>p.FirstName).ThenBy(p=>p.LastName).ToList();
-				foreach (var player in currentPlayers)
+					: CurrentSeasonPlayers.OrderBy(p => p.FirstName).ThenBy(p => p.LastName).ToList();
+				foreach (var player in currentPlayersSorted)
 				{
 					if (!excludeDrafted || !draftedPlayers.Contains(player.PlayerId))
 					{
