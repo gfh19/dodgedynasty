@@ -47,7 +47,7 @@ namespace DodgeDynasty.Mappers.Admin
 
 		protected override void DoUpdate(T model)
 		{
-			var seasonId = PlayerSeasonHelper.GetOrCreateSeason(HomeEntity, model.DraftYear);
+			//var seasonId = PlayerSeasonHelper.GetOrCreateSeason(HomeEntity, model.DraftYear);
 			Draft draft = HomeEntity.Drafts.Where(o => o.DraftId == model.DraftId).FirstOrDefault();
 			draft.LeagueId = model.LeagueId;
 			draft.DraftDate = DateTime.ParseExact(
@@ -55,7 +55,6 @@ namespace DodgeDynasty.Mappers.Admin
 				"yyyy-MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture);
 			draft.DraftLocation = model.DraftLocation;
 			draft.DraftYear = Convert.ToInt16(model.DraftYear);
-			draft.SeasonId = seasonId;
 			draft.NumOwners = Convert.ToInt16(model.NumOwners);
 			draft.NumRounds = Convert.ToInt16(model.NumRounds);
 			draft.NumKeepers = Convert.ToInt16(model.NumKeepers);

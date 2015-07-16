@@ -65,8 +65,8 @@ namespace DodgeDynasty.Models
 		{
 			using (HomeEntity = new HomeEntity())
 			{
-				Player draftedPlayer = Players.FirstOrDefault(
-					Utilities.FindPlayerMatch(playerModel.FirstName, playerModel.LastName, playerModel.Position, playerModel.NFLTeam));
+				Player draftedPlayer = Utilities.FindMatchingPlayer(ActivePlayers, HomeEntity.Players.ToList(),
+					playerModel.FirstName, playerModel.LastName, playerModel.Position);
 				if (draftedPlayer == null)
 				{
 					draftedPlayer = new Entities.Player
@@ -84,8 +84,8 @@ namespace DodgeDynasty.Models
 					draftedPlayer.TruePlayerId = draftedPlayer.PlayerId;
 					HomeEntity.SaveChanges();
 
-					var seasonId = PlayerSeasonHelper.GetOrCreateSeason(HomeEntity, CurrentDraft.DraftYear.Value);
-					PlayerSeasonHelper.AddPlayerSeason(HomeEntity, draftedPlayer.PlayerId, seasonId);
+					//var seasonId = PlayerSeasonHelper.GetOrCreateSeason(HomeEntity, CurrentDraft.DraftYear.Value);
+					//PlayerSeasonHelper.AddPlayerSeason(HomeEntity, draftedPlayer.PlayerId, seasonId);
 
 					string userName = Utilities.GetLoggedInUserName();
 					var playerAdd = new Entities.PlayerAdjustment
@@ -96,7 +96,6 @@ namespace DodgeDynasty.Models
 						NewPosition = draftedPlayer.Position,
 						NewNFLTeam = draftedPlayer.NFLTeam,
 						Action = "Draft Add Player",
-						SeasonId = seasonId,
 						UserId = HomeEntity.Users.First(u => u.UserName == userName).UserId,
 						AddTimestamp = DateTime.Now,
 						LastUpdateTimestamp = DateTime.Now
@@ -206,7 +205,7 @@ namespace DodgeDynasty.Models
 
 		public void PreloadPlayerModel(int playerId)
 		{
-			var player = Players.First(p => p.PlayerId == playerId);
+			var player = ActivePlayers.First(p => p.PlayerId == playerId);
 			Player.FirstName = player.FirstName;
 			Player.LastName = player.LastName;
 			Player.Position = player.Position;

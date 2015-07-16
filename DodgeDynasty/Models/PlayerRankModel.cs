@@ -45,7 +45,7 @@ namespace DodgeDynasty.Models
 			var rankedPlayerIds = PlayerRanks.Select(pr=>pr.PlayerId).ToList();
 
 			RankedPlayers = (from pr in PlayerRanks
-							join p in Players on pr.PlayerId equals p.PlayerId
+							join p in ActivePlayers on pr.PlayerId equals p.PlayerId
 							join t in NFLTeams on p.NFLTeam equals t.TeamAbbr
 							select GetRankedPlayer(pr, p, t)).OrderBy(p=>p.RankNum).ToList();
 
@@ -74,7 +74,7 @@ namespace DodgeDynasty.Models
 			var rankedPlayerIds = PlayerRanks.Select(pr => pr.PlayerId).ToList();
 
 			RankedPlayers = (from pr in PlayerRanks
-							 join p in Players on pr.PlayerId equals p.PlayerId
+							 join p in ActivePlayers on pr.PlayerId equals p.PlayerId
 							 join t in NFLTeams on p.NFLTeam equals t.TeamAbbr
 							 join pick in DraftPicks on pr.PlayerId equals pick.PlayerId into dpLeft	//Left Outer Join
 							 from pick in dpLeft.DefaultIfEmpty()
@@ -120,7 +120,7 @@ namespace DodgeDynasty.Models
 		{
 			if (SortedPlayers == null)
 			{
-				SortedPlayers = CurrentSeasonPlayers.OrderBy(p => p.PlayerName).ToList();
+				SortedPlayers = ActivePlayers.OrderBy(p => p.PlayerName).ToList();
 			}
 			return SortedPlayers;
 		}

@@ -92,10 +92,27 @@ namespace DodgeDynasty.Shared
 
 		/* Data Access Methods */
 
-		public static Func<Entities.Player, bool> FindPlayerMatch(string firstName, string lastName,
-			string position, string nflTeam, bool useNFLTeam = false)
+		/// <summary>
+		/// Find matching player, checking active players first and then all players
+		/// </summary>
+		public static Player FindMatchingPlayer(List<Player> activePlayers, List<Player> allPlayers,
+			string firstName, string lastName, string position, string nflTeam = null)
 		{
-			if (useNFLTeam)
+			Player player = activePlayers.FirstOrDefault(
+				Utilities.FindPlayerMatch(firstName, lastName, position, nflTeam));
+			if (player == null)
+			{
+				//If not in active players, check all players
+				player = allPlayers.FirstOrDefault(
+					Utilities.FindPlayerMatch(firstName, lastName, position, nflTeam));
+			}
+			return player;
+		}
+
+		public static Func<Entities.Player, bool> FindPlayerMatch(string firstName, string lastName,
+			string position, string nflTeam = null)
+		{
+			if (nflTeam != null)
 			{
 				return p => FormatName(p.FirstName) == FormatName(firstName)
 										&& FormatName(p.LastName) == FormatName(lastName)

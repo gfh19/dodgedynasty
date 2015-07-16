@@ -25,7 +25,6 @@
           <Property Name="DraftDate" Type="datetime" Nullable="false" />
           <Property Name="DraftLocation" Type="varchar" MaxLength="50" />
           <Property Name="DraftYear" Type="smallint" />
-          <Property Name="SeasonId" Type="int" />
           <Property Name="NumOwners" Type="smallint" />
           <Property Name="NumRounds" Type="smallint" />
           <Property Name="NumKeepers" Type="smallint" />
@@ -182,7 +181,6 @@
           <Property Name="NewLastName" Type="varchar" MaxLength="25" />
           <Property Name="NewPosition" Type="varchar" MaxLength="10" />
           <Property Name="NewNFLTeam" Type="varchar" MaxLength="3" />
-          <Property Name="SeasonId" Type="int" />
           <Property Name="Action" Type="varchar" MaxLength="25" />
           <Property Name="UserId" Type="int" />
           <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
@@ -215,17 +213,6 @@
           <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
           <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
         </EntityType>
-        <EntityType Name="PlayerSeason">
-          <Key>
-            <PropertyRef Name="PlayerSeasonId" />
-          </Key>
-          <Property Name="PlayerSeasonId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="PlayerId" Type="int" Nullable="false" />
-          <Property Name="PlayerName" Type="varchar" MaxLength="51" StoreGeneratedPattern="Computed" />
-          <Property Name="SeasonId" Type="int" />
-          <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
-          <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
-        </EntityType>
         <EntityType Name="Position">
           <Key>
             <PropertyRef Name="PosId" />
@@ -252,15 +239,6 @@
           </Key>
           <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RoleDescription" Type="varchar" MaxLength="30" />
-        </EntityType>
-        <EntityType Name="Season">
-          <Key>
-            <PropertyRef Name="SeasonId" />
-          </Key>
-          <Property Name="SeasonId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="SeasonYear" Type="smallint" Nullable="false" />
-          <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
-          <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -333,18 +311,6 @@
             </Principal>
             <Dependent Role="Draft">
               <PropertyRef Name="RunnerUpId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Draft_Season">
-          <End Role="Season" Type="Self.Season" Multiplicity="0..1" />
-          <End Role="Draft" Type="Self.Draft" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Season">
-              <PropertyRef Name="SeasonId" />
-            </Principal>
-            <Dependent Role="Draft">
-              <PropertyRef Name="SeasonId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -624,18 +590,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PlayerSeason_Season">
-          <End Role="Season" Type="Self.Season" Multiplicity="0..1" />
-          <End Role="PlayerSeason" Type="Self.PlayerSeason" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Season">
-              <PropertyRef Name="SeasonId" />
-            </Principal>
-            <Dependent Role="PlayerSeason">
-              <PropertyRef Name="SeasonId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_UserRole_Role">
           <End Role="Role" Type="Self.Role" Multiplicity="1" />
           <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
@@ -690,11 +644,9 @@
           <EntitySet Name="PlayerAdjustment" EntityType="Self.PlayerAdjustment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PlayerRank" EntityType="Self.PlayerRank" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PlayerRankHistory" EntityType="Self.PlayerRankHistory" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PlayerSeason" EntityType="Self.PlayerSeason" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Position" EntityType="Self.Position" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rank" EntityType="Self.Rank" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Season" EntityType="Self.Season" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserApplicant" EntityType="Self.UserApplicant" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserProfile" EntityType="Self.UserProfile" Schema="dbo" store:Type="Tables" />
@@ -705,10 +657,6 @@
           </AssociationSet>
           <AssociationSet Name="FK_Draft_RunnerUp" Association="Self.FK_Draft_RunnerUp">
             <End Role="User" EntitySet="User" />
-            <End Role="Draft" EntitySet="Draft" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Draft_Season" Association="Self.FK_Draft_Season">
-            <End Role="Season" EntitySet="Season" />
             <End Role="Draft" EntitySet="Draft" />
           </AssociationSet>
           <AssociationSet Name="FK_Draft_Winner" Association="Self.FK_Draft_Winner">
@@ -803,10 +751,6 @@
             <End Role="Rank" EntitySet="Rank" />
             <End Role="PlayerRank" EntitySet="PlayerRank" />
           </AssociationSet>
-          <AssociationSet Name="FK_PlayerSeason_Season" Association="Self.FK_PlayerSeason_Season">
-            <End Role="Season" EntitySet="Season" />
-            <End Role="PlayerSeason" EntitySet="PlayerSeason" />
-          </AssociationSet>
           <AssociationSet Name="FK_UserRole_Role" Association="Self.FK_UserRole_Role">
             <End Role="Role" EntitySet="Role" />
             <End Role="UserRole" EntitySet="UserRole" />
@@ -827,7 +771,6 @@
         <EntityContainer Name="HomeEntity" annotation:LazyLoadingEnabled="true" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
           <EntitySet Name="NFLTeams" EntityType="HomeModel.NFLTeam" />
           <EntitySet Name="Players" EntityType="HomeModel.Player" />
-          <EntitySet Name="PlayerAdjustments" EntityType="HomeModel.PlayerAdjustment" />
           <EntitySet Name="PlayerRanks" EntityType="HomeModel.PlayerRank" />
           <EntitySet Name="PlayerRankHistories" EntityType="HomeModel.PlayerRankHistory" />
           <EntitySet Name="Positions" EntityType="HomeModel.Position" />
@@ -841,14 +784,6 @@
           <AssociationSet Name="FK_Player_Player" Association="HomeModel.FK_Player_Player">
             <End Role="Player" EntitySet="Players" />
             <End Role="Player1" EntitySet="Players" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PlayerAdjustment_PlayerNew" Association="HomeModel.FK_PlayerAdjustment_PlayerNew">
-            <End Role="Player" EntitySet="Players" />
-            <End Role="PlayerAdjustment" EntitySet="PlayerAdjustments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PlayerAdjustment_PlayerOld" Association="HomeModel.FK_PlayerAdjustment_PlayerOld">
-            <End Role="Player" EntitySet="Players" />
-            <End Role="PlayerAdjustment" EntitySet="PlayerAdjustments" />
           </AssociationSet>
           <AssociationSet Name="FK_PlayerRank_Player" Association="HomeModel.FK_PlayerRank_Player">
             <End Role="Player" EntitySet="Players" />
@@ -906,40 +841,6 @@
             <End Role="League" EntitySet="Leagues" />
             <End Role="DraftChat" EntitySet="DraftChats" />
           </AssociationSet>
-          <EntitySet Name="Drafts" EntityType="HomeModel.Draft" />
-          <AssociationSet Name="FK_DraftChat_Draft" Association="HomeModel.FK_DraftChat_Draft">
-            <End Role="Draft" EntitySet="Drafts" />
-            <End Role="DraftChat" EntitySet="DraftChats" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DraftPick_Draft" Association="HomeModel.FK_DraftPick_Draft">
-            <End Role="Draft" EntitySet="Drafts" />
-            <End Role="DraftPick" EntitySet="DraftPicks" />
-          </AssociationSet>
-          <EntitySet Name="Seasons" EntityType="HomeModel.Season" />
-          <AssociationSet Name="FK_Draft_League" Association="HomeModel.FK_Draft_League">
-            <End Role="League" EntitySet="Leagues" />
-            <End Role="Draft" EntitySet="Drafts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Draft_RunnerUp" Association="HomeModel.FK_Draft_RunnerUp">
-            <End Role="User" EntitySet="Users" />
-            <End Role="Draft" EntitySet="Drafts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Draft_Season" Association="HomeModel.FK_Draft_Season">
-            <End Role="Season" EntitySet="Seasons" />
-            <End Role="Draft" EntitySet="Drafts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Draft_Winner" Association="HomeModel.FK_Draft_Winner">
-            <End Role="User" EntitySet="Users" />
-            <End Role="Draft" EntitySet="Drafts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DraftOwner_Draft" Association="HomeModel.FK_DraftOwner_Draft">
-            <End Role="Draft" EntitySet="Drafts" />
-            <End Role="DraftOwner" EntitySet="DraftOwners" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DraftRank_Draft" Association="HomeModel.FK_DraftRank_Draft">
-            <End Role="Draft" EntitySet="Drafts" />
-            <End Role="DraftRank" EntitySet="DraftRanks" />
-          </AssociationSet>
           <AssociationSet Name="FK_DraftChat_User" Association="HomeModel.FK_DraftChat_User">
             <End Role="User" EntitySet="Users" />
             <End Role="DraftChat" EntitySet="DraftChats" />
@@ -960,14 +861,47 @@
             <End Role="User" EntitySet="Users" />
             <End Role="LeagueOwner" EntitySet="LeagueOwners" />
           </AssociationSet>
+          <EntitySet Name="Drafts" EntityType="HomeModel.Draft" />
+          <EntitySet Name="PlayerAdjustments" EntityType="HomeModel.PlayerAdjustment" />
+          <AssociationSet Name="FK_Draft_League" Association="HomeModel.FK_Draft_League">
+            <End Role="League" EntitySet="Leagues" />
+            <End Role="Draft" EntitySet="Drafts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Draft_RunnerUp" Association="HomeModel.FK_Draft_RunnerUp">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Draft" EntitySet="Drafts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Draft_Winner" Association="HomeModel.FK_Draft_Winner">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Draft" EntitySet="Drafts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DraftChat_Draft" Association="HomeModel.FK_DraftChat_Draft">
+            <End Role="Draft" EntitySet="Drafts" />
+            <End Role="DraftChat" EntitySet="DraftChats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DraftOwner_Draft" Association="HomeModel.FK_DraftOwner_Draft">
+            <End Role="Draft" EntitySet="Drafts" />
+            <End Role="DraftOwner" EntitySet="DraftOwners" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DraftPick_Draft" Association="HomeModel.FK_DraftPick_Draft">
+            <End Role="Draft" EntitySet="Drafts" />
+            <End Role="DraftPick" EntitySet="DraftPicks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DraftRank_Draft" Association="HomeModel.FK_DraftRank_Draft">
+            <End Role="Draft" EntitySet="Drafts" />
+            <End Role="DraftRank" EntitySet="DraftRanks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlayerAdjustment_PlayerNew" Association="HomeModel.FK_PlayerAdjustment_PlayerNew">
+            <End Role="Player" EntitySet="Players" />
+            <End Role="PlayerAdjustment" EntitySet="PlayerAdjustments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlayerAdjustment_PlayerOld" Association="HomeModel.FK_PlayerAdjustment_PlayerOld">
+            <End Role="Player" EntitySet="Players" />
+            <End Role="PlayerAdjustment" EntitySet="PlayerAdjustments" />
+          </AssociationSet>
           <AssociationSet Name="FK_PlayerAdjustment_User" Association="HomeModel.FK_PlayerAdjustment_User">
             <End Role="User" EntitySet="Users" />
             <End Role="PlayerAdjustment" EntitySet="PlayerAdjustments" />
-          </AssociationSet>
-          <EntitySet Name="PlayerSeasons" EntityType="HomeModel.PlayerSeason" />
-          <AssociationSet Name="FK_PlayerSeason_Season" Association="HomeModel.FK_PlayerSeason_Season">
-            <End Role="Season" EntitySet="Seasons" />
-            <End Role="PlayerSeason" EntitySet="PlayerSeasons" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="NFLTeam">
@@ -1000,32 +934,11 @@
           <NavigationProperty Name="NFLTeam1" Relationship="HomeModel.FK_Player_NFLTeam" FromRole="Player" ToRole="NFLTeam" />
           <NavigationProperty Name="Player1" Relationship="HomeModel.FK_Player_Player" FromRole="Player" ToRole="Player1" />
           <NavigationProperty Name="Player2" Relationship="HomeModel.FK_Player_Player" FromRole="Player1" ToRole="Player" />
-          <NavigationProperty Name="PlayerAdjustments" Relationship="HomeModel.FK_PlayerAdjustment_PlayerNew" FromRole="Player" ToRole="PlayerAdjustment" />
-          <NavigationProperty Name="PlayerAdjustments1" Relationship="HomeModel.FK_PlayerAdjustment_PlayerOld" FromRole="Player" ToRole="PlayerAdjustment" />
           <NavigationProperty Name="PlayerRanks" Relationship="HomeModel.FK_PlayerRank_Player" FromRole="Player" ToRole="PlayerRank" />
           <NavigationProperty Name="DraftPicks" Relationship="HomeModel.FK_DraftPick_Player" FromRole="Player" ToRole="DraftPick" />
           <Property Name="TruePlayerId" Type="Int32" />
-        </EntityType>
-        <EntityType Name="PlayerAdjustment">
-          <Key>
-            <PropertyRef Name="AdjustmentId" />
-          </Key>
-          <Property Type="Int32" Name="AdjustmentId" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
-          <Property Type="Int32" Name="OldPlayerId" />
-          <Property Type="Int32" Name="NewPlayerId" />
-          <Property Type="String" Name="NewFirstName" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="NewLastName" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="NewPosition" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="NewNFLTeam" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="Action" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Type="Int32" Name="UserId" />
-          <Property Type="DateTime" Name="AddTimestamp" Nullable="false" Precision="3" />
-          <Property Type="DateTime" Name="LastUpdateTimestamp" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Player" Relationship="HomeModel.FK_PlayerAdjustment_PlayerNew" FromRole="PlayerAdjustment" ToRole="Player" />
-          <NavigationProperty Name="Player1" Relationship="HomeModel.FK_PlayerAdjustment_PlayerOld" FromRole="PlayerAdjustment" ToRole="Player" />
-          <NavigationProperty Name="User" Relationship="HomeModel.FK_PlayerAdjustment_User" FromRole="PlayerAdjustment" ToRole="User" />
-          <Property Name="TruePlayerId" Type="Int32" />
-          <Property Name="SeasonId" Type="Int32" />
+          <NavigationProperty Name="PlayerAdjustments" Relationship="HomeModel.FK_PlayerAdjustment_PlayerNew" FromRole="Player" ToRole="PlayerAdjustment" />
+          <NavigationProperty Name="PlayerAdjustments1" Relationship="HomeModel.FK_PlayerAdjustment_PlayerOld" FromRole="Player" ToRole="PlayerAdjustment" />
         </EntityType>
         <EntityType Name="PlayerRank">
           <Key>
@@ -1125,30 +1038,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PlayerAdjustment_PlayerNew">
-          <End Type="HomeModel.Player" Role="Player" Multiplicity="0..1" />
-          <End Type="HomeModel.PlayerAdjustment" Role="PlayerAdjustment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Player">
-              <PropertyRef Name="PlayerId" />
-            </Principal>
-            <Dependent Role="PlayerAdjustment">
-              <PropertyRef Name="NewPlayerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PlayerAdjustment_PlayerOld">
-          <End Type="HomeModel.Player" Role="Player" Multiplicity="0..1" />
-          <End Type="HomeModel.PlayerAdjustment" Role="PlayerAdjustment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Player">
-              <PropertyRef Name="PlayerId" />
-            </Principal>
-            <Dependent Role="PlayerAdjustment">
-              <PropertyRef Name="OldPlayerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_PlayerRank_Player">
           <End Type="HomeModel.Player" Role="Player" Multiplicity="1" />
           <End Type="HomeModel.PlayerRank" Role="PlayerRank" Multiplicity="*" />
@@ -1238,13 +1127,13 @@
           <NavigationProperty Name="UserRoles" Relationship="HomeModel.FK_UserRole_User" FromRole="User" ToRole="UserRole" />
           <Property Name="LastMessageView" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Messages" Relationship="HomeModel.FK_Message_User" FromRole="User" ToRole="Message" />
-          <NavigationProperty Name="Drafts" Relationship="HomeModel.FK_Draft_RunnerUp" FromRole="User" ToRole="Draft" />
-          <NavigationProperty Name="Drafts1" Relationship="HomeModel.FK_Draft_Winner" FromRole="User" ToRole="Draft" />
           <NavigationProperty Name="DraftChats" Relationship="HomeModel.FK_DraftChat_User" FromRole="User" ToRole="DraftChat" />
           <NavigationProperty Name="DraftOwners" Relationship="HomeModel.FK_DraftOwner_User" FromRole="User" ToRole="DraftOwner" />
           <NavigationProperty Name="DraftPicks" Relationship="HomeModel.FK_DraftPick_User" FromRole="User" ToRole="DraftPick" />
           <NavigationProperty Name="DraftRanks" Relationship="HomeModel.FK_DraftRank_User" FromRole="User" ToRole="DraftRank" />
           <NavigationProperty Name="LeagueOwners" Relationship="HomeModel.FK_LeagueOwner_User" FromRole="User" ToRole="LeagueOwner" />
+          <NavigationProperty Name="Drafts" Relationship="HomeModel.FK_Draft_RunnerUp" FromRole="User" ToRole="Draft" />
+          <NavigationProperty Name="Drafts1" Relationship="HomeModel.FK_Draft_Winner" FromRole="User" ToRole="Draft" />
           <NavigationProperty Name="PlayerAdjustments" Relationship="HomeModel.FK_PlayerAdjustment_User" FromRole="User" ToRole="PlayerAdjustment" />
         </EntityType>
         <Association Name="FK_UserRole_User">
@@ -1270,8 +1159,8 @@
           <Property Name="UserId" Type="Int32" />
           <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Draft" Relationship="HomeModel.FK_DraftRank_Draft" FromRole="DraftRank" ToRole="Draft" />
           <NavigationProperty Name="User" Relationship="HomeModel.FK_DraftRank_User" FromRole="DraftRank" ToRole="User" />
+          <NavigationProperty Name="Draft" Relationship="HomeModel.FK_DraftRank_Draft" FromRole="DraftRank" ToRole="Draft" />
         </EntityType>
         <EntityType Name="DraftOwner">
           <Key>
@@ -1282,8 +1171,8 @@
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="AddTimestamp" Type="DateTime" Precision="3" />
           <Property Name="LastUpdateTimestamp" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Draft" Relationship="HomeModel.FK_DraftOwner_Draft" FromRole="DraftOwner" ToRole="Draft" />
           <NavigationProperty Name="User" Relationship="HomeModel.FK_DraftOwner_User" FromRole="DraftOwner" ToRole="User" />
+          <NavigationProperty Name="Draft" Relationship="HomeModel.FK_DraftOwner_Draft" FromRole="DraftOwner" ToRole="Draft" />
         </EntityType>
         <EntityType Name="DraftPick">
           <Key>
@@ -1300,8 +1189,8 @@
           <Property Name="AddTimestamp" Type="DateTime" Precision="3" />
           <Property Name="LastUpdateTimestamp" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Player" Relationship="HomeModel.FK_DraftPick_Player" FromRole="DraftPick" ToRole="Player" />
-          <NavigationProperty Name="Draft" Relationship="HomeModel.FK_DraftPick_Draft" FromRole="DraftPick" ToRole="Draft" />
           <NavigationProperty Name="User" Relationship="HomeModel.FK_DraftPick_User" FromRole="DraftPick" ToRole="User" />
+          <NavigationProperty Name="Draft" Relationship="HomeModel.FK_DraftPick_Draft" FromRole="DraftPick" ToRole="Draft" />
         </EntityType>
         <Association Name="FK_DraftPick_Player">
           <End Type="HomeModel.Player" Role="Player" Multiplicity="0..1" />
@@ -1450,8 +1339,8 @@
           <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="League" Relationship="HomeModel.FK_DraftChat_League" FromRole="DraftChat" ToRole="League" />
-          <NavigationProperty Name="Draft" Relationship="HomeModel.FK_DraftChat_Draft" FromRole="DraftChat" ToRole="Draft" />
           <NavigationProperty Name="User" Relationship="HomeModel.FK_DraftChat_User" FromRole="DraftChat" ToRole="User" />
+          <NavigationProperty Name="Draft" Relationship="HomeModel.FK_DraftChat_Draft" FromRole="DraftChat" ToRole="Draft" />
         </EntityType>
         <Association Name="FK_DraftChat_League">
           <End Type="HomeModel.League" Role="League" Multiplicity="1" />
@@ -1462,144 +1351,6 @@
             </Principal>
             <Dependent Role="DraftChat">
               <PropertyRef Name="LeagueId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Draft">
-          <Key>
-            <PropertyRef Name="DraftId" />
-          </Key>
-          <Property Name="DraftId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
-          <Property Name="LeagueId" Type="Int32" Nullable="false" />
-          <Property Name="LeagueName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
-          <Property Name="DraftDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="DraftLocation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="DraftYear" Type="Int16" />
-          <Property Name="NumOwners" Type="Int16" />
-          <Property Name="NumRounds" Type="Int16" />
-          <Property Name="NumKeepers" Type="Int16" />
-          <Property Name="Format" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="IsComplete" Type="Boolean" Nullable="false" />
-          <Property Name="WinnerId" Type="Int32" />
-          <Property Name="RunnerUpId" Type="Int32" />
-          <Property Name="HasCoWinners" Type="Boolean" />
-          <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="DraftChats" Relationship="HomeModel.FK_DraftChat_Draft" FromRole="Draft" ToRole="DraftChat" />
-          <NavigationProperty Name="DraftPicks" Relationship="HomeModel.FK_DraftPick_Draft" FromRole="Draft" ToRole="DraftPick" />
-          <Property Name="SeasonId" Type="Int32" />
-          <NavigationProperty Name="League" Relationship="HomeModel.FK_Draft_League" FromRole="Draft" ToRole="League" />
-          <NavigationProperty Name="User" Relationship="HomeModel.FK_Draft_RunnerUp" FromRole="Draft" ToRole="User" />
-          <NavigationProperty Name="Season" Relationship="HomeModel.FK_Draft_Season" FromRole="Draft" ToRole="Season" />
-          <NavigationProperty Name="User1" Relationship="HomeModel.FK_Draft_Winner" FromRole="Draft" ToRole="User" />
-          <NavigationProperty Name="DraftOwners" Relationship="HomeModel.FK_DraftOwner_Draft" FromRole="Draft" ToRole="DraftOwner" />
-          <NavigationProperty Name="DraftRanks" Relationship="HomeModel.FK_DraftRank_Draft" FromRole="Draft" ToRole="DraftRank" />
-        </EntityType>
-        <Association Name="FK_DraftChat_Draft">
-          <End Type="HomeModel.Draft" Role="Draft" Multiplicity="1" />
-          <End Type="HomeModel.DraftChat" Role="DraftChat" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Draft">
-              <PropertyRef Name="DraftId" />
-            </Principal>
-            <Dependent Role="DraftChat">
-              <PropertyRef Name="DraftId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DraftPick_Draft">
-          <End Type="HomeModel.Draft" Role="Draft" Multiplicity="1" />
-          <End Type="HomeModel.DraftPick" Role="DraftPick" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Draft">
-              <PropertyRef Name="DraftId" />
-            </Principal>
-            <Dependent Role="DraftPick">
-              <PropertyRef Name="DraftId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Season">
-          <Key>
-            <PropertyRef Name="SeasonId" />
-          </Key>
-          <Property Name="SeasonId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SeasonYear" Type="Int16" Nullable="false" />
-          <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Drafts" Relationship="HomeModel.FK_Draft_Season" FromRole="Season" ToRole="Draft" />
-          <NavigationProperty Name="PlayerSeasons" Relationship="HomeModel.FK_PlayerSeason_Season" FromRole="Season" ToRole="PlayerSeason" />
-        </EntityType>
-        <Association Name="FK_Draft_League">
-          <End Type="HomeModel.League" Role="League" Multiplicity="1" />
-          <End Type="HomeModel.Draft" Role="Draft" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="League">
-              <PropertyRef Name="LeagueId" />
-            </Principal>
-            <Dependent Role="Draft">
-              <PropertyRef Name="LeagueId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Draft_RunnerUp">
-          <End Type="HomeModel.User" Role="User" Multiplicity="0..1" />
-          <End Type="HomeModel.Draft" Role="Draft" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="Draft">
-              <PropertyRef Name="RunnerUpId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Draft_Season">
-          <End Type="HomeModel.Season" Role="Season" Multiplicity="0..1" />
-          <End Type="HomeModel.Draft" Role="Draft" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Season">
-              <PropertyRef Name="SeasonId" />
-            </Principal>
-            <Dependent Role="Draft">
-              <PropertyRef Name="SeasonId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Draft_Winner">
-          <End Type="HomeModel.User" Role="User" Multiplicity="0..1" />
-          <End Type="HomeModel.Draft" Role="Draft" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="Draft">
-              <PropertyRef Name="WinnerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DraftOwner_Draft">
-          <End Type="HomeModel.Draft" Role="Draft" Multiplicity="1" />
-          <End Type="HomeModel.DraftOwner" Role="DraftOwner" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Draft">
-              <PropertyRef Name="DraftId" />
-            </Principal>
-            <Dependent Role="DraftOwner">
-              <PropertyRef Name="DraftId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DraftRank_Draft">
-          <End Type="HomeModel.Draft" Role="Draft" Multiplicity="0..1" />
-          <End Type="HomeModel.DraftRank" Role="DraftRank" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Draft">
-              <PropertyRef Name="DraftId" />
-            </Principal>
-            <Dependent Role="DraftRank">
-              <PropertyRef Name="DraftId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1663,6 +1414,163 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Draft">
+          <Key>
+            <PropertyRef Name="DraftId" />
+          </Key>
+          <Property Name="DraftId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LeagueId" Type="Int32" Nullable="false" />
+          <Property Name="LeagueName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="DraftDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DraftLocation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DraftYear" Type="Int16" />
+          <Property Name="NumOwners" Type="Int16" />
+          <Property Name="NumRounds" Type="Int16" />
+          <Property Name="NumKeepers" Type="Int16" />
+          <Property Name="Format" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="IsComplete" Type="Boolean" Nullable="false" />
+          <Property Name="WinnerId" Type="Int32" />
+          <Property Name="RunnerUpId" Type="Int32" />
+          <Property Name="HasCoWinners" Type="Boolean" />
+          <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="League" Relationship="HomeModel.FK_Draft_League" FromRole="Draft" ToRole="League" />
+          <NavigationProperty Name="User" Relationship="HomeModel.FK_Draft_RunnerUp" FromRole="Draft" ToRole="User" />
+          <NavigationProperty Name="User1" Relationship="HomeModel.FK_Draft_Winner" FromRole="Draft" ToRole="User" />
+          <NavigationProperty Name="DraftChats" Relationship="HomeModel.FK_DraftChat_Draft" FromRole="Draft" ToRole="DraftChat" />
+          <NavigationProperty Name="DraftOwners" Relationship="HomeModel.FK_DraftOwner_Draft" FromRole="Draft" ToRole="DraftOwner" />
+          <NavigationProperty Name="DraftPicks" Relationship="HomeModel.FK_DraftPick_Draft" FromRole="Draft" ToRole="DraftPick" />
+          <NavigationProperty Name="DraftRanks" Relationship="HomeModel.FK_DraftRank_Draft" FromRole="Draft" ToRole="DraftRank" />
+        </EntityType>
+        <EntityType Name="PlayerAdjustment">
+          <Key>
+            <PropertyRef Name="AdjustmentId" />
+          </Key>
+          <Property Name="AdjustmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OldPlayerId" Type="Int32" />
+          <Property Name="NewPlayerId" Type="Int32" />
+          <Property Name="TruePlayerId" Type="Int32" />
+          <Property Name="NewFirstName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="NewLastName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="NewPosition" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="NewNFLTeam" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Action" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Player" Relationship="HomeModel.FK_PlayerAdjustment_PlayerNew" FromRole="PlayerAdjustment" ToRole="Player" />
+          <NavigationProperty Name="Player1" Relationship="HomeModel.FK_PlayerAdjustment_PlayerOld" FromRole="PlayerAdjustment" ToRole="Player" />
+          <NavigationProperty Name="User" Relationship="HomeModel.FK_PlayerAdjustment_User" FromRole="PlayerAdjustment" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Draft_League">
+          <End Type="HomeModel.League" Role="League" Multiplicity="1" />
+          <End Type="HomeModel.Draft" Role="Draft" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="League">
+              <PropertyRef Name="LeagueId" />
+            </Principal>
+            <Dependent Role="Draft">
+              <PropertyRef Name="LeagueId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Draft_RunnerUp">
+          <End Type="HomeModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="HomeModel.Draft" Role="Draft" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Draft">
+              <PropertyRef Name="RunnerUpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Draft_Winner">
+          <End Type="HomeModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="HomeModel.Draft" Role="Draft" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Draft">
+              <PropertyRef Name="WinnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DraftChat_Draft">
+          <End Type="HomeModel.Draft" Role="Draft" Multiplicity="1" />
+          <End Type="HomeModel.DraftChat" Role="DraftChat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Draft">
+              <PropertyRef Name="DraftId" />
+            </Principal>
+            <Dependent Role="DraftChat">
+              <PropertyRef Name="DraftId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DraftOwner_Draft">
+          <End Type="HomeModel.Draft" Role="Draft" Multiplicity="1" />
+          <End Type="HomeModel.DraftOwner" Role="DraftOwner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Draft">
+              <PropertyRef Name="DraftId" />
+            </Principal>
+            <Dependent Role="DraftOwner">
+              <PropertyRef Name="DraftId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DraftPick_Draft">
+          <End Type="HomeModel.Draft" Role="Draft" Multiplicity="1" />
+          <End Type="HomeModel.DraftPick" Role="DraftPick" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Draft">
+              <PropertyRef Name="DraftId" />
+            </Principal>
+            <Dependent Role="DraftPick">
+              <PropertyRef Name="DraftId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DraftRank_Draft">
+          <End Type="HomeModel.Draft" Role="Draft" Multiplicity="0..1" />
+          <End Type="HomeModel.DraftRank" Role="DraftRank" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Draft">
+              <PropertyRef Name="DraftId" />
+            </Principal>
+            <Dependent Role="DraftRank">
+              <PropertyRef Name="DraftId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlayerAdjustment_PlayerNew">
+          <End Type="HomeModel.Player" Role="Player" Multiplicity="0..1" />
+          <End Type="HomeModel.PlayerAdjustment" Role="PlayerAdjustment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="PlayerId" />
+            </Principal>
+            <Dependent Role="PlayerAdjustment">
+              <PropertyRef Name="NewPlayerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlayerAdjustment_PlayerOld">
+          <End Type="HomeModel.Player" Role="Player" Multiplicity="0..1" />
+          <End Type="HomeModel.PlayerAdjustment" Role="PlayerAdjustment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="PlayerId" />
+            </Principal>
+            <Dependent Role="PlayerAdjustment">
+              <PropertyRef Name="OldPlayerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PlayerAdjustment_User">
           <End Type="HomeModel.User" Role="User" Multiplicity="0..1" />
           <End Type="HomeModel.PlayerAdjustment" Role="PlayerAdjustment" Multiplicity="*" />
@@ -1672,30 +1580,6 @@
             </Principal>
             <Dependent Role="PlayerAdjustment">
               <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="PlayerSeason">
-          <Key>
-            <PropertyRef Name="PlayerSeasonId" />
-          </Key>
-          <Property Name="PlayerSeasonId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PlayerId" Type="Int32" Nullable="false" />
-          <Property Name="SeasonId" Type="Int32" />
-          <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Season" Relationship="HomeModel.FK_PlayerSeason_Season" FromRole="PlayerSeason" ToRole="Season" />
-          <Property Name="PlayerName" Type="String" MaxLength="51" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
-        </EntityType>
-        <Association Name="FK_PlayerSeason_Season">
-          <End Type="HomeModel.Season" Role="Season" Multiplicity="0..1" />
-          <End Type="HomeModel.PlayerSeason" Role="PlayerSeason" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Season">
-              <PropertyRef Name="SeasonId" />
-            </Principal>
-            <Dependent Role="PlayerSeason">
-              <PropertyRef Name="SeasonId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1732,25 +1616,6 @@
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="PlayerId" ColumnName="PlayerId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PlayerAdjustments">
-            <EntityTypeMapping TypeName="HomeModel.PlayerAdjustment">
-              <MappingFragment StoreEntitySet="PlayerAdjustment">
-                <ScalarProperty Name="SeasonId" ColumnName="SeasonId" />
-                <ScalarProperty Name="TruePlayerId" ColumnName="TruePlayerId" />
-                <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
-                <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Action" ColumnName="Action" />
-                <ScalarProperty Name="NewNFLTeam" ColumnName="NewNFLTeam" />
-                <ScalarProperty Name="NewPosition" ColumnName="NewPosition" />
-                <ScalarProperty Name="NewLastName" ColumnName="NewLastName" />
-                <ScalarProperty Name="NewFirstName" ColumnName="NewFirstName" />
-                <ScalarProperty Name="NewPlayerId" ColumnName="NewPlayerId" />
-                <ScalarProperty Name="OldPlayerId" ColumnName="OldPlayerId" />
-                <ScalarProperty Name="AdjustmentId" ColumnName="AdjustmentId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1992,7 +1857,6 @@
           <EntitySetMapping Name="Drafts">
             <EntityTypeMapping TypeName="HomeModel.Draft">
               <MappingFragment StoreEntitySet="Draft">
-                <ScalarProperty Name="SeasonId" ColumnName="SeasonId" />
                 <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
                 <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
                 <ScalarProperty Name="HasCoWinners" ColumnName="HasCoWinners" />
@@ -2013,25 +1877,21 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Seasons">
-            <EntityTypeMapping TypeName="HomeModel.Season">
-              <MappingFragment StoreEntitySet="Season">
+          <EntitySetMapping Name="PlayerAdjustments">
+            <EntityTypeMapping TypeName="HomeModel.PlayerAdjustment">
+              <MappingFragment StoreEntitySet="PlayerAdjustment">
                 <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
                 <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
-                <ScalarProperty Name="SeasonYear" ColumnName="SeasonYear" />
-                <ScalarProperty Name="SeasonId" ColumnName="SeasonId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PlayerSeasons">
-            <EntityTypeMapping TypeName="HomeModel.PlayerSeason">
-              <MappingFragment StoreEntitySet="PlayerSeason">
-                <ScalarProperty Name="PlayerName" ColumnName="PlayerName" />
-                <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
-                <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
-                <ScalarProperty Name="SeasonId" ColumnName="SeasonId" />
-                <ScalarProperty Name="PlayerId" ColumnName="PlayerId" />
-                <ScalarProperty Name="PlayerSeasonId" ColumnName="PlayerSeasonId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="NewNFLTeam" ColumnName="NewNFLTeam" />
+                <ScalarProperty Name="NewPosition" ColumnName="NewPosition" />
+                <ScalarProperty Name="NewLastName" ColumnName="NewLastName" />
+                <ScalarProperty Name="NewFirstName" ColumnName="NewFirstName" />
+                <ScalarProperty Name="TruePlayerId" ColumnName="TruePlayerId" />
+                <ScalarProperty Name="NewPlayerId" ColumnName="NewPlayerId" />
+                <ScalarProperty Name="OldPlayerId" ColumnName="OldPlayerId" />
+                <ScalarProperty Name="AdjustmentId" ColumnName="AdjustmentId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2060,7 +1920,6 @@
         <edmx:EntityTypeShape EntityType="HomeModel.BadTeamsDraft" Width="1.5" PointX="8.75" PointY="1.25" Height="1.9802864583333282" />
         <edmx:EntityTypeShape EntityType="HomeModel.NFLTeam" Width="1.5" PointX="0.75" PointY="8.5" Height="2.5571907552083255" />
         <edmx:EntityTypeShape EntityType="HomeModel.Player" Width="1.5" PointX="3" PointY="7.625" Height="4.2879036458333246" />
-        <edmx:EntityTypeShape EntityType="HomeModel.PlayerAdjustment" Width="1.5" PointX="5.25" PointY="12.125" Height="3.5186979166666674" />
         <edmx:EntityTypeShape EntityType="HomeModel.PlayerRank" Width="1.5" PointX="8.25" PointY="8.25" Height="2.9417936197916674" />
         <edmx:EntityTypeShape EntityType="HomeModel.PlayerRankHistory" Width="1.5" PointX="12.75" PointY="14.5" Height="2.7494921875000102" />
         <edmx:EntityTypeShape EntityType="HomeModel.Position" Width="1.5" PointX="0.75" PointY="16.5" Height="1.5956835937500102" />
@@ -2076,16 +1935,6 @@
           <edmx:ConnectorPoint PointX="3.5319230769230767" PointY="9.9129036458333246" />
           <edmx:ConnectorPoint PointX="3.9784615384615383" PointY="9.9129036458333246" />
           <edmx:ConnectorPoint PointX="3.9784615384615383" PointY="9.6629036458333246" />
-        </edmx:AssociationConnector>
-        <edmx:AssociationConnector Association="HomeModel.FK_PlayerAdjustment_PlayerNew">
-          <edmx:ConnectorPoint PointX="3.2347090384615385" PointY="9.6629036458333246" />
-          <edmx:ConnectorPoint PointX="3.2347090384615385" PointY="11.653300781249996" />
-          <edmx:ConnectorPoint PointX="5.25" PointY="11.653300781249996" />
-        </edmx:AssociationConnector>
-        <edmx:AssociationConnector Association="HomeModel.FK_PlayerAdjustment_PlayerOld">
-          <edmx:ConnectorPoint PointX="4.27048326923077" PointY="9.6629036458333246" />
-          <edmx:ConnectorPoint PointX="4.27048326923077" PointY="10.751849713541667" />
-          <edmx:ConnectorPoint PointX="5.25" PointY="10.751849713541667" />
         </edmx:AssociationConnector>
         <edmx:AssociationConnector Association="HomeModel.FK_PlayerRank_Player">
           <edmx:ConnectorPoint PointX="4.5" PointY="8.6028450520833388" />
@@ -2117,24 +1966,23 @@
         <edmx:AssociationConnector Association="HomeModel.FK_Message_User" />
         <edmx:EntityTypeShape EntityType="HomeModel.DraftChat" Width="1.5" PointX="13.625" PointY="0.75" />
         <edmx:AssociationConnector Association="HomeModel.FK_DraftChat_League" />
-        <edmx:EntityTypeShape EntityType="HomeModel.Draft" Width="1.5" PointX="3.375" PointY="0.75" />
-        <edmx:AssociationConnector Association="HomeModel.FK_DraftChat_Draft" />
-        <edmx:AssociationConnector Association="HomeModel.FK_DraftPick_Draft" />
-        <edmx:EntityTypeShape EntityType="HomeModel.Season" Width="1.5" PointX="15.375" PointY="4.875" />
-        <edmx:AssociationConnector Association="HomeModel.FK_Draft_League" />
-        <edmx:AssociationConnector Association="HomeModel.FK_Draft_RunnerUp" />
-        <edmx:AssociationConnector Association="HomeModel.FK_Draft_Season" />
-        <edmx:AssociationConnector Association="HomeModel.FK_Draft_Winner" />
-        <edmx:AssociationConnector Association="HomeModel.FK_DraftOwner_Draft" />
-        <edmx:AssociationConnector Association="HomeModel.FK_DraftRank_Draft" />
         <edmx:AssociationConnector Association="HomeModel.FK_DraftChat_User" />
         <edmx:AssociationConnector Association="HomeModel.FK_DraftOwner_User" />
         <edmx:AssociationConnector Association="HomeModel.FK_DraftPick_User" />
         <edmx:AssociationConnector Association="HomeModel.FK_DraftRank_User" />
         <edmx:AssociationConnector Association="HomeModel.FK_LeagueOwner_User" />
+        <edmx:EntityTypeShape EntityType="HomeModel.Draft" Width="1.5" PointX="3.375" PointY="0.625" />
+        <edmx:EntityTypeShape EntityType="HomeModel.PlayerAdjustment" Width="1.5" PointX="14.875" PointY="15.125" />
+        <edmx:AssociationConnector Association="HomeModel.FK_Draft_League" />
+        <edmx:AssociationConnector Association="HomeModel.FK_Draft_RunnerUp" />
+        <edmx:AssociationConnector Association="HomeModel.FK_Draft_Winner" />
+        <edmx:AssociationConnector Association="HomeModel.FK_DraftChat_Draft" />
+        <edmx:AssociationConnector Association="HomeModel.FK_DraftOwner_Draft" />
+        <edmx:AssociationConnector Association="HomeModel.FK_DraftPick_Draft" />
+        <edmx:AssociationConnector Association="HomeModel.FK_DraftRank_Draft" />
+        <edmx:AssociationConnector Association="HomeModel.FK_PlayerAdjustment_PlayerNew" />
+        <edmx:AssociationConnector Association="HomeModel.FK_PlayerAdjustment_PlayerOld" />
         <edmx:AssociationConnector Association="HomeModel.FK_PlayerAdjustment_User" />
-        <edmx:EntityTypeShape EntityType="HomeModel.PlayerSeason" Width="1.5" PointX="17.625" PointY="4.875" />
-        <edmx:AssociationConnector Association="HomeModel.FK_PlayerSeason_Season" />
         </edmx:Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

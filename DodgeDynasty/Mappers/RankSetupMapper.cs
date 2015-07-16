@@ -129,9 +129,9 @@ namespace DodgeDynasty.Mappers
 			bool playerAdded = false;
 			RankSetupModel currentModel = DraftFactory.GetRankSetupModel(rankSetupModel.RankId);
 			currentModel.GetCurrentDraft();
-			Player player = currentModel.Players.FirstOrDefault(
-				Utilities.FindPlayerMatch(rankSetupModel.Player.FirstName, rankSetupModel.Player.LastName, 
-					rankSetupModel.Player.Position, rankSetupModel.Player.NFLTeam));
+
+			Player player = Utilities.FindMatchingPlayer(currentModel.ActivePlayers, HomeEntity.Players.ToList(),
+					rankSetupModel.Player.FirstName, rankSetupModel.Player.LastName, rankSetupModel.Player.Position);
 			if (player == null)
 			{
 				using (HomeEntity = new HomeEntity())
@@ -152,9 +152,9 @@ namespace DodgeDynasty.Mappers
 					HomeEntity.SaveChanges();
 					playerAdded = true;
 
-					var seasonId = PlayerSeasonHelper.GetOrCreateSeason(HomeEntity,
-						currentModel.CurrentDraft.DraftYear.Value);
-					PlayerSeasonHelper.AddPlayerSeason(HomeEntity, player.PlayerId, seasonId);
+					//var seasonId = PlayerSeasonHelper.GetOrCreateSeason(HomeEntity,
+					//	currentModel.CurrentDraft.DraftYear.Value);
+					//PlayerSeasonHelper.AddPlayerSeason(HomeEntity, player.PlayerId, seasonId);
 
 					var loggedInUserName = Utilities.GetLoggedInUserName();
 					var playerAdd = new Entities.PlayerAdjustment
@@ -165,7 +165,6 @@ namespace DodgeDynasty.Mappers
 						NewPosition = player.Position,
 						NewNFLTeam = player.NFLTeam,
 						Action = "Rank Add Player",
-						SeasonId = seasonId,
 						UserId = HomeEntity.Users.First(u => u.UserName == loggedInUserName).UserId,
 						AddTimestamp = DateTime.Now,
 						LastUpdateTimestamp = DateTime.Now
@@ -191,6 +190,7 @@ namespace DodgeDynasty.Mappers
 			var newRankedPlayers = rankSetupModel.RankedPlayers.ToList();
 			foreach (var player in newRankedPlayers)
 			{
+				//This code currently cannot be hit
 				if (player.PlayerId < 1)
 				{
 					Player listedPlayer = HomeEntity.Players.FirstOrDefault(
