@@ -92,23 +92,6 @@ namespace DodgeDynasty.Shared
 
 		/* Data Access Methods */
 
-		/// <summary>
-		/// Find matching player, checking active players first and then all players
-		/// </summary>
-		public static Player FindMatchingPlayer(List<Player> activePlayers, List<Player> allPlayers,
-			string firstName, string lastName, string position, string nflTeam = null)
-		{
-			Player player = activePlayers.FirstOrDefault(
-				Utilities.FindPlayerMatch(firstName, lastName, position, nflTeam));
-			if (player == null)
-			{
-				//If not in active players, check all players
-				player = allPlayers.FirstOrDefault(
-					Utilities.FindPlayerMatch(firstName, lastName, position, nflTeam));
-			}
-			return player;
-		}
-
 		public static Func<Entities.Player, bool> FindPlayerMatch(string firstName, string lastName,
 			string position, string nflTeam = null)
 		{
@@ -161,7 +144,7 @@ namespace DodgeDynasty.Shared
 			return System.Web.HttpContext.Current.User.Identity.Name;
 		}
 
-		public static int GetLoggedInUserId(IEnumerable<User> users)
+		public static int GetLoggedInUserId(this IEnumerable<User> users)
 		{
 			return users.GetLoggedInUser().UserId;
 		}

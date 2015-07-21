@@ -65,8 +65,12 @@ namespace DodgeDynasty.Models
 		{
 			using (HomeEntity = new HomeEntity())
 			{
-				Player draftedPlayer = Utilities.FindMatchingPlayer(ActivePlayers, HomeEntity.Players.ToList(),
-					playerModel.FirstName, playerModel.LastName, playerModel.Position);
+				int? inactiveTruePlayerId = null;
+				bool justActivated = false;
+				Player draftedPlayer = DBUtilities.FindMatchingPlayer("Draft",
+					HomeEntity, ActivePlayers,
+					playerModel.FirstName, playerModel.LastName, playerModel.Position, playerModel.NFLTeam,
+					out inactiveTruePlayerId, out justActivated);
 				if (draftedPlayer == null)
 				{
 					draftedPlayer = new Entities.Player
@@ -77,20 +81,19 @@ namespace DodgeDynasty.Models
 						NFLTeam = playerModel.NFLTeam.ToUpper(),
 						AddTimestamp = DateTime.Now,
 						LastUpdateTimestamp = DateTime.Now,
-						IsActive = true
+						IsActive = true,
+						IsDrafted = true
 					};
 					HomeEntity.Players.AddObject(draftedPlayer);
 					HomeEntity.SaveChanges();
-					draftedPlayer.TruePlayerId = draftedPlayer.PlayerId;
+					draftedPlayer.TruePlayerId = inactiveTruePlayerId ?? draftedPlayer.PlayerId;
 					HomeEntity.SaveChanges();
-
-					//var seasonId = PlayerSeasonHelper.GetOrCreateSeason(HomeEntity, CurrentDraft.DraftYear.Value);
-					//PlayerSeasonHelper.AddPlayerSeason(HomeEntity, draftedPlayer.PlayerId, seasonId);
 
 					string userName = Utilities.GetLoggedInUserName();
 					var playerAdd = new Entities.PlayerAdjustment
 					{
 						NewPlayerId = draftedPlayer.PlayerId,
+						TruePlayerId = draftedPlayer.TruePlayerId,
 						NewFirstName = draftedPlayer.FirstName,
 						NewLastName = draftedPlayer.LastName,
 						NewPosition = draftedPlayer.Position,
@@ -100,6 +103,11 @@ namespace DodgeDynasty.Models
 						AddTimestamp = DateTime.Now,
 						LastUpdateTimestamp = DateTime.Now
 					};
+					if (inactiveTruePlayerId != null)
+					{
+						playerAdd.Action = playerAdd.Action + ", Merge TruePlayerId";
+						playerAdd.TruePlayerId = inactiveTruePlayerId;
+					}
 					HomeEntity.PlayerAdjustments.AddObject(playerAdd);
 					HomeEntity.SaveChanges();
 				}
@@ -111,6 +119,12 @@ namespace DodgeDynasty.Models
 						var duplicateDraftPick = DraftPicks.First(p => p.PlayerId == draftedPlayer.PlayerId);
 						throw new DuplicatePickException(duplicateDraftPick);
 					}
+
+					//Mark player drafted
+					draftedPlayer = HomeEntity.Players.FirstOrDefault(p => p.PlayerId == draftedPlayer.PlayerId);
+					draftedPlayer.IsDrafted = true;
+					draftedPlayer.LastUpdateTimestamp = DateTime.Now;
+					HomeEntity.SaveChanges();
 				}
 
 				var draftPick = HomeEntity.DraftPicks.First(p => p.DraftPickId == playerModel.DraftPickId);

@@ -26,7 +26,7 @@ namespace DodgeDynasty.Mappers
 			{
 				copyRowCount = playerRankModel.GetAllPlayerRanks().Count();
 			}
-			rankSetupModel.RankedPlayers = playerRankModel.RankedPlayers.OrderBy(rp=>rp.RankNum).Take(copyRowCount).ToList();
+			rankSetupModel.RankedPlayers = playerRankModel.RankedPlayers.OrderBy(rp => rp.RankNum).Take(copyRowCount).ToList();
 			SetRankInfo(model, rankSetupModel);
 			return AddNewRank(rankSetupModel);
 		}
@@ -130,11 +130,15 @@ namespace DodgeDynasty.Mappers
 			RankSetupModel currentModel = DraftFactory.GetRankSetupModel(rankSetupModel.RankId);
 			currentModel.GetCurrentDraft();
 
-			Player player = Utilities.FindMatchingPlayer(currentModel.ActivePlayers, HomeEntity.Players.ToList(),
-					rankSetupModel.Player.FirstName, rankSetupModel.Player.LastName, rankSetupModel.Player.Position);
-			if (player == null)
+			using (HomeEntity = new HomeEntity())
 			{
-				using (HomeEntity = new HomeEntity())
+				int? inactiveTruePlayerId = null;
+				bool justActivated = false;
+				Player player = DBUtilities.FindMatchingPlayer("Rank",
+						HomeEntity, currentModel.ActivePlayers,
+						rankSetupModel.Player.FirstName, rankSetupModel.Player.LastName, rankSetupModel.Player.Position,
+						rankSetupModel.Player.NFLTeam, out inactiveTruePlayerId, out justActivated);
+				if (player == null)
 				{
 					player = new Entities.Player
 					{
@@ -148,18 +152,15 @@ namespace DodgeDynasty.Mappers
 					};
 					HomeEntity.Players.AddObject(player);
 					HomeEntity.SaveChanges();
-					player.TruePlayerId = player.PlayerId;
+					player.TruePlayerId = inactiveTruePlayerId ?? player.PlayerId;
 					HomeEntity.SaveChanges();
 					playerAdded = true;
-
-					//var seasonId = PlayerSeasonHelper.GetOrCreateSeason(HomeEntity,
-					//	currentModel.CurrentDraft.DraftYear.Value);
-					//PlayerSeasonHelper.AddPlayerSeason(HomeEntity, player.PlayerId, seasonId);
 
 					var loggedInUserName = Utilities.GetLoggedInUserName();
 					var playerAdd = new Entities.PlayerAdjustment
 					{
 						NewPlayerId = player.PlayerId,
+						TruePlayerId = player.TruePlayerId,
 						NewFirstName = player.FirstName,
 						NewLastName = player.LastName,
 						NewPosition = player.Position,
@@ -169,8 +170,17 @@ namespace DodgeDynasty.Mappers
 						AddTimestamp = DateTime.Now,
 						LastUpdateTimestamp = DateTime.Now
 					};
+					if (inactiveTruePlayerId != null)
+					{
+						playerAdd.Action = playerAdd.Action + ", Merge TruePlayerId";
+						playerAdd.TruePlayerId = inactiveTruePlayerId;
+					}
 					HomeEntity.PlayerAdjustments.AddObject(playerAdd);
 					HomeEntity.SaveChanges();
+				}
+				else if (justActivated)
+				{
+					playerAdded = true;
 				}
 			}
 			return playerAdded;
@@ -191,27 +201,27 @@ namespace DodgeDynasty.Mappers
 			foreach (var player in newRankedPlayers)
 			{
 				//This code currently cannot be hit
-				if (player.PlayerId < 1)
-				{
-					Player listedPlayer = HomeEntity.Players.FirstOrDefault(
-						Utilities.FindPlayerMatch(player.FirstName, player.LastName, player.Position, player.NFLTeam));
-					if (listedPlayer == null)
-					{
-						listedPlayer = new Entities.Player
-						{
-							FirstName = player.FirstName,
-							LastName = player.LastName,
-							Position = player.Position.ToUpper(),
-							NFLTeam = player.NFLTeam.ToUpper(),
-							IsActive = true,
-							AddTimestamp = DateTime.Now,
-							LastUpdateTimestamp = DateTime.Now
-						};
-						HomeEntity.Players.AddObject(listedPlayer);
-						HomeEntity.SaveChanges();
-					}
-					player.PlayerId = listedPlayer.PlayerId;
-				}
+				//if (player.PlayerId < 1)
+				//{
+				//	Player listedPlayer = HomeEntity.Players.FirstOrDefault(
+				//		Utilities.FindPlayerMatch(player.FirstName, player.LastName, player.Position, player.NFLTeam));
+				//	if (listedPlayer == null)
+				//	{
+				//		listedPlayer = new Entities.Player
+				//		{
+				//			FirstName = player.FirstName,
+				//			LastName = player.LastName,
+				//			Position = player.Position.ToUpper(),
+				//			NFLTeam = player.NFLTeam.ToUpper(),
+				//			IsActive = true,
+				//			AddTimestamp = DateTime.Now,
+				//			LastUpdateTimestamp = DateTime.Now
+				//		};
+				//		HomeEntity.Players.AddObject(listedPlayer);
+				//		HomeEntity.SaveChanges();
+				//	}
+				//	player.PlayerId = listedPlayer.PlayerId;
+				//}
 				HomeEntity.PlayerRanks.AddObject(new PlayerRank
 				{
 					RankId = player.RankId,

@@ -1283,6 +1283,7 @@ ul.menu li a.current-page
 	min-width: 66px;
 	width: 115px;
 	white-space: normal;
+	overflow: hidden;
 }
 
 .team-name-outline

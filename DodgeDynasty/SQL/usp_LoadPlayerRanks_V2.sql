@@ -228,7 +228,7 @@ BEGIN
 					   ,[AddTimestamp]
 					   ,[LastUpdateTimestamp])
 					SELECT @PlayerId, @OldPlayerId, FirstName, LastName, Position, NFLTeam, 
-						'Update NFL Team, Inactive', NULL, getdate(), getdate()
+						'Update NFL Team, Activate', NULL, getdate(), getdate()
 					FROM dbo.Player
 					WHERE PlayerId = @PlayerId
 				
@@ -444,7 +444,7 @@ BEGIN
 					,[AddTimestamp]
 					,[LastUpdateTimestamp])
 				SELECT @PlayerId, NULL, FirstName, LastName, Position, NFLTeam, 
-					'Update NFL Team, Inactive', NULL, getdate(), getdate()
+					'Update NFL Team, Activate', NULL, getdate(), getdate()
 				FROM dbo.Player
 				WHERE PlayerId = @PlayerId
 
