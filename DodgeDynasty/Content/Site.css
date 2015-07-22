@@ -25,10 +25,19 @@ header {
 	background-color: #fff;
 }
 
-.content-width {
+/*.content-width {
     float: left;
     min-width: 100%;
-}
+}*/
+
+/*.draft-round-row {
+  display: block;
+    float:left;
+    border: 1px solid yellow;
+    min-width:100px; width: auto !important; width: 100px;
+    overflow: auto;
+    white-space: nowrap;
+}*/
 
 .small-page-header, .page-header, .large-page-header, .left-small-page-header {
 	text-align: center;
@@ -1144,6 +1153,11 @@ ul.menu li a.current-page
 	font-size: 14px !important;
 }
 
+
+
+
+
+
 /* Draft Display
 ----------------------------------------------------------*/
 #draftDisplay
@@ -1151,6 +1165,7 @@ ul.menu li a.current-page
 	text-align: center;
 	font-size: 15px;
 }
+
 .round-picks
 {
 	display: block;
@@ -1210,7 +1225,7 @@ ul.menu li a.current-page
 	border-width: 3px;
 	border-style: solid;
 	padding: 1px;
-	width: 115px;
+	width: 116px;
 	white-space: normal;
 	overflow: hidden;
 }
@@ -1281,7 +1296,7 @@ ul.menu li a.current-page
 	border-style: solid;
 	padding: 1px;
 	min-width: 66px;
-	width: 115px;
+	width: 116px;
 	white-space: normal;
 	overflow: hidden;
 }
@@ -2311,6 +2326,24 @@ span.player-select
 		width: 276px;
 	}
 }
+
+/* Tablets/Phablets */
+@media screen and (min-width: 601px)
+{
+	.possible-touch .draft-container {
+		height: 100%;
+		width: 100%;
+		overflow-y: hidden;
+		overflow-x: auto;
+	}
+}
+
+/* END RESPONSIVE STYLES
+----------------------------------------------------------*/
+
+
+
+
 
 
 

@@ -16,6 +16,7 @@ $(function () {
 	$.ajaxSetup({
 		cache: false
 	});
+	setUserAgentInfo();
 	highlightCurrentPageLink();
 	bindMenuLinks();
 	if (!draftChatKillSwitch) {
@@ -23,6 +24,13 @@ $(function () {
 	}
 	checkUserTurnDialog();
 });
+
+function setUserAgentInfo() {	//Currently just for tablet CSS
+	if (/Android|iPad|iPhone|iPod|KFAPWI|Tablet|Touch/i.test(navigator.userAgent)) {
+		//is possible tablet
+		$("body").addClass("possible-touch");
+	}
+}
 
 function initRefreshedPage() {
 	isRefreshPage = true;
