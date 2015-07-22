@@ -25,9 +25,9 @@ $(function () {
 	checkUserTurnDialog();
 });
 
-function setUserAgentInfo() {	//Currently just for tablet CSS
+function setUserAgentInfo() {	//Currently just for tablet/phablet CSS
 	if (/Android|iPad|iPhone|iPod|KFAPWI|Tablet|Touch/i.test(navigator.userAgent)) {
-		//is possible tablet
+		//is possible tablet/phablet
 		$("body").addClass("possible-touch");
 	}
 }

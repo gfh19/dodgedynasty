@@ -25,20 +25,6 @@ header {
 	background-color: #fff;
 }
 
-/*.content-width {
-    float: left;
-    min-width: 100%;
-}*/
-
-/*.draft-round-row {
-  display: block;
-    float:left;
-    border: 1px solid yellow;
-    min-width:100px; width: auto !important; width: 100px;
-    overflow: auto;
-    white-space: nowrap;
-}*/
-
 .small-page-header, .page-header, .large-page-header, .left-small-page-header {
 	text-align: center;
 	margin-top: 5px;
@@ -1163,7 +1149,7 @@ ul.menu li a.current-page
 #draftDisplay
 {
 	text-align: center;
-	font-size: 15px;
+	font-size: 0px;
 }
 
 .round-picks
@@ -1201,7 +1187,6 @@ ul.menu li a.current-page
 	clear: both;
 	display: inline-block;
 	float: none;
-	margin-right: -4px;
 	vertical-align: top;
 }
 .snake-pick
@@ -2330,7 +2315,7 @@ span.player-select
 /* Tablets/Phablets */
 @media screen and (min-width: 601px)
 {
-	.possible-touch .draft-container {
+	.possible-touch .draft-container, .possible-touch .team-container, .possible-touch .rank-container {
 		height: 100%;
 		width: 100%;
 		overflow-y: hidden;
