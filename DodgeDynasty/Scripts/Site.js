@@ -38,7 +38,7 @@ function initRefreshedPage() {
 	if (!webSocketsKillSwitch) {
 		setTimeout(function () {
 			if (draftActive && !connectionStopped && $.connection.hub.state == $.signalR.connectionState.disconnected) {
-				console.log("Disconnect detected!  Manual Reconnection Attempted!");
+				console.log("Disconnect detected.  Manual Reconnection Attempted.");
 				startHubConnection(function () { window.location.reload() });
 			}
 		}, 2500);
@@ -409,6 +409,7 @@ function bindDraftChatWindow() {
 	$('.force-dchat').click(function (e) {
 		e.preventDefault();
 		startHubConnection(null, true);
+		toggleChatWindowError(false);
 	});
 }
 

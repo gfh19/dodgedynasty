@@ -18,29 +18,31 @@
 		}
 		@using (Html.BeginForm(actionName, controllerName, FormMethod.Post, new { id = "userInfoForm" }))
 		{
-			<div class="mi-user-entry-header">
-				@if (Model.AdminMode)
-				{
-					@Html.LabelFor(m => m.UserName, new { @class = "mi-user-header" })
-				}
-				@Html.LabelFor(m => m.FirstName, new { @class = "mi-first-header" })
-				@Html.LabelFor(m => m.LastName, new { @class = "mi-last-header" })
-				@Html.LabelFor(m => m.NickName, new { @class = "mi-nick-header" })
+			<div class="mi-user-entry">
+				<div class="mi-user-entry-header">
+					@if (Model.AdminMode)
+					{
+						@Html.LabelFor(m => m.UserName, new { @class = "mi-user-header" })
+					}
+					@Html.LabelFor(m => m.FirstName, new { @class = "mi-first-header" })
+					@Html.LabelFor(m => m.LastName, new { @class = "mi-last-header" })
+					@Html.LabelFor(m => m.NickName, new { @class = "mi-nick-header" })
+				</div>
+				<div class="mi-user-entry-name block-error">
+					@if (Model.AdminMode)
+					{
+						@Html.DropDownListFor(u => u.UserName, Model.GetUserListItems(Model.UserName), new { @class = "mi-user-name" })
+					}
+					@Html.TextBoxFor(m => m.FirstName, new { @class = "mi-first-name", maxLength = "15", autofocus = "autofocus" })
+					@Html.TextBoxFor(m => m.LastName, new { @class = "mi-last-name", maxLength = "25" })
+					@Html.TextBoxFor(m => m.NickName, new { @class = "mi-nick-name", maxLength = "10" })
+					@Html.ValidationMessageFor(m => m.FirstName)
+					@Html.ValidationMessageFor(m => m.LastName)
+					@Html.ValidationMessageFor(m => m.NickName)
+				</div>
 			</div>
-			<div class="block-error">
-				@if (Model.AdminMode)
-				{
-					@Html.DropDownListFor(u => u.UserName, Model.GetUserListItems(Model.UserName), new { @class = "mi-user-name" })
-				}
-				@Html.TextBoxFor(m => m.FirstName, new { @class = "mi-first-name", maxLength = "15", autofocus = "autofocus" })
-				@Html.TextBoxFor(m => m.LastName, new { @class = "mi-last-name", maxLength = "25" })
-				@Html.TextBoxFor(m => m.NickName, new { @class = "mi-nick-name", maxLength = "10" })
-				@Html.ValidationMessageFor(m => m.FirstName)
-				@Html.ValidationMessageFor(m => m.LastName)
-				@Html.ValidationMessageFor(m => m.NickName)
-			</div>
-			<div class="page-section">
-				<div class="mi-leagues">
+			<div class="mi-league-entry-section page-section">
+				<div class="mi-leagues mobile-touch-scroll">
 					@if (Model.OwnerLeagues.Count > 0)
 					{
 						<div class="mi-league-entry-header">
@@ -76,8 +78,8 @@
 						</div>
 					}
 				</div>
-				<div class="page-section"><button class="submit-info" type="submit">Submit</button></div>
 			</div>
+			<div class="page-section"><button class="submit-info" type="submit">Submit</button></div>
 		}
 	</div>
 </div>
