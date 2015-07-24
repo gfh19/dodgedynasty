@@ -342,6 +342,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="OLD_favicon.ico" />
     <Content Include="Scripts\EditDraft.js" />
     <Content Include="Scripts\AddEditDraft.js" />
     <Content Include="Scripts\AddDraft.js" />
@@ -416,6 +417,8 @@
     <Content Include="Views\Shared\UserInfoPartial.cshtml" />
     <Content Include="Views\Admin\ManageUsers.cshtml" />
     <Content Include="Views\Admin\AddUser.cshtml" />
+    <Content Include="Content\images\DD.png2" />
+    <Content Include="Content\images\DodgeDynasty.png2" />
     <None Include="Properties\PublishProfiles\WinHost 2013 Local Folder.pubxml" />
     <None Include="Properties\PublishProfiles\WinHost FTP.pubxml" />
     <None Include="Properties\PublishProfiles\WinHost Local Folder.pubxml" />

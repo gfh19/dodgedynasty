@@ -201,20 +201,20 @@ footer
 ----------------------------------------------------------*/
 .site-logo
 {
-	color: #B0E0E6;
+	/*color: #B0E0E6;
 	font-family: 'Brush Script MT', 'Brush Script MT Italic', Arial, sans-serif;
-	font-size: 27px;	
-	height: 32px;
-	margin: -5px 0px 0px 0px;
+	font-size: 27px;*/	
+	height: 20px;
+	margin: -2px 0px 0px 0px;
 	padding-left: 10px;
 }
-
-.site-logo a, .site-logo a:hover, .site-logo a:active
-{
-	background: none;
-	color: #c8c8c8;
-	outline: none;
-	text-decoration: none;
+.site-logo-img {
+	display: inline;
+	height: 29px;
+	width: 133px;
+}
+.site-logo-img-mobile {
+	display: none;
 }
 
 
@@ -264,11 +264,12 @@ footer
 }
 ul.menu
 {
+	font-family: "Segoe UI", Arial, Sans-Serif;
 	font-size: 17px;
-	font-weight: 500;
+	font-weight: 600;
 	margin: 0px;
 	padding-left: 5px;
-	padding-bottom: 4px;
+	padding-bottom: 5px;
 	text-align: right;
 }
 
@@ -321,6 +322,7 @@ ul.menu li.mobileNav a {
   border-radius: 2px;
   -webkit-border-radius: 2px;
   margin-right: 5px;
+  margin-bottom: -4px;
 }
 .navbar-toggle:focus {
   outline: 0;
@@ -2133,11 +2135,20 @@ span.player-select
 		display: none;
 	}
 	.site-logo {
-		font-size: 18px;
-		margin-top: -4px;
 		padding-left: 6px;
-		padding-top: 6px;
+		padding-top: 4px;
+		height: 22px;
 	}
+	.site-logo-img {
+		display: none;
+	}
+	.site-logo-img-mobile {
+		display: inline;
+		height: 21px;
+		width: 36px;
+	}
+
+
 	ul.menu li.desktopNav {
 		display: none;
 	}
@@ -2394,6 +2405,7 @@ span.player-select
 		width: 100%;
 		overflow-y: hidden;
 		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
 	}
 }
 
