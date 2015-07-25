@@ -1,6 +1,15 @@
 ﻿SET XACT_ABORT ON
 BEGIN TRANSACTION;
 
+
+COMMIT TRANSACTION;
+
+
+
+SET XACT_ABORT ON
+BEGIN TRANSACTION;
+
+/* Below Run in Production on 7/24/15 */
 /* 7/24/15 */
 
 /****** Object:  Table [dbo].[ByeWeek]    Script Date: 7/24/2015 11:40:31 PM ******/
@@ -76,12 +85,6 @@ INSERT INTO dbo.ByeWeek VALUES (2015, 'WAS', '8', getdate(), getdate());
 
 
 COMMIT TRANSACTION;
-
-
-
-
-
-
 
 
 

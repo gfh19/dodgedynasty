@@ -72,8 +72,7 @@ namespace DodgeDynasty.Controllers
 		public ActionResult BestAvailable(string rankId, string id)
 		{
 			var options = GetPlayerRankOptions();
-			int currentRankId = DetermineRankId(rankId, options);
-			PlayerRankModel playerRankModel = DraftFactory.GetPlayerRankModel(currentRankId, Utilities.ToNullInt(id));
+			PlayerRankModel playerRankModel = DetermineRankModel(rankId, id, options);
 			playerRankModel.Options = options;
 			playerRankModel.GetBestAvailPlayerRanks();
 			return View(playerRankModel);
@@ -84,8 +83,7 @@ namespace DodgeDynasty.Controllers
 		public ActionResult BestAvailablePartial(string rankId)
 		{
 			var options = GetPlayerRankOptions();
-			int currentRankId = DetermineRankId(rankId, options, false);
-			PlayerRankModel playerRankModel = DraftFactory.GetPlayerRankModel(currentRankId);
+			PlayerRankModel playerRankModel = DetermineRankModel(rankId, null, options, false);
 			playerRankModel.Options = options;
 			playerRankModel.GetBestAvailPlayerRanks();
 			return PartialView(Constants.Views.BestAvailable, playerRankModel);
@@ -96,8 +94,7 @@ namespace DodgeDynasty.Controllers
 		public ActionResult PlayerRanks(string rankId, string id)
 		{
 			var options = GetPlayerRankOptions();
-			int currentRankId = DetermineRankId(rankId, options);
-			PlayerRankModel playerRankModel = DraftFactory.GetPlayerRankModel(currentRankId, Utilities.ToNullInt(id));
+			PlayerRankModel playerRankModel = DetermineRankModel(rankId, id, options);
 			playerRankModel.Options = options;
 			playerRankModel.GetAllPlayerRanksByPosition();
 			return View(playerRankModel);
@@ -108,8 +105,7 @@ namespace DodgeDynasty.Controllers
 		public ActionResult PlayerRanksPartial(string rankId)
 		{
 			var options = GetPlayerRankOptions();
-			int currentRankId = DetermineRankId(rankId, options, false);
-			PlayerRankModel playerRankModel = DraftFactory.GetPlayerRankModel(currentRankId);
+			PlayerRankModel playerRankModel = DetermineRankModel(rankId, null, options, false);
 			playerRankModel.Options = options;
 			playerRankModel.GetAllPlayerRanksByPosition();
 			return PartialView(Constants.Views.PlayerRanks, playerRankModel);
@@ -130,12 +126,19 @@ namespace DodgeDynasty.Controllers
 			return PartialView(Constants.Views.RankingsList, model);
 		}
 
-		private int DetermineRankId(string id, PlayerRankOptions options, bool setCookie = true)
+		private PlayerRankModel DetermineRankModel(string id, string draftId, PlayerRankOptions options, bool setCookie = true)
 		{
+			int? draftIdInt = null;
+			if (!string.IsNullOrEmpty(draftId))
+			{
+				draftIdInt = Convert.ToInt32(draftId);
+			}
+			PlayerRankModel playerRankModel = DraftFactory.GetEmptyPlayerRankModel(draftIdInt);
 			int rankId = 0;
 			if (!string.IsNullOrEmpty(id))
 			{
 				rankId = Convert.ToInt32(id);
+				//Access not checked due to "OwnerRankAccess" attribute check
 			}
 			else if (!string.IsNullOrEmpty(options.RankId))
 			{
@@ -144,19 +147,35 @@ namespace DodgeDynasty.Controllers
 				{
 					rankId = 0;
 				}
+				else if (setCookie && !string.IsNullOrEmpty(options.DraftId))
+				{	//If viewing ranks flipping between drafts (i.e. history), clear cached rankId
+					if (string.IsNullOrEmpty(draftId))
+					{
+						draftId = playerRankModel.GetCurrentDraftId().ToString();
+					}
+					if (draftId != options.DraftId)
+					{
+						rankId = 0;
+					}
+				}
 			}
-			
 			if (rankId == 0)
 			{
-				RankingsListModel rankingsListModel = DraftFactory.GetRankingsListModel();
-				rankId = rankingsListModel.GetPrimaryRankId(rankingsListModel);
+				RankingsListModel rankingsListModel = DraftFactory.GetRankingsListModel(draftIdInt);
+				rankId = rankingsListModel.GetPrimaryRankId();
 			}
-			if (setCookie && options.RankId != rankId.ToString())
+			if (setCookie && (options.RankId != rankId.ToString() || options.DraftId != draftId))
 			{
 				options.RankId = rankId.ToString();
+				if (string.IsNullOrEmpty(draftId))
+				{
+					draftId = playerRankModel.GetCurrentDraftId().ToString();
+				}
+				options.DraftId = draftId;
 				Response.Cookies["playerRankOptions"].Value = JsonConvert.SerializeObject(options);
 			}
-			return rankId;
+			playerRankModel.SetPlayerRanks(rankId);
+			return playerRankModel;
 		}
 
 		[HttpGet]

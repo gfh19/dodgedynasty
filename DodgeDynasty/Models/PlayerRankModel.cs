@@ -28,15 +28,23 @@ namespace DodgeDynasty.Models
 		public PlayerModel Player { get; set; }
 
 		public PlayerRankModel(int rankId, int? draftId = null)
+			: this(draftId)
+		{}
+
+		public PlayerRankModel(int? draftId = null)
 		{
 			base.GetCurrentDraft(draftId);
-			RankId = rankId;
 			int window;
 			RanksWindow = int.TryParse(ConfigurationManager.AppSettings["RanksWindow"], out window) ? window : 12;
+		}
+
+		public void SetPlayerRanks(int rankId)
+		{
+			RankId = rankId;
 			using (HomeEntity = new HomeEntity())
 			{
-				CurrentRank = HomeEntity.Ranks.First(r=>r.RankId == rankId);
-				PlayerRanks = HomeEntity.PlayerRanks.Where(pr=>pr.RankId == rankId).ToList();
+				CurrentRank = HomeEntity.Ranks.First(r => r.RankId == rankId);
+				PlayerRanks = HomeEntity.PlayerRanks.Where(pr => pr.RankId == rankId).ToList();
 			}
 		}
 
@@ -45,7 +53,7 @@ namespace DodgeDynasty.Models
 			var rankedPlayerIds = PlayerRanks.Select(pr=>pr.PlayerId).ToList();
 
 			RankedPlayers = (from pr in PlayerRanks
-							join p in ActivePlayers on pr.PlayerId equals p.PlayerId
+							join p in AllPlayers on pr.PlayerId equals p.PlayerId
 							join t in NFLTeams on p.NFLTeam equals t.TeamAbbr
 							select GetRankedPlayer(pr, p, t)).OrderBy(p=>p.RankNum).ToList();
 
@@ -74,7 +82,7 @@ namespace DodgeDynasty.Models
 			var rankedPlayerIds = PlayerRanks.Select(pr => pr.PlayerId).ToList();
 
 			RankedPlayers = (from pr in PlayerRanks
-							 join p in ActivePlayers on pr.PlayerId equals p.PlayerId
+							 join p in AllPlayers on pr.PlayerId equals p.PlayerId
 							 join t in NFLTeams on p.NFLTeam equals t.TeamAbbr
 							 join pick in DraftPicks on pr.PlayerId equals pick.PlayerId into dpLeft	//Left Outer Join
 							 from pick in dpLeft.DefaultIfEmpty()

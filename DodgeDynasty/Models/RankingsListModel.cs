@@ -9,7 +9,8 @@ namespace DodgeDynasty.Models
 {
 	public class RankingsListModel : DraftModel
 	{
-		public RankingsListModel(int? draftId = null) : base(draftId)
+		public RankingsListModel(int? draftId = null)
+			: base(draftId)
 		{
 			GetCurrentDraft(DraftId);
 		}
@@ -22,7 +23,7 @@ namespace DodgeDynasty.Models
 			return GetDraftPublicRankings(DraftId.Value, currentDraftRanks);
 		}
 
-		public static List<DraftRankModel> GetDraftPublicRankings(int draftId, 
+		public static List<DraftRankModel> GetDraftPublicRankings(int draftId,
 			List<DraftRankModel> currentDraftRanks)
 		{
 			List<DraftRankModel> publicRankings = new List<DraftRankModel>();
@@ -49,11 +50,11 @@ namespace DodgeDynasty.Models
 			return privateRankings.ToList();
 		}
 
-		public int GetPrimaryRankId(RankingsListModel rankingsListModel)
+		public int GetPrimaryRankId()
 		{
 			int rankId;
-			var privateRankings = rankingsListModel.GetPrivateRankings();
-			var publicRankings = rankingsListModel.GetPublicRankings();
+			var privateRankings = GetPrivateRankings();
+			var publicRankings = GetPublicRankings();
 			if (privateRankings.Count() > 0)
 			{
 				rankId = privateRankings[0].RankId;
@@ -64,9 +65,20 @@ namespace DodgeDynasty.Models
 			}
 			else
 			{
-				rankId = 1;
+				var lastPublicRanking = GetLastOpenPublicRanking();
+				rankId = (lastPublicRanking != null) ? lastPublicRanking.RankId : 1;
 			}
 			return rankId;
+		}
+
+		public DraftRankModel GetLastOpenPublicRanking()
+		{
+			var openPublicRanks =	from dr in DraftRanks
+									join r in Ranks on dr.RankId equals r.RankId
+									where (dr.DraftId == null && dr.UserId == null)
+									orderby r.Year descending
+									select GetDraftRankModel(dr, r);
+			return openPublicRanks.FirstOrDefault();
 		}
 	}
 }

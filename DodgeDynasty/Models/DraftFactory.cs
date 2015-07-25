@@ -26,9 +26,16 @@ namespace DodgeDynasty.Models
 			return model;
 		}
 
+		public static PlayerRankModel GetEmptyPlayerRankModel(int? draftId = null)
+		{
+			PlayerRankModel model = new PlayerRankModel(draftId);
+			return model;
+		}
+
 		public static PlayerRankModel GetPlayerRankModel(int rankId, int? draftId = null)
 		{
 			PlayerRankModel model = new PlayerRankModel(rankId, draftId);
+			model.SetPlayerRanks(rankId);
 			return model;
 		}
 

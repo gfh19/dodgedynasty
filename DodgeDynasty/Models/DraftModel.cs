@@ -24,11 +24,13 @@ namespace DodgeDynasty.Models
 		public List<LeagueOwner> LeagueOwners { get; set; }
 		public List<NFLTeam> NFLTeams { get; set; }
 		public List<ByeWeek> ByeWeeks { get; set; }
+		public List<Player> AllPlayers { get; set; }
 		public List<Player> ActivePlayers { get; set; }
 		//public List<Player> CurrentSeasonPlayers { get; set; }
 		public List<Player> DraftedPlayers { get; set; }
 		public List<Position> Positions { get; set; }
 		public List<League> Leagues { get; set; }
+		public List<DraftOwner> AllDraftOwners { get; set; }
 
 		public Draft CurrentDraft { get; set; }
 		//public Season CurrentSeason { get; set; }
@@ -71,11 +73,13 @@ namespace DodgeDynasty.Models
 					Drafts = HomeEntity.Drafts.ToList();
 					NFLTeams = HomeEntity.NFLTeams.ToList();
 					ByeWeeks = HomeEntity.ByeWeeks.ToList();
-					ActivePlayers = HomeEntity.Players.Where(p => p.IsActive).ToList();
+					AllPlayers = HomeEntity.Players.ToList();
+					ActivePlayers = AllPlayers.Where(p => p.IsActive).ToList();
 					Positions = HomeEntity.Positions.ToList();
 					Leagues = HomeEntity.Leagues.ToList();
 					Users = HomeEntity.Users.ToList();
 					LeagueOwners = HomeEntity.LeagueOwners.ToList();
+					AllDraftOwners = HomeEntity.DraftOwners.ToList();
 					DraftRanks = HomeEntity.DraftRanks.ToList();
 					Ranks = HomeEntity.Ranks.ToList();
 
@@ -96,14 +100,22 @@ namespace DodgeDynasty.Models
 			return DraftId;
 		}
 
-		public int GetCurrentDraftId(User user, int? draftId)
+		public int GetCurrentDraftId(int? draftId = null)
 		{
 			if (draftId != null)
 			{
 				return draftId.Value;
 			}
-			var draftOwners = HomeEntity.DraftOwners.ToList();
-			return Utilities.GetLatestUserDraftId(user, Drafts, draftOwners);
+			return GetCurrentDraftId(Users.GetLoggedInUser(), draftId);
+		}
+
+		public int GetCurrentDraftId(User user, int? draftId=null)
+		{
+			if (draftId != null)
+			{
+				return draftId.Value;
+			}
+			return Utilities.GetLatestUserDraftId(user, Drafts, AllDraftOwners);
 		}
 
 		private void SetCurrentDraftInfo(int? draftId = null)
@@ -112,7 +124,7 @@ namespace DodgeDynasty.Models
 
 			DraftPicks = HomeEntity.DraftPicks.Where(d => d.DraftId == DraftId).OrderBy(d => d.PickNum).ToList();
 
-			var draftUserIds = HomeEntity.DraftOwners.Where(d => d.DraftId == DraftId).Select(d => d.UserId).ToList();
+			var draftUserIds = AllDraftOwners.Where(d => d.DraftId == DraftId).Select(d => d.UserId).ToList();
 			DraftUsers = HomeEntity.Users.Where(u => draftUserIds.Contains(u.UserId)).OrderBy(o => o.NickName).ToList();
 			DraftOwnerUsers = GetOwnerUsers(DraftUsers);
 

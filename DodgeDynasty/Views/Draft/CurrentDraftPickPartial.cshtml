@@ -49,7 +49,7 @@
 			<text>The Draft Has Completed</text>
 		}
 	</div>
-	@if (Model.IsUserTurn())
+	@if (Model.IsDraftActive() && Model.IsUserTurn())
 	{
 		if (ViewBag.Title != "Draft Pick")
 		{

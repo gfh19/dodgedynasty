@@ -25,10 +25,10 @@ header {
 	background-color: #fff;
 }
 
-.content-width {
+/*.content-width {
     float: left;
     min-width: 100%;
-}
+}*/
 
 .small-page-header, .page-header, .large-page-header, .left-small-page-header {
 	text-align: center;
