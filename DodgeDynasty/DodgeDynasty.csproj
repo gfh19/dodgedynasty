@@ -225,6 +225,7 @@
     <Compile Include="Models\Types\DraftRankModel.cs" />
     <Compile Include="Models\Types\HubConnJson.cs" />
     <Compile Include="Models\Types\PickInfoJson.cs" />
+    <Compile Include="Models\Types\PlayerContext.cs" />
     <Compile Include="Models\Types\PlayerRankOptions.cs" />
     <Compile Include="Controllers\SharedController.cs" />
     <Compile Include="Entities\HomeEntity.Designer.cs">
@@ -269,6 +270,8 @@
     <Content Include="Content\bootstrap\css\bootstrap.min.css" />
     <Content Include="Content\images\close.png" />
     <Content Include="Content\images\collapse.png" />
+    <Content Include="Content\images\DD.png" />
+    <Content Include="Content\images\DodgeDynasty.png" />
     <Content Include="Content\images\expand.png" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\images\down.png" />
@@ -417,12 +420,11 @@
     <Content Include="Views\Shared\UserInfoPartial.cshtml" />
     <Content Include="Views\Admin\ManageUsers.cshtml" />
     <Content Include="Views\Admin\AddUser.cshtml" />
-    <Content Include="Content\images\DD.png2" />
-    <Content Include="Content\images\DodgeDynasty.png2" />
     <None Include="Properties\PublishProfiles\WinHost 2013 Local Folder.pubxml" />
     <None Include="Properties\PublishProfiles\WinHost FTP.pubxml" />
     <None Include="Properties\PublishProfiles\WinHost Local Folder.pubxml" />
     <Content Include="Views\Site\Messages.cshtml" />
+    <Content Include="Views\Web.config" />
     <None Include="Web.local.config">
       <SubType>Designer</SubType>
     </None>
@@ -453,7 +455,6 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

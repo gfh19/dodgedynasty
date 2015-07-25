@@ -25,6 +25,11 @@ header {
 	background-color: #fff;
 }
 
+.content-width {
+    float: left;
+    min-width: 100%;
+}
+
 .small-page-header, .page-header, .large-page-header, .left-small-page-header {
 	text-align: center;
 	margin-top: 5px;
@@ -2406,6 +2411,10 @@ span.player-select
 		overflow-y: hidden;
 		overflow-x: auto;
 		-webkit-overflow-scrolling: touch;
+	}
+	.possible-touch .content-width {
+		float: none;
+		min-width: 0%;
 	}
 }
 

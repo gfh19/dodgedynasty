@@ -47,6 +47,7 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerAdjustment_PlayerNew", "Player", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.Player), "PlayerAdjustment", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerAdjustment), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerAdjustment_PlayerOld", "Player", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.Player), "PlayerAdjustment", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerAdjustment), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerRank_Player", "Player", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Player), "PlayerRank", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerRank), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_ByeWeek_NFLTeam", "NFLTeam", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.NFLTeam), "ByeWeek", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.ByeWeek), true)]
 
 #endregion
 
@@ -449,6 +450,22 @@ namespace DodgeDynasty.Entities
             }
         }
         private ObjectSet<Player> _Players;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<ByeWeek> ByeWeeks
+        {
+            get
+            {
+                if ((_ByeWeeks == null))
+                {
+                    _ByeWeeks = base.CreateObjectSet<ByeWeek>("ByeWeeks");
+                }
+                return _ByeWeeks;
+            }
+        }
+        private ObjectSet<ByeWeek> _ByeWeeks;
 
         #endregion
 
@@ -629,6 +646,14 @@ namespace DodgeDynasty.Entities
         {
             base.AddObject("Players", player);
         }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the ByeWeeks EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToByeWeeks(ByeWeek byeWeek)
+        {
+            base.AddObject("ByeWeeks", byeWeek);
+        }
 
         #endregion
 
@@ -637,6 +662,234 @@ namespace DodgeDynasty.Entities
     #endregion
 
     #region Entities
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="HomeModel", Name="ByeWeek")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class ByeWeek : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new ByeWeek object.
+        /// </summary>
+        /// <param name="byeWeekId">Initial value of the ByeWeekId property.</param>
+        /// <param name="year">Initial value of the Year property.</param>
+        /// <param name="nFLTeam">Initial value of the NFLTeam property.</param>
+        /// <param name="weekNum">Initial value of the WeekNum property.</param>
+        /// <param name="addTimestamp">Initial value of the AddTimestamp property.</param>
+        /// <param name="lastUpdateTimestamp">Initial value of the LastUpdateTimestamp property.</param>
+        public static ByeWeek CreateByeWeek(global::System.Int32 byeWeekId, global::System.Int16 year, global::System.String nFLTeam, global::System.Int16 weekNum, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp)
+        {
+            ByeWeek byeWeek = new ByeWeek();
+            byeWeek.ByeWeekId = byeWeekId;
+            byeWeek.Year = year;
+            byeWeek.NFLTeam = nFLTeam;
+            byeWeek.WeekNum = weekNum;
+            byeWeek.AddTimestamp = addTimestamp;
+            byeWeek.LastUpdateTimestamp = lastUpdateTimestamp;
+            return byeWeek;
+        }
+
+        #endregion
+
+        #region Simple Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ByeWeekId
+        {
+            get
+            {
+                return _ByeWeekId;
+            }
+            set
+            {
+                if (_ByeWeekId != value)
+                {
+                    OnByeWeekIdChanging(value);
+                    ReportPropertyChanging("ByeWeekId");
+                    _ByeWeekId = StructuralObject.SetValidValue(value, "ByeWeekId");
+                    ReportPropertyChanged("ByeWeekId");
+                    OnByeWeekIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _ByeWeekId;
+        partial void OnByeWeekIdChanging(global::System.Int32 value);
+        partial void OnByeWeekIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int16 Year
+        {
+            get
+            {
+                return _Year;
+            }
+            set
+            {
+                OnYearChanging(value);
+                ReportPropertyChanging("Year");
+                _Year = StructuralObject.SetValidValue(value, "Year");
+                ReportPropertyChanged("Year");
+                OnYearChanged();
+            }
+        }
+        private global::System.Int16 _Year;
+        partial void OnYearChanging(global::System.Int16 value);
+        partial void OnYearChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String NFLTeam
+        {
+            get
+            {
+                return _NFLTeam;
+            }
+            set
+            {
+                OnNFLTeamChanging(value);
+                ReportPropertyChanging("NFLTeam");
+                _NFLTeam = StructuralObject.SetValidValue(value, false, "NFLTeam");
+                ReportPropertyChanged("NFLTeam");
+                OnNFLTeamChanged();
+            }
+        }
+        private global::System.String _NFLTeam;
+        partial void OnNFLTeamChanging(global::System.String value);
+        partial void OnNFLTeamChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int16 WeekNum
+        {
+            get
+            {
+                return _WeekNum;
+            }
+            set
+            {
+                OnWeekNumChanging(value);
+                ReportPropertyChanging("WeekNum");
+                _WeekNum = StructuralObject.SetValidValue(value, "WeekNum");
+                ReportPropertyChanged("WeekNum");
+                OnWeekNumChanged();
+            }
+        }
+        private global::System.Int16 _WeekNum;
+        partial void OnWeekNumChanging(global::System.Int16 value);
+        partial void OnWeekNumChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime AddTimestamp
+        {
+            get
+            {
+                return _AddTimestamp;
+            }
+            set
+            {
+                OnAddTimestampChanging(value);
+                ReportPropertyChanging("AddTimestamp");
+                _AddTimestamp = StructuralObject.SetValidValue(value, "AddTimestamp");
+                ReportPropertyChanged("AddTimestamp");
+                OnAddTimestampChanged();
+            }
+        }
+        private global::System.DateTime _AddTimestamp;
+        partial void OnAddTimestampChanging(global::System.DateTime value);
+        partial void OnAddTimestampChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime LastUpdateTimestamp
+        {
+            get
+            {
+                return _LastUpdateTimestamp;
+            }
+            set
+            {
+                OnLastUpdateTimestampChanging(value);
+                ReportPropertyChanging("LastUpdateTimestamp");
+                _LastUpdateTimestamp = StructuralObject.SetValidValue(value, "LastUpdateTimestamp");
+                ReportPropertyChanged("LastUpdateTimestamp");
+                OnLastUpdateTimestampChanged();
+            }
+        }
+        private global::System.DateTime _LastUpdateTimestamp;
+        partial void OnLastUpdateTimestampChanging(global::System.DateTime value);
+        partial void OnLastUpdateTimestampChanged();
+
+        #endregion
+
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_ByeWeek_NFLTeam", "NFLTeam")]
+        public NFLTeam NFLTeam1
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<NFLTeam>("HomeModel.FK_ByeWeek_NFLTeam", "NFLTeam").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<NFLTeam>("HomeModel.FK_ByeWeek_NFLTeam", "NFLTeam").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<NFLTeam> NFLTeam1Reference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<NFLTeam>("HomeModel.FK_ByeWeek_NFLTeam", "NFLTeam");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<NFLTeam>("HomeModel.FK_ByeWeek_NFLTeam", "NFLTeam", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
     
     /// <summary>
     /// No Metadata Documentation available.
@@ -653,12 +906,16 @@ namespace DodgeDynasty.Entities
         /// </summary>
         /// <param name="className">Initial value of the ClassName property.</param>
         /// <param name="colorText">Initial value of the ColorText property.</param>
+        /// <param name="colorValue">Initial value of the ColorValue property.</param>
+        /// <param name="addTimestamp">Initial value of the AddTimestamp property.</param>
         /// <param name="lastUpdateTimestamp">Initial value of the LastUpdateTimestamp property.</param>
-        public static CssColor CreateCssColor(global::System.String className, global::System.String colorText, global::System.DateTime lastUpdateTimestamp)
+        public static CssColor CreateCssColor(global::System.String className, global::System.String colorText, global::System.String colorValue, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp)
         {
             CssColor cssColor = new CssColor();
             cssColor.ClassName = className;
             cssColor.ColorText = colorText;
+            cssColor.ColorValue = colorValue;
+            cssColor.AddTimestamp = addTimestamp;
             cssColor.LastUpdateTimestamp = lastUpdateTimestamp;
             return cssColor;
         }
@@ -721,7 +978,7 @@ namespace DodgeDynasty.Entities
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
         public global::System.String ColorValue
         {
@@ -733,7 +990,7 @@ namespace DodgeDynasty.Entities
             {
                 OnColorValueChanging(value);
                 ReportPropertyChanging("ColorValue");
-                _ColorValue = StructuralObject.SetValidValue(value, true, "ColorValue");
+                _ColorValue = StructuralObject.SetValidValue(value, false, "ColorValue");
                 ReportPropertyChanged("ColorValue");
                 OnColorValueChanged();
             }
@@ -745,9 +1002,9 @@ namespace DodgeDynasty.Entities
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public Nullable<global::System.DateTime> AddTimestamp
+        public global::System.DateTime AddTimestamp
         {
             get
             {
@@ -762,8 +1019,8 @@ namespace DodgeDynasty.Entities
                 OnAddTimestampChanged();
             }
         }
-        private Nullable<global::System.DateTime> _AddTimestamp;
-        partial void OnAddTimestampChanging(Nullable<global::System.DateTime> value);
+        private global::System.DateTime _AddTimestamp;
+        partial void OnAddTimestampChanging(global::System.DateTime value);
         partial void OnAddTimestampChanged();
     
         /// <summary>
@@ -4255,6 +4512,28 @@ namespace DodgeDynasty.Entities
                 }
             }
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_ByeWeek_NFLTeam", "ByeWeek")]
+        public EntityCollection<ByeWeek> ByeWeeks
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<ByeWeek>("HomeModel.FK_ByeWeek_NFLTeam", "ByeWeek");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<ByeWeek>("HomeModel.FK_ByeWeek_NFLTeam", "ByeWeek", value);
+                }
+            }
+        }
 
         #endregion
 
@@ -6277,14 +6556,16 @@ namespace DodgeDynasty.Entities
         /// </summary>
         /// <param name="userId">Initial value of the UserId property.</param>
         /// <param name="userName">Initial value of the UserName property.</param>
+        /// <param name="fullName">Initial value of the FullName property.</param>
         /// <param name="isActive">Initial value of the IsActive property.</param>
         /// <param name="addTimestamp">Initial value of the AddTimestamp property.</param>
         /// <param name="lastUpdateTimestamp">Initial value of the LastUpdateTimestamp property.</param>
-        public static User CreateUser(global::System.Int32 userId, global::System.String userName, global::System.Boolean isActive, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp)
+        public static User CreateUser(global::System.Int32 userId, global::System.String userName, global::System.String fullName, global::System.Boolean isActive, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp)
         {
             User user = new User();
             user.UserId = userId;
             user.UserName = userName;
+            user.FullName = fullName;
             user.IsActive = isActive;
             user.AddTimestamp = addTimestamp;
             user.LastUpdateTimestamp = lastUpdateTimestamp;
@@ -6397,7 +6678,7 @@ namespace DodgeDynasty.Entities
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
         public global::System.String FullName
         {

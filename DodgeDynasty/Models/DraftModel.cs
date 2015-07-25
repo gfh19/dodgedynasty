@@ -23,6 +23,7 @@ namespace DodgeDynasty.Models
 		public List<User> Users { get; set; }
 		public List<LeagueOwner> LeagueOwners { get; set; }
 		public List<NFLTeam> NFLTeams { get; set; }
+		public List<ByeWeek> ByeWeeks { get; set; }
 		public List<Player> ActivePlayers { get; set; }
 		//public List<Player> CurrentSeasonPlayers { get; set; }
 		public List<Player> DraftedPlayers { get; set; }
@@ -38,7 +39,7 @@ namespace DodgeDynasty.Models
 		public OwnerUser CurrentClockOwnerUser { get; set; }
 		public OwnerUser CurrentLoggedInOwnerUser { get; set; }
 
-		public Player CurrentGridPlayer { get; set; }
+		public PlayerContext CurrentGridPlayer { get; set; }
 		public OwnerUser CurrentGridOwnerUser { get; set; }
 		public int CurrentRoundNum { get; set; }
 
@@ -69,6 +70,7 @@ namespace DodgeDynasty.Models
 				{
 					Drafts = HomeEntity.Drafts.ToList();
 					NFLTeams = HomeEntity.NFLTeams.ToList();
+					ByeWeeks = HomeEntity.ByeWeeks.ToList();
 					ActivePlayers = HomeEntity.Players.Where(p => p.IsActive).ToList();
 					Positions = HomeEntity.Positions.ToList();
 					Leagues = HomeEntity.Leagues.ToList();
@@ -88,8 +90,6 @@ namespace DodgeDynasty.Models
 			var user = HomeEntity.Users.FirstOrDefault(u => u.UserName == userName);
 			DraftId = GetCurrentDraftId(user, draftId);
 			CurrentDraft = Drafts.First(d => d.DraftId == DraftId);
-			//CurrentSeason = GetCurrentSeason();
-			//CurrentSeasonPlayers = GetSeasonPlayers(CurrentSeason.SeasonId);
 			CurrentLeagueOwners = LeagueOwners.Where(lo => lo.LeagueId == CurrentDraft.LeagueId).ToList();
 			var leagueOwner = CurrentLeagueOwners.FirstOrDefault(lo => lo.UserId == user.UserId);
 			CurrentLoggedInOwnerUser = OwnerUserMapper.GetOwnerUser(user, leagueOwner);
@@ -157,7 +157,8 @@ namespace DodgeDynasty.Models
 
 		public void SetCurrentGridPlayer(int? playerId)
 		{
-			CurrentGridPlayer = GetPlayer(playerId);
+			var player = GetPlayer(playerId);
+			CurrentGridPlayer = GetPlayerContext(player);
 		}
 
 		public Player GetPlayer(int? playerId)
@@ -172,6 +173,18 @@ namespace DodgeDynasty.Models
 				player = new Player();
 			}
 			return player;
+		}
+
+		public PlayerContext GetPlayerContext(Player player)
+		{
+			//Get Player with current year/draft context (just ByeWeek)
+			var playerContext = new PlayerContext(player);
+			var byeWeek = ByeWeeks.FirstOrDefault(o => o.Year == CurrentDraft.DraftYear
+				&& o.NFLTeam == player.NFLTeam);
+			if (byeWeek != null) {
+				playerContext.ByeWeek = byeWeek.WeekNum;
+			}
+			return playerContext;
 		}
 
 		public void SetCurrentGridOwnerUser(int userId)

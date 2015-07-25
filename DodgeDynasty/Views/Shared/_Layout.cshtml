@@ -4,9 +4,9 @@
 	<meta charset="utf-8" />
 	<title>@ViewBag.Title - Dodge Dynasty League</title>
 	<link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	@Styles.Render("~/Content/css")
-	@Styles.Render("~/Content/themes/base")
+	@Styles.Render("~/Content/themes/base/css")
 	@Scripts.Render("~/bundles/jquery")
 	@Scripts.Render("~/bundles/lib")
 	@{
@@ -17,7 +17,7 @@
 			<script src="@Url.Content("~/signalr/hubs")"></script>
 		}
 	}
-	<script type="text/javascript" src="@Url.Content("~/Scripts/Site.js")"></script>
+	<script type="text/javascript" src="@Url.Content("~/Scripts/Site.js?v=2.0")"></script>
 	@if (DodgeDynasty.Shared.Utilities.IsUserLoggedIn())
 	{
 		@Html.Partial(DodgeDynasty.Shared.Constants.Views.ColorStyles)
@@ -79,7 +79,10 @@
 						{
 							<li>@Html.ActionLink("Home", "Index", "Home")</li>
 							<li>@Html.ActionLink("About", "About", "Home")</li>
-							<li>@Html.ActionLink("Login", "Login", "Account")</li>
+							<li>
+								@Html.ActionLink("Login", "Login", "Account")
+								<span class="toggle-msgs-section"></span>
+							</li>
 						}
 					</ul>
 					<div class="navbar-collapse collapse">

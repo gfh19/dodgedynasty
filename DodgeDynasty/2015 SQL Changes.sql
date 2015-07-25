@@ -1,10 +1,123 @@
 ﻿SET XACT_ABORT ON
 BEGIN TRANSACTION;
 
+/* 7/24/15 */
+
+/****** Object:  Table [dbo].[ByeWeek]    Script Date: 7/24/2015 11:40:31 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[ByeWeek](
+	[ByeWeekId] [int] IDENTITY(1,1) NOT NULL,
+	[Year] [smallint] NOT NULL,
+	[NFLTeam] [varchar](3) NOT NULL,
+	[WeekNum] [smallint] NOT NULL,
+	[AddTimestamp] [datetime] NOT NULL,
+	[LastUpdateTimestamp] [datetime] NOT NULL,
+ CONSTRAINT [PK_ByeWeek] PRIMARY KEY CLUSTERED 
+(
+	[ByeWeekId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+ALTER TABLE [dbo].[ByeWeek]  WITH CHECK ADD  CONSTRAINT [FK_ByeWeek_NFLTeam] FOREIGN KEY([NFLTeam])
+REFERENCES [dbo].[NFLTeam] ([TeamAbbr])
+GO
+
+ALTER TABLE [dbo].[ByeWeek] CHECK CONSTRAINT [FK_ByeWeek_NFLTeam]
+GO
+
+
+INSERT INTO dbo.ByeWeek VALUES (2015, 'ARI', '9', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2015, 'ATL', '10', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2015, 'BAL', '9', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2015, 'BUF', '8', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2015, 'CAR', '5', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2015, 'CHI', '7', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2015, 'CIN', '7', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2015, 'CLE', '11', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2015, 'DAL', '6', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2015, 'DEN', '7', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2015, 'DET', '9', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2015, 'GB', '7', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2015, 'HOU', '9', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2015, 'IND', '10', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2015, 'JAX', '8', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2015, 'KC', '9', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2015, 'MIA', '5', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2015, 'MIN', '5', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2015, 'NE', '4', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2015, 'NO', '11', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2015, 'NYG', '11', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2015, 'NYJ', '5', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2015, 'OAK', '6', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2015, 'PHI', '8', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2015, 'PIT', '11', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2015, 'SD', '10', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2015, 'SF', '10', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2015, 'SEA', '9', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2015, 'STL', '6', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2015, 'TB', '6', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2015, 'TEN', '4', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2015, 'WAS', '8', getdate(), getdate());
+
+
+
+
+COMMIT TRANSACTION;
+
+
+
+
+
+
+
+
+
+
+
+
+SET XACT_ABORT ON
+BEGIN TRANSACTION;
+
+/* Below Run in Production on 7/23/15 */
+/* 7/23/15 */
+
+	-- Mark all IsDrafted players
+UPDATE dbo.Player
+SET IsDrafted = 1
+WHERE PlayerId IN (SELECT PlayerId FROM DraftPick WHERE PlayerId IS NOT NULL)
+
+-- UPDATE Dexter McCluster !!!
+-- Set RB to Active, WR to Inactive, have share same TruePlayerId
+UPDATE dbo.Player
+SET IsActive = 1
+WHERE PlayerId = 334
+
+UPDATE dbo.Player
+SET TruePlayerId = 334
+WHERE PlayerId = 229
+
+
+
 /* 7/15/15 */
+SET XACT_ABORT ON
+BEGIN TRANSACTION;
+
 
 /*
-	TODO BEFORE RUNNING usp!
+	TODO BEFORE RUNNING usp_LoadPlayerRanks_V2!
 	- Add IsDrafted column to Player			+
 	- Expand PlayerAdjustment Action column to 50 char	+
 	- Delete existing rankings (FntprsDyn?)		
@@ -20,9 +133,6 @@ GO
 ALTER TABLE dbo.[PlayerAdjustment]
 ALTER COLUMN [Action] VARCHAR(50) NULL
 GO
-
--- UPDATE Dexter McCluster !!!
--- Set RB to Active, WR to Inactive, have share same TruePlayerId
 
 /* 7/11/15 */
 

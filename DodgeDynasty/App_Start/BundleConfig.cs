@@ -24,7 +24,7 @@ namespace DodgeDynasty
 
 			bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css"));
 
-			bundles.Add(new StyleBundle("~/Content/themes/base").Include(
+			bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
 						"~/Content/themes/base/jquery-ui-1.10.4.custom.css"));
 		}
 	}

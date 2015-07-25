@@ -190,6 +190,7 @@ BEGIN
 						WHERE PlayerId = @ExistingActivePlayerId
 
 						INSERT INTO dbo.PlayerAdjustment
+							([OldPlayerId],[NewPlayerId],[TruePlayerId],[NewFirstName],[NewLastName],[NewPosition],[NewNFLTeam],[Action],[UserId],[AddTimestamp],[LastUpdateTimestamp])
 							SELECT @ExistingActivePlayerId, @PlayerId, TruePlayerId, FirstName, LastName, Position, NFLTeam,
 								'Deactivate Drafted Player - New Team', NULL, getdate(), getdate()
 							FROM dbo.Player
@@ -318,6 +319,7 @@ BEGIN
 					WHERE PlayerId = @OldPlayerId
 
 					INSERT INTO dbo.PlayerAdjustment
+						([OldPlayerId],[NewPlayerId],[TruePlayerId],[NewFirstName],[NewLastName],[NewPosition],[NewNFLTeam],[Action],[UserId],[AddTimestamp],[LastUpdateTimestamp])
 						SELECT @OldPlayerId, @PlayerId, TruePlayerId, FirstName, LastName, Position, NFLTeam,
 							'Deactivate Drafted Player - New Team', NULL, getdate(), getdate()
 						FROM dbo.Player

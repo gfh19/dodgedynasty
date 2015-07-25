@@ -20,7 +20,12 @@
 				<div class="draft-pick-outline outline">
 				<div class="team-draft-pick @Model.CurrentGridOwnerUser.CssClass">
 					<div class="clear-fix draft-pick-meta">
-						<span class="pick-info"><span class="pick-num">@pick.PickNum</span></span>
+						<span class="pick-info"><span class="pick-num">@pick.PickNum</span>
+						@if (Model.CurrentGridPlayer.ByeWeek != null)
+						{
+							<span>(Bye-@Model.CurrentGridPlayer.ByeWeek)</span>
+						}
+						</span>
 						<span class="player-info">
 						@if (!string.IsNullOrEmpty(Model.CurrentGridPlayer.Position))
 						{

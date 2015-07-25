@@ -5,14 +5,25 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="HomeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ByeWeek">
+          <Key>
+            <PropertyRef Name="ByeWeekId" />
+          </Key>
+          <Property Name="ByeWeekId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Year" Type="smallint" Nullable="false" />
+          <Property Name="NFLTeam" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="WeekNum" Type="smallint" Nullable="false" />
+          <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
+          <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="CssColor">
           <Key>
             <PropertyRef Name="ClassName" />
           </Key>
           <Property Name="ClassName" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="ColorText" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="ColorValue" Type="varchar" MaxLength="7" />
-          <Property Name="AddTimestamp" Type="datetime" />
+          <Property Name="ColorValue" Type="varchar" MaxLength="7" Nullable="false" />
+          <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
           <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Draft">
@@ -21,7 +32,6 @@
           </Key>
           <Property Name="DraftId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="LeagueId" Type="int" Nullable="false" />
-          <Property Name="LeagueName" Type="varchar" MaxLength="50" StoreGeneratedPattern="Computed" />
           <Property Name="DraftDate" Type="datetime" Nullable="false" />
           <Property Name="DraftLocation" Type="varchar" MaxLength="50" />
           <Property Name="DraftYear" Type="smallint" />
@@ -31,6 +41,7 @@
           <Property Name="Format" Type="varchar" MaxLength="10" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="IsComplete" Type="bit" Nullable="false" />
+          <Property Name="LeagueName" Type="varchar" MaxLength="50" StoreGeneratedPattern="Computed" />
           <Property Name="WinnerId" Type="int" />
           <Property Name="RunnerUpId" Type="int" />
           <Property Name="HasCoWinners" Type="bit" />
@@ -109,8 +120,8 @@
           </Key>
           <Property Name="LeagueId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="LeagueName" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="AddTimestamp" Type="datetime" />
           <Property Name="LastUpdateTimestamp" Type="datetime" />
+          <Property Name="AddTimestamp" Type="datetime" />
         </EntityType>
         <EntityType Name="LeagueOwner">
           <Key>
@@ -119,12 +130,12 @@
           <Property Name="LeagueOwnerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="LeagueId" Type="int" Nullable="false" />
-          <Property Name="LeagueName" Type="varchar" MaxLength="50" StoreGeneratedPattern="Computed" />
           <Property Name="TeamName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CssClass" Type="varchar" MaxLength="20" />
-          <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
           <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="LeagueName" Type="varchar" MaxLength="50" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="Message">
           <Key>
@@ -137,9 +148,9 @@
           <Property Name="MessageText" Type="varchar" MaxLength="1000" Nullable="false" />
           <Property Name="AllUsers" Type="bit" Nullable="false" />
           <Property Name="LeagueId" Type="int" />
-          <Property Name="LeagueName" Type="varchar" MaxLength="50" StoreGeneratedPattern="Computed" />
           <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
           <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
+          <Property Name="LeagueName" Type="varchar" MaxLength="50" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="NFLTeam">
           <Key>
@@ -158,7 +169,6 @@
             <PropertyRef Name="PlayerId" />
           </Key>
           <Property Name="PlayerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="TruePlayerId" Type="int" />
           <Property Name="FirstName" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="LastName" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="PlayerName" Type="varchar" MaxLength="51" StoreGeneratedPattern="Computed" Nullable="false" />
@@ -166,9 +176,10 @@
           <Property Name="NFLTeam" Type="varchar" MaxLength="3" Nullable="false" />
           <Property Name="DateOfBirth" Type="date" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
-          <Property Name="IsDrafted" Type="bit" Nullable="false" />
           <Property Name="AddTimestamp" Type="datetime" />
           <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
+          <Property Name="IsDrafted" Type="bit" Nullable="false" />
+          <Property Name="TruePlayerId" Type="int" />
         </EntityType>
         <EntityType Name="PlayerAdjustment">
           <Key>
@@ -177,7 +188,6 @@
           <Property Name="AdjustmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="OldPlayerId" Type="int" />
           <Property Name="NewPlayerId" Type="int" />
-          <Property Name="TruePlayerId" Type="int" />
           <Property Name="NewFirstName" Type="varchar" MaxLength="25" />
           <Property Name="NewLastName" Type="varchar" MaxLength="25" />
           <Property Name="NewPosition" Type="varchar" MaxLength="10" />
@@ -186,6 +196,7 @@
           <Property Name="UserId" Type="int" />
           <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
           <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
+          <Property Name="TruePlayerId" Type="int" />
         </EntityType>
         <EntityType Name="PlayerRank">
           <Key>
@@ -247,17 +258,17 @@
           </Key>
           <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserName" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="FirstName" Type="varchar" MaxLength="15" />
-          <Property Name="LastName" Type="varchar" MaxLength="25" />
-          <Property Name="FullName" Type="varchar" MaxLength="41" StoreGeneratedPattern="Computed" />
-          <Property Name="NickName" Type="varchar" MaxLength="10" />
           <Property Name="Password" Type="varbinary" MaxLength="128" />
           <Property Name="Salt" Type="binary" MaxLength="8" />
-          <Property Name="LastLogin" Type="datetime" />
-          <Property Name="LastMessageView" Type="datetime" />
-          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="15" />
+          <Property Name="LastName" Type="varchar" MaxLength="25" />
           <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
+          <Property Name="LastLogin" Type="datetime" />
+          <Property Name="FullName" Type="varchar" MaxLength="41" StoreGeneratedPattern="Computed" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
+          <Property Name="NickName" Type="varchar" MaxLength="10" />
+          <Property Name="LastMessageView" Type="datetime" />
         </EntityType>
         <EntityType Name="UserApplicant">
           <Key>
@@ -291,6 +302,18 @@
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="RoleId" Type="int" Nullable="false" />
         </EntityType>
+        <Association Name="FK_ByeWeek_NFLTeam">
+          <End Role="NFLTeam" Type="Self.NFLTeam" Multiplicity="1" />
+          <End Role="ByeWeek" Type="Self.ByeWeek" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NFLTeam">
+              <PropertyRef Name="TeamAbbr" />
+            </Principal>
+            <Dependent Role="ByeWeek">
+              <PropertyRef Name="NFLTeam" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Draft_League">
           <End Role="League" Type="Self.League" Multiplicity="1" />
           <End Role="Draft" Type="Self.Draft" Multiplicity="*" />
@@ -630,6 +653,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="HomeModelStoreContainer">
+          <EntitySet Name="ByeWeek" EntityType="Self.ByeWeek" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CssColor" EntityType="Self.CssColor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Draft" EntityType="Self.Draft" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DraftChat" EntityType="Self.DraftChat" Schema="dbo" store:Type="Tables" />
@@ -652,6 +676,10 @@
           <EntitySet Name="UserApplicant" EntityType="Self.UserApplicant" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserProfile" EntityType="Self.UserProfile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ByeWeek_NFLTeam" Association="Self.FK_ByeWeek_NFLTeam">
+            <End Role="NFLTeam" EntitySet="NFLTeam" />
+            <End Role="ByeWeek" EntitySet="ByeWeek" />
+          </AssociationSet>
           <AssociationSet Name="FK_Draft_League" Association="Self.FK_Draft_League">
             <End Role="League" EntitySet="League" />
             <End Role="Draft" EntitySet="Draft" />
@@ -904,6 +932,11 @@
             <End Role="Player" EntitySet="Players" />
             <End Role="PlayerRank" EntitySet="PlayerRanks" />
           </AssociationSet>
+          <EntitySet Name="ByeWeeks" EntityType="HomeModel.ByeWeek" />
+          <AssociationSet Name="FK_ByeWeek_NFLTeam" Association="HomeModel.FK_ByeWeek_NFLTeam">
+            <End Role="NFLTeam" EntitySet="NFLTeams" />
+            <End Role="ByeWeek" EntitySet="ByeWeeks" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="NFLTeam">
           <Key>
@@ -917,6 +950,7 @@
           <Property Type="String" Name="Conference" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
           <Property Type="String" Name="Division" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Players" Relationship="HomeModel.FK_Player_NFLTeam" FromRole="NFLTeam" ToRole="Player" />
+          <NavigationProperty Name="ByeWeeks" Relationship="HomeModel.FK_ByeWeek_NFLTeam" FromRole="NFLTeam" ToRole="ByeWeek" />
         </EntityType>
         <EntityType Name="PlayerRank">
           <Key>
@@ -1058,7 +1092,7 @@
           <Property Name="UserName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="FirstName" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="LastName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="FullName" Type="String" MaxLength="41" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="FullName" Type="String" MaxLength="41" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" Nullable="false" />
           <Property Name="NickName" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Password" Type="Binary" MaxLength="128" FixedLength="false" />
           <Property Name="Salt" Type="Binary" MaxLength="8" FixedLength="true" />
@@ -1156,8 +1190,8 @@
           </Key>
           <Property Name="ClassName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="ColorText" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="ColorValue" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
-          <Property Name="AddTimestamp" Type="DateTime" Precision="3" />
+          <Property Name="ColorValue" Type="String" MaxLength="7" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AddTimestamp" Type="DateTime" Precision="3" Nullable="false" />
           <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="LeagueOwners" Relationship="HomeModel.FK_LeagueOwner_CssColor" FromRole="CssColor" ToRole="LeagueOwner" />
         </EntityType>
@@ -1585,6 +1619,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ByeWeek">
+          <Key>
+            <PropertyRef Name="ByeWeekId" />
+          </Key>
+          <Property Name="ByeWeekId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Year" Type="Int16" Nullable="false" />
+          <Property Name="NFLTeam" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="WeekNum" Type="Int16" Nullable="false" />
+          <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="NFLTeam1" Relationship="HomeModel.FK_ByeWeek_NFLTeam" FromRole="ByeWeek" ToRole="NFLTeam" />
+        </EntityType>
+        <Association Name="FK_ByeWeek_NFLTeam">
+          <End Type="HomeModel.NFLTeam" Role="NFLTeam" Multiplicity="1" />
+          <End Type="HomeModel.ByeWeek" Role="ByeWeek" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NFLTeam">
+              <PropertyRef Name="TeamAbbr" />
+            </Principal>
+            <Dependent Role="ByeWeek">
+              <PropertyRef Name="NFLTeam" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1898,6 +1956,18 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ByeWeeks">
+            <EntityTypeMapping TypeName="HomeModel.ByeWeek">
+              <MappingFragment StoreEntitySet="ByeWeek">
+                <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
+                <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
+                <ScalarProperty Name="WeekNum" ColumnName="WeekNum" />
+                <ScalarProperty Name="NFLTeam" ColumnName="NFLTeam" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="ByeWeekId" ColumnName="ByeWeekId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -1975,6 +2045,8 @@
         <edmx:AssociationConnector Association="HomeModel.FK_PlayerAdjustment_PlayerNew" />
         <edmx:AssociationConnector Association="HomeModel.FK_PlayerAdjustment_PlayerOld" />
         <edmx:AssociationConnector Association="HomeModel.FK_PlayerRank_Player" />
+        <edmx:EntityTypeShape EntityType="HomeModel.ByeWeek" Width="1.5" PointX="3" PointY="20.75" />
+        <edmx:AssociationConnector Association="HomeModel.FK_ByeWeek_NFLTeam" />
         </edmx:Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
