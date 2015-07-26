@@ -1864,9 +1864,9 @@ span.player-select
 }
 
 
-/* Messages (tab)
+/* Messages (menu & tab)
 ----------------------------------------------------------*/
-
+/* Menu */
 .toggle-msgs, .menu-msgs {
 	font-size: 10px;
 	color: white;
@@ -1912,6 +1912,10 @@ span.player-select
 {
 	background-color: inherit;
 }
+
+/* Page/Tabs */
+#tabs { visibility: hidden; }
+#tabs.ui-tabs { visibility: visible !important; }
 
 #messages .ui-state-default, .ui-state-hover {
 	background: #F5F5F5;
