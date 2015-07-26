@@ -16,7 +16,7 @@ namespace DodgeDynasty.Mappers.Site
 		{
 			//Update last message view 
 			var user = HomeEntity.Users.GetLoggedInUser();
-			user.LastMessageView = DateTime.Now;
+			user.LastMessageView = Utilities.GetEasternTime();
 			HomeEntity.SaveChanges();
 
 			//Get User Messages Display
