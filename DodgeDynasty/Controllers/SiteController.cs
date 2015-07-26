@@ -9,7 +9,7 @@ using DodgeDynasty.Mappers.Site;
 using DodgeDynasty.Models.Site;
 using DodgeDynasty.Models.Types;
 using DodgeDynasty.Shared;
-using DodgeDynasty.SignalR;
+using DodgeDynasty.WebSockets;
 
 namespace DodgeDynasty.Controllers
 {

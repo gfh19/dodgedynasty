@@ -258,9 +258,9 @@
     <Compile Include="Shared\Extensions\SessionExtensions.cs" />
     <Compile Include="Shared\Utilities.cs" />
     <Compile Include="Controllers\RankController.cs" />
-    <Compile Include="SignalR\DraftHub.cs" />
-    <Compile Include="SignalR\DraftHubHelper.cs" />
-    <Compile Include="SignalR\DD_SignalR.cs" />
+    <Compile Include="WebSockets\DraftHub.cs" />
+    <Compile Include="WebSockets\DraftHubHelper.cs" />
+    <Compile Include="WebSockets\DD_SignalR.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="2015 SQL Changes.sql" />
@@ -345,7 +345,6 @@
     <Content Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="OLD_favicon.ico" />
     <Content Include="Scripts\EditDraft.js" />
     <Content Include="Scripts\AddEditDraft.js" />
     <Content Include="Scripts\AddDraft.js" />

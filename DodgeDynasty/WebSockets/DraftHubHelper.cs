@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using Microsoft.AspNet.SignalR;
 
-namespace DodgeDynasty.SignalR
+namespace DodgeDynasty.WebSockets
 {
 	public static class DraftHubHelper
 	{

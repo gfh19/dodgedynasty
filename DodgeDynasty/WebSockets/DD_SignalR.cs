@@ -6,9 +6,9 @@ using Microsoft.AspNet.SignalR;
 using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartup(typeof(DodgeDynasty.SignalR.DD_SignalR))]
+[assembly: OwinStartup(typeof(DodgeDynasty.WebSockets.DD_SignalR))]
 
-namespace DodgeDynasty.SignalR
+namespace DodgeDynasty.WebSockets
 {
 	public class DD_SignalR
 	{

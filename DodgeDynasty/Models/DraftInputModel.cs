@@ -11,7 +11,7 @@ using System.Linq.Expressions;
 using DodgeDynasty.Shared;
 using DodgeDynasty.Shared.Exceptions;
 using DodgeDynasty.Models.Types;
-using DodgeDynasty.SignalR;
+using DodgeDynasty.WebSockets;
 using DodgeDynasty.Mappers.Shared;
 
 namespace DodgeDynasty.Models

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using DodgeDynasty.Models;
-using DodgeDynasty.SignalR;
+using DodgeDynasty.WebSockets;
 
 namespace DodgeDynasty.Mappers
 {

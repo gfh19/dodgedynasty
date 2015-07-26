@@ -6,7 +6,7 @@ using System.Web;
 using DodgeDynasty.Mappers.Shared;
 using Microsoft.AspNet.SignalR;
 
-namespace DodgeDynasty.SignalR
+namespace DodgeDynasty.WebSockets
 {
 	public class DraftHub : Hub
 	{

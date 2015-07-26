@@ -9,7 +9,7 @@ using DodgeDynasty.Shared;
 using DodgeDynasty.Mappers.Shared;
 using DodgeDynasty.Models.Types;
 using Newtonsoft.Json;
-using DodgeDynasty.SignalR;
+using DodgeDynasty.WebSockets;
 using DodgeDynasty.Models.Shared;
 
 namespace DodgeDynasty.Controllers

@@ -49,17 +49,18 @@ function initRefreshedPage() {
 
 function initPage() {
 	if (draftActive && !webSocketsKillSwitch) {
-		startHubConnection();
+		draftHub = $.connection.draftHub;
 		draftHub.client.broadcastDraft = (typeof broadcastDraft !== "undefined") ? broadcastDraft : function () { };
 		draftHub.client.broadcastChat = (typeof broadcastChat !== "undefined") ? broadcastChat : function () { };
 		draftHub.client.broadcastDisconnect = (typeof broadcastDisconnect !== "undefined") ? broadcastDisconnect : function () { };
+		startHubConnection();
 	}
 }
 
 function startHubConnection(startFn, forceAttempt) {
 	var connected = false;
 	if (!webSocketsKillSwitch) {
-		draftHub = $.connection.draftHub;
+		draftHub = draftHub || $.connection.draftHub;
 		if ($.connection.hub.state == $.signalR.connectionState.disconnected) {
 			console.log("Attempting socket connection");
 			$.connection.hub.start().done(function () {
