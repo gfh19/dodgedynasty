@@ -2,7 +2,86 @@
 BEGIN TRANSACTION;
 
 
+/* 7/30/15 */
+
+DBCC CHECKIDENT('Draft', RESEED, 0)
+GO
+
+INSERT INTO [dbo].[Draft]
+           ([LeagueId]
+           ,[DraftDate]
+           ,[DraftLocation]
+           ,[DraftYear]
+           ,[NumOwners]
+           ,[NumRounds]
+           ,[NumKeepers]
+           ,[Format]
+           ,[IsActive]
+           ,[IsComplete]
+           ,[WinnerId]
+           ,[RunnerUpId]
+           ,[HasCoWinners]
+           ,[AddTimestamp]
+           ,[LastUpdateTimestamp])
+     VALUES
+           (1,'2008-08-23 16:00:00','Medina',2008,8,15,0,'repeat',0,1,26,30,0,'2008-08-23 16:00:00.000','2008-08-23 16:00:00.000')
+           ,(1,'2009-08-22 17:00:00','Medina',2009,8,15,7,'repeat',0,1,28,27,0,'2009-08-22 17:00:00.000','2008-08-22 17:00:00.000')
+           ,(1,'2010-08-22 19:00:00','Medina',2010,8,15,7,'repeat',0,1,28,29,0,'2010-08-22 19:00:00','2010-08-22 19:00:00')
+           ,(1,'2011-08-21 20:00:00','Medina',2011,8,15,7,'repeat',0,1,27,28,0,'2011-08-21 20:00:00','2011-08-21 20:00:00')
+GO
+
+INSERT INTO [dbo].[Draft]
+           ([LeagueId]
+           ,[DraftDate]
+           ,[DraftLocation]
+           ,[DraftYear]
+           ,[NumOwners]
+           ,[NumRounds]
+           ,[NumKeepers]
+           ,[Format]
+           ,[IsActive]
+           ,[IsComplete]
+           ,[WinnerId]
+           ,[RunnerUpId]
+           ,[HasCoWinners]
+           ,[AddTimestamp]
+           ,[LastUpdateTimestamp])
+     VALUES
+           (2,'2000-08-28 13:00:00','Bowling Green',2000,10,15,0,'snake',0,1,NULL,NULL,NULL,'2000-08-28 13:00:00','2000-08-28 13:00:00')
+           ,(2,'2001-09-05 13:00:00','Bowling Green',2001,10,15,1,'snake',0,1,NULL,NULL,NULL,'2001-09-05 13:00:00','2001-09-05 13:00:00')
+           ,(2,'2002-09-05 13:00:00','Bowling Green',2002,10,15,1,'snake',0,1,NULL,NULL,NULL,'2002-09-05 13:00:00','2002-09-05 13:00:00')
+           ,(2,'2003-09-05 13:00:00','Toledo',2003,10,15,1,'snake',0,1,NULL,NULL,NULL,'2003-09-05 13:00:00','2003-09-05 13:00:00')
+           ,(2,'2004-09-05 13:00:00','Westlake',2004,10,15,1,'snake',0,1,NULL,NULL,NULL,'2004-09-05 13:00:00','2004-09-05 13:00:00')
+           ,(2,'2005-09-05 13:00:00','Westlake',2005,10,15,1,'snake',0,1,NULL,NULL,NULL,'2005-09-05 13:00:00','2005-09-05 13:00:00')
+           ,(2,'2006-09-05 13:00:00','Westlake',2006,10,15,1,'snake',0,1,NULL,NULL,NULL,'2006-09-05 13:00:00','2006-09-05 13:00:00')
+           ,(2,'2007-09-05 13:00:00','Westlake',2007,10,15,1,'snake',0,1,NULL,NULL,NULL,'2007-09-05 13:00:00','2007-09-05 13:00:00')
+           ,(2,'2008-09-05 13:00:00','Westlake',2008,10,15,1,'snake',0,1,NULL,NULL,NULL,'2008-09-05 13:00:00','2008-09-05 13:00:00')
+           ,(2,'2009-09-05 13:00:00','Westlake',2009,10,15,1,'snake',0,1,NULL,NULL,NULL,'2009-09-05 13:00:00','2009-09-05 13:00:00')
+           ,(2,'2010-09-05 13:00:00','Westlake',2010,10,15,1,'snake',0,1,NULL,NULL,NULL,'2010-09-05 13:00:00','2010-09-05 13:00:00')
+           ,(2,'2011-09-04 13:00:00','Westlake',2011,10,15,1,'snake',0,1,NULL,NULL,NULL,'2011-09-04 13:00:00','2011-09-04 13:00:00')
+           ,(2,'2012-09-02 13:00:00','Westlake',2012,10,15,1,'snake',0,1,NULL,NULL,NULL,'2012-09-02 13:00:00','2012-09-02 13:00:00')
+           ,(2,'2013-09-01 13:00:00','Westlake',2013,10,15,1,'snake',0,1,NULL,NULL,NULL,'2013-09-01 13:00:00','2013-09-01 13:00:00')
+GO
+
+DBCC CHECKIDENT('Draft', RESEED, 15)
+GO
+
+UPDATE dbo.Draft
+SET NumRounds = 17,
+	NumKeepers = 3
+WHERE DraftId = 6
+
+
+
+
 COMMIT TRANSACTION;
+
+
+
+
+
+
+
 
 
 
