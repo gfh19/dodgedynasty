@@ -9,7 +9,7 @@ namespace DodgeDynasty.Models
 {
 	public class DraftDisplayModel : DraftModel
 	{
-		public DraftDisplayModel(int? draftId=null)
+		public DraftDisplayModel(int? draftId=null) : base(draftId)
 		{
 			base.GetCurrentDraft(draftId);
 		}

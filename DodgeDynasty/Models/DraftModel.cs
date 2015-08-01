@@ -128,7 +128,6 @@ namespace DodgeDynasty.Models
 			DraftUsers = HomeEntity.Users.Where(u => draftUserIds.Contains(u.UserId)).OrderBy(o => o.NickName).ToList();
 			DraftOwnerUsers = GetOwnerUsers(DraftUsers);
 
-			DraftPicks = GetDraftPicks();
 			var playerIds = DraftPicks.Select(dp => dp.PlayerId).ToList();
 			DraftedPlayers = HomeEntity.Players.Where(p =>
 				playerIds.Contains(p.PlayerId)).ToList();

@@ -2,6 +2,14 @@
 BEGIN TRANSACTION;
 
 
+/* TODO:
+- Create History tables
+- Delete Bailey League, Draft, Draft Picks, and any junk Players
+- Add old Dynasty/Fridge owners
+	- Add to League
+- Change to allow my info colors from inactive owners
+*/
+
 /* 7/30/15 */
 
 DBCC CHECKIDENT('Draft', RESEED, 0)
@@ -24,7 +32,7 @@ INSERT INTO [dbo].[Draft]
            ,[AddTimestamp]
            ,[LastUpdateTimestamp])
      VALUES
-           (1,'2008-08-23 16:00:00','Medina',2008,8,15,0,'repeat',0,1,26,30,0,'2008-08-23 16:00:00.000','2008-08-23 16:00:00.000')
+           (1,'2008-08-23 16:00:00','Medina',2008,8,15,0,'snake',0,1,26,30,0,'2008-08-23 16:00:00.000','2008-08-23 16:00:00.000')
            ,(1,'2009-08-22 17:00:00','Medina',2009,8,15,7,'repeat',0,1,28,27,0,'2009-08-22 17:00:00.000','2008-08-22 17:00:00.000')
            ,(1,'2010-08-22 19:00:00','Medina',2010,8,15,7,'repeat',0,1,28,29,0,'2010-08-22 19:00:00','2010-08-22 19:00:00')
            ,(1,'2011-08-21 20:00:00','Medina',2011,8,15,7,'repeat',0,1,27,28,0,'2011-08-21 20:00:00','2011-08-21 20:00:00')

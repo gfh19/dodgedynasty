@@ -394,6 +394,7 @@
     <Content Include="Scripts\AddUser.js" />
     <Content Include="Scripts\UserInfo.js" />
     <Content Include="SQL\usp_LoadPastDraftRosters.sql" />
+    <Content Include="SQL\usp_LoadPastDrafts.sql" />
     <Content Include="SQL\usp_LoadPlayerRanks_V2.sql" />
     <Content Include="Views\Shared\Unauthorized.cshtml" />
     <Content Include="Views\Draft\Pick.cshtml" />
