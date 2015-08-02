@@ -1715,6 +1715,7 @@ span.player-select
 .lo-selected-color {
 	border: 3px solid;
 	padding: 1px 1px;
+	font-size: 12px;
 }
 
 .owner-controls, .lo-active {

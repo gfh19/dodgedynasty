@@ -31,7 +31,15 @@ namespace DodgeDynasty.Mappers.Account
 						})
 				.Where(lo => lo.LeagueOwner.UserId == user.UserId)
 				.OrderBy(l=>l.AddTimestamp).ToList();
-			Model.OwnerLeagues = ownerLeagueSelect.Select(ol => ol.LeagueOwner).ToList();
+			if (Model.AdminMode)
+			{
+				Model.OwnerLeagues = ownerLeagueSelect.Select(ol => ol.LeagueOwner).ToList();
+			}
+			else
+			{
+				Model.OwnerLeagues = ownerLeagueSelect.Where(ol=>ol.LeagueOwner.IsActive)
+					.Select(ol => ol.LeagueOwner).ToList();
+			}
 			var cssColors = HomeEntity.CssColors.ToList();
 			Model.AvailableLeaguesColors = new Dictionary<int, List<CssColor>>();
 			foreach (var ownerLeague in Model.OwnerLeagues)
