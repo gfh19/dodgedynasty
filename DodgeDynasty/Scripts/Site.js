@@ -161,7 +161,8 @@ function setPickTimer(recursive) {
 	var hasTimer = $(".start-time").length > 0;
 	pickTimeSeconds = (hasTimer) ? $(".start-time").data("pick-time-seconds") : 0;
 	if (hasTimer && pickTimeSeconds > 0) {
-		if (!draftActive) {
+		var isHistoryMode = window.location.search.indexOf("historyMode=true") > 0;
+		if (!draftActive || isHistoryMode) {
 			displayDraftTime();
 		}
 		else {

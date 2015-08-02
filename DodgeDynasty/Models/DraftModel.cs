@@ -249,8 +249,9 @@ namespace DodgeDynasty.Models
 
 		public string GetNFLTeamDisplay(string nflTeamAbbr)
 		{
-			var nflTeam = NFLTeams.First(t => t.TeamAbbr == nflTeamAbbr);
-			return nflTeam.AbbrDisplay;
+			nflTeamAbbr = (!string.IsNullOrEmpty(nflTeamAbbr) ? nflTeamAbbr.ToUpper() : "");
+			var nflTeam = NFLTeams.FirstOrDefault(t => t.TeamAbbr == nflTeamAbbr);
+			return (nflTeam != null) ? nflTeam.AbbrDisplay : "";
 		}
 
 		public bool IsDraftActive()

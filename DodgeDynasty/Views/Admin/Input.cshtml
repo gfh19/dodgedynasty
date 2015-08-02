@@ -23,6 +23,10 @@
 			{
 				<text>Pick #@Model.CurrentDraftPick.PickNum, Current Team: @Model.CurrentDraftPickOwnerUser.TeamName</text>
 			}
+			else if (!Model.CurrentDraft.IsComplete && Model.DraftPicks.Count == 0)
+			{
+	   			<text>The Draft Has Not Been Setup</text>
+			}
 			else
 			{
 				<text>The Draft Has Completed</text>

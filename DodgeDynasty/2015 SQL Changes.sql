@@ -1,6 +1,26 @@
 ﻿SET XACT_ABORT ON
 BEGIN TRANSACTION;
 
+/* TODO:
+	- Correct TJ Houshmandzadeh from RB to WR (Bal)
+*/
+
+COMMIT TRANSACTION;
+
+
+
+
+
+
+
+
+
+
+SET XACT_ABORT ON
+BEGIN TRANSACTION;
+
+
+/* Below Run in Production on 8/1/15 */
 
 /* TODO:
 - Delete Bailey League, Draft, Draft Picks, and any junk Players	+
@@ -8,7 +28,7 @@ BEGIN TRANSACTION;
 - Create both SPs													+
 - Add old Dynasty/Fridge owners										+
 	- Add to League, THEN Deactivate								+
-- Later:  Change to allow my info colors from inactive owners
+- Later:  Change to allow my info colors from inactive owners		+
 */
 
 /* 8/1/15 */

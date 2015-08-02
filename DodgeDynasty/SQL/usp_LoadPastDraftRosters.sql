@@ -12,7 +12,7 @@ ALTER PROCEDURE [dbo].[usp_LoadPastDraftRosters]
 	@PlayerName varchar(50),
 	@Position varchar(10),
 	@NFLTeam varchar(50),
-	@Owner varchar(10),
+	@Owner varchar(30),
 	@PickNum int,
 	@RoundNum int,
 	@LeagueId int,
@@ -41,12 +41,18 @@ BEGIN
 		CASE RTRIM(UPPER(REPLACE(@NFLTeam, '.', '')))
 		WHEN 'AZ' THEN 'ARI'
 		WHEN 'GBP' THEN 'GB'
+		WHEN 'GNB' THEN 'GB'
 		WHEN 'JAC' THEN 'JAX'
+		WHEN 'KAN' THEN 'KC'
 		WHEN 'KCC' THEN 'KC'
 		WHEN 'NEP' THEN 'NE'
+		WHEN 'NWE' THEN 'NE'
+		WHEN 'NOR' THEN 'NO'
 		WHEN 'NOS' THEN 'NO'
 		WHEN 'SDC' THEN 'SD'
+		WHEN 'SDG' THEN 'SD'
 		WHEN 'SFO' THEN 'SF'
+		WHEN 'TAM' THEN 'TB'
 		WHEN 'TBB' THEN 'TB'
 		WHEN 'WSH' THEN 'WAS'
 		WHEN 'D/ST' THEN ''
@@ -84,7 +90,7 @@ BEGIN
 		WHEN 'TENNESSEE TITANS' THEN 'TEN'
 		WHEN 'WASHINGTON REDSKINS' THEN 'WAS'
 
-		ELSE RTRIM(@NFLTeam)
+		ELSE LTRIM(RTRIM(UPPER(@NFLTeam)))
 		END
 
 	--TODO:  Replace with lookup
@@ -156,38 +162,38 @@ BEGIN
 		WHEN 'TITANS' THEN 'Tennessee Titans'
 		WHEN 'REDSKINS' THEN 'Washington Redskins'
 		
-		WHEN 'ARIZONA CARDINALS' THEN 'Arizona Cardinals'
-		WHEN 'ATLANTA FALCONS' THEN 'Atlanta Falcons'
-		WHEN 'BALTIMORE RAVENS' THEN 'Baltimore Ravens'
-		WHEN 'BUFFALO BILLS' THEN 'Buffalo Bills'
-		WHEN 'CAROLINA PANTHERS' THEN 'Carolina Panthers'
-		WHEN 'CHICAGO BEARS' THEN 'Chicago Bears'
-		WHEN 'CINCINNATI BENGALS' THEN 'Cincinnati Bengals'
-		WHEN 'CLEVELAND BROWNS' THEN 'Cleveland Browns'
-		WHEN 'DALLAS COWBOYS' THEN 'Dallas Cowboys'
-		WHEN 'DENVER BRONCOS' THEN 'Denver Broncos'
-		WHEN 'DETROIT LIONS' THEN 'Detroit Lions'
-		WHEN 'GREEN BAY PACKERS' THEN 'Green Bay Packers'
-		WHEN 'HOUSTON TEXANS' THEN 'Houston Texans'
-		WHEN 'INDIANAPOLIS COLTS' THEN 'Indianapolis Colts'
-		WHEN 'JACKSONVILLE JAGUARS' THEN 'Jacksonville Jaguars'
-		WHEN 'KANSAS CITY CHIEFS' THEN 'Kansas City Chiefs'
-		WHEN 'MIAMI DOLPHINS' THEN 'Miami Dolphins'
-		WHEN 'MINNESOTA VIKINGS' THEN 'Minnesota Vikings'
-		WHEN 'NEW ENGLAND PATRIOTS' THEN 'New England Patriots'
-		WHEN 'NEW ORLEANS SAINTS' THEN 'New Orleans Saints'
-		WHEN 'NEW YORK GIANTS' THEN 'New York Giants'
-		WHEN 'NEW YORK JETS' THEN 'New York Jets'
-		WHEN 'OAKLAND RAIDERS' THEN 'Oakland Raiders'
-		WHEN 'PHILADELPHIA EAGLES' THEN 'Philadelphia Eagles'
-		WHEN 'PITTSBURGH STEELERS' THEN 'Pittsburgh Steelers'
-		WHEN 'SAN DIEGO CHARGERS' THEN 'San Diego Chargers'
-		WHEN 'SEATTLE SEAHAWKS' THEN 'Seattle Seahawks'
-		WHEN 'SAN FRANCISCO 49ERS' THEN 'San Francisco 49ers'
-		WHEN 'ST LOUIS RAMS' THEN 'St. Louis Rams'
-		WHEN 'TAMPA BAY BUCCANEERS' THEN 'Tampa Bay Buccaneers'
-		WHEN 'TENNESSEE TITANS' THEN 'Tennessee Titans'
-		WHEN 'WASHINGTON REDSKINS' THEN 'Washington Redskins'
+		WHEN 'ARIZONA' THEN 'Arizona Cardinals'
+		WHEN 'ATLANTA' THEN 'Atlanta Falcons'
+		WHEN 'BALTIMORE' THEN 'Baltimore Ravens'
+		WHEN 'BUFFALO' THEN 'Buffalo Bills'
+		WHEN 'CAROLINA' THEN 'Carolina Panthers'
+		WHEN 'CHICAGO' THEN 'Chicago Bears'
+		WHEN 'CINCINNATI' THEN 'Cincinnati Bengals'
+		WHEN 'CLEVELAND' THEN 'Cleveland Browns'
+		WHEN 'DALLAS' THEN 'Dallas Cowboys'
+		WHEN 'DENVER' THEN 'Denver Broncos'
+		WHEN 'DETROIT' THEN 'Detroit Lions'
+		WHEN 'GREEN BAY' THEN 'Green Bay Packers'
+		WHEN 'HOUSTON' THEN 'Houston Texans'
+		WHEN 'INDIANAPOLIS' THEN 'Indianapolis Colts'
+		WHEN 'JACKSONVILLE' THEN 'Jacksonville Jaguars'
+		WHEN 'KANSAS CITY' THEN 'Kansas City Chiefs'
+		WHEN 'MIAMI' THEN 'Miami Dolphins'
+		WHEN 'MINNESOTA' THEN 'Minnesota Vikings'
+		WHEN 'NEW ENGLAND' THEN 'New England Patriots'
+		WHEN 'NEW ORLEANS' THEN 'New Orleans Saints'
+		WHEN 'NEW YORK' THEN 'New York Giants'
+		WHEN 'NEW YORK' THEN 'New York Jets'
+		WHEN 'OAKLAND' THEN 'Oakland Raiders'
+		WHEN 'PHILADELPHIA' THEN 'Philadelphia Eagles'
+		WHEN 'PITTSBURGH' THEN 'Pittsburgh Steelers'
+		WHEN 'SAN DIEGO' THEN 'San Diego Chargers'
+		WHEN 'SEATTLE' THEN 'Seattle Seahawks'
+		WHEN 'SAN FRANCISCO' THEN 'San Francisco 49ers'
+		WHEN 'ST LOUIS' THEN 'St. Louis Rams'
+		WHEN 'TAMPA BAY' THEN 'Tampa Bay Buccaneers'
+		WHEN 'TENNESSEE' THEN 'Tennessee Titans'
+		WHEN 'WASHINGTON' THEN 'Washington Redskins'
 
 		WHEN 'CHRISTOPHER IVORY' THEN 'Chris Ivory'
 		WHEN 'TIMOTHY WRIGHT' THEN 'Tim Wright'
@@ -208,19 +214,43 @@ BEGIN
 		CASE (RTRIM(UPPER(@Position)))
 		WHEN 'D/ST' THEN 'DEF'
 		WHEN 'DST' THEN 'DEF'
+		WHEN 'D' THEN 'DEF'
 		WHEN 'PK' THEN 'K'
-		ELSE @Position
+		ELSE LTRIM(RTRIM(UPPER(@Position)))
 		END
 		
 	SELECT @ScrubbedOwner = 
 		CASE (RTRIM(UPPER(@Owner)))
+		WHEN 'GEORGE HAWKE' THEN 'George'
+		WHEN 'GEORGE HAYEK' THEN 'George'
+		WHEN 'BRENT FISHER' THEN 'Fisher'
+		WHEN 'DAVE NICKELSEN' THEN 'Dave'
+		WHEN 'ERIC DOKSA' THEN 'Doksa'
+		WHEN 'JEFF POHLMANN' THEN 'Pohlmann'
+		WHEN 'JEFF HECKLER' THEN 'Heckler'
+		WHEN 'JEFF HOLDA' THEN 'Holda'
+		WHEN 'MATT ROBSON' THEN 'Meat'
+		WHEN 'RYAN MITCHELL' THEN 'Mitchell'
+		WHEN 'STEVE MILLER' THEN 'Steve'
+		WHEN 'TREVOR MCALEER' THEN 'Trevor'
 		WHEN 'HAWKE' THEN 'George'
+		WHEN 'BRENT' THEN 'Fisher'
 		WHEN 'JEFF' THEN 'Pohlmann'
 		WHEN 'JOEY' THEN 'Joe'
-		WHEN 'MEAT' THEN 'Meat'
 		WHEN 'KARA' THEN 'Voldemort'
+		WHEN 'MEAT' THEN 'Meat'
+		WHEN 'Ryan' THEN 'Mitchell'
 		ELSE @Owner
 		END
+
+	IF (@ScrubbedNFLTeam IS NULL OR @ScrubbedNFLTeam = '') AND @ScrubbedPosition = 'DEF'
+	BEGIN
+		SELECT @ScrubbedNFLTeam = TeamAbbr
+			FROM NFLTeam
+			WHERE (UPPER(TeamName) = UPPER(@ScrubbedPlayerName)
+				   OR UPPER(LocationName) = UPPER(@ScrubbedPlayerName)
+				   OR UPPER(LocationName+' '+TeamName) = UPPER(@ScrubbedPlayerName))
+	END
 
 	SELECT @DraftId = DraftId FROM Draft
 		WHERE LeagueId = @LeagueId AND DraftYear = @DraftYear

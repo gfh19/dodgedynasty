@@ -44,6 +44,18 @@
 					 data-use-time-zone="@Model.UseTimeZone()"></div>
 			}
 		}
+		else if (!Model.CurrentDraft.IsComplete && Model.DraftPicks.Count == 0)
+		{
+			if (!Model.IsDraftActive())
+			{
+				<div class="start-time"
+					 data-draft-time="@Model.CurrentDraft.DraftDate.ToString("MM/dd/yyyy HH:mm:ss")"
+					 data-pick-start-time="@Model.CurrentDraft.DraftDate.ToString("MM/dd/yyyy HH:mm:ss")"
+					 data-current-time="@Model.GetCurrentTimeEastern(DateTime.UtcNow).ToString("MM/dd/yyyy HH:mm:ss")"
+					 data-pick-time-seconds="@Model.PickTimeSeconds"
+					 data-use-time-zone="@Model.UseTimeZone()"></div>
+			}
+		}
 		else
 		{
 			<text>The Draft Has Completed</text>

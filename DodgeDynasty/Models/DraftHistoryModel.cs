@@ -23,7 +23,7 @@ namespace DodgeDynasty.Models
 		public bool IsDraftEntered(Draft draft)
 		{
 			var draftPickCount = AllDraftPicks.Where(p => p.DraftId == draft.DraftId).Count();
-			return draftPickCount > 0;
+			return draftPickCount > 0 || !draft.IsComplete;
 		}
 
 		public string GetDraftWinnerName(int? userId)
