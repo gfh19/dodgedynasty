@@ -22,7 +22,16 @@ namespace DodgeDynasty.Mappers.Account
 			Model.FirstName = user.FirstName;
 			Model.LastName = user.LastName;
 			Model.NickName = user.NickName;
-			Model.OwnerLeagues = HomeEntity.LeagueOwners.Where(lo => lo.UserId == user.UserId).ToList();
+			var ownerLeagueSelect = HomeEntity.LeagueOwners.ToList()
+					.Join(HomeEntity.Leagues.ToList(), lo => lo.LeagueId, l => l.LeagueId,
+						(lo, l) => new
+						{
+							LeagueOwner = lo,
+							AddTimestamp = l.AddTimestamp
+						})
+				.Where(lo => lo.LeagueOwner.UserId == user.UserId)
+				.OrderBy(l=>l.AddTimestamp).ToList();
+			Model.OwnerLeagues = ownerLeagueSelect.Select(ol => ol.LeagueOwner).ToList();
 			var cssColors = HomeEntity.CssColors.ToList();
 			Model.AvailableLeaguesColors = new Dictionary<int, List<CssColor>>();
 			foreach (var ownerLeague in Model.OwnerLeagues)

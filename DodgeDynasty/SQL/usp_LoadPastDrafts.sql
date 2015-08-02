@@ -1,8 +1,5 @@
 ﻿USE [Home]
 GO
-
-DROP PROCEDURE [dbo].[usp_LoadPastDrafts]
-GO
  
 /****** Object:  StoredProcedure [dbo].[usp_LoadPastDrafts]    Script Date: 8/1/2015 12:06:15 PM ******/
 SET ANSI_NULLS ON
@@ -11,7 +8,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE PROCEDURE [dbo].[usp_LoadPastDrafts]
+ALTER PROCEDURE [dbo].[usp_LoadPastDrafts]
 	@DraftId int
 AS
 BEGIN

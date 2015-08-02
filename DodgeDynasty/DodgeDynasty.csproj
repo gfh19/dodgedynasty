@@ -376,7 +376,7 @@
     <Content Include="Scripts\RankingsList.js" />
     <Content Include="Scripts\SetupDraft.js" />
     <Content Include="Scripts\SetupRank.js" />
-    <Content Include="Scripts\TeamDisplay.js" />
+    <Content Include="Scripts\History.js" />
     <Content Include="Scripts\Input.js" />
     <Content Include="Scripts\Display.js" />
     <Content Include="Scripts\lib\jquery.unobtrusive-ajax.js" />
@@ -392,6 +392,7 @@
     <Content Include="Scripts\Pick.js" />
     <Content Include="Scripts\Site.js" />
     <Content Include="Scripts\AddUser.js" />
+    <Content Include="Scripts\TeamDisplay.js" />
     <Content Include="Scripts\UserInfo.js" />
     <Content Include="SQL\usp_LoadPastDraftRosters.sql" />
     <Content Include="SQL\usp_LoadPastDrafts.sql" />

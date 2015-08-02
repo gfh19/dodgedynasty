@@ -1784,7 +1784,12 @@ span.player-select
 }
 .dh-year, .dh-winner, .dh-runner-up {
 	display: inline-block;
-
+}
+.dh-viewchk-section {
+	display: none;
+}
+.dh-view-label {
+	display: inline;
 }
 .dh-header .dh-year, .dh-header .dh-winner, .dh-header .dh-runner-up {
 	border: 1px dotted black;
@@ -2299,7 +2304,15 @@ span.player-select
 	.dh-header, .dh-winner, .dh-runner-up {
 		display: none;
 	}
-
+	.dh-viewchk-section {
+		display: block;
+	}
+	.dh-view-winners {
+		display: inline-block !important;
+	}
+	.dh-mobile-view {
+		min-width: 497px;
+	}
 	
 	/* User Info
 	------------------------------------*/

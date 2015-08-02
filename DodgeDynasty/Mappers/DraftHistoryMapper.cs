@@ -23,6 +23,7 @@ namespace DodgeDynasty.Mappers
 								 select l).ToList();
 			}
 			Model.AllDrafts = HomeEntity.Drafts.ToList();
+			Model.AllDraftPicks = HomeEntity.DraftPicks.ToList();
 			Model.AllUsers = HomeEntity.Users.ToList();
 		}
 	}

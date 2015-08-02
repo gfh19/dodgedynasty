@@ -4,7 +4,7 @@ GO
 /****** Object:  StoredProcedure [dbo].[usp_LoadPastDraftRosters]    Script Date: 7/26/2015 9:34:57 PM ******/
 SET ANSI_NULLS ON
 GO
- 
+
 SET QUOTED_IDENTIFIER ON
 GO
 
@@ -33,12 +33,21 @@ BEGIN
 	DECLARE @HistoryPlayerId int;
 	DECLARE @PlayerId int;
 	DECLARE @TruePlayerId int;
-	DECLARE @AddDateTime datetime = DATEFROMPARTS(@DraftYear, '7', '31');
+	--DECLARE @AddDateTime datetime = DATEFROMPARTS(@DraftYear, '7', '31');
+	DECLARE @DateString varchar(20) = CAST(@DraftYear as varchar) + CAST('-07-31' as varchar);
+	DECLARE @AddDateTime datetime = CONVERT(datetime, @DateString)
 
 	SELECT @ScrubbedNFLTeam = 
 		CASE RTRIM(UPPER(REPLACE(@NFLTeam, '.', '')))
 		WHEN 'AZ' THEN 'ARI'
+		WHEN 'GBP' THEN 'GB'
 		WHEN 'JAC' THEN 'JAX'
+		WHEN 'KCC' THEN 'KC'
+		WHEN 'NEP' THEN 'NE'
+		WHEN 'NOS' THEN 'NO'
+		WHEN 'SDC' THEN 'SD'
+		WHEN 'SFO' THEN 'SF'
+		WHEN 'TBB' THEN 'TB'
 		WHEN 'WSH' THEN 'WAS'
 		WHEN 'D/ST' THEN ''
 
@@ -182,7 +191,6 @@ BEGIN
 
 		WHEN 'CHRISTOPHER IVORY' THEN 'Chris Ivory'
 		WHEN 'TIMOTHY WRIGHT' THEN 'Tim Wright'
-
 		WHEN 'ROBERT GRIFFIN' THEN 'Robert Griffin III'
 		WHEN 'ODELL BECKHAM JR' THEN 'Odell Beckham'
 
@@ -190,6 +198,7 @@ BEGIN
 		WHEN 'CHAD JOHNSON' THEN 'Chad Ochocinco'
 		WHEN 'PIERRE GARÇON' THEN 'Pierre Garcon'
 		WHEN 'ROY E WILLIAMS' THEN 'Roy Williams'
+		WHEN 'CARNELL WILLIAMS' THEN 'Cadillac Williams'
 		WHEN UPPER('Ted Ginn Jr') THEN 'Ted Ginn'
 
 		ELSE LTRIM(RTRIM(@PlayerName))
@@ -199,6 +208,7 @@ BEGIN
 		CASE (RTRIM(UPPER(@Position)))
 		WHEN 'D/ST' THEN 'DEF'
 		WHEN 'DST' THEN 'DEF'
+		WHEN 'PK' THEN 'K'
 		ELSE @Position
 		END
 		
@@ -208,6 +218,7 @@ BEGIN
 		WHEN 'JEFF' THEN 'Pohlmann'
 		WHEN 'JOEY' THEN 'Joe'
 		WHEN 'MEAT' THEN 'Meat'
+		WHEN 'KARA' THEN 'Voldemort'
 		ELSE @Owner
 		END
 

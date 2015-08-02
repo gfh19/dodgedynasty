@@ -3,12 +3,78 @@ BEGIN TRANSACTION;
 
 
 /* TODO:
-- Create History tables
-- Delete Bailey League, Draft, Draft Picks, and any junk Players
-- Add old Dynasty/Fridge owners
-	- Add to League
-- Change to allow my info colors from inactive owners
+- Delete Bailey League, Draft, Draft Picks, and any junk Players	+
+- Create History tables												+
+- Create both SPs													+
+- Add old Dynasty/Fridge owners										+
+	- Add to League, THEN Deactivate								+
+- Later:  Change to allow my info colors from inactive owners
 */
+
+/* 8/1/15 */
+
+/****** Object:  Table [dbo].[_HistoryPlayer]    Script Date: 8/1/2015 11:09:07 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[_HistoryPlayer](
+	[HistoryPlayerId] [int] IDENTITY(1,1) NOT NULL,
+	[DraftId] [int] NULL,
+	[Year] [smallint] NULL,
+	[PlayerId] [int] NULL,
+	[TruePlayerId] [int] NULL,
+	[FirstName] [varchar](25) NOT NULL,
+	[LastName] [varchar](25) NOT NULL,
+	[Position] [varchar](10) NULL,
+	[NFLTeam] [varchar](3) NULL,
+	[Action] [varchar](50) NULL,
+	[AddTimestamp] [datetime] NULL,
+ CONSTRAINT [PK__HistoryPlayer] PRIMARY KEY CLUSTERED 
+(
+	[HistoryPlayerId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+
+/****** Object:  Table [dbo].[_HistoryDraftPick]    Script Date: 8/1/2015 11:09:29 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[_HistoryDraftPick](
+	[HistoryDraftPickId] [int] IDENTITY(1,1) NOT NULL,
+	[DraftId] [int] NOT NULL,
+	[PickNum] [int] NOT NULL,
+	[RoundNum] [int] NOT NULL,
+	[UserId] [int] NOT NULL,
+	[HistoryPlayerId] [int] NOT NULL,
+	[PlayerId] [int] NULL,
+	[TruePlayerId] [int] NULL,
+	[AddTimestamp] [datetime] NULL,
+ CONSTRAINT [PK__HistoryDraftPick] PRIMARY KEY CLUSTERED 
+(
+	[HistoryDraftPickId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+
+
+
 
 /* 7/30/15 */
 
@@ -36,6 +102,9 @@ INSERT INTO [dbo].[Draft]
            ,(1,'2009-08-22 17:00:00','Medina',2009,8,15,7,'repeat',0,1,28,27,0,'2009-08-22 17:00:00.000','2008-08-22 17:00:00.000')
            ,(1,'2010-08-22 19:00:00','Medina',2010,8,15,7,'repeat',0,1,28,29,0,'2010-08-22 19:00:00','2010-08-22 19:00:00')
            ,(1,'2011-08-21 20:00:00','Medina',2011,8,15,7,'repeat',0,1,27,28,0,'2011-08-21 20:00:00','2011-08-21 20:00:00')
+GO
+
+DBCC CHECKIDENT('Draft', RESEED, 14)
 GO
 
 INSERT INTO [dbo].[Draft]
@@ -71,13 +140,13 @@ INSERT INTO [dbo].[Draft]
            ,(2,'2013-09-01 13:00:00','Westlake',2013,10,15,1,'snake',0,1,NULL,NULL,NULL,'2013-09-01 13:00:00','2013-09-01 13:00:00')
 GO
 
-DBCC CHECKIDENT('Draft', RESEED, 15)
-GO
 
 UPDATE dbo.Draft
 SET NumRounds = 17,
 	NumKeepers = 3
 WHERE DraftId = 6
+
+
 
 
 

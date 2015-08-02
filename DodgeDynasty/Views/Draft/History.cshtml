@@ -2,46 +2,64 @@
 @{
 	ViewBag.Title = "Draft History";
 }
+@section scripts {
+	<script type="text/javascript" src="@Url.Content("~/Scripts/History.js")"></script>
+}
 <div id="draftHistory">
 	<div class="large-page-header">Draft History</div>
 	<div class="page-entries">
-		@foreach (var league in Model.Leagues)
-		{
-			<div class="page-section">
-				<div class="page-header">@league.LeagueName</div>
-				<div class="dh-entry">
-					@{var leagueContainsWinner = Model.LeagueContainsWinner(league.LeagueId);}
-					@if (leagueContainsWinner)
-					{
-						<div class="dh-header">
-							<span class="dh-year">Year
-							</span><span class="dh-winner">Winner
-							</span><span class="dh-runner-up">Runner-up</span>
-						</div>
-					}
-					@foreach (var draft in Model.GetLeagueDrafts(league.LeagueId))
-					{
-						<div class="page-entry">
-							<span class="dh-year">
-								<a href="@Url.Content("~/Draft/Display/" + draft.DraftId + "?historyMode=true")">@draft.DraftYear @draft.LeagueName</a>
-							</span>
+		<div class="dh-viewchk-section">
+			<input type="checkbox" id="dh-view-chkbox"/>
+			<label class="dh-view-label" for="dh-view-chkbox">View Winners</label>
+		</div>
+		<div class="dh-history-content mobile-touch-scroll">
+			@foreach (var league in Model.Leagues)
+			{
+				<div class="dh-league-section page-section">
+					<div class="page-header">@league.LeagueName</div>
+					<div class="dh-entry">
+						@{var leagueContainsWinner = Model.LeagueContainsWinner(league.LeagueId);}
+						@if (leagueContainsWinner)
+						{
+							<div class="dh-header">
+								<span class="dh-year">
+									Year
+								</span><span class="dh-winner">
+									Winner
+								</span><span class="dh-runner-up">Runner-up</span>
+							</div>
+						}
+						@foreach (var draft in Model.GetLeagueDrafts(league.LeagueId))
+						{
+							<div class="page-entry">
+								<span class="dh-year">
+									@if (Model.IsDraftEntered(draft))
+									{
+										<a href="@Url.Content("~/Draft/Display/" + draft.DraftId + "?historyMode=true")">@draft.DraftYear @draft.LeagueName</a>
+									}
+									else
+									{
+										<span>@draft.DraftYear @draft.LeagueName</span>
+									}
+								</span>
 
-							@if (leagueContainsWinner)
-							{
+								@if (leagueContainsWinner)
+								{
 								@Html.Raw("</span>");<span class="dh-winner">@Model.GetDraftWinnerName(draft.WinnerId)
 									@if (draft.HasCoWinners.GetValueOrDefault()) { <span class="new-line">(Co-Winner)</span> }
 								</span><span class="dh-runner-up">@Model.GetDraftWinnerName(draft.RunnerUpId)
 									@if (draft.HasCoWinners.GetValueOrDefault()) {  <span class="new-line">(Co-Winner)</span> }</span>
-							}
-							else
-							{
-	   							@Html.Raw("</span>");
-							}
-						</div>
-					}
+								}
+								else
+								{
+									@Html.Raw("</span>");
+								}
+							</div>
+						}
+					</div>
 				</div>
-			</div>
-		}
+			}
+		</div>
 	</div>
 
 </div>
