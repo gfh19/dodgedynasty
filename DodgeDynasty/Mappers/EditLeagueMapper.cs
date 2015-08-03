@@ -48,7 +48,6 @@ namespace DodgeDynasty.Mappers
 						  select u).FirstOrDefault();
 				lo.UserId = user.UserId;
 
-				//TODO:  Consolidate into one table!
 				LeagueOwner owner = new LeagueOwner
 				{
 					UserId = lo.UserId,

@@ -16,8 +16,6 @@ namespace DodgeDynasty.Controllers
 {
 	public class DraftController : BaseController
 	{
-		//TODO:  Test playerId passed during draft
-
 		[HttpGet]
 		public ActionResult Pick(string playerId, string id)
 		{

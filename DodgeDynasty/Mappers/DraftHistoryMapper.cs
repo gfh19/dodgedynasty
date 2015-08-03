@@ -19,7 +19,7 @@ namespace DodgeDynasty.Mappers
 			{
 				Model.Leagues = (from l in HomeEntity.Leagues.AsEnumerable()
 								 join lo in HomeEntity.LeagueOwners.AsEnumerable() on l.LeagueId equals lo.LeagueId
-								 where lo.UserId == HomeEntity.Users.GetLoggedInUserId()
+								 where lo.UserId == HomeEntity.Users.GetLoggedInUserId() && lo.IsActive
 								 select l).ToList();
 			}
 			Model.AllDrafts = HomeEntity.Drafts.ToList();

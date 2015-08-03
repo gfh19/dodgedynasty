@@ -45,7 +45,8 @@ namespace DodgeDynasty.Models
 							 join lo in leagueOwnerUsers on u.UserId equals lo.UserId
 							 select OwnerUserMapper.GetOwnerUser(u,
 								leagueOwners.FirstOrDefault(l => l.UserId == u.UserId)))
-									.OrderByDescending(l => l.IsActive);
+									.OrderByDescending(l => l.IsActive)
+									.ThenBy(l=>l.FullName);
 			return ownerUsers.ToList();
 		}
 	}

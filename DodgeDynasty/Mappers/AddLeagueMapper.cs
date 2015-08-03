@@ -47,9 +47,7 @@ namespace DodgeDynasty.Mappers
 							where u.UserId == lo.UserId
 							select u).FirstOrDefault();
 				lo.UserId = user.UserId;
-				//TODO:  Someday add more in depth CssClass assignment & lookup i.e. CssClass SQL table)
 
-				//TODO:  Consolidate into one table!
 				LeagueOwner owner = new LeagueOwner
 				{
 					UserId = lo.UserId,

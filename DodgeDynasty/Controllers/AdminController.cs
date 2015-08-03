@@ -242,8 +242,18 @@ namespace DodgeDynasty.Controllers
 				}
 				else
 				{
-					ModelState.AddModelError("", "The password was not changed - user was not found.");
-					return View(mapper.GetModel());
+					if (mapper.PasswordStatus == ManageMessageId.ConfirmPasswordMismatch)
+					{
+						ModelState.AddModelError("", "New Password and Confirm Password do not match.");
+					}
+					else if (mapper.PasswordStatus == ManageMessageId.CurrentPasswordInvalid)
+					{
+						ModelState.AddModelError("CurrentPassword", "Current Password is incorrect.");
+					}
+					else
+					{
+						ModelState.AddModelError("", "The password was not changed - user was not found.");
+					}
 				}
 			}
 

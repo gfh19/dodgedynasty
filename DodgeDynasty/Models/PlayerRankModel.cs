@@ -57,7 +57,7 @@ namespace DodgeDynasty.Models
 							join t in NFLTeams on p.NFLTeam equals t.TeamAbbr
 							select GetRankedPlayer(pr, p, t)).OrderBy(p=>p.RankNum).ToList();
 
-			OverallRankedPlayers = RankedPlayers.Where(rp=>!DraftedPlayers.Any(dp=>rp.PlayerId == dp.PlayerId)).ToList();
+			OverallRankedPlayers = RankedPlayers.Where(rp=>!DraftedPlayers.Any(dp=>rp.TruePlayerId == dp.TruePlayerId)).ToList();
 			QBRankedPlayers = OverallRankedPlayers.Where(p=>p.Position == "QB").ToList();
 			RBRankedPlayers = OverallRankedPlayers.Where(p => p.Position == "RB").ToList();
 			WRTERankedPlayers = OverallRankedPlayers.Where(p => p.Position == "WR" || p.Position == "TE").ToList();
@@ -79,18 +79,42 @@ namespace DodgeDynasty.Models
 
 		public List<RankedPlayer> GetAllPlayerRanks()
 		{
+			var draftPickTruePlayers = DraftPicks.Join(AllPlayers, dp => dp.PlayerId, p => p.PlayerId, (dp, p) => new
+			{
+				DraftPickId = dp.DraftPickId,
+				PlayerId = p.PlayerId,
+				TruePlayerId = p.TruePlayerId,
+				PickNum = dp.PickNum,
+				UserId = dp.UserId,
+			});
 			var rankedPlayerIds = PlayerRanks.Select(pr => pr.PlayerId).ToList();
 
 			RankedPlayers = (from pr in PlayerRanks
 							 join p in AllPlayers on pr.PlayerId equals p.PlayerId
 							 join t in NFLTeams on p.NFLTeam equals t.TeamAbbr
-							 join pick in DraftPicks on pr.PlayerId equals pick.PlayerId into dpLeft	//Left Outer Join
+							 join pick in DraftPicks on 
+								pr.PlayerId equals pick.PlayerId into dpLeft	//Left Outer Join
 							 from pick in dpLeft.DefaultIfEmpty()
 							 join u in Users on ((pick != null) ? pick.UserId : -1) equals u.UserId into uLeft	//Left Outer Join
 							 from u in uLeft.DefaultIfEmpty()
 							 join lo in CurrentLeagueOwners on ((pick != null) ? pick.UserId : -1) equals lo.UserId into loLeft
 							 from lo in loLeft.DefaultIfEmpty()
 							 select GetRankedPlayer(pr, p, t, pick, u, lo)).OrderBy(p => p.RankNum).ToList();
+			foreach (var rankedPlayer in RankedPlayers)
+			{
+				if (rankedPlayer.PickNum == null)
+				{
+					var draftPickTruePlayer = draftPickTruePlayers.FirstOrDefault(dp=>dp.TruePlayerId == rankedPlayer.TruePlayerId);
+					if (draftPickTruePlayer != null)
+					{
+						rankedPlayer.PickNum = draftPickTruePlayer.PickNum.ToString();
+						rankedPlayer.UserId = draftPickTruePlayer.UserId.ToString();
+						rankedPlayer.NickName = Users.FirstOrDefault(lo => lo.UserId == draftPickTruePlayer.UserId).NickName;
+						var leagueOwner = CurrentLeagueOwners.FirstOrDefault(lo=>lo.UserId == draftPickTruePlayer.UserId);
+						rankedPlayer.CssClass = (leagueOwner != null) ? leagueOwner.CssClass : null;
+					}
+				}
+			}
 			return RankedPlayers;
 		}
 
@@ -99,6 +123,7 @@ namespace DodgeDynasty.Models
 			return new RankedPlayer
 			{
 				PlayerId = p.PlayerId,
+				TruePlayerId = p.TruePlayerId.Value,
 				RankId = pr.RankId,
 				PlayerRankId = pr.PlayerRankId,
 				FirstName = p.FirstName,

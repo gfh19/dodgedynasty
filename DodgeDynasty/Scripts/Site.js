@@ -1,5 +1,4 @@
-﻿//var refreshTimer = 60000;
-var pickTimeSeconds = 0;
+﻿var pickTimeSeconds = 0;
 var playerHints = [];
 var hasModelErrors = false;
 var isRefreshPage = false;
@@ -95,7 +94,7 @@ function registerHubConnection(forceAttempt) {
 	ajaxPost({ connectionId: $.connection.hub.id, forceAttempt: forceAttempt }, "Site/OpenDraftHubConnection",
 		function (response) {
 			if (response.good) {
-				console.log('Socket connection started.  ' + response.conns + ' tabs registered.');
+				console.log('Socket connection started.  ' + response.conns + ' tab(s) registered.');
 				refreshTimer = defaultRefreshTimer;
 				//Mark chat available again
 				toggleChatWindowError(false);
@@ -468,7 +467,6 @@ function sendDraftChat() {
 		broadcastChatMessage(msg);
 		$(".dchat-input").removeClass("invalid-border-small");
 		$(".dchat-input").val("");
-		$(".dchat-input").focus();
 	}
 	else {
 		$(".dchat-input").addClass("invalid-border-small");

@@ -7,7 +7,6 @@ namespace DodgeDynasty.Shared
 {
 	public static class Constants
 	{
-		//TODO:  SQL-ize
 		public const int NewPlayerId = -1;
 		public static string ChatDateTimeFormat = "M/d h:mmtt";
 		public static string ChatTimeFormat = "h:mmtt";
@@ -21,6 +20,8 @@ namespace DodgeDynasty.Shared
 			public const string MaxTabConnections = "MaxTabConnections";
 			public const string WebSocketsKillSwitch = "WebSocketsKillSwitch";
 			public const string DraftChatKillSwitch = "DraftChatKillSwitch";
+			public const string MajorVersion = "MajorVersion";
+			public const string JSVersion = "JSVersion";
 		}
 
 		public static class Cookies

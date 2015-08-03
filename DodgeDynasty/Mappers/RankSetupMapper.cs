@@ -200,28 +200,6 @@ namespace DodgeDynasty.Mappers
 			var newRankedPlayers = rankSetupModel.RankedPlayers.ToList();
 			foreach (var player in newRankedPlayers)
 			{
-				//This code currently cannot be hit
-				//if (player.PlayerId < 1)
-				//{
-				//	Player listedPlayer = HomeEntity.Players.FirstOrDefault(
-				//		Utilities.FindPlayerMatch(player.FirstName, player.LastName, player.Position, player.NFLTeam));
-				//	if (listedPlayer == null)
-				//	{
-				//		listedPlayer = new Entities.Player
-				//		{
-				//			FirstName = player.FirstName,
-				//			LastName = player.LastName,
-				//			Position = player.Position.ToUpper(),
-				//			NFLTeam = player.NFLTeam.ToUpper(),
-				//			IsActive = true,
-				//			AddTimestamp = DateTime.Now,
-				//			LastUpdateTimestamp = DateTime.Now
-				//		};
-				//		HomeEntity.Players.AddObject(listedPlayer);
-				//		HomeEntity.SaveChanges();
-				//	}
-				//	player.PlayerId = listedPlayer.PlayerId;
-				//}
 				HomeEntity.PlayerRanks.AddObject(new PlayerRank
 				{
 					RankId = player.RankId,

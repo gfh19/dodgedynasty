@@ -3,8 +3,8 @@
     ViewBag.Title = "All Players";
 }
 @section scripts {
-	<script type="text/javascript" src="@Url.Content("~/Scripts/PlayerRanks.js")"></script>
-	<script type="text/javascript" src="@Url.Content("~/Scripts/PlayerRanksShared.js")"></script>
+	<script type="text/javascript" src="@Url.Script("~/Scripts/PlayerRanks.js")"></script>
+	<script type="text/javascript" src="@Url.Script("~/Scripts/PlayerRanksShared.js")"></script>
 }
 <div id="allPlayerRanks">
 	@Html.Partial("PlayerRanksPartial", Model)

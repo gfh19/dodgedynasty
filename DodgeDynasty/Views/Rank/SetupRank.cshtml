@@ -3,8 +3,8 @@
 	ViewBag.Title = "Update Rankings";
 }
 @section scripts {
-	<script type="text/javascript" src="@Url.Content("~/Scripts/PlayerRanksShared.js")"></script>
-	<script type="text/javascript" src="@Url.Content("~/Scripts/SetupRank.js")"></script>
+	<script type="text/javascript" src="@Url.Script("~/Scripts/PlayerRanksShared.js")"></script>
+	<script type="text/javascript" src="@Url.Script("~/Scripts/SetupRank.js")"></script>
 }
 <div id="setupRank" data-rank-id="@Model.RankId" data-draft-id="@Model.DraftId.Value">
 	<script type="text/javascript">

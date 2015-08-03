@@ -26,14 +26,12 @@ namespace DodgeDynasty.Models
 		public List<ByeWeek> ByeWeeks { get; set; }
 		public List<Player> AllPlayers { get; set; }
 		public List<Player> ActivePlayers { get; set; }
-		//public List<Player> CurrentSeasonPlayers { get; set; }
 		public List<Player> DraftedPlayers { get; set; }
 		public List<Position> Positions { get; set; }
 		public List<League> Leagues { get; set; }
 		public List<DraftOwner> AllDraftOwners { get; set; }
 
 		public Draft CurrentDraft { get; set; }
-		//public Season CurrentSeason { get; set; }
 		public List<LeagueOwner> CurrentLeagueOwners { get; set; }
 		public DraftPick CurrentDraftPick { get; set; }
 		public DraftPick PreviousDraftPick { get; set; }

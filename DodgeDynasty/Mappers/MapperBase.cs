@@ -13,6 +13,7 @@ namespace DodgeDynasty.Mappers
 		public T Model { get; set; }
 		public ModelStateDictionary ModelState { get; set; }
 		public bool UpdateSucceeded { get; set; }
+		public bool DoUpdateFailed { get; set; }
 
 		public T GetModel(T model)
 		{
@@ -74,7 +75,10 @@ namespace DodgeDynasty.Mappers
 				if (ValidateModel(model))
 				{
 					DoUpdate(model);
-					UpdateSucceeded = true;
+					if (!DoUpdateFailed)
+					{
+						UpdateSucceeded = true;
+					}
 				}
 			}
 			return UpdateSucceeded;

@@ -8,6 +8,7 @@ namespace DodgeDynasty.Models.Types
 	public class RankedPlayer
 	{
 		public int PlayerId { get; set; }
+		public int TruePlayerId { get; set; }
 		public int RankId { get; set; }
 		public int PlayerRankId { get; set; }
 		public string FirstName { get; set; }

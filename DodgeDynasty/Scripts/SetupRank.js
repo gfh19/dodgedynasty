@@ -213,10 +213,10 @@ function getRankSetupModel() {
 		var leftParenIx = playerEntryText.indexOf('(');
 		var dashIx = playerEntryText.indexOf('-');
 		var rightParenIx = playerEntryText.indexOf(')');
-		player.FirstName = playerEntryText.substr(0, firstSpaceIx);
-		player.LastName = playerEntryText.substr(firstSpaceIx + 1, leftParenIx - (firstSpaceIx + 2));
-		player.NFLTeam = playerEntryText.substr(leftParenIx + 1, dashIx - (leftParenIx + 1));
-		player.Position = playerEntryText.substr(dashIx + 1, rightParenIx - (dashIx + 1));
+		//player.FirstName = playerEntryText.substr(0, firstSpaceIx);
+		//player.LastName = playerEntryText.substr(firstSpaceIx + 1, leftParenIx - (firstSpaceIx + 2));
+		//player.NFLTeam = playerEntryText.substr(leftParenIx + 1, dashIx - (leftParenIx + 1));
+		//player.Position = playerEntryText.substr(dashIx + 1, rightParenIx - (dashIx + 1));
 		player.RankNum = parseInt($(".player-rank-num", playerRank).text());
 		player.PosRankNum = 0;
 		player.AuctionValue = null;

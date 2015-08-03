@@ -2,7 +2,7 @@
 BEGIN TRANSACTION;
 
 /* TODO:
-	- Correct TJ Houshmandzadeh from RB to WR (Bal)
+	- Correct TJ Houshmandzadeh from RB to WR (Bal)					+
 */
 
 COMMIT TRANSACTION;

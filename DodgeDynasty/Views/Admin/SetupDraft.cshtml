@@ -3,7 +3,7 @@
     ViewBag.Title = "Draft Setup";
 }
 @section scripts {
-	<script type="text/javascript" src="@Url.Content("~/Scripts/SetupDraft.js")"></script>
+	<script type="text/javascript" src="@Url.Script("~/Scripts/SetupDraft.js")"></script>
 }
 <div id="setupDraft" data-draft-id="@Model.DraftId.Value">
 	<h2>Draft Setup - @Model.GetCurrentDraftName() Draft</h2>

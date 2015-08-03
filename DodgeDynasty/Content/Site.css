@@ -1076,7 +1076,7 @@ ul.menu li a.current-page
 .dave
 {
 	** orange ***
-	border-color: #FF612B;
+	border-color: #FF914B;
 }
 .hawkeman
 {
@@ -1686,7 +1686,7 @@ span.player-select
 	width: 145px;
 }
 .lo-teamname-header {
-	width: 196px;
+	width: 212px;
 }
 .lo-active-header {
 	width: 46px;
@@ -2405,12 +2405,21 @@ span.player-select
 	.dchat-body {
 		height: 164px;
 	}
-	.dchat-body, .dchat-footer {
-		width: 278px;
+	.dchat-body {
+		width: 283px;
+	}
+	.dchat-footer {
+		width: 285px;
+		height: 26px;
+		background-color: #DDDDDD;
+		border-bottom-left-radius: 3px;
+		border-bottom-right-radius: 3px;
+		webkit-border-bottom-left-radius: 3px;
+		webkit-border-bottom-right-radius: 3px;
 	}
 	.dchat-input {
-		width: 190px;
-		margin-left: 12px;
+		width: 182px;
+		margin-left: 22px;
 	}
 	.dchat-window-error .dchat-preview {
 		width: 196px;

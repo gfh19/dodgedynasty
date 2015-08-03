@@ -78,10 +78,10 @@ namespace DodgeDynasty.Controllers
 			ViewBag.ReturnUrl = Url.Action("ChangePassword");
 			if (ModelState.IsValid)
 			{
+				var mapper = new PasswordMapper<LocalPasswordModel>();
 				bool changePasswordSucceeded;
 				try
 				{
-					var mapper = new PasswordMapper<LocalPasswordModel>();
 					mapper.UserName = User.Identity.Name;
 					mapper.UpdateEntity(model);
 					changePasswordSucceeded = mapper.UpdateSucceeded;
@@ -97,7 +97,18 @@ namespace DodgeDynasty.Controllers
 				}
 				else
 				{
-					ModelState.AddModelError("", "The current password is incorrect or the new password is invalid.");
+					if (mapper.PasswordStatus == ManageMessageId.ConfirmPasswordMismatch)
+					{
+						ModelState.AddModelError("", "New Password and Confirm Password do not match.");
+					}
+					else if (mapper.PasswordStatus == ManageMessageId.CurrentPasswordInvalid)
+					{
+						ModelState.AddModelError("CurrentPassword", "Current Password is incorrect.");
+					}
+					else
+					{
+						ModelState.AddModelError("", "The current password is incorrect or the new password is invalid.");
+					}
 				}
 			}
 
