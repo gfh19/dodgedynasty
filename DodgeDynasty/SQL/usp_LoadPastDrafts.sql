@@ -32,6 +32,7 @@ BEGIN
 
 		SELECT TOP 1 @PlayerId = PlayerId FROM _HistoryPlayer WHERE HistoryPlayerId = @HistoryPlayerId;
 
+		--If no player entry already exists, add one (IsActive = 0, IsDrafted = 1)
 		IF @PlayerId IS NULL
 			BEGIN
 			INSERT INTO [dbo].[Player]
@@ -51,6 +52,12 @@ BEGIN
 				ORDER BY HistoryPlayerId
 
 			SET @PlayerId = SCOPE_IDENTITY()
+		END
+		ELSE --Else If Player Entry already exists, mark IsDrafted = 1!
+		BEGIN
+			UPDATE [dbo].[Player]
+			SET IsDrafted = 1
+			WHERE PlayerId = @PlayerId
 		END
 
 		UPDATE hdp

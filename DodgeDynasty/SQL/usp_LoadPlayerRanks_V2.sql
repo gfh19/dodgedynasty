@@ -1,4 +1,5 @@
 ﻿
+
 /****** Object:  StoredProcedure [dbo].[usp_LoadPlayerRanks_V2]    Script Date: 7/12/2015 4:17:09 PM ******/
 Use [Home]
 
@@ -167,8 +168,21 @@ BEGIN
 					UPDATE [dbo].[Player]
 					SET [TruePlayerId] = @ExistingActiveTruePlayerId
 					WHERE [PlayerId] = @PlayerId
+					
+					-- Deactivate old Active drafted player in favor of new team Newly Added Player!
+					UPDATE Player
+					SET IsActive = 0
+					WHERE PlayerId = @ExistingActivePlayerId
+
+					INSERT INTO dbo.PlayerAdjustment
+						([OldPlayerId],[NewPlayerId],[TruePlayerId],[NewFirstName],[NewLastName],[NewPosition],[NewNFLTeam],[Action],[UserId],[AddTimestamp],[LastUpdateTimestamp])
+						SELECT @ExistingActivePlayerId, @PlayerId, TruePlayerId, FirstName, LastName, Position, NFLTeam,
+							'Deactivate Drafted Player - New Team', NULL, getdate(), getdate()
+						FROM dbo.Player
+						WHERE PlayerId = @ExistingActivePlayerId
 
 					DECLARE @AddPlayerMatchBoth VARCHAR(50) = 'Add Player, Match Both, IsDrafted';
+
 					IF EXISTS (SELECT TOP 1 * FROM [dbo].[PlayerRank] pr
 								JOIN [dbo].[Rank] r ON pr.RankId = r.RankId
 								WHERE pr.PlayerId = @ExistingActivePlayerId
@@ -183,18 +197,6 @@ BEGIN
 							AND r.[Year] = @DraftYear
 
 						PRINT 'Updated Rankings Rowcount: ' + CAST(@@ROWCOUNT AS VARCHAR);
-
-						-- Deactivate old Active drafted player in favor of new team Newly Added Player
-						UPDATE Player
-						SET IsActive = 0
-						WHERE PlayerId = @ExistingActivePlayerId
-
-						INSERT INTO dbo.PlayerAdjustment
-							([OldPlayerId],[NewPlayerId],[TruePlayerId],[NewFirstName],[NewLastName],[NewPosition],[NewNFLTeam],[Action],[UserId],[AddTimestamp],[LastUpdateTimestamp])
-							SELECT @ExistingActivePlayerId, @PlayerId, TruePlayerId, FirstName, LastName, Position, NFLTeam,
-								'Deactivate Drafted Player - New Team', NULL, getdate(), getdate()
-							FROM dbo.Player
-							WHERE PlayerId = @ExistingActivePlayerId
 
 						SET @AddPlayerMatchBoth = @AddPlayerMatchBoth + ' (& Ranks)';
 					END
@@ -229,7 +231,7 @@ BEGIN
 					   ,[AddTimestamp]
 					   ,[LastUpdateTimestamp])
 					SELECT @PlayerId, @OldPlayerId, FirstName, LastName, Position, NFLTeam, 
-						'Update NFL Team, Activate', NULL, getdate(), getdate()
+						'Update NFL Team, Active Was Drafted', NULL, getdate(), getdate()
 					FROM dbo.Player
 					WHERE PlayerId = @PlayerId
 				
@@ -269,8 +271,8 @@ BEGIN
 			--If Close Player Match in Active Players, investigate
 			IF @IsDrafted = 1
 			BEGIN
-				-- If Player IsDrafted, Add new player and link to TruePlayerId
-				INSERT INTO [dbo].[Player]
+				-- If Player IsDrafted, Add new player and link to TruePlayerId, DEACTIVATE EXISTING!
+				INSERT INTO [dbo].[Player]	--Add new player
 					([FirstName]
 					,[LastName]
 					,[Position]
@@ -295,7 +297,18 @@ BEGIN
 				UPDATE [dbo].[Player]
 				SET [TruePlayerId] = @TruePlayerId
 				WHERE [PlayerId] = @PlayerId
-				
+								
+				-- Deactivate old Active drafted player in favor of new team Newly Added Player!
+				UPDATE Player
+				SET IsActive = 0
+				WHERE PlayerId = @OldPlayerId
+
+				INSERT INTO dbo.PlayerAdjustment
+					([OldPlayerId],[NewPlayerId],[TruePlayerId],[NewFirstName],[NewLastName],[NewPosition],[NewNFLTeam],[Action],[UserId],[AddTimestamp],[LastUpdateTimestamp])
+					SELECT @OldPlayerId, @PlayerId, TruePlayerId, FirstName, LastName, Position, NFLTeam,
+						'Deactivate Drafted Player - New Team (2)', NULL, getdate(), getdate()
+					FROM dbo.Player
+					WHERE PlayerId = @OldPlayerId
 
 				DECLARE @AddPlayerMatchActive VARCHAR(50) = 'Add Player, Match Active, IsDrafted';
 				IF EXISTS (SELECT TOP 1 * FROM [dbo].[PlayerRank] pr
@@ -303,7 +316,7 @@ BEGIN
 							WHERE pr.PlayerId = @OldPlayerId
 								AND r.[Year] = @DraftYear)
 				BEGIN
-					-- * Update all current year's rankings of trueplyr to New Player Id and Deactivate Old!
+					-- * Update all current year's rankings of trueplyr to New Player Id
 					UPDATE pr
 					SET pr.[PlayerId] = @PlayerId
 					FROM [dbo].[PlayerRank] pr
@@ -313,11 +326,6 @@ BEGIN
 
 					PRINT 'Updated Rankings Rowcount: ' + CAST(@@ROWCOUNT AS VARCHAR);
 					
-					-- Deactivate old Active drafted player in favor of new team Newly Added Player
-					UPDATE Player
-					SET IsActive = 0
-					WHERE PlayerId = @OldPlayerId
-
 					INSERT INTO dbo.PlayerAdjustment
 						([OldPlayerId],[NewPlayerId],[TruePlayerId],[NewFirstName],[NewLastName],[NewPosition],[NewNFLTeam],[Action],[UserId],[AddTimestamp],[LastUpdateTimestamp])
 						SELECT @OldPlayerId, @PlayerId, TruePlayerId, FirstName, LastName, Position, NFLTeam,
@@ -328,7 +336,7 @@ BEGIN
 					SET @AddPlayerMatchActive = @AddPlayerMatchActive + ' (& Ranks)';
 				END
 
-				--Now Add New Active Player
+				--And log record of Add New Active Player (& possibly Ranks update)
 				INSERT INTO dbo.PlayerAdjustment ([OldPlayerId]
 					,[NewPlayerId]
 					,[TruePlayerId]
@@ -359,7 +367,7 @@ BEGIN
 					,[AddTimestamp]
 					,[LastUpdateTimestamp])
 				SELECT @PlayerId, NULL, FirstName, LastName, Position, NFLTeam, 
-					'Update NFL Team, Active', NULL, getdate(), getdate()
+					'Update NFL Team, (Re)activate', NULL, getdate(), getdate()
 				FROM dbo.Player
 				WHERE PlayerId = @PlayerId
 				

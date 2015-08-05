@@ -1962,6 +1962,10 @@ span.player-select
 	font-size: 16px;
 }
 
+.message-text {
+	margin-top: 8px;
+}
+
 .msg-add-section {
 	text-align: center;
 	margin-bottom: 15px;
