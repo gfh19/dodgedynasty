@@ -47,10 +47,10 @@
 							msgCountDisplay = DodgeDynasty.Shared.Utilities.GetMessageCountDisplay(msgCount);
 							if (draftId != null && DodgeDynasty.Shared.Utilities.ToBool(historyMode))
 							{
-								<li>@Html.ActionLink("Pick", "Pick/" + draftId, "Draft", new { historyMode = true }, null)</li>
-								<li>@Html.ActionLink("Draft", "Display/" + draftId, "Draft", new { historyMode = true }, null)</li>
-								<li>@Html.ActionLink("Teams", "TeamDisplay/" + draftId, "Draft", new { historyMode = true }, null)</li>
-								<li>@Html.ActionLink("Ranks", "BestAvailable/" + draftId, "Draft", new { historyMode = true }, null)</li>
+								<li>@Html.ActionLink("Pick", "Pick/" + draftId, "Draft", new { historyMode = "true" }, null)</li>
+								<li>@Html.ActionLink("Draft", "Display/" + draftId, "Draft", new { historyMode = "true" }, null)</li>
+								<li>@Html.ActionLink("Teams", "TeamDisplay/" + draftId, "Draft", new { historyMode = "true" }, null)</li>
+								<li>@Html.ActionLink("Ranks", "BestAvailable/" + draftId, "Draft", new { historyMode = "true" }, null)</li>
 							}
 							else
 							{
@@ -85,6 +85,8 @@
 							</li>
 						}
 					</ul>
+					@if (DodgeDynasty.Shared.Utilities.IsUserLoggedIn())
+					{
 					<div class="navbar-collapse collapse">
 						<ul class="menu nav navbar-nav">
 							<li>@Html.ActionLink("History", "History", "Draft")</li>
@@ -128,6 +130,7 @@
 							}
 						</ul>
 					</div>
+					}
 				</nav>
 			</div>
 		</div>

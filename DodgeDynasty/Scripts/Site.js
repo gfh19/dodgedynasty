@@ -82,6 +82,7 @@ function startHubConnection(startFn, forceAttempt) {
 				connectionStopped = true;
 				//Mark chat unavailable
 				toggleChatWindowError(true);
+				pageBroadcastDraftHandler();
 			}
 			else if (!connected) {
 				console.log("No responses, conn state is: " + $.connection.hub.state);
@@ -106,6 +107,7 @@ function registerHubConnection(forceAttempt) {
 				connectionStopped = true;
 				//Mark chat unavailable
 				toggleChatWindowError(true);
+				pageBroadcastDraftHandler();
 			}
 		}, null, "JSON");
 }

@@ -22,7 +22,8 @@
 		<div class="more-rank-opts">
 			@{
 				var draftId = DodgeDynasty.Shared.Utilities.GetRouteDraftId(Url.RequestContext.RouteData);
-				if (draftId != null)
+				var historyMode = Request.QueryString[DodgeDynasty.Shared.Constants.QS.HistoryMode];
+				if (draftId != null && DodgeDynasty.Shared.Utilities.ToBool(historyMode))
 				{
 					if (ViewBag.Title == "Best Available")
 					{
@@ -32,7 +33,7 @@
 					{
 						<a href="@Url.Content("~/Draft/BestAvailable/" + draftId + "?rankId=" + Model.RankId + "&historyMode=true")" id="bestAvailLink">Show Best Available</a>
 					}
-					<text>&#8226; <a href="@Url.Content("~/Draft/RankingsList/" + draftId)" id="otherRanksLink">View Other Rankings</a></text>
+					<text>&#8226; <a href="@Url.Content("~/Draft/RankingsList/" + draftId + "?historyMode=true")" id="otherRanksLink">View Other Rankings</a></text>
 				}
 				else
 				{

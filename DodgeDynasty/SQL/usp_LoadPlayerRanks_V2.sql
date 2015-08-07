@@ -1,7 +1,5 @@
-﻿
-
-/****** Object:  StoredProcedure [dbo].[usp_LoadPlayerRanks_V2]    Script Date: 7/12/2015 4:17:09 PM ******/
-Use [Home]
+﻿/****** Object:  StoredProcedure [dbo].[usp_LoadPlayerRanks_V2]    Script Date: 7/12/2015 4:17:09 PM ******/
+USE [Home]
 
 SET ANSI_NULLS ON
 GO
@@ -70,37 +68,65 @@ BEGIN
 		-Add PlayerRank entry
 		*/
 
-
-	SELECT @ScrubbedNFLTeam = 
-		CASE RTRIM(UPPER(@NFLTeam))
-		WHEN 'AZ' THEN 'ARI'
-		WHEN 'JAC' THEN 'JAX'
-		WHEN 'D/ST' THEN ''
-		ELSE RTRIM(@NFLTeam)
-		END
-
 	--TODO:  Replace with lookup
 	SELECT @ScrubbedFirstName = 
-		CASE (RTRIM(UPPER(@FirstName)) + ' ' + RTRIM(UPPER(@LastName)))
+		CASE (LTRIM(RTRIM(UPPER(REPLACE(@FirstName, '.', '')))) + ' ' + LTRIM(RTRIM(UPPER(REPLACE(@LastName, '.', '')))))
 		WHEN 'CHRISTOPHER IVORY' THEN 'Chris'
 		WHEN 'TIMOTHY WRIGHT' THEN 'Tim'
-		ELSE @FirstName
+		WHEN 'STEVIE JOHNSON' THEN 'Steve'
+		ELSE LTRIM(RTRIM(@FirstName))
 		END
 
 	SELECT @ScrubbedLastName = 
-		CASE (RTRIM(UPPER(@FirstName)) + ' ' + RTRIM(UPPER(@LastName)))
+		CASE (LTRIM(RTRIM(UPPER(REPLACE(@FirstName, '.', '')))) + ' ' + LTRIM(RTRIM(UPPER(REPLACE(@LastName, '.', '')))))
 		WHEN 'ROBERT GRIFFIN' THEN 'Griffin III'
 		WHEN 'ODELL BECKHAM JR' THEN 'Beckham'
-		WHEN 'ODELL BECKHAM JR.' THEN 'Beckham'
-		ELSE @LastName
+		WHEN 'STEVE SMITH SR' THEN 'Smith'
+		ELSE LTRIM(RTRIM(@LastName))
 		END
+
+	SELECT TOP 1 @ScrubbedNFLTeam = TeamAbbr FROM NFLTeam
+		WHERE (LTRIM(RTRIM(UPPER(REPLACE(LocationName, '.', '')))) = UPPER(REPLACE(@ScrubbedFirstName, '.', ''))
+			   AND LTRIM(RTRIM(UPPER(REPLACE(TeamName, '.', '')))) = UPPER(REPLACE(@ScrubbedLastName, '.', '')))
+		OR (LTRIM(RTRIM(UPPER(REPLACE(LocationName, '.', '')))) + ' ' + LTRIM(RTRIM(UPPER(REPLACE(TeamName, '.', ''))))
+			= UPPER(REPLACE(@ScrubbedFirstName, '.', '')) + ' ' + UPPER(REPLACE(@ScrubbedLastName, '.', '')))
+
+	--If First/Last Name = NFLTeam (location & team name), set NFLTeam and Position
+	IF @ScrubbedNFLTeam IS NOT NULL
+	BEGIN
+		SET @ScrubbedPosition = 'DEF';
+	END
+	ELSE
+	BEGIN
+		SELECT @ScrubbedNFLTeam = 
+			CASE RTRIM(UPPER(@NFLTeam))
+			WHEN 'AZ' THEN 'ARI'
+			WHEN 'GBP' THEN 'GB'
+			WHEN 'GNB' THEN 'GB'
+			WHEN 'JAC' THEN 'JAX'
+			WHEN 'KAN' THEN 'KC'
+			WHEN 'KCC' THEN 'KC'
+			WHEN 'NEP' THEN 'NE'
+			WHEN 'NWE' THEN 'NE'
+			WHEN 'NOR' THEN 'NO'
+			WHEN 'NOS' THEN 'NO'
+			WHEN 'SDC' THEN 'SD'
+			WHEN 'SDG' THEN 'SD'
+			WHEN 'SFO' THEN 'SF'
+			WHEN 'TAM' THEN 'TB'
+			WHEN 'TBB' THEN 'TB'
+			WHEN 'WSH' THEN 'WAS'
+			WHEN 'D/ST' THEN ''
+			ELSE LTRIM(RTRIM(UPPER(@NFLTeam)))
+			END
 		
-	SELECT @ScrubbedPosition = 
-		CASE (RTRIM(UPPER(@Position)))
-		WHEN 'D/ST' THEN 'DEF'
-		WHEN 'DST' THEN 'DEF'
-		ELSE @Position
-		END
+		SELECT @ScrubbedPosition = 
+			CASE (RTRIM(UPPER(@Position)))
+			WHEN 'D/ST' THEN 'DEF'
+			WHEN 'DST' THEN 'DEF'
+			ELSE LTRIM(RTRIM(UPPER(@Position)))
+			END
+	END
 
 	--First, check for EXACT match in ACTIVE players
 	SELECT @PlayerId = p.PlayerId, @TruePlayerId=TruePlayerId, @IsDrafted=IsDrafted FROM dbo.Player p
