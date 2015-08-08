@@ -64,6 +64,9 @@
 							<th>Player</th>
 							<th>Team</th>
 							<th>Pos</th>
+							@if (Model.AreYearByeWeeksFound()) {
+								<th>Bye</th>
+							}
 						</tr>
 						@foreach (var player in Model.OverallRankedPlayers)
 						{
@@ -81,17 +84,21 @@
 								</td>
 								@if (player.PickNum != null)
 								{
-									<td colspan="2">(@player.NickName, #@player.PickNum)</td>
+									<td colspan="@(Model.AreYearByeWeeksFound() ? "3" : "2")">(@player.NickName, #@player.PickNum)</td>
 								}
 								else
 								{
 									<td>@player.NFLTeamDisplay</td>
 									<td>@player.Position</td>
+									if (Model.AreYearByeWeeksFound())
+									{
+										<td class="ba-bye-week">(@Model.GetNFLTeamByeWeek(player.NFLTeam))</td>
+									}
 								}
 							</tr>
 						}
 						<tr>
-							<td colspan="4" class="expand">
+							<td colspan="@(Model.AreYearByeWeeksFound() ? "5" : "4")" class="expand">
 								<a href="#" id="ExpandOverall" class="expand-link" data-expand="@Model.Options.ExpandOverall.ToString().ToLower()">More...</a>
 							</td>
 						</tr>

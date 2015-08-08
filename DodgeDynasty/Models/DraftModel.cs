@@ -188,13 +188,25 @@ namespace DodgeDynasty.Models
 		{
 			//Get Player with current year/draft context (just ByeWeek)
 			var playerContext = new PlayerContext(player);
-			var byeWeek = ByeWeeks.FirstOrDefault(o => o.Year == CurrentDraft.DraftYear
-				&& o.NFLTeam == player.NFLTeam);
-			if (byeWeek != null) {
-				playerContext.ByeWeek = byeWeek.WeekNum;
-			}
+			playerContext.ByeWeek = GetNFLTeamByeWeek(player.NFLTeam);
 			return playerContext;
 		}
+
+		public int? GetNFLTeamByeWeek(string nflTeam)
+		{
+			var byeWeek = ByeWeeks.FirstOrDefault(o => o.Year == CurrentDraft.DraftYear
+				&& o.NFLTeam == nflTeam);
+			if (byeWeek != null)
+			{
+				return byeWeek.WeekNum;
+			}
+			return null;
+		}
+
+		public bool AreYearByeWeeksFound()
+		{
+			return ByeWeeks.Any(o => o.Year == CurrentDraft.DraftYear);
+		} 
 
 		public void SetCurrentGridOwnerUser(int userId)
 		{

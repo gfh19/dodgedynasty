@@ -1430,6 +1430,9 @@ ul.menu li a.current-page
 	margin-top: 4px;
 	font-size: 10px;
 }
+.ba-bye-week {
+	font-size: 12px;
+}
 
 /* RankingsList / Setup Rank
 ----------------------------------------------------------*/
@@ -2243,7 +2246,7 @@ span.player-select
 	table
 	{
 		margin: auto;
-		max-width: 265px;
+		max-width: 285px;
 	}
 	.ba-category 
 	{
