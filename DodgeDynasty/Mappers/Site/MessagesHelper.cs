@@ -14,7 +14,7 @@ namespace DodgeDynasty.Mappers.Site
 			//Get all messages for user's leagues/"all users"/by users in any of user's leagues
 			//TODO:  Optimize someday
 			var userLeagueIds = (from lo in homeEntity.LeagueOwners
-								 where lo.UserId == user.UserId
+								 where lo.UserId == user.UserId && lo.IsActive
 								 select lo.LeagueId).ToList();
 			var userMessages = (from m in homeEntity.Messages
 								where m.AuthorId == user.UserId
@@ -22,7 +22,7 @@ namespace DodgeDynasty.Mappers.Site
 								  || (m.LeagueId != null && userLeagueIds.Contains(m.LeagueId.Value))
 								  || (m.LeagueId == null &&
 									  (from lo in homeEntity.LeagueOwners
-									   where userLeagueIds.Contains(lo.LeagueId)
+									   where lo.IsActive && userLeagueIds.Contains(lo.LeagueId)
 									   select lo.UserId).Contains(m.AuthorId))
 								select m).ToList();
 			return userMessages;

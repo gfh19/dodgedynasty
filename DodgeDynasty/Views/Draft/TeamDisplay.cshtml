@@ -29,7 +29,7 @@
 						<span class="player-info">
 						@if (!string.IsNullOrEmpty(Model.CurrentGridPlayer.Position))
 						{
-							<span>@Model.CurrentGridPlayer.NFLTeam-<span class="pos">@Model.CurrentGridPlayer.Position</span></span>
+							<span>@Model.GetNFLTeamDisplay(Model.CurrentGridPlayer.NFLTeam)-<span class="pos">@Model.CurrentGridPlayer.Position</span></span>
 						}
 						</span>
 					</div>

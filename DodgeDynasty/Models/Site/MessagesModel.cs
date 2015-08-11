@@ -28,12 +28,13 @@ namespace DodgeDynasty.Models.Site
 
 		public List<SelectListItem> GetAudienceLeagues()
 		{
+			OwnerLeagues = OwnerLeagues.OrderBy(o => o.LeagueName).ToList();
 			OwnerLeagues.Insert(0, new LeagueOwner{LeagueId=0, LeagueName="Everyone (All My Leagues)"});
 			if (Utilities.IsUserAdmin()) {
 				OwnerLeagues.Insert(0, new LeagueOwner{LeagueId=-1, LeagueName="Entire Site"});
 			}
-			return Utilities.GetListItems<LeagueOwner>(OwnerLeagues, o => o.LeagueName, o => o.LeagueId.ToString(),
-				false);
+			return Utilities.GetListItems<LeagueOwner>(OwnerLeagues.ToList(),
+				o => o.LeagueName, o => o.LeagueId.ToString(), false);
 		}
 	}
 }

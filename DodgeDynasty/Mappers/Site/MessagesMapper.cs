@@ -20,7 +20,7 @@ namespace DodgeDynasty.Mappers.Site
 			HomeEntity.SaveChanges();
 
 			//Get User Messages Display
-			Model.OwnerLeagues = HomeEntity.LeagueOwners.Where(lo => lo.UserId == user.UserId).ToList();
+			Model.OwnerLeagues = HomeEntity.LeagueOwners.Where(lo => lo.UserId == user.UserId && lo.IsActive).ToList();
 			var userMessages = MessagesHelper.GetUserMessages(HomeEntity, user);
 			Model.Messages = userMessages;
 
