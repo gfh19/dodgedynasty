@@ -31,11 +31,12 @@
 			<div class="draft-pick-outline @(Model.IsSnakeRound(pick.RoundNum) ? "snake-pick" : (Model.IsLastPickBeforeSnakeRound(pick) ? "pre-snake-pick" : "")) outline">
 			<div class="draft-pick @Model.CurrentGridOwnerUser.CssClass @(!string.IsNullOrEmpty(Model.CurrentGridPlayer.PlayerName) ? "filled" : "")">
 				<div class="clear-fix draft-pick-meta">
-					<span class="pick-info"><span class="pick-num">@pick.PickNum</span> @Model.CurrentGridOwnerUser.NickName</span>
+					<span class="pick-info"><span class="pick-num">@pick.PickNum</span>
+					<span class="player-nickname">@Model.CurrentGridOwnerUser.NickName</span></span>
 					<span class="player-info">
 					@if (!string.IsNullOrEmpty(Model.CurrentGridPlayer.Position))
 					{
-						<span>@Model.GetNFLTeamDisplay(Model.CurrentGridPlayer.NFLTeam)-<span class="pos">@Model.CurrentGridPlayer.Position</span></span>
+						<span><span class="player-nflteam">@Model.GetNFLTeamDisplay(Model.CurrentGridPlayer.NFLTeam)-</span><span class="pos">@Model.CurrentGridPlayer.Position</span></span>
 					}
 					</span>
 				</div>
