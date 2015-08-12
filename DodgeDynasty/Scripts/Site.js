@@ -36,7 +36,7 @@ function initRefreshedPage() {
 	checkUserTurnDialog();
 	if (!webSocketsKillSwitch) {
 		setTimeout(function () {
-			if (draftActive && !connectionStopped && $.connection.hub.state == $.signalR.connectionState.disconnected) {
+			if (draftActive && !isHistoryMode() && !connectionStopped && $.connection.hub.state == $.signalR.connectionState.disconnected) {
 				console.log("Disconnect detected.  Manual Reconnection Attempted.");
 				startHubConnection(function () { window.location.reload() });
 			}
@@ -47,7 +47,7 @@ function initRefreshedPage() {
 /*		--- WebSockets */
 
 function initPage() {
-	if (draftActive && !webSocketsKillSwitch) {
+	if (draftActive && !isHistoryMode() && !webSocketsKillSwitch) {
 		draftHub = $.connection.draftHub;
 		draftHub.client.broadcastDraft = (typeof broadcastDraft !== "undefined") ? broadcastDraft : function () { };
 		draftHub.client.broadcastChat = (typeof broadcastChat !== "undefined") ? broadcastChat : function () { };
@@ -82,7 +82,9 @@ function startHubConnection(startFn, forceAttempt) {
 				connectionStopped = true;
 				//Mark chat unavailable
 				toggleChatWindowError(true);
-				pageBroadcastDraftHandler();
+				if (typeof pageBroadcastDraftHandler !== "undefined") {
+					pageBroadcastDraftHandler();
+				}
 			}
 			else if (!connected) {
 				console.log("No responses, conn state is: " + $.connection.hub.state);
@@ -107,7 +109,9 @@ function registerHubConnection(forceAttempt) {
 				connectionStopped = true;
 				//Mark chat unavailable
 				toggleChatWindowError(true);
-				pageBroadcastDraftHandler();
+				if (typeof pageBroadcastDraftHandler !== "undefined") {
+					pageBroadcastDraftHandler();
+				}
 			}
 		}, null, "JSON");
 }
@@ -158,12 +162,15 @@ function broadcastChat(chat) {
 
 /*		--- End WebSockets */
 
+function isHistoryMode() {
+	return window.location.search.indexOf("historyMode=true") > 0;
+}
+
 function setPickTimer(recursive) {
 	var hasTimer = $(".start-time").length > 0;
 	pickTimeSeconds = (hasTimer) ? $(".start-time").data("pick-time-seconds") : 0;
 	if (hasTimer && pickTimeSeconds > 0) {
-		var isHistoryMode = window.location.search.indexOf("historyMode=true") > 0;
-		if (!draftActive || isHistoryMode) {
+		if (!draftActive || isHistoryMode()) {
 			displayDraftTime();
 		}
 		else {

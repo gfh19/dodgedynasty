@@ -235,11 +235,14 @@ namespace DodgeDynasty.Models
 					return 0;
 				}
 				var ownerUser = DraftOwnerUsers.FirstOrDefault(ou => ou.UserName == userName);
-				var nextUserPick = 
-					DraftPicks.FirstOrDefault(p => p.PickNum > CurrentDraftPick.PickNum && p.UserId == ownerUser.UserId);
-				if (nextUserPick != null)
+				if (ownerUser != null)
 				{
-					return nextUserPick.PickNum - CurrentDraftPick.PickNum;
+					var nextUserPick =
+						DraftPicks.FirstOrDefault(p => p.PickNum > CurrentDraftPick.PickNum && p.UserId == ownerUser.UserId);
+					if (nextUserPick != null)
+					{
+						return nextUserPick.PickNum - CurrentDraftPick.PickNum;
+					}
 				}
 			}
 			return -1;
