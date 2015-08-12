@@ -11,7 +11,6 @@ function bindActionLinks() {
 	bindAddPickLinks();
 	bindDeletePickLinks();
 	bindSubmitDraftPicks();
-	bindOwnerSelects($("select"));
 	bindDeletePlayers();
 };
 
@@ -33,6 +32,10 @@ function bindAddRoundLink(link) {
 		var maxPickNum = getMaxRoundPickNum(roundPicks);
 		var roundPickCount = $('.pick', roundPicks).length;
 		changeAllPickNums(maxPickNum, roundPickCount);
+
+		$(newRoundPicks).find("select").each(function (i) {
+			this.selectedIndex = $(roundPicks).find("select")[i].selectedIndex;
+		})
 
 		addNewRoundPicksAfter(newRoundPicks, roundPicks, roundPickCount, roundNum);
 	});
@@ -57,7 +60,6 @@ function addNewRoundPicksAfter(newRoundPicks, roundPicks, roundPickCount, roundN
 	$.each(newDeletePickLinks, function (index, link) {
 		bindDeletePickLink(link);
 	});
-	bindOwnerSelects($("select", newRoundPicks))
 }
 
 function bindDeleteRoundLinks() {
@@ -98,9 +100,12 @@ function bindReverseRoundLink(link) {
 		for (var i = picks.length - 1; i >= 0; i--) {
 			var origPick = picks[origPickIx++];
 			var newPick = $(picks[i]).clone();
+			$(newPick).find("select")[0].selectedIndex = $(picks[i]).find("select")[0].selectedIndex;
 			$(newPick).attr("data-pick-id", $(origPick).attr("data-pick-id"));
 			$(newPick).attr("data-pick-num", $(origPick).attr("data-pick-num"));
-			$(".pick-num", newPick).text($(".pick-num", origPick).text());
+			$(".sd-pick-num", newPick).text($(".sd-pick-num", origPick).text());
+			bindAddPickLink($(".add-pick-right", newPick));
+			bindDeletePickLink($(".delete-pick-right", newPick));
 			$(roundPicks).append(newPick);
 		}
 		$(picks).remove();
@@ -132,7 +137,6 @@ function bindAddPickLink(link) {
 		}
 		bindAddPickLink($(".add-pick-right", newPick));
 		bindDeletePickLink($(".delete-pick-right", newPick));
-		bindOwnerSelects($("select", newPick))
 	});
 };
 
@@ -157,17 +161,6 @@ function bindDeletePickLink(link) {
 	});
 };
 
-function bindOwnerSelects(selects) {
-	$(selects).on('change', function (e) {
-		var optionSelected = $("option:selected", this);
-		var valueSelected = this.value;
-		$.each($("option", $(this)), function (ix, option) {
-			$(option).removeAttr("selected");
-		});
-		$(optionSelected).attr("selected", "selected");
-	});
-}
-
 function changeAllPickNums(pickNum, offset) {
 	var picks = $(".pick");
 	changePickNums(picks, pickNum, offset);
@@ -183,7 +176,7 @@ function changePickNums(picks, pickNum, offset) {
 
 function setNewPickNum(pick, newPickNum) {
 	$(pick).attr("data-pick-num", newPickNum);
-	$(".pick-num", pick).text(newPickNum);
+	$(".sd-pick-num", pick).text(newPickNum);
 };
 
 function clearNewPickAttributes(pick) {
@@ -191,6 +184,9 @@ function clearNewPickAttributes(pick) {
 	var pickSelect = $(".pick-owner", pick);
 	pickSelect.val("");
 	$("option", pickSelect).removeAttr("selected");
+	//IE
+	$("option", pickSelect).removeProp("selected");
+
 	$(".picked-player", pick).remove();
 };
 

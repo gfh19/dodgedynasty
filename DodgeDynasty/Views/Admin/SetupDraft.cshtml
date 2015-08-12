@@ -36,11 +36,11 @@
 					{
 						 Model.SetCurrentGridOwnerUser(pick.UserId);
 						 Model.SetCurrentGridPlayer(pick.PlayerId);
-						 <span class="pick-num">@pick.PickNum</span>@Html.DropDownListFor(m => m.CurrentGridOwnerUser.UserId, Model.GetDraftOwnerListItems(), new { @class = "pick-owner" })<a href="#" class="delete-pick-right @(pick.PickNum == 1 ? "hide-yo-husbands-too" : "")" tabindex="-1"><img src="@Url.Content("~/Content/images/minus.png")" alt="Delete Pick"/></a>
+						 <span class="sd-pick-num">@pick.PickNum</span>@Html.DropDownListFor(m => m.CurrentGridOwnerUser.UserId, Model.GetDraftOwnerListItems(), new { @class = "pick-owner" })<a href="#" class="delete-pick-right @(pick.PickNum == 1 ? "hide-yo-husbands-too" : "")" tabindex="-1"><img src="@Url.Content("~/Content/images/minus.png")" alt="Delete Pick"/></a>
 					}
 					else
 					{
-						<span class="pick-num">@pick.PickNum</span>@Html.DropDownList("UserId", Model.GetDraftOwnerListItems(), new { @class = "pick-owner" })<a href="#" class="delete-pick-right @(pick.PickNum == 1 ? "hide-yo-husbands-too" : "")" tabindex="-1"><img src="@Url.Content("~/Content/images/minus.png")" alt="Delete Pick"/></a>
+						<span class="sd-pick-num">@pick.PickNum</span>@Html.DropDownList("UserId", Model.GetDraftOwnerListItems(), new { @class = "pick-owner" })<a href="#" class="delete-pick-right @(pick.PickNum == 1 ? "hide-yo-husbands-too" : "")" tabindex="-1"><img src="@Url.Content("~/Content/images/minus.png")" alt="Delete Pick"/></a>
 					}
 					@if (Model.CurrentGridPlayer != null && !string.IsNullOrEmpty(Model.CurrentGridPlayer.PlayerName))
 					{

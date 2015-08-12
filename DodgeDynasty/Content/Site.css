@@ -1625,7 +1625,7 @@ span.player-select
 	margin: 0px;
 	padding: 0px;
 }
-#setupDraft .pick-num 
+.sd-pick-num
 {
 	display: inline-block;
 	font-family: Arial;
