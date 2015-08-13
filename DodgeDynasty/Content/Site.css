@@ -1820,7 +1820,7 @@ span.player-select
 	border: 1px dotted black;
 }
 .dh-year {
-	width: 210px;
+	width: 215px;
 }
 .dh-winner {
 	width: 140px;
@@ -2351,7 +2351,7 @@ span.player-select
 		display: inline-block !important;
 	}
 	.dh-mobile-view {
-		min-width: 497px;
+		min-width: 502px;
 	}
 	
 	/* User Info
