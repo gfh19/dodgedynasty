@@ -1899,11 +1899,13 @@ span.player-select
 /* Menu */
 .toggle-msgs, .menu-msgs {
 	font-size: 10px;
+	line-height: 13px;
 	color: white;
 	background-color: skyblue;
 	border-radius: 10px;
 	-webkit-border-radius: 10px;
 	padding: 1px;
+	margin-bottom: 4px;
 	display: inline-block;
 	vertical-align: top;
 	height: 15px;

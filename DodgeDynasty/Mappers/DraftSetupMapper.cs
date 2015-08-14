@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using DodgeDynasty.Models;
 using DodgeDynasty.Entities;
+using DodgeDynasty.Shared;
 
 namespace DodgeDynasty.Mappers
 {
@@ -61,7 +62,20 @@ namespace DodgeDynasty.Mappers
 				.OrderBy(p => p.PickNum).FirstOrDefault();
 			if (firstDraftPick != null)
 			{
-				firstDraftPick.PickStartDateTime = currentModel.CurrentDraft.DraftDate;
+				var currentDateTime = Utilities.GetEasternTime();
+				//Past Draft - Set PickStart time to current time
+				if (currentDateTime > currentModel.CurrentDraft.DraftDate)
+				{
+					if (!firstDraftPick.PickStartDateTime.HasValue || firstDraftPick.PickStartDateTime > currentDateTime)
+					{
+						firstDraftPick.PickStartDateTime = currentDateTime;
+					}
+				}
+				//Future Draft - Set PickStart to draft time
+				else
+				{
+					firstDraftPick.PickStartDateTime = currentModel.CurrentDraft.DraftDate;
+				}
 				HomeEntity.SaveChanges();
 			}
 		}

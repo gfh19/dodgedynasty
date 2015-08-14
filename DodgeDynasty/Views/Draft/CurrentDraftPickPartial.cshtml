@@ -1,7 +1,6 @@
 ﻿@model DodgeDynasty.Models.DraftModel
 <script type="text/javascript">
 	$(function () {
-		draftActive = @(Model.IsDraftActive() ?  "true" : "false");
 		isUserTurn = @(Model.IsUserTurn() ? "true" : "false");
 		initRefreshedPage();
 	});

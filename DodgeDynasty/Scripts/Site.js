@@ -2,11 +2,12 @@
 var playerHints = [];
 var hasModelErrors = false;
 var isRefreshPage = false;
-var draftActive = false;
+var draftActive = false;	//Means ANY draftActive, not necessarily this one (check historyMode)
 var isUserTurn = false;
 var currentServerTime = null;
 var clientServerTimeOffset = null;
 var draftHub;
+var connectionAttempted = false;
 var connectionStopped = false;
 
 /* Init functions */
@@ -36,7 +37,7 @@ function initRefreshedPage() {
 	checkUserTurnDialog();
 	if (!webSocketsKillSwitch) {
 		setTimeout(function () {
-			if (draftActive && !isHistoryMode() && !connectionStopped && $.connection.hub.state == $.signalR.connectionState.disconnected) {
+			if (draftActive && connectionAttempted && !connectionStopped && $.connection.hub.state == $.signalR.connectionState.disconnected) {
 				console.log("Disconnect detected.  Manual Reconnection Attempted.");
 				startHubConnection(function () { window.location.reload() });
 			}
@@ -47,7 +48,7 @@ function initRefreshedPage() {
 /*		--- WebSockets */
 
 function initPage() {
-	if (draftActive && !isHistoryMode() && !webSocketsKillSwitch) {
+	if (draftActive && !webSocketsKillSwitch) {
 		draftHub = $.connection.draftHub;
 		draftHub.client.broadcastDraft = (typeof broadcastDraft !== "undefined") ? broadcastDraft : function () { };
 		draftHub.client.broadcastChat = (typeof broadcastChat !== "undefined") ? broadcastChat : function () { };
@@ -59,6 +60,7 @@ function initPage() {
 function startHubConnection(startFn, forceAttempt) {
 	var connected = false;
 	if (!webSocketsKillSwitch) {
+		connectionAttempted = true;
 		draftHub = draftHub || $.connection.draftHub;
 		if ($.connection.hub.state == $.signalR.connectionState.disconnected) {
 			console.log("Attempting socket connection");
@@ -133,7 +135,9 @@ function broadcastChatMessage(msg) {
 
 //Server to client:  Draft Pick broadcast-received.  Bound to server-side (C#) hub client handle
 function broadcastDraft() {
-	if (typeof pageBroadcastDraftHandler !== "undefined") pageBroadcastDraftHandler();
+	if (typeof pageBroadcastDraftHandler !== "undefined" && !isHistoryMode()) {
+		pageBroadcastDraftHandler();
+	}
 	checkUserTurnDialog();
 }
 
@@ -182,6 +186,7 @@ function setPickTimer(recursive) {
 				clientServerTimeOffset = Math.floor((new Date(currentServerTime) - new Date()) / 1000);
 			}
 			var startDateTime = new Date(startTimeString);
+			var draftStartTime = new Date($(".start-time").attr("data-draft-time"));
 			var currentTime = new Date();
 			currentTime.setSeconds(currentTime.getSeconds() + clientServerTimeOffset);
 
@@ -189,6 +194,9 @@ function setPickTimer(recursive) {
 			var diff = (pickTimeSeconds - timeElapsed);
 			if (diff > pickTimeSeconds) {
 				if (currentPick == "1") {
+					displayDraftTime();
+				}
+				else if (draftStartTime - currentTime > 0) {
 					displayDraftTime();
 				}
 				else {
@@ -245,7 +253,7 @@ function refreshPageWithPickTimer(url, elementId, timer) {
 };
 
 function callRefreshPageWithPickTimer(url, elementId) {
-	if (draftHistoryId == '') {
+	if (!isHistoryMode()) {
 		if (draftActive) {
 			callRefreshPage(url, elementId);
 			refreshPageWithPickTimer(url, elementId);
@@ -292,6 +300,7 @@ function setPlayerAutoComplete(fname, lname, pos, nfl) {
 function checkUserTurnDialog() {
 	if (draftActive &&
 		(!isRefreshPage			//Either user turn is unknown, i.e. not on refreshed page  
+		|| isHistoryMode()		//Or on refresh page in historyMode (doesn't get refreshed) 
 		|| isUserTurn))			//Or we know is user turn on refreshed page
 	{
 		tryShowUserTurnDialog();
@@ -331,7 +340,7 @@ function setLatestUserTurnPickInfo(showFn) {
 	ajaxGetJson("Draft/GetUserTurnPickInfo", function (pickInfo) {
 		if (pickInfo && pickInfo.turn) {
 			setUserTurnCookie(true, false);
-			if (!isElementInView($(".current-turn"))) {
+			if (!isElementInView($(".current-turn")) || isHistoryMode()) {
 				$("#userTurnDialog").attr("title", "Your Turn - Pick #" + pickInfo.num);
 				if (pickInfo.hasPrev) {
 					$(".ut-last-pick").text("(Last Pick: " + pickInfo.prevName + ")");

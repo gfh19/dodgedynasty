@@ -35,7 +35,7 @@ function getPickInfo() {
 };
 
 function callRefreshUserPickWithPickTimer() {
-	if (draftHistoryId == '') {
+	if (!isHistoryMode()) {
 		if (draftActive && !isUserTurn) {
 			getPickInfo();
 			refreshUserPickWithPickTimer();
