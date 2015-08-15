@@ -202,7 +202,7 @@ namespace DodgeDynasty.Controllers
 			PickInfoJson pickInfo = new PickInfoJson
 			{
 				turn = model.IsDraftActive() && model.IsUserTurn(),
-				num = model.CurrentDraftPick.PickNum,
+				num = (model.CurrentDraftPick != null) ? model.CurrentDraftPick.PickNum : 0,
 				hasPrev = (model.PreviousDraftPick != null),
 				prevName = (model.PreviousDraftPick != null) ? model.PreviousDraftPick.Player.PlayerName : null
 			};

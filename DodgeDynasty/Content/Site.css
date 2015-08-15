@@ -2453,11 +2453,8 @@ span.player-select
 		width: 285px;
 	}
 	.dchat-input {
-		width: 267px;
+		width: 221px;
 		margin-left: 3px;
-	}
-	.dchat-send-msg {
-		display: none;
 	}
 	.dchat-window-error .dchat-preview {
 		width: 196px;

@@ -229,7 +229,7 @@ function displayDraftTime() {
 	//var draftTime = moment([2014, 7, 30, 18, 30, 0]);
 	moment.suppressDeprecationWarnings = true;
 	var draftTime = moment(new Date($(".start-time").attr("data-draft-time")).toString());
-	$(".start-time").text("Draft Begins: " + draftTime.format("ddd, M/DD @ h:mmA"));
+	$(".start-time").text("Draft Begins: " + draftTime.format("ddd, M/D @ h:mmA"));
 }
 
 function highlightCurrentPageLink() {
