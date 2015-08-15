@@ -19,6 +19,10 @@ namespace DodgeDynasty.Controllers
 		[HttpGet]
 		public ActionResult Pick(string playerId, string id)
 		{
+			if (TempData.ContainsKey(Constants.TempData.NextDraftInputModel))
+			{
+				return View((DraftInputModel)TempData[Constants.TempData.NextDraftInputModel]);
+			}
 			DraftInputModel draftInputModel = DraftFactory.GetCurrentDraftInputModel(Utilities.ToNullInt(id));
 			if (!string.IsNullOrEmpty(playerId))
 			{

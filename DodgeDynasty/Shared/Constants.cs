@@ -47,6 +47,13 @@ namespace DodgeDynasty.Shared
 			public const string StringLength = "The {0} must be between {2} and {1} characters long.";
 		}
 
+		public static class QS
+		{
+			public const string IsActive = "isActive";
+			public const string IsComplete = "isComplete";
+			public const string HistoryMode = "historyMode";
+		}
+
 		public static class Roles
 		{
 			public const int Admin = 1;
@@ -57,11 +64,9 @@ namespace DodgeDynasty.Shared
 			public const string HubConnections = "HubConnections";
 		}
 
-		public static class QS
+		public static class TempData
 		{
-			public const string IsActive = "isActive";
-			public const string IsComplete = "isComplete";
-			public const string HistoryMode = "historyMode";
+			public const string NextDraftInputModel = "NextDraftInputModel";
 		}
 
 		public static class Views

@@ -1,19 +1,24 @@
-﻿$(function () {
-	setPickTimer(true);
-	setPlayerAutoComplete();
-	var initTimer = 0;
-	if (hasModelErrors === true) {
-		initTimer = 30000;
+﻿var initPickCalled = false;
+
+function initPick() {
+	if (!initPickCalled) {
+		initPickCalled = true;
+		setPickTimer(true);
+		setPlayerAutoComplete();
+		var initTimer = 0;
+		if (hasModelErrors === true) {
+			initTimer = 30000;
+		}
+		if (!isUserTurn) {
+			setTimeout(function () {
+				callRefreshUserPickWithPickTimer();
+				hasModelErrors = false;
+			},
+			initTimer);
+			setNewPickUserTurnCookie();
+		}
 	}
-	if (!isUserTurn) {
-		setTimeout(function () {
-			callRefreshUserPickWithPickTimer();
-			hasModelErrors = false;
-		},
-		initTimer);
-		setNewPickUserTurnCookie();
-	}
-});
+};
 
 function pageBroadcastDraftHandler() {
 	getPickInfo();

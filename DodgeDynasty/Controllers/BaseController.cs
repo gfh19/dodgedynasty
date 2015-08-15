@@ -52,7 +52,8 @@ namespace DodgeDynasty.Controllers
 			nextDraftInputModel.Message = string.Format("{0} {1} has been drafted by {2}.",
 				playerModel.FirstName, playerModel.LastName, playerModel.TeamName);
 			nextDraftInputModel.PickMade = true;
-			return View(viewName, nextDraftInputModel);
+			TempData[Constants.TempData.NextDraftInputModel] = nextDraftInputModel;
+			return RedirectToAction(viewName);
 		}
 
 		public PlayerRankOptions GetPlayerRankOptions()

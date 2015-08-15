@@ -1,7 +1,4 @@
-﻿$(function () {
-});
-
-function initInput() {
+﻿function initInput() {
 	setPlayerAutoComplete();
 	bindInputPrevious();
 	bindInputNext();

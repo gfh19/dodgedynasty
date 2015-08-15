@@ -10,7 +10,6 @@
 <div id="pickInfo">
 	<script type="text/javascript">
 		$(function () {
-			var pickMade = @(Model.PickMade ? "broadcastPickMade()" : "false");
 			playerHints = @Html.Raw(@Model.GetPlayerHints(true));
 			initInput();
 		});

@@ -16,10 +16,9 @@
 	<div id="playerEntry">
 		<script type="text/javascript">
 			$(function () {
-				var pickMade = @(Model.PickMade ? "broadcastPickMade()" : "false");
 				playerHints = @Html.Raw(@Model.GetPlayerHints(true));
-				//isUserTurn = @(nextTurnPickCount == 0 ? "true" : "false");
 				hasModelErrors = @(!ViewData.ModelState.IsValid ?  "true" : "false");
+				initPick();
 			});
 		</script>
 		@Html.Partial("CurrentDraftPickPartial", Model)
@@ -98,5 +97,4 @@
 	{
 		<div class="view-draft"><a href="@Url.Content("~/Draft/Display/")">View Draft</a> for full details.</div>
 	}
-
 </div>
