@@ -107,6 +107,7 @@
 						})
 					</div>
 					<div class="msg-text-section">
+						@Html.ValidationMessageFor(o => o.MessageText)
 						@Html.TextAreaFor(o => o.MessageText, new { @class = "add-msg-text editable", maxLength = "1000" })
 					</div>
 				</p>

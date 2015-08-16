@@ -34,8 +34,10 @@ function showAddMessageDialog() {
 		buttons: [
 					{
 						text: "Submit", click: function () {
-							$("#messageForm").submit();
-							$(this).dialog("close");
+							if ($("#messageForm").valid()) {
+								$("#messageForm").submit();
+								$(this).dialog("close");
+							}
 						}
 					},
 					{

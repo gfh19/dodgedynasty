@@ -38,16 +38,10 @@ namespace DodgeDynasty.Controllers
 			GetPlayerRankOptions();
 			PlayerRankModel model = DraftFactory.GetPlayerRankModel(rankId);
 			model.GetAllPlayerRanks();
-			return View(model);
-		}
-
-		[HttpPost]
-		[OwnerUpdateRankAccess]
-		public ActionResult SetupRank(int rankId, string rankStatus)
-		{
-			PlayerRankModel model = DraftFactory.GetPlayerRankModel(rankId);
-			model.GetAllPlayerRanks();
-			model.RankStatus = rankStatus;
+			if (TempData.ContainsKey(Constants.TempData.RankStatus))
+			{
+				model.RankStatus = (string)TempData[Constants.TempData.RankStatus];
+			}
 			return View(model);
 		}
 
@@ -65,7 +59,7 @@ namespace DodgeDynasty.Controllers
 				playerRankModel.Player = model.Player;
 				playerRankModel.RankStatus = (playerAdded) ? "player-added" : "player-existed";
 			}
-			playerRankModel.GetAllPlayerRanks();
+			TempData[Constants.TempData.RankStatus] = playerRankModel.RankStatus;
 			return playerRankModel.RankStatus;
 		}
     }

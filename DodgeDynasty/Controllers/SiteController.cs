@@ -31,7 +31,7 @@ namespace DodgeDynasty.Controllers
 			{
 				return View(mapper.GetUpdatedModel(model));
 			}
-			return View(mapper.GetModel());
+			return RedirectToAction(Constants.Views.Messages);
 		}
 
 		[HttpPost]

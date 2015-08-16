@@ -286,8 +286,7 @@ function updatePlayerRanks(rankSetupModel) {
 	showSavingDialog();
 	setTimeout(function () {
 		ajaxPost(rankSetupModel, "Rank/UpdateRankSetup", function (rankStatus) {
-			$("#rankStatus").val(rankStatus);
-			$("#setupRankForm").submit();
+			window.location.reload();
 		}, null, null, true);
 	}, 0);
 }

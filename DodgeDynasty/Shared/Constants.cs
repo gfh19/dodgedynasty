@@ -67,6 +67,7 @@ namespace DodgeDynasty.Shared
 		public static class TempData
 		{
 			public const string NextDraftInputModel = "NextDraftInputModel";
+			public const string RankStatus = "RankStatus";
 		}
 
 		public static class Views
@@ -87,6 +88,7 @@ namespace DodgeDynasty.Shared
 			public const string ColorStyles = "_ColorStyles";
 			public const string UserInfoPartial = "UserInfoPartial";
 			public const string ManageUsers = "ManageUsers";
+			public const string Messages = "Messages";
 		}
 	}
 }
