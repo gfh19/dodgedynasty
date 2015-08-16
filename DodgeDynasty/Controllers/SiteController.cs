@@ -34,6 +34,12 @@ namespace DodgeDynasty.Controllers
 			return RedirectToAction(Constants.Views.Messages);
 		}
 
+		[HttpGet]
+		public ActionResult DraftChatPartial()
+		{
+			return PartialView(Constants.Views.DraftChatPartial);
+		}
+
 		[HttpPost]
 		public JsonResult OpenDraftHubConnection(string connectionId, bool forceAttempt = false)
 		{

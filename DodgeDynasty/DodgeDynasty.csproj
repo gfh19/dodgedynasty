@@ -392,7 +392,6 @@
     <Content Include="Scripts\lib\modernizr-2.5.3.js" />
     <Content Include="Scripts\Pick.js" />
     <Content Include="Scripts\Site.js" />
-    <Content Include="Scripts\AddUser.js" />
     <Content Include="Scripts\TeamDisplay.js" />
     <Content Include="Scripts\UserInfo.js" />
     <Content Include="SQL\usp_LoadPastDraftRosters.sql" />
@@ -428,6 +427,7 @@
     <None Include="Properties\PublishProfiles\WinHost Local Folder.pubxml" />
     <Content Include="Views\Site\Messages.cshtml" />
     <Content Include="Views\Web.config" />
+    <Content Include="Views\Shared\_DraftChatPartial.cshtml" />
     <None Include="Web.local.config">
       <SubType>Designer</SubType>
     </None>

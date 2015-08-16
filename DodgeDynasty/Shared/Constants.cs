@@ -89,6 +89,7 @@ namespace DodgeDynasty.Shared
 			public const string UserInfoPartial = "UserInfoPartial";
 			public const string ManageUsers = "ManageUsers";
 			public const string Messages = "Messages";
+			public const string DraftChatPartial = "_DraftChatPartial";
 		}
 	}
 }

@@ -163,9 +163,15 @@ function checkStillSocketConnected(recursive) {
 		setTimeout(function () {
 			if (draftActive && connectionAttempted && !connectionStopped && $.connection.hub.state == $.signalR.connectionState.disconnected) {
 				console.log("Disconnect detected.  Manual Reconnect Attempted.");
-				startHubConnection(function () { window.location.reload() });
+				startHubConnection(function () {
+					if (!draftChatKillSwitch) {
+						ajaxGetReplace("Site/DraftChatPartial", "#dchat-partial", function () {
+							bindDraftChatWindow();
+						});
+					}
+				});
 			}
-		}, 2500);
+		}, 1500);
 	}
 	if (recursive) {
 		setTimeout(function () {
@@ -308,14 +314,19 @@ function setPlayerAutoComplete(fname, lname, pos, nfl) {
 };
 
 function checkUserTurnDialog() {
-	if (draftActive &&
-		(!isRefreshPage			//Either user turn is unknown, i.e. not on refreshed page  
-		|| isHistoryMode()		//Or on refresh page in historyMode (doesn't get refreshed) 
-		|| isUserTurn))			//Or we know is user turn on refreshed page
+	if (draftActive)
 	{
-		tryShowUserTurnDialog();
+		if (!isRefreshPage		//Either user turn is unknown, i.e. not on refreshed page  
+		|| isHistoryMode()		//Or on refresh page in historyMode (doesn't get refreshed) 
+		|| isUserTurn)			//Or we know is user turn on refreshed page
+		{
+			tryShowUserTurnDialog();
+		}
+		//else if open and not user turn, close it
+		else if (isUserTurnDialogOpen()) {
+			closeUserTurnDialog();
+		}
 	}
-	//else if open and not user turn, close it
 }
 
 function tryShowUserTurnDialog() {
@@ -323,6 +334,15 @@ function tryShowUserTurnDialog() {
 		var settings = jQuery.parseJSON($.cookie("userTurnSettings"));
 		if (!settings.shown && !settings.neverShowAgain) {
 			showUserTurnDialog();
+		}
+		//else if open and not user turn, close it
+		else if (isUserTurnDialogOpen())
+		{
+			ajaxGetJson("Draft/GetUserTurnPickInfo", function (pickInfo) {
+				if (pickInfo && !pickInfo.turn) {
+					closeUserTurnDialog();
+				}
+			});
 		}
 	}
 	else {
@@ -338,6 +358,7 @@ function showUserTurnDialog() {
 				height: 'auto',
 				width: '250px',
 				modal: false,
+				autoOpen: true,
 				buttons: [
 							{ text: "Make Pick", click: function () { location.href = baseURL + "Draft/Pick"; $(this).dialog("close"); } },
 							{ text: "Close", click: function () { $(this).dialog("close"); } },
@@ -360,12 +381,23 @@ function setLatestUserTurnPickInfo(showFn) {
 			}
 		}
 		//else if open and not user turn, close it
+		else if (isUserTurnDialogOpen()) {
+			closeUserTurnDialog();
+		}
 	});
 }
 
 function setUserTurnCookie(shown, neverShowAgain) {
 	var settings = { shown: shown, neverShowAgain: neverShowAgain };
 	$.cookie("userTurnSettings", JSON.stringify(settings), { path: baseURL });
+}
+
+function isUserTurnDialogOpen() {
+	return $("#userTurnDialog").dialog({autoOpen: false}).dialog("isOpen");
+}
+
+function closeUserTurnDialog() {
+	$("#userTurnDialog").dialog("close");
 }
 
 function markInvalidId(userId) {
