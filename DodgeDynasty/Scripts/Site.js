@@ -60,7 +60,6 @@ function startHubConnection(startFn, forceAttempt) {
 			console.log("Attempting socket connection");
 			$.connection.hub.start().done(function () {
 				connected = true;
-				//Quick send broadcast before closing connection?
 				if (startFn) startFn();
 				console.log("Calling ajax open conn...");
 				registerHubConnection(forceAttempt);
@@ -163,13 +162,7 @@ function checkStillSocketConnected(recursive) {
 		setTimeout(function () {
 			if (draftActive && connectionAttempted && !connectionStopped && $.connection.hub.state == $.signalR.connectionState.disconnected) {
 				console.log("Disconnect detected.  Manual Reconnect Attempted.");
-				startHubConnection(function () {
-					if (!draftChatKillSwitch) {
-						ajaxGetReplace("Site/DraftChatPartial", "#dchat-partial", function () {
-							bindDraftChatWindow();
-						});
-					}
-				});
+				startHubConnection(refreshDraftChat);
 			}
 		}, 1500);
 	}
@@ -177,6 +170,14 @@ function checkStillSocketConnected(recursive) {
 		setTimeout(function () {
 			checkStillSocketConnected(true);
 		}, 25000);
+	}
+}
+
+function refreshDraftChat() {
+	if (!draftChatKillSwitch) {
+		ajaxGetReplace("Site/DraftChatPartial", "#dchat-partial", function () {
+			bindDraftChatWindow();
+		});
 	}
 }
 
@@ -471,7 +472,7 @@ function bindDraftChatWindow() {
 	});
 	$('.force-dchat').click(function (e) {
 		e.preventDefault();
-		startHubConnection(null, true);
+		startHubConnection(refreshDraftChat, true);
 		toggleChatWindowError(false);
 	});
 }
