@@ -35,14 +35,7 @@ function setUserAgentInfo() {	//Currently just for tablet/phablet CSS
 function initRefreshedPage() {
 	isRefreshPage = true;
 	checkUserTurnDialog();
-	if (!webSocketsKillSwitch) {
-		setTimeout(function () {
-			if (draftActive && connectionAttempted && !connectionStopped && $.connection.hub.state == $.signalR.connectionState.disconnected) {
-				console.log("Disconnect detected.  Manual Reconnection Attempted.");
-				startHubConnection(function () { window.location.reload() });
-			}
-		}, 2500);
-	}
+	checkStillSocketConnected(false);
 };
 
 /*		--- WebSockets */
@@ -55,6 +48,7 @@ function initPage() {
 		draftHub.client.broadcastDisconnect = (typeof broadcastDisconnect !== "undefined") ? broadcastDisconnect : function () { };
 		startHubConnection();
 	}
+	checkStillSocketConnected(true);
 }
 
 function startHubConnection(startFn, forceAttempt) {
@@ -162,6 +156,22 @@ function broadcastChat(chat) {
 	$(".dchat-prev-content", dchatWindow).html($(copy).html())
 
 	scrollDraftChatBottom();
+}
+
+function checkStillSocketConnected(recursive) {
+	if (!webSocketsKillSwitch) {
+		setTimeout(function () {
+			if (draftActive && connectionAttempted && !connectionStopped && $.connection.hub.state == $.signalR.connectionState.disconnected) {
+				console.log("Disconnect detected.  Manual Reconnect Attempted.");
+				startHubConnection(function () { window.location.reload() });
+			}
+		}, 2500);
+	}
+	if (recursive) {
+		setTimeout(function () {
+			checkStillSocketConnected(true);
+		}, 25000);
+	}
 }
 
 /*		--- End WebSockets */
@@ -305,6 +315,7 @@ function checkUserTurnDialog() {
 	{
 		tryShowUserTurnDialog();
 	}
+	//else if open and not user turn, close it
 }
 
 function tryShowUserTurnDialog() {
@@ -348,6 +359,7 @@ function setLatestUserTurnPickInfo(showFn) {
 				if (showFn) showFn();
 			}
 		}
+		//else if open and not user turn, close it
 	});
 }
 

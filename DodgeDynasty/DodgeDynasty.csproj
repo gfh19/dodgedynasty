@@ -352,6 +352,7 @@
     <Content Include="Scripts\AddEditLeague.js" />
     <Content Include="Scripts\AddLeague.js" />
     <Content Include="Scripts\EditLeague.js" />
+    <Content Include="Scripts\History.js" />
     <Content Include="Scripts\lib\aloha.js" />
     <Content Include="Scripts\lib\aloha.min.js" />
     <Content Include="Scripts\lib\jquery.signalR-2.2.0.js" />
@@ -377,7 +378,6 @@
     <Content Include="Scripts\RankingsList.js" />
     <Content Include="Scripts\SetupDraft.js" />
     <Content Include="Scripts\SetupRank.js" />
-    <Content Include="Scripts\History.js" />
     <Content Include="Scripts\Input.js" />
     <Content Include="Scripts\Display.js" />
     <Content Include="Scripts\lib\jquery.unobtrusive-ajax.js" />

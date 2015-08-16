@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Web;
 using DodgeDynasty.Entities;
 using DodgeDynasty.Mappers.Site;
@@ -66,18 +68,20 @@ namespace DodgeDynasty.Mappers.Shared
 		{
 			var currentTime = Utilities.GetEasternTime();
 			var user = HomeEntity.Users.FirstOrDefault(u => u.UserName == UserName);
+			var encodedText = Regex.Replace(model.MessageText, @"\p{Cs}{1,}", "<emoji>");
 			DraftChat chatMessage = new DraftChat
 			{
 				DraftId = model.DraftId,
 				LeagueId = model.LeagueId,
 				AuthorId = user.UserId,
-				MessageText = model.MessageText,
+				MessageText = encodedText,
 				AddTimestamp = currentTime,
 				LastUpdateTimestamp = currentTime
 			};
 			HomeEntity.DraftChats.AddObject(chatMessage);
 			HomeEntity.SaveChanges();
 
+			chatMessage.MessageText = model.MessageText;
 			ChatJsonResult = CreateChatJsonResult(chatMessage, user);
 		}
 
