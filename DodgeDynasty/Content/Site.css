@@ -1531,6 +1531,10 @@ ul.menu li a.current-page
 	display: inline-block;
 	width: 230px;
 }
+.clear-ranks {
+	display: inline-block;
+	margin-top: 8px;
+}
 span.player-select 
 {
 	font-size: 15px;

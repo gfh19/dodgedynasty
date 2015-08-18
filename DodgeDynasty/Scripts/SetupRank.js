@@ -139,11 +139,14 @@ function bindMoveDownPlayerLink(link) {
 }
 
 function bindPastePlayerHandlers() {
-	$(document).on("paste", function (e) {
-		pastePlayerHandler(e.originalEvent.clipboardData);
-	});
+	if (!isBrowserIE()) {
+		$(document).on("paste", function (e) {
+			pastePlayerHandler(e.originalEvent.clipboardData);
+		});
+	}
 
 	if (isBrowserIE()) {
+		var pasteKeysPressed = false;
 		var map = {
 			17: false,	//Ctrl
 			86: false	//V
@@ -152,19 +155,24 @@ function bindPastePlayerHandlers() {
 			if (e.keyCode in map) {
 				map[e.keyCode] = true;
 				if (map[17] && map[86]) {
-					pastePlayerHandler(window.clipboardData);
+					pasteKeysPressed = true;
 				}
 			}
 		}).keyup(function (e) {
 			if (e.keyCode in map) {
 				map[e.keyCode] = false;
+				if (pasteKeysPressed) {
+					pasteKeysPressed = false;
+					pastePlayerHandler(window.clipboardData);
+				}
 			}
 		});
 	}
 }
 
 function pastePlayerHandler(clipboardData) {
-	var pastedText = (clipboardData) ? clipboardData.getData('text') : null;
+	$("body").css("cursor", "wait");
+	var pastedText = (clipboardData) ? clipboardData.getData('Text') : null;
 	if (pastedText && $(document.activeElement).is("select") && $(document.activeElement).hasClass("player-select")) {
 		var pastedArray = pastedText.split("\r\n");
 		if (pastedArray.length > 0 && pastedArray[pastedArray.length - 1] == "") {
@@ -173,32 +181,7 @@ function pastePlayerHandler(clipboardData) {
 		var destSelect = document.activeElement;
 		if (pastedArray.length > 0) {
 			$.each(pastedArray, function (ix, txt) {
-				if (txt && txt.length > 0) {
-					var matchedVal = null;
-					var pastedVal = $("option", destSelect).filter(function () {
-						if (matchedVal == null) {
-							var playerNameLength = $(this).html().indexOf(" (");
-							if (playerNameLength < 0) { playerNameLength = $(this).html().length; }
-							var playerName = $(this).html().substr(0, playerNameLength);
-							if (playerNameLength > 0
-								&& (formatName($(this).html()).startsWith(formatName(txt))
-								|| formatName(txt).startsWith(formatName(playerName)))) {
-								matchedVal = $(this).val();
-								return true;
-							}
-						}
-						return false;
-					}).val();
-					if (matchedVal && matchedVal >= 0) {
-						(isBrowserIE()) ? $('option[value=' + matchedVal + ']', destSelect).prop('selected', true)
-										: $(destSelect).val(matchedVal);
-					}
-					else {
-						(isBrowserIE()) ? $("option:first", destSelect).prop('selected', true)
-										: $(destSelect).val($("option:first", destSelect).val());
-					}
-					matchedVal = null;
-				}
+				selectPastedPlayer(txt, destSelect);
 				var newDestSelect = $(".player-select", $(destSelect).parent().parent().next());
 				if (ix < (pastedArray.length - 1) && ($(newDestSelect).length == 0 || $(newDestSelect).is("span"))) {
 					$(".rank-add-player", $(destSelect).parent().parent()).click();
@@ -208,6 +191,7 @@ function pastePlayerHandler(clipboardData) {
 			});
 		}
 	}
+	$("body").css("cursor", "default");
 }
 
 function selectPastedPlayer(txt, destSelect) {
@@ -228,10 +212,12 @@ function selectPastedPlayer(txt, destSelect) {
 			return false;
 		}).val();
 		if (matchedVal && matchedVal >= 0) {
-			$(destSelect).val(matchedVal - 0);
+			(isBrowserIE()) ? $('option[value=' + matchedVal + ']', destSelect).prop('selected', true)
+							: $(destSelect).val(matchedVal);
 		}
 		else {
-			$(destSelect).val($("option:first", destSelect).val());
+			(isBrowserIE()) ? $("option:first", destSelect).prop('selected', true)
+							: $(destSelect).val($("option:first", destSelect).val());
 		}
 		matchedVal = null;
 	}

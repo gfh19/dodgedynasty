@@ -164,7 +164,7 @@ function checkStillSocketConnected(recursive) {
 				console.log("Disconnect detected.  Manual Reconnect Attempted.");
 				startHubConnection(refreshDraftChat);
 			}
-		}, 1500);
+		}, 1000);
 	}
 	if (recursive) {
 		setTimeout(function () {
@@ -546,6 +546,13 @@ function scrollDraftChatBottom() {
 
 /* Helper functions */
 
+if (!String.prototype.startsWith) {
+	String.prototype.startsWith = function (searchString, position) {
+		position = position || 0;
+		return this.indexOf(searchString, position) === position;
+	};
+}
+
 function ajaxGetJson(url, successFn) {
 	$.get(baseURL + url, {}, successFn, "JSON");
 };
@@ -646,4 +653,13 @@ function htmlEncode(val) {
 
 function htmlDecode(val) {
 	return $('<div/>').html(val).text();
+}
+
+function formatName(name) {
+	return name.replace(/ /g, "").replace(/-/g, "").replace(/\./g, "").replace(/'/g, "").replace(/\(|\)/g, "")
+			.replace(/\"/g, "").replace(/,/g, "").replace(/\d/g, "").replace(/ /g, "").replace(/	/g, "").toLowerCase();
+}
+
+function isBrowserIE() {
+	return window.navigator.userAgent.indexOf("Trident") > 0 || window.navigator.userAgent.indexOf("MSIE ") > 0;
 }
