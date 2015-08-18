@@ -16,8 +16,10 @@ function initSetupRank() {
 	bindRemovePlayerLinks();
 	bindMoveUpPlayerLinks();
 	bindMoveDownPlayerLinks();
+	bindPastePlayerHandlers();
 	bindSubmitRankings();
 	bindAddNewPlayerLink();
+	bindClearRankingsLink();
 	saveCookieRankId();
 	$('html').keydown(preventBackspaceNav);
 	$('html').keypress(preventBackspaceNav);
@@ -136,6 +138,105 @@ function bindMoveDownPlayerLink(link) {
 	});
 }
 
+function bindPastePlayerHandlers() {
+	$(document).on("paste", function (e) {
+		pastePlayerHandler(e.originalEvent.clipboardData);
+	});
+
+	if (isBrowserIE()) {
+		var map = {
+			17: false,	//Ctrl
+			86: false	//V
+		};
+		$(document).keydown(function (e) {
+			if (e.keyCode in map) {
+				map[e.keyCode] = true;
+				if (map[17] && map[86]) {
+					pastePlayerHandler(window.clipboardData);
+				}
+			}
+		}).keyup(function (e) {
+			if (e.keyCode in map) {
+				map[e.keyCode] = false;
+			}
+		});
+	}
+}
+
+function pastePlayerHandler(clipboardData) {
+	var pastedText = (clipboardData) ? clipboardData.getData('text') : null;
+	if (pastedText && $(document.activeElement).is("select") && $(document.activeElement).hasClass("player-select")) {
+		var pastedArray = pastedText.split("\r\n");
+		if (pastedArray.length > 0 && pastedArray[pastedArray.length - 1] == "") {
+			pastedArray = pastedArray.splice(0, pastedArray.length - 1);
+		}
+		var destSelect = document.activeElement;
+		if (pastedArray.length > 0) {
+			$.each(pastedArray, function (ix, txt) {
+				if (txt && txt.length > 0) {
+					var matchedVal = null;
+					var pastedVal = $("option", destSelect).filter(function () {
+						if (matchedVal == null) {
+							var playerNameLength = $(this).html().indexOf(" (");
+							if (playerNameLength < 0) { playerNameLength = $(this).html().length; }
+							var playerName = $(this).html().substr(0, playerNameLength);
+							if (playerNameLength > 0
+								&& (formatName($(this).html()).startsWith(formatName(txt))
+								|| formatName(txt).startsWith(formatName(playerName)))) {
+								matchedVal = $(this).val();
+								return true;
+							}
+						}
+						return false;
+					}).val();
+					if (matchedVal && matchedVal >= 0) {
+						(isBrowserIE()) ? $('option[value=' + matchedVal + ']', destSelect).prop('selected', true)
+										: $(destSelect).val(matchedVal);
+					}
+					else {
+						(isBrowserIE()) ? $("option:first", destSelect).prop('selected', true)
+										: $(destSelect).val($("option:first", destSelect).val());
+					}
+					matchedVal = null;
+				}
+				var newDestSelect = $(".player-select", $(destSelect).parent().parent().next());
+				if (ix < (pastedArray.length - 1) && ($(newDestSelect).length == 0 || $(newDestSelect).is("span"))) {
+					$(".rank-add-player", $(destSelect).parent().parent()).click();
+					newDestSelect = $(".player-select", $(destSelect).parent().parent().next());
+				}
+				destSelect = newDestSelect;
+			});
+		}
+	}
+}
+
+function selectPastedPlayer(txt, destSelect) {
+	if (txt && txt.length > 0) {
+		var matchedVal = null;
+		var pastedVal = $("option", destSelect).filter(function () {
+			if (matchedVal == null) {
+				var playerNameLength = $(this).html().indexOf(" (");
+				if (playerNameLength < 0) { playerNameLength = $(this).html().length; }
+				var playerName = $(this).html().substr(0, playerNameLength);
+				if (playerNameLength > 0
+					&& (formatName($(this).html()).startsWith(formatName(txt))
+					|| formatName(txt).startsWith(formatName(playerName)))) {
+					matchedVal = $(this).val();
+					return true;
+				}
+			}
+			return false;
+		}).val();
+		if (matchedVal && matchedVal >= 0) {
+			$(destSelect).val(matchedVal - 0);
+		}
+		else {
+			$(destSelect).val($("option:first", destSelect).val());
+		}
+		matchedVal = null;
+	}
+};
+
 function copyPlayerRankEntry() {
 	var copyPREntry = $('.copy-pr-entry');
 	var newPlayerRankEntry = $(copyPREntry).clone();
@@ -207,16 +308,12 @@ function getRankSetupModel() {
 		else {
 			player.PlayerId = $(".player-select", playerRank).attr("data-player-id");
 		}
-		//TODO:  player name parts (not used)
+
 		var playerEntryText = $("select option:selected", playerRank).text();
 		var firstSpaceIx = playerEntryText.indexOf(' ');
 		var leftParenIx = playerEntryText.indexOf('(');
 		var dashIx = playerEntryText.indexOf('-');
 		var rightParenIx = playerEntryText.indexOf(')');
-		//player.FirstName = playerEntryText.substr(0, firstSpaceIx);
-		//player.LastName = playerEntryText.substr(firstSpaceIx + 1, leftParenIx - (firstSpaceIx + 2));
-		//player.NFLTeam = playerEntryText.substr(leftParenIx + 1, dashIx - (leftParenIx + 1));
-		//player.Position = playerEntryText.substr(dashIx + 1, rightParenIx - (dashIx + 1));
 		player.RankNum = parseInt($(".player-rank-num", playerRank).text());
 		player.PosRankNum = 0;
 		player.AuctionValue = null;
@@ -305,6 +402,13 @@ function bindAddNewPlayerLink() {
 	});
 }
 
+function bindClearRankingsLink() {
+	$(".clear-ranks").click(function (e) {
+		e.preventDefault();
+		showClearRanksDialog();
+	});
+}
+
 function getNewPlayer() {
 	var player = {};
 	player.FirstName = $("#add-plyr-fname").val();
@@ -341,5 +445,28 @@ function showAddNewPlayerDialog() {
 						}
 					},
 				]
+	});
+}
+
+function showClearRanksDialog() {
+	$("#clearRanksDialog").dialog({
+		resizable: false,
+		height: 'auto',
+		width: '230px',
+		modal: true,
+		buttons: [
+					{
+						text: "OK", click: function () {
+							$(".rank-add-player").last().click()
+							$(".rank-remove-player").not(":last").click();
+							$(this).dialog("close");
+						}
+					},
+					{
+						text: "Cancel", click: function () {
+							$(this).dialog("close");
+						}
+					},
+		]
 	});
 }
