@@ -255,9 +255,10 @@ function bindSubmitDraftPicks() {
 		});
 		draftPicksModel.DraftPicks = draftPicks;
 		if (validateDraftPicksModel(userIds)) {
+			addWaitCursor();
 			ajaxPost(draftPicksModel, "Admin/SetupDraft", function (response) {
 				$("#setupDraftForm").submit();
-			}, null, null, true);
+			}, removeWaitCursor);
 		}
 	});
 };

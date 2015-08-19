@@ -202,9 +202,29 @@ function selectPastedPlayer(txt, destSelect) {
 				var playerNameLength = $(this).html().indexOf(" (");
 				if (playerNameLength < 0) { playerNameLength = $(this).html().length; }
 				var playerName = $(this).html().substr(0, playerNameLength);
+				var defenseName = null;
+				if (isDEF($(this).html())) {
+					var teamNameIx = playerName.lastIndexOf(" ");
+					if (teamNameIx > 0) {
+						defenseName = playerName.substr(teamNameIx+1, playerNameLength);
+					}
+				}
+
+				var pastedPlayerLength = txt.indexOf("(");
+				if (pastedPlayerLength < 0) { pastedPlayerLength = txt.length; }
+				var pastedPlayer = txt.substr(0, pastedPlayerLength);
+				pastedPlayerLength = pastedPlayer.indexOf(",");
+				if (pastedPlayerLength > 0) {
+					pastedPlayer = txt.substr(0, pastedPlayerLength);
+				}
+
 				if (playerNameLength > 0
-					&& (formatName($(this).html()).startsWith(formatName(txt))
-					|| formatName(txt).startsWith(formatName(playerName)))) {
+					&& (formatName($(this).html()).startsWith(formatName(pastedPlayer))
+					|| formatName(pastedPlayer).startsWith(formatName(playerName)))
+					|| (defenseName != null
+						&& (formatName(defenseName).startsWith(formatName(pastedPlayer))
+						|| formatName(pastedPlayer).startsWith(formatName(defenseName))))
+					) {
 					matchedVal = $(this).val();
 					return true;
 				}
@@ -222,6 +242,10 @@ function selectPastedPlayer(txt, destSelect) {
 		matchedVal = null;
 	}
 };
+
+function isDEF(playerText) {
+	return playerText.indexOf("-DEF)") > 0;
+}
 
 function copyPlayerRankEntry() {
 	var copyPREntry = $('.copy-pr-entry');

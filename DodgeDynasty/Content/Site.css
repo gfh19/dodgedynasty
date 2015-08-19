@@ -68,6 +68,17 @@ header {
 	margin-top: 12px;
 }
 
+.wait {
+	cursor: wait;
+}
+.wait > * {
+    pointer-events:none;
+}
+
+.progress {
+	cursor: progress;
+}
+
 a
 {
 	color: #333;

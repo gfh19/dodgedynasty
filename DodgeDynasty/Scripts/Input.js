@@ -29,7 +29,9 @@ function bindInputDelete() {
 					{
 						text: "OK",
 						click: function () {
-							ajaxPostReplace({ draftPickId: $("#Player_DraftPickId").val() }, "Admin/InputDelete", '#pickInfo', null, null, null, true);
+							addWaitCursor();
+							ajaxPostReplace({ draftPickId: $("#Player_DraftPickId").val() }, "Admin/InputDelete", '#pickInfo',
+								removeWaitCursor, removeWaitCursor);
 							$(this).dialog("close");
 						}
 					},

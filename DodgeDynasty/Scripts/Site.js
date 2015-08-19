@@ -663,3 +663,11 @@ function formatName(name) {
 function isBrowserIE() {
 	return window.navigator.userAgent.indexOf("Trident") > 0 || window.navigator.userAgent.indexOf("MSIE ") > 0;
 }
+
+function addWaitCursor() {
+	$('body').addClass('wait');
+}
+
+function removeWaitCursor() {
+	$('body').removeClass('wait');
+}
