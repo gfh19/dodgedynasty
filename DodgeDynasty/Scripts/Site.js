@@ -656,12 +656,12 @@ function htmlDecode(val) {
 }
 
 function formatName(name) {
-	return name.trim().replace(/-/g, "").replace(/\./g, "").replace(/'/g, "").replace(/\(|\)/g, "")
-			.replace(/\"/g, "").replace(/,/g, "").replace(/\d/g, "").replace(/	/g, "").toLowerCase();
+	return name.replace(/-/g, "").replace(/\./g, "").replace(/'/g, "").replace(/\*/g, "").replace(/\(|\)/g, "")
+			.replace(/\"/g, "").replace(/,/g, "").replace(/\d/g, "").replace(/ /g, "").replace(/	/g, "").trim().toLowerCase();
 }
 
 function isBrowserIE() {
-	return window.navigator.userAgent.indexOf("Trident") > 0 || window.navigator.userAgent.indexOf("MSIE ") > 0;
+	return (/Trident|MSIE |Edge/i.test(window.navigator.userAgent));
 }
 
 function addWaitCursor() {
