@@ -656,8 +656,8 @@ function htmlDecode(val) {
 }
 
 function formatName(name) {
-	return name.replace(/ /g, "").replace(/-/g, "").replace(/\./g, "").replace(/'/g, "").replace(/\(|\)/g, "")
-			.replace(/\"/g, "").replace(/,/g, "").replace(/\d/g, "").replace(/ /g, "").replace(/	/g, "").toLowerCase();
+	return name.trim().replace(/-/g, "").replace(/\./g, "").replace(/'/g, "").replace(/\(|\)/g, "")
+			.replace(/\"/g, "").replace(/,/g, "").replace(/\d/g, "").replace(/	/g, "").toLowerCase();
 }
 
 function isBrowserIE() {

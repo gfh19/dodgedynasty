@@ -223,7 +223,7 @@ function selectPastedPlayer(txt, destSelect) {
 					|| formatName(pastedPlayer).startsWith(formatName(playerName)))
 					|| (defenseName != null
 						&& (formatName(defenseName).startsWith(formatName(pastedPlayer))
-						|| formatName(pastedPlayer).startsWith(formatName(defenseName))))
+						|| formatName(pastedPlayer).startsWith(formatName(defenseName)+' d')))
 					) {
 					matchedVal = $(this).val();
 					return true;

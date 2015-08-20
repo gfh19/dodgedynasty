@@ -48,7 +48,7 @@ function bindSetOwnerSelects() {
 function bindSetOwner(select) {
 	$(select).change(function (e) {
 		var loEntry = $(select).closest(".league-owner-entry");
-		$(".lo-team-input", loEntry).val("Team " + $("option:selected", select).text());
+		$(".lo-team-input", loEntry).val($("option:selected", select).text());
 	});
 }
 
