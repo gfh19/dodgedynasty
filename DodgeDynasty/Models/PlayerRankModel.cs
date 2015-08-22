@@ -167,7 +167,7 @@ namespace DodgeDynasty.Models
 		{
 			if (nflTeam != null)
 			{
-				var nflTeamDisplay = NFLTeams.First(t => t.TeamAbbr == nflTeam).AbbrDisplay;
+				var nflTeamDisplay = NFLTeams.First(t => t.TeamAbbr == nflTeam.ToUpper()).AbbrDisplay;
 				return string.Format("{0} ({1}-{2})", playerName, nflTeamDisplay, position);
 			}
 			else

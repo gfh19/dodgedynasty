@@ -316,24 +316,6 @@ namespace DodgeDynasty.Models
 				t => (string.Format("{0} ({1} {2})", t.AbbrDisplay, t.LocationName, t.TeamName)), t => t.AbbrDisplay);
 		}
 
-		//public Season GetCurrentSeason()
-		//{
-		//	var season = (CurrentDraft.SeasonId.HasValue)
-		//		? HomeEntity.Seasons.Where(s => s.SeasonId == CurrentDraft.SeasonId.Value).FirstOrDefault()
-		//		: HomeEntity.Seasons.Where(s => s.SeasonYear == (CurrentDraft.DraftYear ?? DateTime.Now.Year))
-		//			.FirstOrDefault();
-		//	return season;
-		//}
-
-		//public List<Player> GetSeasonPlayers(int seasonId)
-		//{
-		//	var currentPlayerIds = HomeEntity.PlayerSeasons
-		//		.Where(ps => ps.SeasonId == seasonId || ps.SeasonId == null)
-		//		.Select(ps => ps.PlayerId).ToList();
-		//	var currentPlayers = ActivePlayers.Where(p => currentPlayerIds.Contains(p.PlayerId)).ToList();
-		//	return currentPlayers;
-		//}
-
 		public string GetPlayerHints(bool excludeDrafted)
 		{
 			using (HomeEntity = new HomeEntity())
@@ -361,7 +343,7 @@ namespace DodgeDynasty.Models
 				{
 					if (!excludeDrafted || !draftedPlayers.Contains(player.PlayerId))
 					{
-						var nflTeam = NFLTeams.First(t => t.TeamAbbr == player.NFLTeam);
+						var nflTeam = NFLTeams.First(t => t.TeamAbbr == player.NFLTeam.ToUpper());
 						playerHints.Append(string.Format(
 							"{{value:\"{0} {1} {3}-{4}\",firstName:\"{0}\",lastName:\"{1}\",nflTeam:\"{2}\",nflTeamDisplay:\"{3}\",pos:\"{4}\"}},",
 							Utilities.JsonEncode(player.FirstName), Utilities.JsonEncode(player.LastName), Utilities.JsonEncode(nflTeam.TeamAbbr),
@@ -379,6 +361,7 @@ namespace DodgeDynasty.Models
 								 join r in Ranks on dr.RankId equals r.RankId
 								 where ((dr.DraftId == null && r.Year == CurrentDraft.DraftYear) || dr.DraftId == DraftId)
 								   && (dr.UserId == null || dr.UserId == CurrentLoggedInOwnerUser.UserId)
+								 orderby dr.PrimaryDraftRanking descending, dr.UserId descending, dr.DraftId descending, r.RankName
 								 select GetDraftRankModel(dr, r);
 			return fullDraftRanks.ToList();
 		}

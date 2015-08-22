@@ -103,7 +103,7 @@ namespace DodgeDynasty.Shared
 					else if (!player.IsDrafted)
 					{
 						//Update NFL team & Activate close matching inactive player
-						player.NFLTeam = nflTeam;
+						player.NFLTeam = nflTeam.ToUpper();
 						player.IsActive = true;
 						homeEntity.SaveChanges();
 						AddPlayerAdjustment(homeEntity, player, mode, "Update NFL Team, Activate");
@@ -123,7 +123,7 @@ namespace DodgeDynasty.Shared
 				NewFirstName = player.FirstName,
 				NewLastName = player.LastName,
 				NewPosition = player.Position,
-				NewNFLTeam = player.NFLTeam,
+				NewNFLTeam = player.NFLTeam.ToUpper(),
 				Action = string.Format("{0} {1}", mode, action),
 				UserId = homeEntity.Users.GetLoggedInUserId(),
 				AddTimestamp = DateTime.Now,

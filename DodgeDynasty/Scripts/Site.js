@@ -295,7 +295,7 @@ function setPlayerAutoComplete(fname, lname, pos, nfl) {
 				var response = null;
 				var nameParts = [item.firstName, item.lastName];
 				$.each(nameParts, function (index, elem) {
-					if (elem.trim().toUpperCase().match("^" + request.term.trim().toUpperCase())) {
+					if (formatAutoCompName(elem).match("^" + formatAutoCompName(request.term))) {
 						response = item;
 					}
 				});
@@ -655,9 +655,12 @@ function htmlDecode(val) {
 	return $('<div/>').html(val).text();
 }
 
+function formatAutoCompName(name) {
+	return name.replace(/\.|'|-/g,'').trim().toLowerCase();
+}
+
 function formatName(name) {
-	return name.replace(/-/g, "").replace(/\./g, "").replace(/'/g, "").replace(/\*/g, "").replace(/\(|\)/g, "")
-			.replace(/\"/g, "").replace(/,/g, "").replace(/\d/g, "").replace(/ /g, "").replace(/	/g, "").trim().toLowerCase();
+	return name.replace(/\.|'|-|\*|\(|\)|\"|,|\d|	| /g, "").trim().toLowerCase();
 }
 
 function isBrowserIE() {

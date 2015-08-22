@@ -1472,6 +1472,9 @@ ul.menu li a.current-page
 {
 	font-size: 11px;
 }
+.not-available {
+	margin-bottom: 5px;
+}
 #setupRank 
 {
 	text-align: center;
