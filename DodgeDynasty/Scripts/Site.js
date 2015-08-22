@@ -98,7 +98,7 @@ function registerHubConnection(forceAttempt) {
 				toggleChatWindowError(false);
 			}
 			else {
-				console.log('Too many tabs open.  Closing socket connection. ' + response.conns + ' tabs regged.');
+				console.log('Unavailable socket. Closing socket connection. ' + response.conns + ' tabs regged.');
 				$.connection.hub.stop();
 				refreshTimer = fastRefreshTimer;
 				connectionStopped = true;
