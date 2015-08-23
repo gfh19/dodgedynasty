@@ -1,6 +1,7 @@
 ﻿$(function () {
 	setPickTimer(true);
 	callRefreshPageWithPickTimer("Draft/PlayerRanksPartial" + getRankIdUrlPath(), "#allPlayerRanks");
+	touchScrollDiv = ".rank-container";
 });
 
 function pageBroadcastDraftHandler() {

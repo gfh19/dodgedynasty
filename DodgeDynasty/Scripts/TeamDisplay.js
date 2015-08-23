@@ -1,6 +1,7 @@
 ﻿$(function () {
 	setPickTimer(true);
 	callRefreshPageWithPickTimer("Draft/TeamDisplayPartial", '#teamDisplay');
+	touchScrollDiv = ".team-container";
 });
 
 function pageBroadcastDraftHandler() {

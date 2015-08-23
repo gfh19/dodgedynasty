@@ -9,6 +9,8 @@ var clientServerTimeOffset = null;
 var draftHub;
 var connectionAttempted = false;
 var connectionStopped = false;
+var touchScrollDiv = null;
+var touchScrollLeft = null;
 
 /* Init functions */
 
@@ -24,6 +26,7 @@ $(function () {
 	}
 	checkUserTurnDialog();
 });
+
 
 function setUserAgentInfo() {	//Currently just for tablet/phablet CSS
 	if (/Android|iPad|iPhone|iPod|KFAPWI|Tablet|Touch/i.test(navigator.userAgent)) {
@@ -162,14 +165,17 @@ function checkStillSocketConnected(recursive) {
 		setTimeout(function () {
 			if (draftActive && connectionAttempted && !connectionStopped && $.connection.hub.state == $.signalR.connectionState.disconnected) {
 				console.log("Disconnect detected.  Manual Reconnect Attempted.");
-				startHubConnection(refreshDraftChat);
+				startHubConnection(function () {
+					checkUserTurnDialog();
+					refreshDraftChat();
+				});
 			}
 		}, 1000);
 	}
 	if (recursive) {
 		setTimeout(function () {
 			checkStillSocketConnected(true);
-		}, 25000);
+		}, 10000);
 	}
 }
 
@@ -279,9 +285,28 @@ function callRefreshPageWithPickTimer(url, elementId) {
 };
 
 function callRefreshPage(url, elementId) {
+	saveTouchScrollPos(elementId);
 	ajaxGetReplace(url, elementId, function () {
+		restoreTouchScrollPos(elementId);
 		setPickTimer(false);
 	});
+}
+
+function saveTouchScrollPos(elementId)
+{
+	if ($(".possible-touch").length > 0 && touchScrollDiv != null) {
+		touchScrollLeft = $(touchScrollDiv, ".possible-touch").scrollLeft();
+	}
+	else {
+		touchScrollLeft = null;
+	}
+}
+
+function restoreTouchScrollPos(elementId) {
+	if (touchScrollLeft != null && touchScrollDiv != null && $(".possible-touch").length > 0) {
+		$(touchScrollDiv, ".possible-touch").scrollLeft(touchScrollLeft);
+	}
+	touchScrollLeft = null;
 }
 
 function setPlayerAutoComplete(fname, lname, pos, nfl) {

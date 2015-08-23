@@ -1,6 +1,7 @@
 ﻿$(function () {
 	setPickTimer(true);
 	callRefreshPageWithPickTimer("Draft/DisplayPartial", '#draftDisplay');
+	touchScrollDiv = ".draft-container";
 });
 
 function pageBroadcastDraftHandler() {
