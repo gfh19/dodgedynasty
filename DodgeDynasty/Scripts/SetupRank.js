@@ -1,4 +1,9 @@
 ﻿var playerIds;
+var _playerNameSubs = {
+	"christopher ivory": "Chris Ivory",
+	"buck allen": "Javorius Allen",
+	"stevie johnson": "Steve Johnson"
+}
 
  $(function () {
 	setPickTimer(true);
@@ -217,13 +222,14 @@ function selectPastedPlayer(txt, destSelect) {
 				if (pastedPlayerLength > 0) {
 					pastedPlayer = txt.substr(0, pastedPlayerLength);
 				}
+				var scrubbedPlayer = scrubPlayerName(pastedPlayer);
 
 				if (playerNameLength > 0
-					&& (formatName($(this).html()).startsWith(formatName(pastedPlayer))
-					|| formatName(pastedPlayer).startsWith(formatName(playerName)))
+					&& (formatName($(this).html()).startsWith(scrubbedPlayer)
+					|| scrubbedPlayer.startsWith(formatName(playerName)))
 					|| (defenseName != null
-						&& (formatName(defenseName).startsWith(formatName(pastedPlayer))
-						|| formatName(pastedPlayer).startsWith(formatName(defenseName)+' d')))
+						&& (formatName(defenseName).startsWith(scrubbedPlayer)
+						|| scrubbedPlayer.startsWith(formatName(defenseName)+' d')))
 					) {
 					matchedVal = $(this).val();
 					return true;
@@ -245,6 +251,11 @@ function selectPastedPlayer(txt, destSelect) {
 
 function isDEF(playerText) {
 	return playerText.indexOf("-DEF)") > 0;
+}
+
+function scrubPlayerName(playerName) {
+	var scrubbedName = formatName(playerName);
+	return (_playerNameSubs[scrubbedName]) ? formatName(_playerNameSubs[scrubbedName]) : scrubbedName;
 }
 
 function copyPlayerRankEntry() {
