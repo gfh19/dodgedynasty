@@ -255,7 +255,13 @@ function isDEF(playerText) {
 
 function scrubPlayerName(playerName) {
 	var scrubbedName = formatName(playerName);
-	return (_playerNameSubs[scrubbedName]) ? formatName(_playerNameSubs[scrubbedName]) : scrubbedName;
+	$.each(_playerNameSubs, function (playerKey, playerValue) {
+		if (scrubbedName.startsWith(playerKey) || playerKey.startsWith(scrubbedName)) {
+			scrubbedName = formatName(playerValue);
+			return false;
+		}
+	});
+	return scrubbedName;
 }
 
 function copyPlayerRankEntry() {
