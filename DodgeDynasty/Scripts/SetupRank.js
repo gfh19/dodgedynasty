@@ -202,16 +202,17 @@ function pastePlayerHandler(clipboardData) {
 function selectPastedPlayer(txt, destSelect) {
 	if (txt && txt.length > 0) {
 		var matchedVal = null;
-		var pastedVal = $("option", destSelect).filter(function () {
+		$.each($("option", destSelect), function (ix, option) {
 			if (matchedVal == null) {
-				var playerNameLength = $(this).html().indexOf(" (");
-				if (playerNameLength < 0) { playerNameLength = $(this).html().length; }
-				var playerName = $(this).html().substr(0, playerNameLength);
+				var optText = $(option).html();
+				var playerNameLength = optText.indexOf(" (");
+				if (playerNameLength < 0) { playerNameLength = optText.length; }
+				var playerName = optText.substr(0, playerNameLength);
 				var defenseName = null;
-				if (isDEF($(this).html())) {
+				if (isDEF(optText)) {
 					var teamNameIx = playerName.lastIndexOf(" ");
 					if (teamNameIx > 0) {
-						defenseName = playerName.substr(teamNameIx+1, playerNameLength);
+						defenseName = playerName.substr(teamNameIx + 1, playerNameLength);
 					}
 				}
 
@@ -225,18 +226,17 @@ function selectPastedPlayer(txt, destSelect) {
 				var scrubbedPlayer = scrubPlayerName(pastedPlayer);
 
 				if (playerNameLength > 0
-					&& (formatName($(this).html()).startsWith(scrubbedPlayer)
+					&& (formatName(optText).startsWith(scrubbedPlayer)
 					|| scrubbedPlayer.startsWith(formatName(playerName)))
 					|| (defenseName != null
 						&& (formatName(defenseName).startsWith(scrubbedPlayer)
-						|| scrubbedPlayer.startsWith(formatName(defenseName)+' d')))
+						|| scrubbedPlayer.startsWith(formatName(defenseName) + ' d')))
 					) {
-					matchedVal = $(this).val();
-					return true;
+					matchedVal = $(option).val();
+					return false;
 				}
 			}
-			return false;
-		}).val();
+		});
 		if (matchedVal && matchedVal >= 0) {
 			(isBrowserIE()) ? $('option[value=' + matchedVal + ']', destSelect).prop('selected', true)
 							: $(destSelect).val(matchedVal);
