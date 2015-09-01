@@ -1,7 +1,11 @@
 ﻿var playerIds;
+var _playerNameIds = {
+	"derek carrier": 1063,
+}
 var _playerNameSubs = {
-	"christopher ivory": "Chris Ivory",
 	"buck allen": "Javorius Allen",
+	"christopher ivory": "Chris Ivory",
+	"philly brown": "Corey Brown",
 	"stevie johnson": "Steve Johnson"
 }
 
@@ -224,6 +228,17 @@ function selectPastedPlayer(txt, destSelect) {
 					pastedPlayer = txt.substr(0, pastedPlayerLength);
 				}
 				var scrubbedPlayer = scrubPlayerName(pastedPlayer);
+
+				$.each(_playerNameIds, function (playerKey, playerValue) {
+					if (scrubbedPlayer.startsWith(playerKey)) {
+						matchedVal = _playerNameIds[playerKey];
+						return false;
+					}
+				});
+
+				if (matchedVal != null) {
+					return matchedVal;
+				}
 
 				if (playerNameLength > 0
 					&& (formatName(optText).startsWith(scrubbedPlayer)

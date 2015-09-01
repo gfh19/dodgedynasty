@@ -255,8 +255,9 @@ BEGIN
 	SELECT @DraftId = DraftId FROM Draft
 		WHERE LeagueId = @LeagueId AND DraftYear = @DraftYear
 
-	SELECT @UserId = UserId FROM dbo.[User]
+	SELECT TOP 1 @UserId = UserId FROM dbo.[User]
 		WHERE NickName = @ScrubbedOwner
+		ORDER BY AddTimestamp
 
 	DECLARE @Message varchar(50);
 	IF (@UserId IS NULL)
