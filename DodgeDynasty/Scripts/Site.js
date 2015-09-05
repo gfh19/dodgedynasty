@@ -318,7 +318,7 @@ function setPlayerAutoComplete(fname, lname, pos, nfl) {
 		source: function (request, response) {
 			var filteredArray = $.map(playerHints, function (item) {
 				var response = null;
-				var nameParts = [item.firstName, item.lastName];
+				var nameParts = [item.firstName, item.lastName, item.firstName + ' ' + item.lastName];
 				$.each(nameParts, function (index, elem) {
 					if (formatAutoCompName(elem).match("^" + formatAutoCompName(request.term))) {
 						response = item;
