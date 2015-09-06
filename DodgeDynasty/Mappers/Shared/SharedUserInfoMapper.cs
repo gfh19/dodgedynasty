@@ -60,7 +60,7 @@ namespace DodgeDynasty.Mappers.Account
 			foreach (var ownerLeague in model.OwnerLeagues)
 			{
 				var leagueColors = HomeEntity.LeagueOwners
-					.Where(lo => lo.LeagueId == ownerLeague.LeagueId && lo.UserId != userId)
+					.Where(lo => lo.LeagueId == ownerLeague.LeagueId && lo.UserId != userId && lo.IsActive)
 					.Select(lo => lo.CssClass).ToList();
 				var leagueTeamNames = HomeEntity.LeagueOwners
 					.Where(lo => lo.LeagueId == ownerLeague.LeagueId && lo.UserId != userId)
@@ -77,7 +77,7 @@ namespace DodgeDynasty.Mappers.Account
 					.Select(lo => lo.NickName).ToList();
 				if (leagueColors.Contains(ownerLeague.CssClass))
 				{
-					ModelState.AddModelError("", "Error - Color already being used in that league.");
+					ModelState.AddModelError("", string.Format("Error - Color already used in {0}.", ownerLeague.LeagueName));
 					isValid = false;
 				}
 				if (string.IsNullOrEmpty(ownerLeague.CssClass))
