@@ -52,6 +52,7 @@ namespace DodgeDynasty.Shared
 			public const string IsActive = "isActive";
 			public const string IsComplete = "isComplete";
 			public const string HistoryMode = "historyMode";
+			public const string ByPositions = "byPositions";
 		}
 
 		public static class Roles

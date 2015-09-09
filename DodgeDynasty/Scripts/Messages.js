@@ -7,6 +7,7 @@ $(function () {
 	$("#tabs").tabs();
 	bindAddMessageDialog();
 	bindDraftChatDisplayLinks();
+	displayLineBreaks();
 	//aloha.dom.query('.editable', document).forEach(aloha);
 	//bindRteButtons();
 });
@@ -71,6 +72,12 @@ function bindDraftChatDisplayLinks() {
 			$(flip).text("expand");
 		}
 	});
+}
+
+function displayLineBreaks() {
+	$.each($(".message-text"), function (ix, msg) {
+		$(msg).html($(msg).html().replace(/\n/g, '<br/>'));
+	})
 }
 
 //function bindRteButtons() {

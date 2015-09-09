@@ -1235,7 +1235,7 @@ ul.menu li a.current-page
 	overflow: hidden;
 }
 
-.draft-pick.filled
+.draft-pick.filled, .team-draft-pick.filled
 {
 	height: 49px;
 }
@@ -1297,6 +1297,10 @@ ul.menu li a.current-page
 
 /* Draft Team Display
 ----------------------------------------------------------*/
+
+.team-pos-label {
+	display: inline;
+}
 
 .team-content
 {

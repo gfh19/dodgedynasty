@@ -6,9 +6,25 @@
 	<script type="text/javascript" src="@Url.Script("~/Scripts/TeamDisplay.js")"></script>
 }
 <div id="teamDisplay">
+	<script type="text/javascript">
+		$(function () {
+			initTeamDisplay();
+		});
+	</script>
 	@Html.Partial("CurrentDraftPickPartial", Model)
 	<div class="team-container">
 		<div class="clear-fix team-content">
+			<div class="team-pos-section">
+				@if (DodgeDynasty.Shared.Utilities.ToBool(Request.QueryString[DodgeDynasty.Shared.Constants.QS.ByPositions]))
+				{
+					<input type="checkbox" id="team-by-pos" checked="checked"/>
+				}
+				else
+				{
+					<input type="checkbox" id="team-by-pos" />
+				}
+				<label class="team-pos-label" for="team-by-pos">By Position</label>
+			</div>
 		@foreach (var owner in Model.GetTeamDraftOwners())
 		{
 			Model.SetCurrentGridOwnerUser(owner.UserId);
@@ -18,7 +34,7 @@
 				{
 				Model.SetCurrentGridPlayer(pick.PlayerId);
 				<div class="draft-pick-outline outline">
-				<div class="team-draft-pick @Model.CurrentGridOwnerUser.CssClass">
+				<div class="team-draft-pick @Model.CurrentGridOwnerUser.CssClass @(!string.IsNullOrEmpty(Model.CurrentGridPlayer.PlayerName) ? "filled" : "")">
 					<div class="clear-fix draft-pick-meta">
 						<span class="pick-info"><span class="pick-num">@pick.PickNum</span>
 						@if (Model.CurrentGridPlayer.ByeWeek != null)

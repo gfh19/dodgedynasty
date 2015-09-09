@@ -20,9 +20,9 @@ namespace DodgeDynasty.Models
 			return model;
 		}
 
-		public static DraftTeamDisplayModel GetDraftTeamDisplayModel(int? draftId = null)
+		public static DraftTeamDisplayModel GetDraftTeamDisplayModel(int? draftId = null, bool byPositions = false)
 		{
-			DraftTeamDisplayModel model = new DraftTeamDisplayModel(draftId);
+			DraftTeamDisplayModel model = new DraftTeamDisplayModel(draftId, byPositions);
 			return model;
 		}
 

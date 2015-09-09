@@ -183,7 +183,16 @@ function pastePlayerHandler(clipboardData) {
 	$("body").css("cursor", "wait");
 	var pastedText = (clipboardData) ? clipboardData.getData('Text') : null;
 	if (pastedText && $(document.activeElement).is("select") && $(document.activeElement).hasClass("player-select")) {
-		var pastedArray = pastedText.split("\r\n");
+		var pastedArray;
+		if (pastedText.indexOf("\r\n") > 0) {
+			pastedArray = pastedText.split("\r\n");
+		}
+		else if (pastedText.indexOf("\r") > 0) {
+			pastedArray = pastedText.split("\r");
+		}
+		else {
+			pastedArray = pastedText.split("\n");
+		}
 		if (pastedArray.length > 0 && pastedArray[pastedArray.length - 1] == "") {
 			pastedArray = pastedArray.splice(0, pastedArray.length - 1);
 		}

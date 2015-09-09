@@ -286,10 +286,19 @@ function callRefreshPageWithPickTimer(url, elementId) {
 
 function callRefreshPage(url, elementId) {
 	saveTouchScrollPos(elementId);
-	ajaxGetReplace(url, elementId, function () {
+	var refreshUrl = getDynamicUrl(url);
+	ajaxGetReplace(refreshUrl, elementId, function () {
 		restoreTouchScrollPos(elementId);
 		setPickTimer(false);
 	});
+}
+
+function getDynamicUrl(url) {
+	var returnUrl = url;
+	if ((typeof url === "function")) {
+		returnUrl = url();
+	}
+	return returnUrl;
 }
 
 function saveTouchScrollPos(elementId)
@@ -578,6 +587,18 @@ if (!String.prototype.startsWith) {
 	};
 }
 
+if (!String.prototype.endsWith) {
+	String.prototype.endsWith = function (searchString, position) {
+		var subjectString = this.toString();
+		if (position === undefined || position > subjectString.length) {
+			position = subjectString.length;
+		}
+		position -= searchString.length;
+		var lastIndex = subjectString.indexOf(searchString, position);
+		return lastIndex !== -1 && lastIndex === position;
+	};
+}
+
 function ajaxGetJson(url, successFn) {
 	$.get(baseURL + url, {}, successFn, "JSON");
 };
@@ -698,4 +719,11 @@ function addWaitCursor() {
 
 function removeWaitCursor() {
 	$('body').removeClass('wait');
+}
+
+function addQSValue(urlString, qsValue) {
+	if (urlString.indexOf("?") > 0) {
+		return urlString + "&" + qsValue;
+	}
+	return urlString + "?" + qsValue;
 }

@@ -59,13 +59,14 @@ namespace DodgeDynasty.Controllers
 
 		public ActionResult TeamDisplay(string id)
 		{
-			DraftTeamDisplayModel draftTeamDisplayModel = DraftFactory.GetDraftTeamDisplayModel(Utilities.ToNullInt(id));
+            DraftTeamDisplayModel draftTeamDisplayModel = DraftFactory.GetDraftTeamDisplayModel(Utilities.ToNullInt(id));
 			return View(draftTeamDisplayModel);
 		}
 
-		public ActionResult TeamDisplayPartial()
+		public ActionResult TeamDisplayPartial(string id)
 		{
-			DraftTeamDisplayModel draftTeamDisplayModel = DraftFactory.GetDraftTeamDisplayModel();
+			var byPositions = Request.QueryString[Constants.QS.ByPositions];
+			DraftTeamDisplayModel draftTeamDisplayModel = DraftFactory.GetDraftTeamDisplayModel(Utilities.ToNullInt(id), Utilities.ToBool(byPositions));
 			return PartialView(Constants.Views.TeamDisplay, draftTeamDisplayModel);
 		}
 
