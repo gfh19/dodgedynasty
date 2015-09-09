@@ -33,14 +33,20 @@ namespace DodgeDynasty.Models
 		{
 			if (ByPositions)
 			{
-				TeamDraftPicks = DraftPicks.Where(dp => dp.UserId == userId).Join(DraftedPlayers, tdp => tdp.PlayerId, plyr => plyr.PlayerId,
-					(tdp, plyr) => new DraftPickPlayer
+				TeamDraftPicks = DraftPicks.Where(dp => dp.UserId == userId).GroupJoin(DraftedPlayers, tdp => tdp.PlayerId, plyr => plyr.PlayerId,
+					(tdp, plyrGrp) => plyrGrp.Select(plyr => new DraftPickPlayer
 					{
 						DraftPickId = tdp.DraftPickId,
 						PickNum = tdp.PickNum,
 						PlayerId = tdp.PlayerId,
-						Position = plyr.Position ?? ""
-					}).OrderBy(dp=>dp.Position).OrderBy(dp => PositionOrder[dp.Position]).ThenBy(dp => dp.PickNum).ToList();
+						Position = plyr.Position
+					}).DefaultIfEmpty(new DraftPickPlayer
+					{
+						DraftPickId = tdp.DraftPickId,
+						PickNum = tdp.PickNum,
+						PlayerId = null,
+						Position = ""
+					})).SelectMany(g => g).OrderBy(dp=>dp.Position).OrderBy(dp => PositionOrder[dp.Position]).ThenBy(dp => dp.PickNum).ToList();
 			}
 			else
 			{
