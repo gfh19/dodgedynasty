@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Web;
+﻿using System.Reflection;
 using System.Web.Mvc;
-using DodgeDynasty.Models;
+using DodgeDynasty.Entities;
 
 namespace DodgeDynasty.Mappers
 {
-	public class MapperBase<T> : ModelBase where T : class, new()
+	public class MapperBase<T> where T : class, new()
 	{
 		public T Model { get; set; }
 		public ModelStateDictionary ModelState { get; set; }
 		public bool UpdateSucceeded { get; set; }
 		public bool DoUpdateFailed { get; set; }
+		protected HomeEntity HomeEntity { get; set; }
 
 		public T GetModel(T model)
 		{

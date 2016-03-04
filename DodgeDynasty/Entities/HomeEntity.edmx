@@ -32,6 +32,7 @@
           </Key>
           <Property Name="DraftId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="LeagueId" Type="int" Nullable="false" />
+          <Property Name="LeagueName" Type="varchar" MaxLength="50" StoreGeneratedPattern="Computed" />
           <Property Name="DraftDate" Type="datetime" Nullable="false" />
           <Property Name="DraftLocation" Type="varchar" MaxLength="50" />
           <Property Name="DraftYear" Type="smallint" />
@@ -41,7 +42,6 @@
           <Property Name="Format" Type="varchar" MaxLength="10" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="IsComplete" Type="bit" Nullable="false" />
-          <Property Name="LeagueName" Type="varchar" MaxLength="50" StoreGeneratedPattern="Computed" />
           <Property Name="WinnerId" Type="int" />
           <Property Name="RunnerUpId" Type="int" />
           <Property Name="HasCoWinners" Type="bit" />
@@ -91,8 +91,8 @@
             <PropertyRef Name="DraftPickHistoryId" />
           </Key>
           <Property Name="DraftPickHistoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DraftPickGroupId" Type="int" Nullable="false" />
           <Property Name="DraftPickId" Type="int" Nullable="false" />
+          <Property Name="DraftId" Type="int" Nullable="false" />
           <Property Name="PickNum" Type="int" Nullable="false" />
           <Property Name="RoundNum" Type="int" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
@@ -114,6 +114,16 @@
           <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
           <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="Highlight">
+          <Key>
+            <PropertyRef Name="HighlightId" />
+          </Key>
+          <Property Name="HighlightId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HighlightClass" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="HighlightValue" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
+          <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="League">
           <Key>
             <PropertyRef Name="LeagueId" />
@@ -130,12 +140,12 @@
           <Property Name="LeagueOwnerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="LeagueId" Type="int" Nullable="false" />
+          <Property Name="LeagueName" Type="varchar" MaxLength="50" StoreGeneratedPattern="Computed" />
           <Property Name="TeamName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CssClass" Type="varchar" MaxLength="20" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
           <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
-          <Property Name="IsActive" Type="bit" Nullable="false" />
-          <Property Name="LeagueName" Type="varchar" MaxLength="50" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="Message">
           <Key>
@@ -169,6 +179,7 @@
             <PropertyRef Name="PlayerId" />
           </Key>
           <Property Name="PlayerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TruePlayerId" Type="int" />
           <Property Name="FirstName" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="LastName" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="PlayerName" Type="varchar" MaxLength="51" StoreGeneratedPattern="Computed" Nullable="false" />
@@ -176,10 +187,9 @@
           <Property Name="NFLTeam" Type="varchar" MaxLength="3" Nullable="false" />
           <Property Name="DateOfBirth" Type="date" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="IsDrafted" Type="bit" Nullable="false" />
           <Property Name="AddTimestamp" Type="datetime" />
           <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
-          <Property Name="IsDrafted" Type="bit" Nullable="false" />
-          <Property Name="TruePlayerId" Type="int" />
         </EntityType>
         <EntityType Name="PlayerAdjustment">
           <Key>
@@ -190,6 +200,7 @@
           <Property Name="NewPlayerId" Type="int" />
           <Property Name="NewFirstName" Type="varchar" MaxLength="25" />
           <Property Name="NewLastName" Type="varchar" MaxLength="25" />
+          <Property Name="NewPlayerName" Type="varchar" MaxLength="51" StoreGeneratedPattern="Computed" />
           <Property Name="NewPosition" Type="varchar" MaxLength="10" />
           <Property Name="NewNFLTeam" Type="varchar" MaxLength="3" />
           <Property Name="Action" Type="varchar" MaxLength="50" />
@@ -197,6 +208,20 @@
           <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
           <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
           <Property Name="TruePlayerId" Type="int" />
+        </EntityType>
+        <EntityType Name="PlayerHighlight">
+          <Key>
+            <PropertyRef Name="PlayerHighlightId" />
+          </Key>
+          <Property Name="PlayerHighlightId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DraftId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="PlayerId" Type="int" Nullable="false" />
+          <Property Name="HighlightId" Type="int" Nullable="false" />
+          <Property Name="HighlightValue" Type="varchar" MaxLength="51" StoreGeneratedPattern="Computed" />
+          <Property Name="RankNum" Type="int" Nullable="false" />
+          <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
+          <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="PlayerRank">
           <Key>
@@ -590,6 +615,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PlayerHighlight_Draft">
+          <End Role="Draft" Type="Self.Draft" Multiplicity="1" />
+          <End Role="PlayerHighlight" Type="Self.PlayerHighlight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Draft">
+              <PropertyRef Name="DraftId" />
+            </Principal>
+            <Dependent Role="PlayerHighlight">
+              <PropertyRef Name="DraftId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlayerHighlight_Highlight">
+          <End Role="Highlight" Type="Self.Highlight" Multiplicity="1" />
+          <End Role="PlayerHighlight" Type="Self.PlayerHighlight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Highlight">
+              <PropertyRef Name="HighlightId" />
+            </Principal>
+            <Dependent Role="PlayerHighlight">
+              <PropertyRef Name="HighlightId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlayerHighlight_Player">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="PlayerHighlight" Type="Self.PlayerHighlight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="PlayerId" />
+            </Principal>
+            <Dependent Role="PlayerHighlight">
+              <PropertyRef Name="PlayerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlayerHighlight_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="PlayerHighlight" Type="Self.PlayerHighlight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="PlayerHighlight">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PlayerRank_Player">
           <End Role="Player" Type="Self.Player" Multiplicity="1" />
           <End Role="PlayerRank" Type="Self.PlayerRank" Multiplicity="*" />
@@ -661,12 +734,14 @@
           <EntitySet Name="DraftPick" EntityType="Self.DraftPick" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DraftPickHistory" EntityType="Self.DraftPickHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DraftRank" EntityType="Self.DraftRank" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Highlight" EntityType="Self.Highlight" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="League" EntityType="Self.League" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LeagueOwner" EntityType="Self.LeagueOwner" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Message" EntityType="Self.Message" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NFLTeam" EntityType="Self.NFLTeam" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Player" EntityType="Self.Player" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PlayerAdjustment" EntityType="Self.PlayerAdjustment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PlayerHighlight" EntityType="Self.PlayerHighlight" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PlayerRank" EntityType="Self.PlayerRank" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PlayerRankHistory" EntityType="Self.PlayerRankHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Position" EntityType="Self.Position" Schema="dbo" store:Type="Tables" />
@@ -772,6 +847,22 @@
             <End Role="User" EntitySet="User" />
             <End Role="PlayerAdjustment" EntitySet="PlayerAdjustment" />
           </AssociationSet>
+          <AssociationSet Name="FK_PlayerHighlight_Draft" Association="Self.FK_PlayerHighlight_Draft">
+            <End Role="Draft" EntitySet="Draft" />
+            <End Role="PlayerHighlight" EntitySet="PlayerHighlight" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlayerHighlight_Highlight" Association="Self.FK_PlayerHighlight_Highlight">
+            <End Role="Highlight" EntitySet="Highlight" />
+            <End Role="PlayerHighlight" EntitySet="PlayerHighlight" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlayerHighlight_Player" Association="Self.FK_PlayerHighlight_Player">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="PlayerHighlight" EntitySet="PlayerHighlight" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlayerHighlight_User" Association="Self.FK_PlayerHighlight_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="PlayerHighlight" EntitySet="PlayerHighlight" />
+          </AssociationSet>
           <AssociationSet Name="FK_PlayerRank_Player" Association="Self.FK_PlayerRank_Player">
             <End Role="Player" EntitySet="Player" />
             <End Role="PlayerRank" EntitySet="PlayerRank" />
@@ -827,7 +918,6 @@
           <EntitySet Name="DraftRanks" EntityType="HomeModel.DraftRank" />
           <EntitySet Name="DraftOwners" EntityType="HomeModel.DraftOwner" />
           <EntitySet Name="DraftPicks" EntityType="HomeModel.DraftPick" />
-          <EntitySet Name="DraftPickHistories" EntityType="HomeModel.DraftPickHistory" />
           <EntitySet Name="CssColors" EntityType="HomeModel.CssColor" />
           <EntitySet Name="Leagues" EntityType="HomeModel.League" />
           <EntitySet Name="LeagueOwners" EntityType="HomeModel.LeagueOwner" />
@@ -936,6 +1026,25 @@
           <AssociationSet Name="FK_ByeWeek_NFLTeam" Association="HomeModel.FK_ByeWeek_NFLTeam">
             <End Role="NFLTeam" EntitySet="NFLTeams" />
             <End Role="ByeWeek" EntitySet="ByeWeeks" />
+          </AssociationSet>
+          <EntitySet Name="Highlights" EntityType="HomeModel.Highlight" />
+          <EntitySet Name="DraftPickHistories" EntityType="HomeModel.DraftPickHistory" />
+          <EntitySet Name="PlayerHighlights" EntityType="HomeModel.PlayerHighlight" />
+          <AssociationSet Name="FK_PlayerHighlight_Draft" Association="HomeModel.FK_PlayerHighlight_Draft">
+            <End Role="Draft" EntitySet="Drafts" />
+            <End Role="PlayerHighlight" EntitySet="PlayerHighlights" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlayerHighlight_Highlight" Association="HomeModel.FK_PlayerHighlight_Highlight">
+            <End Role="Highlight" EntitySet="Highlights" />
+            <End Role="PlayerHighlight" EntitySet="PlayerHighlights" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlayerHighlight_Player" Association="HomeModel.FK_PlayerHighlight_Player">
+            <End Role="Player" EntitySet="Players" />
+            <End Role="PlayerHighlight" EntitySet="PlayerHighlights" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlayerHighlight_User" Association="HomeModel.FK_PlayerHighlight_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="PlayerHighlight" EntitySet="PlayerHighlights" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="NFLTeam">
@@ -1111,6 +1220,7 @@
           <NavigationProperty Name="Drafts" Relationship="HomeModel.FK_Draft_RunnerUp" FromRole="User" ToRole="Draft" />
           <NavigationProperty Name="Drafts1" Relationship="HomeModel.FK_Draft_Winner" FromRole="User" ToRole="Draft" />
           <NavigationProperty Name="PlayerAdjustments" Relationship="HomeModel.FK_PlayerAdjustment_User" FromRole="User" ToRole="PlayerAdjustment" />
+          <NavigationProperty Name="PlayerHighlights" Relationship="HomeModel.FK_PlayerHighlight_User" FromRole="User" ToRole="PlayerHighlight" />
         </EntityType>
         <Association Name="FK_UserRole_User">
           <End Type="HomeModel.User" Role="User" Multiplicity="1" />
@@ -1167,22 +1277,6 @@
           <NavigationProperty Name="User" Relationship="HomeModel.FK_DraftPick_User" FromRole="DraftPick" ToRole="User" />
           <NavigationProperty Name="Draft" Relationship="HomeModel.FK_DraftPick_Draft" FromRole="DraftPick" ToRole="Draft" />
           <NavigationProperty Name="Player" Relationship="HomeModel.FK_DraftPick_Player" FromRole="DraftPick" ToRole="Player" />
-        </EntityType>
-        <EntityType Name="DraftPickHistory">
-          <Key>
-            <PropertyRef Name="DraftPickHistoryId" />
-          </Key>
-          <Property Name="DraftPickHistoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
-          <Property Name="DraftPickGroupId" Type="Int32" Nullable="false" />
-          <Property Name="DraftPickId" Type="Int32" Nullable="false" />
-          <Property Name="PickNum" Type="Int32" Nullable="false" />
-          <Property Name="RoundNum" Type="Int32" Nullable="false" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="PlayerId" Type="Int32" />
-          <Property Name="PickStartDateTime" Type="DateTime" Precision="3" />
-          <Property Name="PickEndDateTime" Type="DateTime" Precision="3" />
-          <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="CssColor">
           <Key>
@@ -1406,6 +1500,7 @@
           <NavigationProperty Name="DraftOwners" Relationship="HomeModel.FK_DraftOwner_Draft" FromRole="Draft" ToRole="DraftOwner" />
           <NavigationProperty Name="DraftPicks" Relationship="HomeModel.FK_DraftPick_Draft" FromRole="Draft" ToRole="DraftPick" />
           <NavigationProperty Name="DraftRanks" Relationship="HomeModel.FK_DraftRank_Draft" FromRole="Draft" ToRole="DraftRank" />
+          <NavigationProperty Name="PlayerHighlights" Relationship="HomeModel.FK_PlayerHighlight_Draft" FromRole="Draft" ToRole="PlayerHighlight" />
         </EntityType>
         <EntityType Name="PlayerAdjustment">
           <Key>
@@ -1426,6 +1521,7 @@
           <NavigationProperty Name="User" Relationship="HomeModel.FK_PlayerAdjustment_User" FromRole="PlayerAdjustment" ToRole="User" />
           <NavigationProperty Name="Player" Relationship="HomeModel.FK_PlayerAdjustment_PlayerNew" FromRole="PlayerAdjustment" ToRole="Player" />
           <NavigationProperty Name="Player1" Relationship="HomeModel.FK_PlayerAdjustment_PlayerOld" FromRole="PlayerAdjustment" ToRole="Player" />
+          <Property Name="NewPlayerName" Type="String" MaxLength="51" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
         <Association Name="FK_Draft_League">
           <End Type="HomeModel.League" Role="League" Multiplicity="1" />
@@ -1546,6 +1642,7 @@
           <NavigationProperty Name="PlayerAdjustments" Relationship="HomeModel.FK_PlayerAdjustment_PlayerNew" FromRole="Player" ToRole="PlayerAdjustment" />
           <NavigationProperty Name="PlayerAdjustments1" Relationship="HomeModel.FK_PlayerAdjustment_PlayerOld" FromRole="Player" ToRole="PlayerAdjustment" />
           <NavigationProperty Name="PlayerRanks" Relationship="HomeModel.FK_PlayerRank_Player" FromRole="Player" ToRole="PlayerRank" />
+          <NavigationProperty Name="PlayerHighlights" Relationship="HomeModel.FK_PlayerHighlight_Player" FromRole="Player" ToRole="PlayerHighlight" />
         </EntityType>
         <Association Name="FK_DraftPick_Player">
           <End Type="HomeModel.Player" Role="Player" Multiplicity="0..1" />
@@ -1640,6 +1737,99 @@
             </Principal>
             <Dependent Role="ByeWeek">
               <PropertyRef Name="NFLTeam" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Highlight">
+          <Key>
+            <PropertyRef Name="HighlightId" />
+          </Key>
+          <Property Name="HighlightId" Type="Int32" Nullable="false" />
+          <Property Name="HighlightClass" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="HighlightValue" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="PlayerHighlights" Relationship="HomeModel.FK_PlayerHighlight_Highlight" FromRole="Highlight" ToRole="PlayerHighlight" />
+        </EntityType>
+        <EntityType Name="DraftPickHistory">
+          <Key>
+            <PropertyRef Name="DraftPickHistoryId" />
+          </Key>
+          <Property Name="DraftPickHistoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DraftPickId" Type="Int32" Nullable="false" />
+          <Property Name="DraftId" Type="Int32" Nullable="false" />
+          <Property Name="PickNum" Type="Int32" Nullable="false" />
+          <Property Name="RoundNum" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="PlayerId" Type="Int32" />
+          <Property Name="PickStartDateTime" Type="DateTime" Precision="3" />
+          <Property Name="PickEndDateTime" Type="DateTime" Precision="3" />
+          <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="PlayerHighlight">
+          <Key>
+            <PropertyRef Name="PlayerHighlightId" />
+          </Key>
+          <Property Name="PlayerHighlightId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DraftId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="PlayerId" Type="Int32" Nullable="false" />
+          <Property Name="HighlightId" Type="Int32" Nullable="false" />
+          <Property Name="RankNum" Type="Int32" Nullable="false" />
+          <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Draft" Relationship="HomeModel.FK_PlayerHighlight_Draft" FromRole="PlayerHighlight" ToRole="Draft" />
+          <NavigationProperty Name="Highlight" Relationship="HomeModel.FK_PlayerHighlight_Highlight" FromRole="PlayerHighlight" ToRole="Highlight" />
+          <NavigationProperty Name="Player" Relationship="HomeModel.FK_PlayerHighlight_Player" FromRole="PlayerHighlight" ToRole="Player" />
+          <NavigationProperty Name="User" Relationship="HomeModel.FK_PlayerHighlight_User" FromRole="PlayerHighlight" ToRole="User" />
+          <Property Name="HighlightValue" Type="String" MaxLength="51" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <Association Name="FK_PlayerHighlight_Draft">
+          <End Type="HomeModel.Draft" Role="Draft" Multiplicity="1" />
+          <End Type="HomeModel.PlayerHighlight" Role="PlayerHighlight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Draft">
+              <PropertyRef Name="DraftId" />
+            </Principal>
+            <Dependent Role="PlayerHighlight">
+              <PropertyRef Name="DraftId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlayerHighlight_Highlight">
+          <End Type="HomeModel.Highlight" Role="Highlight" Multiplicity="1" />
+          <End Type="HomeModel.PlayerHighlight" Role="PlayerHighlight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Highlight">
+              <PropertyRef Name="HighlightId" />
+            </Principal>
+            <Dependent Role="PlayerHighlight">
+              <PropertyRef Name="HighlightId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlayerHighlight_Player">
+          <End Type="HomeModel.Player" Role="Player" Multiplicity="1" />
+          <End Type="HomeModel.PlayerHighlight" Role="PlayerHighlight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="PlayerId" />
+            </Principal>
+            <Dependent Role="PlayerHighlight">
+              <PropertyRef Name="PlayerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlayerHighlight_User">
+          <End Type="HomeModel.User" Role="User" Multiplicity="1" />
+          <End Type="HomeModel.PlayerHighlight" Role="PlayerHighlight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="PlayerHighlight">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1814,23 +2004,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="DraftPickHistories">
-            <EntityTypeMapping TypeName="HomeModel.DraftPickHistory">
-              <MappingFragment StoreEntitySet="DraftPickHistory">
-                <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
-                <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
-                <ScalarProperty Name="PickEndDateTime" ColumnName="PickEndDateTime" />
-                <ScalarProperty Name="PickStartDateTime" ColumnName="PickStartDateTime" />
-                <ScalarProperty Name="PlayerId" ColumnName="PlayerId" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="RoundNum" ColumnName="RoundNum" />
-                <ScalarProperty Name="PickNum" ColumnName="PickNum" />
-                <ScalarProperty Name="DraftPickId" ColumnName="DraftPickId" />
-                <ScalarProperty Name="DraftPickGroupId" ColumnName="DraftPickGroupId" />
-                <ScalarProperty Name="DraftPickHistoryId" ColumnName="DraftPickHistoryId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="CssColors">
             <EntityTypeMapping TypeName="HomeModel.CssColor">
               <MappingFragment StoreEntitySet="CssColor">
@@ -1923,6 +2096,7 @@
           <EntitySetMapping Name="PlayerAdjustments">
             <EntityTypeMapping TypeName="HomeModel.PlayerAdjustment">
               <MappingFragment StoreEntitySet="PlayerAdjustment">
+                <ScalarProperty Name="NewPlayerName" ColumnName="NewPlayerName" />
                 <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
                 <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
@@ -1965,6 +2139,49 @@
                 <ScalarProperty Name="NFLTeam" ColumnName="NFLTeam" />
                 <ScalarProperty Name="Year" ColumnName="Year" />
                 <ScalarProperty Name="ByeWeekId" ColumnName="ByeWeekId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Highlights">
+            <EntityTypeMapping TypeName="HomeModel.Highlight">
+              <MappingFragment StoreEntitySet="Highlight">
+                <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
+                <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
+                <ScalarProperty Name="HighlightValue" ColumnName="HighlightValue" />
+                <ScalarProperty Name="HighlightClass" ColumnName="HighlightClass" />
+                <ScalarProperty Name="HighlightId" ColumnName="HighlightId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DraftPickHistories">
+            <EntityTypeMapping TypeName="HomeModel.DraftPickHistory">
+              <MappingFragment StoreEntitySet="DraftPickHistory">
+                <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
+                <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
+                <ScalarProperty Name="PickEndDateTime" ColumnName="PickEndDateTime" />
+                <ScalarProperty Name="PickStartDateTime" ColumnName="PickStartDateTime" />
+                <ScalarProperty Name="PlayerId" ColumnName="PlayerId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="RoundNum" ColumnName="RoundNum" />
+                <ScalarProperty Name="PickNum" ColumnName="PickNum" />
+                <ScalarProperty Name="DraftId" ColumnName="DraftId" />
+                <ScalarProperty Name="DraftPickId" ColumnName="DraftPickId" />
+                <ScalarProperty Name="DraftPickHistoryId" ColumnName="DraftPickHistoryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PlayerHighlights">
+            <EntityTypeMapping TypeName="HomeModel.PlayerHighlight">
+              <MappingFragment StoreEntitySet="PlayerHighlight">
+                <ScalarProperty Name="HighlightValue" ColumnName="HighlightValue" />
+                <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
+                <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
+                <ScalarProperty Name="RankNum" ColumnName="RankNum" />
+                <ScalarProperty Name="HighlightId" ColumnName="HighlightId" />
+                <ScalarProperty Name="PlayerId" ColumnName="PlayerId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="DraftId" ColumnName="DraftId" />
+                <ScalarProperty Name="PlayerHighlightId" ColumnName="PlayerHighlightId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2012,7 +2229,6 @@
         <edmx:EntityTypeShape EntityType="HomeModel.DraftRank" Width="1.5" PointX="0.75" PointY="0.75" />
         <edmx:EntityTypeShape EntityType="HomeModel.DraftOwner" Width="1.5" PointX="0.75" PointY="13" />
         <edmx:EntityTypeShape EntityType="HomeModel.DraftPick" Width="1.5" PointX="5.625" PointY="7.75" />
-        <edmx:EntityTypeShape EntityType="HomeModel.DraftPickHistory" Width="1.5" PointX="11.375" PointY="0.75" />
         <edmx:EntityTypeShape EntityType="HomeModel.CssColor" Width="1.5" PointX="10.375" PointY="16.75" />
         <edmx:EntityTypeShape EntityType="HomeModel.League" Width="1.5" PointX="10.375" PointY="7.75" />
         <edmx:EntityTypeShape EntityType="HomeModel.LeagueOwner" Width="1.5" PointX="12.625" PointY="7.25" />
@@ -2047,6 +2263,13 @@
         <edmx:AssociationConnector Association="HomeModel.FK_PlayerRank_Player" />
         <edmx:EntityTypeShape EntityType="HomeModel.ByeWeek" Width="1.5" PointX="3" PointY="20.75" />
         <edmx:AssociationConnector Association="HomeModel.FK_ByeWeek_NFLTeam" />
+        <edmx:EntityTypeShape EntityType="HomeModel.Highlight" Width="1.5" PointX="3" PointY="24.875" />
+        <edmx:EntityTypeShape EntityType="HomeModel.DraftPickHistory" Width="1.5" PointX="10.375" PointY="0.75" />
+        <edmx:EntityTypeShape EntityType="HomeModel.PlayerHighlight" Width="1.5" PointX="15" PointY="6.125" />
+        <edmx:AssociationConnector Association="HomeModel.FK_PlayerHighlight_Draft" />
+        <edmx:AssociationConnector Association="HomeModel.FK_PlayerHighlight_Highlight" />
+        <edmx:AssociationConnector Association="HomeModel.FK_PlayerHighlight_Player" />
+        <edmx:AssociationConnector Association="HomeModel.FK_PlayerHighlight_User" />
         </edmx:Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

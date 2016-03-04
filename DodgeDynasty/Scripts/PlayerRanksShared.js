@@ -1,5 +1,6 @@
 ﻿var ranksWindow;
 var clientCookieOptions = null;
+var highlightedPlayers = {};
 
 function initPlayerRanksShared() {
 	bindExpandLinks();
@@ -110,15 +111,36 @@ function getRankIdUrlPath() {
 
 //Highlighting
 
-$("td[data-player-id]").parent("tr").click(function (e) {
-	if ($(event.target).closest("tr").hasClass("highlighted")) {
-		$(event.target).closest("tr").removeClass("highlighted");
-		$(event.target).closest("tr").css("background-color", "");
+function handlePlayerHighlightClick() {
+	var playerRow = $(event.target).closest("tr");
+	if ($(playerRow).hasClass("highlighted")) {
+		removePlayerHighlighting(playerRow);
 	}
 	else {
-		$(event.target).closest("tr").addClass("highlighted");
-		$(event.target).closest("tr").css("background-color", "lime");
+		addPlayerHighlighting(playerRow);
 	}
+}
+
+function getPlayerHighlightModel(playerRow) {
+	return { PlayerId: $(playerRow).attr("data-player-id"), HighlightId: "1" };
+}
+
+function addPlayerHighlighting(playerRow) {
+	ajaxPost(getPlayerHighlightModel(playerRow), "Rank/AddPlayerHighlight", function (data) {
+		$(playerRow).addClass("highlighted");
+		$(playerRow).css("background-color", "yellow");
+	});
+}
+
+function removePlayerHighlighting(playerRow) {
+	ajaxPost(getPlayerHighlightModel(playerRow), "Rank/DeletePlayerHighlight", function (data) {
+		$(playerRow).removeClass("highlighted");
+		$(playerRow).closest("tr").css("background-color", "");
+	});
+}
+
+$("tr[data-player-id]").click(function (e) {
+	handlePlayerHighlightClick();
 });
 
 $(".ba-category").css("cursor", "pointer");

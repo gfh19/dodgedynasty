@@ -30,7 +30,9 @@ namespace DodgeDynasty.Models
 		public List<Position> Positions { get; set; }
 		public List<League> Leagues { get; set; }
 		public List<DraftOwner> AllDraftOwners { get; set; }
+		public List<PlayerHighlight> PlayerHighlights { get; set; }
 
+		public List<PlayerHighlight> CurrentPlayerHighlights { get; set; }
 		public Draft CurrentDraft { get; set; }
 		public List<LeagueOwner> CurrentLeagueOwners { get; set; }
 		public DraftPick CurrentDraftPick { get; set; }
@@ -80,6 +82,7 @@ namespace DodgeDynasty.Models
 					AllDraftOwners = HomeEntity.DraftOwners.ToList();
 					DraftRanks = HomeEntity.DraftRanks.ToList();
 					Ranks = HomeEntity.Ranks.ToList();
+					PlayerHighlights = HomeEntity.PlayerHighlights.ToList();
 
 					SetCurrentDraftInfo(draftId);
 				}
@@ -95,7 +98,8 @@ namespace DodgeDynasty.Models
 			CurrentLeagueOwners = LeagueOwners.Where(lo => lo.LeagueId == CurrentDraft.LeagueId).ToList();
 			var leagueOwner = CurrentLeagueOwners.FirstOrDefault(lo => lo.UserId == user.UserId);
 			CurrentLoggedInOwnerUser = OwnerUserMapper.GetOwnerUser(user, leagueOwner);
-			return DraftId;
+			CurrentPlayerHighlights = PlayerHighlights.Where(o => o.DraftId == DraftId && o.UserId == user.UserId).ToList();
+            return DraftId;
 		}
 
 		public int GetCurrentDraftId(int? draftId = null)

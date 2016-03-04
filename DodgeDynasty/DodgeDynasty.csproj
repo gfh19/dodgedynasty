@@ -173,6 +173,7 @@
     <Compile Include="Mappers\DraftHistoryMapper.cs" />
     <Compile Include="Mappers\Admin\EditDraftMapper.cs" />
     <Compile Include="Mappers\Admin\AddDraftMapper.cs" />
+    <Compile Include="Mappers\Drafts\SingleDraftMapper.cs" />
     <Compile Include="Mappers\EditLeagueMapper.cs" />
     <Compile Include="Mappers\AddLeagueMapper.cs">
       <SubType>Code</SubType>
@@ -182,6 +183,8 @@
     <Compile Include="Mappers\DraftSetupMapper.cs" />
     <Compile Include="Mappers\ActivateDraftMapper.cs" />
     <Compile Include="Mappers\DraftStatusMapper.cs" />
+    <Compile Include="Mappers\Highlights\DeletePlayerHighlightMapper.cs" />
+    <Compile Include="Mappers\Highlights\HighlightsMapper.cs" />
     <Compile Include="Mappers\ManageDraftsMapper.cs" />
     <Compile Include="Mappers\ManageLeaguesMapper.cs" />
     <Compile Include="Mappers\MapperBase.cs">
@@ -189,6 +192,7 @@
     </Compile>
     <Compile Include="Mappers\PasswordMapper.cs" />
     <Compile Include="Mappers\RankSetupMapper.cs" />
+    <Compile Include="Mappers\Highlights\AddPlayerHighlightMapper.cs" />
     <Compile Include="Mappers\Shared\ColorStylesMapper.cs" />
     <Compile Include="Mappers\Shared\DraftChatMapper.cs" />
     <Compile Include="Mappers\Shared\PlayerSeasonHelper.cs" />
@@ -205,6 +209,7 @@
     <Compile Include="Models\Admin\AddUserModel.cs" />
     <Compile Include="Models\Admin\ManageUsersModel.cs" />
     <Compile Include="Models\Admin\UserStatusModel.cs" />
+    <Compile Include="Models\Drafts\SingleDraftModel.cs" />
     <Compile Include="Models\DraftHistoryModel.cs" />
     <Compile Include="Models\DraftPicksSetupModel.cs" />
     <Compile Include="Models\DraftSetupModel.cs" />
@@ -213,12 +218,16 @@
     <Compile Include="Models\Factory.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Models\Highlights\HighlightedPlayer.cs" />
+    <Compile Include="Models\Highlights\HighlightModel.cs" />
+    <Compile Include="Models\Highlights\HighlightsModel.cs" />
     <Compile Include="Models\IManageLeaguesModel.cs" />
     <Compile Include="Models\ActivateDraftModel.cs" />
     <Compile Include="Models\LocalPasswordModel.cs" />
     <Compile Include="Models\ManageDraftsModel.cs" />
     <Compile Include="Models\ManageLeaguesModel.cs" />
     <Compile Include="Mappers\OwnerUserMapper.cs" />
+    <Compile Include="Models\Highlights\PlayerHighlightModel.cs" />
     <Compile Include="Models\Shared\DraftChatModel.cs" />
     <Compile Include="Models\Site\MessagesCountModel.cs" />
     <Compile Include="Models\Site\MessagesModel.cs" />
@@ -272,7 +281,8 @@
     <Compile Include="WebSockets\DD_SignalR.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="2015 SQL Changes.sql" />
+    <Content Include="2016 SQL Changes.sql" />
+    <Content Include="SQL\2015 SQL Changes.sql" />
     <Content Include="Content\bootstrap\css\bootstrap-theme.css" />
     <Content Include="Content\bootstrap\css\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap\css\bootstrap.css" />
@@ -470,6 +480,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="DataHelpers\" />
+    <Folder Include="Models\Ranks\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

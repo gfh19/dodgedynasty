@@ -7,4 +7,12 @@
 		border-color: @color.ColorValue;
 	}</text>
 }
+@{var highlightModel = new DodgeDynasty.Mappers.Highlights.HighlightsMapper().GetModel(); }
+@foreach (var highlight in highlightModel.Highlights)
+{	<text>
+	.highlighted.@highlight.HighlightClass
+	{
+		background-color: @highlight.HighlightValue;
+	}</text>
+}
 </style>

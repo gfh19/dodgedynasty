@@ -7,7 +7,7 @@ namespace DodgeDynasty.Models
 {
 	public class Factory
 	{
-		public static T GetClass<T>() where T : new()
+		public static T Create<T>() where T : new()
 		{
 			T obj = new T();
 			return obj;

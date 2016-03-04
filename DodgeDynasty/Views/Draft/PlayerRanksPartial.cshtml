@@ -70,7 +70,8 @@
 						</tr>
 						@foreach (var player in Model.OverallRankedPlayers)
 						{
-							<tr class="@((player.PickNum != null) ? ("ba-selected " + player.CssClass + ((Model.IsLoggedInUser(player.UserId) ? " you" : ""))) : "") ">
+							<tr class="@((player.PickNum != null) ? ("ba-selected " + player.CssClass + ((Model.IsLoggedInUser(player.UserId) ? " you " : " "))) : "") @((player.HighlightValue != null ? "highlighted " + player.HighlightValue : " "))"
+								 data-player-id="@player.PlayerId">
 								<td>@player.RankNum</td>
 								<td class="ba-player-name" data-player-id="@player.PlayerId">
 									@if (Model.IsDraftActive() && Model.IsUserTurn() && player.PickNum == null)
@@ -116,7 +117,8 @@
 						</tr>
 						@foreach (var player in Model.QBRankedPlayers)
 						{
-							<tr class="@((player.PickNum != null) ? ("ba-selected " + player.CssClass + ((Model.IsLoggedInUser(player.UserId) ? " you" : ""))) : "") ">
+							<tr class="@((player.PickNum != null) ? ("ba-selected " + player.CssClass + ((Model.IsLoggedInUser(player.UserId) ? " you" : ""))) : "") "
+								 data-player-id="@player.PlayerId">
 								<td>@player.RankNum</td>
 								<td class="ba-player-name" data-player-id="@player.PlayerId">
 									@if (Model.IsDraftActive() && Model.IsUserTurn() && player.PickNum == null)
@@ -157,7 +159,8 @@
 						</tr>
 						@foreach (var player in Model.RBRankedPlayers)
 						{
-							<tr class="@((player.PickNum != null) ? ("ba-selected " + player.CssClass + ((Model.IsLoggedInUser(player.UserId) ? " you" : ""))) : "") ">
+							<tr class="@((player.PickNum != null) ? ("ba-selected " + player.CssClass + ((Model.IsLoggedInUser(player.UserId) ? " you" : ""))) : "") "
+								 data-player-id="@player.PlayerId">
 								<td>@player.RankNum</td>
 								<td class="ba-player-name" data-player-id="@player.PlayerId">
 									@if (Model.IsDraftActive() && Model.IsUserTurn() && player.PickNum == null)
@@ -199,7 +202,8 @@
 						</tr>
 						@foreach (var player in Model.WRTERankedPlayers)
 						{
-							<tr class="@((player.PickNum != null) ? ("ba-selected " + player.CssClass + ((Model.IsLoggedInUser(player.UserId) ? " you" : ""))) : "") ">
+							<tr class="@((player.PickNum != null) ? ("ba-selected " + player.CssClass + ((Model.IsLoggedInUser(player.UserId) ? " you" : ""))) : "") "
+								 data-player-id="@player.PlayerId">
 								<td>@player.RankNum</td>
 								<td class="ba-player-name" data-player-id="@player.PlayerId">
 									@if (Model.IsDraftActive() && Model.IsUserTurn() && player.PickNum == null)
@@ -241,7 +245,8 @@
 						</tr>
 						@foreach (var player in Model.DEFRankedPlayers)
 						{
-							<tr class="@((player.PickNum != null) ? ("ba-selected " + player.CssClass + ((Model.IsLoggedInUser(player.UserId) ? " you" : ""))) : "") ">
+							<tr class="@((player.PickNum != null) ? ("ba-selected " + player.CssClass + ((Model.IsLoggedInUser(player.UserId) ? " you" : ""))) : "") "
+								 data-player-id="@player.PlayerId">
 								<td>@player.RankNum</td>
 								<td class="ba-player-name" data-player-id="@player.PlayerId">
 									@if (Model.IsDraftActive() && Model.IsUserTurn() && player.PickNum == null)
@@ -282,7 +287,8 @@
 						</tr>
 						@foreach (var player in Model.KRankedPlayers)
 						{
-							<tr class="@((player.PickNum != null) ? ("ba-selected " + player.CssClass + ((Model.IsLoggedInUser(player.UserId) ? " you" : ""))) : "") ">
+							<tr class="@((player.PickNum != null) ? ("ba-selected " + player.CssClass + ((Model.IsLoggedInUser(player.UserId) ? " you" : ""))) : "") "
+								 data-player-id="@player.PlayerId">
 								<td>@player.RankNum</td>
 								<td class="ba-player-name" data-player-id="@player.PlayerId">
 									@if (Model.IsDraftActive() && Model.IsUserTurn() && player.PickNum == null)

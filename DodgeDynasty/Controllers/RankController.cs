@@ -1,16 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using DodgeDynasty.Models;
 using DodgeDynasty.Shared;
 using DodgeDynasty.Mappers;
 using DodgeDynasty.Filters;
+using DodgeDynasty.Mappers.Highlights;
+using DodgeDynasty.Models.Highlights;
 
 namespace DodgeDynasty.Controllers
 {
-    public class RankController : BaseController
+	public class RankController : BaseController
 	{
 		[HttpGet]
 		[OwnerRankAccess]
@@ -62,5 +61,21 @@ namespace DodgeDynasty.Controllers
 			TempData[Constants.TempData.RankStatus] = playerRankModel.RankStatus;
 			return playerRankModel.RankStatus;
 		}
-    }
+
+		[HttpPost]
+		public JsonResult AddPlayerHighlight(PlayerHighlightModel model)
+		{
+			AddPlayerHighlightMapper mapper = Factory.Create<AddPlayerHighlightMapper>();
+			mapper.UpdateEntity(model);
+			return Json(new object { });
+		}
+
+		[HttpPost]
+		public JsonResult DeletePlayerHighlight(int playerId)
+		{
+			DeletePlayerHighlightMapper mapper = Factory.Create<DeletePlayerHighlightMapper>();
+			mapper.UpdateEntity(new PlayerHighlightModel { PlayerId = playerId });
+			return Json(new object { });
+		}
+	}
 }
