@@ -21,6 +21,13 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <TargetFrameworkProfile />
+    <MvcProjectUpgradeChecked>true</MvcProjectUpgradeChecked>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -222,6 +229,7 @@
     <Compile Include="Models\Shared\LeagueOwnerHelper.cs" />
     <Compile Include="Models\Types\ChatJson.cs" />
     <Compile Include="Models\Types\DodgeDynastyContent.cs" />
+    <Compile Include="Models\Types\DraftPickPlayer.cs" />
     <Compile Include="Models\Types\DraftRankModel.cs" />
     <Compile Include="Models\Types\HubConnJson.cs" />
     <Compile Include="Models\Types\PickInfoJson.cs" />
@@ -423,6 +431,7 @@
     <Content Include="Views\Admin\ManageUsers.cshtml" />
     <Content Include="Views\Admin\AddUser.cshtml" />
     <None Include="Properties\PublishProfiles\WinHost 2013 Local Folder.pubxml" />
+    <None Include="Properties\PublishProfiles\WinHost 2015 Local Folder.pubxml" />
     <None Include="Properties\PublishProfiles\WinHost FTP.pubxml" />
     <None Include="Properties\PublishProfiles\WinHost Local Folder.pubxml" />
     <Content Include="Views\Site\Messages.cshtml" />

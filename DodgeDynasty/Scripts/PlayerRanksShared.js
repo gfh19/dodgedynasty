@@ -106,3 +106,19 @@ function getRankIdUrlPath() {
 	}
 	return "";
 }
+
+
+//Highlighting
+
+$("td[data-player-id]").parent("tr").click(function (e) {
+	if ($(event.target).closest("tr").hasClass("highlighted")) {
+		$(event.target).closest("tr").removeClass("highlighted");
+		$(event.target).closest("tr").css("background-color", "");
+	}
+	else {
+		$(event.target).closest("tr").addClass("highlighted");
+		$(event.target).closest("tr").css("background-color", "lime");
+	}
+});
+
+$(".ba-category").css("cursor", "pointer");
