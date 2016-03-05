@@ -3,12 +3,12 @@ var clientCookieOptions = null;
 var highlightedPlayers = {};
 
 function initPlayerRanksShared() {
+	syncCookies();
+	toggleHighlighting();
 	bindExpandLinks();
 	bindToggleAllLinks();
-	syncCookies();
 	toggleRanksWindows();
 	bindPlayerLinks();
-	enableHighlighting();
 }
 
 function bindExpandLinks() {
@@ -54,6 +54,7 @@ function bindToggleAllLinks() {
 		else {
 			enableHighlighting();
 		}
+		flipCookieValue("ShowHighlighting");
 	});
 }
 
@@ -75,6 +76,8 @@ function getCookieOptions() {
 
 function setCookieOptions(options) {
 	$.cookie("playerRankOptions", JSON.stringify(options), { path: baseURL });
+	//Re: "path: baseURL", appears that server Response.Cookies always uses path="/", both local and prod....
+	//Doesn't work now locally, may be future enhancement to just set here (& userTurn) to "/"
 }
 
 function flipCookieValue(expandLinkId) {
@@ -83,6 +86,7 @@ function flipCookieValue(expandLinkId) {
 	return clientCookieOptions[expandLinkId];
 }
 
+//On load, opens tables to whatever is stored in cookie
 function toggleRanksWindows() {
 	$.each($(".ba-table"), function (index, table) {
 		var linkId = $(table).attr("data-link");
@@ -122,45 +126,93 @@ function getRankIdUrlPath() {
 //Highlighting
 
 function enableHighlighting() {
+	toggleQueueDisplay();
 	$(".pr-highlight-section").removeClass("hide-yo-wives");
+	$(".ba-category").css("cursor", "pointer");
+	$(".pr-toggle-highlight").addClass("enabled");
+	$("tr[data-player-id]").addClass("on");
+	$(".pr-toggle-highlight").text("Turn Off Highlighting (also new)");
 	$("tr[data-player-id]").click(function (e) {
 		handlePlayerHighlightClick();
 	});
-	$(".ba-category").css("cursor", "pointer");
-	$(".pr-toggle-highlight").text("Turn Off Highlighting (also new)");
-	$(".pr-toggle-highlight").addClass("enabled");
-	$("tr[data-player-id]").addClass("on");
 }
 
 function disableHighlighting() {
 	$(".pr-highlight-section").addClass("hide-yo-wives");
 	$("tr[data-player-id]").unbind("click");
 	$(".ba-category").css("cursor", "auto");
-	$(".pr-toggle-highlight").text("Show Highlighting *NEW!*");
 	$(".pr-toggle-highlight").removeClass("enabled");
 	$("tr[data-player-id]").removeClass("on");
+	$(".pr-toggle-highlight").text("Show Highlighting *NEW!*");
+}
+
+//On load, hide/show highlighting based on what's in cookie
+function toggleHighlighting() {
+	var showHighlighting = clientCookieOptions["ShowHighlighting"];
+	if (showHighlighting) {
+		enableHighlighting();
+	} else {
+		disableHighlighting();
+	}
+	bindHighlightColorSelect();
+	changeHighlightColor();
+}
+
+function toggleQueueDisplay() {
+	var numQueueRows = $(".pr-highlight-section tr[data-player-id]");
+	if (numQueueRows.length > 0) {
+		$(".hq-empty-msg").addClass("hide-yo-wives");
+		$(".queue-table").removeClass("hide-yo-wives");
+		if (numQueueRows.length > 12) {
+			$(".queue-table .expand").parent("tr").removeClass("hide-yo-wives");
+		}
+		else {
+			$(".queue-table .expand").parent("tr").addClass("hide-yo-wives");
+		}
+	}
+	else {
+		$(".queue-table").addClass("hide-yo-wives");
+		$(".hq-empty-msg").removeClass("hide-yo-wives");
+	}
 }
 
 function handlePlayerHighlightClick() {
 	var playerRow = $(event.target).closest("tr");
 	if ($(playerRow).hasClass("highlighted")) {
-		removePlayerHighlighting(playerRow);
+		if ($(playerRow).parents(".queue-table").length > 0) {
+			if ($("#highlight-color").val() == "<remove>") {
+				removePlayerHighlighting(playerRow);
+			}
+			else {
+				addPlayerHighlighting(playerRow);
+			}
+		}
+		else {
+			if ($("#highlight-color").val() != "<remove>" && !$(playerRow).hasClass($("#highlight-color").val())) {
+				addPlayerHighlighting(playerRow);
+			}
+			else {
+				removePlayerHighlighting(playerRow);
+			}
+		}
 		pageBroadcastDraftHandler();
 	}
 	else {
-		addPlayerHighlighting(playerRow);
-		pageBroadcastDraftHandler();
+		if ($("#highlight-color").val() != "<remove>") {
+			addPlayerHighlighting(playerRow);
+			pageBroadcastDraftHandler();
+		}
 	}
 }
 
 function getPlayerHighlightModel(playerRow) {
-	return { PlayerId: $(playerRow).attr("data-player-id"), HighlightId: "1" };
+	return { PlayerId: $(playerRow).attr("data-player-id"), HighlightClass: $("#highlight-color").val() };
 }
 
 function addPlayerHighlighting(playerRow) {
 	ajaxPost(getPlayerHighlightModel(playerRow), "Rank/AddPlayerHighlight", function (data) {
 		$(playerRow).addClass("highlighted");
-		$(playerRow).addClass("yellow");
+		$(playerRow).addClass($("#highlight-color").val());
 	});
 }
 
@@ -171,4 +223,18 @@ function removePlayerHighlighting(playerRow) {
 			$(playerRow).removeClass(color);
 		});
 	});
+}
+
+function bindHighlightColorSelect() {
+	$("#highlight-color").change(changeHighlightColor);
+}
+
+function changeHighlightColor() {
+	var colorSpan = $(".hq-color-span");
+	var newColor = $("#highlight-color").val();
+	$(colorSpan).removeClass();
+	$(colorSpan).addClass("hq-color-span");
+	$(colorSpan).addClass(newColor);
+	clientCookieOptions["HighlightColor"] = newColor;
+	setCookieOptions(clientCookieOptions);
 }

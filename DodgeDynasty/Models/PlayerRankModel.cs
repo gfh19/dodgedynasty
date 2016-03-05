@@ -139,22 +139,22 @@ namespace DodgeDynasty.Models
 			{
 				PlayerId = p.PlayerId,
 				TruePlayerId = p.TruePlayerId.Value,
-				RankId = pr.RankId,
-				PlayerRankId = pr.PlayerRankId,
+				RankId = (pr != null) ? pr.RankId : -1,
+				PlayerRankId = (pr != null) ? pr.PlayerRankId : -1,
 				FirstName = p.FirstName,
 				LastName = p.LastName,
 				PlayerName = p.PlayerName,
 				NFLTeam = p.NFLTeam,
 				NFLTeamDisplay = t.AbbrDisplay,
 				Position = p.Position,
-				RankNum = pr.RankNum,
-				PosRankNum = pr.PosRankNum,
-				AuctionValue = pr.AuctionValue,
+				RankNum = (pr != null) ? pr.RankNum : null,
+				PosRankNum = (pr != null) ? pr.PosRankNum : null,
+				AuctionValue = (pr != null) ? pr.AuctionValue : null,
 				PickNum = (pick != null) ? pick.PickNum.ToString() : null,
 				UserId = (u != null) ? u.UserId.ToString() : null,
 				NickName = (u != null) ? u.NickName : null,
 				CssClass = (u != null) ? lo.CssClass : null,
-				HighlightValue = (ph != null) ? ph.HighlightValue : null,
+				HighlightClass = (ph != null) ? ph.HighlightClass : null,
                 HighlightRankNum = (ph != null) ? ph.RankNum.ToString() : null
 			};
 		}
@@ -215,8 +215,18 @@ namespace DodgeDynasty.Models
 		{
 			var mapper = new HighlightsMapper();
 			var model = mapper.GetModel();
-            return Utilities.GetListItems<HighlightModel>(model.Highlights.OrderBy(o=>o.HighlightId).ToList(),
-				o => o.HighlightName, o => o.HighlightValue.ToString(), false);
+			var highlightColors = model.Highlights;
+			var maxHighlightId = model.Highlights.Select(o => o.HighlightId).DefaultIfEmpty().Max();
+			highlightColors.Add(
+				new HighlightModel { HighlightId = (maxHighlightId+100),
+					HighlightName="<Remove>", HighlightClass = "<remove>", HighlightValue = "<remove>" });
+            return Utilities.GetListItems<HighlightModel>(highlightColors.OrderBy(o => o.HighlightId).ToList(),
+				o => o.HighlightName, o => o.HighlightClass.ToString(), false, GetSelectedHighlightColor());
 		}
+
+		public string GetSelectedHighlightColor()
+		{
+			return !string.IsNullOrEmpty(Options.HighlightColor) ? Options.HighlightColor : null;
+        }
 	}
 }

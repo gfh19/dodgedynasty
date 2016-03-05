@@ -1419,7 +1419,7 @@ ul.menu li a.current-page
 .ba-category 
 {
 	display: inline-block;
-	margin-right: 10px;
+	margin-right: 6px;
 }
 
 .ba-category 
@@ -1472,11 +1472,42 @@ ul.menu li a.current-page
 	font-size: 12px;
 }
 
-	/*---- Highlighting */
+.ba-category th:last-child, .ba-category td:last-child {
+	padding-right: 2px;
+}
+
+	/*    -------- Highlighting */
 
 .pr-highlight-section {
 	display: inline-block;
+	min-height: 389px;
+	min-width: 200px;
+	border: 2px solid darkblue;
+	border-radius: 6px;
+	-webkit-border-radius: 6px;
+	margin-right: 6px;
 }
+.hq-color-span {
+	display: inline-block;
+	width: 100%;
+	padding-top: 2px;
+	padding-bottom: 3px;
+	border-bottom: 2px solid darkblue !important;
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+.hq-header {
+	font-size: inherit;
+	font-weight: bold;
+	padding-top: 5px;
+}
+.pr-highlight-section table {
+	margin: 0px;
+}
+.pr-highlight-section td {
+	padding-right: 6px;
+}
+
 
 /* RankingsList / Setup Rank
 ----------------------------------------------------------*/
@@ -2322,6 +2353,11 @@ span.player-select
 	.ba-category td {
 		max-width: 130px;
 		white-space: normal;
+	}
+		/*    -------- Highlighting */
+	.pr-highlight-section {
+		display: inline-block;
+		margin-right: 0px;
 	}
 	/* Setup Draft
 	------------------------------------*/

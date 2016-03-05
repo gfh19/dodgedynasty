@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace DodgeDynasty.Models.Types
 {
@@ -24,5 +20,11 @@ namespace DodgeDynasty.Models.Types
 		public bool ExpandDEF { get; set; }
 		[JsonProperty()]
 		public bool ExpandK { get; set; }
+		[JsonProperty()]
+		public bool ExpandQueue { get; set; }
+		[JsonProperty()]
+		public bool ShowHighlighting { get; set; }
+		[JsonProperty()]
+		public string HighlightColor { get; set; }
 	}
 }

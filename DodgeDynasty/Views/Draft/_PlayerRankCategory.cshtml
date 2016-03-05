@@ -9,9 +9,9 @@
 		<caption class="ba-header">@Model.CurrentRankCategory.Header</caption>
 		<tbody>
 			<tr>
-				<th>Rank</th>
+				<th>Rk</th>
 				<th>Player</th>
-				<th>Team</th>
+				<th>Tm</th>
 				@if (showPos) {
 					<th>Pos</th>
 				}
@@ -23,7 +23,7 @@
 			@foreach (var player in Model.CurrentRankCategory.PlayerList)
 			{
 				<tr class="@((player.PickNum != null) ? ("ba-selected " + player.CssClass + ((Model.IsLoggedInUser(player.UserId) ? " you " : " "))) : "")
-								@((player.HighlightValue != null ? "highlighted " + player.HighlightValue : " "))"
+								@((player.HighlightClass != null ? "highlighted " + player.HighlightClass : " "))"
 					data-player-id="@player.PlayerId">
 					<td>@player.RankNum</td>
 					<td class="ba-player-name" data-player-id="@player.PlayerId">

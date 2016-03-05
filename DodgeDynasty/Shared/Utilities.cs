@@ -111,16 +111,16 @@ namespace DodgeDynasty.Shared
 		}
 
 		public static List<SelectListItem> GetListItems<T>(List<T> items,
-			Func<T, string> textFn, Func<T, string> valueCodeFn, bool blankEntry = true, string selected = null)
+			Func<T, string> textFn, Func<T, string> valueCodeFn, bool blankEntry = true, string selectedValue = null)
 		{
 			var listItems = items.Select(s => new SelectListItem { Text = textFn(s), Value = valueCodeFn(s) }).ToList();
 			if (blankEntry)
 			{
 				listItems.Insert(0, new SelectListItem());
 			}
-			if (selected != null)
+			if (selectedValue != null)
 			{
-				listItems.ForEach(s => s.Selected = FormatName(s.Value) == FormatName(selected) ? true : false);
+				listItems.ForEach(s => s.Selected = FormatName(s.Value) == FormatName(selectedValue) ? true : false);
 			}
 			return listItems;
 		}

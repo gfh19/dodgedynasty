@@ -6020,6 +6020,30 @@ namespace DodgeDynasty.Entities
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String HighlightClass
+        {
+            get
+            {
+                return _HighlightClass;
+            }
+            set
+            {
+                OnHighlightClassChanging(value);
+                ReportPropertyChanging("HighlightClass");
+                _HighlightClass = StructuralObject.SetValidValue(value, true, "HighlightClass");
+                ReportPropertyChanged("HighlightClass");
+                OnHighlightClassChanged();
+            }
+        }
+        private global::System.String _HighlightClass;
+        partial void OnHighlightClassChanging(global::System.String value);
+        partial void OnHighlightClassChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
         public global::System.Int32 RankNum
@@ -6088,30 +6112,6 @@ namespace DodgeDynasty.Entities
         private global::System.DateTime _LastUpdateTimestamp;
         partial void OnLastUpdateTimestampChanging(global::System.DateTime value);
         partial void OnLastUpdateTimestampChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String HighlightValue
-        {
-            get
-            {
-                return _HighlightValue;
-            }
-            set
-            {
-                OnHighlightValueChanging(value);
-                ReportPropertyChanging("HighlightValue");
-                _HighlightValue = StructuralObject.SetValidValue(value, true, "HighlightValue");
-                ReportPropertyChanged("HighlightValue");
-                OnHighlightValueChanged();
-            }
-        }
-        private global::System.String _HighlightValue;
-        partial void OnHighlightValueChanging(global::System.String value);
-        partial void OnHighlightValueChanged();
 
         #endregion
 

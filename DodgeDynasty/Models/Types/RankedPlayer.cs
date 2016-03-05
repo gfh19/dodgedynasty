@@ -24,7 +24,7 @@ namespace DodgeDynasty.Models.Types
 		public string UserId { get; set; }
 		public string NickName { get; set; }
 		public string CssClass { get; set; }
-		public string HighlightValue { get; set; }
+		public string HighlightClass { get; set; }
 		public string HighlightRankNum { get; set; }
 	}
 }
