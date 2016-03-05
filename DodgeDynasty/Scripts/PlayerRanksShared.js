@@ -45,6 +45,15 @@ function bindToggleAllLinks() {
 			$(link).click();
 		});
 	});
+	$(".pr-toggle-highlight").click(function (e) {
+		e.preventDefault();
+		if ($(".pr-toggle-highlight").hasClass("enabled")) {
+			disableHighlighting();
+		}
+		else {
+			enableHighlighting();
+		}
+	});
 }
 
 function bindPlayerLinks() {
@@ -111,6 +120,24 @@ function getRankIdUrlPath() {
 
 //Highlighting
 
+function enableHighlighting() {
+	$("tr[data-player-id]").click(function (e) {
+		handlePlayerHighlightClick();
+	});
+	$(".ba-category").css("cursor", "pointer");
+	$(".pr-toggle-highlight").text("Turn Off Highlighting (also new)");
+	$(".pr-toggle-highlight").addClass("enabled");
+	$("tr[data-player-id]").addClass("on");
+}
+
+function disableHighlighting() {
+	$("tr[data-player-id]").unbind("click");
+	$(".ba-category").css("cursor", "auto");
+	$(".pr-toggle-highlight").text("Show Highlighting (NEW!)");
+	$(".pr-toggle-highlight").removeClass("enabled");
+	$("tr[data-player-id]").removeClass("on");
+}
+
 function handlePlayerHighlightClick() {
 	var playerRow = $(event.target).closest("tr");
 	if ($(playerRow).hasClass("highlighted")) {
@@ -128,19 +155,15 @@ function getPlayerHighlightModel(playerRow) {
 function addPlayerHighlighting(playerRow) {
 	ajaxPost(getPlayerHighlightModel(playerRow), "Rank/AddPlayerHighlight", function (data) {
 		$(playerRow).addClass("highlighted");
-		$(playerRow).css("background-color", "yellow");
+		$(playerRow).addClass("yellow");
 	});
 }
 
 function removePlayerHighlighting(playerRow) {
 	ajaxPost(getPlayerHighlightModel(playerRow), "Rank/DeletePlayerHighlight", function (data) {
 		$(playerRow).removeClass("highlighted");
-		$(playerRow).closest("tr").css("background-color", "");
+		$.each(highlightColors, function (ix, color) {
+			$(playerRow).removeClass(color);
+		});
 	});
 }
-
-$("tr[data-player-id]").click(function (e) {
-	handlePlayerHighlightClick();
-});
-
-$(".ba-category").css("cursor", "pointer");

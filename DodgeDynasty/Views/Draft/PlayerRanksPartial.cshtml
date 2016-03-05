@@ -51,6 +51,9 @@
 			<div class="pr-toggle-links">
 				<a class="pr-expand-all" href="#">Expand All</a>/<a class="pr-collapse-all" href="#">Collapse All</a>
 			</div>
+			<div class="pr-highlight-links">
+				<a class="pr-toggle-highlight" href="#">Show Highlighting (NEW!)</a>
+			</div>
 		</div>
 	</div>
 	<div class="rank-container">
@@ -70,7 +73,8 @@
 						</tr>
 						@foreach (var player in Model.OverallRankedPlayers)
 						{
-							<tr class="@((player.PickNum != null) ? ("ba-selected " + player.CssClass + ((Model.IsLoggedInUser(player.UserId) ? " you " : " "))) : "") @((player.HighlightValue != null ? "highlighted " + player.HighlightValue : " "))"
+							<tr class="@((player.PickNum != null) ? ("ba-selected " + player.CssClass + ((Model.IsLoggedInUser(player.UserId) ? " you " : " "))) : "") 
+								@((player.HighlightValue != null ? "highlighted " + player.HighlightValue : " "))"
 								 data-player-id="@player.PlayerId">
 								<td>@player.RankNum</td>
 								<td class="ba-player-name" data-player-id="@player.PlayerId">

@@ -1462,8 +1462,10 @@ ul.menu li a.current-page
 	border-style: solid;
 	background-color: #DFDFDF;
 }
-.pr-toggle-links {
+.pr-toggle-links, .pr-highlight-links {
 	margin-top: 4px;
+}
+.pr-toggle-links {
 	font-size: 10px;
 }
 .ba-bye-week {
