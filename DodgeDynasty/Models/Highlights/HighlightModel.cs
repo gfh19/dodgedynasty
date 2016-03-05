@@ -8,6 +8,7 @@ namespace DodgeDynasty.Models.Highlights
 	public class HighlightModel
 	{
 		public int HighlightId { get; set; }
+		public string HighlightName { get; set; }
 		public string HighlightClass { get; set; }
 		public string HighlightValue { get; set; }
 	}

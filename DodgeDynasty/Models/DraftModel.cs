@@ -30,7 +30,6 @@ namespace DodgeDynasty.Models
 		public List<Position> Positions { get; set; }
 		public List<League> Leagues { get; set; }
 		public List<DraftOwner> AllDraftOwners { get; set; }
-		public List<PlayerHighlight> PlayerHighlights { get; set; }
 
 		public List<PlayerHighlight> CurrentPlayerHighlights { get; set; }
 		public Draft CurrentDraft { get; set; }
@@ -82,7 +81,6 @@ namespace DodgeDynasty.Models
 					AllDraftOwners = HomeEntity.DraftOwners.ToList();
 					DraftRanks = HomeEntity.DraftRanks.ToList();
 					Ranks = HomeEntity.Ranks.ToList();
-					PlayerHighlights = HomeEntity.PlayerHighlights.ToList();
 
 					SetCurrentDraftInfo(draftId);
 				}
@@ -98,7 +96,6 @@ namespace DodgeDynasty.Models
 			CurrentLeagueOwners = LeagueOwners.Where(lo => lo.LeagueId == CurrentDraft.LeagueId).ToList();
 			var leagueOwner = CurrentLeagueOwners.FirstOrDefault(lo => lo.UserId == user.UserId);
 			CurrentLoggedInOwnerUser = OwnerUserMapper.GetOwnerUser(user, leagueOwner);
-			CurrentPlayerHighlights = PlayerHighlights.Where(o => o.DraftId == DraftId && o.UserId == user.UserId).ToList();
             return DraftId;
 		}
 
@@ -122,7 +119,8 @@ namespace DodgeDynasty.Models
 
 		private void SetCurrentDraftInfo(int? draftId = null)
 		{
-			DraftId = SetCurrentDraft(draftId);
+			var userId = Users.GetLoggedInUserId();
+            DraftId = SetCurrentDraft(draftId);
 
 			DraftPicks = HomeEntity.DraftPicks.Where(d => d.DraftId == DraftId).OrderBy(d => d.PickNum).ToList();
 
@@ -133,9 +131,10 @@ namespace DodgeDynasty.Models
 			var playerIds = DraftPicks.Select(dp => dp.PlayerId).ToList();
 			DraftedPlayers = HomeEntity.Players.Where(p =>
 				playerIds.Contains(p.PlayerId)).ToList();
-			Users = HomeEntity.Users.ToList();
 			CurrentDraftPick = DraftPicks.OrderBy(p => p.PickNum)
 				.FirstOrDefault(p => p.PlayerId == null);
+			CurrentPlayerHighlights = HomeEntity.PlayerHighlights
+				.Where(o => o.DraftId == DraftId && o.UserId == userId).OrderBy(o=>o.RankNum).ToList();
 			if (CurrentDraftPick != null)
 			{
 				var currentPickNum = CurrentDraftPick.PickNum;

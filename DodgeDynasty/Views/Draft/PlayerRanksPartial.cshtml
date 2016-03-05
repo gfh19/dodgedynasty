@@ -58,6 +58,57 @@
 	</div>
 	<div class="rank-container">
 		<div class="ba-rankings">
+			<div class="pr-highlight-section hide-yo-wives" style="display: inline-block; margin-right: 10px; min-height: 386px; min-width: 220px; border: 2px solid darkblue; border-radius: 6px; -webkit-border-radius: 6px; margin-right: 0px; margin-bottom: 20px;">
+				<span class="hq-color-span" style="display: inline-block; width: 100%; padding-top: 2px; padding-bottom: 3px; background-color: yellow; border-bottom: 2px solid darkblue; border-radius: 6px; -webkit-border-radius: 6px;">
+					Select Color:  @Html.DropDownList("HighlightColor", Model.GetHighlightColors())
+				</span>
+				<div>
+					<label class="ba-header" style="font-size: inherit; font-weight: bold; padding-top: 5px;">Highlighted Queue</label>
+				</div>
+				<table class="ba-table" style="margin-left: 1px;" data-link="ExpandDEF">
+					<tbody>
+						<tr>
+							<th>#</th>
+							<th>Rk</th>
+							<th>Player</th>
+							<th>Tm</th>
+							<th>Pos</th>
+							<th>Bye</th>
+						</tr>
+					@{int hpCnt = 1;}
+					@foreach (var player in Model.HighlightedPlayers)
+					{
+						<tr class="highlighted @player.HighlightValue" data-player-id="@player.PlayerId">
+							<td>@(hpCnt++)</td>
+							<td>@player.RankNum</td>
+							<td class="ba-player-name" data-player-id="@player.PlayerId">
+								@if (Model.IsDraftActive() && Model.IsUserTurn() && player.PickNum == null)
+								{
+									<a href="#" class="player-link">@player.PlayerName</a>
+								}
+								else
+								{
+									@player.PlayerName
+								}
+							</td>
+							@if (player.PickNum != null)
+							{
+								<td colspan="@(Model.AreYearByeWeeksFound() ? "3" : "2")">(@player.NickName, #@player.PickNum)</td>
+							}
+							else
+							{
+								<td>@player.NFLTeamDisplay</td>
+								<td>@player.Position</td>
+								if (Model.AreYearByeWeeksFound())
+								{
+									<td class="ba-bye-week">(@Model.GetNFLTeamByeWeek(player.NFLTeam))</td>
+								}
+							}
+						</tr>
+					}
+					</tbody>
+				</table>
+			</div>
 			@Html.Partial("_PlayerRankCategory", Model.SetCategory(DodgeDynasty.Models.ViewTypes.RankCategory.Overall))
 			@Html.Partial("_PlayerRankCategory", Model.SetCategory(DodgeDynasty.Models.ViewTypes.RankCategory.QB))
 			@Html.Partial("_PlayerRankCategory", Model.SetCategory(DodgeDynasty.Models.ViewTypes.RankCategory.RB))

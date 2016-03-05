@@ -3411,7 +3411,8 @@ namespace DodgeDynasty.Entities
         /// <param name="highlightValue">Initial value of the HighlightValue property.</param>
         /// <param name="addTimestamp">Initial value of the AddTimestamp property.</param>
         /// <param name="lastUpdateTimestamp">Initial value of the LastUpdateTimestamp property.</param>
-        public static Highlight CreateHighlight(global::System.Int32 highlightId, global::System.String highlightClass, global::System.String highlightValue, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp)
+        /// <param name="highlightName">Initial value of the HighlightName property.</param>
+        public static Highlight CreateHighlight(global::System.Int32 highlightId, global::System.String highlightClass, global::System.String highlightValue, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp, global::System.String highlightName)
         {
             Highlight highlight = new Highlight();
             highlight.HighlightId = highlightId;
@@ -3419,6 +3420,7 @@ namespace DodgeDynasty.Entities
             highlight.HighlightValue = highlightValue;
             highlight.AddTimestamp = addTimestamp;
             highlight.LastUpdateTimestamp = lastUpdateTimestamp;
+            highlight.HighlightName = highlightName;
             return highlight;
         }
 
@@ -3548,6 +3550,30 @@ namespace DodgeDynasty.Entities
         private global::System.DateTime _LastUpdateTimestamp;
         partial void OnLastUpdateTimestampChanging(global::System.DateTime value);
         partial void OnLastUpdateTimestampChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String HighlightName
+        {
+            get
+            {
+                return _HighlightName;
+            }
+            set
+            {
+                OnHighlightNameChanging(value);
+                ReportPropertyChanging("HighlightName");
+                _HighlightName = StructuralObject.SetValidValue(value, false, "HighlightName");
+                ReportPropertyChanged("HighlightName");
+                OnHighlightNameChanged();
+            }
+        }
+        private global::System.String _HighlightName;
+        partial void OnHighlightNameChanging(global::System.String value);
+        partial void OnHighlightNameChanged();
 
         #endregion
 

@@ -8,6 +8,7 @@ function initPlayerRanksShared() {
 	syncCookies();
 	toggleRanksWindows();
 	bindPlayerLinks();
+	enableHighlighting();
 }
 
 function bindExpandLinks() {
@@ -121,6 +122,7 @@ function getRankIdUrlPath() {
 //Highlighting
 
 function enableHighlighting() {
+	$(".pr-highlight-section").removeClass("hide-yo-wives");
 	$("tr[data-player-id]").click(function (e) {
 		handlePlayerHighlightClick();
 	});
@@ -131,6 +133,7 @@ function enableHighlighting() {
 }
 
 function disableHighlighting() {
+	$(".pr-highlight-section").addClass("hide-yo-wives");
 	$("tr[data-player-id]").unbind("click");
 	$(".ba-category").css("cursor", "auto");
 	$(".pr-toggle-highlight").text("Show Highlighting *NEW!*");
@@ -142,9 +145,11 @@ function handlePlayerHighlightClick() {
 	var playerRow = $(event.target).closest("tr");
 	if ($(playerRow).hasClass("highlighted")) {
 		removePlayerHighlighting(playerRow);
+		pageBroadcastDraftHandler();
 	}
 	else {
 		addPlayerHighlighting(playerRow);
+		pageBroadcastDraftHandler();
 	}
 }
 

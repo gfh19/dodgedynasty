@@ -8,6 +8,8 @@ using System.Configuration;
 using System.Web.Mvc;
 using DodgeDynasty.Shared;
 using DodgeDynasty.Models.ViewTypes;
+using DodgeDynasty.Mappers.Highlights;
+using DodgeDynasty.Models.Highlights;
 
 namespace DodgeDynasty.Models
 {
@@ -28,6 +30,8 @@ namespace DodgeDynasty.Models
 		public string RankStatus { get; set; }
 		public PlayerModel Player { get; set; }
 		public RankCategoryModel CurrentRankCategory { get; set; }
+		public List<PlayerHighlight> PlayerHighlights { get; set; }
+		public List<RankedPlayer> HighlightedPlayers { get; set; }
 
 		public PlayerRankModel(int rankId, int? draftId = null)
 			: this(draftId)
@@ -45,9 +49,12 @@ namespace DodgeDynasty.Models
 			RankId = rankId;
 			using (HomeEntity = new HomeEntity())
 			{
-				CurrentRank = HomeEntity.Ranks.First(r => r.RankId == rankId);
+				var userId = HomeEntity.Users.GetLoggedInUserId();
+                CurrentRank = HomeEntity.Ranks.First(r => r.RankId == rankId);
 				PlayerRanks = HomeEntity.PlayerRanks.Where(pr => pr.RankId == rankId).ToList();
-			}
+				PlayerHighlights = HomeEntity.PlayerHighlights.
+					Where(o => o.DraftId == DraftId && o.UserId == userId).ToList();
+            }
 		}
 
 		public void GetBestAvailPlayerRanks()
@@ -67,7 +74,8 @@ namespace DodgeDynasty.Models
 			WRTERankedPlayers = OverallRankedPlayers.Where(p => p.Position == "WR" || p.Position == "TE").ToList();
 			DEFRankedPlayers = OverallRankedPlayers.Where(p => p.Position == "DEF").ToList();
 			KRankedPlayers = OverallRankedPlayers.Where(p => p.Position == "K").ToList();
-		}
+			GetHighlightedPlayers();
+        }
 
 		public void GetAllPlayerRanksByPosition()
 		{
@@ -79,7 +87,8 @@ namespace DodgeDynasty.Models
 			WRTERankedPlayers = OverallRankedPlayers.Where(p => p.Position == "WR" || p.Position == "TE").ToList();
 			DEFRankedPlayers = OverallRankedPlayers.Where(p => p.Position == "DEF").ToList();
 			KRankedPlayers = OverallRankedPlayers.Where(p => p.Position == "K").ToList();
-		}
+			GetHighlightedPlayers();
+        }
 
 		public List<RankedPlayer> GetAllPlayerRanks()
 		{
@@ -145,7 +154,8 @@ namespace DodgeDynasty.Models
 				UserId = (u != null) ? u.UserId.ToString() : null,
 				NickName = (u != null) ? u.NickName : null,
 				CssClass = (u != null) ? lo.CssClass : null,
-				HighlightValue = (ph != null) ? ph.HighlightValue : null
+				HighlightValue = (ph != null) ? ph.HighlightValue : null,
+                HighlightRankNum = (ph != null) ? ph.RankNum.ToString() : null
 			};
 		}
 
@@ -183,10 +193,30 @@ namespace DodgeDynasty.Models
 			}
 		}
 
+		public void GetHighlightedPlayers()
+		{
+			HighlightedPlayers = (from ph in CurrentPlayerHighlights
+								 join pr in PlayerRanks on ph.PlayerId equals pr.PlayerId into prLeft		//Left Outer Join
+								 from pr in prLeft.DefaultIfEmpty()
+								 join pick in DraftPicks on ph.PlayerId equals pick.PlayerId into dpLeft    //Left Outer Join
+								 from pick in dpLeft.DefaultIfEmpty()
+								 join p in AllPlayers on ph.PlayerId equals p.PlayerId
+								 join t in NFLTeams on p.NFLTeam equals t.TeamAbbr
+								 select GetRankedPlayer(pr, p, t, ph)).OrderBy(p => Convert.ToInt32(p.HighlightRankNum)).ToList();
+		}
+
 		public PlayerRankModel SetCategory(RankCategory category)
 		{
 			CurrentRankCategory = RankCategoryFactory.RankCatDict[category](this);
 			return this;
 		}
-    }
+
+		public List<SelectListItem> GetHighlightColors()
+		{
+			var mapper = new HighlightsMapper();
+			var model = mapper.GetModel();
+            return Utilities.GetListItems<HighlightModel>(model.Highlights.OrderBy(o=>o.HighlightId).ToList(),
+				o => o.HighlightName, o => o.HighlightValue.ToString(), false);
+		}
+	}
 }

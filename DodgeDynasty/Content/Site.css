@@ -1472,6 +1472,12 @@ ul.menu li a.current-page
 	font-size: 12px;
 }
 
+	/*---- Highlighting */
+
+.pr-highlight-section {
+	display: inline-block;
+}
+
 /* RankingsList / Setup Rank
 ----------------------------------------------------------*/
 .note-text 

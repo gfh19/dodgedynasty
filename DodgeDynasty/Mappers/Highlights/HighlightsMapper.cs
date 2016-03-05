@@ -12,6 +12,7 @@ namespace DodgeDynasty.Mappers.Highlights
 			HomeEntity.Highlights.ToList().ForEach(o => Model.Highlights.Add(new HighlightModel
 			{
 				HighlightId = o.HighlightId,
+				HighlightName = o.HighlightName,
 				HighlightClass = o.HighlightClass,
 				HighlightValue = o.HighlightValue
 			}));
