@@ -1,0 +1,64 @@
+﻿@model DodgeDynasty.Models.PlayerRankModel
+
+<div class="ba-category">
+	@{
+		var showBye = Model.CurrentRankCategory.ShowByeWeek && Model.AreYearByeWeeksFound();
+		var showPos = Model.CurrentRankCategory.ShowPos;
+	}
+	<table class="ba-table" data-link="@Model.CurrentRankCategory.DataLink">
+		<caption class="ba-header">@Model.CurrentRankCategory.Header</caption>
+		<tbody>
+			<tr>
+				<th>Rank</th>
+				<th>Player</th>
+				<th>Team</th>
+				@if (showPos) {
+					<th>Pos</th>
+				}
+				@if (showBye)
+				{
+					<th>Bye</th>
+				}
+			</tr>
+			@foreach (var player in Model.CurrentRankCategory.PlayerList)
+			{
+				<tr class="@((player.PickNum != null) ? ("ba-selected " + player.CssClass + ((Model.IsLoggedInUser(player.UserId) ? " you " : " "))) : "")
+								@((player.HighlightValue != null ? "highlighted " + player.HighlightValue : " "))"
+					data-player-id="@player.PlayerId">
+					<td>@player.RankNum</td>
+					<td class="ba-player-name" data-player-id="@player.PlayerId">
+						@if (Model.IsDraftActive() && Model.IsUserTurn() && player.PickNum == null)
+						{
+							<a href="#" class="player-link">@player.PlayerName</a>
+						}
+						else
+						{
+							@player.PlayerName
+						}
+					</td>
+					@if (player.PickNum != null)
+					{
+						<td colspan="@((showPos && showBye) ? "3" : ((showPos || showBye) ? "2" : "1"))">(@player.NickName, #@player.PickNum)</td>
+					}
+					else
+					{
+						<td>@player.NFLTeamDisplay</td>
+						if (showPos)
+						{
+							<td>@player.Position</td>
+						}
+						if (showBye)
+						{
+							<td class="ba-bye-week">(@Model.GetNFLTeamByeWeek(player.NFLTeam))</td>
+						}
+					}
+				</tr>
+			}
+			<tr>
+				<td colspan="@((showPos && showBye) ? "5" : ((showPos || showBye) ? "4" : "3"))" class="expand">
+					<a href="#" id="@Model.CurrentRankCategory.ExpandId" class="expand-link" data-expand="@Model.CurrentRankCategory.ExpandValue">More...</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

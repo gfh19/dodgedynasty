@@ -7,6 +7,7 @@ using DodgeDynasty.Models.Types;
 using System.Configuration;
 using System.Web.Mvc;
 using DodgeDynasty.Shared;
+using DodgeDynasty.Models.ViewTypes;
 
 namespace DodgeDynasty.Models
 {
@@ -26,6 +27,7 @@ namespace DodgeDynasty.Models
 		public List<Player> SortedPlayers { get; set; }
 		public string RankStatus { get; set; }
 		public PlayerModel Player { get; set; }
+		public RankCategoryModel CurrentRankCategory { get; set; }
 
 		public PlayerRankModel(int rankId, int? draftId = null)
 			: this(draftId)
@@ -180,5 +182,11 @@ namespace DodgeDynasty.Models
 				return playerName;
 			}
 		}
-	}
+
+		public PlayerRankModel SetCategory(RankCategory category)
+		{
+			CurrentRankCategory = RankCategoryFactory.RankCatDict[category](this);
+			return this;
+		}
+    }
 }

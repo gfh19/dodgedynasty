@@ -133,7 +133,7 @@ function enableHighlighting() {
 function disableHighlighting() {
 	$("tr[data-player-id]").unbind("click");
 	$(".ba-category").css("cursor", "auto");
-	$(".pr-toggle-highlight").text("Show Highlighting (NEW!)");
+	$(".pr-toggle-highlight").text("Show Highlighting *NEW!*");
 	$(".pr-toggle-highlight").removeClass("enabled");
 	$("tr[data-player-id]").removeClass("on");
 }
