@@ -1480,7 +1480,7 @@ ul.menu li a.current-page
 
 .pr-highlight-section {
 	display: inline-block;
-	min-height: 389px;
+	min-height: 389.5px;
 	min-width: 200px;
 	border: 2px solid darkblue;
 	border-radius: 6px;
@@ -1507,7 +1507,17 @@ ul.menu li a.current-page
 .pr-highlight-section td {
 	padding-right: 6px;
 }
-
+.hq-selected
+{
+	font-size: 0.9em;
+	text-decoration: line-through;
+}
+.hq-delete-span {
+	display: inline-block;
+	font-size: 12px;
+	padding-top: 6px;
+	padding-bottom: 3px;
+}
 
 /* RankingsList / Setup Rank
 ----------------------------------------------------------*/

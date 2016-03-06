@@ -167,19 +167,19 @@ GO
 INSERT INTO [dbo].[Highlight]
            ([HighlightName],[HighlightClass],[HighlightValue],[AddTimestamp],[LastUpdateTimestamp])
      VALUES
-           ('Red','red','#FF88AA',getdate(),getdate())
-GO
-
-INSERT INTO [dbo].[Highlight]
-           ([HighlightName],[HighlightClass],[HighlightValue],[AddTimestamp],[LastUpdateTimestamp])
-     VALUES
            ('Orange','orange','#FFBF22',getdate(),getdate())
 GO
 
 INSERT INTO [dbo].[Highlight]
            ([HighlightName],[HighlightClass],[HighlightValue],[AddTimestamp],[LastUpdateTimestamp])
      VALUES
-           ('Pink','pink','#FF00FF`',getdate(),getdate())
+           ('Red','red','#FF4444',getdate(),getdate())
+GO
+
+INSERT INTO [dbo].[Highlight]
+           ([HighlightName],[HighlightClass],[HighlightValue],[AddTimestamp],[LastUpdateTimestamp])
+     VALUES
+           ('Pink','pink','#FF00FF',getdate(),getdate())
 GO
 
 INSERT INTO [dbo].[Highlight]

@@ -727,3 +727,12 @@ function addQSValue(urlString, qsValue) {
 	}
 	return urlString + "?" + qsValue;
 }
+
+function toggleDisplay(element, condition) {
+	if (condition) {
+		$(element).show();
+	}
+	else {
+		$(element).hide();
+	}
+}

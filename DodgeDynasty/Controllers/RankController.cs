@@ -6,6 +6,7 @@ using DodgeDynasty.Mappers;
 using DodgeDynasty.Filters;
 using DodgeDynasty.Mappers.Highlights;
 using DodgeDynasty.Models.Highlights;
+using System.Net;
 
 namespace DodgeDynasty.Controllers
 {
@@ -63,19 +64,27 @@ namespace DodgeDynasty.Controllers
 		}
 
 		[HttpPost]
-		public JsonResult AddPlayerHighlight(PlayerHighlightModel model)
+		public HttpStatusCode AddPlayerHighlight(PlayerHighlightModel model)
 		{
 			AddPlayerHighlightMapper mapper = Factory.Create<AddPlayerHighlightMapper>();
 			mapper.UpdateEntity(model);
-			return Json(new object { });
+			return HttpStatusCode.OK;
 		}
 
 		[HttpPost]
-		public JsonResult DeletePlayerHighlight(int playerId)
+		public HttpStatusCode DeletePlayerHighlight(int playerId)
 		{
 			DeletePlayerHighlightMapper mapper = Factory.Create<DeletePlayerHighlightMapper>();
 			mapper.UpdateEntity(new PlayerHighlightModel { PlayerId = playerId });
-			return Json(new object { });
+			return HttpStatusCode.OK;
+		}
+
+		[HttpPost]
+		public HttpStatusCode DeleteAllHighlights()
+		{
+			DeleteAllHighlightsMapper mapper = Factory.Create<DeleteAllHighlightsMapper>();
+			mapper.UpdateEntity();
+			return HttpStatusCode.OK;
 		}
 	}
 }

@@ -183,6 +183,7 @@
     <Compile Include="Mappers\DraftSetupMapper.cs" />
     <Compile Include="Mappers\ActivateDraftMapper.cs" />
     <Compile Include="Mappers\DraftStatusMapper.cs" />
+    <Compile Include="Mappers\Highlights\DeleteAllHighlightsMapper.cs" />
     <Compile Include="Mappers\Highlights\DeletePlayerHighlightMapper.cs" />
     <Compile Include="Mappers\Highlights\HighlightsMapper.cs" />
     <Compile Include="Mappers\ManageDraftsMapper.cs" />

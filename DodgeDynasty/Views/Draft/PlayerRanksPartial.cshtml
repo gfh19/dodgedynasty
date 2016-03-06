@@ -51,9 +51,12 @@
 			<div class="pr-toggle-links">
 				<a class="pr-expand-all" href="#">Expand All</a>/<a class="pr-collapse-all" href="#">Collapse All</a>
 			</div>
-			<div class="pr-highlight-links">
-				<a class="pr-toggle-highlight" href="#">Show Highlighting *NEW!*</a>
-			</div>
+			@if (!DodgeDynasty.Shared.Utilities.ToBool(historyMode))
+			{
+				<div class="pr-highlight-links">
+					<a class="pr-toggle-highlight" href="#">Show Highlighting *NEW!*</a>
+				</div>
+			}
 		</div>
 	</div>
 	<div class="rank-container">
@@ -69,8 +72,8 @@
 					<div class="hq-empty-msg">
 						<p>
 							The Queue is empty.
-							<br /><br />Click player to add
-							<br />to the Highlight Queue!
+							<br /><br />Click a player to Highlight
+							<br />& add to the Queue!
 							<br /><br />(Drag and Drop players
 							<br />within Queue to reorder)
 						</p>
@@ -91,7 +94,7 @@
 							@{int hpCnt = 1;}
 							@foreach (var player in Model.HighlightedPlayers)
 							{
-								<tr class="highlighted @player.HighlightClass" data-player-id="@player.PlayerId">
+								<tr class="highlighted @player.HighlightClass @(player.PickNum != null ? "hq-selected" : "")" data-player-id="@player.PlayerId">
 									<td style="">@(hpCnt++)</td>
 									<td>@(player.RankNum != null ? player.RankNum.ToString() : "---")</td>
 									<td class="ba-player-name" data-player-id="@player.PlayerId">
@@ -119,11 +122,21 @@
 									}
 								</tr>
 							}
-							<td colspan="@(Model.AreYearByeWeeksFound() ? "6" : "5")" class="expand">
-								<a href="#" id="ExpandQueue" class="expand-link" data-expand="@Model.Options.ExpandQueue.ToString().ToLower()">More...</a>
-							</td>
+							<tr>
+								<td colspan="@(Model.AreYearByeWeeksFound() ? "6" : "5")" class="expand">
+									<a href="#" id="ExpandQueue" class="expand-link" data-expand="@Model.Options.ExpandQueue.ToString().ToLower()">More...</a>
+								</td>
+							</tr>
 						</tbody>
 					</table>
+					<span class="hq-delete-span">
+						&lt;<a href="#" class="hq-delete-all">Delete All Highlighting</a>&gt;
+						<div id="hqConfirmDelete" class="center hide-yo-kids" title="Delete All Highlighting">
+							<p>WARNING!</p>
+							<p>This will delete ALL current Player Highlights, and cannot be undone.</p>
+							<p>Are you sure?</p>
+						</div>
+					</span>
 				</div>
 			</div>
 			@Html.Partial("_PlayerRankCategory", Model.SetCategory(DodgeDynasty.Models.ViewTypes.RankCategory.Overall))
