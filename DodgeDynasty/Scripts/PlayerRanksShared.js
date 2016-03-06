@@ -132,6 +132,7 @@ function toggleHighlighting() {
 		bindHighlightColorSelect();
 		bindDeleteAllHighlighting();
 		bindCopyLastDraftHighlights();
+		bindSortableQueue();
 	}
 }
 
@@ -284,4 +285,28 @@ function bindCopyLastDraftHighlights() {
 
 function copyLastDraftHighlights() {
 	ajaxPost({}, "Rank/CopyLastDraftHighlights", pageBroadcastDraftHandler);
+}
+
+//jQuery UI Sortable for Drag & drop
+function bindSortableQueue() {
+	$(".queue-table tbody").sortable({
+		items: "tr:not(.unsortable)",
+		update: function (event, ui) {
+			var prevRow = $(ui.item).prev("tr[data-player-id]");
+			var prevPlayerId = "";
+			if (prevRow) {
+				prevPlayerId = $(prevRow).attr("data-player-id");
+			}
+			var playerQueueOrderModel = {
+				UpdatedPlayerId: $(ui.item).attr("data-player-id"),
+				PreviousPlayerId: prevPlayerId
+			}
+			updatePlayerQueueOrder(playerQueueOrderModel);
+		}
+	})
+}
+
+function updatePlayerQueueOrder(playerQueueOrderModel) {
+	addWaitCursor();
+	ajaxPost(playerQueueOrderModel, "Rank/UpdatePlayerQueueOrder", removeWaitCursor, pageBroadcastDraftHandler);
 }

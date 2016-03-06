@@ -73,7 +73,7 @@
 						<p>
 							Your Queue is empty.
 							<br /><br />Click a player to Highlight & add to your Queue!
-							<br /><br />(To reorder your Queue, drag & drop the players within them.)
+							<br /><br />(To reorder your Queue, Drag & Drop the players within them.)
 							<br />
 							<br /><br />
 							@{var lastHighlightsDraft = Model.GetLastHighlightsDraft();}
@@ -81,14 +81,14 @@
 							{
 								<br />
 								<span class="hq-copy-text">
-									&lt;<a href="#" class="hq-copy-last-draft">Copy @lastHighlightsDraft.LeagueName draft</a>&gt;
+									&lt;<a href="#" class="hq-copy-last-draft">Copy @lastHighlightsDraft.LeagueName queue</a>&gt;
 								</span>
 							}
 						</p>
 					</div>
 					<table class="ba-table queue-table " data-link="ExpandQueue">
 						<tbody>
-							<tr>
+							<tr class="unsortable">
 								<th style="">#</th>
 								<th>Rk</th>
 								<th class="hq-player-th">Player</th>
@@ -130,7 +130,7 @@
 									}
 								</tr>
 							}
-							<tr>
+							<tr class="unsortable">
 								<td colspan="@(Model.AreYearByeWeeksFound() ? "6" : "5")" class="expand">
 									<a href="#" id="ExpandQueue" class="expand-link" data-expand="@Model.Options.ExpandQueue.ToString().ToLower()">More...</a>
 								</td>

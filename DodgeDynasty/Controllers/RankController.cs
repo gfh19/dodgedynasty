@@ -94,5 +94,13 @@ namespace DodgeDynasty.Controllers
 			mapper.UpdateEntity();
 			return HttpStatusCode.OK;
 		}
+
+		[HttpPost]
+		public HttpStatusCode UpdatePlayerQueueOrder(PlayerQueueOrderModel model)
+		{
+			UpdatePlayerQueueOrderMapper mapper = Factory.Create<UpdatePlayerQueueOrderMapper>();
+			mapper.UpdateEntity(model);
+			return HttpStatusCode.OK;
+		}
 	}
 }

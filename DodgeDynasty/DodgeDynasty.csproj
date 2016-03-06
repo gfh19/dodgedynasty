@@ -187,6 +187,7 @@
     <Compile Include="Mappers\Highlights\DeleteAllHighlightsMapper.cs" />
     <Compile Include="Mappers\Highlights\DeletePlayerHighlightMapper.cs" />
     <Compile Include="Mappers\Highlights\HighlightsMapper.cs" />
+    <Compile Include="Mappers\Highlights\UpdatePlayerQueueOrderMapper.cs" />
     <Compile Include="Mappers\ManageDraftsMapper.cs" />
     <Compile Include="Mappers\ManageLeaguesMapper.cs" />
     <Compile Include="Mappers\MapperBase.cs">
@@ -223,6 +224,7 @@
     <Compile Include="Models\Highlights\HighlightedPlayer.cs" />
     <Compile Include="Models\Highlights\HighlightModel.cs" />
     <Compile Include="Models\Highlights\HighlightsModel.cs" />
+    <Compile Include="Models\Highlights\PlayerQueueOrderModel.cs" />
     <Compile Include="Models\IManageLeaguesModel.cs" />
     <Compile Include="Models\ActivateDraftModel.cs" />
     <Compile Include="Models\LocalPasswordModel.cs" />
