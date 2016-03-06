@@ -120,7 +120,6 @@ function getRankIdUrlPath() {
 //On load, hide/show highlighting based on what's in cookie
 function toggleHighlighting() {
 	if(!isHistoryMode()) {
-		bindShowHighlightingLink();
 		var showHighlighting = clientCookieOptions["ShowHighlighting"];
 		if (showHighlighting) {
 			enableHighlighting();
@@ -128,8 +127,11 @@ function toggleHighlighting() {
 			disableHighlighting();
 		}
 		changeHighlightColor();
+
+		bindShowHighlightingLink();
 		bindHighlightColorSelect();
 		bindDeleteAllHighlighting();
+		bindCopyLastDraftHighlights();
 	}
 }
 
@@ -208,12 +210,10 @@ function handlePlayerHighlightClick() {
 				removePlayerHighlighting(playerRow);
 			}
 		}
-		pageBroadcastDraftHandler();
 	}
 	else {
 		if ($("#highlight-color").val() != "<remove>") {
 			addPlayerHighlighting(playerRow);
-			pageBroadcastDraftHandler();
 		}
 	}
 }
@@ -223,19 +223,11 @@ function getPlayerHighlightModel(playerRow) {
 }
 
 function addPlayerHighlighting(playerRow) {
-	ajaxPost(getPlayerHighlightModel(playerRow), "Rank/AddPlayerHighlight", function (data) {
-		$(playerRow).addClass("highlighted");
-		$(playerRow).addClass($("#highlight-color").val());
-	});
+	ajaxPost(getPlayerHighlightModel(playerRow), "Rank/AddPlayerHighlight", pageBroadcastDraftHandler);
 }
 
 function removePlayerHighlighting(playerRow) {
-	ajaxPost(getPlayerHighlightModel(playerRow), "Rank/DeletePlayerHighlight", function (data) {
-		$(playerRow).removeClass("highlighted");
-		$.each(highlightColors, function (ix, color) {
-			$(playerRow).removeClass(color);
-		});
-	});
+	ajaxPost(getPlayerHighlightModel(playerRow), "Rank/DeletePlayerHighlight", pageBroadcastDraftHandler);
 }
 
 function changeHighlightColor() {
@@ -258,7 +250,7 @@ function bindDeleteAllHighlighting() {
 		$("#hqConfirmDelete").dialog({
 			resizable: false,
 			height: 'auto',
-			width: '260px',
+			width: '240px',
 			modal: true,
 			buttons: [
 					{
@@ -281,4 +273,15 @@ function bindDeleteAllHighlighting() {
 
 function toggleDeleteHighlightDisplay(shouldDisplay) {
 	toggleDisplay($(".hq-delete-span"), shouldDisplay);
+}
+
+function bindCopyLastDraftHighlights() {
+	$(".hq-copy-last-draft").click(function (e) {
+		e.preventDefault();
+		copyLastDraftHighlights();
+	});
+}
+
+function copyLastDraftHighlights() {
+	ajaxPost({}, "Rank/CopyLastDraftHighlights", pageBroadcastDraftHandler);
 }

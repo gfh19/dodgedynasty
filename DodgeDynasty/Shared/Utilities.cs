@@ -167,14 +167,19 @@ namespace DodgeDynasty.Shared
 
 		public static int GetLatestUserDraftId(User user, List<Draft> drafts, List<DraftOwner> draftOwners)
 		{
+			return GetLatestUserDraft(user, drafts, draftOwners).DraftId;
+        }
+
+		public static Draft GetLatestUserDraft(User user, List<Draft> drafts, List<DraftOwner> draftOwners)
+		{
 			var ownerDraftIds = draftOwners.Where(o => o.UserId == user.UserId).Select(o => o.DraftId).ToList();
 			var ownerDrafts = drafts.Where(d => ownerDraftIds.Contains(d.DraftId))
 				.OrderByDescending(o => o.IsActive).ThenBy(o => o.IsComplete).ThenBy(o => o.DraftDate).ToList();
 			if (ownerDrafts.Any(o => o.IsActive || !o.IsComplete))
 			{
-				return ownerDrafts.Select(d => d.DraftId).FirstOrDefault();
+				return ownerDrafts.FirstOrDefault();
 			}
-			return ownerDrafts.Select(d => d.DraftId).Last();
+			return ownerDrafts.Last();
 		}
 
 		public static bool IsUserAdmin()

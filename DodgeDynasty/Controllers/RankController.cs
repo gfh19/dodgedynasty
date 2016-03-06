@@ -86,5 +86,13 @@ namespace DodgeDynasty.Controllers
 			mapper.UpdateEntity();
 			return HttpStatusCode.OK;
 		}
+		
+		[HttpPost]
+		public HttpStatusCode CopyLastDraftHighlights()
+		{
+			CopyLastDraftHighlightsMapper mapper = Factory.Create<CopyLastDraftHighlightsMapper>();
+			mapper.UpdateEntity();
+			return HttpStatusCode.OK;
+		}
 	}
 }

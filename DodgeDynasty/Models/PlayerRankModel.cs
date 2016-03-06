@@ -10,6 +10,7 @@ using DodgeDynasty.Shared;
 using DodgeDynasty.Models.ViewTypes;
 using DodgeDynasty.Mappers.Highlights;
 using DodgeDynasty.Models.Highlights;
+using DodgeDynasty.Models.Drafts;
 
 namespace DodgeDynasty.Models
 {
@@ -236,6 +237,12 @@ namespace DodgeDynasty.Models
 		public string GetSelectedHighlightColor()
 		{
 			return !string.IsNullOrEmpty(Options.HighlightColor) ? Options.HighlightColor : null;
+        }
+
+		public SingleDraftModel GetLastHighlightsDraft()
+		{
+			CopyLastDraftHighlightsMapper mapper = new CopyLastDraftHighlightsMapper();
+			return mapper.GetModel();
         }
 	}
 }

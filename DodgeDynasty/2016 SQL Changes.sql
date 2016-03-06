@@ -212,7 +212,7 @@ GO
 
 --TODO:  Add the Indexes I put in the DB for PlayerHighlight !!!
 --TODO:  Add the Index & Uniqueness constraint for HighlightClass in Highlight table
-
+-- NOTE:  DraftYear cannot be null going forward
 
 COMMIT TRANSACTION;
 

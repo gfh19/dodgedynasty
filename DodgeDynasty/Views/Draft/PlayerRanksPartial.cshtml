@@ -71,11 +71,19 @@
 				<div class="">
 					<div class="hq-empty-msg">
 						<p>
-							The Queue is empty.
-							<br /><br />Click a player to Highlight
-							<br />& add to the Queue!
-							<br /><br />(Drag and Drop players
-							<br />within Queue to reorder)
+							Your Queue is empty.
+							<br /><br />Click a player to Highlight & add to your Queue!
+							<br /><br />(To reorder your Queue, drag & drop the players within them.)
+							<br />
+							<br /><br />
+							@{var lastHighlightsDraft = Model.GetLastHighlightsDraft();}
+							@if (lastHighlightsDraft != null)
+							{
+								<br />
+								<span class="hq-copy-text">
+									&lt;<a href="#" class="hq-copy-last-draft">Copy @lastHighlightsDraft.LeagueName draft</a>&gt;
+								</span>
+							}
 						</p>
 					</div>
 					<table class="ba-table queue-table " data-link="ExpandQueue">
@@ -83,7 +91,7 @@
 							<tr>
 								<th style="">#</th>
 								<th>Rk</th>
-								<th style="min-width: 115px">Player</th>
+								<th class="hq-player-th">Player</th>
 								<th>Tm</th>
 								<th>Pos</th>
 								@if (Model.AreYearByeWeeksFound())
@@ -133,8 +141,7 @@
 						&lt;<a href="#" class="hq-delete-all">Delete All Highlighting</a>&gt;
 						<div id="hqConfirmDelete" class="center hide-yo-kids" title="Delete All Highlighting">
 							<p>WARNING!</p>
-							<p>This will delete ALL current Player Highlights, and cannot be undone.</p>
-							<p>Are you sure?</p>
+							<p>This will delete your Player Highlights, and cannot be undone.</p>
 						</div>
 					</span>
 				</div>
