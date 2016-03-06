@@ -103,7 +103,7 @@
 							@foreach (var player in Model.HighlightedPlayers)
 							{
 								<tr class="highlighted @player.HighlightClass @(player.PickNum != null ? "hq-selected" : "")" data-player-id="@player.PlayerId">
-									<td style="">@(hpCnt++)</td>
+									<td class="hq-rank-num" data-rank-num="@hpCnt">@(hpCnt++)</td>
 									<td>@(player.RankNum != null ? player.RankNum.ToString() : "---")</td>
 									<td class="ba-player-name" data-player-id="@player.PlayerId">
 										@if (Model.IsDraftActive() && Model.IsUserTurn() && player.PickNum == null)

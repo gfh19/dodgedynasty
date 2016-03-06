@@ -19,7 +19,8 @@ namespace DodgeDynasty
 						"~/Scripts/lib/jquery.signalR-{version}.js",
 						"~/Scripts/lib/jquery-ui-{version}.js",	//jquery-ui MUST come after bootstrap
 						"~/Scripts/lib/moment.js",
-						"~/Scripts/lib/aloha.js"
+						"~/Scripts/lib/aloha.js",
+						"~/Scripts/lib/jQuery-addTouch.js"
 						));
 
 			bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css"));

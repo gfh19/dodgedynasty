@@ -308,5 +308,18 @@ function bindSortableQueue() {
 
 function updatePlayerQueueOrder(playerQueueOrderModel) {
 	addWaitCursor();
-	ajaxPost(playerQueueOrderModel, "Rank/UpdatePlayerQueueOrder", removeWaitCursor, pageBroadcastDraftHandler);
+	ajaxPost(playerQueueOrderModel, "Rank/UpdatePlayerQueueOrder", function () {
+		updateQueueRankNums(playerQueueOrderModel);
+		removeWaitCursor();
+	}, pageBroadcastDraftHandler);
+}
+
+function updateQueueRankNums(playerQueueOrderModel) {
+	var newRankNum = 1;
+	var playerRows = $("td[data-rank-num]");
+	$.each(playerRows, function (index, player) {
+		$(player).attr("data-rank-num", newRankNum);
+		$(player).text(newRankNum);
+		newRankNum++;
+	});
 }
