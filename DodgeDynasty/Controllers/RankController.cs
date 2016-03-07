@@ -7,6 +7,7 @@ using DodgeDynasty.Filters;
 using DodgeDynasty.Mappers.Highlights;
 using DodgeDynasty.Models.Highlights;
 using System.Net;
+using DodgeDynasty.UIHelpers;
 
 namespace DodgeDynasty.Controllers
 {
@@ -64,19 +65,24 @@ namespace DodgeDynasty.Controllers
 		}
 
 		[HttpPost]
-		public HttpStatusCode AddPlayerHighlight(PlayerHighlightModel model)
+		public ActionResult AddPlayerHighlight(PlayerHighlightModel model, bool showBestAvailable)
 		{
 			AddPlayerHighlightMapper mapper = Factory.Create<AddPlayerHighlightMapper>();
 			mapper.UpdateEntity(model);
-			return HttpStatusCode.OK;
+			PlayerRankHelper helper = Factory.Create<PlayerRankHelper>();
+			var playerRankModel = helper.GetPlayerRankPartial(null, showBestAvailable, Request, Response);
+			var result = PartialView(helper.GetPlayerRankPartialName(showBestAvailable), playerRankModel);
+            return result;
 		}
 
 		[HttpPost]
-		public HttpStatusCode DeletePlayerHighlight(int playerId)
+		public ActionResult DeletePlayerHighlight(int playerId, bool showBestAvailable)
 		{
 			DeletePlayerHighlightMapper mapper = Factory.Create<DeletePlayerHighlightMapper>();
 			mapper.UpdateEntity(new PlayerHighlightModel { PlayerId = playerId });
-			return HttpStatusCode.OK;
+			PlayerRankHelper helper = Factory.Create<PlayerRankHelper>();
+			var playerRankModel = helper.GetPlayerRankPartial(null, showBestAvailable, Request, Response);
+			return PartialView(helper.GetPlayerRankPartialName(showBestAvailable), playerRankModel);
 		}
 
 		[HttpPost]

@@ -7,5 +7,5 @@
 	<script type="text/javascript" src="@Url.Script("~/Scripts/PlayerRanksShared.js")"></script>
 }
 <div id="bestAvailable">
-	@Html.Partial("PlayerRanksPartial", Model)
+	@Html.Partial(Url.Content("../Draft/PlayerRanksPartial"), Model)
 </div>

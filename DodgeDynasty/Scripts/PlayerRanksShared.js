@@ -220,15 +220,19 @@ function handlePlayerHighlightClick() {
 }
 
 function getPlayerHighlightModel(playerRow) {
-	return { PlayerId: $(playerRow).attr("data-player-id"), HighlightClass: $("#highlight-color").val() };
+	return {
+		PlayerId: $(playerRow).attr("data-player-id"),
+		HighlightClass: $("#highlight-color").val(),
+		ShowBestAvailable: replaceElementId == "#bestAvailable"
+	};
 }
 
 function addPlayerHighlighting(playerRow) {
-	ajaxPost(getPlayerHighlightModel(playerRow), "Rank/AddPlayerHighlight", pageBroadcastDraftHandler);
+	ajaxPostReplace(getPlayerHighlightModel(playerRow), "Rank/AddPlayerHighlight", replaceElementId);
 }
 
 function removePlayerHighlighting(playerRow) {
-	ajaxPost(getPlayerHighlightModel(playerRow), "Rank/DeletePlayerHighlight", pageBroadcastDraftHandler);
+	ajaxPostReplace(getPlayerHighlightModel(playerRow), "Rank/DeletePlayerHighlight", replaceElementId);
 }
 
 function changeHighlightColor() {
@@ -291,6 +295,8 @@ function copyLastDraftHighlights() {
 function bindSortableQueue() {
 	$(".queue-table tbody").sortable({
 		items: "tr:not(.unsortable)",
+		delay: 175,
+		scrollSensitivity: 10,
 		update: function (event, ui) {
 			var prevRow = $(ui.item).prev("tr[data-player-id]");
 			var prevPlayerId = "";

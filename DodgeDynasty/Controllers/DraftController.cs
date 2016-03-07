@@ -85,6 +85,7 @@ namespace DodgeDynasty.Controllers
 		[OwnerRankAccess]
 		public ActionResult BestAvailablePartial(string rankId)
 		{
+			//TBD
 			var options = GetPlayerRankOptions();
 			PlayerRankModel playerRankModel = DetermineRankModel(rankId, null, options, false);
 			playerRankModel.Options = options;
@@ -107,6 +108,7 @@ namespace DodgeDynasty.Controllers
 		[OwnerRankAccess]
 		public ActionResult PlayerRanksPartial(string rankId)
 		{
+			//TBD
 			var options = GetPlayerRankOptions();
 			PlayerRankModel playerRankModel = DetermineRankModel(rankId, null, options, false);
 			playerRankModel.Options = options;
@@ -129,6 +131,7 @@ namespace DodgeDynasty.Controllers
 			return PartialView(Constants.Views.RankingsList, model);
 		}
 
+		//TBD
 		private PlayerRankModel DetermineRankModel(string id, string draftId, PlayerRankOptions options, bool setCookie = true)
 		{
 			int? draftIdInt = null;

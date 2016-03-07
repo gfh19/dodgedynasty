@@ -283,6 +283,7 @@
     <Compile Include="Shared\Extensions\SessionExtensions.cs" />
     <Compile Include="Shared\Utilities.cs" />
     <Compile Include="Controllers\RankController.cs" />
+    <Compile Include="UIHelpers\PlayerRankHelper.cs" />
     <Compile Include="WebSockets\DraftHub.cs" />
     <Compile Include="WebSockets\DraftHubHelper.cs" />
     <Compile Include="WebSockets\DD_SignalR.cs" />
@@ -489,7 +490,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="DataHelpers\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

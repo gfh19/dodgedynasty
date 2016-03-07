@@ -7,7 +7,7 @@
 			initPlayerRanksShared();
 		});
 	</script>
-	@Html.Partial("CurrentDraftPickPartial", Model)
+	@Html.Partial(Url.Content("../Draft/CurrentDraftPickPartial"), Model)
 	<div class="rank-header">
 		<div class="rank-name" data-rank-id="@Model.CurrentRank.RankId">
 			@if (!string.IsNullOrEmpty(Model.CurrentRank.Url))
@@ -146,12 +146,12 @@
 					</span>
 				</div>
 			</div>
-			@Html.Partial("_PlayerRankCategory", Model.SetCategory(DodgeDynasty.Models.ViewTypes.RankCategory.Overall))
-			@Html.Partial("_PlayerRankCategory", Model.SetCategory(DodgeDynasty.Models.ViewTypes.RankCategory.QB))
-			@Html.Partial("_PlayerRankCategory", Model.SetCategory(DodgeDynasty.Models.ViewTypes.RankCategory.RB))
-			@Html.Partial("_PlayerRankCategory", Model.SetCategory(DodgeDynasty.Models.ViewTypes.RankCategory.WRTE))
-			@Html.Partial("_PlayerRankCategory", Model.SetCategory(DodgeDynasty.Models.ViewTypes.RankCategory.DEF))
-			@Html.Partial("_PlayerRankCategory", Model.SetCategory(DodgeDynasty.Models.ViewTypes.RankCategory.K))
+			@Html.Partial(Url.Content("../Draft/_PlayerRankCategory"), Model.SetCategory(DodgeDynasty.Models.ViewTypes.RankCategory.Overall))
+            @Html.Partial(Url.Content("../Draft/_PlayerRankCategory"), Model.SetCategory(DodgeDynasty.Models.ViewTypes.RankCategory.QB))
+			@Html.Partial(Url.Content("../Draft/_PlayerRankCategory"), Model.SetCategory(DodgeDynasty.Models.ViewTypes.RankCategory.RB))
+			@Html.Partial(Url.Content("../Draft/_PlayerRankCategory"), Model.SetCategory(DodgeDynasty.Models.ViewTypes.RankCategory.WRTE))
+			@Html.Partial(Url.Content("../Draft/_PlayerRankCategory"), Model.SetCategory(DodgeDynasty.Models.ViewTypes.RankCategory.DEF))
+			@Html.Partial(Url.Content("../Draft/_PlayerRankCategory"), Model.SetCategory(DodgeDynasty.Models.ViewTypes.RankCategory.K))
 		</div>
 	</div>
 </div>

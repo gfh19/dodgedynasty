@@ -1485,7 +1485,7 @@ ul.menu li a.current-page
 	border-radius: 6px;
 	-webkit-border-radius: 6px;
 	margin-right: 6px;
-	box-shadow: dimgrey 3px 3px
+	box-shadow: dimgrey 4px 4px
 }
 .hq-color-span {
 	display: inline-block;
@@ -2378,6 +2378,10 @@ span.player-select
 	.pr-highlight-section {
 		display: inline-block;
 		margin-right: 0px;
+	}
+	.pr-highlight-section td {
+		max-width: 120px;
+		padding-right: 3px;
 	}
 	/* Setup Draft
 	------------------------------------*/

@@ -1,15 +1,14 @@
 ﻿SET XACT_ABORT ON
 BEGIN TRANSACTION;
 
+/* Below Run in Production on 3/6/16 */
+
 /* 3/3/15 */
 
 USE [Home]
 GO
 
-
-
-
-/****** Object:  Table [dbo].[Highlight]    Script Date: 3/3/2016 10:58:05 PM ******/
+/****** Object:  Table [dbo].[Highlight]    Script Date: 3/6/2016 2:27:19 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -21,6 +20,7 @@ GO
 
 CREATE TABLE [dbo].[Highlight](
 	[HighlightId] [int] IDENTITY(1,1) NOT NULL,
+	[HighlightName] [varchar](50) NOT NULL,
 	[HighlightClass] [varchar](50) NOT NULL,
 	[HighlightValue] [varchar](50) NOT NULL,
 	[AddTimestamp] [datetime] NOT NULL,
@@ -35,6 +35,9 @@ GO
 
 SET ANSI_PADDING OFF
 GO
+
+
+
 
 
 
@@ -209,13 +212,12 @@ GO
 
 
 
+COMMIT TRANSACTION;
+
 
 --TODO:  Add the Indexes I put in the DB for PlayerHighlight !!!
 --TODO:  Add the Index & Uniqueness constraint for HighlightClass in Highlight table
 -- NOTE:  DraftYear cannot be null going forward
-
-COMMIT TRANSACTION;
-
 
 
 /* ... Below Run in Production on ... */
