@@ -1484,8 +1484,8 @@ ul.menu li a.current-page
 	border: 2px solid darkblue;
 	border-radius: 6px;
 	-webkit-border-radius: 6px;
-	margin-right: 6px;
-	box-shadow: dimgrey 4px 4px
+	margin-right: 7px;
+	box-shadow: #898989 3px 3px
 }
 .hq-color-span {
 	display: inline-block;

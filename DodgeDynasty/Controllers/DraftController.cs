@@ -117,6 +117,16 @@ namespace DodgeDynasty.Controllers
 		}
 
 		[HttpGet]
+		public ActionResult HighlightQueuePartial()
+		{
+			var options = GetPlayerRankOptions();
+			PlayerRankModel playerRankModel = DetermineRankModel(null, null, options);
+			playerRankModel.Options = options;
+			playerRankModel.GetAllPlayerRanksByPosition();
+			return PartialView(Constants.Views.HighlightQueuePartial, playerRankModel);
+		}
+
+		[HttpGet]
 		public ActionResult RankingsList(string id)
 		{
 			GetPlayerRankOptions();

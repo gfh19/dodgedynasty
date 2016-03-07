@@ -65,24 +65,19 @@ namespace DodgeDynasty.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult AddPlayerHighlight(PlayerHighlightModel model, bool showBestAvailable)
+		public HttpStatusCode AddPlayerHighlight(PlayerHighlightModel model)
 		{
 			AddPlayerHighlightMapper mapper = Factory.Create<AddPlayerHighlightMapper>();
 			mapper.UpdateEntity(model);
-			PlayerRankHelper helper = Factory.Create<PlayerRankHelper>();
-			var playerRankModel = helper.GetPlayerRankPartial(null, showBestAvailable, Request, Response);
-			var result = PartialView(helper.GetPlayerRankPartialName(showBestAvailable), playerRankModel);
-            return result;
+			return HttpStatusCode.OK;
 		}
 
 		[HttpPost]
-		public ActionResult DeletePlayerHighlight(int playerId, bool showBestAvailable)
+		public HttpStatusCode DeletePlayerHighlight(int playerId)
 		{
 			DeletePlayerHighlightMapper mapper = Factory.Create<DeletePlayerHighlightMapper>();
 			mapper.UpdateEntity(new PlayerHighlightModel { PlayerId = playerId });
-			PlayerRankHelper helper = Factory.Create<PlayerRankHelper>();
-			var playerRankModel = helper.GetPlayerRankPartial(null, showBestAvailable, Request, Response);
-			return PartialView(helper.GetPlayerRankPartialName(showBestAvailable), playerRankModel);
+			return HttpStatusCode.OK;
 		}
 
 		[HttpPost]

@@ -4,8 +4,8 @@ var clientCookieOptions = null;
 function initPlayerRanksShared() {
 	syncCookies();
 	toggleHighlighting();
-	bindExpandLinks();
 	bindToggleAllLinks();
+	bindExpandLinks();
 	toggleRanksWindows();
 	bindPlayerLinks();
 }
@@ -18,6 +18,7 @@ function bindExpandLinks() {
 }
 
 function bindToggleLink(link) {
+	$(link).unbind("click");
 	$(link).click(function (e) {
 		e.preventDefault();
 		var linkId = $(link).attr('id');
@@ -50,12 +51,17 @@ function bindToggleAllLinks() {
 function bindPlayerLinks() {
 	var playerLinks = $(".player-link");
 	$.each(playerLinks, function (index, link) {
-		$(link).click(function (e) {
-			e.preventDefault();
-			var playerCol = $(link).closest('.ba-player-name');
-			var playerId = $(playerCol).data('player-id');
-			location.href = baseURL + "Draft/Pick?playerId=" + playerId;
-		});
+		bindPlayerLink(link);
+	});
+}
+
+function bindPlayerLink(link) {
+	$(link).unbind("click");
+	$(link).click(function (e) {
+		e.preventDefault();
+		var playerCol = $(link).closest('.ba-player-name');
+		var playerId = $(playerCol).data('player-id');
+		location.href = baseURL + "Draft/Pick?playerId=" + playerId;
 	});
 }
 
@@ -78,10 +84,14 @@ function flipCookieValue(expandLinkId) {
 //On load, opens tables to whatever is stored in cookie
 function toggleRanksWindows() {
 	$.each($(".ba-table"), function (index, table) {
-		var linkId = $(table).attr("data-link");
-		var expandRows = clientCookieOptions[linkId];
-		toggleExpandTableRows(table, expandRows, linkId);
+		toggleRanksTable(table);
 	});
+}
+
+function toggleRanksTable(table) {
+	var linkId = $(table).attr("data-link");
+	var expandRows = clientCookieOptions[linkId];
+	toggleExpandTableRows(table, expandRows, linkId);
 }
 
 function toggleExpandTableRows(table, expandRows, linkId) {
@@ -115,25 +125,46 @@ function getRankIdUrlPath() {
 }
 
 
+
+
+
 //Highlighting
 
 //On load, hide/show highlighting based on what's in cookie
-function toggleHighlighting() {
-	if(!isHistoryMode()) {
+function toggleHighlighting(isQueueRefresh) {
+	if (!isHistoryMode()) {
 		var showHighlighting = clientCookieOptions["ShowHighlighting"];
 		if (showHighlighting) {
 			enableHighlighting();
 		} else {
 			disableHighlighting();
 		}
+		if (isQueueRefresh) {
+			bindExpandLinks();
+			//Toggle Queue window must come after highlight section shown, or could pop to top of screen.  Go figure.
+			toggleQueueWindow();
+			bindQueuePlayerLinks();
+		}
+
 		changeHighlightColor();
 
 		bindShowHighlightingLink();
 		bindHighlightColorSelect();
-		bindDeleteAllHighlighting();
+		bindDeleteAllHighlightingDialog();
 		bindCopyLastDraftHighlights();
 		bindSortableQueue();
 	}
+}
+
+function toggleQueueWindow() {
+	toggleRanksTable($(".pr-highlight-section .ba-table"));
+}
+
+function bindQueuePlayerLinks() {
+	var playerLinks = $(".pr-highlight-section .player-link");
+	$.each(playerLinks, function (index, link) {
+		bindPlayerLink(link);
+	});
 }
 
 function enableHighlighting() {
@@ -143,7 +174,9 @@ function enableHighlighting() {
 	$(".pr-toggle-highlight").addClass("enabled");
 	$("tr[data-player-id]").addClass("on");
 	$(".pr-toggle-highlight").text("Turn Off Highlighting (also new)");
+	$("tr[data-player-id]").unbind("click");
 	$("tr[data-player-id]").click(function (e) {
+		e.preventDefault();
 		handlePlayerHighlightClick();
 	});
 }
@@ -182,17 +215,18 @@ function toggleQueueDisplay() {
 			$(".queue-table .expand").parent("tr").addClass("hide-yo-wives");
 		}
 		toggleDeleteHighlightDisplay(!$("#ExpandQueue").is(":visible") || $("#ExpandQueue").data("expand"));
-		//$(".hq-delete-span").removeClass("hide-yo-wives");
 	}
 	else {
 		$(".queue-table").addClass("hide-yo-wives");
 		$(".hq-empty-msg").removeClass("hide-yo-wives");
-		//$(".hq-delete-span").addClass("hide-yo-wives");
 		toggleDeleteHighlightDisplay(false);
 	}
 }
 
 function handlePlayerHighlightClick() {
+	if ($(event.target).hasClass("player-link")) {
+		return;
+	}
 	var playerRow = $(event.target).closest("tr");
 	if ($(playerRow).hasClass("highlighted")) {
 		if ($(playerRow).parents(".queue-table").length > 0) {
@@ -201,7 +235,7 @@ function handlePlayerHighlightClick() {
 			}
 			else {
 				addPlayerHighlighting(playerRow);
-			}
+		}
 		}
 		else {
 			if ($("#highlight-color").val() != "<remove>" && !$(playerRow).hasClass($("#highlight-color").val())) {
@@ -209,30 +243,69 @@ function handlePlayerHighlightClick() {
 			}
 			else {
 				removePlayerHighlighting(playerRow);
-			}
 		}
+	}
 	}
 	else {
 		if ($("#highlight-color").val() != "<remove>") {
 			addPlayerHighlighting(playerRow);
-		}
+	}
 	}
 }
 
 function getPlayerHighlightModel(playerRow) {
 	return {
 		PlayerId: $(playerRow).attr("data-player-id"),
-		HighlightClass: $("#highlight-color").val(),
-		ShowBestAvailable: replaceElementId == "#bestAvailable"
+		HighlightClass: $("#highlight-color").val()
 	};
 }
 
 function addPlayerHighlighting(playerRow) {
-	ajaxPostReplace(getPlayerHighlightModel(playerRow), "Rank/AddPlayerHighlight", replaceElementId);
+	var playerRankModel = getPlayerHighlightModel(playerRow);
+	ajaxPost(playerRankModel, "Rank/AddPlayerHighlight", function () {
+		refreshHighlightQueue(playerRankModel);
+		clientAddPlayerHighlight(playerRankModel);
+	}, pageBroadcastDraftHandler);	//Refresh whole ranks partial only on error
 }
 
 function removePlayerHighlighting(playerRow) {
-	ajaxPostReplace(getPlayerHighlightModel(playerRow), "Rank/DeletePlayerHighlight", replaceElementId);
+	var playerRankModel = getPlayerHighlightModel(playerRow);
+	ajaxPost(playerRankModel, "Rank/DeletePlayerHighlight", function () {
+		refreshHighlightQueue(playerRankModel);
+		clientRemovePlayerHighlight(playerRankModel);
+	}, pageBroadcastDraftHandler);	//Refresh whole ranks partial only on error
+}
+
+function refreshHighlightQueue(playerRankModel) {
+	ajaxGetReplace("Draft/HighlightQueuePartial", "#highlightQueuePartial", function () {
+		toggleHighlighting(true);
+	}, pageBroadcastDraftHandler);	//Refresh whole ranks partial only on error
+}
+
+function clientAddPlayerHighlight(playerRankModel) {
+	var playerRows = $("tr[data-player-id=" + playerRankModel.PlayerId + "]");
+	$.each(playerRows, function (ix, playerRow) {
+		wipeAllHighlightColors(playerRow);
+		$(playerRow).addClass("highlighted " + playerRankModel.HighlightClass);
+	});
+}
+
+function clientRemovePlayerHighlight(playerRankModel) {
+	var playerRows = $("tr[data-player-id=" + playerRankModel.PlayerId + "]");
+	$.each(playerRows, function (ix, playerRow) {
+		wipeAllHighlightColors(playerRow);
+	});
+}
+
+function wipeAllHighlightColors(playerRow) {
+	$.each(_highlightColors, function (ix, color) {
+		$(playerRow).removeClass(color);
+	});
+}
+
+
+function bindHighlightColorSelect() {
+	$("#highlight-color").change(changeHighlightColor);
 }
 
 function changeHighlightColor() {
@@ -245,11 +318,7 @@ function changeHighlightColor() {
 	setCookieOptions(clientCookieOptions);
 }
 
-function bindHighlightColorSelect() {
-	$("#highlight-color").change(changeHighlightColor);
-}
-
-function bindDeleteAllHighlighting() {
+function bindDeleteAllHighlightingDialog() {
 	$(".hq-delete-all").click(function (e) {
 		e.preventDefault();
 		$("#hqConfirmDelete").dialog({

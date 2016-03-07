@@ -291,6 +291,7 @@ function callRefreshPage(url, elementId) {
 		restoreTouchScrollPos(elementId);
 		setPickTimer(false);
 	});
+	//TODO:  Add refresh Chat window for back button defect
 }
 
 function getDynamicUrl(url) {
@@ -603,8 +604,8 @@ function ajaxGetJson(url, successFn) {
 	$.get(baseURL + url, {}, successFn, "JSON");
 };
 
-function ajaxGet(url, successFn) {
-	$.get(baseURL + url, successFn);
+function ajaxGet(url, successFn, errorFn) {
+	$.get(baseURL + url, successFn).fail(errorFn);
 };
 
 function ajaxPost(model, url, successFn, errorFn, dataType, makeSync) {
@@ -622,13 +623,13 @@ function ajaxPost(model, url, successFn, errorFn, dataType, makeSync) {
 	});
 };
 
-function ajaxGetReplace(url, elementId, successFn) {
+function ajaxGetReplace(url, elementId, successFn, errorFn) {
 	ajaxGet(url, function (response) {
 		replaceWith(elementId, response);
 		if (successFn) {
 			successFn();
 		}
-	});
+	}, errorFn);
 }
 
 function ajaxPostReplace(model, url, elementId, successFn, errorFn, dataType, makeSync) {

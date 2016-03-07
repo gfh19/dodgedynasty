@@ -198,7 +198,6 @@
     <Compile Include="Mappers\Highlights\AddPlayerHighlightMapper.cs" />
     <Compile Include="Mappers\Shared\ColorStylesMapper.cs" />
     <Compile Include="Mappers\Shared\DraftChatMapper.cs" />
-    <Compile Include="Mappers\Shared\PlayerSeasonHelper.cs" />
     <Compile Include="Mappers\Shared\SharedUserInfoMapper.cs" />
     <Compile Include="Mappers\Site\MessagesCountMapper.cs">
       <SubType>Code</SubType>
@@ -457,6 +456,7 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\_DraftChatPartial.cshtml" />
     <Content Include="Views\Draft\_PlayerRankCategory.cshtml" />
+    <Content Include="Views\Draft\HighlightQueuePartial.cshtml" />
     <None Include="Web.local.config">
       <SubType>Designer</SubType>
     </None>
