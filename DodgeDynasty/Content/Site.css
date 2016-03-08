@@ -1487,6 +1487,9 @@ ul.menu li a.current-page
 	margin-right: 7px;
 	box-shadow: #898989 3px 3px
 }
+.highlight-locked {
+	min-height: 362.5px !important;
+}
 .hq-color-span {
 	display: inline-block;
 	width: 100%;

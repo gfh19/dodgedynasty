@@ -729,6 +729,7 @@ function addQSValue(urlString, qsValue) {
 	return urlString + "?" + qsValue;
 }
 
+//Already exists as javascript "toggle"; refactor
 function toggleDisplay(element, condition) {
 	if (condition) {
 		$(element).show();

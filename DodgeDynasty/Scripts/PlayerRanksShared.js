@@ -104,8 +104,8 @@ function toggleExpandTableRows(table, expandRows, linkId) {
 		$("tr:last", table).show();
 		$("#" + linkId).text("More...");
 	}
-	if (linkId == "ExpandQueue" && $("#ExpandQueue").is(":visible")) {
-		toggleDeleteHighlightDisplay(expandRows);
+	if (linkId == "ExpandQueue") {
+		toggleDeleteHighlightDisplay();
 	}
 }
 
@@ -133,12 +133,7 @@ function getRankIdUrlPath() {
 //On load, hide/show highlighting based on what's in cookie
 function toggleHighlighting(isQueueRefresh) {
 	if (!isHistoryMode()) {
-		var showHighlighting = clientCookieOptions["ShowHighlighting"];
-		if (showHighlighting) {
-			enableHighlighting();
-		} else {
-			disableHighlighting();
-		}
+		toggleEnableHighlighting();
 		if (isQueueRefresh) {
 			bindExpandLinks();
 			//Toggle Queue window must come after highlight section shown, or could pop to top of screen.  Go figure.
@@ -152,7 +147,15 @@ function toggleHighlighting(isQueueRefresh) {
 		bindHighlightColorSelect();
 		bindDeleteAllHighlightingDialog();
 		bindCopyLastDraftHighlights();
-		bindSortableQueue();
+		bindEditHighlighting(".pr-empty-edit-link");
+	}
+}
+
+function toggleEnableHighlighting() {
+	if (clientCookieOptions["ShowHighlighting"]) {
+		enableHighlighting();
+	} else {
+		disableHighlighting();
 	}
 }
 
@@ -170,37 +173,76 @@ function bindQueuePlayerLinks() {
 function enableHighlighting() {
 	$(".pr-highlight-section").removeClass("hide-yo-wives");
 	toggleQueueDisplay();
-	$(".ba-category").css("cursor", "pointer");
-	$(".pr-toggle-highlight").addClass("enabled");
 	$("tr[data-player-id]").addClass("on");
-	$(".pr-toggle-highlight").text("Turn Off Highlighting (also new)");
+	$(".pr-toggle-highlight").text("Hide Highlighting");
+	$(".pr-highlight-options").toggle(true);
+	toggleEditHighlighting();
+	bindEditHighlightingLink();
+}
+
+function disableHighlighting() {
+	$(".pr-highlight-section").addClass("hide-yo-wives");
+	$("tr[data-player-id]").removeClass("on");
+	$(".pr-toggle-highlight").text("Show Highlighting *NEW!*");
+	$(".pr-highlight-options").toggle(false);
+	disableEditHighlighting();
+}
+
+function bindShowHighlightingLink() {
+	$(".pr-toggle-highlight").unbind("click");
+	$(".pr-toggle-highlight").click(function (e) {
+		e.preventDefault();
+		flipCookieValue("ShowHighlighting");
+		toggleEnableHighlighting();
+	});
+}
+
+function bindEditHighlightingLink() {
+	bindEditHighlighting(".pr-edit-highlight");
+}
+
+function bindEditHighlighting(link) {
+	$(link).unbind("click");
+	$(link).click(function (e) {
+		e.preventDefault();
+		flipCookieValue("LockHighlighting");
+		toggleEditHighlighting();
+		if (!clientCookieOptions["LockHighlighting"]) {
+			refreshHighlightQueue();
+		}
+	});
+}
+
+function toggleEditHighlighting() {
+	var lockHighlighting = clientCookieOptions["LockHighlighting"];
+	$(".hq-color-span").toggle(!lockHighlighting);
+	$(".pr-highlight-section").toggleClass("highlight-locked", lockHighlighting);
+	$(".pr-empty-edit-msg").toggle(lockHighlighting);
+	if (lockHighlighting) {
+		$(".pr-edit-highlight").text("Turn Edit ON");
+		disableEditHighlighting();
+	}
+	else {
+		$(".pr-edit-highlight").text("Turn Edit Off");
+		enableEditHighlighting();
+	}
+	toggleDeleteHighlightDisplay();
+}
+
+function enableEditHighlighting() {
+	$(".ba-category").css("cursor", "pointer");
 	$("tr[data-player-id]").unbind("click");
 	$("tr[data-player-id]").click(function (e) {
 		e.preventDefault();
 		handlePlayerHighlightClick();
 	});
+	bindSortableQueue();
 }
 
-function disableHighlighting() {
-	$(".pr-highlight-section").addClass("hide-yo-wives");
-	$("tr[data-player-id]").unbind("click");
+function disableEditHighlighting() {
 	$(".ba-category").css("cursor", "auto");
-	$(".pr-toggle-highlight").removeClass("enabled");
-	$("tr[data-player-id]").removeClass("on");
-	$(".pr-toggle-highlight").text("Show Highlighting *NEW!*");
-}
-
-function bindShowHighlightingLink() {
-	$(".pr-toggle-highlight").click(function (e) {
-		e.preventDefault();
-		if ($(".pr-toggle-highlight").hasClass("enabled")) {
-			disableHighlighting();
-		}
-		else {
-			enableHighlighting();
-		}
-		flipCookieValue("ShowHighlighting");
-	});
+	$("tr[data-player-id]").unbind("click");
+	unbindSortableQueue();
 }
 
 function toggleQueueDisplay() {
@@ -214,13 +256,12 @@ function toggleQueueDisplay() {
 		else {
 			$(".queue-table .expand").parent("tr").addClass("hide-yo-wives");
 		}
-		toggleDeleteHighlightDisplay(!$("#ExpandQueue").is(":visible") || $("#ExpandQueue").data("expand"));
 	}
 	else {
 		$(".queue-table").addClass("hide-yo-wives");
 		$(".hq-empty-msg").removeClass("hide-yo-wives");
-		toggleDeleteHighlightDisplay(false);
 	}
+	toggleDeleteHighlightDisplay();
 }
 
 function handlePlayerHighlightClick() {
@@ -263,7 +304,7 @@ function getPlayerHighlightModel(playerRow) {
 function addPlayerHighlighting(playerRow) {
 	var playerRankModel = getPlayerHighlightModel(playerRow);
 	ajaxPost(playerRankModel, "Rank/AddPlayerHighlight", function () {
-		refreshHighlightQueue(playerRankModel);
+		refreshHighlightQueue();
 		clientAddPlayerHighlight(playerRankModel);
 	}, pageBroadcastDraftHandler);	//Refresh whole ranks partial only on error
 }
@@ -271,12 +312,12 @@ function addPlayerHighlighting(playerRow) {
 function removePlayerHighlighting(playerRow) {
 	var playerRankModel = getPlayerHighlightModel(playerRow);
 	ajaxPost(playerRankModel, "Rank/DeletePlayerHighlight", function () {
-		refreshHighlightQueue(playerRankModel);
+		refreshHighlightQueue();
 		clientRemovePlayerHighlight(playerRankModel);
 	}, pageBroadcastDraftHandler);	//Refresh whole ranks partial only on error
 }
 
-function refreshHighlightQueue(playerRankModel) {
+function refreshHighlightQueue() {
 	ajaxGetReplace("Draft/HighlightQueuePartial", "#highlightQueuePartial", function () {
 		toggleHighlighting(true);
 	}, pageBroadcastDraftHandler);	//Refresh whole ranks partial only on error
@@ -345,9 +386,24 @@ function bindDeleteAllHighlightingDialog() {
 	});
 }
 
-function toggleDeleteHighlightDisplay(shouldDisplay) {
+function toggleDeleteHighlightDisplay() {
+	var anyHighlightedPlayers = $(".pr-highlight-section tr[data-player-id]").length > 0;
+	var isExpandQueueVisible = $("#ExpandQueue").is(":visible");
+	var isQueueExpanded = $("#ExpandQueue").attr("data-expand") == "true";
+	var isHighlightLocked = clientCookieOptions["LockHighlighting"];
+	var shouldDisplay = false;
+	if (anyHighlightedPlayers) {
+		shouldDisplay = (!isExpandQueueVisible || isQueueExpanded) && !isHighlightLocked;
+	}
+	else {
+		shouldDisplay = false;
+	}
 	toggleDisplay($(".hq-delete-span"), shouldDisplay);
 }
+
+//function toggleDeleteHighlightDisplay(shouldDisplay) {
+//	toggleDisplay($(".hq-delete-span"), shouldDisplay);
+//}
 
 function bindCopyLastDraftHighlights() {
 	$(".hq-copy-last-draft").click(function (e) {
@@ -365,7 +421,7 @@ function bindSortableQueue() {
 	$(".queue-table tbody").sortable({
 		items: "tr:not(.unsortable)",
 		delay: 175,
-		scrollSensitivity: 10,
+		scrollSensitivity: 15,
 		update: function (event, ui) {
 			var prevRow = $(ui.item).prev("tr[data-player-id]");
 			var prevPlayerId = "";
@@ -381,20 +437,26 @@ function bindSortableQueue() {
 	})
 }
 
-function updatePlayerQueueOrder(playerQueueOrderModel) {
-	addWaitCursor();
-	ajaxPost(playerQueueOrderModel, "Rank/UpdatePlayerQueueOrder", function () {
-		updateQueueRankNums(playerQueueOrderModel);
-		removeWaitCursor();
-	}, pageBroadcastDraftHandler);
+function unbindSortableQueue() {
+	$(".queue-table tbody").sortable({
+		disabled: true
+	});
+};
+
+	function updatePlayerQueueOrder(playerQueueOrderModel) {
+		addWaitCursor();
+		ajaxPost(playerQueueOrderModel, "Rank/UpdatePlayerQueueOrder", function () {
+			updateQueueRankNums(playerQueueOrderModel);
+			removeWaitCursor();
+		}, pageBroadcastDraftHandler);
 }
 
-function updateQueueRankNums(playerQueueOrderModel) {
-	var newRankNum = 1;
-	var playerRows = $("td[data-rank-num]");
-	$.each(playerRows, function (index, player) {
-		$(player).attr("data-rank-num", newRankNum);
-		$(player).text(newRankNum);
-		newRankNum++;
+	function updateQueueRankNums(playerQueueOrderModel) {
+		var newRankNum = 1;
+		var playerRows = $("td[data-rank-num]");
+		$.each(playerRows, function (index, player) {
+			$(player).attr("data-rank-num", newRankNum);
+			$(player).text(newRankNum);
+			newRankNum++;
 	});
 }

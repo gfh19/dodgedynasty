@@ -25,6 +25,8 @@ namespace DodgeDynasty.Models.Types
 		[JsonProperty()]
 		public bool ShowHighlighting { get; set; }
 		[JsonProperty()]
+		public bool LockHighlighting { get; set; }
+		[JsonProperty()]
 		public string HighlightColor { get; set; }
 	}
 }
