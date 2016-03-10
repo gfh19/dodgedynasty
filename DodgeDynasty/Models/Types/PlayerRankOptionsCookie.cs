@@ -9,5 +9,10 @@ namespace DodgeDynasty.Models.Types
 	public class PlayerRankOptionsCookie
 	{
 		public string Id { get; set; }
+
+		public PlayerRankOptionsCookie(string id)
+		{
+			Id = id;
+		}
 	}
 }

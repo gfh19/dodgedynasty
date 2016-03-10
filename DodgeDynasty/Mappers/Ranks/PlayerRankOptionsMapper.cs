@@ -9,6 +9,7 @@ namespace DodgeDynasty.Mappers.Ranks
 	public class PlayerRankOptionsMapper : MapperBase<PlayerRankOptions>
 	{
 		public string PlayerRankOptionId { get; set; }
+		public string UpdatedPlayerRankOptionId { get; set; }
 
 		public PlayerRankOptionsMapper(string playerRankOptionId)
 		{
@@ -67,6 +68,11 @@ namespace DodgeDynasty.Mappers.Ranks
 
 		private Entities.PlayerRankOption AddNewPlayerRankOptions(PlayerRankOptions model, int userId)
 		{
+			var playerRankOptionGuid = new Guid(PlayerRankOptionId);
+			if (HomeEntity.PlayerRankOptions.Any(o => o.PlayerRankOptionId == playerRankOptionGuid))
+			{
+				UpdatedPlayerRankOptionId = PlayerRankOptionId = Guid.NewGuid().ToString();
+			}
 			Entities.PlayerRankOption options = new Entities.PlayerRankOption();
 			options.PlayerRankOptionId = new Guid(PlayerRankOptionId);
 			options.UserId = userId;

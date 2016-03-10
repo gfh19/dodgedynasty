@@ -49,16 +49,30 @@ namespace DodgeDynasty.UIHelpers
 			}
 			if (optionsCookie == null || cookieId == null)
 			{
-				cookieId = SetPlayerRankOptionsCookie(response).Id;
+				cookieId = SetNewPlayerRankOptionsCookie(response).Id;
 			}
 			var mapper = MapperFactory.CreatePlayerRankOptionsMapper(cookieId);
-			return mapper.GetModel();
+			var playerRankOptions = mapper.GetModel();
+			CheckSetUpdatedOptionsCookie(mapper, response);
+			return playerRankOptions;
 		}
 
-		public PlayerRankOptionsCookie SetPlayerRankOptionsCookie(HttpResponseBase response)
+		private void CheckSetUpdatedOptionsCookie(PlayerRankOptionsMapper mapper, HttpResponseBase response)
 		{
-			var cookie = new PlayerRankOptionsCookie();
-			cookie.Id = Guid.NewGuid().ToString();
+			if (mapper.UpdatedPlayerRankOptionId != null)
+			{
+				SetPlayerRankOptionsCookie(response, new PlayerRankOptionsCookie(mapper.UpdatedPlayerRankOptionId));
+			}
+		}
+
+		public PlayerRankOptionsCookie SetNewPlayerRankOptionsCookie(HttpResponseBase response)
+		{
+			var cookie = new PlayerRankOptionsCookie(Guid.NewGuid().ToString());
+			return SetPlayerRankOptionsCookie(response, cookie);
+		}
+
+		public PlayerRankOptionsCookie SetPlayerRankOptionsCookie(HttpResponseBase response, PlayerRankOptionsCookie cookie)
+		{
 			response.SetCookie(new HttpCookie(Constants.Cookies.PlayerRankOptions)
 			{
 				Expires = DateTime.Now.AddDays(100),
@@ -116,6 +130,7 @@ namespace DodgeDynasty.UIHelpers
 				options.DraftId = draftId;
 				PlayerRankOptionsMapper mapper = MapperFactory.CreatePlayerRankOptionsMapper(options.Id);
 				mapper.UpdateEntity(options);
+				CheckSetUpdatedOptionsCookie(mapper, response);
 			}
 			playerRankModel.SetPlayerRanks(rankId);
 			return playerRankModel;
