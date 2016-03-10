@@ -55,28 +55,7 @@ namespace DodgeDynasty.Controllers
 			TempData[Constants.TempData.NextDraftInputModel] = nextDraftInputModel;
 			return RedirectToAction(viewName);
 		}
-
-		//TBD
-		public PlayerRankOptions GetPlayerRankOptions()
-		{
-			PlayerRankOptions options = new PlayerRankOptions();
-			var optionsCookie = Request.Cookies[Constants.Cookies.PlayerRankOptions];
-			if (optionsCookie == null)
-			{
-				Response.SetCookie(new HttpCookie(Constants.Cookies.PlayerRankOptions)
-				{
-					Expires = DateTime.Now.AddDays(100),
-					Value = JsonConvert.SerializeObject(options)
-				});
-			}
-			else
-			{
-				var decodedCookie = HttpUtility.UrlDecode(optionsCookie.Value);
-				options = JsonConvert.DeserializeObject<PlayerRankOptions>(decodedCookie);
-			}
-			return options;
-		}
-
+		
 		public DodgeDynastyContent GetDodgeDynastyCookie()
 		{
 			var dodgeDynastyContent = new DodgeDynastyContent();

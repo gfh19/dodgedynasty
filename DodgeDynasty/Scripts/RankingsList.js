@@ -1,4 +1,6 @@
-﻿$(function () {
+﻿var clientCookieOptions = null;
+
+$(function () {
 	setPickTimer(true);
 	callRefreshPageWithPickTimer("Draft/RankingsListPartial", "#rankingsList");
 });

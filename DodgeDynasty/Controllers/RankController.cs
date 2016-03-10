@@ -8,6 +8,9 @@ using DodgeDynasty.Mappers.Highlights;
 using DodgeDynasty.Models.Highlights;
 using System.Net;
 using DodgeDynasty.UIHelpers;
+using DodgeDynasty.Models.Types;
+using System.Web.Helpers;
+using DodgeDynasty.Mappers.Ranks;
 
 namespace DodgeDynasty.Controllers
 {
@@ -38,6 +41,7 @@ namespace DodgeDynasty.Controllers
 		{
 			GetPlayerRankOptions();
 			PlayerRankModel model = DraftFactory.GetPlayerRankModel(rankId);
+			model.Options = PlayerRankHelper.Instance.GetPlayerRankOptions(Request, Response);
 			model.GetAllPlayerRanks();
 			if (TempData.ContainsKey(Constants.TempData.RankStatus))
 			{
@@ -102,6 +106,21 @@ namespace DodgeDynasty.Controllers
 			UpdatePlayerQueueOrderMapper mapper = Factory.Create<UpdatePlayerQueueOrderMapper>();
 			mapper.UpdateEntity(model);
 			return HttpStatusCode.OK;
+		}
+
+		//May not be necessary...
+		[HttpGet]
+		public JsonResult GetPlayerRankOptions()
+		{
+			var options = PlayerRankHelper.Instance.GetPlayerRankOptions(Request, Response);
+			return Json(options);
+		}
+
+		[HttpPost]
+		public HttpStatusCode PostPlayerRankOptions(PlayerRankOptions options)
+		{
+			var mapper = MapperFactory.CreatePlayerRankOptionsMapper(options.Id);
+			return (mapper.UpdateEntity(options)) ? HttpStatusCode.OK : HttpStatusCode.InternalServerError;
 		}
 	}
 }

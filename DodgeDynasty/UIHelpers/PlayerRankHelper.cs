@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using DodgeDynasty.Mappers;
+using DodgeDynasty.Mappers.Ranks;
 using DodgeDynasty.Models;
 using DodgeDynasty.Models.Types;
 using DodgeDynasty.Shared;
@@ -14,6 +16,10 @@ namespace DodgeDynasty.UIHelpers
 {
 	public class PlayerRankHelper
 	{
+		public static PlayerRankHelper Instance {
+			get { return new PlayerRankHelper(); }
+		}
+
 		public PlayerRankModel GetPlayerRankPartial(string rankId, bool showBestAvailable, 
 			HttpRequestBase request, HttpResponseBase response)
 		{
@@ -33,22 +39,32 @@ namespace DodgeDynasty.UIHelpers
 		
 		public PlayerRankOptions GetPlayerRankOptions(HttpRequestBase request, HttpResponseBase response)
 		{
-			PlayerRankOptions options = new PlayerRankOptions();
+			string cookieId = null;
+
 			var optionsCookie = request.Cookies[Constants.Cookies.PlayerRankOptions];
-			if (optionsCookie == null)
-			{
-				response.SetCookie(new HttpCookie(Constants.Cookies.PlayerRankOptions)
-				{
-					Expires = DateTime.Now.AddDays(100),
-					Value = JsonConvert.SerializeObject(options)
-				});
-			}
-			else
+			if (optionsCookie != null)
 			{
 				var decodedCookie = HttpUtility.UrlDecode(optionsCookie.Value);
-				options = JsonConvert.DeserializeObject<PlayerRankOptions>(decodedCookie);
+				cookieId = JsonConvert.DeserializeObject<PlayerRankOptionsCookie>(decodedCookie).Id;
 			}
-			return options;
+			if (optionsCookie == null || cookieId == null)
+			{
+				cookieId = SetPlayerRankOptionsCookie(response).Id;
+			}
+			var mapper = MapperFactory.CreatePlayerRankOptionsMapper(cookieId);
+			return mapper.GetModel();
+		}
+
+		public PlayerRankOptionsCookie SetPlayerRankOptionsCookie(HttpResponseBase response)
+		{
+			var cookie = new PlayerRankOptionsCookie();
+			cookie.Id = Guid.NewGuid().ToString();
+			response.SetCookie(new HttpCookie(Constants.Cookies.PlayerRankOptions)
+			{
+				Expires = DateTime.Now.AddDays(100),
+				Value = JsonConvert.SerializeObject(cookie)
+			});
+			return cookie;
 		}
 
 		public PlayerRankModel DetermineRankModel(string id, string draftId, PlayerRankOptions options, 
@@ -98,7 +114,8 @@ namespace DodgeDynasty.UIHelpers
 					draftId = playerRankModel.GetCurrentDraftId().ToString();
 				}
 				options.DraftId = draftId;
-				response.Cookies["playerRankOptions"].Value = JsonConvert.SerializeObject(options);
+				PlayerRankOptionsMapper mapper = MapperFactory.CreatePlayerRankOptionsMapper(options.Id);
+				mapper.UpdateEntity(options);
 			}
 			playerRankModel.SetPlayerRanks(rankId);
 			return playerRankModel;

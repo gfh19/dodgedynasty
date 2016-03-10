@@ -15,6 +15,8 @@ namespace DodgeDynasty.Models
 			GetCurrentDraft(DraftId);
 		}
 
+		public PlayerRankOptions Options { get; set; }
+
 		public List<DraftRankModel> GetPublicRankings()
 		{
 			List<DraftRankModel> publicRankings = new List<DraftRankModel>();

@@ -502,6 +502,22 @@ namespace DodgeDynasty.Entities
             }
         }
         private ObjectSet<PlayerHighlight> _PlayerHighlights;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<PlayerRankOption> PlayerRankOptions
+        {
+            get
+            {
+                if ((_PlayerRankOptions == null))
+                {
+                    _PlayerRankOptions = base.CreateObjectSet<PlayerRankOption>("PlayerRankOptions");
+                }
+                return _PlayerRankOptions;
+            }
+        }
+        private ObjectSet<PlayerRankOption> _PlayerRankOptions;
 
         #endregion
 
@@ -705,6 +721,14 @@ namespace DodgeDynasty.Entities
         public void AddToPlayerHighlights(PlayerHighlight playerHighlight)
         {
             base.AddObject("PlayerHighlights", playerHighlight);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the PlayerRankOptions EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToPlayerRankOptions(PlayerRankOption playerRankOption)
+        {
+            base.AddObject("PlayerRankOptions", playerRankOption);
         }
 
         #endregion
@@ -6835,6 +6859,624 @@ namespace DodgeDynasty.Entities
         }
         private global::System.DateTime _LastUpdateTimestamp;
         partial void OnLastUpdateTimestampChanging(global::System.DateTime value);
+        partial void OnLastUpdateTimestampChanged();
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="HomeModel", Name="PlayerRankOption")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class PlayerRankOption : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new PlayerRankOption object.
+        /// </summary>
+        /// <param name="playerRankOptionId">Initial value of the PlayerRankOptionId property.</param>
+        /// <param name="userId">Initial value of the UserId property.</param>
+        /// <param name="expandOverall">Initial value of the ExpandOverall property.</param>
+        /// <param name="expandQB">Initial value of the ExpandQB property.</param>
+        /// <param name="expandRB">Initial value of the ExpandRB property.</param>
+        /// <param name="expandWRTE">Initial value of the ExpandWRTE property.</param>
+        /// <param name="expandDEF">Initial value of the ExpandDEF property.</param>
+        /// <param name="expandK">Initial value of the ExpandK property.</param>
+        /// <param name="expandQueue">Initial value of the ExpandQueue property.</param>
+        /// <param name="hideOverall">Initial value of the HideOverall property.</param>
+        /// <param name="hideQB">Initial value of the HideQB property.</param>
+        /// <param name="hideRB">Initial value of the HideRB property.</param>
+        /// <param name="hideWRTE">Initial value of the HideWRTE property.</param>
+        /// <param name="hideDEF">Initial value of the HideDEF property.</param>
+        /// <param name="hideK">Initial value of the HideK property.</param>
+        /// <param name="hideQueue">Initial value of the HideQueue property.</param>
+        /// <param name="showHighlighting">Initial value of the ShowHighlighting property.</param>
+        /// <param name="lockHighlighting">Initial value of the LockHighlighting property.</param>
+        public static PlayerRankOption CreatePlayerRankOption(global::System.Guid playerRankOptionId, global::System.Int32 userId, global::System.Boolean expandOverall, global::System.Boolean expandQB, global::System.Boolean expandRB, global::System.Boolean expandWRTE, global::System.Boolean expandDEF, global::System.Boolean expandK, global::System.Boolean expandQueue, global::System.Boolean hideOverall, global::System.Boolean hideQB, global::System.Boolean hideRB, global::System.Boolean hideWRTE, global::System.Boolean hideDEF, global::System.Boolean hideK, global::System.Boolean hideQueue, global::System.Boolean showHighlighting, global::System.Boolean lockHighlighting)
+        {
+            PlayerRankOption playerRankOption = new PlayerRankOption();
+            playerRankOption.PlayerRankOptionId = playerRankOptionId;
+            playerRankOption.UserId = userId;
+            playerRankOption.ExpandOverall = expandOverall;
+            playerRankOption.ExpandQB = expandQB;
+            playerRankOption.ExpandRB = expandRB;
+            playerRankOption.ExpandWRTE = expandWRTE;
+            playerRankOption.ExpandDEF = expandDEF;
+            playerRankOption.ExpandK = expandK;
+            playerRankOption.ExpandQueue = expandQueue;
+            playerRankOption.HideOverall = hideOverall;
+            playerRankOption.HideQB = hideQB;
+            playerRankOption.HideRB = hideRB;
+            playerRankOption.HideWRTE = hideWRTE;
+            playerRankOption.HideDEF = hideDEF;
+            playerRankOption.HideK = hideK;
+            playerRankOption.HideQueue = hideQueue;
+            playerRankOption.ShowHighlighting = showHighlighting;
+            playerRankOption.LockHighlighting = lockHighlighting;
+            return playerRankOption;
+        }
+
+        #endregion
+
+        #region Simple Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Guid PlayerRankOptionId
+        {
+            get
+            {
+                return _PlayerRankOptionId;
+            }
+            set
+            {
+                if (_PlayerRankOptionId != value)
+                {
+                    OnPlayerRankOptionIdChanging(value);
+                    ReportPropertyChanging("PlayerRankOptionId");
+                    _PlayerRankOptionId = StructuralObject.SetValidValue(value, "PlayerRankOptionId");
+                    ReportPropertyChanged("PlayerRankOptionId");
+                    OnPlayerRankOptionIdChanged();
+                }
+            }
+        }
+        private global::System.Guid _PlayerRankOptionId;
+        partial void OnPlayerRankOptionIdChanging(global::System.Guid value);
+        partial void OnPlayerRankOptionIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 UserId
+        {
+            get
+            {
+                return _UserId;
+            }
+            set
+            {
+                OnUserIdChanging(value);
+                ReportPropertyChanging("UserId");
+                _UserId = StructuralObject.SetValidValue(value, "UserId");
+                ReportPropertyChanged("UserId");
+                OnUserIdChanged();
+            }
+        }
+        private global::System.Int32 _UserId;
+        partial void OnUserIdChanging(global::System.Int32 value);
+        partial void OnUserIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> RankId
+        {
+            get
+            {
+                return _RankId;
+            }
+            set
+            {
+                OnRankIdChanging(value);
+                ReportPropertyChanging("RankId");
+                _RankId = StructuralObject.SetValidValue(value, "RankId");
+                ReportPropertyChanged("RankId");
+                OnRankIdChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _RankId;
+        partial void OnRankIdChanging(Nullable<global::System.Int32> value);
+        partial void OnRankIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> DraftId
+        {
+            get
+            {
+                return _DraftId;
+            }
+            set
+            {
+                OnDraftIdChanging(value);
+                ReportPropertyChanging("DraftId");
+                _DraftId = StructuralObject.SetValidValue(value, "DraftId");
+                ReportPropertyChanged("DraftId");
+                OnDraftIdChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _DraftId;
+        partial void OnDraftIdChanging(Nullable<global::System.Int32> value);
+        partial void OnDraftIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean ExpandOverall
+        {
+            get
+            {
+                return _ExpandOverall;
+            }
+            set
+            {
+                OnExpandOverallChanging(value);
+                ReportPropertyChanging("ExpandOverall");
+                _ExpandOverall = StructuralObject.SetValidValue(value, "ExpandOverall");
+                ReportPropertyChanged("ExpandOverall");
+                OnExpandOverallChanged();
+            }
+        }
+        private global::System.Boolean _ExpandOverall;
+        partial void OnExpandOverallChanging(global::System.Boolean value);
+        partial void OnExpandOverallChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean ExpandQB
+        {
+            get
+            {
+                return _ExpandQB;
+            }
+            set
+            {
+                OnExpandQBChanging(value);
+                ReportPropertyChanging("ExpandQB");
+                _ExpandQB = StructuralObject.SetValidValue(value, "ExpandQB");
+                ReportPropertyChanged("ExpandQB");
+                OnExpandQBChanged();
+            }
+        }
+        private global::System.Boolean _ExpandQB;
+        partial void OnExpandQBChanging(global::System.Boolean value);
+        partial void OnExpandQBChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean ExpandRB
+        {
+            get
+            {
+                return _ExpandRB;
+            }
+            set
+            {
+                OnExpandRBChanging(value);
+                ReportPropertyChanging("ExpandRB");
+                _ExpandRB = StructuralObject.SetValidValue(value, "ExpandRB");
+                ReportPropertyChanged("ExpandRB");
+                OnExpandRBChanged();
+            }
+        }
+        private global::System.Boolean _ExpandRB;
+        partial void OnExpandRBChanging(global::System.Boolean value);
+        partial void OnExpandRBChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean ExpandWRTE
+        {
+            get
+            {
+                return _ExpandWRTE;
+            }
+            set
+            {
+                OnExpandWRTEChanging(value);
+                ReportPropertyChanging("ExpandWRTE");
+                _ExpandWRTE = StructuralObject.SetValidValue(value, "ExpandWRTE");
+                ReportPropertyChanged("ExpandWRTE");
+                OnExpandWRTEChanged();
+            }
+        }
+        private global::System.Boolean _ExpandWRTE;
+        partial void OnExpandWRTEChanging(global::System.Boolean value);
+        partial void OnExpandWRTEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean ExpandDEF
+        {
+            get
+            {
+                return _ExpandDEF;
+            }
+            set
+            {
+                OnExpandDEFChanging(value);
+                ReportPropertyChanging("ExpandDEF");
+                _ExpandDEF = StructuralObject.SetValidValue(value, "ExpandDEF");
+                ReportPropertyChanged("ExpandDEF");
+                OnExpandDEFChanged();
+            }
+        }
+        private global::System.Boolean _ExpandDEF;
+        partial void OnExpandDEFChanging(global::System.Boolean value);
+        partial void OnExpandDEFChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean ExpandK
+        {
+            get
+            {
+                return _ExpandK;
+            }
+            set
+            {
+                OnExpandKChanging(value);
+                ReportPropertyChanging("ExpandK");
+                _ExpandK = StructuralObject.SetValidValue(value, "ExpandK");
+                ReportPropertyChanged("ExpandK");
+                OnExpandKChanged();
+            }
+        }
+        private global::System.Boolean _ExpandK;
+        partial void OnExpandKChanging(global::System.Boolean value);
+        partial void OnExpandKChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean ExpandQueue
+        {
+            get
+            {
+                return _ExpandQueue;
+            }
+            set
+            {
+                OnExpandQueueChanging(value);
+                ReportPropertyChanging("ExpandQueue");
+                _ExpandQueue = StructuralObject.SetValidValue(value, "ExpandQueue");
+                ReportPropertyChanged("ExpandQueue");
+                OnExpandQueueChanged();
+            }
+        }
+        private global::System.Boolean _ExpandQueue;
+        partial void OnExpandQueueChanging(global::System.Boolean value);
+        partial void OnExpandQueueChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean HideOverall
+        {
+            get
+            {
+                return _HideOverall;
+            }
+            set
+            {
+                OnHideOverallChanging(value);
+                ReportPropertyChanging("HideOverall");
+                _HideOverall = StructuralObject.SetValidValue(value, "HideOverall");
+                ReportPropertyChanged("HideOverall");
+                OnHideOverallChanged();
+            }
+        }
+        private global::System.Boolean _HideOverall;
+        partial void OnHideOverallChanging(global::System.Boolean value);
+        partial void OnHideOverallChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean HideQB
+        {
+            get
+            {
+                return _HideQB;
+            }
+            set
+            {
+                OnHideQBChanging(value);
+                ReportPropertyChanging("HideQB");
+                _HideQB = StructuralObject.SetValidValue(value, "HideQB");
+                ReportPropertyChanged("HideQB");
+                OnHideQBChanged();
+            }
+        }
+        private global::System.Boolean _HideQB;
+        partial void OnHideQBChanging(global::System.Boolean value);
+        partial void OnHideQBChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean HideRB
+        {
+            get
+            {
+                return _HideRB;
+            }
+            set
+            {
+                OnHideRBChanging(value);
+                ReportPropertyChanging("HideRB");
+                _HideRB = StructuralObject.SetValidValue(value, "HideRB");
+                ReportPropertyChanged("HideRB");
+                OnHideRBChanged();
+            }
+        }
+        private global::System.Boolean _HideRB;
+        partial void OnHideRBChanging(global::System.Boolean value);
+        partial void OnHideRBChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean HideWRTE
+        {
+            get
+            {
+                return _HideWRTE;
+            }
+            set
+            {
+                OnHideWRTEChanging(value);
+                ReportPropertyChanging("HideWRTE");
+                _HideWRTE = StructuralObject.SetValidValue(value, "HideWRTE");
+                ReportPropertyChanged("HideWRTE");
+                OnHideWRTEChanged();
+            }
+        }
+        private global::System.Boolean _HideWRTE;
+        partial void OnHideWRTEChanging(global::System.Boolean value);
+        partial void OnHideWRTEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean HideDEF
+        {
+            get
+            {
+                return _HideDEF;
+            }
+            set
+            {
+                OnHideDEFChanging(value);
+                ReportPropertyChanging("HideDEF");
+                _HideDEF = StructuralObject.SetValidValue(value, "HideDEF");
+                ReportPropertyChanged("HideDEF");
+                OnHideDEFChanged();
+            }
+        }
+        private global::System.Boolean _HideDEF;
+        partial void OnHideDEFChanging(global::System.Boolean value);
+        partial void OnHideDEFChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean HideK
+        {
+            get
+            {
+                return _HideK;
+            }
+            set
+            {
+                OnHideKChanging(value);
+                ReportPropertyChanging("HideK");
+                _HideK = StructuralObject.SetValidValue(value, "HideK");
+                ReportPropertyChanged("HideK");
+                OnHideKChanged();
+            }
+        }
+        private global::System.Boolean _HideK;
+        partial void OnHideKChanging(global::System.Boolean value);
+        partial void OnHideKChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean HideQueue
+        {
+            get
+            {
+                return _HideQueue;
+            }
+            set
+            {
+                OnHideQueueChanging(value);
+                ReportPropertyChanging("HideQueue");
+                _HideQueue = StructuralObject.SetValidValue(value, "HideQueue");
+                ReportPropertyChanged("HideQueue");
+                OnHideQueueChanged();
+            }
+        }
+        private global::System.Boolean _HideQueue;
+        partial void OnHideQueueChanging(global::System.Boolean value);
+        partial void OnHideQueueChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean ShowHighlighting
+        {
+            get
+            {
+                return _ShowHighlighting;
+            }
+            set
+            {
+                OnShowHighlightingChanging(value);
+                ReportPropertyChanging("ShowHighlighting");
+                _ShowHighlighting = StructuralObject.SetValidValue(value, "ShowHighlighting");
+                ReportPropertyChanged("ShowHighlighting");
+                OnShowHighlightingChanged();
+            }
+        }
+        private global::System.Boolean _ShowHighlighting;
+        partial void OnShowHighlightingChanging(global::System.Boolean value);
+        partial void OnShowHighlightingChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean LockHighlighting
+        {
+            get
+            {
+                return _LockHighlighting;
+            }
+            set
+            {
+                OnLockHighlightingChanging(value);
+                ReportPropertyChanging("LockHighlighting");
+                _LockHighlighting = StructuralObject.SetValidValue(value, "LockHighlighting");
+                ReportPropertyChanged("LockHighlighting");
+                OnLockHighlightingChanged();
+            }
+        }
+        private global::System.Boolean _LockHighlighting;
+        partial void OnLockHighlightingChanging(global::System.Boolean value);
+        partial void OnLockHighlightingChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String HighlightColor
+        {
+            get
+            {
+                return _HighlightColor;
+            }
+            set
+            {
+                OnHighlightColorChanging(value);
+                ReportPropertyChanging("HighlightColor");
+                _HighlightColor = StructuralObject.SetValidValue(value, true, "HighlightColor");
+                ReportPropertyChanged("HighlightColor");
+                OnHighlightColorChanged();
+            }
+        }
+        private global::System.String _HighlightColor;
+        partial void OnHighlightColorChanging(global::System.String value);
+        partial void OnHighlightColorChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> AddTimestamp
+        {
+            get
+            {
+                return _AddTimestamp;
+            }
+            set
+            {
+                OnAddTimestampChanging(value);
+                ReportPropertyChanging("AddTimestamp");
+                _AddTimestamp = StructuralObject.SetValidValue(value, "AddTimestamp");
+                ReportPropertyChanged("AddTimestamp");
+                OnAddTimestampChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _AddTimestamp;
+        partial void OnAddTimestampChanging(Nullable<global::System.DateTime> value);
+        partial void OnAddTimestampChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> LastUpdateTimestamp
+        {
+            get
+            {
+                return _LastUpdateTimestamp;
+            }
+            set
+            {
+                OnLastUpdateTimestampChanging(value);
+                ReportPropertyChanging("LastUpdateTimestamp");
+                _LastUpdateTimestamp = StructuralObject.SetValidValue(value, "LastUpdateTimestamp");
+                ReportPropertyChanged("LastUpdateTimestamp");
+                OnLastUpdateTimestampChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _LastUpdateTimestamp;
+        partial void OnLastUpdateTimestampChanging(Nullable<global::System.DateTime> value);
         partial void OnLastUpdateTimestampChanged();
 
         #endregion

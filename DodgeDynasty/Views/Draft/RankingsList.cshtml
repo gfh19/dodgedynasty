@@ -10,6 +10,7 @@
 <div id="rankingsList">
 	<script type="text/javascript">
 		$(function () {
+			clientCookieOptions = JSON.parse('@(Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Options)))');
 			initRankingsList();
 		});
 	</script>

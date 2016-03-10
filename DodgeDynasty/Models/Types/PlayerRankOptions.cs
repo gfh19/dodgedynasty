@@ -5,6 +5,8 @@ namespace DodgeDynasty.Models.Types
 	public class PlayerRankOptions
 	{
 		[JsonProperty()]
+		public string Id { get; set; }
+		[JsonProperty()]
 		public string RankId { get; set; }
 		[JsonProperty()]
 		public string DraftId { get; set; }
@@ -22,6 +24,20 @@ namespace DodgeDynasty.Models.Types
 		public bool ExpandK { get; set; }
 		[JsonProperty()]
 		public bool ExpandQueue { get; set; }
+		[JsonProperty()]
+		public bool HideOverall { get; set; }
+		[JsonProperty()]
+		public bool HideQB { get; set; }
+		[JsonProperty()]
+		public bool HideRB { get; set; }
+		[JsonProperty()]
+		public bool HideWRTE { get; set; }
+		[JsonProperty()]
+		public bool HideDEF { get; set; }
+		[JsonProperty()]
+		public bool HideK { get; set; }
+		[JsonProperty()]
+		public bool HideQueue { get; set; }
 		[JsonProperty()]
 		public bool ShowHighlighting { get; set; }
 		[JsonProperty()]

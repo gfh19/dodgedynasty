@@ -4,6 +4,7 @@
 	<script type="text/javascript">
 		$(function () {
 			ranksWindow = @(Model.RanksWindow);
+			clientCookieOptions = JSON.parse('@(Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Options)))');
 			initPlayerRanksShared();
 		});
 	</script>

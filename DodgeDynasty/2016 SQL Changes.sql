@@ -3,6 +3,22 @@ BEGIN TRANSACTION;
 
 
 
+COMMIT TRANSACTION;
+
+
+
+
+
+
+/* Below Run in Production on 3/9/16 */
+
+/* 3/9/16 */
+
+SET XACT_ABORT ON
+BEGIN TRANSACTION;
+
+
+
 USE [Home]
 GO
 
@@ -102,7 +118,82 @@ GO
 
 
 
+
+USE [Home]
+GO
+
+/****** Object:  Index [IX_UserId]    Script Date: 3/9/2016 1:03:38 AM ******/
+DROP INDEX [IX_UserId] ON [dbo].[PlayerRankOption]
+GO
+
+/****** Object:  Table [dbo].[PlayerRankOption]    Script Date: 3/9/2016 1:03:38 AM ******/
+DROP TABLE [dbo].[PlayerRankOption]
+GO
+
+/****** Object:  Table [dbo].[PlayerRankOption]    Script Date: 3/9/2016 1:03:38 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[PlayerRankOption](
+	[PlayerRankOptionId] [uniqueidentifier] NOT NULL,
+	[UserId] [int] NOT NULL,
+	[RankId] [int] NULL,
+	[DraftId] [int] NULL,
+	[ExpandOverall] [bit] NOT NULL,
+	[ExpandQB] [bit] NOT NULL,
+	[ExpandRB] [bit] NOT NULL,
+	[ExpandWRTE] [bit] NOT NULL,
+	[ExpandDEF] [bit] NOT NULL,
+	[ExpandK] [bit] NOT NULL,
+	[ExpandQueue] [bit] NOT NULL,
+	[HideOverall] [bit] NOT NULL,
+	[HideQB] [bit] NOT NULL,
+	[HideRB] [bit] NOT NULL,
+	[HideWRTE] [bit] NOT NULL,
+	[HideDEF] [bit] NOT NULL,
+	[HideK] [bit] NOT NULL,
+	[HideQueue] [bit] NOT NULL,
+	[ShowHighlighting] [bit] NOT NULL,
+	[LockHighlighting] [bit] NOT NULL,
+	[HighlightColor] [varchar](50) NULL,
+	[AddTimestamp] [datetime] NULL,
+	[LastUpdateTimestamp] [datetime] NULL,
+ CONSTRAINT [PK_PlayerRankOption_1] PRIMARY KEY CLUSTERED 
+(
+	[PlayerRankOptionId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+/****** Object:  Index [IX_UserId]    Script Date: 3/9/2016 1:03:38 AM ******/
+CREATE NONCLUSTERED INDEX [IX_UserId] ON [dbo].[PlayerRankOption]
+(
+	[PlayerRankOptionId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+
+
+
+
+
+
+
+
+
 COMMIT TRANSACTION;
+
+
+
 
 
 
@@ -113,7 +204,7 @@ COMMIT TRANSACTION;
 
 /* Below Run in Production on 3/6/16 */
 
-/* 3/3/15 */
+/* 3/3/16 */
 
 USE [Home]
 GO
@@ -262,61 +353,61 @@ GO
 INSERT INTO [dbo].[Highlight]
            ([HighlightName],[HighlightClass],[HighlightValue],[AddTimestamp],[LastUpdateTimestamp])
      VALUES
-           ('Yellow','yellow','yellow',getdate(),getdate())
+           ('Yellow','bg-yellow','yellow',getdate(),getdate())
 GO
 
 INSERT INTO [dbo].[Highlight]
            ([HighlightName],[HighlightClass],[HighlightValue],[AddTimestamp],[LastUpdateTimestamp])
      VALUES
-           ('Lime','lime','lime',getdate(),getdate())
+           ('Lime','bg-lime','lime',getdate(),getdate())
 GO
 
 INSERT INTO [dbo].[Highlight]
            ([HighlightName],[HighlightClass],[HighlightValue],[AddTimestamp],[LastUpdateTimestamp])
      VALUES
-           ('Cyan','cyan','cyan',getdate(),getdate())
+           ('Cyan','bg-cyan','cyan',getdate(),getdate())
 GO
 
 INSERT INTO [dbo].[Highlight]
            ([HighlightName],[HighlightClass],[HighlightValue],[AddTimestamp],[LastUpdateTimestamp])
      VALUES
-           ('Orange','orange','#FFBF22',getdate(),getdate())
+           ('Orange','bg-orange','#FFBF22',getdate(),getdate())
 GO
 
 INSERT INTO [dbo].[Highlight]
            ([HighlightName],[HighlightClass],[HighlightValue],[AddTimestamp],[LastUpdateTimestamp])
      VALUES
-           ('Red','red','#FF4444',getdate(),getdate())
+           ('Red','bg-red','#FF4444',getdate(),getdate())
 GO
 
 INSERT INTO [dbo].[Highlight]
            ([HighlightName],[HighlightClass],[HighlightValue],[AddTimestamp],[LastUpdateTimestamp])
      VALUES
-           ('Pink','pink','#FF00FF',getdate(),getdate())
+           ('Pink','bg-pink','#FF00FF',getdate(),getdate())
 GO
 
 INSERT INTO [dbo].[Highlight]
            ([HighlightName],[HighlightClass],[HighlightValue],[AddTimestamp],[LastUpdateTimestamp])
      VALUES
-           ('Blue','blue','#6767FF',getdate(),getdate())
+           ('Blue','bg-blue','#6767FF',getdate(),getdate())
 GO
 
 INSERT INTO [dbo].[Highlight]
            ([HighlightName],[HighlightClass],[HighlightValue],[AddTimestamp],[LastUpdateTimestamp])
      VALUES
-           ('Green','green','#449944',getdate(),getdate())
+           ('Green','bg-green','#449944',getdate(),getdate())
 GO
 
 INSERT INTO [dbo].[Highlight]
            ([HighlightName],[HighlightClass],[HighlightValue],[AddTimestamp],[LastUpdateTimestamp])
      VALUES
-           ('Grey (clear)','clear','#EFEEEF',getdate(),getdate())
+           ('Grey (clear)','bg-grey','#EFEEEF',getdate(),getdate())
 GO
 
 INSERT INTO [dbo].[Highlight]
            ([HighlightName],[HighlightClass],[HighlightValue],[AddTimestamp],[LastUpdateTimestamp])
      VALUES
-           ('White','white','white',getdate(),getdate())
+           ('White','bg-white','white',getdate(),getdate())
 GO
 
 

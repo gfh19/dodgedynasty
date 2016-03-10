@@ -1,4 +1,5 @@
-﻿var playerIds;
+﻿var clientCookieOptions = null;
+var playerIds;
 var _playerNameIds = {
 	"derek carrier": 1063,
 }

@@ -36,7 +36,9 @@ function bindToggleAllLinks() {
 		e.preventDefault();
 		var collapsedLinks = $(".expand-link[data-expand=false]");
 		$.each(collapsedLinks, function (index, link) {
-			$(link).click();
+			if ($(link).attr("id") != "ExpandQueue" || $(link).is(":visible")) {
+				$(link).click();
+			}
 		});
 	});
 	$(".pr-collapse-all").click(function (e) {
@@ -66,13 +68,11 @@ function bindPlayerLink(link) {
 }
 
 function getCookieOptions() {
-	return jQuery.parseJSON($.cookie("playerRankOptions"));
+	return clientCookieOptions;
 }
 
 function setCookieOptions(options) {
-	$.cookie("playerRankOptions", JSON.stringify(options), { path: baseURL });
-	//Re: "path: baseURL", appears that server Response.Cookies always uses path="/", both local and prod....
-	//Doesn't work now locally, may be future enhancement to just set here (& userTurn) to "/"
+	ajaxPost(options, "Rank/PostPlayerRankOptions");
 }
 
 function flipCookieValue(expandLinkId) {
@@ -207,9 +207,6 @@ function bindEditHighlighting(link) {
 		e.preventDefault();
 		flipCookieValue("LockHighlighting");
 		toggleEditHighlighting();
-		if (!clientCookieOptions["LockHighlighting"]) {
-			refreshHighlightQueue();
-		}
 	});
 }
 
@@ -318,7 +315,8 @@ function removePlayerHighlighting(playerRow) {
 }
 
 function refreshHighlightQueue() {
-	ajaxGetReplace("Draft/HighlightQueuePartial", "#highlightQueuePartial", function () {
+	var isBestAvailable = replaceElementId == "#bestAvailable";
+	ajaxGetReplace("Draft/HighlightQueuePartial?isBestAvailable=" + isBestAvailable, "#highlightQueuePartial", function () {
 		toggleHighlighting(true);
 	}, pageBroadcastDraftHandler);	//Refresh whole ranks partial only on error
 }
@@ -373,6 +371,7 @@ function bindDeleteAllHighlightingDialog() {
 						click: function () {
 							addWaitCursor();
 							ajaxPost({}, "Rank/DeleteAllHighlights", function () {
+								$("#ExpandQueue[data-expand=true]").click();	//Collapse if expanded
 								pageBroadcastDraftHandler();
 								removeWaitCursor();
 							}, removeWaitCursor);
@@ -401,10 +400,6 @@ function toggleDeleteHighlightDisplay() {
 	toggleDisplay($(".hq-delete-span"), shouldDisplay);
 }
 
-//function toggleDeleteHighlightDisplay(shouldDisplay) {
-//	toggleDisplay($(".hq-delete-span"), shouldDisplay);
-//}
-
 function bindCopyLastDraftHighlights() {
 	$(".hq-copy-last-draft").click(function (e) {
 		e.preventDefault();
@@ -419,6 +414,7 @@ function copyLastDraftHighlights() {
 //jQuery UI Sortable for Drag & drop
 function bindSortableQueue() {
 	$(".queue-table tbody").sortable({
+		disabled: false,
 		items: "tr:not(.unsortable)",
 		delay: 175,
 		scrollSensitivity: 15,

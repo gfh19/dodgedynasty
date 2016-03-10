@@ -251,6 +251,34 @@
           <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
           <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="PlayerRankOption">
+          <Key>
+            <PropertyRef Name="PlayerRankOptionId" />
+          </Key>
+          <Property Name="PlayerRankOptionId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="RankId" Type="int" />
+          <Property Name="DraftId" Type="int" />
+          <Property Name="ExpandOverall" Type="bit" Nullable="false" />
+          <Property Name="ExpandQB" Type="bit" Nullable="false" />
+          <Property Name="ExpandRB" Type="bit" Nullable="false" />
+          <Property Name="ExpandWRTE" Type="bit" Nullable="false" />
+          <Property Name="ExpandDEF" Type="bit" Nullable="false" />
+          <Property Name="ExpandK" Type="bit" Nullable="false" />
+          <Property Name="ExpandQueue" Type="bit" Nullable="false" />
+          <Property Name="HideOverall" Type="bit" Nullable="false" />
+          <Property Name="HideQB" Type="bit" Nullable="false" />
+          <Property Name="HideRB" Type="bit" Nullable="false" />
+          <Property Name="HideWRTE" Type="bit" Nullable="false" />
+          <Property Name="HideDEF" Type="bit" Nullable="false" />
+          <Property Name="HideK" Type="bit" Nullable="false" />
+          <Property Name="HideQueue" Type="bit" Nullable="false" />
+          <Property Name="ShowHighlighting" Type="bit" Nullable="false" />
+          <Property Name="LockHighlighting" Type="bit" Nullable="false" />
+          <Property Name="HighlightColor" Type="varchar" MaxLength="50" />
+          <Property Name="AddTimestamp" Type="datetime" />
+          <Property Name="LastUpdateTimestamp" Type="datetime" />
+        </EntityType>
         <EntityType Name="Position">
           <Key>
             <PropertyRef Name="PosId" />
@@ -745,6 +773,7 @@
           <EntitySet Name="PlayerHighlight" EntityType="Self.PlayerHighlight" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PlayerRank" EntityType="Self.PlayerRank" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PlayerRankHistory" EntityType="Self.PlayerRankHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PlayerRankOption" EntityType="Self.PlayerRankOption" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Position" EntityType="Self.Position" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rank" EntityType="Self.Rank" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
@@ -1047,6 +1076,7 @@
             <End Role="User" EntitySet="Users" />
             <End Role="PlayerHighlight" EntitySet="PlayerHighlights" />
           </AssociationSet>
+          <EntitySet Name="PlayerRankOptions" EntityType="HomeModel.PlayerRankOption" />
           </EntityContainer>
         <EntityType Name="NFLTeam">
           <Key>
@@ -1835,6 +1865,34 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="PlayerRankOption">
+          <Key>
+            <PropertyRef Name="PlayerRankOptionId" />
+          </Key>
+          <Property Name="PlayerRankOptionId" Type="Guid" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="RankId" Type="Int32" />
+          <Property Name="DraftId" Type="Int32" />
+          <Property Name="ExpandOverall" Type="Boolean" Nullable="false" />
+          <Property Name="ExpandQB" Type="Boolean" Nullable="false" />
+          <Property Name="ExpandRB" Type="Boolean" Nullable="false" />
+          <Property Name="ExpandWRTE" Type="Boolean" Nullable="false" />
+          <Property Name="ExpandDEF" Type="Boolean" Nullable="false" />
+          <Property Name="ExpandK" Type="Boolean" Nullable="false" />
+          <Property Name="ExpandQueue" Type="Boolean" Nullable="false" />
+          <Property Name="HideOverall" Type="Boolean" Nullable="false" />
+          <Property Name="HideQB" Type="Boolean" Nullable="false" />
+          <Property Name="HideRB" Type="Boolean" Nullable="false" />
+          <Property Name="HideWRTE" Type="Boolean" Nullable="false" />
+          <Property Name="HideDEF" Type="Boolean" Nullable="false" />
+          <Property Name="HideK" Type="Boolean" Nullable="false" />
+          <Property Name="HideQueue" Type="Boolean" Nullable="false" />
+          <Property Name="ShowHighlighting" Type="Boolean" Nullable="false" />
+          <Property Name="LockHighlighting" Type="Boolean" Nullable="false" />
+          <Property Name="HighlightColor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AddTimestamp" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdateTimestamp" Type="DateTime" Precision="3" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2188,6 +2246,35 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="PlayerRankOptions">
+            <EntityTypeMapping TypeName="HomeModel.PlayerRankOption">
+              <MappingFragment StoreEntitySet="PlayerRankOption">
+                <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
+                <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
+                <ScalarProperty Name="HighlightColor" ColumnName="HighlightColor" />
+                <ScalarProperty Name="LockHighlighting" ColumnName="LockHighlighting" />
+                <ScalarProperty Name="ShowHighlighting" ColumnName="ShowHighlighting" />
+                <ScalarProperty Name="HideQueue" ColumnName="HideQueue" />
+                <ScalarProperty Name="HideK" ColumnName="HideK" />
+                <ScalarProperty Name="HideDEF" ColumnName="HideDEF" />
+                <ScalarProperty Name="HideWRTE" ColumnName="HideWRTE" />
+                <ScalarProperty Name="HideRB" ColumnName="HideRB" />
+                <ScalarProperty Name="HideQB" ColumnName="HideQB" />
+                <ScalarProperty Name="HideOverall" ColumnName="HideOverall" />
+                <ScalarProperty Name="ExpandQueue" ColumnName="ExpandQueue" />
+                <ScalarProperty Name="ExpandK" ColumnName="ExpandK" />
+                <ScalarProperty Name="ExpandDEF" ColumnName="ExpandDEF" />
+                <ScalarProperty Name="ExpandWRTE" ColumnName="ExpandWRTE" />
+                <ScalarProperty Name="ExpandRB" ColumnName="ExpandRB" />
+                <ScalarProperty Name="ExpandQB" ColumnName="ExpandQB" />
+                <ScalarProperty Name="ExpandOverall" ColumnName="ExpandOverall" />
+                <ScalarProperty Name="DraftId" ColumnName="DraftId" />
+                <ScalarProperty Name="RankId" ColumnName="RankId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="PlayerRankOptionId" ColumnName="PlayerRankOptionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2273,6 +2360,7 @@
         <edmx:AssociationConnector Association="HomeModel.FK_PlayerHighlight_Highlight" />
         <edmx:AssociationConnector Association="HomeModel.FK_PlayerHighlight_Player" />
         <edmx:AssociationConnector Association="HomeModel.FK_PlayerHighlight_User" />
+        <edmx:EntityTypeShape EntityType="HomeModel.PlayerRankOption" Width="1.5" PointX="17.375" PointY="0.75" />
         </edmx:Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

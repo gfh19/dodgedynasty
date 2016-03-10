@@ -11,6 +11,7 @@
 		document.body.style.cursor = 'wait';
 		$(function () {
 			playerHints = @Html.Raw(@Model.GetPlayerHints(false));
+			clientCookieOptions = JSON.parse('@(Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Options)))');
 			initSetupRank();
 			document.body.style.cursor = 'default';
 		});

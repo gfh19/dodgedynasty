@@ -187,5 +187,17 @@ namespace DodgeDynasty.Shared
 			LoginModel model = new LoginModel { UserName = Utilities.GetLoggedInUserName() };
 			return model.IsUserAdmin();
 		}
+
+		public static int? ToNullableInt32(this string s)
+		{
+			int i;
+			if (Int32.TryParse(s, out i)) return i;
+			return null;
+		}
+
+		public static string ToStringFromNullInt(this int? i)
+		{
+			return (i.HasValue) ? i.ToString() : null;
+        }
 	}
 }
