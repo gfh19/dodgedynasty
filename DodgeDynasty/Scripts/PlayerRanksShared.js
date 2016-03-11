@@ -417,7 +417,7 @@ function bindSortableQueue() {
 		disabled: false,
 		items: "tr:not(.unsortable)",
 		delay: 175,
-		scrollSensitivity: 15,
+		scrollSensitivity: 25,
 		update: function (event, ui) {
 			var prevRow = $(ui.item).prev("tr[data-player-id]");
 			var prevPlayerId = "";

@@ -12,6 +12,7 @@ using DodgeDynasty.Models.Types;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using DodgeDynasty.UIHelpers;
+using DodgeDynasty.Mappers.Drafts;
 
 namespace DodgeDynasty.Controllers
 {
@@ -175,6 +176,13 @@ namespace DodgeDynasty.Controllers
 				prevName = (model.PreviousDraftPick != null) ? model.PreviousDraftPick.Player.PlayerName : null
 			};
 			return Json(pickInfo, JsonRequestBehavior.AllowGet);
+		}
+
+		[HttpGet]
+		public JsonResult GetLastDraftPickAudio()
+		{
+			var mapper = new DraftPickAudioMapper();
+			return Json(mapper.GetModel(), JsonRequestBehavior.AllowGet);
 		}
 	}
 }

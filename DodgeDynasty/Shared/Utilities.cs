@@ -54,6 +54,14 @@ namespace DodgeDynasty.Shared
 			return fields;
 		}
 
+		//Eliminate redundancy
+		public static int? ToNullableInt32(this string s)
+		{
+			int i;
+			if (Int32.TryParse(s, out i)) return i;
+			return null;
+		}
+
 		public static int? ToNullInt(string id)
 		{
 			if (!string.IsNullOrEmpty(id))
@@ -188,16 +196,14 @@ namespace DodgeDynasty.Shared
 			return model.IsUserAdmin();
 		}
 
-		public static int? ToNullableInt32(this string s)
-		{
-			int i;
-			if (Int32.TryParse(s, out i)) return i;
-			return null;
-		}
-
 		public static string ToStringFromNullInt(this int? i)
 		{
 			return (i.HasValue) ? i.ToString() : null;
+        }
+
+		public static string ToUrlEncodedString(this string str)
+		{
+			return (str == null) ? str : HttpContext.Current.Server.UrlEncode(str);
         }
 	}
 }

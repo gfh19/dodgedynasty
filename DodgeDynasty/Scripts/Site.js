@@ -11,6 +11,9 @@ var connectionAttempted = false;
 var connectionStopped = false;
 var touchScrollDiv = null;
 var touchScrollLeft = null;
+var lastPickAudio = null;
+var pickAudioBed = null;
+var pickPlayerAudio = null;
 
 /* Init functions */
 
@@ -25,6 +28,7 @@ $(function () {
 		bindDraftChatWindow();
 	}
 	checkUserTurnDialog();
+	initLastPickAudio();
 });
 
 
@@ -132,7 +136,11 @@ function broadcastChatMessage(msg) {
 //Server to client:  Draft Pick broadcast-received.  Bound to server-side (C#) hub client handle
 function broadcastDraft() {
 	if (typeof pageBroadcastDraftHandler !== "undefined" && !isHistoryMode()) {
+		getLastPickAndPlayAudio();
 		pageBroadcastDraftHandler();
+	}
+	else {
+		getLastPickAndPlayAudio();
 	}
 	checkUserTurnDialog();
 }
@@ -578,6 +586,38 @@ function scrollDraftChatBottom() {
 }
 
 
+/* Draft Pick Audio */
+
+function getLastPickAndPlayAudio() {
+	ajaxGetJson("Draft/GetLastDraftPickAudio", function (pickAudio) {
+		if (lastPickAudio && pickAudio && pickAudio.playerId) {
+			if (lastPickAudio.playerId != pickAudio.playerId) {
+				lastPickAudio = pickAudio;
+				playPickAudio(pickAudio);
+			}
+		}
+		else if (pickAudio && pickAudio.playerId) {
+			lastPickAudio = pickAudio;
+			playPickAudio(pickAudio);
+		}
+	});
+}
+function initLastPickAudio() {
+	ajaxGetJson("Draft/GetLastDraftPickAudio", function (pickAudio) {
+		lastPickAudio = pickAudio;
+	});
+	pickAudioBed = new Audio(baseURL + "/Media/NFL Draft Tone.mp3");
+}
+
+function playPickAudio() {
+	//TODO:  Scrub for missing pos/team
+	pickPlayerAudio = new Audio("http://www.voicerss.org/controls/speech.ashx?hl=en-us&src=" + lastPickAudio.name +
+		",%20" + lastPickAudio.pos + ",%20" + lastPickAudio.team + "&c=mp3&rnd=" + Math.random());
+	pickPlayerAudio.play();
+	setTimeout(function () {
+		pickAudioBed.play();
+	}, 100);
+}
 
 /* Helper functions */
 

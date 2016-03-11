@@ -173,6 +173,7 @@
     <Compile Include="Mappers\DraftHistoryMapper.cs" />
     <Compile Include="Mappers\Admin\EditDraftMapper.cs" />
     <Compile Include="Mappers\Admin\AddDraftMapper.cs" />
+    <Compile Include="Mappers\Drafts\DraftPickAudioMapper.cs" />
     <Compile Include="Mappers\Drafts\SingleDraftMapper.cs" />
     <Compile Include="Mappers\EditLeagueMapper.cs" />
     <Compile Include="Mappers\AddLeagueMapper.cs">
@@ -243,6 +244,7 @@
     <Compile Include="Models\Shared\LeagueOwnerHelper.cs" />
     <Compile Include="Models\Types\ChatJson.cs" />
     <Compile Include="Models\Types\DodgeDynastyContent.cs" />
+    <Compile Include="Models\Types\DraftPickAudio.cs" />
     <Compile Include="Models\Types\DraftPickPlayer.cs" />
     <Compile Include="Models\Types\DraftPlayerHighlight.cs" />
     <Compile Include="Models\Types\DraftRankModel.cs" />
@@ -292,6 +294,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="2016 SQL Changes.sql" />
+    <Content Include="Media\NFL Draft Tone.mp3" />
     <Content Include="Scripts\lib\jQuery-addTouch.js" />
     <Content Include="SQL\OLD - 2015 SQL Changes.sql" />
     <Content Include="Content\bootstrap\css\bootstrap-theme.css" />
