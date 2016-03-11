@@ -107,7 +107,8 @@ namespace DodgeDynasty.Mappers.Ranks
         }
 
 		private string GetSafeHighlightColor(string highlightColor) {
-			return HomeEntity.Highlights.Any(o => o.HighlightClass == highlightColor) ? highlightColor : null;
+			return (highlightColor == Constants.JS.RemoveColor 
+				|| HomeEntity.Highlights.Any(o => o.HighlightClass == highlightColor)) ? highlightColor : null;
 		}
 	}
 }

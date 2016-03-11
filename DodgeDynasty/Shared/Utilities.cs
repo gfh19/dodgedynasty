@@ -203,7 +203,7 @@ namespace DodgeDynasty.Shared
 
 		public static string ToUrlEncodedString(this string str)
 		{
-			return (str == null) ? str : HttpContext.Current.Server.UrlEncode(str);
+			return (str == null) ? "" : HttpContext.Current.Server.UrlEncode(str);
         }
 	}
 }

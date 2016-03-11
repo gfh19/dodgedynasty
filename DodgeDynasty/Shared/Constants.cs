@@ -42,6 +42,11 @@ namespace DodgeDynasty.Shared
 			public const string Snake = "snake";
 		}
 
+		public class JS
+		{
+			public const string RemoveColor = "<remove>";
+		}
+
 		public static class Messages
 		{
 			public const string StringLength = "The {0} must be between {2} and {1} characters long.";

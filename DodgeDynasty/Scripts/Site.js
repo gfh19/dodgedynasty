@@ -588,6 +588,15 @@ function scrollDraftChatBottom() {
 
 /* Draft Pick Audio */
 
+function initLastPickAudio() {
+	if (draftActive) {
+		ajaxGetJson("Draft/GetLastDraftPickAudio", function (pickAudio) {
+			lastPickAudio = pickAudio;
+		});
+		pickAudioBed = new Audio(baseURL + "Media/NFL_Draft_Tone.wav");
+	}
+}
+
 function getLastPickAndPlayAudio() {
 	ajaxGetJson("Draft/GetLastDraftPickAudio", function (pickAudio) {
 		if (lastPickAudio && pickAudio && pickAudio.playerId) {
@@ -602,12 +611,6 @@ function getLastPickAndPlayAudio() {
 		}
 	});
 }
-function initLastPickAudio() {
-	ajaxGetJson("Draft/GetLastDraftPickAudio", function (pickAudio) {
-		lastPickAudio = pickAudio;
-	});
-	pickAudioBed = new Audio(baseURL + "/Media/NFL Draft Tone.mp3");
-}
 
 function playPickAudio() {
 	//TODO:  Scrub for missing pos/team
@@ -615,6 +618,8 @@ function playPickAudio() {
 		",%20" + lastPickAudio.pos + ",%20" + lastPickAudio.team + "&c=mp3&rnd=" + Math.random());
 	pickPlayerAudio.play();
 	setTimeout(function () {
+		//TODO:  If isIE:
+		//$("body").append('<embed src="/Media/NFL_Draft_Tone.wav" autostart=true width=1 height=1 id="wavfile" enablejavascript="true">');
 		pickAudioBed.play();
 	}, 100);
 }
