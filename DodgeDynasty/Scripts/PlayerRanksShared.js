@@ -8,6 +8,8 @@ function initPlayerRanksShared() {
 	bindExpandLinks();
 	toggleRanksWindows();
 	bindPlayerLinks();
+	bindHideCategoryLinks();
+	toggleCategoryTables();
 }
 
 function bindExpandLinks() {
@@ -67,6 +69,45 @@ function bindPlayerLink(link) {
 	});
 }
 
+function bindHideCategoryLinks() {
+	//var hideLinks = $(".ba-header:not(.hq-header)");
+	var hideLinks = $(".ba-hide-cat-link");
+	$.each(hideLinks, function (index, link) {
+		bindHideCategoryLink(link);
+	});
+}
+
+function bindHideCategoryLink(link) {
+	$(link).unbind("click");
+	$(link).click(function (e) {
+		e.preventDefault();
+		var table = $(link).parents("table");
+		var linkId = $(table).attr('data-link');
+		var hideId = $(link).attr('data-hide-id');
+		var hideCategory = flipCookieValue(hideId);
+		toggleHideCategory(table, hideCategory);
+		clientCookieOptions[linkId] = false;
+		toggleExpandTableRows(table, false, linkId);
+	});
+}
+
+function toggleHideCategory(table, hideCategory) {
+	if (hideCategory) {
+		$(".ba-hide-cat-link", table).text("Show");
+	}
+	else {
+		$(".ba-hide-cat-link", table).text("Hide");
+	}
+	$("tbody", table).toggle(!hideCategory);
+}
+
+function toggleCategoryTables() {
+	$.each($(".ba-table:not(.queue-table)"), function (ix, table) {
+		var hideId = $(".ba-hide-cat-link", table).attr("data-hide-id");
+		toggleHideCategory(table, clientCookieOptions[hideId]);
+	});
+}
+
 function getCookieOptions() {
 	return clientCookieOptions;
 }
@@ -75,10 +116,10 @@ function setCookieOptions(options) {
 	ajaxPost(options, "Rank/PostPlayerRankOptions");
 }
 
-function flipCookieValue(expandLinkId) {
-	clientCookieOptions[expandLinkId] = !clientCookieOptions[expandLinkId];
+function flipCookieValue(property) {
+	clientCookieOptions[property] = !clientCookieOptions[property];
 	setCookieOptions(clientCookieOptions);
-	return clientCookieOptions[expandLinkId];
+	return clientCookieOptions[property];
 }
 
 //On load, opens tables to whatever is stored in cookie
@@ -273,7 +314,7 @@ function handlePlayerHighlightClick() {
 			}
 			else {
 				addPlayerHighlighting(playerRow);
-		}
+			}
 		}
 		else {
 			if ($("#highlight-color").val() != "<remove>" && !$(playerRow).hasClass($("#highlight-color").val())) {
@@ -281,13 +322,13 @@ function handlePlayerHighlightClick() {
 			}
 			else {
 				removePlayerHighlighting(playerRow);
+			}
 		}
-	}
 	}
 	else {
 		if ($("#highlight-color").val() != "<remove>") {
 			addPlayerHighlighting(playerRow);
-	}
+		}
 	}
 }
 
@@ -439,20 +480,20 @@ function unbindSortableQueue() {
 	});
 };
 
-	function updatePlayerQueueOrder(playerQueueOrderModel) {
-		addWaitCursor();
-		ajaxPost(playerQueueOrderModel, "Rank/UpdatePlayerQueueOrder", function () {
-			updateQueueRankNums(playerQueueOrderModel);
-			removeWaitCursor();
-		}, pageBroadcastDraftHandler);
+function updatePlayerQueueOrder(playerQueueOrderModel) {
+	addWaitCursor();
+	ajaxPost(playerQueueOrderModel, "Rank/UpdatePlayerQueueOrder", function () {
+		updateQueueRankNums(playerQueueOrderModel);
+		removeWaitCursor();
+	}, pageBroadcastDraftHandler);
 }
 
-	function updateQueueRankNums(playerQueueOrderModel) {
-		var newRankNum = 1;
-		var playerRows = $("td[data-rank-num]");
-		$.each(playerRows, function (index, player) {
-			$(player).attr("data-rank-num", newRankNum);
-			$(player).text(newRankNum);
-			newRankNum++;
+function updateQueueRankNums(playerQueueOrderModel) {
+	var newRankNum = 1;
+	var playerRows = $("td[data-rank-num]");
+	$.each(playerRows, function (index, player) {
+		$(player).attr("data-rank-num", newRankNum);
+		$(player).text(newRankNum);
+		newRankNum++;
 	});
 }

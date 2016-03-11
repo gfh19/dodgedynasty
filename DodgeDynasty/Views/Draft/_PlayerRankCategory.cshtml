@@ -6,7 +6,9 @@
 		var showPos = Model.CurrentRankCategory.ShowPos;
 	}
 	<table class="ba-table" data-link="@Model.CurrentRankCategory.DataLink">
-		<caption class="ba-header">@Model.CurrentRankCategory.Header</caption>
+		<caption class="ba-header">@Model.CurrentRankCategory.Header 
+			<span class="ba-hide-cat-text">(<a class="ba-hide-cat-link" data-hide-id="@Model.CurrentRankCategory.HideId">Hide</a>)</span>
+		</caption>
 		<tbody>
 			<tr>
 				<th>Rk</th>

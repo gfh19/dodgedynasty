@@ -32,6 +32,7 @@ namespace DodgeDynasty.Models.ViewTypes
 		{
 			RankCategoryModel result = new RankCategoryModel();
 			result.DataLink = result.ExpandId = "ExpandOverall";
+			result.HideId = "HideOverall";
 			result.Header = "OVERALL";
 			result.ShowPos = true;
 			result.ShowByeWeek = true;
@@ -43,6 +44,7 @@ namespace DodgeDynasty.Models.ViewTypes
 		{
 			RankCategoryModel result = new RankCategoryModel();
 			result.DataLink = result.ExpandId = "ExpandQB";
+			result.HideId = "HideQB";
 			result.Header = "QB";
 			result.ShowPos = false;
 			result.ShowByeWeek = false;
@@ -54,6 +56,7 @@ namespace DodgeDynasty.Models.ViewTypes
 		{
 			RankCategoryModel result = new RankCategoryModel();
 			result.DataLink = result.ExpandId = "ExpandRB";
+			result.HideId = "HideRB";
 			result.Header = "RB";
 			result.ShowPos = false;
 			result.ShowByeWeek = false;
@@ -65,6 +68,7 @@ namespace DodgeDynasty.Models.ViewTypes
 		{
 			RankCategoryModel result = new RankCategoryModel();
 			result.DataLink = result.ExpandId = "ExpandWRTE";
+			result.HideId = "HideWRTE";
 			result.Header = "WR/TE";
 			result.ShowPos = true;
 			result.ShowByeWeek = false;
@@ -76,6 +80,7 @@ namespace DodgeDynasty.Models.ViewTypes
 		{
 			RankCategoryModel result = new RankCategoryModel();
 			result.DataLink = result.ExpandId = "ExpandDEF";
+			result.HideId = "HideDEF";
 			result.Header = "DEF";
 			result.ShowPos = false;
 			result.ShowByeWeek = false;
@@ -87,6 +92,7 @@ namespace DodgeDynasty.Models.ViewTypes
 		{
 			RankCategoryModel result = new RankCategoryModel();
 			result.DataLink = result.ExpandId = "ExpandK";
+			result.HideId = "HideK";
 			result.Header = "K";
 			result.ShowPos = false;
 			result.ShowByeWeek = false;

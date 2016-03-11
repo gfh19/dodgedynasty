@@ -15,6 +15,7 @@ namespace DodgeDynasty.Models.ViewTypes
 		public bool ShowByeWeek { get; set; }
 		public string ExpandId { get; set; }
 		public string ExpandValue { get; set; }
+		public string HideId { get; set; }
 		public List<RankedPlayer> PlayerList { get; set; }
 		//TODO: Someday, configure all positions to be configureable
 	}

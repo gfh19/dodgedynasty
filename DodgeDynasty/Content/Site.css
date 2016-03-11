@@ -1446,6 +1446,22 @@ ul.menu li a.current-page
 	background-color: #DFDFDF;
 }
 
+.ba-hide-cat-link {
+	cursor: pointer;
+}
+
+.ba-header:not(.hq-header) {
+    margin-bottom: -3px;
+}
+
+.ba-hide-cat-text {
+	display: inline-block;
+	font-weight: normal;
+	font-size: 11px;
+	vertical-align: middle;
+	padding-bottom: 4px;
+}
+
 .expand 
 {
 	text-align: center;

@@ -624,6 +624,7 @@ function playPickAudio() {
 	}, 100);
 }
 
+
 /* Helper functions */
 
 if (!String.prototype.startsWith) {
