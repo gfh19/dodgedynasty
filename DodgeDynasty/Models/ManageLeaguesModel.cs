@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using DodgeDynasty.Entities;
+using DodgeDynasty.Models.Admin;
 
 namespace DodgeDynasty.Models
 {
-	public class ManageLeaguesModel
+	public class ManageLeaguesModel : AdminModeModel
 	{
-		public List<League> AllLeagues { get; set; }
-		//TODO: Future concept:  Only expose User's leagues if Commish of them ("Commish" access)
-//		public List<League> UserLeagues { get; set; }
+		public List<League> Leagues { get; set; }
 	}
 }

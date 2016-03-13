@@ -1,6 +1,261 @@
 ﻿
+
 SET XACT_ABORT ON
 BEGIN TRANSACTION;
+
+
+
+/* 3/13/16 */
+
+
+USE [Home]
+GO
+
+ALTER TABLE [dbo].[Role]
+ADD [AddTimestamp] datetime NULL
+GO
+
+ALTER TABLE [dbo].[Role]
+ADD [LastUpdateTimestamp] datetime NULL
+GO
+
+UPDATE [dbo].[Role]
+SET AddTimestamp = '2014-06-01 00:00:00',
+	LastUpdateTimestamp = '2014-06-01 00:00:00'
+WHERE RoleId = 1
+
+ALTER TABLE [dbo].[Role]
+ALTER COLUMN [RoleDescription] varchar(30) NOT NULL
+GO
+
+ALTER TABLE [dbo].[Role]
+ALTER COLUMN [AddTimestamp] datetime NOT NULL
+GO
+
+ALTER TABLE [dbo].[Role]
+ALTER COLUMN [LastUpdateTimestamp] datetime NOT NULL
+GO
+
+USE [Home]
+GO
+
+INSERT INTO [dbo].[Role] ([RoleDescription], [AddTimestamp], [LastUpdateTimestamp])
+     VALUES
+           ('Commish', getdate(), getdate())
+GO
+
+
+
+
+USE [Home]
+GO
+
+ALTER TABLE [dbo].[UserRole] DROP CONSTRAINT [FK_UserRole_User]
+GO
+
+ALTER TABLE [dbo].[UserRole] DROP CONSTRAINT [FK_UserRole_Role]
+GO
+
+/****** Object:  Table [dbo].[UserRole]    Script Date: 3/13/2016 1:48:38 PM ******/
+DROP TABLE [dbo].[UserRole]
+GO
+
+/****** Object:  Table [dbo].[UserRole]    Script Date: 3/13/2016 1:48:38 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[UserRole](
+	[UserRoleId] [int] IDENTITY(1,1) NOT NULL,
+	[UserId] [int] NOT NULL,
+	[RoleId] [int] NOT NULL,
+	[LeagueId] [int] NULL,
+	[AddTimestamp] [datetime] NOT NULL,
+	[LastUpdateTimestamp] [datetime] NOT NULL,
+ CONSTRAINT [PK_UserRole] PRIMARY KEY CLUSTERED 
+(
+	[UserRoleId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+/****** Object:  Index [IX_User]    Script Date: 3/13/2016 2:58:57 PM ******/
+CREATE NONCLUSTERED INDEX [IX_User] ON [dbo].[UserRole]
+(
+	[UserId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+
+/****** Object:  Index [IX_UserRoleLeague]    Script Date: 3/13/2016 1:48:38 PM ******/
+CREATE UNIQUE NONCLUSTERED INDEX [IX_UserRoleLeague] ON [dbo].[UserRole]
+(
+	[UserId] ASC,
+	[RoleId] ASC,
+	[LeagueId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[UserRole]  WITH CHECK ADD  CONSTRAINT [FK_UserRole_League] FOREIGN KEY([LeagueId])
+REFERENCES [dbo].[League] ([LeagueId])
+GO
+
+ALTER TABLE [dbo].[UserRole] CHECK CONSTRAINT [FK_UserRole_League]
+GO
+
+ALTER TABLE [dbo].[UserRole]  WITH CHECK ADD  CONSTRAINT [FK_UserRole_Role] FOREIGN KEY([RoleId])
+REFERENCES [dbo].[Role] ([RoleId])
+GO
+
+ALTER TABLE [dbo].[UserRole] CHECK CONSTRAINT [FK_UserRole_Role]
+GO
+
+ALTER TABLE [dbo].[UserRole]  WITH CHECK ADD  CONSTRAINT [FK_UserRole_User] FOREIGN KEY([UserId])
+REFERENCES [dbo].[User] ([UserId])
+GO
+
+ALTER TABLE [dbo].[UserRole] CHECK CONSTRAINT [FK_UserRole_User]
+GO
+
+
+
+USE [Home]
+GO
+
+INSERT INTO [dbo].[UserRole]
+           ([UserId],[RoleId],[LeagueId],[AddTimestamp],[LastUpdateTimestamp])
+     VALUES
+           (23, 1, NULL, '2014-06-01 00:00:00', '2014-06-01 00:00:00')
+GO
+
+INSERT INTO [dbo].[UserRole]
+           ([UserId],[RoleId],[LeagueId],[AddTimestamp],[LastUpdateTimestamp])
+     VALUES
+           (23, 2, 1, getdate(), getdate())
+GO
+
+INSERT INTO [dbo].[UserRole]
+           ([UserId],[RoleId],[LeagueId],[AddTimestamp],[LastUpdateTimestamp])
+     VALUES
+           (23, 2, 4, getdate(), getdate())
+GO
+
+INSERT INTO [dbo].[UserRole]
+           ([UserId],[RoleId],[LeagueId],[AddTimestamp],[LastUpdateTimestamp])
+     VALUES
+           (23, 2, 5, getdate(), getdate())
+GO
+
+INSERT INTO [dbo].[UserRole]
+           ([UserId],[RoleId],[LeagueId],[AddTimestamp],[LastUpdateTimestamp])
+     VALUES
+           (23, 2, 6, getdate(), getdate())
+GO
+
+
+
+
+
+
+USE [Home]
+GO
+
+DELETE FROM PlayerHighlight
+DELETE FROM Highlight
+
+DBCC CHECKIDENT('Highlight', RESEED, 0)
+DBCC CHECKIDENT('PlayerHighlight', RESEED, 0)
+
+
+
+
+INSERT INTO [dbo].[Highlight]
+           ([HighlightName],[HighlightClass],[HighlightValue],[AddTimestamp],[LastUpdateTimestamp])
+     VALUES
+           ('Yellow','bg-yellow','yellow',getdate(),getdate())
+GO
+
+INSERT INTO [dbo].[Highlight]
+           ([HighlightName],[HighlightClass],[HighlightValue],[AddTimestamp],[LastUpdateTimestamp])
+     VALUES
+           ('Lime','bg-lime','lime',getdate(),getdate())
+GO
+
+INSERT INTO [dbo].[Highlight]
+           ([HighlightName],[HighlightClass],[HighlightValue],[AddTimestamp],[LastUpdateTimestamp])
+     VALUES
+           ('Cyan','bg-cyan','cyan',getdate(),getdate())
+GO
+
+INSERT INTO [dbo].[Highlight]
+           ([HighlightName],[HighlightClass],[HighlightValue],[AddTimestamp],[LastUpdateTimestamp])
+     VALUES
+           ('Orange','bg-orange','#FFA011',getdate(),getdate())
+GO
+
+INSERT INTO [dbo].[Highlight]
+           ([HighlightName],[HighlightClass],[HighlightValue],[AddTimestamp],[LastUpdateTimestamp])
+     VALUES
+           ('Red','bg-red','#FF4444',getdate(),getdate())
+GO
+
+INSERT INTO [dbo].[Highlight]
+           ([HighlightName],[HighlightClass],[HighlightValue],[AddTimestamp],[LastUpdateTimestamp])
+     VALUES
+           ('Pink','bg-pink','pink',getdate(),getdate())
+GO
+
+INSERT INTO [dbo].[Highlight]
+           ([HighlightName],[HighlightClass],[HighlightValue],[AddTimestamp],[LastUpdateTimestamp])
+     VALUES
+           ('Magenta','bg-magenta','#FF00FF',getdate(),getdate())
+GO
+
+INSERT INTO [dbo].[Highlight]
+           ([HighlightName],[HighlightClass],[HighlightValue],[AddTimestamp],[LastUpdateTimestamp])
+     VALUES
+           ('Light Blue','bg-light-blue','#87CEEB',getdate(),getdate())
+GO
+
+INSERT INTO [dbo].[Highlight]
+           ([HighlightName],[HighlightClass],[HighlightValue],[AddTimestamp],[LastUpdateTimestamp])
+     VALUES
+           ('Blue','bg-blue','#6767FF',getdate(),getdate())
+GO
+
+INSERT INTO [dbo].[Highlight]
+           ([HighlightName],[HighlightClass],[HighlightValue],[AddTimestamp],[LastUpdateTimestamp])
+     VALUES
+           ('Green','bg-green','#449944',getdate(),getdate())
+GO
+
+INSERT INTO [dbo].[Highlight]
+           ([HighlightName],[HighlightClass],[HighlightValue],[AddTimestamp],[LastUpdateTimestamp])
+     VALUES
+           ('Brown','bg-brown','#B36E39',getdate(),getdate())
+GO
+
+INSERT INTO [dbo].[Highlight]
+           ([HighlightName],[HighlightClass],[HighlightValue],[AddTimestamp],[LastUpdateTimestamp])
+     VALUES
+           ('Grey (clear)','bg-grey','#EFEEEF',getdate(),getdate())
+GO
+
+INSERT INTO [dbo].[Highlight]
+           ([HighlightName],[HighlightClass],[HighlightValue],[AddTimestamp],[LastUpdateTimestamp])
+     VALUES
+           ('White','bg-white','white',getdate(),getdate())
+GO
+
+INSERT INTO [dbo].[Highlight]
+           ([HighlightName],[HighlightClass],[HighlightValue],[AddTimestamp],[LastUpdateTimestamp])
+     VALUES
+           ('Black','bg-black','black',getdate(),getdate())
+GO
+
+
 
 
 

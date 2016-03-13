@@ -43,7 +43,7 @@ namespace DodgeDynasty.Mappers.Shared
 			}
 		}
 
-		public override DraftChatModel CreateModelForUpdate()
+		protected override DraftChatModel CreateModelForUpdate()
 		{
 			try
 			{

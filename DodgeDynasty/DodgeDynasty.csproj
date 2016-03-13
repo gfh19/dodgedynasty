@@ -161,15 +161,21 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CommishController.cs" />
     <Compile Include="Controllers\DraftController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SiteController.cs" />
+    <Compile Include="Filters\CommishAccessAttribute.cs" />
+    <Compile Include="Mappers\Account\RoleAccessMapper.cs" />
     <Compile Include="Mappers\Account\MyInfoMapper.cs" />
     <Compile Include="Mappers\AdminPasswordMapper.cs" />
     <Compile Include="Mappers\Admin\AddUserMapper.cs" />
+    <Compile Include="Mappers\Admin\AdminManageDraftsMapper.cs" />
     <Compile Include="Mappers\Admin\ManageUsersMapper.cs" />
     <Compile Include="Mappers\Admin\UserInfoMapper.cs" />
     <Compile Include="Mappers\Admin\UserStatusMapper.cs" />
+    <Compile Include="Mappers\Commish\CommishManageDraftsMapper.cs" />
+    <Compile Include="Mappers\Commish\CommishManageLeaguesMapper.cs" />
     <Compile Include="Mappers\DraftHistoryMapper.cs" />
     <Compile Include="Mappers\Admin\EditDraftMapper.cs" />
     <Compile Include="Mappers\Admin\AddDraftMapper.cs" />
@@ -189,8 +195,10 @@
     <Compile Include="Mappers\Highlights\DeletePlayerHighlightMapper.cs" />
     <Compile Include="Mappers\Highlights\HighlightsMapper.cs" />
     <Compile Include="Mappers\Highlights\UpdatePlayerQueueOrderMapper.cs" />
+    <Compile Include="Mappers\IManageLeaguesMapper.cs" />
+    <Compile Include="Mappers\IMapper.cs" />
     <Compile Include="Mappers\ManageDraftsMapper.cs" />
-    <Compile Include="Mappers\ManageLeaguesMapper.cs" />
+    <Compile Include="Mappers\Admin\AdminManageLeaguesMapper.cs" />
     <Compile Include="Mappers\MapperBase.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -207,11 +215,13 @@
     </Compile>
     <Compile Include="Mappers\Site\MessagesHelper.cs" />
     <Compile Include="Mappers\Site\MessagesMapper.cs" />
+    <Compile Include="Models\Account\RoleAccessModel.cs" />
     <Compile Include="Models\Account\UserInfoModel.cs" />
     <Compile Include="Models\AddEditDraftModel.cs" />
     <Compile Include="Models\AddEditLeagueModel.cs" />
     <Compile Include="Models\AdminPasswordModel.cs" />
     <Compile Include="Models\Admin\AddUserModel.cs" />
+    <Compile Include="Models\Admin\AdminModeModel.cs" />
     <Compile Include="Models\Admin\ManageUsersModel.cs" />
     <Compile Include="Models\Admin\UserStatusModel.cs" />
     <Compile Include="Models\Drafts\SingleDraftModel.cs" />
@@ -430,6 +440,9 @@
     <Content Include="SQL\usp_LoadPastDraftRosters.sql" />
     <Content Include="SQL\usp_LoadPastDrafts.sql" />
     <Content Include="SQL\usp_LoadPlayerRanks_V2.sql" />
+    <Content Include="Views\Admin\ManageDrafts.cshtml" />
+    <Content Include="Views\Admin\ManageLeagues.cshtml" />
+    <Content Include="Views\Commish\ManageDrafts.cshtml" />
     <Content Include="Views\Shared\Unauthorized.cshtml" />
     <Content Include="Views\Draft\Pick.cshtml" />
     <Content Include="Views\Draft\CurrentDraftPickPartial.cshtml" />
@@ -438,12 +451,10 @@
     <Content Include="Views\Draft\PlayerRanksPartial.cshtml" />
     <Content Include="Views\Draft\RankingsList.cshtml" />
     <Content Include="Views\Rank\SetupRank.cshtml" />
-    <Content Include="Views\Admin\ManageLeagues.cshtml" />
     <Content Include="Views\Admin\AddLeague.cshtml" />
     <Content Include="Views\Admin\AddDraft.cshtml" />
     <Content Include="Views\Admin\ActivateDraft.cshtml" />
     <Content Include="Views\Admin\EditLeague.cshtml" />
-    <Content Include="Views\Admin\ManageDrafts.cshtml" />
     <Content Include="Views\Admin\EditDraft.cshtml" />
     <Content Include="Views\Admin\AddEditLeaguePartial.cshtml" />
     <Content Include="Views\Admin\AddEditDraftPartial.cshtml" />
@@ -464,6 +475,9 @@
     <Content Include="Views\Shared\_DraftChatPartial.cshtml" />
     <Content Include="Views\Draft\_PlayerRankCategory.cshtml" />
     <Content Include="Views\Draft\HighlightQueuePartial.cshtml" />
+    <Content Include="Views\AdminShared\_ManageLeaguesPartial.cshtml" />
+    <Content Include="Views\Commish\ManageLeagues.cshtml" />
+    <Content Include="Views\AdminShared\_ManageDraftsPartial.cshtml" />
     <None Include="Web.local.config">
       <SubType>Designer</SubType>
     </None>

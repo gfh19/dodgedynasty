@@ -4,12 +4,12 @@ using DodgeDynasty.Entities;
 
 namespace DodgeDynasty.Mappers
 {
-	public class MapperBase<T> where T : class, new()
+	public class MapperBase<T> : IMapper<T> where T : class, new()
 	{
 		public T Model { get; set; }
 		public ModelStateDictionary ModelState { get; set; }
 		public bool UpdateSucceeded { get; set; }
-		public bool DoUpdateFailed { get; set; }
+		protected bool DoUpdateFailed { get; set; }
 		protected HomeEntity HomeEntity { get; set; }
 
 		public T GetModel(T model)
@@ -24,7 +24,7 @@ namespace DodgeDynasty.Mappers
 
 		public T GetModel()
 		{
-			return GetModel((T)null);
+			return GetModel(Model);
 		}
 
 		public T GetUpdatedModel(T model)
@@ -48,13 +48,13 @@ namespace DodgeDynasty.Mappers
 			return Model;
 		}
 
-		public T CreateModel(T model = null)
+		protected T CreateModel(T model = null)
 		{
 			Model = model ?? new T();
 			return Model;
 		}
 
-		public virtual T CreateModelForUpdate() 
+		protected virtual T CreateModelForUpdate() 
 		{
 			return null;
 		}

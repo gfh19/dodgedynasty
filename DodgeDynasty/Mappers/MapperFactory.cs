@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DodgeDynasty.Mappers.Commish;
 using DodgeDynasty.Mappers.Ranks;
+using DodgeDynasty.Models;
 
 namespace DodgeDynasty.Mappers
 {
@@ -13,5 +15,10 @@ namespace DodgeDynasty.Mappers
 		{
 			return new PlayerRankOptionsMapper(playerRankOptionId);
 		}
-	}
+
+		public static CommishManageDraftsMapper<ManageDraftsModel> CreateCommishManageDraftsMapper(string leagueId)
+		{
+			return new CommishManageDraftsMapper<ManageDraftsModel> { LeagueId = leagueId };
+		}
+    }
 }

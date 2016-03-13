@@ -92,7 +92,7 @@ namespace DodgeDynasty.Controllers
 		[AdminAccess]
 		public ActionResult ManageLeagues()
 		{
-			var mapper = new ManageLeaguesMapper<ManageLeaguesModel>();
+			var mapper = Factory.Create<AdminManageLeaguesMapper<ManageLeaguesModel>>();
 			return View(mapper.GetModel());
 		}
 
@@ -100,7 +100,7 @@ namespace DodgeDynasty.Controllers
 		[AdminAccess]
 		public ActionResult ManageDrafts(string id)
 		{
-			var mapper = new ManageDraftsMapper<ManageDraftsModel> { LeagueId = id };
+			var mapper = new AdminManageDraftsMapper<ManageDraftsModel> { LeagueId = id };
 			return View(mapper.GetModel());
 		}
 

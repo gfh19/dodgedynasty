@@ -63,6 +63,7 @@ namespace DodgeDynasty.Shared
 		public static class Roles
 		{
 			public const int Admin = 1;
+			public const int Commish = 2;
 		}
 
 		public static class Session
@@ -94,6 +95,8 @@ namespace DodgeDynasty.Shared
 			public const string ColorStyles = "_ColorStyles";
 			public const string UserInfoPartial = "UserInfoPartial";
 			public const string ManageUsers = "ManageUsers";
+			public const string ManageLeaguesPartial = "../AdminShared/_ManageLeaguesPartial";
+			public const string ManageDraftsPartial = "../AdminShared/_ManageDraftsPartial";
 			public const string Messages = "Messages";
 			public const string DraftChatPartial = "_DraftChatPartial";
 			public const string HighlightQueuePartial = "HighlightQueuePartial";

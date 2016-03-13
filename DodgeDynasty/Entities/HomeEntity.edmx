@@ -304,7 +304,9 @@
             <PropertyRef Name="RoleId" />
           </Key>
           <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="RoleDescription" Type="varchar" MaxLength="30" />
+          <Property Name="RoleDescription" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
+          <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -350,11 +352,14 @@
         </EntityType>
         <EntityType Name="UserRole">
           <Key>
-            <PropertyRef Name="UserId" />
-            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="UserRoleId" />
           </Key>
+          <Property Name="UserRoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="RoleId" Type="int" Nullable="false" />
+          <Property Name="LeagueId" Type="int" />
+          <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
+          <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
         </EntityType>
         <Association Name="FK_ByeWeek_NFLTeam">
           <End Role="NFLTeam" Type="Self.NFLTeam" Multiplicity="1" />
@@ -716,6 +721,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UserRole_League">
+          <End Role="League" Type="Self.League" Multiplicity="0..1" />
+          <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="League">
+              <PropertyRef Name="LeagueId" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="LeagueId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserRole_Role">
           <End Role="Role" Type="Self.Role" Multiplicity="1" />
           <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
@@ -737,20 +754,6 @@
             </Principal>
             <Dependent Role="UserRole">
               <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserRole_UserRole">
-          <End Role="UserRole" Type="Self.UserRole" Multiplicity="1" />
-          <End Role="UserRole1" Type="Self.UserRole" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="UserRole">
-              <PropertyRef Name="UserId" />
-              <PropertyRef Name="RoleId" />
-            </Principal>
-            <Dependent Role="UserRole1">
-              <PropertyRef Name="UserId" />
-              <PropertyRef Name="RoleId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -901,6 +904,10 @@
             <End Role="Rank" EntitySet="Rank" />
             <End Role="PlayerRank" EntitySet="PlayerRank" />
           </AssociationSet>
+          <AssociationSet Name="FK_UserRole_League" Association="Self.FK_UserRole_League">
+            <End Role="League" EntitySet="League" />
+            <End Role="UserRole" EntitySet="UserRole" />
+          </AssociationSet>
           <AssociationSet Name="FK_UserRole_Role" Association="Self.FK_UserRole_Role">
             <End Role="Role" EntitySet="Role" />
             <End Role="UserRole" EntitySet="UserRole" />
@@ -908,10 +915,6 @@
           <AssociationSet Name="FK_UserRole_User" Association="Self.FK_UserRole_User">
             <End Role="User" EntitySet="User" />
             <End Role="UserRole" EntitySet="UserRole" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserRole_UserRole" Association="Self.FK_UserRole_UserRole">
-            <End Role="UserRole" EntitySet="UserRole" />
-            <End Role="UserRole1" EntitySet="UserRole" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -930,21 +933,7 @@
             <End Role="Rank" EntitySet="Ranks" />
             <End Role="PlayerRank" EntitySet="PlayerRanks" />
           </AssociationSet>
-          <EntitySet Name="Roles" EntityType="HomeModel.Role" />
-          <EntitySet Name="UserRoles" EntityType="HomeModel.UserRole" />
-          <AssociationSet Name="FK_UserRole_Role" Association="HomeModel.FK_UserRole_Role">
-            <End Role="Role" EntitySet="Roles" />
-            <End Role="UserRole" EntitySet="UserRoles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserRole_UserRole" Association="HomeModel.FK_UserRole_UserRole">
-            <End Role="UserRole" EntitySet="UserRoles" />
-            <End Role="UserRole1" EntitySet="UserRoles" />
-          </AssociationSet>
           <EntitySet Name="Users" EntityType="HomeModel.User" />
-          <AssociationSet Name="FK_UserRole_User" Association="HomeModel.FK_UserRole_User">
-            <End Role="User" EntitySet="Users" />
-            <End Role="UserRole" EntitySet="UserRoles" />
-          </AssociationSet>
           <EntitySet Name="DraftRanks" EntityType="HomeModel.DraftRank" />
           <EntitySet Name="DraftOwners" EntityType="HomeModel.DraftOwner" />
           <EntitySet Name="DraftPicks" EntityType="HomeModel.DraftPick" />
@@ -1077,6 +1066,20 @@
             <End Role="PlayerHighlight" EntitySet="PlayerHighlights" />
           </AssociationSet>
           <EntitySet Name="PlayerRankOptions" EntityType="HomeModel.PlayerRankOption" />
+          <EntitySet Name="Roles" EntityType="HomeModel.Role" />
+          <EntitySet Name="UserRoles" EntityType="HomeModel.UserRole" />
+          <AssociationSet Name="FK_UserRole_League" Association="HomeModel.FK_UserRole_League">
+            <End Role="League" EntitySet="Leagues" />
+            <End Role="UserRole" EntitySet="UserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRole_Role" Association="HomeModel.FK_UserRole_Role">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="UserRole" EntitySet="UserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRole_User" Association="HomeModel.FK_UserRole_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserRole" EntitySet="UserRoles" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="NFLTeam">
           <Key>
@@ -1178,52 +1181,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Role">
-          <Key>
-            <PropertyRef Name="RoleId" />
-          </Key>
-          <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
-          <Property Name="RoleDescription" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="UserRoles" Relationship="HomeModel.FK_UserRole_Role" FromRole="Role" ToRole="UserRole" />
-        </EntityType>
-        <EntityType Name="UserRole">
-          <Key>
-            <PropertyRef Name="UserId" />
-            <PropertyRef Name="RoleId" />
-          </Key>
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="RoleId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Role" Relationship="HomeModel.FK_UserRole_Role" FromRole="UserRole" ToRole="Role" />
-          <NavigationProperty Name="UserRole1" Relationship="HomeModel.FK_UserRole_UserRole" FromRole="UserRole" ToRole="UserRole1" />
-          <NavigationProperty Name="UserRole2" Relationship="HomeModel.FK_UserRole_UserRole" FromRole="UserRole1" ToRole="UserRole" />
-          <NavigationProperty Name="User" Relationship="HomeModel.FK_UserRole_User" FromRole="UserRole" ToRole="User" />
-        </EntityType>
-        <Association Name="FK_UserRole_Role">
-          <End Type="HomeModel.Role" Role="Role" Multiplicity="1" />
-          <End Type="HomeModel.UserRole" Role="UserRole" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Role">
-              <PropertyRef Name="RoleId" />
-            </Principal>
-            <Dependent Role="UserRole">
-              <PropertyRef Name="RoleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserRole_UserRole">
-          <End Type="HomeModel.UserRole" Role="UserRole" Multiplicity="1" />
-          <End Type="HomeModel.UserRole" Role="UserRole1" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="UserRole">
-              <PropertyRef Name="UserId" />
-              <PropertyRef Name="RoleId" />
-            </Principal>
-            <Dependent Role="UserRole1">
-              <PropertyRef Name="UserId" />
-              <PropertyRef Name="RoleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="UserId" />
@@ -1240,7 +1197,6 @@
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="UserRoles" Relationship="HomeModel.FK_UserRole_User" FromRole="User" ToRole="UserRole" />
           <Property Name="LastMessageView" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Messages" Relationship="HomeModel.FK_Message_User" FromRole="User" ToRole="Message" />
           <NavigationProperty Name="DraftChats" Relationship="HomeModel.FK_DraftChat_User" FromRole="User" ToRole="DraftChat" />
@@ -1252,19 +1208,8 @@
           <NavigationProperty Name="Drafts1" Relationship="HomeModel.FK_Draft_Winner" FromRole="User" ToRole="Draft" />
           <NavigationProperty Name="PlayerAdjustments" Relationship="HomeModel.FK_PlayerAdjustment_User" FromRole="User" ToRole="PlayerAdjustment" />
           <NavigationProperty Name="PlayerHighlights" Relationship="HomeModel.FK_PlayerHighlight_User" FromRole="User" ToRole="PlayerHighlight" />
+          <NavigationProperty Name="UserRoles" Relationship="HomeModel.FK_UserRole_User" FromRole="User" ToRole="UserRole" />
         </EntityType>
-        <Association Name="FK_UserRole_User">
-          <End Type="HomeModel.User" Role="User" Multiplicity="1" />
-          <End Type="HomeModel.UserRole" Role="UserRole" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="UserRole">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="DraftRank">
           <Key>
             <PropertyRef Name="DraftRankId" />
@@ -1332,6 +1277,7 @@
           <NavigationProperty Name="Messages" Relationship="HomeModel.FK_Message_League" FromRole="League" ToRole="Message" />
           <NavigationProperty Name="DraftChats" Relationship="HomeModel.FK_DraftChat_League" FromRole="League" ToRole="DraftChat" />
           <NavigationProperty Name="Drafts" Relationship="HomeModel.FK_Draft_League" FromRole="League" ToRole="Draft" />
+          <NavigationProperty Name="UserRoles" Relationship="HomeModel.FK_UserRole_League" FromRole="League" ToRole="UserRole" />
         </EntityType>
         <EntityType Name="LeagueOwner">
           <Key>
@@ -1893,6 +1839,66 @@
           <Property Name="AddTimestamp" Type="DateTime" Precision="3" />
           <Property Name="LastUpdateTimestamp" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleDescription" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="UserRoles" Relationship="HomeModel.FK_UserRole_Role" FromRole="Role" ToRole="UserRole" />
+        </EntityType>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="UserRoleId" />
+          </Key>
+          <Property Name="UserRoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <Property Name="LeagueId" Type="Int32" />
+          <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="League" Relationship="HomeModel.FK_UserRole_League" FromRole="UserRole" ToRole="League" />
+          <NavigationProperty Name="Role" Relationship="HomeModel.FK_UserRole_Role" FromRole="UserRole" ToRole="Role" />
+          <NavigationProperty Name="User" Relationship="HomeModel.FK_UserRole_User" FromRole="UserRole" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_UserRole_League">
+          <End Type="HomeModel.League" Role="League" Multiplicity="0..1" />
+          <End Type="HomeModel.UserRole" Role="UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="League">
+              <PropertyRef Name="LeagueId" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="LeagueId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRole_Role">
+          <End Type="HomeModel.Role" Role="Role" Multiplicity="1" />
+          <End Type="HomeModel.UserRole" Role="UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRole_User">
+          <End Type="HomeModel.User" Role="User" Multiplicity="1" />
+          <End Type="HomeModel.UserRole" Role="UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1985,22 +1991,6 @@
             <EntityTypeMapping TypeName="HomeModel.UserProfile">
               <MappingFragment StoreEntitySet="UserProfile">
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Roles">
-            <EntityTypeMapping TypeName="HomeModel.Role">
-              <MappingFragment StoreEntitySet="Role">
-                <ScalarProperty Name="RoleDescription" ColumnName="RoleDescription" />
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserRoles">
-            <EntityTypeMapping TypeName="HomeModel.UserRole">
-              <MappingFragment StoreEntitySet="UserRole">
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2275,6 +2265,28 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="HomeModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
+                <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
+                <ScalarProperty Name="RoleDescription" ColumnName="RoleDescription" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRoles">
+            <EntityTypeMapping TypeName="HomeModel.UserRole">
+              <MappingFragment StoreEntitySet="UserRole">
+                <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
+                <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
+                <ScalarProperty Name="LeagueId" ColumnName="LeagueId" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserRoleId" ColumnName="UserRoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2310,12 +2322,7 @@
           <edmx:ConnectorPoint PointX="7.15625" PointY="8.40211826822918" />
           <edmx:ConnectorPoint PointX="8.25" PointY="8.40211826822918" />
         </edmx:AssociationConnector>
-        <edmx:EntityTypeShape EntityType="HomeModel.Role" Width="1.5" PointX="7.75" PointY="19" />
-        <edmx:EntityTypeShape EntityType="HomeModel.UserRole" Width="1.5" PointX="10" PointY="13.625" />
-        <edmx:AssociationConnector Association="HomeModel.FK_UserRole_Role" />
-        <edmx:AssociationConnector Association="HomeModel.FK_UserRole_UserRole" />
         <edmx:EntityTypeShape EntityType="HomeModel.User" Width="1.5" PointX="7.75" PointY="13" />
-        <edmx:AssociationConnector Association="HomeModel.FK_UserRole_User" />
         <edmx:EntityTypeShape EntityType="HomeModel.DraftRank" Width="1.5" PointX="0.75" PointY="0.75" />
         <edmx:EntityTypeShape EntityType="HomeModel.DraftOwner" Width="1.5" PointX="0.75" PointY="13" />
         <edmx:EntityTypeShape EntityType="HomeModel.DraftPick" Width="1.5" PointX="5.625" PointY="7.75" />
@@ -2361,6 +2368,11 @@
         <edmx:AssociationConnector Association="HomeModel.FK_PlayerHighlight_Player" />
         <edmx:AssociationConnector Association="HomeModel.FK_PlayerHighlight_User" />
         <edmx:EntityTypeShape EntityType="HomeModel.PlayerRankOption" Width="1.5" PointX="17.375" PointY="0.75" />
+        <edmx:EntityTypeShape EntityType="HomeModel.Role" Width="1.5" PointX="15.375" PointY="20.25" />
+        <edmx:EntityTypeShape EntityType="HomeModel.UserRole" Width="1.5" PointX="17.625" PointY="14.875" />
+        <edmx:AssociationConnector Association="HomeModel.FK_UserRole_League" />
+        <edmx:AssociationConnector Association="HomeModel.FK_UserRole_Role" />
+        <edmx:AssociationConnector Association="HomeModel.FK_UserRole_User" />
         </edmx:Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

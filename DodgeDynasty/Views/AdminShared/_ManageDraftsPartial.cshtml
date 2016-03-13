@@ -1,0 +1,21 @@
+﻿@model DodgeDynasty.Models.ManageDraftsModel
+
+<div id="manageDrafts">
+	<div class="large-page-header">@ViewBag.Title</div>
+	<div class="page-entries">
+		@{if (Model.LeagueId != null) {
+			<div class="page-entry">
+				<a href="@Url.Content("~/" + Model.AdminMode + "/AddDraft/" + Model.LeagueId)">&lt;Add New Draft&gt;</a>
+			</div>
+		}}
+		<div class="page-section">
+			@foreach (var draft in Model.LeagueDrafts.OrderByDescending(o => o.DraftDate))
+			{
+				<div class="page-entry">
+					<a href="@Url.Content("~/" + Model.AdminMode + "/EditDraft/" + draft.DraftId)">@draft.DraftYear @draft.LeagueName</a>
+				</div>
+			}
+		</div>
+	</div>
+
+</div>

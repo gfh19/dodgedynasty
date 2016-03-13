@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using DodgeDynasty.Entities;
+using DodgeDynasty.Mappers.Account;
 using DodgeDynasty.Mappers.Shared;
 using DodgeDynasty.Mappers.Site;
+using DodgeDynasty.Models;
+using DodgeDynasty.Models.Account;
 using DodgeDynasty.Models.Shared;
 using DodgeDynasty.Models.Site;
 
@@ -143,6 +146,44 @@ namespace DodgeDynasty.Shared
 		{
 			var draftChatMapper = new DraftChatMapper();
 			return draftChatMapper.GetModel();
+		}
+
+
+		/* Access Methods */
+
+		public static RoleAccessModel GetCurrentUserRoleAccess()
+		{
+			RoleAccessMapper mapper = Factory.Create<RoleAccessMapper>();
+			return mapper.GetModel();
+		}
+
+		public static List<int> GetCommishLeagueIds()
+		{
+			var userRoles = Factory.Create<RoleAccessMapper>().GetModel().UserRoles;
+			return userRoles.Where(o => o.RoleId == Constants.Roles.Commish && o.LeagueId != null)
+				.Select(o => o.LeagueId.Value).ToList();
+		}
+
+		public static bool IsUserAdmin(int? userId = null)
+		{
+			RoleAccessMapper mapper = Factory.Create<RoleAccessMapper>();
+			mapper.Model = new RoleAccessModel { UserId = userId };
+			return mapper.GetModel().IsUserAdmin;
+		}
+
+		public static bool IsUserCommish(int? leagueId = null, int? userId = null)
+		{
+			RoleAccessMapper mapper = Factory.Create<RoleAccessMapper>();
+			mapper.Model = new RoleAccessModel { UserId = userId, LeagueId = leagueId };
+			return mapper.GetModel().IsUserCommish;
+		}
+
+		public static bool IsUserAdminOrCommish(int? leagueId = null, int? userId = null)
+		{
+			RoleAccessMapper mapper = Factory.Create<RoleAccessMapper>();
+			mapper.Model = new RoleAccessModel { UserId = userId, LeagueId = leagueId };
+			var model = mapper.GetModel();
+			return model.IsUserAdmin || model.IsUserCommish;
 		}
 	}
 }

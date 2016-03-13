@@ -69,6 +69,29 @@ namespace DodgeDynasty.Shared
 			return TimeZoneInfo.ConvertTimeFromUtc(utcTime.Value, easternZone);
 		}
 
+		public static int? CheckActionParameterId(ActionExecutingContext filterContext, params string[] idNames)
+		{
+			foreach (string idName in idNames)
+			{
+				if (filterContext.ActionParameters.ContainsKey(idName))
+				{
+					if (filterContext.ActionParameters[idName] != null)
+					{
+						if (filterContext.ActionParameters[idName] is string)
+						{
+							return Convert.ToInt32((string)filterContext.ActionParameters[idName]);
+						}
+						else
+						{
+							return (int)filterContext.ActionParameters[idName];
+						}
+					}
+				}
+			}
+
+			return null;
+		}
+
 
 		/* Conversion methods */
 
@@ -193,6 +216,7 @@ namespace DodgeDynasty.Shared
 			return ownerDrafts.Last();
 		}
 
+		//TODO:  Move to DBUtilities? Or other like class
 		public static bool IsUserAdmin()
 		{
 			LoginModel model = new LoginModel { UserName = Utilities.GetLoggedInUserName() };

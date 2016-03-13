@@ -1,0 +1,20 @@
+﻿@model DodgeDynasty.Models.ManageLeaguesModel
+
+<div id="manageLeagues">
+	<div class="large-page-header">@ViewBag.Title</div>
+	<div class="page-entries">
+		<div class="page-entry">
+			<a href="@Url.Content("~/" + Model.AdminMode + "/AddLeague")">&lt;Add New League&gt;</a>
+		</div>
+		<div class="page-section">
+			@foreach (var league in Model.Leagues.OrderBy(o => o.AddTimestamp))
+			{
+				<div class="page-entry">
+					<a href="@Url.Content("~/" + Model.AdminMode + "/EditLeague/" + @league.LeagueId)">@league.LeagueName</a>
+					(<a href="@Url.Content("~/" + Model.AdminMode + "/ManageDrafts/" + @league.LeagueId)">Manage Drafts</a>)
+				</div>
+			}
+		</div>
+	</div>
+
+</div>

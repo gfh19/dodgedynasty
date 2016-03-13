@@ -8,6 +8,6 @@ namespace DodgeDynasty.Models
 {
 	public interface IManageLeaguesModel
 	{
-		List<League> AllLeagues { get; set; }
+		List<League> Leagues { get; set; }
 	}
 }

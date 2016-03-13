@@ -20,9 +20,6 @@ using System.Xml.Serialization;
 #region EDM Relationship Metadata
 
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerRank_Rank", "Rank", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Rank), "PlayerRank", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerRank), true)]
-[assembly: EdmRelationshipAttribute("HomeModel", "FK_UserRole_Role", "Role", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Role), "UserRole", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.UserRole), true)]
-[assembly: EdmRelationshipAttribute("HomeModel", "FK_UserRole_UserRole", "UserRole", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.UserRole), "UserRole1", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.UserRole), true)]
-[assembly: EdmRelationshipAttribute("HomeModel", "FK_UserRole_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.User), "UserRole", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.UserRole), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_LeagueOwner_CssColor", "CssColor", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.CssColor), "LeagueOwner", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.LeagueOwner), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_LeagueOwner_League", "League", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.League), "LeagueOwner", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.LeagueOwner), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_Message_League", "League", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.League), "Message", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.Message), true)]
@@ -52,6 +49,9 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerHighlight_Highlight", "Highlight", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Highlight), "PlayerHighlight", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerHighlight), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerHighlight_Player", "Player", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Player), "PlayerHighlight", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerHighlight), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerHighlight_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.User), "PlayerHighlight", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerHighlight), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_UserRole_League", "League", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.League), "UserRole", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.UserRole), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_UserRole_Role", "Role", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Role), "UserRole", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.UserRole), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_UserRole_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.User), "UserRole", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.UserRole), true)]
 
 #endregion
 
@@ -214,38 +214,6 @@ namespace DodgeDynasty.Entities
             }
         }
         private ObjectSet<UserProfile> _UserProfiles;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<Role> Roles
-        {
-            get
-            {
-                if ((_Roles == null))
-                {
-                    _Roles = base.CreateObjectSet<Role>("Roles");
-                }
-                return _Roles;
-            }
-        }
-        private ObjectSet<Role> _Roles;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<UserRole> UserRoles
-        {
-            get
-            {
-                if ((_UserRoles == null))
-                {
-                    _UserRoles = base.CreateObjectSet<UserRole>("UserRoles");
-                }
-                return _UserRoles;
-            }
-        }
-        private ObjectSet<UserRole> _UserRoles;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -518,6 +486,38 @@ namespace DodgeDynasty.Entities
             }
         }
         private ObjectSet<PlayerRankOption> _PlayerRankOptions;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Role> Roles
+        {
+            get
+            {
+                if ((_Roles == null))
+                {
+                    _Roles = base.CreateObjectSet<Role>("Roles");
+                }
+                return _Roles;
+            }
+        }
+        private ObjectSet<Role> _Roles;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<UserRole> UserRoles
+        {
+            get
+            {
+                if ((_UserRoles == null))
+                {
+                    _UserRoles = base.CreateObjectSet<UserRole>("UserRoles");
+                }
+                return _UserRoles;
+            }
+        }
+        private ObjectSet<UserRole> _UserRoles;
 
         #endregion
 
@@ -577,22 +577,6 @@ namespace DodgeDynasty.Entities
         public void AddToUserProfiles(UserProfile userProfile)
         {
             base.AddObject("UserProfiles", userProfile);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the Roles EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToRoles(Role role)
-        {
-            base.AddObject("Roles", role);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the UserRoles EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToUserRoles(UserRole userRole)
-        {
-            base.AddObject("UserRoles", userRole);
         }
     
         /// <summary>
@@ -729,6 +713,22 @@ namespace DodgeDynasty.Entities
         public void AddToPlayerRankOptions(PlayerRankOption playerRankOption)
         {
             base.AddObject("PlayerRankOptions", playerRankOption);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Roles EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToRoles(Role role)
+        {
+            base.AddObject("Roles", role);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the UserRoles EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToUserRoles(UserRole userRole)
+        {
+            base.AddObject("UserRoles", userRole);
         }
 
         #endregion
@@ -3843,6 +3843,28 @@ namespace DodgeDynasty.Entities
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Draft>("HomeModel.FK_Draft_League", "Draft", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_UserRole_League", "UserRole")]
+        public EntityCollection<UserRole> UserRoles
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<UserRole>("HomeModel.FK_UserRole_League", "UserRole");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UserRole>("HomeModel.FK_UserRole_League", "UserRole", value);
                 }
             }
         }
@@ -7841,10 +7863,16 @@ namespace DodgeDynasty.Entities
         /// Create a new Role object.
         /// </summary>
         /// <param name="roleId">Initial value of the RoleId property.</param>
-        public static Role CreateRole(global::System.Int32 roleId)
+        /// <param name="roleDescription">Initial value of the RoleDescription property.</param>
+        /// <param name="addTimestamp">Initial value of the AddTimestamp property.</param>
+        /// <param name="lastUpdateTimestamp">Initial value of the LastUpdateTimestamp property.</param>
+        public static Role CreateRole(global::System.Int32 roleId, global::System.String roleDescription, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp)
         {
             Role role = new Role();
             role.RoleId = roleId;
+            role.RoleDescription = roleDescription;
+            role.AddTimestamp = addTimestamp;
+            role.LastUpdateTimestamp = lastUpdateTimestamp;
             return role;
         }
 
@@ -7882,7 +7910,7 @@ namespace DodgeDynasty.Entities
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
         public global::System.String RoleDescription
         {
@@ -7894,7 +7922,7 @@ namespace DodgeDynasty.Entities
             {
                 OnRoleDescriptionChanging(value);
                 ReportPropertyChanging("RoleDescription");
-                _RoleDescription = StructuralObject.SetValidValue(value, true, "RoleDescription");
+                _RoleDescription = StructuralObject.SetValidValue(value, false, "RoleDescription");
                 ReportPropertyChanged("RoleDescription");
                 OnRoleDescriptionChanged();
             }
@@ -7902,6 +7930,54 @@ namespace DodgeDynasty.Entities
         private global::System.String _RoleDescription;
         partial void OnRoleDescriptionChanging(global::System.String value);
         partial void OnRoleDescriptionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime AddTimestamp
+        {
+            get
+            {
+                return _AddTimestamp;
+            }
+            set
+            {
+                OnAddTimestampChanging(value);
+                ReportPropertyChanging("AddTimestamp");
+                _AddTimestamp = StructuralObject.SetValidValue(value, "AddTimestamp");
+                ReportPropertyChanged("AddTimestamp");
+                OnAddTimestampChanged();
+            }
+        }
+        private global::System.DateTime _AddTimestamp;
+        partial void OnAddTimestampChanging(global::System.DateTime value);
+        partial void OnAddTimestampChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime LastUpdateTimestamp
+        {
+            get
+            {
+                return _LastUpdateTimestamp;
+            }
+            set
+            {
+                OnLastUpdateTimestampChanging(value);
+                ReportPropertyChanging("LastUpdateTimestamp");
+                _LastUpdateTimestamp = StructuralObject.SetValidValue(value, "LastUpdateTimestamp");
+                ReportPropertyChanged("LastUpdateTimestamp");
+                OnLastUpdateTimestampChanged();
+            }
+        }
+        private global::System.DateTime _LastUpdateTimestamp;
+        partial void OnLastUpdateTimestampChanging(global::System.DateTime value);
+        partial void OnLastUpdateTimestampChanged();
 
         #endregion
 
@@ -8293,28 +8369,6 @@ namespace DodgeDynasty.Entities
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_UserRole_User", "UserRole")]
-        public EntityCollection<UserRole> UserRoles
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<UserRole>("HomeModel.FK_UserRole_User", "UserRole");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UserRole>("HomeModel.FK_UserRole_User", "UserRole", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_Message_User", "Message")]
         public EntityCollection<Message> Messages
         {
@@ -8525,6 +8579,28 @@ namespace DodgeDynasty.Entities
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PlayerHighlight>("HomeModel.FK_PlayerHighlight_User", "PlayerHighlight", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_UserRole_User", "UserRole")]
+        public EntityCollection<UserRole> UserRoles
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<UserRole>("HomeModel.FK_UserRole_User", "UserRole");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UserRole>("HomeModel.FK_UserRole_User", "UserRole", value);
                 }
             }
         }
@@ -8956,13 +9032,19 @@ namespace DodgeDynasty.Entities
         /// <summary>
         /// Create a new UserRole object.
         /// </summary>
+        /// <param name="userRoleId">Initial value of the UserRoleId property.</param>
         /// <param name="userId">Initial value of the UserId property.</param>
         /// <param name="roleId">Initial value of the RoleId property.</param>
-        public static UserRole CreateUserRole(global::System.Int32 userId, global::System.Int32 roleId)
+        /// <param name="addTimestamp">Initial value of the AddTimestamp property.</param>
+        /// <param name="lastUpdateTimestamp">Initial value of the LastUpdateTimestamp property.</param>
+        public static UserRole CreateUserRole(global::System.Int32 userRoleId, global::System.Int32 userId, global::System.Int32 roleId, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp)
         {
             UserRole userRole = new UserRole();
+            userRole.UserRoleId = userRoleId;
             userRole.UserId = userId;
             userRole.RoleId = roleId;
+            userRole.AddTimestamp = addTimestamp;
+            userRole.LastUpdateTimestamp = lastUpdateTimestamp;
             return userRole;
         }
 
@@ -8975,6 +9057,33 @@ namespace DodgeDynasty.Entities
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
+        public global::System.Int32 UserRoleId
+        {
+            get
+            {
+                return _UserRoleId;
+            }
+            set
+            {
+                if (_UserRoleId != value)
+                {
+                    OnUserRoleIdChanging(value);
+                    ReportPropertyChanging("UserRoleId");
+                    _UserRoleId = StructuralObject.SetValidValue(value, "UserRoleId");
+                    ReportPropertyChanged("UserRoleId");
+                    OnUserRoleIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _UserRoleId;
+        partial void OnUserRoleIdChanging(global::System.Int32 value);
+        partial void OnUserRoleIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
         public global::System.Int32 UserId
         {
             get
@@ -8983,14 +9092,11 @@ namespace DodgeDynasty.Entities
             }
             set
             {
-                if (_UserId != value)
-                {
-                    OnUserIdChanging(value);
-                    ReportPropertyChanging("UserId");
-                    _UserId = StructuralObject.SetValidValue(value, "UserId");
-                    ReportPropertyChanged("UserId");
-                    OnUserIdChanged();
-                }
+                OnUserIdChanging(value);
+                ReportPropertyChanging("UserId");
+                _UserId = StructuralObject.SetValidValue(value, "UserId");
+                ReportPropertyChanged("UserId");
+                OnUserIdChanged();
             }
         }
         private global::System.Int32 _UserId;
@@ -9000,7 +9106,7 @@ namespace DodgeDynasty.Entities
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
         public global::System.Int32 RoleId
         {
@@ -9010,23 +9116,130 @@ namespace DodgeDynasty.Entities
             }
             set
             {
-                if (_RoleId != value)
-                {
-                    OnRoleIdChanging(value);
-                    ReportPropertyChanging("RoleId");
-                    _RoleId = StructuralObject.SetValidValue(value, "RoleId");
-                    ReportPropertyChanged("RoleId");
-                    OnRoleIdChanged();
-                }
+                OnRoleIdChanging(value);
+                ReportPropertyChanging("RoleId");
+                _RoleId = StructuralObject.SetValidValue(value, "RoleId");
+                ReportPropertyChanged("RoleId");
+                OnRoleIdChanged();
             }
         }
         private global::System.Int32 _RoleId;
         partial void OnRoleIdChanging(global::System.Int32 value);
         partial void OnRoleIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> LeagueId
+        {
+            get
+            {
+                return _LeagueId;
+            }
+            set
+            {
+                OnLeagueIdChanging(value);
+                ReportPropertyChanging("LeagueId");
+                _LeagueId = StructuralObject.SetValidValue(value, "LeagueId");
+                ReportPropertyChanged("LeagueId");
+                OnLeagueIdChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _LeagueId;
+        partial void OnLeagueIdChanging(Nullable<global::System.Int32> value);
+        partial void OnLeagueIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime AddTimestamp
+        {
+            get
+            {
+                return _AddTimestamp;
+            }
+            set
+            {
+                OnAddTimestampChanging(value);
+                ReportPropertyChanging("AddTimestamp");
+                _AddTimestamp = StructuralObject.SetValidValue(value, "AddTimestamp");
+                ReportPropertyChanged("AddTimestamp");
+                OnAddTimestampChanged();
+            }
+        }
+        private global::System.DateTime _AddTimestamp;
+        partial void OnAddTimestampChanging(global::System.DateTime value);
+        partial void OnAddTimestampChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime LastUpdateTimestamp
+        {
+            get
+            {
+                return _LastUpdateTimestamp;
+            }
+            set
+            {
+                OnLastUpdateTimestampChanging(value);
+                ReportPropertyChanging("LastUpdateTimestamp");
+                _LastUpdateTimestamp = StructuralObject.SetValidValue(value, "LastUpdateTimestamp");
+                ReportPropertyChanged("LastUpdateTimestamp");
+                OnLastUpdateTimestampChanged();
+            }
+        }
+        private global::System.DateTime _LastUpdateTimestamp;
+        partial void OnLastUpdateTimestampChanging(global::System.DateTime value);
+        partial void OnLastUpdateTimestampChanged();
 
         #endregion
 
         #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_UserRole_League", "League")]
+        public League League
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<League>("HomeModel.FK_UserRole_League", "League").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<League>("HomeModel.FK_UserRole_League", "League").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<League> LeagueReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<League>("HomeModel.FK_UserRole_League", "League");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<League>("HomeModel.FK_UserRole_League", "League", value);
+                }
+            }
+        }
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -9062,82 +9275,6 @@ namespace DodgeDynasty.Entities
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Role>("HomeModel.FK_UserRole_Role", "Role", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_UserRole_UserRole", "UserRole1")]
-        public UserRole UserRole1
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<UserRole>("HomeModel.FK_UserRole_UserRole", "UserRole1").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<UserRole>("HomeModel.FK_UserRole_UserRole", "UserRole1").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<UserRole> UserRole1Reference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<UserRole>("HomeModel.FK_UserRole_UserRole", "UserRole1");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<UserRole>("HomeModel.FK_UserRole_UserRole", "UserRole1", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_UserRole_UserRole", "UserRole")]
-        public UserRole UserRole2
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<UserRole>("HomeModel.FK_UserRole_UserRole", "UserRole").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<UserRole>("HomeModel.FK_UserRole_UserRole", "UserRole").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<UserRole> UserRole2Reference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<UserRole>("HomeModel.FK_UserRole_UserRole", "UserRole");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<UserRole>("HomeModel.FK_UserRole_UserRole", "UserRole", value);
                 }
             }
         }

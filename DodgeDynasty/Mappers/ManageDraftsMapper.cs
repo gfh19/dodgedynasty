@@ -6,7 +6,7 @@ using DodgeDynasty.Models;
 
 namespace DodgeDynasty.Mappers
 {
-	public class ManageDraftsMapper<T> : MapperBase<T> where T : ManageDraftsModel, new()
+	public abstract class ManageDraftsMapper<T> : MapperBase<T> where T : ManageDraftsModel, new()
 	{
 		public string LeagueId { get; set; }
 
@@ -14,13 +14,20 @@ namespace DodgeDynasty.Mappers
 		{
 			if (!string.IsNullOrEmpty(LeagueId))
 			{
-				Model.LeagueId = Int32.Parse(LeagueId);
-				Model.LeagueDrafts = HomeEntity.Drafts.Where(d => d.LeagueId == Model.LeagueId).ToList();
-			}
+				GetDraftsForLeagueId();
+            }
 			else
 			{
-				Model.LeagueDrafts = HomeEntity.Drafts.ToList();
+				GetAllAccessibleDrafts();
 			}
 		}
+
+		protected virtual void GetDraftsForLeagueId()
+		{
+			Model.LeagueId = Int32.Parse(LeagueId);
+			Model.LeagueDrafts = HomeEntity.Drafts.Where(d => d.LeagueId == Model.LeagueId).ToList();
+		}
+
+		protected abstract void GetAllAccessibleDrafts();
 	}
 }
