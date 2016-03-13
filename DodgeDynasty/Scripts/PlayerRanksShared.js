@@ -86,6 +86,8 @@ function bindHideCategoryLink(link) {
 		var hideId = $(link).attr('data-hide-id');
 		var hideCategory = flipCookieValue(hideId);
 		toggleHideCategory(table, hideCategory);
+
+		$("#"+linkId).attr("data-expand", false);
 		clientCookieOptions[linkId] = false;
 		toggleExpandTableRows(table, false, linkId);
 	});

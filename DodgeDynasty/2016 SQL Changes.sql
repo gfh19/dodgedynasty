@@ -1,4 +1,5 @@
-﻿SET XACT_ABORT ON
+﻿
+SET XACT_ABORT ON
 BEGIN TRANSACTION;
 
 
@@ -371,7 +372,7 @@ GO
 INSERT INTO [dbo].[Highlight]
            ([HighlightName],[HighlightClass],[HighlightValue],[AddTimestamp],[LastUpdateTimestamp])
      VALUES
-           ('Orange','bg-orange','#FFBF22',getdate(),getdate())
+           ('Orange','bg-orange','#FFA011',getdate(),getdate())
 GO
 
 INSERT INTO [dbo].[Highlight]
@@ -383,7 +384,19 @@ GO
 INSERT INTO [dbo].[Highlight]
            ([HighlightName],[HighlightClass],[HighlightValue],[AddTimestamp],[LastUpdateTimestamp])
      VALUES
-           ('Pink','bg-pink','#FF00FF',getdate(),getdate())
+           ('Pink','bg-pink','pink',getdate(),getdate())
+GO
+
+INSERT INTO [dbo].[Highlight]
+           ([HighlightName],[HighlightClass],[HighlightValue],[AddTimestamp],[LastUpdateTimestamp])
+     VALUES
+           ('Magenta','bg-magenta','#FF00FF',getdate(),getdate())
+GO
+
+INSERT INTO [dbo].[Highlight]
+           ([HighlightName],[HighlightClass],[HighlightValue],[AddTimestamp],[LastUpdateTimestamp])
+     VALUES
+           ('Light Blue','bg-light-blue','#87CEEB',getdate(),getdate())
 GO
 
 INSERT INTO [dbo].[Highlight]
@@ -401,6 +414,12 @@ GO
 INSERT INTO [dbo].[Highlight]
            ([HighlightName],[HighlightClass],[HighlightValue],[AddTimestamp],[LastUpdateTimestamp])
      VALUES
+           ('Brown','bg-brown','#B36E39',getdate(),getdate())
+GO
+
+INSERT INTO [dbo].[Highlight]
+           ([HighlightName],[HighlightClass],[HighlightValue],[AddTimestamp],[LastUpdateTimestamp])
+     VALUES
            ('Grey (clear)','bg-grey','#EFEEEF',getdate(),getdate())
 GO
 
@@ -408,6 +427,12 @@ INSERT INTO [dbo].[Highlight]
            ([HighlightName],[HighlightClass],[HighlightValue],[AddTimestamp],[LastUpdateTimestamp])
      VALUES
            ('White','bg-white','white',getdate(),getdate())
+GO
+
+INSERT INTO [dbo].[Highlight]
+           ([HighlightName],[HighlightClass],[HighlightValue],[AddTimestamp],[LastUpdateTimestamp])
+     VALUES
+           ('Black','bg-black','black',getdate(),getdate())
 GO
 
 

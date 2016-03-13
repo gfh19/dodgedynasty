@@ -54,20 +54,28 @@ namespace DodgeDynasty.Shared
 			return fields;
 		}
 
-		//Eliminate redundancy
-		public static int? ToNullableInt32(this string s)
+		public static bool IsTrimEmpty(string text)
+		{
+			return string.IsNullOrEmpty(text) || text.Trim().Length == 0;
+		}
+
+		public static DateTime GetEasternTime(DateTime? utcTime = null)
+		{
+			if (!utcTime.HasValue)
+			{
+				utcTime = DateTime.UtcNow;
+			}
+			TimeZoneInfo easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+			return TimeZoneInfo.ConvertTimeFromUtc(utcTime.Value, easternZone);
+		}
+
+
+		/* Conversion methods */
+
+		public static int? ToNullInt(this string s)
 		{
 			int i;
 			if (Int32.TryParse(s, out i)) return i;
-			return null;
-		}
-
-		public static int? ToNullInt(string id)
-		{
-			if (!string.IsNullOrEmpty(id))
-			{
-				return Convert.ToInt32(id);
-			}
 			return null;
 		}
 
@@ -82,19 +90,14 @@ namespace DodgeDynasty.Shared
 			return false;
 		}
 
-		public static bool IsTrimEmpty(string text)
+		public static string ToStringFromNullInt(this int? i)
 		{
-			return string.IsNullOrEmpty(text) || text.Trim().Length == 0;
+			return (i.HasValue) ? i.ToString() : null;
 		}
 
-		public static DateTime GetEasternTime(DateTime? utcTime = null)
+		public static string ToUrlEncodedString(this string str)
 		{
-			if (!utcTime.HasValue)
-			{
-				utcTime = DateTime.UtcNow;
-			}
-			TimeZoneInfo easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
-			return TimeZoneInfo.ConvertTimeFromUtc(utcTime.Value, easternZone);
+			return (str == null) ? "" : HttpContext.Current.Server.UrlEncode(str);
 		}
 
 
@@ -196,14 +199,6 @@ namespace DodgeDynasty.Shared
 			return model.IsUserAdmin();
 		}
 
-		public static string ToStringFromNullInt(this int? i)
-		{
-			return (i.HasValue) ? i.ToString() : null;
-        }
-
-		public static string ToUrlEncodedString(this string str)
-		{
-			return (str == null) ? "" : HttpContext.Current.Server.UrlEncode(str);
-        }
+		/* End Data Access Methods */
 	}
 }

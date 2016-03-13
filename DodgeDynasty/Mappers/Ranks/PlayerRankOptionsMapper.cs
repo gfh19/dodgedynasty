@@ -83,8 +83,8 @@ namespace DodgeDynasty.Mappers.Ranks
 
 		private Entities.PlayerRankOption SetPlayerRankOptions(Entities.PlayerRankOption options, PlayerRankOptions model)
 		{
-			options.RankId = model.RankId.ToNullableInt32();
-			options.DraftId = model.DraftId.ToNullableInt32();
+			options.RankId = model.RankId.ToNullInt();
+			options.DraftId = model.DraftId.ToNullInt();
 			options.ExpandOverall = model.ExpandOverall;
 			options.ExpandQB = model.ExpandQB;
 			options.ExpandRB = model.ExpandRB;

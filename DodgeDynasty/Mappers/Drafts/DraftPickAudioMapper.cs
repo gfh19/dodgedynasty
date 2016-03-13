@@ -31,11 +31,17 @@ namespace DodgeDynasty.Mappers.Drafts
 
 		private static string GetPlayerName(Player player)
 		{
-			if (player.PlayerName == "Ben Roethlisberger")
+			string audio = player.PlayerName;
+			switch (audio)
 			{
-				return "Alleged Sex Offender Ben Roethlisberger".ToUrlEncodedString();
-            }
-			return player.PlayerName.ToUrlEncodedString();
+				case "Ben Roethlisberger":
+					audio = "Alleged Sex Offender Ben Roethlisberger";
+					break;
+				case "San Francisco 49ers":
+					audio = "San Francisco Forty-Niners";
+					break;
+			}
+			return audio.ToUrlEncodedString();
 		}
 
 		private static string GetPositionAudio(Position position, NFLTeam nflTeam)
@@ -50,7 +56,7 @@ namespace DodgeDynasty.Mappers.Drafts
 					audio = "Receiver";
 					break;
 				case "DEF":
-					audio = (nflTeam.TeamAbbr == "FA") ? "" : "Deefence";
+					audio = (nflTeam.TeamAbbr == "FA") ? "" : "Dee-fence";
 					break;
 			}
 			return audio.ToUrlEncodedString();

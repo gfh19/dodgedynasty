@@ -7,9 +7,10 @@
 </script>
 <div class="draft-info center">
 	@{
-		if (DodgeDynasty.Shared.Utilities.GetRouteDraftId(Url.RequestContext.RouteData) != null)
-		{
-			<div class="draft-history-alert">
+		var isDraftActive = Model.IsDraftActive();
+        if (DodgeDynasty.Shared.Utilities.GetRouteDraftId(Url.RequestContext.RouteData) != null)
+			{
+            <div class="draft-history-alert">
 				You're currently viewing <a href="@Url.Content("~/Draft/History")">draft history</a> pages.
 				<a class="latest-draft-link" href="@Url.Content("~/Draft/Display")">Click here for the latest draft.</a>
 			</div>
@@ -30,7 +31,14 @@
 				{
 					<span class="bold">@Model.CurrentClockOwnerUser.NickName</span>
 				}
-				- Pick @Model.CurrentDraftPick.PickNum
+				@if (isDraftActive && (Request.Url.AbsoluteUri.Contains("Draft/Display")))
+				{
+					<text>- Pick <a id="gotoPickNum">@Model.CurrentDraftPick.PickNum</a></text>
+				}
+				else
+				{
+					<text>- Pick @Model.CurrentDraftPick.PickNum</text>
+				}
 			</span>
 			if (Model.CurrentDraftPick.PickStartDateTime.HasValue)
 			{
@@ -45,8 +53,8 @@
 		}
 		else if (!Model.CurrentDraft.IsComplete && Model.DraftPicks.Count == 0)
 		{
-			if (!Model.IsDraftActive())
-			{
+			if (!isDraftActive)
+            {
 				<div class="start-time"
 					 data-draft-time="@Model.CurrentDraft.DraftDate.ToString("MM/dd/yyyy HH:mm:ss")"
 					 data-pick-start-time="@Model.CurrentDraft.DraftDate.ToString("MM/dd/yyyy HH:mm:ss")"
@@ -60,7 +68,7 @@
 			<text>The Draft Has Completed</text>
 		}
 	</div>
-	@if (Model.IsDraftActive() && Model.IsUserTurn())
+	@if (isDraftActive && Model.IsUserTurn())
 	{
 		if (ViewBag.Title != "Draft Pick")
 		{

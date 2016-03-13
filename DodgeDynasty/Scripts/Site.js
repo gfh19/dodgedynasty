@@ -43,7 +43,19 @@ function initRefreshedPage() {
 	isRefreshPage = true;
 	checkUserTurnDialog();
 	checkStillSocketConnected(false);
+	bindGotoPickNum();
 };
+
+function bindGotoPickNum() {
+	$("#gotoPickNum").unbind("click");
+	$("#gotoPickNum").click(function (e) {
+		var pickNum = $("#gotoPickNum").text();
+		var draftPick = $(".draft-pick[data-pick-num=" + pickNum + "]");
+		if (draftPick) {
+			$(draftPick).goTo();
+		}
+	});
+}
 
 /*		--- WebSockets */
 
@@ -589,7 +601,7 @@ function scrollDraftChatBottom() {
 /* Draft Pick Audio */
 
 function initLastPickAudio() {
-	if (draftActive) {
+	if (!audioKillSwitch && draftActive) {
 		ajaxGetJson("Draft/GetLastDraftPickAudio", function (pickAudio) {
 			lastPickAudio = pickAudio;
 		});
@@ -598,18 +610,21 @@ function initLastPickAudio() {
 }
 
 function getLastPickAndPlayAudio() {
-	ajaxGetJson("Draft/GetLastDraftPickAudio", function (pickAudio) {
-		if (lastPickAudio && pickAudio && pickAudio.playerId) {
-			if (lastPickAudio.playerId != pickAudio.playerId) {
+	if (!audioKillSwitch && draftActive && !(window.location.href.indexOf("/Admin/Input") > 0)
+		&& (!(window.location.href.indexOf("/Draft/Pick") > 0) || !isUserTurn)) {
+		ajaxGetJson("Draft/GetLastDraftPickAudio", function (pickAudio) {
+			if (lastPickAudio && pickAudio && pickAudio.playerId) {
+				if (lastPickAudio.playerId != pickAudio.playerId) {
+					lastPickAudio = pickAudio;
+					playPickAudio(pickAudio);
+				}
+			}
+			else if (pickAudio && pickAudio.playerId) {
 				lastPickAudio = pickAudio;
 				playPickAudio(pickAudio);
 			}
-		}
-		else if (pickAudio && pickAudio.playerId) {
-			lastPickAudio = pickAudio;
-			playPickAudio(pickAudio);
-		}
-	});
+		});
+	}
 }
 
 function playPickAudio() {
@@ -621,7 +636,7 @@ function playPickAudio() {
 		//TODO:  If isIE:
 		//$("body").append('<embed src="/Media/NFL_Draft_Tone.wav" autostart=true width=1 height=1 id="wavfile" enablejavascript="true">');
 		pickAudioBed.play();
-	}, 100);
+	}, 125);
 }
 
 
@@ -718,25 +733,6 @@ function preventBackspaceNav(e) {
 	}
 }
 
-$.fn.serializeObject = function () {
-	var o = {};
-	var a = this.serializeArray();
-	$.each(a, function () {
-		if (o[this.name] !== undefined) {
-			if (!o[this.name].push) {
-				o[this.name] = [o[this.name]];
-			}
-			o[this.name].push(this.value || '');
-		} else {
-			o[this.name] = this.value || '';
-		}
-		if ($("#" + this.name) !== undefined && $("#" + this.name).attr("type") == "checkbox") {
-			o[this.name] = $("#" + this.name).prop('checked');
-		}
-	});
-	return o;
-};
-
 function toBool(val) {
 	return val == true || (val != null && val != undefined && val.toLowerCase() == "true");
 }
@@ -783,4 +779,33 @@ function toggleDisplay(element, condition) {
 	else {
 		$(element).hide();
 	}
+}
+
+
+/* Plugins */
+
+$.fn.serializeObject = function () {
+	var o = {};
+	var a = this.serializeArray();
+	$.each(a, function () {
+		if (o[this.name] !== undefined) {
+			if (!o[this.name].push) {
+				o[this.name] = [o[this.name]];
+			}
+			o[this.name].push(this.value || '');
+		} else {
+			o[this.name] = this.value || '';
+		}
+		if ($("#" + this.name) !== undefined && $("#" + this.name).attr("type") == "checkbox") {
+			o[this.name] = $("#" + this.name).prop('checked');
+		}
+	});
+	return o;
+};
+
+$.fn.goTo = function () {
+	$('html, body').animate({
+		scrollTop: ($(this).offset().top - ($(window).height() - $(this).outerHeight(true)) / 2) + 'px'
+	}, 'fast');
+	return this;
 }

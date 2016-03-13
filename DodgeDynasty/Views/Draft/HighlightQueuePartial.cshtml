@@ -21,9 +21,9 @@
 				@if (lastHighlightsDraft != null)
 				{
 					<br />
-								<span class="hq-copy-text">
-									&lt;<a href="#" class="hq-copy-last-draft">Copy @lastHighlightsDraft.LeagueName queue</a>&gt;
-								</span>
+					<span class="hq-copy-text">
+						&lt;<a href="#" class="hq-copy-last-draft">Copy @lastHighlightsDraft.LeagueName queue</a>&gt;
+					</span>
 				}
 			</p>
 		</div>
@@ -66,7 +66,15 @@
 										<td>@player.Position</td>
 							if (Model.AreYearByeWeeksFound())
 							{
-								<td class="ba-bye-week">(@Model.GetNFLTeamByeWeek(player.NFLTeam))</td>
+								var byeWeek = Model.GetNFLTeamByeWeek(player.NFLTeam);
+								if (byeWeek != null)
+								{
+									<td class="ba-bye-week">(@byeWeek)</td>
+								}
+								else
+								{
+									<td class="ba-bye-week"></td>
+								}
 							}
 						}
 					</tr>

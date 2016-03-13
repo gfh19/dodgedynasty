@@ -10,11 +10,14 @@
 @{var highlightModel = new DodgeDynasty.Mappers.Highlights.HighlightsMapper().GetModel(); }
 @foreach (var highlight in highlightModel.Highlights)
 {	<text>
-	.highlighted.on.@highlight.HighlightClass, .hq-color-span.@highlight.HighlightClass
+	.hq-color-span.@highlight.HighlightClass, .highlighted.on.@highlight.HighlightClass
 	{
 		background-color: @highlight.HighlightValue;
 	}</text>
 }
+	.hq-color-span.bg-black, .highlighted.on.bg-black, .highlighted.on.bg-black a {
+		color: white !important;
+	}
 </style>
 <script type="text/javascript">
 	var _highlightColors = [];

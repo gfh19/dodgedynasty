@@ -25,7 +25,7 @@ namespace DodgeDynasty.Controllers
 			{
 				return View((DraftInputModel)TempData[Constants.TempData.NextDraftInputModel]);
 			}
-			DraftInputModel draftInputModel = DraftFactory.GetCurrentDraftInputModel(Utilities.ToNullInt(id));
+			DraftInputModel draftInputModel = DraftFactory.GetCurrentDraftInputModel(id.ToNullInt());
 			if (!string.IsNullOrEmpty(playerId))
 			{
 				int pickPlayerId = Convert.ToInt32(playerId);
@@ -49,7 +49,7 @@ namespace DodgeDynasty.Controllers
 
 		public ActionResult Display(string id)
 		{
-			DraftDisplayModel draftDisplayModel = DraftFactory.GetDraftDisplayModel(Utilities.ToNullInt(id));
+			DraftDisplayModel draftDisplayModel = DraftFactory.GetDraftDisplayModel(id.ToNullInt());
 			return View(draftDisplayModel);
 		}
 
@@ -61,14 +61,14 @@ namespace DodgeDynasty.Controllers
 
 		public ActionResult TeamDisplay(string id)
 		{
-			DraftTeamDisplayModel draftTeamDisplayModel = DraftFactory.GetDraftTeamDisplayModel(Utilities.ToNullInt(id));
+			DraftTeamDisplayModel draftTeamDisplayModel = DraftFactory.GetDraftTeamDisplayModel(id.ToNullInt());
 			return View(draftTeamDisplayModel);
 		}
 
 		public ActionResult TeamDisplayPartial(string id)
 		{
 			var byPositions = Request.QueryString[Constants.QS.ByPositions];
-			DraftTeamDisplayModel draftTeamDisplayModel = DraftFactory.GetDraftTeamDisplayModel(Utilities.ToNullInt(id), Utilities.ToBool(byPositions));
+			DraftTeamDisplayModel draftTeamDisplayModel = DraftFactory.GetDraftTeamDisplayModel(id.ToNullInt(), Utilities.ToBool(byPositions));
 			return PartialView(Constants.Views.TeamDisplay, draftTeamDisplayModel);
 		}
 
@@ -136,7 +136,7 @@ namespace DodgeDynasty.Controllers
 		[HttpGet]
 		public ActionResult RankingsList(string id)
 		{
-			RankingsListModel model = DraftFactory.GetRankingsListModel(Utilities.ToNullInt(id));
+			RankingsListModel model = DraftFactory.GetRankingsListModel(id.ToNullInt());
 			model.Options = PlayerRankHelper.Instance.GetPlayerRankOptions(Request, Response);
 			return View(model);
 		}

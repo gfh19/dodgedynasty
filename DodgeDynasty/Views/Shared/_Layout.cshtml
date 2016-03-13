@@ -165,6 +165,7 @@
 		var baseURL = '@Url.Content("~")';
 		var webSocketsKillSwitch = @webSocketsKillSwitch;
 		var draftChatKillSwitch = @draftChatKillSwitch;
+		var audioKillSwitch = false;
 		var defaultRefreshTimer = @System.Configuration.ConfigurationManager.AppSettings[DodgeDynasty.Shared.Constants.AppSettings.RefreshTimer];
 		var fastRefreshTimer = @System.Configuration.ConfigurationManager.AppSettings[DodgeDynasty.Shared.Constants.AppSettings.FastRefreshTimer];
 		var refreshTimer = webSocketsKillSwitch ? fastRefreshTimer : defaultRefreshTimer;
