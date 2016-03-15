@@ -3,9 +3,12 @@
 <div id="manageLeagues">
 	<div class="large-page-header">@ViewBag.Title</div>
 	<div class="page-entries">
+		@if (Model.AdminMode == DodgeDynasty.Shared.Constants.Modes.Admin)
+		{
 		<div class="page-entry">
 			<a href="@Url.Content("~/" + Model.AdminMode + "/AddLeague")">&lt;Add New League&gt;</a>
 		</div>
+		}
 		<div class="page-section">
 			@foreach (var league in Model.Leagues.OrderBy(o => o.AddTimestamp))
 			{

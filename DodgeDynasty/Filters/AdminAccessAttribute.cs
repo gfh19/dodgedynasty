@@ -15,8 +15,7 @@ namespace DodgeDynasty.Filters
 		{
 			if (!Utilities.IsUserAdmin())
 			{
-				filterContext.Result = new RedirectToRouteResult(
-					new RouteValueDictionary(new { action = "Unauthorized", controller = "Shared" }));
+				filterContext.Result = Utilities.GetUnauthorizedRedirect();
 			}
 		}
 	}

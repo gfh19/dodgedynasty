@@ -30,7 +30,7 @@ namespace DodgeDynasty.Mappers.Highlights
 			{
 				playerHighlight = new PlayerHighlight
 				{
-					DraftId = draftModel.DraftId.Value,
+					DraftId = draftModel.DraftId,
 					UserId = userId,
 					PlayerId = model.PlayerId,
 					HighlightId = highlightId,

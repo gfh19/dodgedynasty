@@ -8,10 +8,11 @@ using DodgeDynasty.Shared;
 using System.Web.Mvc;
 using DodgeDynasty.Models.Types;
 using DraftFormats = DodgeDynasty.Shared.Constants.DraftFormats;
+using DodgeDynasty.Models.Admin;
 
 namespace DodgeDynasty.Models
 {
-	public class AddEditDraftModel
+	public class AddEditDraftModel : AdminModeModel, IAdminLeagueModel
 	{
 		[Display(Name = "Draft Date/Time")]
 		[Required]

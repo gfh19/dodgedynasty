@@ -2,7 +2,7 @@
 
 @{
 	ViewBag.Title = "Add New Draft";
-	Model.AdminMode = DodgeDynasty.Shared.Constants.Modes.Admin;
+	Model.AdminMode = DodgeDynasty.Shared.Constants.Modes.Commish;
 }
 @section scripts {
 	<script type="text/javascript" src="@Url.Script("~/Scripts/AddDraft.js")"></script>
@@ -10,7 +10,7 @@
 	<script type="text/javascript" src="@Url.Script("~/Scripts/LeagueOwnerUser.js")"></script>
 	<script type="text/javascript">
 		$(function () {
-			adminMode = '@DodgeDynasty.Shared.Constants.Modes.Admin';
+			adminMode = '@DodgeDynasty.Shared.Constants.Modes.Commish';
 		});
 	</script>
 }

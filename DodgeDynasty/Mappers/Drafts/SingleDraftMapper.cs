@@ -10,12 +10,22 @@ namespace DodgeDynasty.Mappers.Drafts
 	public class SingleDraftMapper : MapperBase<SingleDraftModel>
 	{
 		//private DraftModel _internalInstance;
+		public int? DraftId { get; set; }
 
 		protected override void PopulateModel()
 		{
-			Draft draft = Utilities.GetLatestUserDraft(HomeEntity.Users.GetLoggedInUser(), 
-				HomeEntity.Drafts.ToList(), HomeEntity.DraftOwners.ToList());
+			Draft draft = null;
+			if (DraftId != null)
+			{
+				draft = HomeEntity.Drafts.FirstOrDefault(o => o.DraftId == DraftId.Value);
+            }
+			else
+			{
+				draft = Utilities.GetLatestUserDraft(HomeEntity.Users.GetLoggedInUser(),
+					HomeEntity.Drafts.ToList(), HomeEntity.DraftOwners.ToList());
+			}
 			Model.DraftId = draft.DraftId;
+			Model.LeagueId = draft.LeagueId;
 			Model.LeagueName = draft.LeagueName;
 			Model.DraftYear = draft.DraftYear.Value;
         }

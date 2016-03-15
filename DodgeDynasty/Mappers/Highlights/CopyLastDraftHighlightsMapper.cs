@@ -29,10 +29,10 @@ namespace DodgeDynasty.Mappers.Highlights
 			if (Model != null)
 			{
 				var lastPlayerHighlights = HomeEntity.PlayerHighlights
-					.Where(ph => ph.DraftId == Model.DraftId.Value && ph.UserId == userId).ToList();
+					.Where(ph => ph.DraftId == Model.DraftId && ph.UserId == userId).ToList();
 				lastPlayerHighlights.ForEach(ph=>HomeEntity.PlayerHighlights.AddObject(new Entities.PlayerHighlight
 				{
-					DraftId = currentDraft.DraftId.Value,
+					DraftId = currentDraft.DraftId,
 					UserId = userId,
 					PlayerId = ph.PlayerId,
 					HighlightId = ph.HighlightId,

@@ -15,7 +15,7 @@
 		<div class="dup-owner-msg invalid hide-yo-wives">Error - Owner selected more than once.</div>
 	</div>
 	<div class="page-entries">
-		@using (Html.BeginForm("EditLeague", "Admin", FormMethod.Post, new { id = "leagueForm" }))
+		@using (Html.BeginForm("EditLeague", Model.AdminMode, FormMethod.Post, new { id = "leagueForm" }))
 		{
 			@Html.HiddenFor(m => m.LeagueId, new { @class = "league-id" })
 			<div>

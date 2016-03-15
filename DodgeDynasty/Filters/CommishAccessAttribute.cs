@@ -13,11 +13,9 @@ namespace DodgeDynasty.Filters
 	{
 		public override void OnActionExecuting(ActionExecutingContext filterContext)
 		{
-			int? leagueId = Utilities.CheckActionParameterId(filterContext, "leagueId", "id");
-            if (!DBUtilities.IsUserAdminOrCommish(leagueId) )
+            if (!DBUtilities.IsUserAdminOrCommish())
 			{
-				filterContext.Result = new RedirectToRouteResult(
-					new RouteValueDictionary(new { action = "Unauthorized", controller = "Shared" }));
+				filterContext.Result = Utilities.GetUnauthorizedRedirect();
 			}
 		}
 	}

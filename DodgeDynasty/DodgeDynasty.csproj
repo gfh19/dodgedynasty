@@ -165,6 +165,8 @@
     <Compile Include="Controllers\DraftController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SiteController.cs" />
+    <Compile Include="Filters\CommishDraftAccessAttribute.cs" />
+    <Compile Include="Filters\CommishLeagueAccessAttribute.cs" />
     <Compile Include="Filters\CommishAccessAttribute.cs" />
     <Compile Include="Mappers\Account\RoleAccessMapper.cs" />
     <Compile Include="Mappers\Account\MyInfoMapper.cs" />
@@ -222,6 +224,7 @@
     <Compile Include="Models\AdminPasswordModel.cs" />
     <Compile Include="Models\Admin\AddUserModel.cs" />
     <Compile Include="Models\Admin\AdminModeModel.cs" />
+    <Compile Include="Models\Admin\IAdminLeagueModel.cs" />
     <Compile Include="Models\Admin\ManageUsersModel.cs" />
     <Compile Include="Models\Admin\UserStatusModel.cs" />
     <Compile Include="Models\Drafts\SingleDraftModel.cs" />
@@ -456,8 +459,7 @@
     <Content Include="Views\Admin\ActivateDraft.cshtml" />
     <Content Include="Views\Admin\EditLeague.cshtml" />
     <Content Include="Views\Admin\EditDraft.cshtml" />
-    <Content Include="Views\Admin\AddEditLeaguePartial.cshtml" />
-    <Content Include="Views\Admin\AddEditDraftPartial.cshtml" />
+    <Content Include="Views\AdminShared\_AddEditDraftPartial.cshtml" />
     <Content Include="Views\Draft\History.cshtml" />
     <Content Include="Views\Admin\ChangePassword.cshtml" />
     <Content Include="Views\Account\MyInfo.cshtml" />
@@ -478,6 +480,10 @@
     <Content Include="Views\AdminShared\_ManageLeaguesPartial.cshtml" />
     <Content Include="Views\Commish\ManageLeagues.cshtml" />
     <Content Include="Views\AdminShared\_ManageDraftsPartial.cshtml" />
+    <Content Include="Views\Commish\EditLeague.cshtml" />
+    <Content Include="Views\AdminShared\_AddEditLeaguePartial.cshtml" />
+    <Content Include="Views\Commish\AddDraft.cshtml" />
+    <Content Include="Views\Commish\EditDraft.cshtml" />
     <None Include="Web.local.config">
       <SubType>Designer</SubType>
     </None>

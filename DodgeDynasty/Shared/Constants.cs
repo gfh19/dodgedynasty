@@ -52,6 +52,12 @@ namespace DodgeDynasty.Shared
 			public const string StringLength = "The {0} must be between {2} and {1} characters long.";
 		}
 
+		public static class Modes
+		{
+			public const string Admin = "Admin";
+			public const string Commish = "Commish";
+		}
+
 		public static class QS
 		{
 			public const string IsActive = "isActive";
@@ -97,6 +103,8 @@ namespace DodgeDynasty.Shared
 			public const string ManageUsers = "ManageUsers";
 			public const string ManageLeaguesPartial = "../AdminShared/_ManageLeaguesPartial";
 			public const string ManageDraftsPartial = "../AdminShared/_ManageDraftsPartial";
+			public const string AddEditLeaguePartial = "../AdminShared/_AddEditLeaguePartial";
+			public const string AddEditDraftPartial = "../AdminShared/_AddEditDraftPartial";
 			public const string Messages = "Messages";
 			public const string DraftChatPartial = "_DraftChatPartial";
 			public const string HighlightQueuePartial = "HighlightQueuePartial";

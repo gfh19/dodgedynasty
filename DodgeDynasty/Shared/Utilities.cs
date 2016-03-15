@@ -92,6 +92,31 @@ namespace DodgeDynasty.Shared
 			return null;
 		}
 
+		public static T CheckActionParameterModel<T>(ActionExecutingContext filterContext, params string[] modelNames)
+			where T : class
+		{
+			foreach (string modelName in modelNames)
+			{
+				if (filterContext.ActionParameters.ContainsKey(modelName))
+				{
+					var model = filterContext.ActionParameters[modelName] as T;
+					if (model != null)
+					{
+						return model;
+					}
+				}
+			}
+
+			return null;
+		}
+
+		public static RedirectToRouteResult GetUnauthorizedRedirect()
+		{
+			return new RedirectToRouteResult(
+				new RouteValueDictionary(new { controller = "Shared", action = "Unauthorized" }));
+		}
+
+
 
 		/* Conversion methods */
 

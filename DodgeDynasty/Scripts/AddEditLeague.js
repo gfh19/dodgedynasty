@@ -1,4 +1,5 @@
-﻿var leagueUserIds = null;
+﻿var adminMode = null;
+var leagueUserIds = null;
 
 function initAddEditLeague() {
 	displayLinks();

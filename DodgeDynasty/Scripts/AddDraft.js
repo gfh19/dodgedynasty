@@ -1,7 +1,7 @@
 ﻿
 function updateAddEditDraftModel(addEditDraftModel) {
-	ajaxPost(addEditDraftModel, "Admin/AddDraft", function (data) {
+	ajaxPost(addEditDraftModel, adminMode + "/AddDraft", function (data) {
 		var response = JSON.parse(data);
-		location.href = baseURL + "Admin/SetupDraft/" + response.draftId;
+		location.href = baseURL + adminMode + "/SetupDraft/" + response.draftId;
 	}, null, null, true);
 }

@@ -1,4 +1,5 @@
-﻿var draftUserIds = null;
+﻿var adminMode = null;
+var draftUserIds = null;
 
 function initAddEditDraft() {
 	displayLinks();

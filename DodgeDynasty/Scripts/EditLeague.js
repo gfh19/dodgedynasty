@@ -1,6 +1,6 @@
 ﻿
 function updateAddEditLeagueModel(addEditLeagueModel) {
-	ajaxPost(addEditLeagueModel, "Admin/EditLeague", function (data) {
-		location.href = baseURL + "Admin/ManageLeagues";
+	ajaxPost(addEditLeagueModel, adminMode + "/EditLeague", function (data) {
+		location.href = baseURL + adminMode + "/ManageLeagues";
 	}, null, null, true);
 }

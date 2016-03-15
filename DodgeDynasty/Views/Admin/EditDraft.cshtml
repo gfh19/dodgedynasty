@@ -2,10 +2,16 @@
 
 @{
 	ViewBag.Title = "Edit Draft";
+	Model.AdminMode = DodgeDynasty.Shared.Constants.Modes.Admin;
 }
 @section scripts {
 	<script type="text/javascript" src="@Url.Script("~/Scripts/EditDraft.js")"></script>
 	<script type="text/javascript" src="@Url.Script("~/Scripts/AddEditDraft.js")"></script>
 	<script type="text/javascript" src="@Url.Script("~/Scripts/LeagueOwnerUser.js")"></script>
+	<script type="text/javascript">
+		$(function () {
+			adminMode = '@DodgeDynasty.Shared.Constants.Modes.Admin';
+		});
+	</script>
 }
-@Html.Partial("AddEditDraftPartial", Model)
+@Html.Partial(DodgeDynasty.Shared.Constants.Views.AddEditDraftPartial, Model)

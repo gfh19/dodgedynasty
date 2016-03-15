@@ -7,10 +7,11 @@ using DodgeDynasty.Entities;
 using DodgeDynasty.Shared;
 using System.Web.Mvc;
 using DodgeDynasty.Models.Types;
+using DodgeDynasty.Models.Admin;
 
 namespace DodgeDynasty.Models
 {
-	public class AddEditLeagueModel
+	public class AddEditLeagueModel : AdminModeModel, IAdminLeagueModel
 	{
 		[Display(Name = "League Name")]
 		[Required]

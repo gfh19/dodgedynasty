@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using DodgeDynasty.Entities;
 using DodgeDynasty.Mappers.Account;
+using DodgeDynasty.Mappers.Drafts;
 using DodgeDynasty.Mappers.Shared;
 using DodgeDynasty.Mappers.Site;
 using DodgeDynasty.Models;
@@ -184,6 +185,21 @@ namespace DodgeDynasty.Shared
 			mapper.Model = new RoleAccessModel { UserId = userId, LeagueId = leagueId };
 			var model = mapper.GetModel();
 			return model.IsUserAdmin || model.IsUserCommish;
+		}
+
+		public static bool IsUserAdminOrCommishForDraft(int? draftId = null)
+		{
+			SingleDraftMapper draftMapper = Factory.Create<SingleDraftMapper>();
+			draftMapper.DraftId = draftId;
+			var draftModel = draftMapper.GetModel();
+			if (draftModel != null)
+			{
+				RoleAccessMapper roleAccessMapper = Factory.Create<RoleAccessMapper>();
+				roleAccessMapper.Model = new RoleAccessModel { LeagueId = draftModel.LeagueId };
+				var model = roleAccessMapper.GetModel();
+				return model.IsUserAdmin || model.IsUserCommish;
+			}
+			return false;
 		}
 	}
 }
