@@ -1,7 +1,7 @@
 ﻿@model DodgeDynasty.Models.DraftInputModel
 @{
-	ViewBag.Title = "Admin Input Draft Pick";
-	Model.AdminMode = DodgeDynasty.Shared.Constants.Modes.Admin;
+	ViewBag.Title = "Commish Input Draft Pick";
+	Model.AdminMode = DodgeDynasty.Shared.Constants.Modes.Commish;
 }
 
 @section scripts {
@@ -11,7 +11,7 @@
 <div id="pickInfo">
 	<script type="text/javascript">
 		$(function () {
-			adminMode = '@DodgeDynasty.Shared.Constants.Modes.Admin';
+			adminMode = '@DodgeDynasty.Shared.Constants.Modes.Commish';
 			playerHints = @Html.Raw(@Model.GetPlayerHints(true));
 			initInput();
 		});

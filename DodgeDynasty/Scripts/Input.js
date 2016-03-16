@@ -1,4 +1,6 @@
-﻿function initInput() {
+﻿var adminMode = null;
+
+function initInput() {
 	setPlayerAutoComplete();
 	bindInputPrevious();
 	bindInputNext();
@@ -7,13 +9,13 @@
 
 function bindInputPrevious() {
 	$("#inputPrevious").click(function () {
-		ajaxPostReplace({ draftPickId: $("#Player_DraftPickId").val() }, "Admin/InputPrevious", '#pickInfo');
+		ajaxPostReplace({ draftPickId: $("#Player_DraftPickId").val() }, adminMode + "/InputPrevious", '#pickInfo');
 	});
 }
 
 function bindInputNext() {
 	$("#inputNext").click(function () {
-		ajaxPostReplace({ draftPickId: $("#Player_DraftPickId").val() }, "Admin/InputNext", '#pickInfo');
+		ajaxPostReplace({ draftPickId: $("#Player_DraftPickId").val() }, adminMode + "/InputNext", '#pickInfo');
 	});
 }
 
@@ -30,7 +32,7 @@ function bindInputDelete() {
 						text: "OK",
 						click: function () {
 							addWaitCursor();
-							ajaxPostReplace({ draftPickId: $("#Player_DraftPickId").val() }, "Admin/InputDelete", '#pickInfo',
+							ajaxPostReplace({ draftPickId: $("#Player_DraftPickId").val() }, adminMode + "/InputDelete", '#pickInfo',
 								removeWaitCursor, removeWaitCursor);
 							$(this).dialog("close");
 						}

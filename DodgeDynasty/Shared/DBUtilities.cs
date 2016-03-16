@@ -4,11 +4,13 @@ using System.Linq;
 using System.Web;
 using DodgeDynasty.Entities;
 using DodgeDynasty.Mappers.Account;
+using DodgeDynasty.Mappers.Commish;
 using DodgeDynasty.Mappers.Drafts;
 using DodgeDynasty.Mappers.Shared;
 using DodgeDynasty.Mappers.Site;
 using DodgeDynasty.Models;
 using DodgeDynasty.Models.Account;
+using DodgeDynasty.Models.Drafts;
 using DodgeDynasty.Models.Shared;
 using DodgeDynasty.Models.Site;
 
@@ -165,6 +167,12 @@ namespace DodgeDynasty.Shared
 				.Select(o => o.LeagueId.Value).ToList();
 		}
 
+		public static SingleDraftModel GetCommishCurrentDraft()
+		{
+			var mapper = Factory.Create<CommishCurrentDraftMapper>();
+			return mapper.GetModel();
+		}
+
 		public static bool IsUserAdmin(int? userId = null)
 		{
 			RoleAccessMapper mapper = Factory.Create<RoleAccessMapper>();
@@ -200,6 +208,13 @@ namespace DodgeDynasty.Shared
 				return model.IsUserAdmin || model.IsUserCommish;
 			}
 			return false;
+		}
+		
+		public static bool IsDraftPickInDraft(int draftPickId, int draftId)
+		{
+			DraftViewMapper mapper = new DraftViewMapper(draftId);
+			var draftViewModel = mapper.GetModel();
+			return draftViewModel.DraftPicks.Any(o=>o.DraftPickId == draftPickId);
 		}
 	}
 }

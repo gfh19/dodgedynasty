@@ -1,4 +1,5 @@
-﻿var ownerHints = [];
+﻿var adminMode = null;
+var ownerHints = [];
 
  $(function () {
 	bindActionLinks();
@@ -256,7 +257,7 @@ function bindSubmitDraftPicks() {
 		draftPicksModel.DraftPicks = draftPicks;
 		if (validateDraftPicksModel(userIds)) {
 			addWaitCursor();
-			ajaxPost(draftPicksModel, "Admin/SetupDraft", function (response) {
+			ajaxPost(draftPicksModel, adminMode + "/SetupDraft", function (response) {
 				$("#setupDraftForm").submit();
 			}, removeWaitCursor);
 		}

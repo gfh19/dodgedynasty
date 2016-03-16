@@ -12,7 +12,7 @@ using DodgeDynasty.Models.Admin;
 
 namespace DodgeDynasty.Models
 {
-	public class AddEditDraftModel : AdminModeModel, IAdminLeagueModel
+	public class AddEditDraftModel : AdminModeModel, ILeagueIdModel, IDraftIdModel
 	{
 		[Display(Name = "Draft Date/Time")]
 		[Required]

@@ -11,7 +11,7 @@ namespace DodgeDynasty.Mappers
 	{
 		protected override void PopulateModel()
 		{
-			if (Utilities.IsUserAdmin())
+			if (DBUtilities.IsUserAdmin())
 			{
 				Model.Leagues = HomeEntity.Leagues.ToList();
 			}
@@ -23,6 +23,12 @@ namespace DodgeDynasty.Mappers
 								 select l).ToList();
 			}
 			Model.AllDrafts = HomeEntity.Drafts.ToList();
+			//Remove Example League for all but Admin
+			if (!DBUtilities.IsUserAdmin())
+			{
+				Model.Leagues.RemoveAll(o => o.LeagueId == Constants.Test.ExampleLeagueId);
+				Model.AllDrafts.RemoveAll(o => o.LeagueId == Constants.Test.ExampleLeagueId);
+			}
 			Model.AllDraftPicks = HomeEntity.DraftPicks.ToList();
 			Model.AllUsers = HomeEntity.Users.ToList();
 		}

@@ -165,23 +165,28 @@
     <Compile Include="Controllers\DraftController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SiteController.cs" />
+    <Compile Include="Filters\CommishDraftPickAccessAttribute.cs" />
     <Compile Include="Filters\CommishDraftAccessAttribute.cs" />
     <Compile Include="Filters\CommishLeagueAccessAttribute.cs" />
     <Compile Include="Filters\CommishAccessAttribute.cs" />
     <Compile Include="Mappers\Account\RoleAccessMapper.cs" />
     <Compile Include="Mappers\Account\MyInfoMapper.cs" />
     <Compile Include="Mappers\AdminPasswordMapper.cs" />
+    <Compile Include="Mappers\AdminShared\ActivateDraftMapper.cs" />
     <Compile Include="Mappers\Admin\AddUserMapper.cs" />
     <Compile Include="Mappers\Admin\AdminManageDraftsMapper.cs" />
     <Compile Include="Mappers\Admin\ManageUsersMapper.cs" />
     <Compile Include="Mappers\Admin\UserInfoMapper.cs" />
     <Compile Include="Mappers\Admin\UserStatusMapper.cs" />
+    <Compile Include="Mappers\Commish\CommishActivateDraftMapper.cs" />
+    <Compile Include="Mappers\Commish\CommishCurrentDraftMapper.cs" />
     <Compile Include="Mappers\Commish\CommishManageDraftsMapper.cs" />
     <Compile Include="Mappers\Commish\CommishManageLeaguesMapper.cs" />
     <Compile Include="Mappers\DraftHistoryMapper.cs" />
     <Compile Include="Mappers\Admin\EditDraftMapper.cs" />
     <Compile Include="Mappers\Admin\AddDraftMapper.cs" />
     <Compile Include="Mappers\Drafts\DraftPickAudioMapper.cs" />
+    <Compile Include="Mappers\Drafts\DraftViewMapper.cs" />
     <Compile Include="Mappers\Drafts\SingleDraftMapper.cs" />
     <Compile Include="Mappers\EditLeagueMapper.cs" />
     <Compile Include="Mappers\AddLeagueMapper.cs">
@@ -190,7 +195,7 @@
     <Compile Include="Filters\OwnerUpdateRankAccessAttribute.cs" />
     <Compile Include="Filters\OwnerRankAccessAttribute.cs" />
     <Compile Include="Mappers\DraftSetupMapper.cs" />
-    <Compile Include="Mappers\ActivateDraftMapper.cs" />
+    <Compile Include="Mappers\Admin\AdminActivateDraftMapper.cs" />
     <Compile Include="Mappers\DraftStatusMapper.cs" />
     <Compile Include="Mappers\Highlights\CopyLastDraftHighlightsMapper.cs" />
     <Compile Include="Mappers\Highlights\DeleteAllHighlightsMapper.cs" />
@@ -199,7 +204,7 @@
     <Compile Include="Mappers\Highlights\UpdatePlayerQueueOrderMapper.cs" />
     <Compile Include="Mappers\IManageLeaguesMapper.cs" />
     <Compile Include="Mappers\IMapper.cs" />
-    <Compile Include="Mappers\ManageDraftsMapper.cs" />
+    <Compile Include="Mappers\AdminShared\ManageDraftsMapper.cs" />
     <Compile Include="Mappers\Admin\AdminManageLeaguesMapper.cs" />
     <Compile Include="Mappers\MapperBase.cs">
       <SubType>Code</SubType>
@@ -224,9 +229,11 @@
     <Compile Include="Models\AdminPasswordModel.cs" />
     <Compile Include="Models\Admin\AddUserModel.cs" />
     <Compile Include="Models\Admin\AdminModeModel.cs" />
-    <Compile Include="Models\Admin\IAdminLeagueModel.cs" />
+    <Compile Include="Models\Admin\IDraftIdModel.cs" />
+    <Compile Include="Models\Admin\ILeagueIdModel.cs" />
     <Compile Include="Models\Admin\ManageUsersModel.cs" />
     <Compile Include="Models\Admin\UserStatusModel.cs" />
+    <Compile Include="Models\Drafts\DraftViewModel.cs" />
     <Compile Include="Models\Drafts\SingleDraftModel.cs" />
     <Compile Include="Models\DraftHistoryModel.cs" />
     <Compile Include="Models\DraftPicksSetupModel.cs" />
@@ -443,6 +450,7 @@
     <Content Include="SQL\usp_LoadPastDraftRosters.sql" />
     <Content Include="SQL\usp_LoadPastDrafts.sql" />
     <Content Include="SQL\usp_LoadPlayerRanks_V2.sql" />
+    <Content Include="Views\Admin\Input.cshtml" />
     <Content Include="Views\Admin\ManageDrafts.cshtml" />
     <Content Include="Views\Admin\ManageLeagues.cshtml" />
     <Content Include="Views\Commish\ManageDrafts.cshtml" />
@@ -484,6 +492,12 @@
     <Content Include="Views\AdminShared\_AddEditLeaguePartial.cshtml" />
     <Content Include="Views\Commish\AddDraft.cshtml" />
     <Content Include="Views\Commish\EditDraft.cshtml" />
+    <Content Include="Views\AdminShared\_SetupDraftPartial.cshtml" />
+    <Content Include="Views\Commish\SetupDraft.cshtml" />
+    <Content Include="Views\AdminShared\_ActivateDraftPartial.cshtml" />
+    <Content Include="Views\Commish\ActivateDraft.cshtml" />
+    <Content Include="Views\AdminShared\_InputPartial.cshtml" />
+    <Content Include="Views\Commish\Input.cshtml" />
     <None Include="Web.local.config">
       <SubType>Designer</SubType>
     </None>
@@ -534,9 +548,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\SetupDraft.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Admin\Input.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Draft\Display.cshtml" />

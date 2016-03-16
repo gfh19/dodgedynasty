@@ -18,7 +18,7 @@ namespace DodgeDynasty.Filters
 			}
 			else
 			{
-				var model = Utilities.CheckActionParameterModel<IAdminLeagueModel>(filterContext, "model");
+				var model = Utilities.CheckActionParameterModel<ILeagueIdModel>(filterContext, "model");
 				if (model != null)
 				{
 					if (!DBUtilities.IsUserAdminOrCommish(model.LeagueId))

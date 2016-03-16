@@ -11,7 +11,7 @@ using DodgeDynasty.Models.Admin;
 
 namespace DodgeDynasty.Models
 {
-	public class AddEditLeagueModel : AdminModeModel, IAdminLeagueModel
+	public class AddEditLeagueModel : AdminModeModel, ILeagueIdModel
 	{
 		[Display(Name = "League Name")]
 		[Required]

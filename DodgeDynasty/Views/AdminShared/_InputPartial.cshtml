@@ -1,0 +1,58 @@
+﻿@model DodgeDynasty.Models.DraftInputModel
+
+<div id="playerEntry">
+	<div>
+		@Model.GetCurrentDraftName()
+		<div class="draftGlance">
+			@if (Model.CurrentClockOwnerUser != null)
+			{
+				<text>Pick #@Model.CurrentDraftPick.PickNum, Current Team: @Model.CurrentDraftPickOwnerUser.TeamName</text>
+			}
+			else if (!Model.CurrentDraft.IsComplete && Model.DraftPicks.Count == 0)
+			{
+	   			<text>The Draft Has Not Been Setup</text>
+			}
+			else
+			{
+				<text>The Draft Has Completed</text>
+			}
+		</div>
+	</div>
+	@using (Html.BeginForm("Input", Model.AdminMode, FormMethod.Post, new { id = "draftInputForm" }))
+	{
+		@Html.ValidationSummary(true)
+
+		<a href="#" id="inputPrevious" class="navLink">Previous</a><a href="#" id="inputNext" class="navLink">Next</a>
+
+		@Html.LabelFor(m => m.Player.FirstName)
+		@Html.TextBoxFor(m => m.Player.FirstName, new { list = "playerHints", maxLength = "25", autofocus = "autofocus" });
+		@Html.ValidationMessageFor(m => m.Player.FirstName)
+		@Html.LabelFor(m => m.Player.LastName);
+		@Html.TextBoxFor(m => m.Player.LastName, new { maxLength = "25" });
+		@Html.ValidationMessageFor(m => m.Player.LastName)
+		@Html.LabelFor(m => m.Player.Position);
+		@Html.DropDownListFor(m => m.Player.Position, Model.GetPositionListItems());
+		@Html.ValidationMessageFor(m => m.Player.Position)
+		@Html.LabelFor(m => m.Player.NFLTeam);
+		@Html.DropDownListFor(m => m.Player.NFLTeam, Model.GetNFLListItems());
+		@Html.ValidationMessageFor(m => m.Player.NFLTeam)
+
+		@Html.HiddenFor(m => m.DraftId);
+		@Html.HiddenFor(m => m.Player.TeamName);
+		@Html.HiddenFor(m => m.Player.DraftPickId);
+		<div class="buttons">
+			<button id="inputSubmit" type="submit">Submit</button>
+			@if (Model.CurrentDraftPick != null && Model.CurrentDraftPick.PlayerId.HasValue)
+			{
+				<button id="inputDelete" type="button">Delete</button>
+				<div id="confirmDelete" class="center hide-yo-kids" title="Delete Pick?">
+					<p>Are you sure you want to delete this pick?</p>
+				</div>
+			}
+		</div>
+	}
+	@if (!string.IsNullOrEmpty(Model.Message))
+	{
+		<div>@Model.Message</div>
+	}
+</div>

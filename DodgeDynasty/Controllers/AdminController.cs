@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using DodgeDynasty.Filters;
@@ -31,13 +32,11 @@ namespace DodgeDynasty.Controllers
 
 		[HttpPost]
 		[AdminAccess]
-		public ActionResult SetupDraft(DraftPicksModel draftPicksModel)
+		public HttpStatusCode SetupDraft(DraftPicksModel draftPicksModel)
 		{
 			DraftSetupMapper mapper = DraftFactory.GetDraftSetupMapper();
 			mapper.UpdateDraftPicks(draftPicksModel);
-			DraftSetupModel draftSetupModel = new DraftSetupModel();
-			draftSetupModel.GetDraftInfo();
-			return PartialView(draftSetupModel);
+			return HttpStatusCode.OK;
 		}
 
 		[HttpGet]
@@ -195,7 +194,7 @@ namespace DodgeDynasty.Controllers
 		[AdminAccess]
 		public ActionResult ActivateDraft()
 		{
-			var mapper = new ActivateDraftMapper<ActivateDraftModel>();
+			var mapper = new AdminActivateDraftMapper<ActivateDraftModel>();
 			return View(mapper.GetModel());
 		}
 

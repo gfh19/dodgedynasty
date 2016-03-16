@@ -18,6 +18,7 @@ namespace DodgeDynasty.Models
 {
 	public class DraftInputModel : DraftModel
 	{
+		public string AdminMode { get; set; }
 		public OwnerUser CurrentDraftPickOwnerUser { get; set; }
 		public PlayerModel Player { get; set; }
 		public string Message { get; set; }

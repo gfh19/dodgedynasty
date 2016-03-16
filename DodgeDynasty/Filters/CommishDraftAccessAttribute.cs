@@ -1,5 +1,5 @@
 ﻿using System.Web.Mvc;
-using DodgeDynasty.Models;
+using DodgeDynasty.Models.Admin;
 using DodgeDynasty.Shared;
 
 namespace DodgeDynasty.Filters
@@ -18,7 +18,7 @@ namespace DodgeDynasty.Filters
 			}
 			else
 			{
-				var model = Utilities.CheckActionParameterModel<AddEditDraftModel>(filterContext, "model");
+				var model = Utilities.CheckActionParameterModel<IDraftIdModel>(filterContext, "model");
 				if (model != null)
 				{
 					if (!DBUtilities.IsUserAdminOrCommishForDraft(model.DraftId))

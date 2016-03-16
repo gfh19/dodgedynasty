@@ -61,8 +61,8 @@
 					@Html.DropDownListFor(m => m.Player.NFLTeam, Model.GetNFLListItems());
 					@Html.ValidationMessageFor(m => m.Player.NFLTeam)
 
+					@Html.HiddenFor(m => m.DraftId);
 					@Html.HiddenFor(m => m.Player.TeamName);
-					@Html.HiddenFor(m => m.Player.DraftId);
 					@Html.HiddenFor(m => m.Player.DraftPickId);
 					<div class="buttons"><button id="inputSubmit" type="submit">Submit</button></div>
 				}

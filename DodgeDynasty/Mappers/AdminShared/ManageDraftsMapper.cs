@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using DodgeDynasty.Models;
 
-namespace DodgeDynasty.Mappers
+namespace DodgeDynasty.Mappers.AdminShared
 {
 	public abstract class ManageDraftsMapper<T> : MapperBase<T> where T : ManageDraftsModel, new()
 	{

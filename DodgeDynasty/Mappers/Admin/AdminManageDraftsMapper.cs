@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using DodgeDynasty.Mappers.AdminShared;
 using DodgeDynasty.Models;
 
 namespace DodgeDynasty.Mappers.Admin

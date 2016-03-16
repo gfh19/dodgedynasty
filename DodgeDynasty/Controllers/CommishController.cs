@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using DodgeDynasty.Filters;
@@ -8,12 +9,13 @@ using DodgeDynasty.Mappers;
 using DodgeDynasty.Mappers.Admin;
 using DodgeDynasty.Mappers.Commish;
 using DodgeDynasty.Models;
+using DodgeDynasty.Shared;
 
 namespace DodgeDynasty.Controllers
 {
 	public class CommishController : BaseController
 	{
-		/* Manage Leagues */
+		#region Manage Leagues
 
 		[HttpGet]
 		[CommishAccess]
@@ -44,8 +46,9 @@ namespace DodgeDynasty.Controllers
 			return Json(new { leagueId = model.LeagueId });
 		}
 
+		#endregion
 
-		/* Manage Drafts */
+		#region Manage Drafts
 
 		[HttpGet]
 		[CommishLeagueAccess]
@@ -99,5 +102,111 @@ namespace DodgeDynasty.Controllers
 			mapper.UpdateEntity(model);
 			return Json(new { draftId = model.DraftId });
 		}
+
+		#endregion
+
+		#region Setup Draft
+
+		[HttpGet]
+		[CommishDraftAccess]
+		public ActionResult SetupDraft(string id)
+		{
+			DraftSetupModel model = new DraftSetupModel();
+			int? draftId = null;
+			if (!string.IsNullOrEmpty(id))
+			{
+				draftId = Int32.Parse(id);
+			}
+			else
+			{
+				draftId = DBUtilities.GetCommishCurrentDraft().DraftId;
+            }
+			model.GetDraftInfo(draftId);
+			return View(model);
+		}
+
+		[HttpPost]
+		[CommishDraftAccess]
+		public HttpStatusCode SetupDraft(DraftPicksModel draftPicksModel)
+		{
+			DraftSetupMapper mapper = DraftFactory.GetDraftSetupMapper();
+			mapper.UpdateDraftPicks(draftPicksModel);
+			return HttpStatusCode.OK;
+		}
+
+		#endregion
+
+		#region Activate Draft
+
+		[HttpGet]
+		[CommishAccess]
+		public ActionResult ActivateDraft()
+		{
+			var mapper = new CommishActivateDraftMapper<ActivateDraftModel>();
+			return View(mapper.GetModel());
+		}
+
+		[HttpGet]
+		[CommishDraftAccess]
+		public ActionResult SetDraftStatus(string id)
+		{
+			var mapper = new DraftStatusMapper(id,
+				Request.QueryString[Constants.QS.IsActive], Request.QueryString[Constants.QS.IsComplete]);
+			mapper.UpdateEntity(mapper.Model);
+			return RedirectToAction(Constants.Views.ActivateDraft);
+		}
+
+		#endregion
+
+		#region Input Draft Pick
+
+		[HttpGet]
+		[CommishAccess]
+		public ActionResult Input()
+		{
+			if (TempData.ContainsKey(Constants.TempData.NextDraftInputModel))
+			{
+				return View((DraftInputModel)TempData[Constants.TempData.NextDraftInputModel]);
+			}
+			DraftInputModel draftInputModel = DraftFactory.GetCurrentDraftInputModel(DBUtilities.GetCommishCurrentDraft().DraftId);
+			return View(draftInputModel);
+		}
+
+		[HttpPost]
+		[CommishDraftPickAccess]
+		public ActionResult InputPrevious(string draftPickId)
+		{
+			DraftInputModel previousDraftInputModel = DraftFactory.GetCurrentDraftInputModel(DBUtilities.GetCommishCurrentDraft().DraftId);
+			previousDraftInputModel.GetPreviousDraftPick(draftPickId);
+			return PartialView(Constants.Views.Input, previousDraftInputModel);
+		}
+
+		[HttpPost]
+		[CommishDraftPickAccess]
+		public ActionResult InputNext(string draftPickId)
+		{
+			DraftInputModel nextDraftInputModel = DraftFactory.GetCurrentDraftInputModel(DBUtilities.GetCommishCurrentDraft().DraftId);
+			nextDraftInputModel.GetNextDraftPick(draftPickId);
+			return PartialView(Constants.Views.Input, nextDraftInputModel);
+		}
+
+		[HttpPost]
+		[CommishDraftPickAccess]
+		public ActionResult Input(DraftInputModel model)
+		{
+			return InputDraftPick(Constants.Views.Input, model, true);
+		}
+
+		[HttpPost]
+		[CommishDraftPickAccess]
+		public ActionResult InputDelete(string draftPickId)
+		{
+			DraftInputModel nextDraftInputModel = DraftFactory.GetCurrentDraftInputModel(DBUtilities.GetCommishCurrentDraft().DraftId);
+			nextDraftInputModel.DeleteDraftPick(Convert.ToInt32(draftPickId));
+			nextDraftInputModel = DraftFactory.GetCurrentDraftInputModel(DBUtilities.GetCommishCurrentDraft().DraftId);
+			return PartialView(Constants.Views.Input, nextDraftInputModel);
+		}
+
+		#endregion
 	}
 }

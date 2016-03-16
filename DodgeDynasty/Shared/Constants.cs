@@ -83,6 +83,11 @@ namespace DodgeDynasty.Shared
 			public const string RankStatus = "RankStatus";
 		}
 
+		public static class Test
+		{
+			public const int ExampleLeagueId = 7;
+		}
+
 		public static class Views
 		{
 			public const string Display = "Display";
@@ -105,6 +110,9 @@ namespace DodgeDynasty.Shared
 			public const string ManageDraftsPartial = "../AdminShared/_ManageDraftsPartial";
 			public const string AddEditLeaguePartial = "../AdminShared/_AddEditLeaguePartial";
 			public const string AddEditDraftPartial = "../AdminShared/_AddEditDraftPartial";
+			public const string SetupDraftPartial = "../AdminShared/_SetupDraftPartial";
+			public const string ActivateDraftPartial = "../AdminShared/_ActivateDraftPartial";
+			public const string InputPartial = "../AdminShared/_InputPartial";
 			public const string Messages = "Messages";
 			public const string DraftChatPartial = "_DraftChatPartial";
 			public const string HighlightQueuePartial = "HighlightQueuePartial";

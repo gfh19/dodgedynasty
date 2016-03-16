@@ -11,6 +11,8 @@ namespace DodgeDynasty.Models
 {
 	public class DraftSetupModel : DraftModel
 	{
+		public string AdminMode { get; set; }
+
 		public DraftSetupModel() { }
 		public DraftSetupModel(int draftId) : base(draftId) { }
 

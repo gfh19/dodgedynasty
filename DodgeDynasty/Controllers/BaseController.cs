@@ -18,7 +18,7 @@ namespace DodgeDynasty.Controllers
     {
 		protected ActionResult InputDraftPick(string viewName, DraftInputModel draftInputModel, bool isAdmin)
 		{
-			DraftInputModel nextDraftInputModel = DraftFactory.GetCurrentDraftInputModel();
+			DraftInputModel nextDraftInputModel = DraftFactory.GetCurrentDraftInputModel(draftInputModel.DraftId);
 			var playerModel = draftInputModel.Player;
 			nextDraftInputModel.Player = playerModel;
 			if (!ModelState.IsValid)
@@ -29,7 +29,7 @@ namespace DodgeDynasty.Controllers
 			{
 				ModelState.Clear();
 				ModelState.AddModelError("", "Error - It is not your turn to pick.");
-				nextDraftInputModel = DraftFactory.GetCurrentDraftInputModel();
+				nextDraftInputModel = DraftFactory.GetCurrentDraftInputModel(draftInputModel.DraftId);
 				return View(nextDraftInputModel);
 			}
 			try
@@ -43,12 +43,12 @@ namespace DodgeDynasty.Controllers
 				ModelState.AddModelError("", string.Format("Error - {0} {1} has already been drafted (Pick #{2}, by {3}).",
 						playerModel.FirstName, playerModel.LastName, pick.PickNum, 
 						nextDraftInputModel.GetTeamName(pick.UserId)));
-				nextDraftInputModel = DraftFactory.GetCurrentDraftInputModel();
+				nextDraftInputModel = DraftFactory.GetCurrentDraftInputModel(draftInputModel.DraftId);
 				return View(nextDraftInputModel);
 			}
 
 			ModelState.Clear();
-			nextDraftInputModel = DraftFactory.GetCurrentDraftInputModel();
+			nextDraftInputModel = DraftFactory.GetCurrentDraftInputModel(draftInputModel.DraftId);
 			nextDraftInputModel.Message = string.Format("{0} {1} has been drafted by {2}.",
 				playerModel.FirstName, playerModel.LastName, playerModel.TeamName);
 			nextDraftInputModel.PickMade = true;
