@@ -6,6 +6,8 @@ function initAddEditLeague() {
 	bindAddOwnerLinks();
 	bindRemoveOwnerLinks();
 	bindSetOwnerSelects();
+	bindAddCommishLink();
+	bindRemoveCommishLinks();
 	bindSubmitLeague();
 	bindColorSelects();
 	initColorSelects();
@@ -32,7 +34,9 @@ function getAddEditLeagueModel() {
 	addEditLeagueModel.LeagueId = $(".league-id").val();
 	addEditLeagueModel.LeagueName = $(".league-name").val();
 	var leagueOwnerUsers = new Array();
+	var leagueCommishUsers = new Array();
 	leagueUserIds = new Array();
+	commishUserIds = new Array();
 	var ix = 0;
 	$.each($(".league-owner-entry"), function (index, ownerUser) {
 		var lo = {};
@@ -44,16 +48,24 @@ function getAddEditLeagueModel() {
 		leagueOwnerUsers.push(lo);
 		leagueUserIds[ix++] = lo.UserId;
 	});
-
+	$.each($(".league-commish-entry").has("select"), function (index, commishUser) {
+		var commishUserId = $("select option:selected", commishUser).val();
+		leagueCommishUsers.push(commishUserId);
+		commishUserIds[ix++] = commishUserId;
+	});
+	
 	addEditLeagueModel.LeagueOwnerUsers = leagueOwnerUsers;
+	addEditLeagueModel.CommishUserIds = leagueCommishUsers;
 	return addEditLeagueModel;
 }
 
 function validateAddEditLeagueModel() {
 	var isValid = true;
 	leagueUserIds.sort();
+	commishUserIds.sort();
 	var blankOwner = $.inArray("", leagueUserIds);
-	if (blankOwner > -1) {
+	var blankCommish = $.inArray("", commishUserIds);
+	if (blankOwner > -1 || blankCommish > -1) {
 		$(".blank-owner-msg").removeClass("hide-yo-wives");
 		markInvalidId("");
 		isValid = false;
@@ -61,7 +73,14 @@ function validateAddEditLeagueModel() {
 	for (var i = 0; i < (leagueUserIds.length - 1) ; i++) {
 		if (leagueUserIds[i] != undefined && leagueUserIds[i] == leagueUserIds[i + 1]) {
 			$(".dup-owner-msg").removeClass("hide-yo-wives");
-			markInvalidId(leagueUserIds[i]);
+			markInvalidId(leagueUserIds[i], $("select", $(".league-owner")));
+			isValid = false;
+		}
+	}
+	for (var i = 0; i < (commishUserIds.length - 1) ; i++) {
+		if (commishUserIds[i] != undefined && commishUserIds[i] == commishUserIds[i + 1]) {
+			$(".dup-owner-msg").removeClass("hide-yo-wives");
+			markInvalidId(commishUserIds[i], $("select", $(".league-commish")));
 			isValid = false;
 		}
 	}
@@ -143,4 +162,46 @@ function initColorSelects() {
 
 function bindNewOwnerMisc(entry) {
 	bindColorSelect($(".lo-color-select", entry));
+}
+
+function bindAddCommishLink() {
+	var link = $(".league-add-commish");
+	$(link).unbind("click");
+	$(link).click(function (e) {
+		e.preventDefault();
+		var commishOwnerEntry = $('.league-commish-entry').last();
+		var newCommishOwnerEntry = copyCommishOwnerEntry();
+		$(newCommishOwnerEntry).insertAfter(commishOwnerEntry);
+
+		bindNewCommishLinks(newCommishOwnerEntry);
+		$("select", newCommishOwnerEntry).focus();
+	});
+}
+
+function copyCommishOwnerEntry() {
+	var copyEntry = $('.copy-commish-entry');
+	var newEntry = $(copyEntry).clone();
+	$(newEntry).addClass("league-commish-entry");
+	$(newEntry).removeClass("copy-commish-entry");
+	$(newEntry).removeClass("hide-yo-wives");
+	return newEntry;
+}
+
+function bindNewCommishLinks(entry) {
+	bindRemoveCommishLink($(".commish-remove-owner", $(entry)));
+}
+
+function bindRemoveCommishLink(link) {
+	$(link).click(function (e) {
+		e.preventDefault();
+		var ownerEntry = $(link).closest('.league-commish-entry');
+		$(ownerEntry).remove();
+	});
+}
+
+function bindRemoveCommishLinks() {
+	var links = $(".commish-remove-owner");
+	$.each(links, function (index, link) {
+		bindRemoveCommishLink(link);
+	});
 }

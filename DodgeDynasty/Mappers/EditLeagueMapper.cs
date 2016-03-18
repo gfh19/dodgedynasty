@@ -17,6 +17,7 @@ namespace DodgeDynasty.Mappers
 		protected override void PopulateModel()
 		{
 			Model.LeagueId = Int32.Parse(LeagueId);
+			var currentUserId = HomeEntity.Users.GetLoggedInUserId();
 			var users = HomeEntity.Users.ToList();
 			var allLeagueOwners = HomeEntity.LeagueOwners.ToList();
 			var leagueOwners = allLeagueOwners.Where(o => o.LeagueId == Model.LeagueId).ToList();
@@ -25,6 +26,10 @@ namespace DodgeDynasty.Mappers
 			Model.LeagueOwnerUsers = OwnerUserMapper.GetOwnerUsers(leagueOwners, users, Model.LeagueId);
 			Model.LeagueName = HomeEntity.Leagues.Where(o => o.LeagueId == Model.LeagueId).FirstOrDefault().LeagueName;
 			Model.CssColors = HomeEntity.CssColors.ToList();
+			Model.CommishUserIds = HomeEntity.UserRoles
+				.Where(o => o.RoleId == Constants.Roles.Commish && o.LeagueId == Model.LeagueId)
+				.OrderBy(o=>o.UserId != currentUserId).ThenBy(o=>o.UserRoleId)
+				.Select(o => o.UserId).ToList();
 		}
 
 		protected override void DoUpdate(T model)
@@ -59,6 +64,27 @@ namespace DodgeDynasty.Mappers
 					LastUpdateTimestamp = DateTime.Now
 				};
 				HomeEntity.LeagueOwners.AddObject(owner);
+			}
+
+			var leagueCommishes = HomeEntity.UserRoles.Where(
+				o => o.RoleId == Constants.Roles.Commish && o.LeagueId == model.LeagueId).ToList();
+			foreach (var oldCommish in leagueCommishes)
+			{
+				HomeEntity.UserRoles.DeleteObject(oldCommish);
+			}
+			if (model.CommishUserIds != null)
+			{
+				foreach (var commishUserId in model.CommishUserIds)
+				{
+					HomeEntity.UserRoles.AddObject(new UserRole
+					{
+						UserId = commishUserId,
+						RoleId = Constants.Roles.Commish,
+						LeagueId = league.LeagueId,
+						AddTimestamp = DateTime.Now,
+						LastUpdateTimestamp = DateTime.Now
+					});
+				}
 			}
 			HomeEntity.SaveChanges();
 		}

@@ -22,6 +22,7 @@ namespace DodgeDynasty.Models
 		public List<OwnerUser> OwnerUsers { get; set; }
 		public List<User> ActiveLeagueUsers { get; set; }
 		public List<CssColor> CssColors { get; set; }
+		public List<int> CommishUserIds { get; set; }
 
 		public List<SelectListItem> GetActiveLeagueUsers(string userId = null)
 		{
@@ -38,6 +39,11 @@ namespace DodgeDynasty.Models
 		public string GetColorText(string cssClass)
 		{
 			return CssColors.FirstOrDefault(o=>o.ClassName == (cssClass ?? Constants.CssClass.None)).ColorText;
+		}
+
+		public bool IsLoggedInUserId(int userId)
+		{
+			return Utilities.GetLoggedInUserId(ActiveLeagueUsers) == userId;
 		}
 	}
 }

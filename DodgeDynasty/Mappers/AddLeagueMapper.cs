@@ -2,11 +2,8 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
-using System.Web;
 using DodgeDynasty.Entities;
-using DodgeDynasty.Mappers.Account;
 using DodgeDynasty.Models;
-using DodgeDynasty.Models.Shared;
 using DodgeDynasty.Models.Types;
 using DodgeDynasty.Shared;
 
@@ -26,6 +23,7 @@ namespace DodgeDynasty.Mappers
 				Model.LeagueOwnerUsers.Add(new OwnerUser { UserId = 0, IsActive = true });
 			}
 			Model.CssColors = HomeEntity.CssColors.ToList();
+			Model.CommishUserIds = new List<int>();
 		}
 
 		protected override void DoUpdate(T model)
@@ -59,6 +57,20 @@ namespace DodgeDynasty.Mappers
 					LastUpdateTimestamp = DateTime.Now
 				};
 				HomeEntity.LeagueOwners.AddObject(owner);
+			}
+			if (model.CommishUserIds != null)
+			{
+				foreach (var commishUserId in model.CommishUserIds)
+				{
+					HomeEntity.UserRoles.AddObject(new UserRole
+					{
+						UserId = commishUserId,
+						RoleId = Constants.Roles.Commish,
+						LeagueId = league.LeagueId,
+						AddTimestamp = DateTime.Now,
+						LastUpdateTimestamp = DateTime.Now
+					});
+				}
 			}
 			HomeEntity.SaveChanges();
 		}

@@ -22,7 +22,7 @@
 				@Html.LabelFor(m => m.LeagueName): @Html.TextBoxFor(m => m.LeagueName, new { @class = "league-name", maxLength = "50", autofocus = "autofocus" })
 				<div>@Html.ValidationMessageFor(m => m.LeagueName)</div>
 			</div>
-			<div class="page-section">
+			<div class="page-section-small">
 				<div class="copy-lo-entry hide-yo-wives">
 					<div class="league-owner">
 						@Html.DropDownList("UserId", Model.GetActiveLeagueUsers(), new { @class = "lo-select" })
@@ -96,7 +96,45 @@
 						</div>
 					}
 				</div>
-				<div class="page-section"><button class="submit-league" type="submit">Submit</button></div>
+				<div class="page-section">
+					<div class="copy-commish-entry hide-yo-wives">
+						<div class="league-commish">
+							@Html.DropDownList("CommishId", Model.GetActiveLeagueUsers(), new { @class = "commish-select" })
+						</div>
+						<div class="commish-owner-controls">
+							&lt;<a href="#" class="commish-remove-owner" tabindex="-1">Remove</a>&gt;
+						</div>
+					</div>
+					<span class="page-header">Commish Access</span>
+					<span class="league-commish-entry hide-yo-wives"></span>
+					@for (int i = 0; i < Model.CommishUserIds.Count; i++)
+					{
+						var isCommishLoggedIn = Model.IsLoggedInUserId(Model.CommishUserIds[i]);
+						<div class="league-commish-entry">
+							<div class="league-commish">
+								@if (isCommishLoggedIn)
+								{
+									@Html.DropDownListFor(o => Model.CommishUserIds[i],
+									Model.GetActiveLeagueUsers(Model.CommishUserIds[i].ToString()),
+									new { @class = "commish-select", disabled = "disabled" })
+								}
+								else
+								{
+									@Html.DropDownListFor(o => Model.CommishUserIds[i],
+									Model.GetActiveLeagueUsers(Model.CommishUserIds[i].ToString()),
+									new { @class = "commish-select" })
+								}
+							</div>
+							@if (!isCommishLoggedIn) {
+								<div class="commish-owner-controls">
+									&lt;<a href="#" class="commish-remove-owner" tabindex="-1">Remove</a>&gt;
+								</div>
+							}
+						</div>
+					}
+					<div class="page-section-small">&lt;<a href="#" class="league-add-commish">Add Commissioner</a>&gt;</div>
+				</div>
+				<div class="page-section-large"><button class="submit-league" type="submit">Submit</button></div>
 			</div>
 		}
 	</div>

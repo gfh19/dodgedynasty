@@ -456,10 +456,11 @@ function closeUserTurnDialog() {
 	$("#userTurnDialog").dialog("close");
 }
 
-function markInvalidId(userId) {
+function markInvalidId(userId, selects) {
+	selects = selects || $("select");
 	if (userId === "") {
 		//Find any blank spans
-		$.each($("select"), function (index, user) {
+		$.each(selects, function (index, user) {
 			if ($(user).val() === "") {
 				$(user).addClass("invalid-border");
 			}
@@ -467,7 +468,7 @@ function markInvalidId(userId) {
 	}
 	else {
 		//Find any matching selected options
-		var invalidEntries = $("select option:selected[value=" + userId + "]").closest("select");
+		var invalidEntries = $("option:selected[value=" + userId + "]", selects).closest("select");
 		$(invalidEntries).addClass("invalid-border");
 	}
 }

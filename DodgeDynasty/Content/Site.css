@@ -61,11 +61,15 @@ header {
 }
 
 .page-section-large {
-	margin-top: 18px;
+	margin-top: 20px;
 }
 
 .page-section {
 	margin-top: 12px;
+}
+
+.page-section-small {
+	margin-top: 4px;
 }
 
 .wait {
@@ -1851,6 +1855,18 @@ span.player-select
 	margin-left: 5px;
 }
 
+.league-owners {
+	min-width: 594px;
+}
+
+.league-commish {
+	display: inline-block;
+	margin-bottom: 4px;
+}
+.commish-owner-controls {
+	display: inline;
+	font-size: 12px;
+}
 
 /* Manage/Add Drafts
 ----------------------------------------------------------*/

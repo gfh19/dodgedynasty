@@ -18,8 +18,10 @@ namespace DodgeDynasty.Controllers
     {
 		protected ActionResult InputDraftPick(string viewName, DraftInputModel draftInputModel, bool isAdmin)
 		{
-			DraftInputModel nextDraftInputModel = DraftFactory.GetCurrentDraftInputModel(draftInputModel.DraftId);
+			var draftId = isAdmin ? draftInputModel.DraftId : null;
+			DraftInputModel nextDraftInputModel = DraftFactory.GetCurrentDraftInputModel(draftId);
 			var playerModel = draftInputModel.Player;
+			playerModel.DraftPickId = isAdmin ? playerModel.DraftPickId : nextDraftInputModel.CurrentDraftPick.DraftPickId;
 			nextDraftInputModel.Player = playerModel;
 			if (!ModelState.IsValid)
 			{
