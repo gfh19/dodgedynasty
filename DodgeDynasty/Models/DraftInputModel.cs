@@ -173,8 +173,9 @@ namespace DodgeDynasty.Models
 		public void GetPreviousDraftPick(string draftPickId)
 		{
 			DraftPick currentDraftPick = GetSafeCurrentDraftPick(draftPickId);
-			var previousDraftPick = DraftPicks.OrderByDescending(dp=>dp.PickNum)
-				.FirstOrDefault(dp => dp.PickNum < currentDraftPick.PickNum);
+			var previousDraftPick = (string.IsNullOrEmpty(draftPickId)) 
+				? currentDraftPick
+				: DraftPicks.OrderByDescending(dp=>dp.PickNum).FirstOrDefault(dp => dp.PickNum < currentDraftPick.PickNum);
 			CurrentDraftPick = previousDraftPick ?? currentDraftPick;
 			SetCurrentDraftPickOwnerUser();
 			ResetCurrentPickPlayerModel();

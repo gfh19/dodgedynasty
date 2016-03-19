@@ -1234,7 +1234,7 @@ ul.menu li a.current-page
 	border-width: 3px;
 	border-style: solid;
 	padding: 1px;
-	width: 116px;
+	width: 118px;
 	white-space: normal;
 	overflow: hidden;
 }
@@ -1272,7 +1272,7 @@ ul.menu li a.current-page
 	display: inline-block;
 	overflow: hidden;
 	white-space: nowrap;
-	max-width: 54px;
+	max-width: 56px;
 }
 
 .pos
@@ -1315,22 +1315,16 @@ ul.menu li a.current-page
 
 .team-name
 {
-	float: left;
-	border-width: 3px;
-	border-style: solid;
-	padding: 1px;
-	width: 115px;
 	text-align: center;
 }
 
-.team-draft-pick
+.team-draft-pick, .team-name
 {
 	float: left;
 	border-width: 3px;
 	border-style: solid;
 	padding: 1px;
-	min-width: 66px;
-	width: 116px;
+	width: 118px;
 	white-space: normal;
 	overflow: hidden;
 }

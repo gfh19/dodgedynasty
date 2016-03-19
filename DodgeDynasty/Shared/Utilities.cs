@@ -79,7 +79,7 @@ namespace DodgeDynasty.Shared
 					{
 						if (filterContext.ActionParameters[idName] is string)
 						{
-							return Convert.ToInt32((string)filterContext.ActionParameters[idName]);
+							return ((string)filterContext.ActionParameters[idName]).ToNullInt();
 						}
 						else
 						{
