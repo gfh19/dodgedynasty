@@ -1798,6 +1798,10 @@ span.player-select
 	display: inline-block;
 }
 
+.lo-color {
+	margin-top: 2px;
+}
+
 .league-owner-entry {
 	min-width: 436px;
 }
@@ -2350,6 +2354,7 @@ span.player-select
 	.draft-pick.filled
 	{
 		height: auto;
+		min-height: auto;
 	}
 	.draft-pick-meta
 	{
