@@ -130,29 +130,29 @@ INSERT INTO [dbo].[UserRole]
            (23, 1, NULL, '2014-06-01 00:00:00', '2014-06-01 00:00:00')
 GO
 
-INSERT INTO [dbo].[UserRole]
-           ([UserId],[RoleId],[LeagueId],[AddTimestamp],[LastUpdateTimestamp])
-     VALUES
-           (23, 2, 1, getdate(), getdate())
-GO
+--INSERT INTO [dbo].[UserRole]
+--           ([UserId],[RoleId],[LeagueId],[AddTimestamp],[LastUpdateTimestamp])
+--     VALUES
+--           (23, 2, 1, getdate(), getdate())
+--GO
 
-INSERT INTO [dbo].[UserRole]
-           ([UserId],[RoleId],[LeagueId],[AddTimestamp],[LastUpdateTimestamp])
-     VALUES
-           (23, 2, 4, getdate(), getdate())
-GO
+--INSERT INTO [dbo].[UserRole]
+--           ([UserId],[RoleId],[LeagueId],[AddTimestamp],[LastUpdateTimestamp])
+--     VALUES
+--           (23, 2, 4, getdate(), getdate())
+--GO
 
-INSERT INTO [dbo].[UserRole]
-           ([UserId],[RoleId],[LeagueId],[AddTimestamp],[LastUpdateTimestamp])
-     VALUES
-           (23, 2, 5, getdate(), getdate())
-GO
+--INSERT INTO [dbo].[UserRole]
+--           ([UserId],[RoleId],[LeagueId],[AddTimestamp],[LastUpdateTimestamp])
+--     VALUES
+--           (23, 2, 5, getdate(), getdate())
+--GO
 
-INSERT INTO [dbo].[UserRole]
-           ([UserId],[RoleId],[LeagueId],[AddTimestamp],[LastUpdateTimestamp])
-     VALUES
-           (23, 2, 6, getdate(), getdate())
-GO
+--INSERT INTO [dbo].[UserRole]
+--           ([UserId],[RoleId],[LeagueId],[AddTimestamp],[LastUpdateTimestamp])
+--     VALUES
+--           (23, 2, 6, getdate(), getdate())
+--GO
 
 
 
