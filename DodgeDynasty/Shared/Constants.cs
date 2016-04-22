@@ -57,7 +57,7 @@ namespace DodgeDynasty.Shared
 			public const string Admin = "Admin";
 			public const string Commish = "Commish";
 		}
-
+		
 		public static class QS
 		{
 			public const string IsActive = "isActive";

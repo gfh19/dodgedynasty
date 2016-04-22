@@ -254,6 +254,7 @@
     <Compile Include="Models\ManageLeaguesModel.cs" />
     <Compile Include="Mappers\OwnerUserMapper.cs" />
     <Compile Include="Models\Highlights\PlayerHighlightModel.cs" />
+    <Compile Include="Models\PlayerAdjustments\PlayerAdjustmentsModel.cs" />
     <Compile Include="Models\Shared\DraftChatModel.cs" />
     <Compile Include="Models\Site\MessagesCountModel.cs" />
     <Compile Include="Models\Site\MessagesModel.cs" />
@@ -498,6 +499,7 @@
     <Content Include="Views\Commish\ActivateDraft.cshtml" />
     <Content Include="Views\AdminShared\_InputPartial.cshtml" />
     <Content Include="Views\Commish\Input.cshtml" />
+    <Content Include="Views\Admin\PlayerAdjustments.cshtml" />
     <None Include="Web.local.config">
       <SubType>Designer</SubType>
     </None>

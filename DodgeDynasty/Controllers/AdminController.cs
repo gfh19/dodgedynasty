@@ -10,6 +10,7 @@ using DodgeDynasty.Mappers.Admin;
 using DodgeDynasty.Models;
 using DodgeDynasty.Models.Account;
 using DodgeDynasty.Models.Admin;
+using DodgeDynasty.Models.PlayerAdjustments;
 using DodgeDynasty.Shared;
 
 namespace DodgeDynasty.Controllers
@@ -333,5 +334,14 @@ namespace DodgeDynasty.Controllers
 			return RedirectToAction(Constants.Views.ManageUsers);
 		}
 
+		[HttpGet]
+		[AdminAccess]
+		public ActionResult PlayerAdjustments(string page)
+		{
+			//var mapper = new GetPlayerAdjustmentsMapper(page);
+			//return View(mapper.GetModel());
+
+			return View(new PlayerAdjustmentsModel());
+		}
 	}
 }

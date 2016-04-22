@@ -1,0 +1,72 @@
+﻿@model DodgeDynasty.Models.PlayerAdjustments.PlayerAdjustmentsModel
+
+<div id="playerAdjustments">
+	<div class="page-entries">
+		<div class="page-section">
+			<div class="player-actions">
+				<a class="pa-add-player" href="#">Add New Player</a>
+			</div>
+			<div class="player-actions">
+				<a class="pa-add-player" href="#">Search for Player</a>
+			</div>
+		</div>
+		<div class="page-section">
+			<div class="page-header">Added Player Adjustments</div>
+			@* TODO:  Add Added Player Adjustments *@
+			@*@foreach (var draft in Model.ActiveDrafts)
+			{
+				<div class="page-entry">
+					<div class="act-draft">@draft.DraftYear @draft.LeagueName</div>
+					<div class="act-draft-links">
+						<a class="deactivate" href="SetDraftStatus/@draft.DraftId?isActive=false">&lt;Deactivate&gt;</a>
+					</div>
+				</div>
+			}*@
+		</div>
+		<div class="page-section">
+			<div class="page-header">Other Player Adjustments</div>
+			@* TODO:  Add Other Player Adjustments *@
+			@*@foreach (var draft in Model.ScheduledDrafts)
+			{
+				<div class="page-entry">
+					<div class="act-draft">@draft.DraftYear @draft.LeagueName</div>
+					<div class="act-draft-links">
+						<a class="activate" href="SetDraftStatus/@draft.DraftId?isActive=true">&lt;Activate&gt;</a>
+						<a class="mark-complete" href="SetDraftStatus/@draft.DraftId?isComplete=true">&lt;Mark Complete&gt;</a>
+					</div>
+				</div>
+			}*@
+		</div>
+		<div class="page-section">
+			<div class="page-header">Player Audit View</div>
+			@* TODO:  Player Audit View *@
+			@*@foreach (var draft in Model.CompleteDrafts)
+			{
+				<div class="page-entry">
+					<div class="act-draft">@draft.DraftYear @draft.LeagueName</div>
+					<div class="act-draft-links">
+						<a class="mark-incomplete" href="SetDraftStatus/@draft.DraftId?isComplete=false">&lt;Mark Incomplete&gt;</a>
+					</div>
+				</div>
+			}*@
+		</div>
+	</div>
+	@*<div id="addNewPlayerDialog" class="center hide-yo-kids" title="Add New Player">
+		@using (Html.BeginForm("AddNewPlayer", "Admin", FormMethod.Post, new { id = "addNewPlayerForm" }))
+		{
+			@Html.LabelFor(m => m.Player.FirstName)
+			@Html.TextBoxFor(m => m.Player.FirstName, new { id = "add-plyr-fname", list = "playerHints", maxLength = "25" });
+			@Html.ValidationMessageFor(m => m.Player.FirstName)
+			@Html.LabelFor(m => m.Player.LastName);
+			@Html.TextBoxFor(m => m.Player.LastName, new { id = "add-plyr-lname", maxLength = "25" });
+			@Html.ValidationMessageFor(m => m.Player.LastName)
+			@Html.LabelFor(m => m.Player.Position);
+			@Html.DropDownListFor(m => m.Player.Position, Model.GetPositionListItems(), new { id = "add-plyr-pos" });
+			@Html.ValidationMessageFor(m => m.Player.Position)
+			@Html.LabelFor(m => m.Player.NFLTeam);
+			@Html.DropDownListFor(m => m.Player.NFLTeam, Model.GetNFLListItems(), new { id = "add-plyr-nfl" });
+			@Html.ValidationMessageFor(m => m.Player.NFLTeam)
+		}
+		<p class="note-text">Save your current rankings and Add a New Player (Do not submit if player has already been found)</p>
+	</div>*@
+</div>
