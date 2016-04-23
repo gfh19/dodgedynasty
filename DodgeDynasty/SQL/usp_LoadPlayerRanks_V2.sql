@@ -248,6 +248,7 @@ BEGIN
 					-- Else if player is not drafted, update team name
 					INSERT INTO dbo.PlayerAdjustment ([OldPlayerId]
 					   ,[NewPlayerId]
+						,[TruePlayerId]
 					   ,[NewFirstName]
 					   ,[NewLastName]
 					   ,[NewPosition]
@@ -256,7 +257,7 @@ BEGIN
 					   ,[UserId]
 					   ,[AddTimestamp]
 					   ,[LastUpdateTimestamp])
-					SELECT @PlayerId, @OldPlayerId, FirstName, LastName, Position, NFLTeam, 
+					SELECT @PlayerId, @OldPlayerId, TruePlayerId, FirstName, LastName, Position, NFLTeam, 
 						'Update NFL Team, Active Was Drafted', NULL, getdate(), getdate()
 					FROM dbo.Player
 					WHERE PlayerId = @PlayerId
@@ -384,6 +385,7 @@ BEGIN
 				-- Else if player is not drafted, update team name
 				INSERT INTO dbo.PlayerAdjustment ([OldPlayerId]
 					,[NewPlayerId]
+					,[TruePlayerId]
 					,[NewFirstName]
 					,[NewLastName]
 					,[NewPosition]
@@ -392,7 +394,7 @@ BEGIN
 					,[UserId]
 					,[AddTimestamp]
 					,[LastUpdateTimestamp])
-				SELECT @PlayerId, NULL, FirstName, LastName, Position, NFLTeam, 
+				SELECT @PlayerId, NULL, TruePlayerId, FirstName, LastName, Position, NFLTeam, 
 					'Update NFL Team, (Re)activate', NULL, getdate(), getdate()
 				FROM dbo.Player
 				WHERE PlayerId = @PlayerId
@@ -471,6 +473,7 @@ BEGIN
 				--Else if player is not drafted, update team name
 				INSERT INTO dbo.PlayerAdjustment ([OldPlayerId]
 					,[NewPlayerId]
+					,[TruePlayerId]
 					,[NewFirstName]
 					,[NewLastName]
 					,[NewPosition]
@@ -479,7 +482,7 @@ BEGIN
 					,[UserId]
 					,[AddTimestamp]
 					,[LastUpdateTimestamp])
-				SELECT @PlayerId, NULL, FirstName, LastName, Position, NFLTeam, 
+				SELECT @PlayerId, NULL, TruePlayerId, FirstName, LastName, Position, NFLTeam, 
 					'Update NFL Team, Activate', NULL, getdate(), getdate()
 				FROM dbo.Player
 				WHERE PlayerId = @PlayerId
