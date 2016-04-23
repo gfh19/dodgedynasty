@@ -271,6 +271,7 @@
     <Compile Include="Models\RankSetupModel.cs" />
     <Compile Include="Models\Shared\ColorStylesModel.cs" />
     <Compile Include="Models\Shared\LeagueOwnerHelper.cs" />
+    <Compile Include="Models\Types\AdjustedPlayer.cs" />
     <Compile Include="Models\Types\ChatJson.cs" />
     <Compile Include="Models\Types\DodgeDynastyContent.cs" />
     <Compile Include="Models\Types\DraftPickAudio.cs" />

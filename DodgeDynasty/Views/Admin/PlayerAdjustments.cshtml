@@ -7,35 +7,76 @@
 				<a class="pa-add-player" href="#">Add New Player</a>
 			</div>
 			<div class="player-actions">
-				<a class="pa-add-player" href="#">Search for Player</a>
+				<a class="pa-search-player" href="#">Search for Player</a>
 			</div>
 		</div>
 		<div class="page-section">
 			<div class="page-header">Added Player Adjustments</div>
-			@* TODO:  Add Added Player Adjustments *@
-			@*@foreach (var draft in Model.ActiveDrafts)
-			{
-				<div class="page-entry">
-					<div class="act-draft">@draft.DraftYear @draft.LeagueName</div>
-					<div class="act-draft-links">
-						<a class="deactivate" href="SetDraftStatus/@draft.DraftId?isActive=false">&lt;Deactivate&gt;</a>
-					</div>
-				</div>
-			}*@
-		</div>
+			<table id="pa-added-players" class="pa-table">
+			<tbody>
+				<tr>
+					<th>Id</th>
+					<th>TPId</th>
+					<th>Player Name</th>
+					<th>Pos</th>
+					<th>NFL Team</th>
+					<th>Action</th>
+					<th>User</th>
+					<th>Drafts/Ranks</th>
+					<th>Time</th>
+					<th>Links</th>
+				</tr>
+
+				@foreach (var player in Model.AddedPlayers)
+				{
+					<tr>
+						<td>@player.PlayerId</td>
+						<td>@player.TruePlayerId</td>
+						<td>@player.PlayerName</td>
+						<td>@player.Position</td>
+						<td>@player.NFLTeamDisplay</td>
+						<td>@player.Action</td>
+						<td>@player.UserFullName</td>
+						<td>@player.DraftsRanksText</td>
+						<td>@player.AddTimestamp</td>
+						<td>TBD: Links</td>
+					</tr>
+				}
+			</table>
+	</div>
 		<div class="page-section">
 			<div class="page-header">Other Player Adjustments</div>
-			@* TODO:  Add Other Player Adjustments *@
-			@*@foreach (var draft in Model.ScheduledDrafts)
-			{
-				<div class="page-entry">
-					<div class="act-draft">@draft.DraftYear @draft.LeagueName</div>
-					<div class="act-draft-links">
-						<a class="activate" href="SetDraftStatus/@draft.DraftId?isActive=true">&lt;Activate&gt;</a>
-						<a class="mark-complete" href="SetDraftStatus/@draft.DraftId?isComplete=true">&lt;Mark Complete&gt;</a>
-					</div>
-				</div>
-			}*@
+			<table id="pa-other-players" class="pa-table">
+				<tbody>
+					<tr>
+						<th>Id</th>
+						<th>TPId</th>
+						<th>Player Name</th>
+						<th>Pos</th>
+						<th>NFL Team</th>
+						<th>Action</th>
+						<th>User</th>
+						<th>Drafts/Ranks</th>
+						<th>Time</th>
+						<th>Links</th>
+					</tr>
+
+					@foreach (var player in Model.OtherAdjPlayers)
+					{
+						<tr>
+							<td>@player.PlayerId</td>
+							<td>@player.TruePlayerId</td>
+							<td>@player.PlayerName</td>
+							<td>@player.Position</td>
+							<td>@player.NFLTeamDisplay</td>
+							<td>@player.Action</td>
+							<td>@player.UserFullName</td>
+							<td>@player.DraftsRanksText</td>
+							<td>@player.AddTimestamp</td>
+							<td>TBD: Links</td>
+						</tr>
+					}
+			</table>
 		</div>
 		<div class="page-section">
 			<div class="page-header">Player Audit View</div>
