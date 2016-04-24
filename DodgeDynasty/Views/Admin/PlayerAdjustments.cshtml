@@ -1,5 +1,11 @@
 ﻿@model DodgeDynasty.Models.PlayerAdjustments.PlayerAdjustmentsModel
 
+@{
+	ViewBag.Title = "Player Adjustments";
+}
+@section scripts {
+	<script type="text/javascript" src="@Url.Script("~/Scripts/PlayerAdjustments.js")"></script>
+}
 <div id="playerAdjustments">
 	<div class="page-entries">
 		<div class="page-section">
@@ -11,7 +17,9 @@
 			</div>
 		</div>
 		<div class="page-section">
-			<div class="page-header">Added Player Adjustments</div>
+			<div class="page-header">Added Player Adjustments
+				<span class="pa-toggle-text">(<a class="pa-toggle" href="#">Toggle</a>)</span>
+			</div>
 			<table id="pa-added-players" class="pa-table">
 			<tbody>
 				<tr>
@@ -27,7 +35,7 @@
 					<th>Links</th>
 				</tr>
 
-				@foreach (var player in Model.AddedPlayers.Take(8))
+				@foreach (var player in Model.AddedPlayers)
 				{
 					<tr>
 						<td>@player.PlayerId</td>
@@ -61,7 +69,7 @@
 						<th>Links</th>
 					</tr>
 
-					@foreach (var player in Model.OtherAdjPlayers.Take(8))
+					@foreach (var player in Model.OtherAdjPlayers)
 					{
 						<tr>
 							<td>@player.PlayerId</td>

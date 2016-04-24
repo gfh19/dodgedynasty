@@ -2309,7 +2309,10 @@ span.player-select
 	padding: 1px 5px;
 	border: 1px dashed black;
 }
-
+.pa-toggle-text {
+	font-size: 12px;
+	font-weight: normal;
+}
 
 
 

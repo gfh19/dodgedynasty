@@ -9,6 +9,7 @@ namespace DodgeDynasty.Mappers.PlayerAdjustments
 {
 	public class GetPlayerAdjustmentsMapper : MapperBase<PlayerAdjustmentsModel>
 	{
+		private int _playerAdjWindow = 8;
 		public List<string> AddPlayerActions = new List<string> {
 			"Add Player"
 			,"Add Player, Match Active, IsDrafted"
@@ -38,38 +39,49 @@ namespace DodgeDynasty.Mappers.PlayerAdjustments
 		protected override void PopulateModel()
 		{
 			var adjustments = HomeEntity.PlayerAdjustments.OrderByDescending(o => o.AddTimestamp).ToList();
+			var mostRecentYear = adjustments.OrderByDescending(o=>o.AddTimestamp).Select(o=>o.AddTimestamp.Year).Distinct().FirstOrDefault();
 
-			Model.AddedPlayers = GetAddedPlayers(adjustments);
-			Model.OtherAdjPlayers = GetOtherAdjPlayers(adjustments);
+			Model.AddedPlayers = GetAddedPlayers(adjustments, mostRecentYear);
+			Model.OtherAdjPlayers = GetOtherAdjPlayers(adjustments, mostRecentYear);
 		}
 
-		private List<AdjustedPlayer> GetAddedPlayers(List<PlayerAdjustment> adjustments)
+		private List<AdjustedPlayer> GetAddedPlayers(List<PlayerAdjustment> adjustments, int mostRecentYear)
+		{
+			var addedPlayerAdjs = adjustments.Where(o => AddPlayerActions.Contains(o.Action) && o.AddTimestamp.Year == mostRecentYear)
+				.OrderByDescending(o => o.AddTimestamp).ToList();
+			if (addedPlayerAdjs.Count < _minPlayerWindow)
+			{
+				addedPlayerAdjs = adjustments.Where(o => AddPlayerActions.Contains(o.Action) && o.AddTimestamp.Year >= mostRecentYear-1)
+					.OrderByDescending(o => o.AddTimestamp).ToList();
+			}
+			return GetAdjustedPlayers(addedPlayerAdjs);
+		}
+
+		private List<AdjustedPlayer> GetOtherAdjPlayers(List<PlayerAdjustment> adjustments, int mostRecentYear)
+		{
+			var otherPlayerAdjs = adjustments.Where(o => !AddPlayerActions.Contains(o.Action) && o.AddTimestamp.Year == mostRecentYear)
+				.OrderByDescending(o => o.AddTimestamp).ToList();
+			if (otherPlayerAdjs.Count < _minPlayerWindow)
+			{
+				otherPlayerAdjs = adjustments.Where(o => !AddPlayerActions.Contains(o.Action) && o.AddTimestamp.Year >= mostRecentYear - 1)
+					.OrderByDescending(o => o.AddTimestamp).ToList();
+			}
+			return GetAdjustedPlayers(otherPlayerAdjs);
+		}
+
+		private List<AdjustedPlayer> GetAdjustedPlayers(List<PlayerAdjustment> playerAdjs)
 		{
 			List<AdjustedPlayer> players = new List<AdjustedPlayer>();
-			var addedPlayerAdjs = adjustments.Where(o => AddPlayerActions.Contains(o.Action)).OrderByDescending(o => o.AddTimestamp).ToList();
-			players.AddRange(GetAdjustedPlayers(addedPlayerAdjs));
+			players.AddRange(from ap in playerAdjs
+							 join p in HomeEntity.Players on
+							 (ap.NewPlayerId != null) ? ap.NewPlayerId : ap.OldPlayerId equals p.PlayerId
+							 join t in HomeEntity.NFLTeams on ap.NewNFLTeam equals t.TeamAbbr
+							 join u in HomeEntity.Users on ((ap.UserId != null) ? ap.UserId : -1) equals u.UserId into uLeft  //Left Outer Join
+							 from u in uLeft.DefaultIfEmpty()
+							 select GetAdjustedPlayer(ap, p, t, u, GetMatchingDrafts(p), GetMatchingRanks(p)));
 			return players;
 		}
-
-		private List<AdjustedPlayer> GetOtherAdjPlayers(List<PlayerAdjustment> adjustments)
-		{
-			List<AdjustedPlayer> players = new List<AdjustedPlayer>();
-			var otherPlayerAdjs = adjustments.Where(o => !AddPlayerActions.Contains(o.Action)).OrderByDescending(o => o.AddTimestamp).ToList();
-			players.AddRange(GetAdjustedPlayers(otherPlayerAdjs));
-			return players;
-		}
-
-		private IEnumerable<AdjustedPlayer> GetAdjustedPlayers(List<PlayerAdjustment> addedPlayerAdjs)
-		{
-			return from ap in addedPlayerAdjs
-				   join p in HomeEntity.Players on
-				   (ap.NewPlayerId != null) ? ap.NewPlayerId : ap.OldPlayerId equals p.PlayerId
-				   join t in HomeEntity.NFLTeams on ap.NewNFLTeam equals t.TeamAbbr
-				   join u in HomeEntity.Users on ((ap.UserId != null) ? ap.UserId : -1) equals u.UserId into uLeft  //Left Outer Join
-				   from u in uLeft.DefaultIfEmpty()
-				   select GetAdjustedPlayer(ap, p, t, u, GetMatchingDrafts(p), GetMatchingRanks(p));
-		}
-
+		
 		private AdjustedPlayer GetAdjustedPlayer(PlayerAdjustment ap, Player p, NFLTeam t, User u, List<Draft> drafts, List<Rank> ranks)
 		{
 			return new AdjustedPlayer
@@ -103,7 +115,15 @@ namespace DodgeDynasty.Mappers.PlayerAdjustments
             }
 			else if (ranks.Count > 0)
 			{
-				draftsRanksText = string.Format("{0} {1} Ranks", ranks[0].Year, ranks[0].RankName);
+				var rankName = ranks[0].RankName;
+				if (rankName.EndsWith(" Ranks"))
+				{
+					draftsRanksText = string.Format("{0} {1}", ranks[0].Year, rankName);
+				}
+				else
+				{
+					draftsRanksText = string.Format("{0} {1} Ranks", ranks[0].Year, rankName);
+				}
 				if (ranks.Count > 1)
 				{
 					draftsRanksText += " (& more...)";
