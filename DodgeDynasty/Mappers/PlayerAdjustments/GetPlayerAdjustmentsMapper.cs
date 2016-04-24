@@ -49,7 +49,7 @@ namespace DodgeDynasty.Mappers.PlayerAdjustments
 		{
 			var addedPlayerAdjs = adjustments.Where(o => AddPlayerActions.Contains(o.Action) && o.AddTimestamp.Year == mostRecentYear)
 				.OrderByDescending(o => o.AddTimestamp).ToList();
-			if (addedPlayerAdjs.Count < _minPlayerWindow)
+			if (addedPlayerAdjs.Count < _playerAdjWindow)
 			{
 				addedPlayerAdjs = adjustments.Where(o => AddPlayerActions.Contains(o.Action) && o.AddTimestamp.Year >= mostRecentYear-1)
 					.OrderByDescending(o => o.AddTimestamp).ToList();
@@ -61,7 +61,7 @@ namespace DodgeDynasty.Mappers.PlayerAdjustments
 		{
 			var otherPlayerAdjs = adjustments.Where(o => !AddPlayerActions.Contains(o.Action) && o.AddTimestamp.Year == mostRecentYear)
 				.OrderByDescending(o => o.AddTimestamp).ToList();
-			if (otherPlayerAdjs.Count < _minPlayerWindow)
+			if (otherPlayerAdjs.Count < _playerAdjWindow)
 			{
 				otherPlayerAdjs = adjustments.Where(o => !AddPlayerActions.Contains(o.Action) && o.AddTimestamp.Year >= mostRecentYear - 1)
 					.OrderByDescending(o => o.AddTimestamp).ToList();
@@ -96,6 +96,8 @@ namespace DodgeDynasty.Mappers.PlayerAdjustments
 				UserId = (u != null) ? u.UserId.ToString() : null,
 				UserFullName = (u != null) ? u.FullName : null,
 				DraftsRanksText = GetDraftsRanksText(p, drafts, ranks),
+				IsActive = p.IsActive,
+				IsDrafted = p.IsDrafted,
 				AddTimestamp = ap.AddTimestamp
 			};
 		}

@@ -37,23 +37,30 @@
 
 				@foreach (var player in Model.AddedPlayers)
 				{
-					<tr>
+					<tr data-player-id="@player.PlayerId">
 						<td>@player.PlayerId</td>
 						<td>@player.TruePlayerId</td>
 						<td>@player.PlayerName</td>
 						<td>@player.Position</td>
 						<td>@player.NFLTeam</td>
 						<td>@player.Action</td>
-						<td>@player.UserFullName</td>
+						<td class="nowrap">@player.UserFullName</td>
 						<td>@player.DraftsRanksText</td>
-						<td>@player.AddTimestamp</td>
-						<td>TBD: Links</td>
+						<td class="nowrap">@player.AddTimestamp</td>
+						<td class="pa-entry-links">
+							&lt;<a class="pa-edit-player" href="#">Edit</a>&gt;
+							<span class="@(player.IsActive ? "hide-yo-wives" : "bold activate")">&lt;<a class="pa-activate-player activate" href="#">Activate</a>&gt;</span>
+							<span class="@(!player.IsActive ? "hide-yo-wives" : "bold deactivate")">&lt;<a class="pa-deactivate-player deactivate" href="#">Deactivate</a>&gt;</span>
+							<span class="@(player.IsDrafted ? "hide-yo-wives" : "")">&lt;<a class="pa-delete-player" href="#">Delete</a>&gt;</span>
+						</td>
 					</tr>
 				}
 			</table>
 	</div>
 		<div class="page-section">
-			<div class="page-header">Other Player Adjustments</div>
+			<div class="page-header">Other Player Adjustments
+				<span class="pa-toggle-text">(<a class="pa-toggle" href="#">Toggle</a>)</span>
+			</div>
 			<table id="pa-other-players" class="pa-table">
 				<tbody>
 					<tr>
@@ -78,10 +85,15 @@
 							<td>@player.Position</td>
 							<td>@player.NFLTeam</td>
 							<td>@player.Action</td>
-							<td>@player.UserFullName</td>
+							<td class="nowrap">@player.UserFullName</td>
 							<td>@player.DraftsRanksText</td>
-							<td>@player.AddTimestamp</td>
-							<td>TBD: Links</td>
+							<td class="nowrap">@player.AddTimestamp</td>
+							<td class="pa-entry-links">
+								&lt;<a class="pa-edit-player" href="#">Edit</a>&gt;
+								<span class="@(player.IsActive ? "hide-yo-wives" : "bold activate")">&lt;<a class="pa-activate-player activate" href="#">Activate</a>&gt;</span>
+								<span class="@(!player.IsActive ? "hide-yo-wives" : "bold deactivate")">&lt;<a class="pa-deactivate-player deactivate" href="#">Deactivate</a>&gt;</span>
+								<span class="@(player.IsDrafted ? "hide-yo-wives" : "")">&lt;<a class="pa-delete-player" href="#">Delete</a>&gt;</span>
+							</td>
 						</tr>
 					}
 			</table>

@@ -712,6 +712,10 @@ aside ul li
 	display: inline;
 }
 
+.nowrap {
+	white-space: nowrap;
+}
+
 /* login page */
 
 #loginForm .validation-error
@@ -2312,6 +2316,15 @@ span.player-select
 .pa-toggle-text {
 	font-size: 12px;
 	font-weight: normal;
+}
+.pa-entry-links {
+	white-space: nowrap;
+}
+#playerAdjustments .activate {
+	color: #10B910 !important;
+}
+#playerAdjustments .deactivate {
+	color: #FF0000 !important;
 }
 
 
