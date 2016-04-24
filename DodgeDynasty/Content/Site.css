@@ -2284,6 +2284,36 @@ span.player-select
 }
 
 
+/* Player Adjustments
+----------------------------------------------------------*/
+.pa-table
+{
+	min-width: 1024px;
+	margin: 0 auto;
+	border: 1px solid black;
+}
+
+.pa-table tr:first-child
+{
+	border: 1px solid black;
+}
+
+.pa-table th
+{
+	padding: 1px 5px;
+	border: 1px solid black;
+}
+
+.pa-table td
+{
+	padding: 1px 5px;
+	border: 1px dashed black;
+}
+
+
+
+
+
 
 /* RESPONSIVE STYLES
    Display

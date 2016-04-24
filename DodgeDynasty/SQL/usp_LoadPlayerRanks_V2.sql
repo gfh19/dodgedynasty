@@ -257,8 +257,8 @@ BEGIN
 					   ,[UserId]
 					   ,[AddTimestamp]
 					   ,[LastUpdateTimestamp])
-					SELECT @PlayerId, @OldPlayerId, TruePlayerId, FirstName, LastName, Position, NFLTeam, 
-						'Update NFL Team, Active Was Drafted', NULL, getdate(), getdate()
+					SELECT @OldPlayerId, @PlayerId, TruePlayerId, FirstName, LastName, Position, NFLTeam, 
+						'Update NFL Team, Active Not Drafted', NULL, getdate(), getdate()
 					FROM dbo.Player
 					WHERE PlayerId = @PlayerId
 				

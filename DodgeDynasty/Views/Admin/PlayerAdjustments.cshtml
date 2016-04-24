@@ -27,14 +27,14 @@
 					<th>Links</th>
 				</tr>
 
-				@foreach (var player in Model.AddedPlayers)
+				@foreach (var player in Model.AddedPlayers.Take(8))
 				{
 					<tr>
 						<td>@player.PlayerId</td>
 						<td>@player.TruePlayerId</td>
 						<td>@player.PlayerName</td>
 						<td>@player.Position</td>
-						<td>@player.NFLTeamDisplay</td>
+						<td>@player.NFLTeam</td>
 						<td>@player.Action</td>
 						<td>@player.UserFullName</td>
 						<td>@player.DraftsRanksText</td>
@@ -61,14 +61,14 @@
 						<th>Links</th>
 					</tr>
 
-					@foreach (var player in Model.OtherAdjPlayers)
+					@foreach (var player in Model.OtherAdjPlayers.Take(8))
 					{
 						<tr>
 							<td>@player.PlayerId</td>
 							<td>@player.TruePlayerId</td>
 							<td>@player.PlayerName</td>
 							<td>@player.Position</td>
-							<td>@player.NFLTeamDisplay</td>
+							<td>@player.NFLTeam</td>
 							<td>@player.Action</td>
 							<td>@player.UserFullName</td>
 							<td>@player.DraftsRanksText</td>
