@@ -342,5 +342,13 @@ namespace DodgeDynasty.Controllers
 			var mapper = new GetPlayerAdjustmentsMapper();
 			return View(mapper.GetModel());
 		}
+
+		[HttpGet]
+		[AdminAccess]
+		public ActionResult AddNewPlayer(PlayerModel player)
+		{
+			var mapper = new GetPlayerAdjustmentsMapper();
+			return View(mapper.GetModel());
+		}
 	}
 }

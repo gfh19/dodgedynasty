@@ -43,6 +43,8 @@ namespace DodgeDynasty.Mappers.PlayerAdjustments
 
 			Model.AddedPlayers = GetAddedPlayers(adjustments, mostRecentYear);
 			Model.OtherAdjPlayers = GetOtherAdjPlayers(adjustments, mostRecentYear);
+			Model.NFLTeams = HomeEntity.NFLTeams.ToList();
+			Model.Positions = HomeEntity.Positions.ToList();
 		}
 
 		private List<AdjustedPlayer> GetAddedPlayers(List<PlayerAdjustment> adjustments, int mostRecentYear)

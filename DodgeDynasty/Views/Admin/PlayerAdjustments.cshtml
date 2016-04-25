@@ -112,22 +112,22 @@
 			}*@
 		</div>
 	</div>
-	@*<div id="addNewPlayerDialog" class="center hide-yo-kids" title="Add New Player">
+	<div id="addNewPlayerDialog" class="center hide-yo-kids" title="Add New Player">
 		@using (Html.BeginForm("AddNewPlayer", "Admin", FormMethod.Post, new { id = "addNewPlayerForm" }))
 		{
-			@Html.LabelFor(m => m.Player.FirstName)
-			@Html.TextBoxFor(m => m.Player.FirstName, new { id = "add-plyr-fname", list = "playerHints", maxLength = "25" });
-			@Html.ValidationMessageFor(m => m.Player.FirstName)
-			@Html.LabelFor(m => m.Player.LastName);
-			@Html.TextBoxFor(m => m.Player.LastName, new { id = "add-plyr-lname", maxLength = "25" });
-			@Html.ValidationMessageFor(m => m.Player.LastName)
-			@Html.LabelFor(m => m.Player.Position);
-			@Html.DropDownListFor(m => m.Player.Position, Model.GetPositionListItems(), new { id = "add-plyr-pos" });
-			@Html.ValidationMessageFor(m => m.Player.Position)
-			@Html.LabelFor(m => m.Player.NFLTeam);
-			@Html.DropDownListFor(m => m.Player.NFLTeam, Model.GetNFLListItems(), new { id = "add-plyr-nfl" });
-			@Html.ValidationMessageFor(m => m.Player.NFLTeam)
+			@Html.LabelFor(m => m.AddedPlayer.FirstName)
+			@Html.TextBoxFor(m => m.AddedPlayer.FirstName, new { id = "add-plyr-fname", list = "playerHints", maxLength = "25" });
+			@Html.ValidationMessageFor(m => m.AddedPlayer.FirstName)
+			@Html.LabelFor(m => m.AddedPlayer.LastName);
+			@Html.TextBoxFor(m => m.AddedPlayer.LastName, new { id = "add-plyr-lname", maxLength = "25" });
+			@Html.ValidationMessageFor(m => m.AddedPlayer.LastName)
+			@Html.LabelFor(m => m.AddedPlayer.Position);
+			@Html.DropDownListFor(m => m.AddedPlayer.Position, Model.GetPositionListItems(), new { id = "add-plyr-pos" });
+			@Html.ValidationMessageFor(m => m.AddedPlayer.Position)
+			@Html.LabelFor(m => m.AddedPlayer.NFLTeam);
+			@Html.DropDownListFor(m => m.AddedPlayer.NFLTeam, Model.GetNFLListItems(), new { id = "add-plyr-nfl" });
+			@Html.ValidationMessageFor(m => m.AddedPlayer.NFLTeam)
 		}
 		<p class="note-text">Save your current rankings and Add a New Player (Do not submit if player has already been found)</p>
-	</div>*@
+	</div>
 </div>

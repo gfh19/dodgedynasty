@@ -31,5 +31,8 @@ namespace DodgeDynasty.Models
 		public int DraftId { get; set; }
 		public int DraftPickId { get; set; }
 		public int PlayerId { get; set; }
+		public int TruePlayerId { get; set; }
+		public bool IsActive { get; set; }
+		public bool IsDrafted { get; set; }
 	}
 }
