@@ -4,6 +4,7 @@ using System.Data.Objects;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -149,7 +150,7 @@ namespace DodgeDynasty.Shared
 		}
 
 
-		/* Data Access Methods */
+		/* Data Access/Parsing Methods */
 
 		public static Func<Entities.Player, bool> FindPlayerMatch(string firstName, string lastName,
 			string position, string nflTeam = null)
@@ -248,6 +249,41 @@ namespace DodgeDynasty.Shared
 			return model.IsUserAdmin();
 		}
 
-		/* End Data Access Methods */
+		public static string GetAutoCompletePlayerHints(List<Player> playersSorted, List<NFLTeam> nflTeams, 
+			bool excludeDrafted, List<int?> draftedPlayerIds)
+		{
+			StringBuilder playerHints = new StringBuilder("[");
+			foreach (var player in playersSorted)
+			{
+				if (!excludeDrafted || !draftedPlayerIds.Contains(player.PlayerId))
+				{
+					var nflTeam = nflTeams.First(t => t.TeamAbbr == player.NFLTeam.ToUpper());
+                    playerHints.Append(string.Format(
+						"{{value:\"{0} {1} {3}-{4}\",firstName:\"{0}\",lastName:\"{1}\",nflTeam:\"{2}\",nflTeamDisplay:\"{3}\",pos:\"{4}\"}},",
+						Utilities.JsonEncode(player.FirstName), Utilities.JsonEncode(player.LastName), Utilities.JsonEncode(nflTeam.TeamAbbr),
+							Utilities.JsonEncode(nflTeam.AbbrDisplay), Utilities.JsonEncode(player.Position)));
+				}
+			}
+			playerHints.Append("]");
+			return playerHints.ToString();
+		}
+
+		public static string GetAutoCompleteTruePlayerHints(List<Player> playersSorted, List<NFLTeam> nflTeams)
+		{
+			StringBuilder playerHints = new StringBuilder("[");
+			foreach (var player in playersSorted)
+			{
+				var nflTeam = nflTeams.First(t => t.TeamAbbr == player.NFLTeam.ToUpper());
+				playerHints.Append(string.Format(
+			"{{value:\"({5}) {0} {1} {3}-{4}\",firstName:\"{0}\",lastName:\"{1}\",nflTeam:\"{2}\",nflTeamDisplay:\"{3}\",pos:\"{4}\",tpid:\"{5}\"}},",
+					Utilities.JsonEncode(player.FirstName), Utilities.JsonEncode(player.LastName), Utilities.JsonEncode(nflTeam.TeamAbbr),
+					Utilities.JsonEncode(nflTeam.AbbrDisplay), Utilities.JsonEncode(player.Position), player.TruePlayerId));
+			}
+			playerHints.Append("]");
+			return playerHints.ToString();
+		}
+
+
+		/* End Data Access/Parsing Methods */
 	}
 }

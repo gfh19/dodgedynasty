@@ -716,6 +716,10 @@ aside ul li
 	white-space: nowrap;
 }
 
+.vert-middle {
+	vertical-align: middle;
+}
+
 /* login page */
 
 #loginForm .validation-error
@@ -2326,7 +2330,14 @@ span.player-select
 #playerAdjustments .deactivate {
 	color: #FF0000 !important;
 }
-
+.pa-player-dialog {
+	overflow: visible !important;
+}
+.pa-player-id {
+	display: inline;
+	width: 40px;
+	margin: 0px 5px 5px 5px;
+}
 
 
 

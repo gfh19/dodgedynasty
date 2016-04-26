@@ -263,6 +263,7 @@
     <Compile Include="Models\ManageLeaguesModel.cs" />
     <Compile Include="Mappers\OwnerUserMapper.cs" />
     <Compile Include="Models\Highlights\PlayerHighlightModel.cs" />
+    <Compile Include="Models\PlayerAdjustments\AdminPlayerModel.cs" />
     <Compile Include="Models\PlayerAdjustments\PlayerAdjustmentsModel.cs" />
     <Compile Include="Models\Shared\DraftChatModel.cs" />
     <Compile Include="Models\Site\MessagesCountModel.cs" />

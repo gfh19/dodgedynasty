@@ -323,38 +323,26 @@ namespace DodgeDynasty.Models
 		{
 			using (HomeEntity = new HomeEntity())
 			{
-				//var season = GetCurrentSeason();
-				StringBuilder playerHints = new StringBuilder("[");
 				var draftedPlayers = DraftPicks.Select(p => p.PlayerId).ToList();
 
 				var currentRankings = GetCurrentAvailableDraftRanks();
 				List<PlayerRank> playerRankings = null;
-				if (currentRankings.Count > 0) {
-					var sortedRankings = currentRankings.OrderBy(r=>r.UserId).ThenByDescending(r=>r.PrimaryDraftRanking)
-						.ThenBy(r=>r.DraftId);
+				if (currentRankings.Count > 0)
+				{
+					var sortedRankings = currentRankings.OrderBy(r => r.UserId).ThenByDescending(r => r.PrimaryDraftRanking)
+						.ThenBy(r => r.DraftId);
 					var ranking = sortedRankings.FirstOrDefault();
-					playerRankings = HomeEntity.PlayerRanks.Where(r=>r.RankId == ranking.RankId).ToList();
+					playerRankings = HomeEntity.PlayerRanks.Where(r => r.RankId == ranking.RankId).ToList();
 				}
 				var currentPlayersSorted = (playerRankings != null)
-					? (	from p in ActivePlayers
-						join r in playerRankings on p.PlayerId equals r.PlayerId into rkPlyrsLeft		//Left outer join
-						from r in rkPlyrsLeft.DefaultIfEmpty()
-						orderby (r!=null?r.RankNum:Int32.MaxValue), p.FirstName, p.LastName
-						select p).ToList()
+					? (from p in ActivePlayers
+					   join r in playerRankings on p.PlayerId equals r.PlayerId into rkPlyrsLeft        //Left outer join
+					   from r in rkPlyrsLeft.DefaultIfEmpty()
+					   orderby (r != null ? r.RankNum : Int32.MaxValue), p.FirstName, p.LastName
+					   select p).ToList()
 					: ActivePlayers.OrderBy(p => p.FirstName).ThenBy(p => p.LastName).ToList();
-				foreach (var player in currentPlayersSorted)
-				{
-					if (!excludeDrafted || !draftedPlayers.Contains(player.PlayerId))
-					{
-						var nflTeam = NFLTeams.First(t => t.TeamAbbr == player.NFLTeam.ToUpper());
-						playerHints.Append(string.Format(
-							"{{value:\"{0} {1} {3}-{4}\",firstName:\"{0}\",lastName:\"{1}\",nflTeam:\"{2}\",nflTeamDisplay:\"{3}\",pos:\"{4}\"}},",
-							Utilities.JsonEncode(player.FirstName), Utilities.JsonEncode(player.LastName), Utilities.JsonEncode(nflTeam.TeamAbbr),
-								Utilities.JsonEncode(nflTeam.AbbrDisplay), Utilities.JsonEncode(player.Position)));
-					}
-				}
-				playerHints.Append("]");
-				return playerHints.ToString();
+
+				return Utilities.GetAutoCompletePlayerHints(currentPlayersSorted, NFLTeams, excludeDrafted, draftedPlayers);
 			}
 		}
 

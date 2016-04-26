@@ -12,7 +12,8 @@ namespace DodgeDynasty.Models.PlayerAdjustments
 		public List<AdjustedPlayer> OtherAdjPlayers { get; set; }
 		public List<NFLTeam> NFLTeams { get; set; }
 		public List<Position> Positions { get; set; }
-		public PlayerModel AddedPlayer { get; set; }
+		public List<Player> AllPlayers { get; set; }
+		public AdminPlayerModel Player { get; set; }
 
 		public List<SelectListItem> GetPositionListItems()
 		{
@@ -24,6 +25,11 @@ namespace DodgeDynasty.Models.PlayerAdjustments
 		{
 			return Utilities.GetListItems<NFLTeam>(NFLTeams,
 				t => (string.Format("{0} ({1} {2})", t.AbbrDisplay, t.LocationName, t.TeamName)), t => t.AbbrDisplay);
+		}
+
+		public string GetPlayerHints()
+		{
+			return Utilities.GetAutoCompleteTruePlayerHints(AllPlayers, NFLTeams);
 		}
 	}
 }
