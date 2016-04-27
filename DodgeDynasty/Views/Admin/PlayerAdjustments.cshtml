@@ -57,7 +57,8 @@
 							&lt;<a class="pa-edit-player" href="#">Edit</a>&gt;
 							<span class="@(player.IsActive ? "hide-yo-wives" : "bold activate")">&lt;<a class="pa-activate-player activate" href="#">Activate</a>&gt;</span>
 							<span class="@(!player.IsActive ? "hide-yo-wives" : "bold deactivate")">&lt;<a class="pa-deactivate-player deactivate" href="#">Deactivate</a>&gt;</span>
-							<span class="@(player.IsDrafted ? "hide-yo-wives" : "")">&lt;<a class="pa-delete-player" href="#">Delete</a>&gt;</span>
+							@*TBD: consider if delete player necessary*@
+							@*<span class="@(player.IsDrafted ? "hide-yo-wives" : "")">&lt;<a class="pa-delete-player" href="#">Delete</a>&gt;</span>*@
 						</td>
 					</tr>
 				}
@@ -98,7 +99,8 @@
 								&lt;<a class="pa-edit-player" href="#">Edit</a>&gt;
 								<span class="@(player.IsActive ? "hide-yo-wives" : "bold activate")">&lt;<a class="pa-activate-player activate" href="#">Activate</a>&gt;</span>
 								<span class="@(!player.IsActive ? "hide-yo-wives" : "bold deactivate")">&lt;<a class="pa-deactivate-player deactivate" href="#">Deactivate</a>&gt;</span>
-								<span class="@(player.IsDrafted ? "hide-yo-wives" : "")">&lt;<a class="pa-delete-player" href="#">Delete</a>&gt;</span>
+								@*TBD: consider if delete player necessary*@
+								@*<span class="@(player.IsDrafted ? "hide-yo-wives" : "")">&lt;<a class="pa-delete-player" href="#">Delete</a>&gt;</span>*@
 							</td>
 						</tr>
 					}

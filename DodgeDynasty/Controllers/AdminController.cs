@@ -360,5 +360,14 @@ namespace DodgeDynasty.Controllers
 			mapper.UpdateEntity(player);
 			return Json(new { status = "" });
 		}
+
+		[HttpPost]
+		[AdminAccess]
+		public JsonResult SetPlayerStatus(AdminPlayerModel player)
+		{
+			var mapper = new AdminEditPlayerMapper();
+			mapper.UpdateEntity(player);
+			return Json(new { status = "" });
+		}
 	}
 }

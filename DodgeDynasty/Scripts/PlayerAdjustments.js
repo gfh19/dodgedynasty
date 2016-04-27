@@ -5,6 +5,7 @@ function initPlayerAdjustments() {
 	bindToggleWindowLinks();
 	bindAddNewPlayerLink();
 	bindEditPlayerLink();
+	bindActivatePlayerLinks();
 }
 
 function displayAdjustmentWindows() {
@@ -52,6 +53,25 @@ function bindEditPlayerLink() {
 			setTruePlayerAutoComplete("#edit-plyr-id", "#edit-plyr-tpid", "#edit-plyr-fname", "#edit-plyr-lname", "#edit-plyr-pos", "#edit-plyr-nfl");
 			$("#edit-plyr-fname").focus();
 		});
+	});
+}
+
+function bindActivatePlayerLinks() {
+	var links = $(".pa-activate-player, .pa-deactivate-player");
+	$.each(links, function (index, link) {
+		$(link).click(function (e) {
+			e.preventDefault();
+			if ($(link).parents("tr[data-player-id]").length > 0) {
+				var playerId = $(link).parents("tr[data-player-id]").attr("data-player-id");
+				setPlayerStatus(playerId, $(link).hasClass("pa-activate-player"));
+			}
+		});
+	});
+}
+
+function setPlayerStatus(id, activate) {
+	ajaxPost({ PlayerId: id, IsActive: activate }, "Admin/SetPlayerStatus", function () {
+		window.location.reload();
 	});
 }
 
