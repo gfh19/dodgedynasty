@@ -26,19 +26,31 @@ function bindAddNewPlayerLink() {
 		setTruePlayerAutoComplete("#add-plyr-tpid", "#add-plyr-fname", "#add-plyr-lname", "#add-plyr-pos", "#add-plyr-nfl");
 		$("#add-plyr-fname").focus();
 	});
+	$(".pa-clear-add").click(function () {
+		$("#add-plyr-tpid").val("");
+		$("#add-plyr-fname").val("");
+		$("#add-plyr-lname").val("");
+		$("#add-plyr-pos").val("");
+		$("#add-plyr-nfl").val("");
+		$("#add-plyr-active").prop("checked", true);
+	});
 }
 
 function getNewPlayer() {
-	function getNewPlayer() {
-		var player = {};
-		player.TruePlayerId = $("#add-plyr-tpid").val();
-		player.FirstName = $("#add-plyr-fname").val();
-		player.LastName = $("#add-plyr-lname").val();
-		player.Position = $("#add-plyr-pos").val();
-		player.NFLTeam = $("#add-plyr-nfl").val();
-		player.IsActive = $("#add-plyr-active").prop('checked');
-		return player;
-	}
+	var player = {};
+	player.TruePlayerId = $("#add-plyr-tpid").val();
+	player.FirstName = $("#add-plyr-fname").val();
+	player.LastName = $("#add-plyr-lname").val();
+	player.Position = $("#add-plyr-pos").val();
+	player.NFLTeam = $("#add-plyr-nfl").val();
+	player.IsActive = $("#add-plyr-active").prop('checked');
+	return player;
+}
+
+function addNewPlayer(player) {
+	ajaxPost(player, "Admin/AddNewPlayer", function () {
+		window.location.reload();
+	});
 }
 
 function showAddNewPlayerDialog() {

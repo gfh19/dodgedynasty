@@ -33,7 +33,7 @@ namespace DodgeDynasty.Models
 		[Display(Name = "PId")]
 		public int PlayerId { get; set; }
 		[Display(Name = "True PId")]
-		public int TruePlayerId { get; set; }
+		public int? TruePlayerId { get; set; }
 		[Display(Name = "Is Active?")]
 		public bool IsActive { get; set; }
 		public bool IsDrafted { get; set; }

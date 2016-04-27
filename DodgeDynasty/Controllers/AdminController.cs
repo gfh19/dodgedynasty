@@ -343,12 +343,13 @@ namespace DodgeDynasty.Controllers
 			return View(mapper.GetModel());
 		}
 
-		[HttpGet]
+		[HttpPost]
 		[AdminAccess]
-		public ActionResult AddNewPlayer(PlayerModel player)
+		public JsonResult AddNewPlayer(AdminPlayerModel player)
 		{
-			var mapper = new GetPlayerAdjustmentsMapper();
-			return View(mapper.GetModel());
+			var mapper = new AdminAddPlayerMapper();
+			mapper.UpdateEntity(player);
+            return Json(new { status="" });
 		}
 	}
 }

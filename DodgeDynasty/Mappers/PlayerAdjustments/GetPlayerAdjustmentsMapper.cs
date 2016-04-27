@@ -10,31 +10,7 @@ namespace DodgeDynasty.Mappers.PlayerAdjustments
 	public class GetPlayerAdjustmentsMapper : MapperBase<PlayerAdjustmentsModel>
 	{
 		private int _playerAdjWindow = 8;
-		public List<string> AddPlayerActions = new List<string> {
-			"Add Player"
-			,"Add Player, Match Active, IsDrafted"
-			,"Add Player, Match Inactive, IsDrafted"
-			,"Draft Add Player"
-			,"Rank Add Player"
-			,"Rank Add Player, Merge TruePlayerId"
-			,"Add Player, Match Active, IsDrafted"
-			,"Add Player, Match Active, IsDrafted (& Ranks)"
-			,"Add Player, Match Both, IsDrafted"
-			,"Add Player, Match Both, IsDrafted (& Ranks)"
-			,"Add Player, Match Inactive, IsDrafted"
-		};
-
-		public List<string> OtherPlayerActions = new List<string> {
-			"Draft Activate Player"
-			,"Draft Update NFL Team, Activate"
-			,"Rank Activate Player"
-			,"Rank Update NFL Team, Activate"
-			,"Update NFL Team"
-			,"Update NFL Team, (Re)activate"
-			,"Update NFL Team, Activate"
-			,"Update NFL Team, Active Not Drafted"
-			,"Update NFL Team, Active Was Drafted"	//Should be invalid
-		};
+		private string _addPlayerActionText = "Add Player";
 
 		protected override void PopulateModel()
 		{
@@ -50,11 +26,11 @@ namespace DodgeDynasty.Mappers.PlayerAdjustments
 
 		private List<AdjustedPlayer> GetAddedPlayers(List<PlayerAdjustment> adjustments, int mostRecentYear)
 		{
-			var addedPlayerAdjs = adjustments.Where(o => AddPlayerActions.Contains(o.Action) && o.AddTimestamp.Year == mostRecentYear)
+			var addedPlayerAdjs = adjustments.Where(o => o.Action.Contains(_addPlayerActionText) && o.AddTimestamp.Year == mostRecentYear)
 				.OrderByDescending(o => o.AddTimestamp).ToList();
 			if (addedPlayerAdjs.Count < _playerAdjWindow)
 			{
-				addedPlayerAdjs = adjustments.Where(o => AddPlayerActions.Contains(o.Action) && o.AddTimestamp.Year >= mostRecentYear-1)
+				addedPlayerAdjs = adjustments.Where(o => o.Action.Contains(_addPlayerActionText) && o.AddTimestamp.Year >= mostRecentYear-1)
 					.OrderByDescending(o => o.AddTimestamp).ToList();
 			}
 			return GetAdjustedPlayers(addedPlayerAdjs);
@@ -62,11 +38,11 @@ namespace DodgeDynasty.Mappers.PlayerAdjustments
 
 		private List<AdjustedPlayer> GetOtherAdjPlayers(List<PlayerAdjustment> adjustments, int mostRecentYear)
 		{
-			var otherPlayerAdjs = adjustments.Where(o => !AddPlayerActions.Contains(o.Action) && o.AddTimestamp.Year == mostRecentYear)
+			var otherPlayerAdjs = adjustments.Where(o => !o.Action.Contains(_addPlayerActionText) && o.AddTimestamp.Year == mostRecentYear)
 				.OrderByDescending(o => o.AddTimestamp).ToList();
 			if (otherPlayerAdjs.Count < _playerAdjWindow)
 			{
-				otherPlayerAdjs = adjustments.Where(o => !AddPlayerActions.Contains(o.Action) && o.AddTimestamp.Year >= mostRecentYear - 1)
+				otherPlayerAdjs = adjustments.Where(o => !o.Action.Contains(_addPlayerActionText) && o.AddTimestamp.Year >= mostRecentYear - 1)
 					.OrderByDescending(o => o.AddTimestamp).ToList();
 			}
 			return GetAdjustedPlayers(otherPlayerAdjs);
