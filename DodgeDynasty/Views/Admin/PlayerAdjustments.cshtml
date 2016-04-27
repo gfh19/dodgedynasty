@@ -19,7 +19,7 @@
 				<a class="pa-add-player" href="#">Add New Player</a>
 			</div>
 			<div class="player-actions">
-				<a class="pa-search-player" href="#">Search for Player</a>
+				<a class="pa-edit-player" href="#">Edit Player</a>
 			</div>
 		</div>
 		<div class="page-section">
@@ -84,7 +84,7 @@
 
 					@foreach (var player in Model.OtherAdjPlayers)
 					{
-						<tr>
+						<tr data-player-id="@player.PlayerId">
 							<td>@player.PlayerId</td>
 							<td>@player.TruePlayerId</td>
 							<td>@player.PlayerName</td>
@@ -118,7 +118,7 @@
 			}*@
 		</div>
 	</div>
-	<div id="addNewPlayerDialog" class="center hide-yo-kids" title="Add New Player">
+	<div id="addNewPlayerDialog" class="center hide-yo-kids playerDialog" title="Add New Player">
 		@using (Html.BeginForm("AddNewPlayer", "Admin", FormMethod.Post, new { id = "addNewPlayerForm" }))
 		{
 			<div class="page-section-small">
@@ -145,6 +145,35 @@
 			</div>
 			<div class="page-section-small">
 				<a class="pa-clear-add" href="#">&lt;Clear Player&gt;</a>
+			</div>
+		}
+	</div>
+	<div id="editPlayerDialog" class="center hide-yo-kids playerDialog" title="Edit Player">
+		@using (Html.BeginForm("EditPlayer", "Admin", FormMethod.Post, new { id = "editPlayerForm" }))
+		{
+			<div class="page-section-small">
+				@Html.LabelFor(m => m.Player.PlayerId, new { @class = "inline-label" })
+				@Html.TextBoxFor(m => m.Player.PlayerId, new { id = "edit-plyr-id", @class = "pa-player-id", disabled = true })
+				@Html.LabelFor(m => m.Player.TruePlayerId, new { @class = "inline-label" })
+				@Html.TextBoxFor(m => m.Player.TruePlayerId, new { id = "edit-plyr-tpid", @class = "pa-player-id" })
+			</div>
+			<div class="page-section-small">
+				@Html.LabelFor(m => m.Player.FirstName)
+				@Html.TextBoxFor(m => m.Player.FirstName, new { id = "edit-plyr-fname", list = "playerHints", maxLength = "25" })
+				@Html.ValidationMessageFor(m => m.Player.FirstName)
+				@Html.LabelFor(m => m.Player.LastName)
+				@Html.TextBoxFor(m => m.Player.LastName, new { id = "edit-plyr-lname", maxLength = "25" })
+				@Html.ValidationMessageFor(m => m.Player.LastName)
+				@Html.LabelFor(m => m.Player.Position)
+				@Html.DropDownListFor(m => m.Player.Position, Model.GetPositionListItems(), new { id = "edit-plyr-pos" })
+				@Html.ValidationMessageFor(m => m.Player.Position)
+				@Html.LabelFor(m => m.Player.NFLTeam)
+				@Html.DropDownListFor(m => m.Player.NFLTeam, Model.GetNFLListItems(), new { id = "edit-plyr-nfl" })
+				@Html.ValidationMessageFor(m => m.Player.NFLTeam)
+				<div>
+					@Html.LabelFor(m => m.Player.IsActive, new { @class = "inline-label" })
+					@Html.CheckBoxFor(m => m.Player.IsActive, new { id = "edit-plyr-active", @class = "vert-middle", @checked = "checked" })
+				</div>
 			</div>
 		}
 	</div>

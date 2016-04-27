@@ -9,7 +9,7 @@ namespace DodgeDynasty.Mappers.PlayerAdjustments
 {
 	public class GetPlayerAdjustmentsMapper : MapperBase<PlayerAdjustmentsModel>
 	{
-		private int _playerAdjWindow = 8;
+		private int _playerAdjWindow = 20;
 		private string _addPlayerActionText = "Add Player";
 
 		protected override void PopulateModel()
@@ -67,10 +67,10 @@ namespace DodgeDynasty.Mappers.PlayerAdjustments
 			{
 				PlayerId = p.PlayerId,
 				TruePlayerId = p.TruePlayerId.Value,
-				PlayerName = p.PlayerName,
-				NFLTeam = p.NFLTeam,
+				PlayerName = ap.NewPlayerName,
+				NFLTeam = ap.NewNFLTeam,
 				NFLTeamDisplay = t.AbbrDisplay,
-				Position = p.Position,
+				Position = ap.NewPosition,
 				Action = ap.Action,
 				UserId = (u != null) ? u.UserId.ToString() : null,
 				UserFullName = (u != null) ? u.FullName : null,

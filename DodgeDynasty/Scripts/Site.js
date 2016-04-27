@@ -808,3 +808,9 @@ $.fn.goTo = function () {
 	}, 'fast');
 	return this;
 }
+
+$.fn.where = function (prop, val) {
+	return $.grep($(this), function (e) { return e[prop] == val; });
+}
+
+/* End Plugins */

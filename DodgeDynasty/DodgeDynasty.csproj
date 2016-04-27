@@ -220,6 +220,7 @@
     <Compile Include="Mappers\MapperFactory.cs" />
     <Compile Include="Mappers\PasswordMapper.cs" />
     <Compile Include="Mappers\PlayerAdjustments\AdminAddPlayerMapper.cs" />
+    <Compile Include="Mappers\PlayerAdjustments\AdminEditPlayerMapper.cs" />
     <Compile Include="Mappers\PlayerAdjustments\GetPlayerAdjustmentsMapper.cs" />
     <Compile Include="Mappers\RankSetupMapper.cs" />
     <Compile Include="Mappers\Highlights\AddPlayerHighlightMapper.cs" />
