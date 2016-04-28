@@ -1,4 +1,4 @@
-﻿var playerAdjWindow = 8;
+﻿var playerAdjWindow = 6;
 
 function initPlayerAdjustments() {
 	displayAdjustmentWindows();
@@ -6,6 +6,7 @@ function initPlayerAdjustments() {
 	bindAddNewPlayerLink();
 	bindEditPlayerLink();
 	bindActivatePlayerLinks();
+	bindInactivateAllPlayerButtons();
 }
 
 function displayAdjustmentWindows() {
@@ -68,6 +69,25 @@ function bindActivatePlayerLinks() {
 				var playerId = $(link).parents("tr[data-player-id]").attr("data-player-id");
 				setPlayerStatus(playerId, $(link).hasClass("pa-activate-player"));
 			}
+		});
+	});
+}
+
+function bindInactivateAllPlayerButtons() {
+	$(".activate-defs").click(function (e) {
+		e.preventDefault();
+		showConfirmDialog("Are you sure you want to Inactivate all but 32 DEFs? <br/><br/>(This is irreversible)", function () {
+			ajaxPost({ playerGroup: "def" }, "Admin/InactivatePlayers", function () {
+				window.location.reload();
+			});
+		});
+	});
+	$(".inactivate-all").click(function (e) {
+		e.preventDefault();
+		showConfirmDialog("Are you sure you want to Inactivate ALL PLAYERS? <br/><br/>(This is irreversible)", function () {
+			ajaxPost({ playerGroup: "all" }, "Admin/InactivatePlayers", function () {
+				window.location.reload();
+			});
 		});
 	});
 }

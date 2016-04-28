@@ -9,7 +9,7 @@ namespace DodgeDynasty.Mappers.PlayerAdjustments
 {
 	public class GetPlayerAdjustmentsMapper : MapperBase<PlayerAdjustmentsModel>
 	{
-		private int _playerAdjWindow = 25;
+		private int _playerAdjWindow = 20;
 		private string _addPlayerActionText = "Add Player";
 
 		protected override void PopulateModel()
@@ -24,6 +24,8 @@ namespace DodgeDynasty.Mappers.PlayerAdjustments
 			Model.NFLTeams = HomeEntity.NFLTeams.ToList();
 			Model.Positions = HomeEntity.Positions.ToList();
 			Model.AllPlayers = HomeEntity.Players.OrderBy(o=>o.PlayerName).ToList();
+			Model.ActivePlayerCount = Model.AllPlayers.Count(o => o.IsActive);
+			Model.InactivePlayerCount = Model.AllPlayers.Count(o => !o.IsActive);
 		}
 
 		private List<AdjustedPlayer> GetAddedPlayers(List<PlayerAdjustment> adjustments, int mostRecentYear)
@@ -92,7 +94,7 @@ namespace DodgeDynasty.Mappers.PlayerAdjustments
 								  p1.NFLTeam == p2.NFLTeam && p1.PlayerId != p2.PlayerId && p1.TruePlayerId != p2.TruePlayerId)
 								  .DefaultIfEmpty()
 							   join t in HomeEntity.NFLTeams on p2.NFLTeam equals t.TeamAbbr
-							   orderby p2.PlayerName
+							   orderby p2.PlayerName, p2.AddTimestamp descending
 							   select new { Player = p2, NFLTeam = t };
 			foreach (var auditPlayer in auditPlayers)
 			{
@@ -113,7 +115,7 @@ namespace DodgeDynasty.Mappers.PlayerAdjustments
 			var auditPlayers = from p in HomeEntity.Players
 							   join t in HomeEntity.NFLTeams on p.NFLTeam equals t.TeamAbbr
 							   where auditPlayerTpids.Contains(p.TruePlayerId)
-							   orderby p.TruePlayerId
+							   orderby p.TruePlayerId, p.AddTimestamp descending
 							   select new { Player = p, NFLTeam = t };
 			foreach (var auditPlayer in auditPlayers)
 			{

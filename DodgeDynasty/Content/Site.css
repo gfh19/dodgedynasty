@@ -2338,6 +2338,10 @@ span.player-select
 	width: 40px;
 	margin: 0px 5px 5px 5px;
 }
+.pa-status-label {
+	display: inline;
+	margin-left: 14px;
+}
 
 
 

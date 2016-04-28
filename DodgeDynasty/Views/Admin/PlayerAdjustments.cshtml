@@ -15,6 +15,16 @@
 <div id="playerAdjustments">
 	<div class="page-entries">
 		<div class="page-section">
+			@if (Model.NonUniquePlayers.Count > 0)
+			{
+				<div class="message-error">Non-Unique Players Found!!!</div>
+			}
+			@if (Model.DuplicateActivePlayers.Count > 0)
+			{
+				<div class="message-error">Duplicate Active Players Found!!!</div>
+			}
+		</div>
+		<div class="page-section">
 			<div class="player-actions">
 				<a class="pa-add-player" href="#">Add New Player</a>
 			</div>
@@ -23,7 +33,7 @@
 			</div>
 		</div>
 		<div class="page-section">
-			<div class="page-header">Added Player Adjustments
+			<div class="page-header">Added Players
 				<span class="pa-toggle-text">(<a class="pa-toggle" href="#">Toggle</a>)</span>
 			</div>
 			<table id="pa-added-players" class="pa-table">
@@ -62,6 +72,7 @@
 						</td>
 					</tr>
 				}
+			</tbody>
 			</table>
 	</div>
 		<div class="page-section">
@@ -104,46 +115,61 @@
 							</td>
 						</tr>
 					}
+				</tbody>
 			</table>
 		</div>
 		<div class="page-section">
 			<div class="page-header">Player Audit View</div>
-			<table id="pa-unique-check" class="pa-table">
-				<caption>Non-Unique Player Check</caption>
-				<tbody>
-					<tr>
-						<th>Id</th>
-						<th>TPId</th>
-						<th>Player Name</th>
-						<th>Pos</th>
-						<th>NFL Team</th>
-						<th>Drafts/Ranks</th>
-						<th>Time</th>
-						<th>Links</th>
-					</tr>
-
-					@foreach (var player in Model.NonUniquePlayers)
-					{
-						<tr data-player-id="@player.PlayerId">
-							<td>@player.PlayerId</td>
-							<td>@player.TruePlayerId</td>
-							<td>@player.PlayerName</td>
-							<td>@player.Position</td>
-							<td>@player.NFLTeam</td>
-							<td>@player.DraftsRanksText</td>
-							<td class="nowrap">@player.AddTimestamp</td>
-							<td class="pa-entry-links">
-								&lt;<a class="pa-edit-player" href="#">Edit</a>&gt;
-								<span class="@(player.IsActive ? "hide-yo-wives" : "bold activate")">&lt;<a class="pa-activate-player activate" href="#">Activate</a>&gt;</span>
-								<span class="@(!player.IsActive ? "hide-yo-wives" : "bold deactivate")">&lt;<a class="pa-deactivate-player deactivate" href="#">Deactivate</a>&gt;</span>
-								@*TBD: consider if delete player necessary*@
-								@*<span class="@(player.IsDrafted ? "hide-yo-wives" : "")">&lt;<a class="pa-delete-player" href="#">Delete</a>&gt;</span>*@
-							</td>
+			@if (Model.NonUniquePlayers.Count == 0)
+			{
+				<span class="bold">Non-Unique Player Check: </span><span> (None found)</span>
+			}
+			else
+			{
+				<table id="pa-unique-check" class="pa-table">
+					<caption>Non-Unique Player Check</caption>
+					<tbody>
+						<tr>
+							<th>Id</th>
+							<th>TPId</th>
+							<th>Player Name</th>
+							<th>Pos</th>
+							<th>NFL Team</th>
+							<th>Drafts/Ranks</th>
+							<th>Time</th>
+							<th>Links</th>
 						</tr>
-					}
-			</table>
+
+						@foreach (var player in Model.NonUniquePlayers)
+						{
+							<tr data-player-id="@player.PlayerId">
+								<td>@player.PlayerId</td>
+								<td>@player.TruePlayerId</td>
+								<td>@player.PlayerName</td>
+								<td>@player.Position</td>
+								<td>@player.NFLTeam</td>
+								<td>@player.DraftsRanksText</td>
+								<td class="nowrap">@player.AddTimestamp</td>
+								<td class="pa-entry-links">
+									&lt;<a class="pa-edit-player" href="#">Edit</a>&gt;
+									<span class="@(player.IsActive ? "hide-yo-wives" : "bold activate")">&lt;<a class="pa-activate-player activate" href="#">Activate</a>&gt;</span>
+									<span class="@(!player.IsActive ? "hide-yo-wives" : "bold deactivate")">&lt;<a class="pa-deactivate-player deactivate" href="#">Deactivate</a>&gt;</span>
+									@*TBD: consider if delete player necessary*@
+									@*<span class="@(player.IsDrafted ? "hide-yo-wives" : "")">&lt;<a class="pa-delete-player" href="#">Delete</a>&gt;</span>*@
+								</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+			}
 		</div>
 		<div class="page-section">
+			@if (Model.DuplicateActivePlayers.Count == 0)
+			{
+				<span class="bold">Duplicate Active TruePlayer Check: </span> <span>(None found)</span>
+			}
+			else
+			{
 			<table id="pa-dup-active-check" class="pa-table">
 				<caption>Duplicate Active TruePlayer Check</caption>
 				<tbody>
@@ -177,7 +203,15 @@
 							</td>
 						</tr>
 					}
+				</tbody>
 			</table>
+			}
+		</div>
+		<div class="page-section-large">
+			<span class="pa-status-label">Active Player Count: </span><span>@Model.ActivePlayerCount</span>
+			<span class="pa-status-label">(<span>Inactive Player Count: </span><span>@Model.InactivePlayerCount</span>)</span>
+			<span class="pa-status-label"><button class="activate-defs ui-button-text">Inactivate All but 32 DEFs</button></span>
+			<span class="pa-status-label"><button class="inactivate-all ui-button-text">Inactivate ALL Players</button></span>
 		</div>
 	</div>
 	<div id="addNewPlayerDialog" class="center hide-yo-kids playerDialog" title="Add New Player">

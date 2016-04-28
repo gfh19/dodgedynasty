@@ -598,6 +598,9 @@ function scrollDraftChatBottom() {
 	d.scrollTop(d.prop("scrollHeight"));
 }
 
+/*	End Draft Chat */
+
+
 
 /* Draft Pick Audio */
 
@@ -637,6 +640,9 @@ function playPickAudio() {
 		pickAudioBed.play();
 	}, 125);
 }
+
+/*  End Draft Pick Audio */
+
 
 
 /* Helper functions */
@@ -779,6 +785,29 @@ function toggleDisplay(element, condition) {
 		$(element).hide();
 	}
 }
+
+function showConfirmDialog(dialogText, okFn, cancelFn) {
+	cancelFn = cancelFn || function () { $(this).dialog("close"); };
+	var confirmDialog = '<div class="center hide-yo-kids" title="Confirmation"><p>' + dialogText + '</p></div>';
+
+	$(confirmDialog).dialog({
+		resizable: false,
+		height: 'auto',
+		width: '280px',
+		modal: true,
+		buttons: [
+					{
+						text: "OK", click: okFn
+					},
+					{
+						text: "Cancel", click: cancelFn
+					},
+		]
+	});
+}
+
+/*  End Helper Function */
+
 
 
 /* Plugins */

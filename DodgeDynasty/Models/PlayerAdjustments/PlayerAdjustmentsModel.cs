@@ -15,6 +15,8 @@ namespace DodgeDynasty.Models.PlayerAdjustments
 		public List<NFLTeam> NFLTeams { get; set; }
 		public List<Position> Positions { get; set; }
 		public List<Player> AllPlayers { get; set; }
+		public int ActivePlayerCount { get; set; }
+		public int InactivePlayerCount { get; set; }
 		public AdminPlayerModel Player { get; set; }
 
 		public List<SelectListItem> GetPositionListItems()

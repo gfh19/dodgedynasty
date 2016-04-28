@@ -222,6 +222,7 @@
     <Compile Include="Mappers\PlayerAdjustments\AdminAddPlayerMapper.cs" />
     <Compile Include="Mappers\PlayerAdjustments\AdminEditPlayerMapper.cs" />
     <Compile Include="Mappers\PlayerAdjustments\GetPlayerAdjustmentsMapper.cs" />
+    <Compile Include="Mappers\PlayerAdjustments\InactivatePlayersMapper.cs" />
     <Compile Include="Mappers\RankSetupMapper.cs" />
     <Compile Include="Mappers\Highlights\AddPlayerHighlightMapper.cs" />
     <Compile Include="Mappers\Ranks\PlayerRankOptionsMapper.cs" />
@@ -266,6 +267,7 @@
     <Compile Include="Mappers\OwnerUserMapper.cs" />
     <Compile Include="Models\Highlights\PlayerHighlightModel.cs" />
     <Compile Include="Models\PlayerAdjustments\AdminPlayerModel.cs" />
+    <Compile Include="Models\PlayerAdjustments\InactivatePlayersModel.cs" />
     <Compile Include="Models\PlayerAdjustments\PlayerAdjustmentsModel.cs" />
     <Compile Include="Models\Shared\DraftChatModel.cs" />
     <Compile Include="Models\Site\MessagesCountModel.cs" />
