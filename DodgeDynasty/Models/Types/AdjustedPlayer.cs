@@ -4,6 +4,7 @@ namespace DodgeDynasty.Models.Types
 {
 	public class AdjustedPlayer : RankedPlayer
 	{
+		public int AdjustmentId { get; set; }
 		public string Action { get; set; }
 		public string UserFullName { get; set; }
 		public string DraftsRanksText { get; set; }

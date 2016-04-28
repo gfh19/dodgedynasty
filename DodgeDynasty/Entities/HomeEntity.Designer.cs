@@ -52,6 +52,7 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_UserRole_League", "League", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.League), "UserRole", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.UserRole), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_UserRole_Role", "Role", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Role), "UserRole", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.UserRole), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_UserRole_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.User), "UserRole", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.UserRole), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_AdminStatus_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.User), "AdminStatu", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.AdminStatu), true)]
 
 #endregion
 
@@ -518,6 +519,22 @@ namespace DodgeDynasty.Entities
             }
         }
         private ObjectSet<UserRole> _UserRoles;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<AdminStatu> AdminStatus
+        {
+            get
+            {
+                if ((_AdminStatus == null))
+                {
+                    _AdminStatus = base.CreateObjectSet<AdminStatu>("AdminStatus");
+                }
+                return _AdminStatus;
+            }
+        }
+        private ObjectSet<AdminStatu> _AdminStatus;
 
         #endregion
 
@@ -730,6 +747,14 @@ namespace DodgeDynasty.Entities
         {
             base.AddObject("UserRoles", userRole);
         }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the AdminStatus EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToAdminStatus(AdminStatu adminStatu)
+        {
+            base.AddObject("AdminStatus", adminStatu);
+        }
 
         #endregion
 
@@ -738,6 +763,128 @@ namespace DodgeDynasty.Entities
     #endregion
 
     #region Entities
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="HomeModel", Name="AdminStatu")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class AdminStatu : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new AdminStatu object.
+        /// </summary>
+        /// <param name="userId">Initial value of the UserId property.</param>
+        public static AdminStatu CreateAdminStatu(global::System.Int32 userId)
+        {
+            AdminStatu adminStatu = new AdminStatu();
+            adminStatu.UserId = userId;
+            return adminStatu;
+        }
+
+        #endregion
+
+        #region Simple Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 UserId
+        {
+            get
+            {
+                return _UserId;
+            }
+            set
+            {
+                if (_UserId != value)
+                {
+                    OnUserIdChanging(value);
+                    ReportPropertyChanging("UserId");
+                    _UserId = StructuralObject.SetValidValue(value, "UserId");
+                    ReportPropertyChanged("UserId");
+                    OnUserIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _UserId;
+        partial void OnUserIdChanging(global::System.Int32 value);
+        partial void OnUserIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> LastPlayerAdjView
+        {
+            get
+            {
+                return _LastPlayerAdjView;
+            }
+            set
+            {
+                OnLastPlayerAdjViewChanging(value);
+                ReportPropertyChanging("LastPlayerAdjView");
+                _LastPlayerAdjView = StructuralObject.SetValidValue(value, "LastPlayerAdjView");
+                ReportPropertyChanged("LastPlayerAdjView");
+                OnLastPlayerAdjViewChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _LastPlayerAdjView;
+        partial void OnLastPlayerAdjViewChanging(Nullable<global::System.DateTime> value);
+        partial void OnLastPlayerAdjViewChanged();
+
+        #endregion
+
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_AdminStatus_User", "User")]
+        public User User
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_AdminStatus_User", "User").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_AdminStatus_User", "User").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<User> UserReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_AdminStatus_User", "User");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("HomeModel.FK_AdminStatus_User", "User", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
     
     /// <summary>
     /// No Metadata Documentation available.
@@ -8601,6 +8748,44 @@ namespace DodgeDynasty.Entities
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UserRole>("HomeModel.FK_UserRole_User", "UserRole", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_AdminStatus_User", "AdminStatu")]
+        public AdminStatu AdminStatu
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<AdminStatu>("HomeModel.FK_AdminStatus_User", "AdminStatu").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<AdminStatu>("HomeModel.FK_AdminStatus_User", "AdminStatu").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<AdminStatu> AdminStatuReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<AdminStatu>("HomeModel.FK_AdminStatus_User", "AdminStatu");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<AdminStatu>("HomeModel.FK_AdminStatus_User", "AdminStatu", value);
                 }
             }
         }

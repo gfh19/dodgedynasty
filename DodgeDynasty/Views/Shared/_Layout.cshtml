@@ -37,6 +37,7 @@
 					@{
 						var msgCount = 0;
 						var msgCountDisplay = "";
+						var userRoleAccessModel = new DodgeDynasty.Models.Account.RoleAccessModel();
 					}
 					<ul class="menu top-nav">
 						@if (DodgeDynasty.Shared.Utilities.IsUserLoggedIn())
@@ -45,6 +46,7 @@
 							var historyMode = Request.QueryString[DodgeDynasty.Shared.Constants.QS.HistoryMode];
 							msgCount = DodgeDynasty.Shared.DBUtilities.GetMessageCountModel().NewMessages.Count;
 							msgCountDisplay = DodgeDynasty.Shared.Utilities.GetMessageCountDisplay(msgCount);
+							userRoleAccessModel = DodgeDynasty.Shared.DBUtilities.GetCurrentUserRoleAccess();
 							if (draftId != null && DodgeDynasty.Shared.Utilities.ToBool(historyMode))
 							{
 								<li>@Html.ActionLink("Pick", "Pick/" + draftId, "Draft", new { historyMode = "true" }, null)</li>
@@ -60,11 +62,22 @@
 								<li>@Html.ActionLink("Ranks", "BestAvailable", "Draft")</li>
 							}
 							<li>
-								<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-									<span class="icon-bar"></span>
-									<span class="icon-bar"></span>
-									<span class="icon-bar"></span>
-								</button>
+								@if (userRoleAccessModel.IsUserAdmin && userRoleAccessModel.NewPlayerAdjExists)
+								{
+									<button type="button" class="navbar-toggle invalid-border" data-toggle="collapse" data-target=".navbar-collapse">
+										<span class="icon-bar"></span>
+										<span class="icon-bar"></span>
+										<span class="icon-bar"></span>
+									</button>
+								}
+								else
+								{
+									<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+										<span class="icon-bar"></span>
+										<span class="icon-bar"></span>
+										<span class="icon-bar"></span>
+									</button>
+								}
 								<span class="toggle-msgs-section">
 									@if (msgCount > 0)
 									{
@@ -111,7 +124,6 @@
 									<!--<li class="divider"></li>-->
 								</ul>
 							</li>
-							@{var userRoleAccessModel = DodgeDynasty.Shared.DBUtilities.GetCurrentUserRoleAccess();}
 							@if (userRoleAccessModel.IsUserAdmin)
 							{
 								<li class="dropdown">
@@ -125,7 +137,14 @@
 										<li>@Html.ActionLink("Activate Draft", "ActivateDraft", "Admin")</li>
 										<li>@Html.ActionLink("Enter Draft Pick", "Input", "Admin")</li>
 										<li><a href="#" class="menu-broadcast-draft">Broadcast Draft Pick</a></li>
-										<li>@Html.ActionLink("Player Adjustments", "PlayerAdjustments", "Admin")</li>
+										@if (userRoleAccessModel.NewPlayerAdjExists)
+										{
+											<li>@Html.ActionLink("Player Adjustments", "PlayerAdjustments", "Admin", null, new { @class="invalid-border" })</li>
+										}
+										else
+										{
+											<li>@Html.ActionLink("Player Adjustments", "PlayerAdjustments", "Admin")</li>
+										}
 										<!--<li class="divider"></li>-->
 									</ul>
 								</li>

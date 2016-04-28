@@ -23,6 +23,24 @@ namespace DodgeDynasty.Mappers.Account
 			{
 				Model.IsUserCommish = Model.UserRoles.Any(o => o.RoleId == Constants.Roles.Commish);
 			}
+			if (Model.IsUserAdmin)
+			{
+				var adminStatus = HomeEntity.AdminStatus.FirstOrDefault(o => o.UserId == userId);
+				if (adminStatus != null && adminStatus.LastPlayerAdjView.HasValue)
+				{
+					Model.LastPlayerAdjView = adminStatus.LastPlayerAdjView.Value;
+				}
+				else
+				{
+					Model.LastPlayerAdjView = DateTime.MinValue;
+				}
+				var latestPlayerAdjDT = HomeEntity.PlayerAdjustments.OrderByDescending(o => o.AddTimestamp)
+					.Select(o=>o.AddTimestamp).FirstOrDefault();
+				if (latestPlayerAdjDT != null)
+				{
+					Model.NewPlayerAdjExists = latestPlayerAdjDT.CompareTo(Model.LastPlayerAdjView) > 0;
+				}
+			}
 		}
 	}
 }

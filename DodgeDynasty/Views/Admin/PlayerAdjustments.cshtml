@@ -33,50 +33,53 @@
 			</div>
 		</div>
 		<div class="page-section">
-			<div class="page-header">Added Players
+			<div class="page-header">
+				Added Players
 				<span class="pa-toggle-text">(<a class="pa-toggle" href="#">Toggle</a>)</span>
 			</div>
 			<table id="pa-added-players" class="pa-table">
-			<tbody>
-				<tr>
-					<th>Id</th>
-					<th>TPId</th>
-					<th>Player Name</th>
-					<th>Pos</th>
-					<th>NFL Team</th>
-					<th>Action</th>
-					<th>User</th>
-					<th>Drafts/Ranks</th>
-					<th>Time</th>
-					<th>Links</th>
-				</tr>
-
-				@foreach (var player in Model.AddedPlayers)
-				{
-					<tr data-player-id="@player.PlayerId">
-						<td>@player.PlayerId</td>
-						<td>@player.TruePlayerId</td>
-						<td>@player.PlayerName</td>
-						<td>@player.Position</td>
-						<td>@player.NFLTeam</td>
-						<td>@player.Action</td>
-						<td class="nowrap">@player.UserFullName</td>
-						<td>@player.DraftsRanksText</td>
-						<td class="nowrap">@player.AddTimestamp</td>
-						<td class="pa-entry-links">
-							&lt;<a class="pa-edit-player" href="#">Edit</a>&gt;
-							<span class="@(player.IsActive ? "hide-yo-wives" : "bold activate")">&lt;<a class="pa-activate-player activate" href="#">Activate</a>&gt;</span>
-							<span class="@(!player.IsActive ? "hide-yo-wives" : "bold deactivate")">&lt;<a class="pa-deactivate-player deactivate" href="#">Deactivate</a>&gt;</span>
-							@*TBD: consider if delete player necessary*@
-							@*<span class="@(player.IsDrafted ? "hide-yo-wives" : "")">&lt;<a class="pa-delete-player" href="#">Delete</a>&gt;</span>*@
-						</td>
+				<tbody>
+					<tr>
+						<th>Id</th>
+						<th>TPId</th>
+						<th>Player Name</th>
+						<th>Pos</th>
+						<th>NFL Team</th>
+						<th>Action</th>
+						<th>User</th>
+						<th>Drafts/Ranks</th>
+						<th>Time</th>
+						<th>Links</th>
 					</tr>
-				}
-			</tbody>
+
+					@foreach (var player in Model.AddedPlayers)
+					{
+						var playerClass = Model.NewAdjustmentIds.Contains(player.AdjustmentId) ? " invalid-border" : "";
+						<tr data-player-id="@player.PlayerId" class="@playerClass">
+							<td>@player.PlayerId</td>
+							<td>@player.TruePlayerId</td>
+							<td>@player.PlayerName</td>
+							<td>@player.Position</td>
+							<td>@player.NFLTeam</td>
+							<td>@player.Action</td>
+							<td class="nowrap">@player.UserFullName</td>
+							<td>@player.DraftsRanksText</td>
+							<td class="nowrap">@player.AddTimestamp</td>
+							<td class="pa-entry-links">
+								&lt;<a class="pa-edit-player" href="#">Edit</a>&gt;
+								<span class="@(player.IsActive ? "hide-yo-wives" : "bold activate")">&lt;<a class="pa-activate-player activate" href="#">Activate</a>&gt;</span>
+								<span class="@(!player.IsActive ? "hide-yo-wives" : "bold deactivate")">&lt;<a class="pa-deactivate-player deactivate" href="#">Deactivate</a>&gt;</span>
+								@*TBD: consider if delete player necessary*@
+								@*<span class="@(player.IsDrafted ? "hide-yo-wives" : "")">&lt;<a class="pa-delete-player" href="#">Delete</a>&gt;</span>*@
+							</td>
+						</tr>
+					}
+				</tbody>
 			</table>
-	</div>
+		</div>
 		<div class="page-section">
-			<div class="page-header">Other Player Adjustments
+			<div class="page-header">
+				Other Player Adjustments
 				<span class="pa-toggle-text">(<a class="pa-toggle" href="#">Toggle</a>)</span>
 			</div>
 			<table id="pa-other-players" class="pa-table">
@@ -96,7 +99,8 @@
 
 					@foreach (var player in Model.OtherAdjPlayers)
 					{
-						<tr data-player-id="@player.PlayerId">
+						var playerClass = Model.NewAdjustmentIds.Contains(player.AdjustmentId) ? " invalid-border" : "";
+						<tr data-player-id="@player.PlayerId" class="@playerClass">
 							<td>@player.PlayerId</td>
 							<td>@player.TruePlayerId</td>
 							<td>@player.PlayerName</td>
@@ -126,7 +130,7 @@
 			}
 			else
 			{
-				<table id="pa-unique-check" class="pa-table">
+				<table id="pa-unique-check" class="pa-table invalid-border">
 					<caption>Non-Unique Player Check</caption>
 					<tbody>
 						<tr>
@@ -163,14 +167,14 @@
 				</table>
 			}
 		</div>
+		@if (Model.DuplicateActivePlayers.Count == 0)
+		{
+		<span class="bold">Duplicate Active TruePlayer Check: </span> <span>(None found)</span>
+		}
+		else
+		{
 		<div class="page-section">
-			@if (Model.DuplicateActivePlayers.Count == 0)
-			{
-				<span class="bold">Duplicate Active TruePlayer Check: </span> <span>(None found)</span>
-			}
-			else
-			{
-			<table id="pa-dup-active-check" class="pa-table">
+			<table id="pa-dup-active-check" class="pa-table invalid-border">
 				<caption>Duplicate Active TruePlayer Check</caption>
 				<tbody>
 					<tr>
@@ -205,8 +209,8 @@
 					}
 				</tbody>
 			</table>
-			}
 		</div>
+		}
 		<div class="page-section-large">
 			<span class="pa-status-label">Active Player Count: </span><span>@Model.ActivePlayerCount</span>
 			<span class="pa-status-label">(<span>Inactive Player Count: </span><span>@Model.InactivePlayerCount</span>)</span>

@@ -4,6 +4,7 @@ using System.Linq;
 using DodgeDynasty.Entities;
 using DodgeDynasty.Models.PlayerAdjustments;
 using DodgeDynasty.Models.Types;
+using DodgeDynasty.Shared;
 
 namespace DodgeDynasty.Mappers.PlayerAdjustments
 {
@@ -26,6 +27,23 @@ namespace DodgeDynasty.Mappers.PlayerAdjustments
 			Model.AllPlayers = HomeEntity.Players.OrderBy(o=>o.PlayerName).ToList();
 			Model.ActivePlayerCount = Model.AllPlayers.Count(o => o.IsActive);
 			Model.InactivePlayerCount = Model.AllPlayers.Count(o => !o.IsActive);
+
+			var userId = HomeEntity.Users.GetLoggedInUserId();
+			var adminStatus = HomeEntity.AdminStatus.FirstOrDefault(o => o.UserId == userId);
+			var currentDateTime = Utilities.GetEasternTime();
+			if (adminStatus != null)
+			{
+				var lastPlayerAdjView = adminStatus.LastPlayerAdjView.HasValue ? adminStatus.LastPlayerAdjView : DateTime.MinValue;
+                Model.NewAdjustmentIds = adjustments.Where(o => o.AddTimestamp.CompareTo(adminStatus.LastPlayerAdjView) > 0)
+					.Select(o => o.AdjustmentId).ToList();
+				adminStatus.LastPlayerAdjView = currentDateTime;
+			}
+			else
+			{
+				Model.NewAdjustmentIds = adjustments.Select(o => o.AdjustmentId).ToList();
+				HomeEntity.AdminStatus.AddObject(new AdminStatu { UserId = userId, LastPlayerAdjView = currentDateTime });
+            }
+			HomeEntity.SaveChanges();
 		}
 
 		private List<AdjustedPlayer> GetAddedPlayers(List<PlayerAdjustment> adjustments, int mostRecentYear)
@@ -69,7 +87,8 @@ namespace DodgeDynasty.Mappers.PlayerAdjustments
 		{
 			return new AdjustedPlayer
 			{
-				PlayerId = p.PlayerId,
+				AdjustmentId = ap.AdjustmentId,
+                PlayerId = p.PlayerId,
 				TruePlayerId = p.TruePlayerId.Value,
 				PlayerName = ap.NewPlayerName,
 				NFLTeam = ap.NewNFLTeam,

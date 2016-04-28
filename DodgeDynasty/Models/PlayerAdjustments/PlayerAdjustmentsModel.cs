@@ -12,6 +12,7 @@ namespace DodgeDynasty.Models.PlayerAdjustments
 		public List<AdjustedPlayer> OtherAdjPlayers { get; set; }
 		public List<AdjustedPlayer> NonUniquePlayers { get; set; }
 		public List<AdjustedPlayer> DuplicateActivePlayers { get; set; }
+		public List<int> NewAdjustmentIds { get; set; }
 		public List<NFLTeam> NFLTeams { get; set; }
 		public List<Position> Positions { get; set; }
 		public List<Player> AllPlayers { get; set; }

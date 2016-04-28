@@ -5,6 +5,13 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="HomeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AdminStatus">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="LastPlayerAdjView" Type="datetime" />
+        </EntityType>
         <EntityType Name="ByeWeek">
           <Key>
             <PropertyRef Name="ByeWeekId" />
@@ -199,6 +206,7 @@
           <Property Name="AdjustmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="OldPlayerId" Type="int" />
           <Property Name="NewPlayerId" Type="int" />
+          <Property Name="TruePlayerId" Type="int" />
           <Property Name="NewFirstName" Type="varchar" MaxLength="25" />
           <Property Name="NewLastName" Type="varchar" MaxLength="25" />
           <Property Name="NewPlayerName" Type="varchar" MaxLength="51" StoreGeneratedPattern="Computed" />
@@ -208,7 +216,6 @@
           <Property Name="UserId" Type="int" />
           <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
           <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
-          <Property Name="TruePlayerId" Type="int" />
         </EntityType>
         <EntityType Name="PlayerHighlight">
           <Key>
@@ -361,6 +368,18 @@
           <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
           <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
         </EntityType>
+        <Association Name="FK_AdminStatus_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="AdminStatus" Type="Self.AdminStatus" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="AdminStatus">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ByeWeek_NFLTeam">
           <End Role="NFLTeam" Type="Self.NFLTeam" Multiplicity="1" />
           <End Role="ByeWeek" Type="Self.ByeWeek" Multiplicity="*" />
@@ -758,6 +777,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="HomeModelStoreContainer">
+          <EntitySet Name="AdminStatus" EntityType="Self.AdminStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ByeWeek" EntityType="Self.ByeWeek" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CssColor" EntityType="Self.CssColor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Draft" EntityType="Self.Draft" Schema="dbo" store:Type="Tables" />
@@ -784,6 +804,10 @@
           <EntitySet Name="UserApplicant" EntityType="Self.UserApplicant" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserProfile" EntityType="Self.UserProfile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AdminStatus_User" Association="Self.FK_AdminStatus_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="AdminStatus" EntitySet="AdminStatus" />
+          </AssociationSet>
           <AssociationSet Name="FK_ByeWeek_NFLTeam" Association="Self.FK_ByeWeek_NFLTeam">
             <End Role="NFLTeam" EntitySet="NFLTeam" />
             <End Role="ByeWeek" EntitySet="ByeWeek" />
@@ -1080,6 +1104,11 @@
             <End Role="User" EntitySet="Users" />
             <End Role="UserRole" EntitySet="UserRoles" />
           </AssociationSet>
+          <EntitySet Name="AdminStatus" EntityType="HomeModel.AdminStatu" />
+          <AssociationSet Name="FK_AdminStatus_User" Association="HomeModel.FK_AdminStatus_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="AdminStatu" EntitySet="AdminStatus" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="NFLTeam">
           <Key>
@@ -1209,6 +1238,7 @@
           <NavigationProperty Name="PlayerAdjustments" Relationship="HomeModel.FK_PlayerAdjustment_User" FromRole="User" ToRole="PlayerAdjustment" />
           <NavigationProperty Name="PlayerHighlights" Relationship="HomeModel.FK_PlayerHighlight_User" FromRole="User" ToRole="PlayerHighlight" />
           <NavigationProperty Name="UserRoles" Relationship="HomeModel.FK_UserRole_User" FromRole="User" ToRole="UserRole" />
+          <NavigationProperty Name="AdminStatu" Relationship="HomeModel.FK_AdminStatus_User" FromRole="User" ToRole="AdminStatu" />
         </EntityType>
         <EntityType Name="DraftRank">
           <Key>
@@ -1899,6 +1929,26 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="AdminStatu">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="LastPlayerAdjView" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="User" Relationship="HomeModel.FK_AdminStatus_User" FromRole="AdminStatu" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_AdminStatus_User">
+          <End Type="HomeModel.User" Role="User" Multiplicity="1" />
+          <End Type="HomeModel.AdminStatu" Role="AdminStatu" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="AdminStatu">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2287,6 +2337,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="AdminStatus">
+            <EntityTypeMapping TypeName="HomeModel.AdminStatu">
+              <MappingFragment StoreEntitySet="AdminStatus">
+                <ScalarProperty Name="LastPlayerAdjView" ColumnName="LastPlayerAdjView" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2373,6 +2431,8 @@
         <edmx:AssociationConnector Association="HomeModel.FK_UserRole_League" />
         <edmx:AssociationConnector Association="HomeModel.FK_UserRole_Role" />
         <edmx:AssociationConnector Association="HomeModel.FK_UserRole_User" />
+        <edmx:EntityTypeShape EntityType="HomeModel.AdminStatu" Width="1.5" PointX="10" PointY="14.125" />
+        <edmx:AssociationConnector Association="HomeModel.FK_AdminStatus_User" />
         </edmx:Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

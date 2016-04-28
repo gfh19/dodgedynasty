@@ -14,5 +14,7 @@ namespace DodgeDynasty.Models.Account
 		public List<UserRole> UserRoles { get; set; }
 		public bool IsUserAdmin { get; set; }
 		public bool IsUserCommish { get; set; }
+		public DateTime LastPlayerAdjView { get; set; }
+		public bool NewPlayerAdjExists { get; set; }
 	}
 }

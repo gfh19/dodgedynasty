@@ -5,6 +5,40 @@ BEGIN TRANSACTION;
 
 
 
+USE [Home]
+GO
+
+ALTER TABLE [dbo].[AdminStatus] DROP CONSTRAINT [FK_AdminStatus_User]
+GO
+
+/****** Object:  Table [dbo].[AdminStatus]    Script Date: 4/27/2016 11:38:37 PM ******/
+DROP TABLE [dbo].[AdminStatus]
+GO
+
+/****** Object:  Table [dbo].[AdminStatus]    Script Date: 4/27/2016 11:38:37 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[AdminStatus](
+	[UserId] [int] NOT NULL,
+	[LastPlayerAdjView] [datetime] NULL,
+ CONSTRAINT [PK_AdminStatus] PRIMARY KEY CLUSTERED 
+(
+	[UserId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[AdminStatus]  WITH CHECK ADD  CONSTRAINT [FK_AdminStatus_User] FOREIGN KEY([UserId])
+REFERENCES [dbo].[User] ([UserId])
+GO
+
+ALTER TABLE [dbo].[AdminStatus] CHECK CONSTRAINT [FK_AdminStatus_User]
+GO
 
 
 
