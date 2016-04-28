@@ -108,16 +108,76 @@
 		</div>
 		<div class="page-section">
 			<div class="page-header">Player Audit View</div>
-			@* TODO:  Player Audit View *@
-			@*@foreach (var draft in Model.CompleteDrafts)
-			{
-				<div class="page-entry">
-					<div class="act-draft">@draft.DraftYear @draft.LeagueName</div>
-					<div class="act-draft-links">
-						<a class="mark-incomplete" href="SetDraftStatus/@draft.DraftId?isComplete=false">&lt;Mark Incomplete&gt;</a>
-					</div>
-				</div>
-			}*@
+			<table id="pa-unique-check" class="pa-table">
+				<caption>Non-Unique Player Check</caption>
+				<tbody>
+					<tr>
+						<th>Id</th>
+						<th>TPId</th>
+						<th>Player Name</th>
+						<th>Pos</th>
+						<th>NFL Team</th>
+						<th>Drafts/Ranks</th>
+						<th>Time</th>
+						<th>Links</th>
+					</tr>
+
+					@foreach (var player in Model.NonUniquePlayers)
+					{
+						<tr data-player-id="@player.PlayerId">
+							<td>@player.PlayerId</td>
+							<td>@player.TruePlayerId</td>
+							<td>@player.PlayerName</td>
+							<td>@player.Position</td>
+							<td>@player.NFLTeam</td>
+							<td>@player.DraftsRanksText</td>
+							<td class="nowrap">@player.AddTimestamp</td>
+							<td class="pa-entry-links">
+								&lt;<a class="pa-edit-player" href="#">Edit</a>&gt;
+								<span class="@(player.IsActive ? "hide-yo-wives" : "bold activate")">&lt;<a class="pa-activate-player activate" href="#">Activate</a>&gt;</span>
+								<span class="@(!player.IsActive ? "hide-yo-wives" : "bold deactivate")">&lt;<a class="pa-deactivate-player deactivate" href="#">Deactivate</a>&gt;</span>
+								@*TBD: consider if delete player necessary*@
+								@*<span class="@(player.IsDrafted ? "hide-yo-wives" : "")">&lt;<a class="pa-delete-player" href="#">Delete</a>&gt;</span>*@
+							</td>
+						</tr>
+					}
+			</table>
+		</div>
+		<div class="page-section">
+			<table id="pa-dup-active-check" class="pa-table">
+				<caption>Duplicate Active TruePlayer Check</caption>
+				<tbody>
+					<tr>
+						<th>Id</th>
+						<th>TPId</th>
+						<th>Player Name</th>
+						<th>Pos</th>
+						<th>NFL Team</th>
+						<th>Drafts/Ranks</th>
+						<th>Time</th>
+						<th>Links</th>
+					</tr>
+
+					@foreach (var player in Model.DuplicateActivePlayers)
+					{
+						<tr data-player-id="@player.PlayerId">
+							<td>@player.PlayerId</td>
+							<td>@player.TruePlayerId</td>
+							<td>@player.PlayerName</td>
+							<td>@player.Position</td>
+							<td>@player.NFLTeam</td>
+							<td>@player.DraftsRanksText</td>
+							<td class="nowrap">@player.AddTimestamp</td>
+							<td class="pa-entry-links">
+								&lt;<a class="pa-edit-player" href="#">Edit</a>&gt;
+								<span class="@(player.IsActive ? "hide-yo-wives" : "bold activate")">&lt;<a class="pa-activate-player activate" href="#">Activate</a>&gt;</span>
+								<span class="@(!player.IsActive ? "hide-yo-wives" : "bold deactivate")">&lt;<a class="pa-deactivate-player deactivate" href="#">Deactivate</a>&gt;</span>
+								@*TBD: consider if delete player necessary*@
+								@*<span class="@(player.IsDrafted ? "hide-yo-wives" : "")">&lt;<a class="pa-delete-player" href="#">Delete</a>&gt;</span>*@
+							</td>
+						</tr>
+					}
+			</table>
 		</div>
 	</div>
 	<div id="addNewPlayerDialog" class="center hide-yo-kids playerDialog" title="Add New Player">

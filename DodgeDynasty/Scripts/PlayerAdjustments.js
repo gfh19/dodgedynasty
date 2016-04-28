@@ -25,7 +25,8 @@ function bindAddNewPlayerLink() {
 	$(".pa-add-player").click(function (e) {
 		e.preventDefault();
 		showAddNewPlayerDialog();
-		setTruePlayerAutoComplete(null, "#add-plyr-tpid", "#add-plyr-fname", "#add-plyr-lname", "#add-plyr-pos", "#add-plyr-nfl");
+		setTruePlayerAutoComplete(null, "#add-plyr-tpid", "#add-plyr-fname", "#add-plyr-lname",
+			"#add-plyr-pos", "#add-plyr-nfl", "#add-plyr-active");
 		$("#add-plyr-fname").focus();
 	});
 	$(".pa-clear-add").click(clearAddPlayer);
@@ -40,7 +41,8 @@ function bindEditPlayerLink() {
 				var playerId = $(link).parents("tr[data-player-id]").attr("data-player-id");
 				var playerHint = $(playerHints).where("id", playerId);
 				if (playerHint.length > 0) {
-					setSelectedPlayer("#edit-plyr-id", "#edit-plyr-tpid", "#edit-plyr-fname", "#edit-plyr-lname", "#edit-plyr-pos", "#edit-plyr-nfl", playerHint[0]);
+					setSelectedPlayer("#edit-plyr-id", "#edit-plyr-tpid", "#edit-plyr-fname", "#edit-plyr-lname",
+						"#edit-plyr-pos", "#edit-plyr-nfl", "#edit-plyr-active", playerHint[0]);
 				}
 				else {
 					clearEditPlayer();
@@ -50,7 +52,8 @@ function bindEditPlayerLink() {
 				clearEditPlayer();
 			}
 			showEditPlayerDialog();
-			setTruePlayerAutoComplete("#edit-plyr-id", "#edit-plyr-tpid", "#edit-plyr-fname", "#edit-plyr-lname", "#edit-plyr-pos", "#edit-plyr-nfl");
+			setTruePlayerAutoComplete("#edit-plyr-id", "#edit-plyr-tpid", "#edit-plyr-fname", "#edit-plyr-lname",
+				"#edit-plyr-pos", "#edit-plyr-nfl", "#edit-plyr-active");
 			$("#edit-plyr-fname").focus();
 		});
 	});
@@ -163,7 +166,7 @@ function showPlayerDialog(dialogId, formId, header, getPlayerFn, playerFn) {
 	});
 }
 
-function setTruePlayerAutoComplete(pid, tpid, fname, lname, pos, nfl) {
+function setTruePlayerAutoComplete(pid, tpid, fname, lname, pos, nfl, active) {
 	pid = pid || "";
 	$(fname).autocomplete({
 		source: function (request, response) {
@@ -180,18 +183,19 @@ function setTruePlayerAutoComplete(pid, tpid, fname, lname, pos, nfl) {
 			response(filteredArray);
 		},
 		select: function (event, ui) {
-			setSelectedPlayer(pid, tpid, fname, lname, pos, nfl, ui.item);
+			setSelectedPlayer(pid, tpid, fname, lname, pos, nfl, active, ui.item);
 			return false;
 		}
 	});
 };
 
-function setSelectedPlayer(pid, tpid, fname, lname, pos, nfl, plyrHint) {
+function setSelectedPlayer(pid, tpid, fname, lname, pos, nfl, active, plyrHint) {
 	$(pid).val(plyrHint.id);
 	$(tpid).val(plyrHint.tpid);
 	$(fname).val(plyrHint.firstName);
 	$(lname).val(plyrHint.lastName);
 	$(pos).val(plyrHint.pos);
 	$(nfl).val(plyrHint.nflTeamDisplay);
+	$(active).prop("checked", toBool(plyrHint.active));
 	setTimeout(function () { $("#inputSubmit").focus(); }, 0);
 }

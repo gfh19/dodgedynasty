@@ -9,7 +9,7 @@ namespace DodgeDynasty.Mappers.PlayerAdjustments
 {
 	public class GetPlayerAdjustmentsMapper : MapperBase<PlayerAdjustmentsModel>
 	{
-		private int _playerAdjWindow = 20;
+		private int _playerAdjWindow = 25;
 		private string _addPlayerActionText = "Add Player";
 
 		protected override void PopulateModel()
@@ -19,6 +19,8 @@ namespace DodgeDynasty.Mappers.PlayerAdjustments
 
 			Model.AddedPlayers = GetAddedPlayers(adjustments, mostRecentYear);
 			Model.OtherAdjPlayers = GetOtherAdjPlayers(adjustments, mostRecentYear);
+			Model.NonUniquePlayers = GetNonUniquePlayers();
+			Model.DuplicateActivePlayers = GetDuplicateActivePlayers();
 			Model.NFLTeams = HomeEntity.NFLTeams.ToList();
 			Model.Positions = HomeEntity.Positions.ToList();
 			Model.AllPlayers = HomeEntity.Players.OrderBy(o=>o.PlayerName).ToList();
@@ -78,6 +80,63 @@ namespace DodgeDynasty.Mappers.PlayerAdjustments
 				IsActive = p.IsActive,
 				IsDrafted = p.IsDrafted,
 				AddTimestamp = ap.AddTimestamp
+			};
+		}
+
+		private List<AdjustedPlayer> GetNonUniquePlayers()
+		{
+			List<AdjustedPlayer> players = new List<AdjustedPlayer>();
+			var auditPlayers = from p1 in HomeEntity.Players
+							   from p2 in HomeEntity.Players.Where(p2 =>
+								  p1.FirstName == p2.FirstName && p1.LastName == p2.LastName && p1.Position == p2.Position &&
+								  p1.NFLTeam == p2.NFLTeam && p1.PlayerId != p2.PlayerId && p1.TruePlayerId != p2.TruePlayerId)
+								  .DefaultIfEmpty()
+							   join t in HomeEntity.NFLTeams on p2.NFLTeam equals t.TeamAbbr
+							   orderby p2.PlayerName
+							   select new { Player = p2, NFLTeam = t };
+			foreach (var auditPlayer in auditPlayers)
+			{
+				players.Add(GetAuditedPlayer(auditPlayer.Player, auditPlayer.NFLTeam,
+					GetMatchingDrafts(auditPlayer.Player), GetMatchingRanks(auditPlayer.Player)));
+			}
+			return players;
+		}
+
+		private List<AdjustedPlayer> GetDuplicateActivePlayers()
+		{
+			List<AdjustedPlayer> players = new List<AdjustedPlayer>();
+			var auditPlayerTpids = from p in HomeEntity.Players
+								   where p.IsActive
+								   group p by p.TruePlayerId into grp
+								   where grp.Count() > 1
+								   select grp.Key;
+			var auditPlayers = from p in HomeEntity.Players
+							   join t in HomeEntity.NFLTeams on p.NFLTeam equals t.TeamAbbr
+							   where auditPlayerTpids.Contains(p.TruePlayerId)
+							   orderby p.TruePlayerId
+							   select new { Player = p, NFLTeam = t };
+			foreach (var auditPlayer in auditPlayers)
+			{
+				players.Add(GetAuditedPlayer(auditPlayer.Player, auditPlayer.NFLTeam,
+					GetMatchingDrafts(auditPlayer.Player), GetMatchingRanks(auditPlayer.Player)));
+			}
+			return players;
+		}
+
+		private AdjustedPlayer GetAuditedPlayer(Player p, NFLTeam t, List<Draft> drafts, List<Rank> ranks)
+		{
+			return new AdjustedPlayer
+			{
+				PlayerId = p.PlayerId,
+				TruePlayerId = p.TruePlayerId.Value,
+				PlayerName = p.PlayerName,
+				NFLTeam = p.NFLTeam,
+				NFLTeamDisplay = t.AbbrDisplay,
+				Position = p.Position,
+				DraftsRanksText = GetDraftsRanksText(p, drafts, ranks),
+				IsActive = p.IsActive,
+				IsDrafted = p.IsDrafted,
+				AddTimestamp = p.AddTimestamp.Value
 			};
 		}
 
