@@ -97,7 +97,7 @@ namespace DodgeDynasty.Mappers.PlayerAdjustments
 				Action = ap.Action,
 				UserId = (u != null) ? u.UserId.ToString() : null,
 				UserFullName = (u != null) ? u.FullName : null,
-				DraftsRanksText = GetDraftsRanksText(p, drafts, ranks),
+				DraftsRanks = GetDraftsRanks(p, drafts, ranks),
 				IsActive = p.IsActive,
 				IsDrafted = p.IsDrafted,
 				AddTimestamp = ap.AddTimestamp
@@ -154,44 +154,52 @@ namespace DodgeDynasty.Mappers.PlayerAdjustments
 				NFLTeam = p.NFLTeam,
 				NFLTeamDisplay = t.AbbrDisplay,
 				Position = p.Position,
-				DraftsRanksText = GetDraftsRanksText(p, drafts, ranks),
+				DraftsRanks = GetDraftsRanks(p, drafts, ranks),
 				IsActive = p.IsActive,
 				IsDrafted = p.IsDrafted,
 				AddTimestamp = p.AddTimestamp.Value
 			};
 		}
 
-		private string GetDraftsRanksText(Player p, List<Draft> drafts, List<Rank> ranks)
+		private List<DraftsRanksTextModel> GetDraftsRanks(Player p, List<Draft> drafts, List<Rank> ranks)
 		{
-			string draftsRanksText = "---";
-			var latestDraft = drafts.OrderByDescending(o => o.DraftDate).Select(o => o.DraftDate).FirstOrDefault();
-			var latestRank = ranks.OrderByDescending(o => o.AddTimestamp).Select(o => o.AddTimestamp).FirstOrDefault();
-			if (drafts.Count > 0 && latestDraft > latestRank)
+			List<DraftsRanksTextModel> results = new List<DraftsRanksTextModel>();
+
+			results.AddRange(drafts.OrderByDescending(o => o.DraftDate).Select(o => new DraftsRanksTextModel
 			{
-				draftsRanksText = string.Format("{0} {1} Draft", drafts[0].DraftYear, drafts[0].LeagueName);
-				if (drafts.Count > 1 || ranks.Count > 0)
+				Text = string.Format("{0} {1} Draft", o.DraftYear, o.LeagueName),
+				Timestamp = o.DraftDate
+			}));
+			results.AddRange(ranks.Join(HomeEntity.DraftRanks, r=>r.RankId, dr=>dr.RankId,
+				(r, dr) => new
 				{
-					draftsRanksText += " (& more...)";
-				}
-            }
-			else if (ranks.Count > 0)
+					Rank = r,
+					DraftRank = dr
+				})
+				.OrderByDescending(o => o.Rank.AddTimestamp).Select(o => new DraftsRanksTextModel
 			{
-				var rankName = ranks[0].RankName;
-				if (rankName.EndsWith(" Ranks"))
-				{
-					draftsRanksText = string.Format("{0} {1}", ranks[0].Year, rankName);
-				}
-				else
-				{
-					draftsRanksText = string.Format("{0} {1} Ranks", ranks[0].Year, rankName);
-				}
-				if (ranks.Count > 1)
-				{
-					draftsRanksText += " (& more...)";
-				}
+				Text = string.Format("{0} {1}", o.Rank.Year, FormatRankTextName(o.Rank)),
+				UserId = o.DraftRank.UserId,
+				Timestamp = o.Rank.AddTimestamp
+			}));
+			results = results.OrderByDescending(o => o.Timestamp).ToList();
+			if (results.Count == 0)
+			{
+				results.Add(new DraftsRanksTextModel { Text = "---", Timestamp = DateTime.Now });
 			}
-			return draftsRanksText;
+
+			return results;
 		}
+
+		private string FormatRankTextName(Rank rank)
+		{
+			var rankName = rank.RankName;
+			if (!rank.RankName.EndsWith(" Ranks"))
+			{
+				rankName = rankName + " Ranks";
+			}
+			return rankName;
+        }
 
 		private List<Draft> GetMatchingDrafts(Player p)
 		{

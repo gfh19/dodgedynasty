@@ -7,6 +7,7 @@ function initPlayerAdjustments() {
 	bindEditPlayerLink();
 	bindActivatePlayerLinks();
 	bindInactivateAllPlayerButtons();
+	bindDraftsRanksMoreLinks();
 }
 
 function displayAdjustmentWindows() {
@@ -218,4 +219,29 @@ function setSelectedPlayer(pid, tpid, fname, lname, pos, nfl, active, plyrHint) 
 	$(nfl).val(plyrHint.nflTeamDisplay);
 	$(active).prop("checked", toBool(plyrHint.active));
 	setTimeout(function () { $("#inputSubmit").focus(); }, 0);
+}
+
+function bindDraftsRanksMoreLinks() {
+	$(".pa-dr-more-link").unbind("click");
+	var links = $(".pa-dr-more-link");
+	$.each(links, function (index, link) {
+		$(link).click(function (e) {
+			e.preventDefault();
+			var paMoreDialog = $(link).siblings(".pa-dr-more-dialog");
+			var dialog = '<div class="center hide-yo-kids" title="Drafts/Ranks Found">' + $(paMoreDialog).html() + '</div>';
+			$(dialog).dialog({
+				resizable: false,
+				height: 'auto',
+				width: '295px',
+				modal: true,
+				buttons: [
+							{
+								text: "OK", click: function () {
+									$(this).dialog("close");
+								}
+							},
+				]
+			});
+		});
+	});
 }

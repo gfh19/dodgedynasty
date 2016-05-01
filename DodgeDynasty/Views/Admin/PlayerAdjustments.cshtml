@@ -63,7 +63,7 @@
 							<td>@player.NFLTeam</td>
 							<td>@player.Action</td>
 							<td class="nowrap">@player.UserFullName</td>
-							<td>@player.DraftsRanksText</td>
+							@Html.Partial("_DraftsRanksPartial", player)
 							<td class="nowrap">@player.AddTimestamp</td>
 							<td class="pa-entry-links">
 								&lt;<a class="pa-edit-player" href="#">Edit</a>&gt;
@@ -108,7 +108,7 @@
 							<td>@player.NFLTeam</td>
 							<td>@player.Action</td>
 							<td class="nowrap">@player.UserFullName</td>
-							<td>@player.DraftsRanksText</td>
+							@Html.Partial("_DraftsRanksPartial", player)
 							<td class="nowrap">@player.AddTimestamp</td>
 							<td class="pa-entry-links">
 								&lt;<a class="pa-edit-player" href="#">Edit</a>&gt;
@@ -152,7 +152,7 @@
 								<td>@player.PlayerName</td>
 								<td>@player.Position</td>
 								<td>@player.NFLTeam</td>
-								<td>@player.DraftsRanksText</td>
+								@Html.Partial("_DraftsRanksPartial", player)
 								<td class="nowrap">@player.AddTimestamp</td>
 								<td class="pa-entry-links">
 									&lt;<a class="pa-edit-player" href="#">Edit</a>&gt;
@@ -196,7 +196,7 @@
 							<td>@player.PlayerName</td>
 							<td>@player.Position</td>
 							<td>@player.NFLTeam</td>
-							<td>@player.DraftsRanksText</td>
+							@Html.Partial("_DraftsRanksPartial", player)
 							<td class="nowrap">@player.AddTimestamp</td>
 							<td class="pa-entry-links">
 								&lt;<a class="pa-edit-player" href="#">Edit</a>&gt;
