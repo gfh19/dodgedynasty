@@ -14,10 +14,10 @@ using Newtonsoft.Json;
 
 namespace DodgeDynasty.UIHelpers
 {
-	public class PlayerRankHelper
+	public class PlayerRankUIHelper
 	{
-		public static PlayerRankHelper Instance {
-			get { return new PlayerRankHelper(); }
+		public static PlayerRankUIHelper Instance {
+			get { return new PlayerRankUIHelper(); }
 		}
 
 		public PlayerRankModel GetPlayerRankPartial(string rankId, bool showBestAvailable, 
@@ -28,7 +28,17 @@ namespace DodgeDynasty.UIHelpers
 			playerRankModel.Options = options;
 			if (showBestAvailable)
 			{
-				playerRankModel.GetBestAvailPlayerRanks();
+				if (playerRankModel.Options.IsComparingRanks)
+				{
+					var compareRankMapper = new CompareRanksMapper(playerRankModel);
+					compareRankMapper.GetModel();
+					playerRankModel = compareRankMapper.PlayerRankModel;
+					playerRankModel.HighlightedPlayers = playerRankModel.GetBestAvailHighlightedPlayers();
+				}
+				else
+				{
+					playerRankModel.GetBestAvailPlayerRanks();
+				}
 			}
 			else
 			{
@@ -53,11 +63,11 @@ namespace DodgeDynasty.UIHelpers
 			}
 			var mapper = MapperFactory.CreatePlayerRankOptionsMapper(cookieId);
 			var playerRankOptions = mapper.GetModel();
-			CheckSetUpdatedOptionsCookie(mapper, response);
+			CheckUpdatedOptionsCookie(mapper, response);
 			return playerRankOptions;
 		}
 
-		private void CheckSetUpdatedOptionsCookie(PlayerRankOptionsMapper mapper, HttpResponseBase response)
+		private void CheckUpdatedOptionsCookie(PlayerRankOptionsMapper mapper, HttpResponseBase response)
 		{
 			if (mapper.UpdatedPlayerRankOptionId != null)
 			{
@@ -130,7 +140,7 @@ namespace DodgeDynasty.UIHelpers
 				options.DraftId = draftId;
 				PlayerRankOptionsMapper mapper = MapperFactory.CreatePlayerRankOptionsMapper(options.Id);
 				mapper.UpdateEntity(options);
-				CheckSetUpdatedOptionsCookie(mapper, response);
+				CheckUpdatedOptionsCookie(mapper, response);
 			}
 			playerRankModel.SetPlayerRanks(rankId);
 			return playerRankModel;

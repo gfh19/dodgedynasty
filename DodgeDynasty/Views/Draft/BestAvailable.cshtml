@@ -7,5 +7,12 @@
 	<script type="text/javascript" src="@Url.Script("~/Scripts/PlayerRanksShared.js")"></script>
 }
 <div id="bestAvailable">
-	@Html.Partial(Url.Content("../Draft/PlayerRanksPartial"), Model)
+	@if (Model.Options.IsComparingRanks)
+	{
+		@Html.Partial(Url.Content("../Draft/ComparePlayerRanksPartial"), Model)
+	}
+	else
+	{
+		@Html.Partial(Url.Content("../Draft/PlayerRanksPartial"), Model)
+	}
 </div>

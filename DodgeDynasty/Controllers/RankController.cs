@@ -41,7 +41,7 @@ namespace DodgeDynasty.Controllers
 		{
 			GetPlayerRankOptions();
 			PlayerRankModel model = DraftFactory.GetPlayerRankModel(rankId);
-			model.Options = PlayerRankHelper.Instance.GetPlayerRankOptions(Request, Response);
+			model.Options = PlayerRankUIHelper.Instance.GetPlayerRankOptions(Request, Response);
 			model.GetAllPlayerRanks();
 			if (TempData.ContainsKey(Constants.TempData.RankStatus))
 			{
@@ -112,7 +112,7 @@ namespace DodgeDynasty.Controllers
 		[HttpGet]
 		public JsonResult GetPlayerRankOptions()
 		{
-			var options = PlayerRankHelper.Instance.GetPlayerRankOptions(Request, Response);
+			var options = PlayerRankUIHelper.Instance.GetPlayerRankOptions(Request, Response);
 			return Json(options);
 		}
 

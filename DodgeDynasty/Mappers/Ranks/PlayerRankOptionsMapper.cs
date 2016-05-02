@@ -69,6 +69,7 @@ namespace DodgeDynasty.Mappers.Ranks
 		private Entities.PlayerRankOption AddNewPlayerRankOptions(PlayerRankOptions model, int userId)
 		{
 			var playerRankOptionGuid = new Guid(PlayerRankOptionId);
+			//If optionId exists in DB for a different user (i.e. new user logged into same browser)
 			if (HomeEntity.PlayerRankOptions.Any(o => o.PlayerRankOptionId == playerRankOptionGuid))
 			{
 				UpdatedPlayerRankOptionId = PlayerRankOptionId = Guid.NewGuid().ToString();

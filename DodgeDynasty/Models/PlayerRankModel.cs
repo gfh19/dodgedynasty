@@ -14,7 +14,7 @@ using DodgeDynasty.Models.Drafts;
 
 namespace DodgeDynasty.Models
 {
-	public class PlayerRankModel : RankIdModel
+	public class PlayerRankModel : RankIdModel, IPlayerRankModel
 	{
 		public int RanksWindow { get; set; }
 		public Rank CurrentRank { get; set; }
@@ -31,8 +31,9 @@ namespace DodgeDynasty.Models
 		public string RankStatus { get; set; }
 		public PlayerModel Player { get; set; }
 		public RankCategoryModel CurrentRankCategory { get; set; }
-		public List<PlayerHighlight> PlayerHighlights { get; set; }
+		//public List<PlayerHighlight> PlayerHighlights { get; set; }
 		public List<RankedPlayer> HighlightedPlayers { get; set; }
+		public List<PlayerRankingsModel> CompareRankModels { get; set; }
 
 		public PlayerRankModel(int rankId, int? draftId = null)
 			: this(draftId)
@@ -53,8 +54,8 @@ namespace DodgeDynasty.Models
 				var userId = HomeEntity.Users.GetLoggedInUserId();
                 CurrentRank = HomeEntity.Ranks.First(r => r.RankId == rankId);
 				PlayerRanks = HomeEntity.PlayerRanks.Where(pr => pr.RankId == rankId).ToList();
-				PlayerHighlights = HomeEntity.PlayerHighlights.
-					Where(o => o.DraftId == DraftId && o.UserId == userId).ToList();
+				//PlayerHighlights = HomeEntity.PlayerHighlights.
+					//Where(o => o.DraftId == DraftId && o.UserId == userId).ToList();
             }
 		}
 
@@ -218,6 +219,12 @@ namespace DodgeDynasty.Models
 		public PlayerRankModel SetCategory(RankCategory category)
 		{
 			CurrentRankCategory = RankCategoryFactory.RankCatDict[category](this);
+			return this;
+		}
+		
+		public IPlayerRankModel SetCompareRanksCategory(RankCategory category, IPlayerRankModel compareRankModel)
+		{
+			CurrentRankCategory = RankCategoryFactory.RankCatDict[category](compareRankModel);
 			return this;
 		}
 

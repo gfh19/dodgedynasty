@@ -1,6 +1,6 @@
 ﻿@model DodgeDynasty.Models.PlayerRankModel
 
-<div id="playerRanksPartial">
+<div id="comparePlayerRanksPartial">
 	<script type="text/javascript">
 		$(function () {
 			ranksWindow = @(Model.RanksWindow);
@@ -64,12 +64,10 @@
 	<div class="rank-container">
 		<div class="ba-rankings">
 			@Html.Partial(Url.Content("../Draft/HighlightQueuePartial"), Model)
-			@Html.Partial(Url.Content("../Draft/_PlayerRankCategory"), Model.SetCategory(DodgeDynasty.Models.ViewTypes.RankCategory.Overall))
-            @Html.Partial(Url.Content("../Draft/_PlayerRankCategory"), Model.SetCategory(DodgeDynasty.Models.ViewTypes.RankCategory.QB))
-			@Html.Partial(Url.Content("../Draft/_PlayerRankCategory"), Model.SetCategory(DodgeDynasty.Models.ViewTypes.RankCategory.RB))
-			@Html.Partial(Url.Content("../Draft/_PlayerRankCategory"), Model.SetCategory(DodgeDynasty.Models.ViewTypes.RankCategory.WRTE))
-			@Html.Partial(Url.Content("../Draft/_PlayerRankCategory"), Model.SetCategory(DodgeDynasty.Models.ViewTypes.RankCategory.DEF))
-			@Html.Partial(Url.Content("../Draft/_PlayerRankCategory"), Model.SetCategory(DodgeDynasty.Models.ViewTypes.RankCategory.K))
+			@foreach (var compareRankModel in Model.CompareRankModels)
+			{
+				@Html.Partial(Url.Content("../Draft/_PlayerRankCategory"), Model.SetCompareRanksCategory(DodgeDynasty.Models.ViewTypes.RankCategory.Overall, compareRankModel))
+			}
 		</div>
 	</div>
 </div>

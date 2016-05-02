@@ -28,7 +28,7 @@ namespace DodgeDynasty.Models.ViewTypes
 			{ RankCategory.K, new RankCatFn(CreateCategoryK) }
 		};
 
-		public static RankCategoryModel CreateCategoryOverall(PlayerRankModel playerRankModel)
+		public static RankCategoryModel CreateCategoryOverall(IPlayerRankModel playerRankModel)
 		{
 			RankCategoryModel result = new RankCategoryModel();
 			result.DataLink = result.ExpandId = "ExpandOverall";
@@ -40,7 +40,7 @@ namespace DodgeDynasty.Models.ViewTypes
 			result.PlayerList = playerRankModel.OverallRankedPlayers;
             return result;
 		}
-		public static RankCategoryModel CreateCategoryQB(PlayerRankModel playerRankModel)
+		public static RankCategoryModel CreateCategoryQB(IPlayerRankModel playerRankModel)
 		{
 			RankCategoryModel result = new RankCategoryModel();
 			result.DataLink = result.ExpandId = "ExpandQB";
@@ -52,7 +52,7 @@ namespace DodgeDynasty.Models.ViewTypes
 			result.PlayerList = playerRankModel.QBRankedPlayers;
 			return result;
 		}
-		public static RankCategoryModel CreateCategoryRB(PlayerRankModel playerRankModel)
+		public static RankCategoryModel CreateCategoryRB(IPlayerRankModel playerRankModel)
 		{
 			RankCategoryModel result = new RankCategoryModel();
 			result.DataLink = result.ExpandId = "ExpandRB";
@@ -64,7 +64,7 @@ namespace DodgeDynasty.Models.ViewTypes
 			result.PlayerList = playerRankModel.RBRankedPlayers;
 			return result;
 		}
-		public static RankCategoryModel CreateCategoryWRTE(PlayerRankModel playerRankModel)
+		public static RankCategoryModel CreateCategoryWRTE(IPlayerRankModel playerRankModel)
 		{
 			RankCategoryModel result = new RankCategoryModel();
 			result.DataLink = result.ExpandId = "ExpandWRTE";
@@ -76,7 +76,7 @@ namespace DodgeDynasty.Models.ViewTypes
 			result.PlayerList = playerRankModel.WRTERankedPlayers;
 			return result;
 		}
-		public static RankCategoryModel CreateCategoryDEF(PlayerRankModel playerRankModel)
+		public static RankCategoryModel CreateCategoryDEF(IPlayerRankModel playerRankModel)
 		{
 			RankCategoryModel result = new RankCategoryModel();
 			result.DataLink = result.ExpandId = "ExpandDEF";
@@ -88,7 +88,7 @@ namespace DodgeDynasty.Models.ViewTypes
 			result.PlayerList = playerRankModel.DEFRankedPlayers;
 			return result;
 		}
-		public static RankCategoryModel CreateCategoryK(PlayerRankModel playerRankModel)
+		public static RankCategoryModel CreateCategoryK(IPlayerRankModel playerRankModel)
 		{
 			RankCategoryModel result = new RankCategoryModel();
 			result.DataLink = result.ExpandId = "ExpandK";
@@ -102,5 +102,5 @@ namespace DodgeDynasty.Models.ViewTypes
 		}
 	}
 
-	public delegate RankCategoryModel RankCatFn(PlayerRankModel playerRankModel);
+	public delegate RankCategoryModel RankCatFn(IPlayerRankModel playerRankModel);
 }

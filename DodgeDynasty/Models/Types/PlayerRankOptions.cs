@@ -11,6 +11,10 @@ namespace DodgeDynasty.Models.Types
 		[JsonProperty()]
 		public string DraftId { get; set; }
 		[JsonProperty()]
+		public bool IsComparingRanks { get; set; }
+		[JsonProperty()]
+		public string CompareRankIds { get; set; }
+		[JsonProperty()]
 		public bool ExpandOverall { get; set; }
 		[JsonProperty()]
 		public bool ExpandQB { get; set; }

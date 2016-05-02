@@ -11,7 +11,7 @@ using System.Web.Mvc;
 
 namespace DodgeDynasty.Models
 {
-	public class DraftModel : ModelBase
+	public class DraftModel : ModelBase, IDraftModel
 	{
 		public int? DraftId { get; set; }
 		public int PickTimeSeconds { get; set; }
