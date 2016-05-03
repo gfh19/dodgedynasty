@@ -24,13 +24,14 @@ namespace DodgeDynasty.UIHelpers
 			HttpRequestBase request, HttpResponseBase response)
 		{
 			var options = GetPlayerRankOptions(request, response);
+			UpdateIsComparingRanks(request, response, options);
 			PlayerRankModel playerRankModel = DetermineRankModel(rankId, null, options, response, false);
 			playerRankModel.Options = options;
 			if (showBestAvailable)
 			{
 				if (playerRankModel.Options.IsComparingRanks)
 				{
-					var compareRankMapper = new CompareRanksMapper(playerRankModel);
+					var compareRankMapper = MapperFactory.CreateCompareRanksMapper(playerRankModel);
 					compareRankMapper.GetModel();
 					playerRankModel = compareRankMapper.PlayerRankModel;
 					playerRankModel.HighlightedPlayers = playerRankModel.GetBestAvailHighlightedPlayers();
@@ -46,7 +47,7 @@ namespace DodgeDynasty.UIHelpers
 			}
 			return playerRankModel;
 		}
-		
+
 		public PlayerRankOptions GetPlayerRankOptions(HttpRequestBase request, HttpResponseBase response)
 		{
 			string cookieId = null;
@@ -138,12 +139,30 @@ namespace DodgeDynasty.UIHelpers
 					draftId = playerRankModel.GetCurrentDraftId().ToString();
 				}
 				options.DraftId = draftId;
-				PlayerRankOptionsMapper mapper = MapperFactory.CreatePlayerRankOptionsMapper(options.Id);
-				mapper.UpdateEntity(options);
-				CheckUpdatedOptionsCookie(mapper, response);
+				UpdatePlayerRankOptions(options, response);
 			}
 			playerRankModel.SetPlayerRanks(rankId);
 			return playerRankModel;
+		}
+
+		public void UpdatePlayerRankOptions(PlayerRankOptions options, HttpResponseBase response)
+		{
+			PlayerRankOptionsMapper mapper = MapperFactory.CreatePlayerRankOptionsMapper(options.Id);
+			mapper.UpdateEntity(options);
+			CheckUpdatedOptionsCookie(mapper, response);
+		}
+
+		public void UpdateIsComparingRanks(HttpRequestBase request, HttpResponseBase response, PlayerRankOptions options)
+		{
+			if (request.QueryString[Constants.QS.IsComparingRanks] != null)
+			{
+				var isComparingRanks = Utilities.ToBool(request.QueryString[Constants.QS.IsComparingRanks]);
+				if (options.IsComparingRanks != isComparingRanks)
+				{
+					options.IsComparingRanks = isComparingRanks;
+					UpdatePlayerRankOptions(options, response);
+				}
+			}
 		}
 
 		public string GetPlayerRankPartialName(bool showBestAvailable)

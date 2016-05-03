@@ -76,13 +76,7 @@ namespace DodgeDynasty.Controllers
 		[OwnerRankAccess]
 		public ActionResult BestAvailable(string rankId, string id)
 		{
-			//TODO:  Check CompareRankIds owner rank access/valid ints; clear cookie values if not
-
-			//var helper = PlayerRankUIHelper.Instance;
-			//var options = helper.GetPlayerRankOptions(Request, Response);
-			//PlayerRankModel playerRankModel = helper.DetermineRankModel(rankId, id, options, Response);
-			//playerRankModel.Options = options;
-			//playerRankModel.GetBestAvailPlayerRanks();
+//TODO:  Check CompareRankIds owner rank access/valid ints; clear cookie values if not
 
 			var helper = PlayerRankUIHelper.Instance;
 			var playerRankModel = helper.GetPlayerRankPartial(rankId, true, Request, Response);
@@ -127,6 +121,7 @@ namespace DodgeDynasty.Controllers
 		}
 
 		[HttpGet]
+		[OwnerRankAccess]
 		public ActionResult HighlightQueuePartial(bool isBestAvailable)
 		{
 			var helper = PlayerRankUIHelper.Instance;
@@ -142,6 +137,19 @@ namespace DodgeDynasty.Controllers
 				playerRankModel.GetAllPlayerRanksByPosition();
 			}
 			return PartialView(Constants.Views.HighlightQueuePartial, playerRankModel);
+		}
+
+		[HttpPost]
+		[OwnerRankAccess]
+		public ActionResult UpdateCompareRankSelects(string compRankIds, bool isBestAvailable)
+		{
+//TODO:  Check CompareRankIds owner rank access/valid ints; clear cookie values if not
+			var helper = PlayerRankUIHelper.Instance;
+			var options = helper.GetPlayerRankOptions(Request, Response);
+			options.CompareRankIds = compRankIds;
+			helper.UpdatePlayerRankOptions(options, Response);
+			var playerRankModel = helper.GetPlayerRankPartial(null, isBestAvailable, Request, Response);
+			return PartialView(isBestAvailable ? Constants.Views.BestAvailable : Constants.Views.PlayerRanks, playerRankModel);
 		}
 
 		[HttpGet]

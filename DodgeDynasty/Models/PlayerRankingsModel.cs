@@ -32,5 +32,6 @@ namespace DodgeDynasty.Models
 		public List<RankedPlayer> KRankedPlayers { get; set; }
 		public PlayerRankOptions Options { get; set; }
 		public List<RankedPlayer> HighlightedPlayers { get; set; }
+		public string CategoryRankHeader { get; set; }
 	}
 }

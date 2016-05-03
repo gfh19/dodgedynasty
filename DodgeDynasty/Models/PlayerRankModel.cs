@@ -34,6 +34,8 @@ namespace DodgeDynasty.Models
 		//public List<PlayerHighlight> PlayerHighlights { get; set; }
 		public List<RankedPlayer> HighlightedPlayers { get; set; }
 		public List<PlayerRankingsModel> CompareRankModels { get; set; }
+		public IPlayerRankModel CompareRank { get; set; }
+		public string CategoryRankHeader { get; set; }
 
 		public PlayerRankModel(int rankId, int? draftId = null)
 			: this(draftId)
@@ -225,7 +227,10 @@ namespace DodgeDynasty.Models
 		public IPlayerRankModel SetCompareRanksCategory(RankCategory category, IPlayerRankModel compareRankModel)
 		{
 			CurrentRankCategory = RankCategoryFactory.RankCatDict[category](compareRankModel);
-			return this;
+			CompareRank = compareRankModel;
+			CompareRank.CategoryRankHeader = string.Format("{0} ({1})", compareRankModel.CurrentRank.RankName, 
+				compareRankModel.CurrentRank.RankDate.ToString("M/d/yy"));
+            return this;
 		}
 
 		public List<SelectListItem> GetHighlightColors()
@@ -250,6 +255,11 @@ namespace DodgeDynasty.Models
 		{
 			CopyLastDraftHighlightsMapper mapper = new CopyLastDraftHighlightsMapper();
 			return mapper.GetModel();
+        }
+
+		public List<SelectListItem> GetCurrentAvailableDraftRankItems(string rankId)
+		{
+			return Utilities.GetListItems(GetCurrentAvailableDraftRanks(), r => r.RankName, r => r.RankId.ToString(), false, rankId);
         }
 	}
 }

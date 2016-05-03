@@ -1,4 +1,5 @@
 ﻿/* 4/27/16 */
+--Guess could've called it "AuditStatus" table
 
 SET XACT_ABORT ON
 BEGIN TRANSACTION;
@@ -39,6 +40,22 @@ GO
 
 ALTER TABLE [dbo].[AdminStatus] CHECK CONSTRAINT [FK_AdminStatus_User]
 GO
+
+
+
+
+
+ALTER TABLE [dbo].[PlayerRankOption]
+ADD [IsComparingRanks] bit NOT NULL DEFAULT(0)
+GO
+
+ALTER TABLE [dbo].[PlayerRankOption]
+ADD [CompareRankIds] varchar(50) NULL
+GO
+
+
+
+
 
 
 

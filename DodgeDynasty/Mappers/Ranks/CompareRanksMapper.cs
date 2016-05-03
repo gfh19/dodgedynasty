@@ -19,13 +19,16 @@ namespace DodgeDynasty.Mappers.Ranks
 		{
 			var helper = PlayerRankModelHelper.Instance;
 			PlayerRankModel.CompareRankModels = new List<PlayerRankingsModel>();
-            foreach (var compareRankId in PlayerRankModel.Options.CompareRankIds.Split(','))
+			if (!string.IsNullOrEmpty(PlayerRankModel.Options.CompareRankIds))
 			{
-				Model = helper.CreatePlayerRankingsModel(PlayerRankModel);
-				helper.SetPlayerRanks(Model, HomeEntity, Convert.ToInt32(compareRankId));
-				helper.GetBestAvailOverallCompPlayerRanks(Model);
-				PlayerRankModel.CompareRankModels.Add(Model);
-            }
+				foreach (var compareRankId in PlayerRankModel.Options.CompareRankIds.Split(','))
+				{
+					Model = helper.CreatePlayerRankingsModel(PlayerRankModel);
+					helper.SetPlayerRanks(Model, HomeEntity, Convert.ToInt32(compareRankId));
+					helper.GetBestAvailOverallCompPlayerRanks(Model);
+					PlayerRankModel.CompareRankModels.Add(Model);
+				}
+			}
 		}
 	}
 }

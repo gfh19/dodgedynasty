@@ -283,6 +283,8 @@
           <Property Name="ShowHighlighting" Type="bit" Nullable="false" />
           <Property Name="LockHighlighting" Type="bit" Nullable="false" />
           <Property Name="HighlightColor" Type="varchar" MaxLength="50" />
+          <Property Name="IsComparingRanks" Type="bit" Nullable="false" />
+          <Property Name="CompareRankIds" Type="varchar" MaxLength="50" />
           <Property Name="AddTimestamp" Type="datetime" />
           <Property Name="LastUpdateTimestamp" Type="datetime" />
         </EntityType>
@@ -1868,6 +1870,8 @@
           <Property Name="HighlightColor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="AddTimestamp" Type="DateTime" Precision="3" />
           <Property Name="LastUpdateTimestamp" Type="DateTime" Precision="3" />
+          <Property Name="IsComparingRanks" Type="Boolean" Nullable="false" />
+          <Property Name="CompareRankIds" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -2289,6 +2293,8 @@
           <EntitySetMapping Name="PlayerRankOptions">
             <EntityTypeMapping TypeName="HomeModel.PlayerRankOption">
               <MappingFragment StoreEntitySet="PlayerRankOption">
+                <ScalarProperty Name="CompareRankIds" ColumnName="CompareRankIds" />
+                <ScalarProperty Name="IsComparingRanks" ColumnName="IsComparingRanks" />
                 <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
                 <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
                 <ScalarProperty Name="HighlightColor" ColumnName="HighlightColor" />

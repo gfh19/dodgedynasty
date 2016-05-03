@@ -20,5 +20,10 @@ namespace DodgeDynasty.Mappers
 		{
 			return new CommishManageDraftsMapper<ManageDraftsModel> { LeagueId = leagueId };
 		}
-    }
+
+		public static CompareRanksMapper CreateCompareRanksMapper(PlayerRankModel playerRankModel)
+		{
+			return new CompareRanksMapper(playerRankModel); ;
+		}
+	}
 }

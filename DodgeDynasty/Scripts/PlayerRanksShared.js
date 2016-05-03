@@ -10,6 +10,7 @@ function initPlayerRanksShared() {
 	bindPlayerLinks();
 	bindHideCategoryLinks();
 	toggleCategoryTables();
+	bindCompareRanksSelects();
 }
 
 function bindExpandLinks() {
@@ -167,7 +168,9 @@ function getRankIdUrlPath() {
 	return "";
 }
 
-
+function isBestAvailablePage() {
+	return replaceElementId == "#bestAvailable";
+}
 
 
 
@@ -358,7 +361,7 @@ function removePlayerHighlighting(playerRow) {
 }
 
 function refreshHighlightQueue() {
-	var isBestAvailable = replaceElementId == "#bestAvailable";
+	var isBestAvailable = isBestAvailablePage();
 	ajaxGetReplace("Draft/HighlightQueuePartial?isBestAvailable=" + isBestAvailable, "#highlightQueuePartial", function () {
 		toggleHighlighting(true);
 	}, pageBroadcastDraftHandler);	//Refresh whole ranks partial only on error
@@ -497,5 +500,30 @@ function updateQueueRankNums(playerQueueOrderModel) {
 		$(player).attr("data-rank-num", newRankNum);
 		$(player).text(newRankNum);
 		newRankNum++;
+	});
+}
+
+
+
+//Compare Ranks
+
+function bindCompareRanksSelects() {
+	var selects = $(".cr-rank-select");
+	$.each(selects, function (index, select) {
+		bindCompareRanksSelect(select);
+	});
+}
+
+function bindCompareRanksSelect(select) {
+	$(select).unbind("change");
+	$(select).change(function (e) {
+		e.preventDefault();
+		var compareRankdIds = "";
+		$.each($(".cr-rank-select"), function (ix, select) {
+			compareRankdIds += $(select).val() + ",";
+		});
+		compareRankdIds = compareRankdIds.removeTrailing(",")
+		ajaxPostReplace({ compRankIds: compareRankdIds, isBestAvailable: isBestAvailablePage() },
+			"Draft/UpdateCompareRankSelects", replaceElementId);
 	});
 }

@@ -20,7 +20,10 @@
 		<div class="rankings-list">Other Player Rankings</div>
 	</div>
 	<div class="rlist-header">
-		<div class="rlist-section"><a href="#" class="rank-compare-list">Compare Multiple Rankings *NEW!*</a></div>
+	@if (draftId == null)
+	{
+		<div class="rlist-section"><a href="@Url.Content("~/Draft/BestAvailable?compare=true")" class="rank-compare-list">Compare Multiple Rankings *NEW!*</a></div>
+	}
 	</div>
 	<div class="rlist-header">
 		<div class="rlist-section bold">Public Rankings:</div>
@@ -30,11 +33,11 @@
 				<div class="rank-list-entry">
 					@if (draftId != null)
 					{
-						<a class="rank-link" data-rank-id="@list.RankId" href="@Url.Content("~/Draft/BestAvailable/" + draftId + "?rankId=" + list.RankId + "&historyMode=true")">@list.RankName</a>
+						<a class="rank-link" data-rank-id="@list.RankId" href="@Url.Content("~/Draft/BestAvailable/" + draftId + "?compare=false&rankId=" + list.RankId + "&historyMode=true")">@list.RankName</a>
 					}
 					else
 					{
-						<a class="rank-link" data-rank-id="@list.RankId" href="@Url.Content("~/Draft/BestAvailable?rankId=" + list.RankId)">@list.RankName</a>
+						<a class="rank-link" data-rank-id="@list.RankId" href="@Url.Content("~/Draft/BestAvailable?compare=false&rankId=" + list.RankId)">@list.RankName</a>
 					}
 				</div>
 			}
@@ -49,11 +52,11 @@
 				<div class="rank-list-entry">
 					@if (draftId != null)
 					{
-						<a class="rank-link" data-rank-id="@list.RankId" href="@Url.Content("~/Draft/BestAvailable/" + draftId + "?rankId=" + list.RankId + "&historyMode=true")">@list.RankName</a>
+						<a class="rank-link" data-rank-id="@list.RankId" href="@Url.Content("~/Draft/BestAvailable/" + draftId + "?compare=false&rankId=" + list.RankId + "&historyMode=true")">@list.RankName</a>
 					}
 					else
 					{
-						<a class="rank-link" data-rank-id="@list.RankId" href="@Url.Content("~/Draft/BestAvailable?rankId=" + list.RankId)">@list.RankName</a>
+						<a class="rank-link" data-rank-id="@list.RankId" href="@Url.Content("~/Draft/BestAvailable?compare=false&rankId=" + list.RankId)">@list.RankName</a>
 						<text>(<a class="update-rank-link" href="@Url.Content("~/Rank/SetupRank?rankId=" + list.RankId)">Edit</a>)</text>
 					}
 				</div>

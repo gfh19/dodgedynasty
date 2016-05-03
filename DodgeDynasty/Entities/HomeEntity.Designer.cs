@@ -7065,7 +7065,8 @@ namespace DodgeDynasty.Entities
         /// <param name="hideQueue">Initial value of the HideQueue property.</param>
         /// <param name="showHighlighting">Initial value of the ShowHighlighting property.</param>
         /// <param name="lockHighlighting">Initial value of the LockHighlighting property.</param>
-        public static PlayerRankOption CreatePlayerRankOption(global::System.Guid playerRankOptionId, global::System.Int32 userId, global::System.Boolean expandOverall, global::System.Boolean expandQB, global::System.Boolean expandRB, global::System.Boolean expandWRTE, global::System.Boolean expandDEF, global::System.Boolean expandK, global::System.Boolean expandQueue, global::System.Boolean hideOverall, global::System.Boolean hideQB, global::System.Boolean hideRB, global::System.Boolean hideWRTE, global::System.Boolean hideDEF, global::System.Boolean hideK, global::System.Boolean hideQueue, global::System.Boolean showHighlighting, global::System.Boolean lockHighlighting)
+        /// <param name="isComparingRanks">Initial value of the IsComparingRanks property.</param>
+        public static PlayerRankOption CreatePlayerRankOption(global::System.Guid playerRankOptionId, global::System.Int32 userId, global::System.Boolean expandOverall, global::System.Boolean expandQB, global::System.Boolean expandRB, global::System.Boolean expandWRTE, global::System.Boolean expandDEF, global::System.Boolean expandK, global::System.Boolean expandQueue, global::System.Boolean hideOverall, global::System.Boolean hideQB, global::System.Boolean hideRB, global::System.Boolean hideWRTE, global::System.Boolean hideDEF, global::System.Boolean hideK, global::System.Boolean hideQueue, global::System.Boolean showHighlighting, global::System.Boolean lockHighlighting, global::System.Boolean isComparingRanks)
         {
             PlayerRankOption playerRankOption = new PlayerRankOption();
             playerRankOption.PlayerRankOptionId = playerRankOptionId;
@@ -7086,6 +7087,7 @@ namespace DodgeDynasty.Entities
             playerRankOption.HideQueue = hideQueue;
             playerRankOption.ShowHighlighting = showHighlighting;
             playerRankOption.LockHighlighting = lockHighlighting;
+            playerRankOption.IsComparingRanks = isComparingRanks;
             return playerRankOption;
         }
 
@@ -7647,6 +7649,54 @@ namespace DodgeDynasty.Entities
         private Nullable<global::System.DateTime> _LastUpdateTimestamp;
         partial void OnLastUpdateTimestampChanging(Nullable<global::System.DateTime> value);
         partial void OnLastUpdateTimestampChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean IsComparingRanks
+        {
+            get
+            {
+                return _IsComparingRanks;
+            }
+            set
+            {
+                OnIsComparingRanksChanging(value);
+                ReportPropertyChanging("IsComparingRanks");
+                _IsComparingRanks = StructuralObject.SetValidValue(value, "IsComparingRanks");
+                ReportPropertyChanged("IsComparingRanks");
+                OnIsComparingRanksChanged();
+            }
+        }
+        private global::System.Boolean _IsComparingRanks;
+        partial void OnIsComparingRanksChanging(global::System.Boolean value);
+        partial void OnIsComparingRanksChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String CompareRankIds
+        {
+            get
+            {
+                return _CompareRankIds;
+            }
+            set
+            {
+                OnCompareRankIdsChanging(value);
+                ReportPropertyChanging("CompareRankIds");
+                _CompareRankIds = StructuralObject.SetValidValue(value, true, "CompareRankIds");
+                ReportPropertyChanged("CompareRankIds");
+                OnCompareRankIdsChanged();
+            }
+        }
+        private global::System.String _CompareRankIds;
+        partial void OnCompareRankIdsChanging(global::System.String value);
+        partial void OnCompareRankIdsChanged();
 
         #endregion
 

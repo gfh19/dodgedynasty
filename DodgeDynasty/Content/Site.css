@@ -1497,6 +1497,9 @@ ul.menu li a.current-page
 .ba-category th:last-child, .ba-category td:last-child {
 	padding-right: 2px;
 }
+.ba-table {
+	margin: 0 auto;
+}
 
 	/*    -------- Highlighting */
 

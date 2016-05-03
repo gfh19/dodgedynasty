@@ -46,8 +46,10 @@ namespace DodgeDynasty.Mappers.Ranks
 				HideQueue = options.HideQueue,
 				ShowHighlighting = options.ShowHighlighting,
 				LockHighlighting = options.LockHighlighting,
-				HighlightColor = options.HighlightColor
-			};
+				HighlightColor = options.HighlightColor,
+				IsComparingRanks = options.IsComparingRanks,
+				CompareRankIds = options.CompareRankIds
+		};
 		}
 
 		protected override void DoUpdate(PlayerRankOptions model)
@@ -103,6 +105,8 @@ namespace DodgeDynasty.Mappers.Ranks
 			options.ShowHighlighting = model.ShowHighlighting;
 			options.LockHighlighting = model.LockHighlighting;
 			options.HighlightColor = GetSafeHighlightColor(model.HighlightColor);
+			options.IsComparingRanks = model.IsComparingRanks;
+			options.CompareRankIds = model.CompareRankIds;
 			options.LastUpdateTimestamp = DateTime.Now;
 			return options;
         }

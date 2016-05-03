@@ -741,6 +741,7 @@ function preventBackspaceNav(e) {
 function toBool(val) {
 	return val == true || (val != null && val != undefined && val.toLowerCase() == "true");
 }
+
 function htmlEncode(val) {
 	return $('<div/>').text(val).html();
 }
@@ -841,5 +842,18 @@ $.fn.goTo = function () {
 $.fn.where = function (prop, val) {
 	return $.grep($(this), function (e) { return e[prop] == val; });
 }
+
+String.prototype.removeTrailing = function (substr) {
+	var ix = this.lastIndexOf(substr);
+	var resp = this + "";
+	if (ix >= 0) {
+		resp = this.substring(0, ix);
+		if (this.length - substr.length != resp.length) {
+			resp = this + "";
+		}
+	}
+	return resp;
+}
+
 
 /* End Plugins */
