@@ -38,29 +38,18 @@ namespace DodgeDynasty.Mappers.Ranks
 		public void SetPlayerRanks(IPlayerRankModel model, HomeEntity homeEntity, int rankId)
 		{
 			model.RankId = rankId;
-			var userId = homeEntity.Users.GetLoggedInUserId();
 			model.CurrentRank = homeEntity.Ranks.First(r => r.RankId == rankId);
 			model.PlayerRanks = homeEntity.PlayerRanks.Where(pr => pr.RankId == rankId).ToList();
 		}
 
-		public void GetBestAvailOverallCompPlayerRanks(IPlayerRankModel model)
+		public void GetBestAvailOverallCompRanks(IPlayerRankModel model)
 		{
-			var rankedPlayerIds = model.PlayerRanks.Select(pr => pr.PlayerId).ToList();
-
-			model.RankedPlayers = (from pr in model.PlayerRanks
-								   join p in model.AllPlayers on pr.PlayerId equals p.PlayerId
-								   join t in model.NFLTeams on p.NFLTeam equals t.TeamAbbr
-								   join ph in model.CurrentPlayerHighlights on pr.PlayerId equals ph.PlayerId into phLeft
-								   from ph in phLeft.DefaultIfEmpty()
-								   select GetRankedPlayer(pr, p, t, ph)).OrderBy(p => p.RankNum).ToList();
-
 			model.OverallRankedPlayers = model.RankedPlayers.Where(rp => !model.DraftedPlayers.Any(dp => rp.TruePlayerId == dp.TruePlayerId)).ToList();
-			//model.QBRankedPlayers = model.OverallRankedPlayers.Where(p => p.Position == "QB").ToList();
-			//model.RBRankedPlayers = model.OverallRankedPlayers.Where(p => p.Position == "RB").ToList();
-			//model.WRTERankedPlayers = model.OverallRankedPlayers.Where(p => p.Position == "WR" || p.Position == "TE").ToList();
-			//model.DEFRankedPlayers = model.OverallRankedPlayers.Where(p => p.Position == "DEF").ToList();
-			//model.KRankedPlayers = model.OverallRankedPlayers.Where(p => p.Position == "K").ToList();
-			//model.HighlightedPlayers = bestAvailHighlightedPlayers;
+		}
+
+		public void GetAllPlayersOverallCompRanks(IPlayerRankModel model)
+		{
+			model.OverallRankedPlayers = model.RankedPlayers.ToList();
 		}
 
 		public RankedPlayer GetRankedPlayer(PlayerRank pr, Player p, NFLTeam t, PlayerHighlight ph = null, DraftPick pick = null,

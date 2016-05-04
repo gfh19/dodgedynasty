@@ -80,7 +80,6 @@ namespace DodgeDynasty.Controllers
 
 			var helper = PlayerRankUIHelper.Instance;
 			var playerRankModel = helper.GetPlayerRankPartial(rankId, true, Request, Response);
-
 			return View(playerRankModel);
 		}
 
@@ -88,11 +87,10 @@ namespace DodgeDynasty.Controllers
 		[OwnerRankAccess]
 		public ActionResult BestAvailablePartial(string rankId)
 		{
+//TODO:  Check CompareRankIds owner rank access/valid ints; clear cookie values if not
+
 			var helper = PlayerRankUIHelper.Instance;
-			var options = helper.GetPlayerRankOptions(Request, Response);
-			PlayerRankModel playerRankModel = helper.DetermineRankModel(rankId, null, options, Response, false);
-			playerRankModel.Options = options;
-			playerRankModel.GetBestAvailPlayerRanks();
+			var playerRankModel = helper.GetPlayerRankPartial(rankId, true, Request, Response);
 			return PartialView(Constants.Views.BestAvailable, playerRankModel);
 		}
 
@@ -100,11 +98,10 @@ namespace DodgeDynasty.Controllers
 		[OwnerRankAccess]
 		public ActionResult PlayerRanks(string rankId, string id)
 		{
+//TODO:  Check CompareRankIds owner rank access/valid ints; clear cookie values if not
+
 			var helper = PlayerRankUIHelper.Instance;
-			var options = helper.GetPlayerRankOptions(Request, Response);
-			PlayerRankModel playerRankModel = helper.DetermineRankModel(rankId, id, options, Response);
-			playerRankModel.Options = options;
-			playerRankModel.GetAllPlayerRanksByPosition();
+			var playerRankModel = helper.GetPlayerRankPartial(rankId, false, Request, Response);
 			return View(playerRankModel);
 		}
 
@@ -112,11 +109,10 @@ namespace DodgeDynasty.Controllers
 		[OwnerRankAccess]
 		public ActionResult PlayerRanksPartial(string rankId)
 		{
+//TODO:  Check CompareRankIds owner rank access/valid ints; clear cookie values if not
+
 			var helper = PlayerRankUIHelper.Instance;
-			var options = helper.GetPlayerRankOptions(Request, Response);
-			PlayerRankModel playerRankModel = helper.DetermineRankModel(rankId, null, options, Response, false);
-			playerRankModel.Options = options;
-			playerRankModel.GetAllPlayerRanksByPosition();
+			var playerRankModel = helper.GetPlayerRankPartial(rankId, false, Request, Response);
 			return PartialView(Constants.Views.PlayerRanks, playerRankModel);
 		}
 

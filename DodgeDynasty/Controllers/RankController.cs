@@ -42,7 +42,7 @@ namespace DodgeDynasty.Controllers
 			GetPlayerRankOptions();
 			PlayerRankModel model = DraftFactory.GetPlayerRankModel(rankId);
 			model.Options = PlayerRankUIHelper.Instance.GetPlayerRankOptions(Request, Response);
-			model.GetAllPlayerRanks();
+			model.GetRankedPlayersAllWithDraftPickInfo();
 			if (TempData.ContainsKey(Constants.TempData.RankStatus))
 			{
 				model.RankStatus = (string)TempData[Constants.TempData.RankStatus];

@@ -31,7 +31,7 @@ namespace DodgeDynasty.UIHelpers
 			{
 				if (playerRankModel.Options.IsComparingRanks)
 				{
-					var compareRankMapper = MapperFactory.CreateCompareRanksMapper(playerRankModel);
+					var compareRankMapper = MapperFactory.CreateCompareRanksMapper(playerRankModel, showBestAvailable);
 					compareRankMapper.GetModel();
 					playerRankModel = compareRankMapper.PlayerRankModel;
 					playerRankModel.HighlightedPlayers = playerRankModel.GetBestAvailHighlightedPlayers();
@@ -43,7 +43,17 @@ namespace DodgeDynasty.UIHelpers
 			}
 			else
 			{
-				playerRankModel.GetAllPlayerRanksByPosition();
+				if (playerRankModel.Options.IsComparingRanks)
+				{
+					var compareRankMapper = MapperFactory.CreateCompareRanksMapper(playerRankModel, showBestAvailable);
+					compareRankMapper.GetModel();
+					playerRankModel = compareRankMapper.PlayerRankModel;
+					playerRankModel.HighlightedPlayers = playerRankModel.GetAllHighlightedPlayers();
+				}
+				else
+				{
+					playerRankModel.GetAllPlayerRanksByPosition();
+				}
 			}
 			return playerRankModel;
 		}

@@ -16,7 +16,7 @@ namespace DodgeDynasty.Mappers
 		{
 			RankSetupModel rankSetupModel = new RankSetupModel();
 			PlayerRankModel playerRankModel = DraftFactory.GetPlayerRankModel(copyFromRankId);
-			playerRankModel.GetAllPlayerRanks();
+			playerRankModel.GetRankedPlayersAllWithDraftPickInfo();
 			int copyRowCount;
 			if (!string.IsNullOrEmpty(copyCount) && Int32.TryParse(copyCount, out copyRowCount) && copyRowCount > 0)
 			{
@@ -24,7 +24,7 @@ namespace DodgeDynasty.Mappers
 			}
 			else
 			{
-				copyRowCount = playerRankModel.GetAllPlayerRanks().Count();
+				copyRowCount = playerRankModel.GetRankedPlayersAllWithDraftPickInfo().Count();
 			}
 			rankSetupModel.RankedPlayers = playerRankModel.RankedPlayers.OrderBy(rp => rp.RankNum).Take(copyRowCount).ToList();
 			SetRankInfo(model, rankSetupModel);

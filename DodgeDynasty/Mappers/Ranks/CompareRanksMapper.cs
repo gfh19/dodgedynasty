@@ -9,11 +9,13 @@ namespace DodgeDynasty.Mappers.Ranks
 	public class CompareRanksMapper : MapperBase<PlayerRankingsModel>
 	{
 		public PlayerRankModel PlayerRankModel { get; set; }
+		public bool ShowBestAvailable { get; set; }
 
-		public CompareRanksMapper(PlayerRankModel playerRankModel)
+		public CompareRanksMapper(PlayerRankModel playerRankModel, bool showBestAvailable)
 		{
 			PlayerRankModel = playerRankModel;
-		}
+			ShowBestAvailable = showBestAvailable;
+        }
 
 		protected override void PopulateModel()
 		{
@@ -23,9 +25,20 @@ namespace DodgeDynasty.Mappers.Ranks
 			{
 				foreach (var compareRankId in PlayerRankModel.Options.CompareRankIds.Split(','))
 				{
-					Model = helper.CreatePlayerRankingsModel(PlayerRankModel);
-					helper.SetPlayerRanks(Model, HomeEntity, Convert.ToInt32(compareRankId));
-					helper.GetBestAvailOverallCompPlayerRanks(Model);
+					var rankId = Convert.ToInt32(compareRankId);
+                    Model = helper.CreatePlayerRankingsModel(PlayerRankModel);
+					helper.SetPlayerRanks(PlayerRankModel, HomeEntity, rankId);
+					helper.SetPlayerRanks(Model, HomeEntity, rankId);
+					if (ShowBestAvailable)
+					{
+						Model.RankedPlayers = PlayerRankModel.GetRankedPlayersAll();
+						helper.GetBestAvailOverallCompRanks(Model);
+					}
+					else
+					{
+						Model.RankedPlayers = PlayerRankModel.GetRankedPlayersAllWithDraftPickInfo();
+						helper.GetAllPlayersOverallCompRanks(Model);
+					}
 					PlayerRankModel.CompareRankModels.Add(Model);
 				}
 			}

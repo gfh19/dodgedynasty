@@ -53,37 +53,27 @@ namespace DodgeDynasty.Models
 			RankId = rankId;
 			using (HomeEntity = new HomeEntity())
 			{
-				var userId = HomeEntity.Users.GetLoggedInUserId();
                 CurrentRank = HomeEntity.Ranks.First(r => r.RankId == rankId);
 				PlayerRanks = HomeEntity.PlayerRanks.Where(pr => pr.RankId == rankId).ToList();
-				//PlayerHighlights = HomeEntity.PlayerHighlights.
-					//Where(o => o.DraftId == DraftId && o.UserId == userId).ToList();
             }
 		}
 
 		public void GetBestAvailPlayerRanks()
 		{
-			var rankedPlayerIds = PlayerRanks.Select(pr=>pr.PlayerId).ToList();
+			GetRankedPlayersAll();
 
-			RankedPlayers = (from pr in PlayerRanks
-							join p in AllPlayers on pr.PlayerId equals p.PlayerId
-							join t in NFLTeams on p.NFLTeam equals t.TeamAbbr							
-							join ph in CurrentPlayerHighlights on pr.PlayerId equals ph.PlayerId into phLeft
-							from ph in phLeft.DefaultIfEmpty()
-							select GetRankedPlayer(pr, p, t, ph)).OrderBy(p=>p.RankNum).ToList();
-
-			OverallRankedPlayers = RankedPlayers.Where(rp=>!DraftedPlayers.Any(dp=>rp.TruePlayerId == dp.TruePlayerId)).ToList();
-			QBRankedPlayers = OverallRankedPlayers.Where(p=>p.Position == "QB").ToList();
+			OverallRankedPlayers = RankedPlayers.Where(rp => !DraftedPlayers.Any(dp => rp.TruePlayerId == dp.TruePlayerId)).ToList();
+			QBRankedPlayers = OverallRankedPlayers.Where(p => p.Position == "QB").ToList();
 			RBRankedPlayers = OverallRankedPlayers.Where(p => p.Position == "RB").ToList();
 			WRTERankedPlayers = OverallRankedPlayers.Where(p => p.Position == "WR" || p.Position == "TE").ToList();
 			DEFRankedPlayers = OverallRankedPlayers.Where(p => p.Position == "DEF").ToList();
 			KRankedPlayers = OverallRankedPlayers.Where(p => p.Position == "K").ToList();
 			HighlightedPlayers = GetBestAvailHighlightedPlayers();
-        }
+		}
 
 		public void GetAllPlayerRanksByPosition()
 		{
-			GetAllPlayerRanks();
+			GetRankedPlayersAllWithDraftPickInfo();
 
 			OverallRankedPlayers = RankedPlayers.ToList();
 			QBRankedPlayers = OverallRankedPlayers.Where(p => p.Position == "QB").ToList();
@@ -94,18 +84,19 @@ namespace DodgeDynasty.Models
 			HighlightedPlayers = GetAllHighlightedPlayers();
         }
 
-		public List<RankedPlayer> GetAllPlayerRanks()
+		public List<RankedPlayer> GetRankedPlayersAll()
 		{
-			var draftPickTruePlayers = DraftPicks.Join(AllPlayers, dp => dp.PlayerId, p => p.PlayerId, (dp, p) => new
-			{
-				DraftPickId = dp.DraftPickId,
-				PlayerId = p.PlayerId,
-				TruePlayerId = p.TruePlayerId,
-				PickNum = dp.PickNum,
-				UserId = dp.UserId,
-			});
-			var rankedPlayerIds = PlayerRanks.Select(pr => pr.PlayerId).ToList();
+			RankedPlayers = (from pr in PlayerRanks
+							 join p in AllPlayers on pr.PlayerId equals p.PlayerId
+							 join t in NFLTeams on p.NFLTeam equals t.TeamAbbr
+							 join ph in CurrentPlayerHighlights on pr.PlayerId equals ph.PlayerId into phLeft
+							 from ph in phLeft.DefaultIfEmpty()
+							 select GetRankedPlayer(pr, p, t, ph)).OrderBy(p => p.RankNum).ToList();
+			return RankedPlayers;
+		}
 
+		public List<RankedPlayer> GetRankedPlayersAllWithDraftPickInfo()
+		{
 			RankedPlayers = (from pr in PlayerRanks
 							 join p in AllPlayers on pr.PlayerId equals p.PlayerId
 							 join t in NFLTeams on p.NFLTeam equals t.TeamAbbr
@@ -118,22 +109,8 @@ namespace DodgeDynasty.Models
 							 join ph in CurrentPlayerHighlights on pr.PlayerId equals ph.PlayerId into phLeft
 							 from ph in phLeft.DefaultIfEmpty()
 							 select GetRankedPlayer(pr, p, t, ph, pick, u, lo)).OrderBy(p => p.RankNum).ToList();
-			foreach (var rankedPlayer in RankedPlayers)
-			{
-				if (rankedPlayer.PickNum == null)
-				{
-					var draftPickTruePlayer = draftPickTruePlayers.FirstOrDefault(dp=>dp.TruePlayerId == rankedPlayer.TruePlayerId);
-					if (draftPickTruePlayer != null)
-					{
-						rankedPlayer.PickNum = draftPickTruePlayer.PickNum.ToString();
-						rankedPlayer.UserId = draftPickTruePlayer.UserId.ToString();
-						rankedPlayer.NickName = Users.FirstOrDefault(lo => lo.UserId == draftPickTruePlayer.UserId).NickName;
-						var leagueOwner = CurrentLeagueOwners.FirstOrDefault(lo=>lo.UserId == draftPickTruePlayer.UserId);
-						rankedPlayer.CssClass = (leagueOwner != null) ? leagueOwner.CssClass : null;
-					}
-				}
-			}
-			return RankedPlayers;
+
+			return GetDraftedTruePlayersFor(RankedPlayers);
 		}
 
 		private RankedPlayer GetRankedPlayer(PlayerRank pr, Player p, NFLTeam t, PlayerHighlight ph = null, DraftPick pick=null, 
@@ -199,23 +176,54 @@ namespace DodgeDynasty.Models
 
 		public List<RankedPlayer> GetAllHighlightedPlayers()
 		{
-			return (from ph in CurrentPlayerHighlights
-					join pr in PlayerRanks on ph.PlayerId equals pr.PlayerId into prLeft		//Left Outer Join
-					from pr in prLeft.DefaultIfEmpty()
-					join pick in DraftPicks on ph.PlayerId equals pick.PlayerId into dpLeft    //Left Outer Join
-					from pick in dpLeft.DefaultIfEmpty()
-					join p in AllPlayers on ph.PlayerId equals p.PlayerId
-					join t in NFLTeams on p.NFLTeam equals t.TeamAbbr
-					join u in Users on ((pick != null) ? pick.UserId : -1) equals u.UserId into uLeft  //Left Outer Join
-					from u in uLeft.DefaultIfEmpty()
-					join lo in CurrentLeagueOwners on ((pick != null) ? pick.UserId : -1) equals lo.UserId into loLeft
-					from lo in loLeft.DefaultIfEmpty()
-					select GetRankedPlayer(pr, p, t, ph, pick, u, lo)).OrderBy(p => Convert.ToInt32(p.HighlightRankNum)).ToList();
+			var highlightedPlayers = (from ph in CurrentPlayerHighlights
+									  join pr in PlayerRanks on ph.PlayerId equals pr.PlayerId into prLeft      //Left Outer Join
+									  from pr in prLeft.DefaultIfEmpty()
+									  join pick in DraftPicks on ph.PlayerId equals pick.PlayerId into dpLeft    //Left Outer Join
+									  from pick in dpLeft.DefaultIfEmpty()
+									  join p in AllPlayers on ph.PlayerId equals p.PlayerId
+									  join t in NFLTeams on p.NFLTeam equals t.TeamAbbr
+									  join u in Users on ((pick != null) ? pick.UserId : -1) equals u.UserId into uLeft  //Left Outer Join
+									  from u in uLeft.DefaultIfEmpty()
+									  join lo in CurrentLeagueOwners on ((pick != null) ? pick.UserId : -1) equals lo.UserId into loLeft
+									  from lo in loLeft.DefaultIfEmpty()
+									  select GetRankedPlayer(pr, p, t, ph, pick, u, lo)).OrderBy(p => Convert.ToInt32(p.HighlightRankNum)).ToList();
+
+            return GetDraftedTruePlayersFor(highlightedPlayers);
 		}
-		
+
 		public List<RankedPlayer> GetBestAvailHighlightedPlayers()
 		{
 			return GetAllHighlightedPlayers().Where(o => o.PickNum == null).ToList();
+		}
+
+		public List<RankedPlayer> GetDraftedTruePlayersFor(List<RankedPlayer> players)
+		{
+			var draftPickTruePlayers = DraftPicks.Join(AllPlayers, dp => dp.PlayerId, p => p.PlayerId, (dp, p) => new
+			{
+				DraftPickId = dp.DraftPickId,
+				PlayerId = p.PlayerId,
+				TruePlayerId = p.TruePlayerId,
+				PickNum = dp.PickNum,
+				UserId = dp.UserId,
+			});
+
+			foreach (var player in players)
+			{
+				if (player.PickNum == null)
+				{
+					var draftPickTruePlayer = draftPickTruePlayers.FirstOrDefault(dp => dp.TruePlayerId == player.TruePlayerId);
+					if (draftPickTruePlayer != null)
+					{
+						player.PickNum = draftPickTruePlayer.PickNum.ToString();
+						player.UserId = draftPickTruePlayer.UserId.ToString();
+						player.NickName = Users.FirstOrDefault(lo => lo.UserId == draftPickTruePlayer.UserId).NickName;
+						var leagueOwner = CurrentLeagueOwners.FirstOrDefault(lo => lo.UserId == draftPickTruePlayer.UserId);
+						player.CssClass = (leagueOwner != null) ? leagueOwner.CssClass : null;
+					}
+				}
+			}
+			return players;
 		}
 
 		public PlayerRankModel SetCategory(RankCategory category)

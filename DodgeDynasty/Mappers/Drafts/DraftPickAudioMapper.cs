@@ -81,39 +81,6 @@ namespace DodgeDynasty.Mappers.Drafts
 						audio = "Forty-Niners";
 						break;
 				}
-				if (random.Next(1, 3) % 2 == 0)
-				{
-					switch (nflTeam.TeamAbbr)
-					{
-						case "CIN":
-							audio = "Who dey think gonna beat them bengals";
-							break;
-						case "CLE":
-							audio = "Here we go BROWNIES";
-							break;
-						case "DAL":
-							audio = "How bout them COWBOYS";
-							break;
-						case "DEN":
-							audio = "World Champion Broncos";
-							break;
-						case "NYJ":
-							audio = "J-E-T-S JETS JETS JETS";
-							break;
-						case "NYG":
-							audio = "The Geeeee Men";
-							break;
-						case "OAK":
-							audio = "The Rrrrrrrray Ders";
-							break;
-						case "SD":
-							audio = "SAN DEE-YAY GO, SUPER CHARGERS!";
-							break;
-						case "PIT":
-							audio = "Pittspuke";
-							break;
-					}
-				}
 			}
 			return audio.ToUrlEncodedString();
 		}
