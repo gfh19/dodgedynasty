@@ -24,10 +24,11 @@ namespace DodgeDynasty.UIHelpers
 			HttpRequestBase request, HttpResponseBase response)
 		{
 			var options = GetPlayerRankOptions(request, response);
-			UpdateIsComparingRanks(options, request, response);
+			var historyMode = Utilities.ToBool(request.QueryString[Constants.QS.HistoryMode]);
+			UpdateIsComparingRanks(options, request, response, historyMode);
 			PlayerRankModel playerRankModel = DetermineRankModel(rankId, null, options, response, false);
 			playerRankModel.Options = options;
-			if (playerRankModel.Options.IsComparingRanks)
+			if (playerRankModel.Options.IsComparingRanks && !historyMode)
 			{
 				playerRankModel = GetCompareRanksPlayerModel(playerRankModel, showBestAvailable, response);
 			}
@@ -178,6 +179,41 @@ namespace DodgeDynasty.UIHelpers
 			return playerRankModel;
 		}
 
+		public void AddCompareRank(PlayerRankOptions options, HttpResponseBase response)
+		{
+			if (ValidateOrClearCompareRankIds(options, response))
+			{
+				if (options.CompareRankIds == null)
+				{
+					options.CompareRankIds = string.Empty;
+				}
+				var compareRankIds = options.CompareRankIds.Split(',');
+                if (compareRankIds.Length < Constants.MaxCompareRanks)
+				{
+					RankingsListModel rankingsListModel = DraftFactory.GetRankingsListModel();
+					var rankings = rankingsListModel.GetAllUserDraftRankings();
+					if (rankings.Count > 0)
+					{
+						var nextRankId = rankings.Last().RankId;
+						foreach (var rank in rankings)
+						{
+							if (!compareRankIds.Contains(rank.RankId.ToString()))
+							{
+								nextRankId = rank.RankId;
+								break;
+							}
+						}
+						if (options.CompareRankIds.Length > 0)
+						{
+							options.CompareRankIds += ",";
+						}
+						options.CompareRankIds += nextRankId;
+						UpdatePlayerRankOptions(options, response);
+					}
+				}
+			}
+		}
+		
 		public void UpdatePlayerRankOptions(PlayerRankOptions options, HttpResponseBase response)
 		{
 			PlayerRankOptionsMapper mapper = MapperFactory.CreatePlayerRankOptionsMapper(options.Id);
@@ -185,9 +221,9 @@ namespace DodgeDynasty.UIHelpers
 			CheckUpdatedOptionsCookie(mapper, response);
 		}
 
-		public void UpdateIsComparingRanks(PlayerRankOptions options, HttpRequestBase request, HttpResponseBase response)
+		public void UpdateIsComparingRanks(PlayerRankOptions options, HttpRequestBase request, HttpResponseBase response, bool historyMode)
 		{
-			if (request.QueryString[Constants.QS.IsComparingRanks] != null)
+			if (request.QueryString[Constants.QS.IsComparingRanks] != null && !historyMode)
 			{
 				var isComparingRanks = Utilities.ToBool(request.QueryString[Constants.QS.IsComparingRanks]);
 				if (options.IsComparingRanks != isComparingRanks)

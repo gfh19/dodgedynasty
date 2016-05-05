@@ -8,8 +8,9 @@ namespace DodgeDynasty.Shared
 	public static class Constants
 	{
 		public const int NewPlayerId = -1;
-		public static string ChatDateTimeFormat = "M/d h:mmtt";
-		public static string ChatTimeFormat = "h:mmtt";
+		public const string ChatDateTimeFormat = "M/d h:mmtt";
+		public const string ChatTimeFormat = "h:mmtt";
+		public const int MaxCompareRanks = 8;
 
 
 		public static class AppSettings

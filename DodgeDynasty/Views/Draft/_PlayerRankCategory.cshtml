@@ -6,18 +6,25 @@
 		var showPos = Model.CurrentRankCategory.ShowPos;
 	}
 	<table class="ba-table" data-link="@Model.CurrentRankCategory.DataLink">
-		@if (Model.CompareRank != null)
+		@{var historyMode = Request.QueryString[DodgeDynasty.Shared.Constants.QS.HistoryMode]; }
+		@if (Model.CompareRank != null && !DodgeDynasty.Shared.Utilities.ToBool(historyMode))
 		{
-			<div class="bold center">
+            <div class="bold center">
 				@Html.DropDownList("ComparedRank",
 				Model.GetCurrentAvailableDraftRankItems(Model.CompareRank.RankId.ToString()),
 				new { @class = "cr-rank-select" })
 			</div>
 			<div class="bold center">@Model.CompareRank.CategoryRankHeader</div>
+			<caption class="ba-header">@Model.CurrentRankCategory.Header
+				<span class="ba-hide-cat-text">(<a class="cr-remove-link" data-rank-id="@Model.CompareRank.RankId">Remove</a>)</span>
+			</caption>
 		}
-		<caption class="ba-header">@Model.CurrentRankCategory.Header 
-			<span class="ba-hide-cat-text">(<a class="ba-hide-cat-link" data-hide-id="@Model.CurrentRankCategory.HideId">Hide</a>)</span>
-		</caption>
+		else
+		{
+			<caption class="ba-header">@Model.CurrentRankCategory.Header
+				<span class="ba-hide-cat-text">(<a class="ba-hide-cat-link" data-hide-id="@Model.CurrentRankCategory.HideId">Hide</a>)</span>
+			</caption>
+		}
 		<tbody>
 			<tr>
 				<th>Rk</th>

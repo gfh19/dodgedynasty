@@ -10,7 +10,7 @@ function initPlayerRanksShared() {
 	bindPlayerLinks();
 	bindHideCategoryLinks();
 	toggleCategoryTables();
-	bindCompareRanksSelects();
+	bindCompareRanks();
 }
 
 function bindExpandLinks() {
@@ -507,23 +507,56 @@ function updateQueueRankNums(playerQueueOrderModel) {
 
 //Compare Ranks
 
-function bindCompareRanksSelects() {
+function bindCompareRanks() {
 	var selects = $(".cr-rank-select");
 	$.each(selects, function (index, select) {
 		bindCompareRanksSelect(select);
 	});
+
+	var addLinks = $(".cr-add-rank-text, .cr-add-rank");
+	$.each(addLinks, function (index, link) {
+		bindAddCompareRank(link);
+	});
+
+	var removeLinks = $(".cr-remove-link");
+	$.each(removeLinks, function (index, link) {
+		bindRemoveCompareRankLink(link);
+	});
+}
+
+function updateCompareRankIds(removeRankId) {
+	var compareRankIds = "";
+	$.each($(".cr-rank-select"), function (ix, select) {
+		if (!removeRankId || removeRankId != $(select).val()) {
+			compareRankIds += $(select).val() + ",";
+		}
+	});
+	compareRankIds = compareRankIds.removeTrailing(",")
+	ajaxPostReplace({ compRankIds: compareRankIds, isBestAvailable: isBestAvailablePage() },
+		"Draft/UpdateCompareRankIds", replaceElementId);
 }
 
 function bindCompareRanksSelect(select) {
 	$(select).unbind("change");
 	$(select).change(function (e) {
 		e.preventDefault();
-		var compareRankIds = "";
-		$.each($(".cr-rank-select"), function (ix, select) {
-			compareRankIds += $(select).val() + ",";
-		});
-		compareRankIds = compareRankIds.removeTrailing(",")
-		ajaxPostReplace({ compRankIds: compareRankIds, isBestAvailable: isBestAvailablePage() },
-			"Draft/UpdateCompareRankSelects", replaceElementId);
+		updateCompareRankIds();
+	});
+}
+
+function bindAddCompareRank(link) {
+	$(link).unbind("click");
+	$(link).click(function (e) {
+		e.preventDefault();
+		ajaxPostReplace({ isBestAvailable: isBestAvailablePage() }, "Draft/AddCompareRank", replaceElementId);
+	});
+}
+
+function bindRemoveCompareRankLink(link) {
+	$(link).unbind("click");
+	$(link).click(function (e) {
+		e.preventDefault();
+		var removeRankId = $(link).attr('data-rank-id');
+		updateCompareRankIds(removeRankId);
 	});
 }

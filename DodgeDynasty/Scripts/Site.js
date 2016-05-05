@@ -855,5 +855,13 @@ String.prototype.removeTrailing = function (substr) {
 	return resp;
 }
 
+String.prototype.removeAll = function (substr) {
+	return this.replaceAll(substr, "")
+}
+
+String.prototype.replaceAll = function (substr, newstr) {
+	var rx = new RegExp(substr, "g");
+	return this.replace(rx, newstr);
+}
 
 /* End Plugins */

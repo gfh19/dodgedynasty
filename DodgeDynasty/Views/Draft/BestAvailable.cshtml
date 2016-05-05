@@ -7,7 +7,8 @@
 	<script type="text/javascript" src="@Url.Script("~/Scripts/PlayerRanksShared.js")"></script>
 }
 <div id="bestAvailable">
-	@if (Model.Options.IsComparingRanks)
+	@{var historyMode = Request.QueryString[DodgeDynasty.Shared.Constants.QS.HistoryMode]; }
+	@if (Model.Options.IsComparingRanks && !DodgeDynasty.Shared.Utilities.ToBool(historyMode))
 	{
 		@Html.Partial(Url.Content("../Draft/ComparePlayerRanksPartial"), Model)
 	}

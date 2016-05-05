@@ -82,5 +82,13 @@ namespace DodgeDynasty.Models
 									select GetDraftRankModel(dr, r);
 			return openPublicRanks.FirstOrDefault();
 		}
+
+		public List<DraftRankModel> GetAllUserDraftRankings()
+		{
+			List<DraftRankModel> rankings = new List<DraftRankModel>();
+			rankings.AddRange(GetPrivateRankings());
+			rankings.AddRange(GetPublicRankings());
+			return rankings;
+		}
 	}
 }

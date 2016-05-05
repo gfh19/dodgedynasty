@@ -1557,6 +1557,24 @@ ul.menu li a.current-page
 	font-size: 13px;
 }
 
+	/*    -------- Compare Ranks */
+
+.cr-add-compare {
+	padding-top: 30px;
+	text-align: center;
+	white-space: normal;
+	cursor: initial !important;
+}
+.cr-add-rank-content {
+	width: 232px;
+}
+.cr-add-rank-text {
+	cursor: pointer;
+}
+.cr-add-rank img {
+	vertical-align: bottom;
+}
+
 /* RankingsList / Setup Rank
 ----------------------------------------------------------*/
 .note-text 
@@ -2480,6 +2498,13 @@ span.player-select
 	.pr-highlight-section td {
 		max-width: 120px;
 		padding-right: 3px;
+	}
+		/*    -------- Compare Ranks */
+	.cr-add-rank-content {
+		margin: 0 auto;
+	}
+	.cr-add-compare {
+		padding-top: 15px;
 	}
 	/* Setup Draft
 	------------------------------------*/

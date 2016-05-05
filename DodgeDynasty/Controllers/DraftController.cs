@@ -129,17 +129,31 @@ namespace DodgeDynasty.Controllers
 
 		[HttpPost]
 		[OwnerRankAccess]
-		public ActionResult UpdateCompareRankSelects(string compRankIds, bool isBestAvailable)
+		public ActionResult UpdateCompareRankIds(string compRankIds, bool isBestAvailable)
 		{
-//TODO:  Check CompareRankIds owner rank access/valid ints; clear cookie values if not
 			var helper = PlayerRankUIHelper.Instance;
 			var options = helper.GetPlayerRankOptions(Request, Response);
 			options.CompareRankIds = compRankIds;
-			helper.UpdatePlayerRankOptions(options, Response);
+			if (helper.ValidateOrClearCompareRankIds(options, Response))
+			{
+				helper.UpdatePlayerRankOptions(options, Response);
+			}
 			var playerRankModel = helper.GetPlayerRankPartial(null, isBestAvailable, Request, Response);
 			return PartialView(isBestAvailable ? Constants.Views.BestAvailable : Constants.Views.PlayerRanks, playerRankModel);
 		}
 
+		[HttpPost]
+		[OwnerRankAccess]
+		public ActionResult AddCompareRank(bool isBestAvailable)
+		{
+			//Not sending DraftId since not allowing in history mode
+			var helper = PlayerRankUIHelper.Instance;
+			var options = helper.GetPlayerRankOptions(Request, Response);
+			helper.AddCompareRank(options, Response);
+			var playerRankModel = helper.GetPlayerRankPartial(null, isBestAvailable, Request, Response);
+			return PartialView(isBestAvailable ? Constants.Views.BestAvailable : Constants.Views.PlayerRanks, playerRankModel);
+		}
+		
 		[HttpGet]
 		public ActionResult RankingsList(string id)
 		{
