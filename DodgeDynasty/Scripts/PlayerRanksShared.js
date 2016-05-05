@@ -518,12 +518,12 @@ function bindCompareRanksSelect(select) {
 	$(select).unbind("change");
 	$(select).change(function (e) {
 		e.preventDefault();
-		var compareRankdIds = "";
+		var compareRankIds = "";
 		$.each($(".cr-rank-select"), function (ix, select) {
-			compareRankdIds += $(select).val() + ",";
+			compareRankIds += $(select).val() + ",";
 		});
-		compareRankdIds = compareRankdIds.removeTrailing(",")
-		ajaxPostReplace({ compRankIds: compareRankdIds, isBestAvailable: isBestAvailablePage() },
+		compareRankIds = compareRankIds.removeTrailing(",")
+		ajaxPostReplace({ compRankIds: compareRankIds, isBestAvailable: isBestAvailablePage() },
 			"Draft/UpdateCompareRankSelects", replaceElementId);
 	});
 }

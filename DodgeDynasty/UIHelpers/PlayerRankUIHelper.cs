@@ -24,38 +24,61 @@ namespace DodgeDynasty.UIHelpers
 			HttpRequestBase request, HttpResponseBase response)
 		{
 			var options = GetPlayerRankOptions(request, response);
-			UpdateIsComparingRanks(request, response, options);
+			UpdateIsComparingRanks(options, request, response);
 			PlayerRankModel playerRankModel = DetermineRankModel(rankId, null, options, response, false);
 			playerRankModel.Options = options;
-			if (showBestAvailable)
+			if (playerRankModel.Options.IsComparingRanks)
 			{
-				if (playerRankModel.Options.IsComparingRanks)
-				{
-					var compareRankMapper = MapperFactory.CreateCompareRanksMapper(playerRankModel, showBestAvailable);
-					compareRankMapper.GetModel();
-					playerRankModel = compareRankMapper.PlayerRankModel;
-					playerRankModel.HighlightedPlayers = playerRankModel.GetBestAvailHighlightedPlayers();
-				}
-				else
-				{
-					playerRankModel.GetBestAvailPlayerRanks();
-				}
+				playerRankModel = GetCompareRanksPlayerModel(playerRankModel, showBestAvailable, response);
 			}
 			else
 			{
-				if (playerRankModel.Options.IsComparingRanks)
+				if (showBestAvailable)
 				{
-					var compareRankMapper = MapperFactory.CreateCompareRanksMapper(playerRankModel, showBestAvailable);
-					compareRankMapper.GetModel();
-					playerRankModel = compareRankMapper.PlayerRankModel;
-					playerRankModel.HighlightedPlayers = playerRankModel.GetAllHighlightedPlayers();
+					playerRankModel.GetBestAvailPlayerRanks();
 				}
+
 				else
 				{
 					playerRankModel.GetAllPlayerRanksByPosition();
 				}
 			}
+
 			return playerRankModel;
+		}
+
+		public PlayerRankModel GetCompareRanksPlayerModel(PlayerRankModel playerRankModel, bool showBestAvailable, HttpResponseBase response)
+		{
+			var options = playerRankModel.Options;
+			ValidateOrClearCompareRankIds(options, response);
+			var compareRankMapper = MapperFactory.CreateCompareRanksMapper(playerRankModel, showBestAvailable);
+			compareRankMapper.GetModel();
+			playerRankModel = compareRankMapper.PlayerRankModel;
+			playerRankModel.HighlightedPlayers = (showBestAvailable)
+				? playerRankModel.GetBestAvailHighlightedPlayers()
+				: playerRankModel.GetAllHighlightedPlayers();
+			return playerRankModel;
+		}
+
+		public bool ValidateOrClearCompareRankIds(PlayerRankOptions options, HttpResponseBase response)
+		{
+			AccessModel accessModel = Factory.Create<AccessModel>();
+			var isValid = true;
+			if (!string.IsNullOrEmpty(options.CompareRankIds))
+			{
+				foreach (var compareRankId in options.CompareRankIds.Split(','))
+				{
+					int? rankId = Utilities.ToNullInt(compareRankId);
+					if (rankId == null || !accessModel.CanUserAccessRank(rankId.Value))
+					{
+						options.CompareRankIds = "";
+						UpdatePlayerRankOptions(options, response);
+						isValid = false;
+                        break;
+					}
+				}
+			}
+			return isValid;
 		}
 
 		public PlayerRankOptions GetPlayerRankOptions(HttpRequestBase request, HttpResponseBase response)
@@ -162,7 +185,7 @@ namespace DodgeDynasty.UIHelpers
 			CheckUpdatedOptionsCookie(mapper, response);
 		}
 
-		public void UpdateIsComparingRanks(HttpRequestBase request, HttpResponseBase response, PlayerRankOptions options)
+		public void UpdateIsComparingRanks(PlayerRankOptions options, HttpRequestBase request, HttpResponseBase response)
 		{
 			if (request.QueryString[Constants.QS.IsComparingRanks] != null)
 			{
