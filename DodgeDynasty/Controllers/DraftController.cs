@@ -144,6 +144,17 @@ namespace DodgeDynasty.Controllers
 
 		[HttpPost]
 		[OwnerRankAccess]
+		public ActionResult UpdatePlayerRankOptions(PlayerRankOptions options, bool isBestAvailable)
+		{
+			//Not coding CompareRankIds Validation; call UpdateCompareRankIds instead
+			var helper = PlayerRankUIHelper.Instance;
+			helper.UpdatePlayerRankOptions(options, Response);
+			var playerRankModel = helper.GetPlayerRankPartial(null, isBestAvailable, Request, Response);
+			return PartialView(isBestAvailable ? Constants.Views.BestAvailable : Constants.Views.PlayerRanks, playerRankModel);
+		}
+
+		[HttpPost]
+		[OwnerRankAccess]
 		public ActionResult AddCompareRank(bool isBestAvailable)
 		{
 			//Not sending DraftId since not allowing in history mode

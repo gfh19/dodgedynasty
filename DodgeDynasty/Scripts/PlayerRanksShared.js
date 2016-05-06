@@ -522,6 +522,8 @@ function bindCompareRanks() {
 	$.each(removeLinks, function (index, link) {
 		bindRemoveCompareRankLink(link);
 	});
+
+	bindShowAvgCompRanks($(".cr-chk-show-avg"));
 }
 
 function updateCompareRankIds(removeRankId) {
@@ -534,6 +536,11 @@ function updateCompareRankIds(removeRankId) {
 	compareRankIds = compareRankIds.removeTrailing(",")
 	ajaxPostReplace({ compRankIds: compareRankIds, isBestAvailable: isBestAvailablePage() },
 		"Draft/UpdateCompareRankIds", replaceElementId);
+}
+
+function updatePlayerRankOptions(options) {
+	ajaxPostReplace({ options: options, isBestAvailable: isBestAvailablePage() },
+		"Draft/UpdatePlayerRankOptions", replaceElementId);
 }
 
 function bindCompareRanksSelect(select) {
@@ -558,5 +565,14 @@ function bindRemoveCompareRankLink(link) {
 		e.preventDefault();
 		var removeRankId = $(link).attr('data-rank-id');
 		updateCompareRankIds(removeRankId);
+	});
+}
+
+function bindShowAvgCompRanks(checkbox) {
+	$(checkbox).unbind("change");
+	$(checkbox).change(function (e) {
+		var showAvg = $(checkbox).prop('checked');
+		clientCookieOptions["ShowAvgCompRanks"] = showAvg;
+		updatePlayerRankOptions(clientCookieOptions);
 	});
 }

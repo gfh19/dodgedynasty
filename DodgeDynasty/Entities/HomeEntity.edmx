@@ -287,6 +287,7 @@
           <Property Name="CompareRankIds" Type="varchar" MaxLength="50" />
           <Property Name="AddTimestamp" Type="datetime" />
           <Property Name="LastUpdateTimestamp" Type="datetime" />
+          <Property Name="ShowAvgCompRanks" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Position">
           <Key>
@@ -1872,6 +1873,7 @@
           <Property Name="LastUpdateTimestamp" Type="DateTime" Precision="3" />
           <Property Name="IsComparingRanks" Type="Boolean" Nullable="false" />
           <Property Name="CompareRankIds" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ShowAvgCompRanks" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -2293,6 +2295,7 @@
           <EntitySetMapping Name="PlayerRankOptions">
             <EntityTypeMapping TypeName="HomeModel.PlayerRankOption">
               <MappingFragment StoreEntitySet="PlayerRankOption">
+                <ScalarProperty Name="ShowAvgCompRanks" ColumnName="ShowAvgCompRanks" />
                 <ScalarProperty Name="CompareRankIds" ColumnName="CompareRankIds" />
                 <ScalarProperty Name="IsComparingRanks" ColumnName="IsComparingRanks" />
                 <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />

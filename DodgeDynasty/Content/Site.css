@@ -1574,6 +1574,15 @@ ul.menu li a.current-page
 .cr-add-rank img {
 	vertical-align: bottom;
 }
+.cr-lbl-show-avg {
+	display: inline;
+	font-size: 14px;
+	font-weight: normal;
+}
+.cr-chk-show-avg {
+	vertical-align: middle;
+}
+
 
 /* RankingsList / Setup Rank
 ----------------------------------------------------------*/

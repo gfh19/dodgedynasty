@@ -11,10 +11,6 @@ namespace DodgeDynasty.Models.Types
 		[JsonProperty()]
 		public string DraftId { get; set; }
 		[JsonProperty()]
-		public bool IsComparingRanks { get; set; }
-		[JsonProperty()]
-		public string CompareRankIds { get; set; }
-		[JsonProperty()]
 		public bool ExpandOverall { get; set; }
 		[JsonProperty()]
 		public bool ExpandQB { get; set; }
@@ -48,5 +44,11 @@ namespace DodgeDynasty.Models.Types
 		public bool LockHighlighting { get; set; }
 		[JsonProperty()]
 		public string HighlightColor { get; set; }
+		[JsonProperty()]
+		public bool IsComparingRanks { get; set; }
+		[JsonProperty()]
+		public string CompareRankIds { get; set; }
+		[JsonProperty()]
+		public bool ShowAvgCompRanks { get; set; }
 	}
 }

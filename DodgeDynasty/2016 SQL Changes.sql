@@ -53,6 +53,10 @@ ALTER TABLE [dbo].[PlayerRankOption]
 ADD [CompareRankIds] varchar(50) NULL
 GO
 
+ALTER TABLE [dbo].[PlayerRankOption]
+ADD [ShowAvgCompRanks] bit NOT NULL DEFAULT(0)
+GO
+
 
 
 

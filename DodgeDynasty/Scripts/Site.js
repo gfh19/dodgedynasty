@@ -305,10 +305,10 @@ function callRefreshPageWithPickTimer(url, elementId) {
 };
 
 function callRefreshPage(url, elementId) {
-	saveTouchScrollPos(elementId);
+	saveTouchScrollPos();
 	var refreshUrl = getDynamicUrl(url);
 	ajaxGetReplace(refreshUrl, elementId, function () {
-		restoreTouchScrollPos(elementId);
+		restoreTouchScrollPos();
 		setPickTimer(false);
 	});
 	//TODO:  Add refresh Chat window for back button defect
@@ -322,7 +322,7 @@ function getDynamicUrl(url) {
 	return returnUrl;
 }
 
-function saveTouchScrollPos(elementId)
+function saveTouchScrollPos()
 {
 	if ($(".possible-touch").length > 0 && touchScrollDiv != null) {
 		touchScrollLeft = $(touchScrollDiv, ".possible-touch").scrollLeft();
@@ -699,8 +699,12 @@ function ajaxGetReplace(url, elementId, successFn, errorFn) {
 }
 
 function ajaxPostReplace(model, url, elementId, successFn, errorFn, dataType, makeSync) {
+//Going to default to refreshed page functnlty (i.e. setPickTimer, restoreTouchScroll)
+	saveTouchScrollPos();
 	ajaxPost(model, url, function (response) {
 		replaceWith(elementId, response);
+		restoreTouchScrollPos();
+		setPickTimer(false);
 		if (successFn) {
 			successFn();
 		}

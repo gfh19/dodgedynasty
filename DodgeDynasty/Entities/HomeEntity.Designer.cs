@@ -7066,7 +7066,8 @@ namespace DodgeDynasty.Entities
         /// <param name="showHighlighting">Initial value of the ShowHighlighting property.</param>
         /// <param name="lockHighlighting">Initial value of the LockHighlighting property.</param>
         /// <param name="isComparingRanks">Initial value of the IsComparingRanks property.</param>
-        public static PlayerRankOption CreatePlayerRankOption(global::System.Guid playerRankOptionId, global::System.Int32 userId, global::System.Boolean expandOverall, global::System.Boolean expandQB, global::System.Boolean expandRB, global::System.Boolean expandWRTE, global::System.Boolean expandDEF, global::System.Boolean expandK, global::System.Boolean expandQueue, global::System.Boolean hideOverall, global::System.Boolean hideQB, global::System.Boolean hideRB, global::System.Boolean hideWRTE, global::System.Boolean hideDEF, global::System.Boolean hideK, global::System.Boolean hideQueue, global::System.Boolean showHighlighting, global::System.Boolean lockHighlighting, global::System.Boolean isComparingRanks)
+        /// <param name="showAvgCompRanks">Initial value of the ShowAvgCompRanks property.</param>
+        public static PlayerRankOption CreatePlayerRankOption(global::System.Guid playerRankOptionId, global::System.Int32 userId, global::System.Boolean expandOverall, global::System.Boolean expandQB, global::System.Boolean expandRB, global::System.Boolean expandWRTE, global::System.Boolean expandDEF, global::System.Boolean expandK, global::System.Boolean expandQueue, global::System.Boolean hideOverall, global::System.Boolean hideQB, global::System.Boolean hideRB, global::System.Boolean hideWRTE, global::System.Boolean hideDEF, global::System.Boolean hideK, global::System.Boolean hideQueue, global::System.Boolean showHighlighting, global::System.Boolean lockHighlighting, global::System.Boolean isComparingRanks, global::System.Boolean showAvgCompRanks)
         {
             PlayerRankOption playerRankOption = new PlayerRankOption();
             playerRankOption.PlayerRankOptionId = playerRankOptionId;
@@ -7088,6 +7089,7 @@ namespace DodgeDynasty.Entities
             playerRankOption.ShowHighlighting = showHighlighting;
             playerRankOption.LockHighlighting = lockHighlighting;
             playerRankOption.IsComparingRanks = isComparingRanks;
+            playerRankOption.ShowAvgCompRanks = showAvgCompRanks;
             return playerRankOption;
         }
 
@@ -7697,6 +7699,30 @@ namespace DodgeDynasty.Entities
         private global::System.String _CompareRankIds;
         partial void OnCompareRankIdsChanging(global::System.String value);
         partial void OnCompareRankIdsChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean ShowAvgCompRanks
+        {
+            get
+            {
+                return _ShowAvgCompRanks;
+            }
+            set
+            {
+                OnShowAvgCompRanksChanging(value);
+                ReportPropertyChanging("ShowAvgCompRanks");
+                _ShowAvgCompRanks = StructuralObject.SetValidValue(value, "ShowAvgCompRanks");
+                ReportPropertyChanged("ShowAvgCompRanks");
+                OnShowAvgCompRanksChanged();
+            }
+        }
+        private global::System.Boolean _ShowAvgCompRanks;
+        partial void OnShowAvgCompRanksChanging(global::System.Boolean value);
+        partial void OnShowAvgCompRanksChanged();
 
         #endregion
 
