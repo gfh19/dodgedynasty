@@ -11,9 +11,11 @@ namespace DodgeDynasty.Mappers.Ranks
 {
 	public class PlayerRankModelHelper
 	{
+		static PlayerRankModelHelper _instance = new PlayerRankModelHelper();
+
 		public static PlayerRankModelHelper Instance
 		{
-			get { return new PlayerRankModelHelper(); }
+			get { return _instance; }
 		}
 
 		public PlayerRankingsModel CreatePlayerRankingsModel(IPlayerRankModel model)
@@ -76,6 +78,32 @@ namespace DodgeDynasty.Mappers.Ranks
 				CssClass = (u != null) ? lo.CssClass : null,
 				HighlightClass = (ph != null) ? ph.HighlightClass : null,
 				HighlightRankNum = (ph != null) ? ph.RankNum.ToString() : null
+			};
+		}
+
+		public RankedPlayer CopyRankedPlayer(RankedPlayer rp)
+		{
+			return new RankedPlayer
+			{
+				PlayerId = rp.PlayerId,
+				TruePlayerId = rp.TruePlayerId,
+				RankId = rp.RankId,
+				PlayerRankId = rp.PlayerRankId,
+				FirstName = rp.FirstName,
+				LastName = rp.LastName,
+				PlayerName = rp.PlayerName,
+				NFLTeam = rp.NFLTeam,
+				NFLTeamDisplay = rp.NFLTeamDisplay,
+				Position = rp.Position,
+				RankNum = rp.RankNum,
+				PosRankNum = rp.PosRankNum,
+				AuctionValue = rp.AuctionValue,
+				PickNum = rp.PickNum,
+				UserId = rp.UserId,
+				NickName = rp.NickName,
+				CssClass = rp.CssClass,
+				HighlightClass = rp.HighlightClass,
+				HighlightRankNum = rp.HighlightRankNum
 			};
 		}
 	}

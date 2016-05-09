@@ -1582,6 +1582,9 @@ ul.menu li a.current-page
 .cr-chk-show-avg {
 	vertical-align: middle;
 }
+.cr-avg-ranks {
+	margin-top: 20px;
+}
 
 
 /* RankingsList / Setup Rank

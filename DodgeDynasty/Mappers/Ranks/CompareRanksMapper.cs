@@ -48,16 +48,19 @@ namespace DodgeDynasty.Mappers.Ranks
 				}
 				if (PlayerRankModel.Options.ShowAvgCompRanks && PlayerRankModel.CompareRankModels.Count > 0)
 				{
-					PlayerRankModel.AveragePlayerRanks = CalculateAvgCompareRanks();
+					var averagePlayerRank = helper.CreatePlayerRankingsModel(PlayerRankModel);
+					averagePlayerRank.RankedPlayers = CalculateAvgCompareRanks();
+					averagePlayerRank.OverallRankedPlayers = averagePlayerRank.RankedPlayers;
+					PlayerRankModel.AveragePlayerRank = averagePlayerRank;
 				}
 			}
 		}
 
-		public List<RankedPlayerAverage> CalculateAvgCompareRanks()
+		public List<RankedPlayer> CalculateAvgCompareRanks()
 		{
 			List<RankedPlayerAverage> rankedPlayerAverages = new List<RankedPlayerAverage>();
 			List<RankedPlayer> allRankedPlayers = new List<RankedPlayer>();
-			PlayerRankModel.CompareRankModels.ForEach(o => allRankedPlayers.AddRange(o.RankedPlayers));
+			PlayerRankModel.CompareRankModels.ForEach(o => allRankedPlayers.AddRange(o.OverallRankedPlayers));
 			var distinctTruePlayerIds = (from player in allRankedPlayers
 										 select player.TruePlayerId).Distinct().OrderBy(o=>o).ToList();
             for (int i=0; i<PlayerRankModel.CompareRankModels.Count; i++)
@@ -68,8 +71,27 @@ namespace DodgeDynasty.Mappers.Ranks
 					SetAverageRankedPlayer(rankedPlayerAverages, tpid, rank.RankedPlayers, i);
                 }
 			}
-			rankedPlayerAverages.ForEach(o => o.AvgRankNum = o.AllRankNums.Take(o.AllRankNums.Count()).Average());
-			return rankedPlayerAverages.OrderBy(o=>o.AvgRankNum).ThenBy(o=>o.AllRankNums[0]).ToList();
+			rankedPlayerAverages.ForEach(o => o.RankedPlayer.AvgRankNum = o.AllRankNums.Take(o.AllRankNums.Count()).Average());
+			allRankedPlayers = new List<RankedPlayer>();
+			int playerCount = 1;
+			int prevRankNum = playerCount;
+			double prevAvgRankNum = 0.0;
+			foreach (var rankedPlayerAvg in rankedPlayerAverages.OrderBy(o => o.RankedPlayer.AvgRankNum).ThenBy(o => o.AllRankNums[0]).ToList())
+			{
+				if (rankedPlayerAvg.RankedPlayer.AvgRankNum > prevAvgRankNum)
+				{
+					rankedPlayerAvg.RankedPlayer.RankNum = playerCount;
+					prevRankNum = playerCount;
+				}
+				else
+				{
+					rankedPlayerAvg.RankedPlayer.RankNum = prevRankNum;
+				}
+				playerCount++;
+				prevAvgRankNum = rankedPlayerAvg.RankedPlayer.AvgRankNum.Value;
+				allRankedPlayers.Add(rankedPlayerAvg.RankedPlayer);
+            }
+			return allRankedPlayers;
 		}
 
 		public void SetAverageRankedPlayer(List<RankedPlayerAverage> rankedPlayerAverages, int truePlayerId, List<RankedPlayer> rankedPlayers, int rankIx)
@@ -83,7 +105,7 @@ namespace DodgeDynasty.Mappers.Ranks
             }
 			if (rankedPlayer != null)
 			{
-				playerAvg.RankedPlayer = playerAvg.RankedPlayer ?? rankedPlayer;
+				playerAvg.RankedPlayer = playerAvg.RankedPlayer ?? PlayerRankModelHelper.Instance.CopyRankedPlayer(rankedPlayer);
 				playerAvg.AllRankNums[rankIx] = rankedPlayer.RankNum.Value;
 			}
 			else

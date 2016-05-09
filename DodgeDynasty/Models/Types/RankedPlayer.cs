@@ -19,6 +19,7 @@ namespace DodgeDynasty.Models.Types
 		public string Position { get; set; }
 		public int? RankNum { get; set; }
 		public int? PosRankNum { get; set; }
+		public double? AvgRankNum { get; set; }
 		public decimal? AuctionValue { get; set; }
 		public string PickNum { get; set; }
 		public string UserId { get; set; }

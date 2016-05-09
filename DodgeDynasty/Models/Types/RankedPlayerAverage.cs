@@ -11,6 +11,5 @@ namespace DodgeDynasty.Models.Types
 		public int TruePlayerId { get; set; }
 		public RankedPlayer RankedPlayer { get; set; }
 		public int[] AllRankNums { get; set; }
-		public double AvgRankNum { get; set; }
 	}
 }

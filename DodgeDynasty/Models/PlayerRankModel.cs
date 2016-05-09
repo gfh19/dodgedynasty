@@ -11,6 +11,7 @@ using DodgeDynasty.Models.ViewTypes;
 using DodgeDynasty.Mappers.Highlights;
 using DodgeDynasty.Models.Highlights;
 using DodgeDynasty.Models.Drafts;
+using DodgeDynasty.Mappers.Ranks;
 
 namespace DodgeDynasty.Models
 {
@@ -36,7 +37,7 @@ namespace DodgeDynasty.Models
 		/* Compare Ranks */
 		public List<PlayerRankingsModel> CompareRankModels { get; set; }
 		public IPlayerRankModel CompareRank { get; set; }
-		public List<RankedPlayerAverage> AveragePlayerRanks { get; set; }
+		public IPlayerRankModel AveragePlayerRank { get; set; }
 		public string CategoryRankHeader { get; set; }
 
 		public PlayerRankModel(int rankId, int? draftId = null)
@@ -93,7 +94,7 @@ namespace DodgeDynasty.Models
 							 join t in NFLTeams on p.NFLTeam equals t.TeamAbbr
 							 join ph in CurrentPlayerHighlights on pr.PlayerId equals ph.PlayerId into phLeft
 							 from ph in phLeft.DefaultIfEmpty()
-							 select GetRankedPlayer(pr, p, t, ph)).OrderBy(p => p.RankNum).ToList();
+							 select PlayerRankModelHelper.Instance.GetRankedPlayer(pr, p, t, ph)).OrderBy(p => p.RankNum).ToList();
 			return RankedPlayers;
 		}
 
@@ -110,36 +111,9 @@ namespace DodgeDynasty.Models
 							 from lo in loLeft.DefaultIfEmpty()
 							 join ph in CurrentPlayerHighlights on pr.PlayerId equals ph.PlayerId into phLeft
 							 from ph in phLeft.DefaultIfEmpty()
-							 select GetRankedPlayer(pr, p, t, ph, pick, u, lo)).OrderBy(p => p.RankNum).ToList();
+							 select PlayerRankModelHelper.Instance.GetRankedPlayer(pr, p, t, ph, pick, u, lo)).OrderBy(p => p.RankNum).ToList();
 
 			return GetDraftedTruePlayersFor(RankedPlayers);
-		}
-
-		private RankedPlayer GetRankedPlayer(PlayerRank pr, Player p, NFLTeam t, PlayerHighlight ph = null, DraftPick pick=null, 
-			User u=null, LeagueOwner lo=null)
-		{
-			return new RankedPlayer
-			{
-				PlayerId = p.PlayerId,
-				TruePlayerId = p.TruePlayerId.Value,
-				RankId = (pr != null) ? pr.RankId : -1,
-				PlayerRankId = (pr != null) ? pr.PlayerRankId : -1,
-				FirstName = p.FirstName,
-				LastName = p.LastName,
-				PlayerName = p.PlayerName,
-				NFLTeam = p.NFLTeam,
-				NFLTeamDisplay = t.AbbrDisplay,
-				Position = p.Position,
-				RankNum = (pr != null) ? pr.RankNum : null,
-				PosRankNum = (pr != null) ? pr.PosRankNum : null,
-				AuctionValue = (pr != null) ? pr.AuctionValue : null,
-				PickNum = (pick != null) ? pick.PickNum.ToString() : null,
-				UserId = (u != null) ? u.UserId.ToString() : null,
-				NickName = (u != null) ? u.NickName : null,
-				CssClass = (u != null) ? lo.CssClass : null,
-				HighlightClass = (ph != null) ? ph.HighlightClass : null,
-                HighlightRankNum = (ph != null) ? ph.RankNum.ToString() : null
-			};
 		}
 
 		public List<SelectListItem> GetRankPlayersListItem(string playerId)
@@ -189,7 +163,7 @@ namespace DodgeDynasty.Models
 									  from u in uLeft.DefaultIfEmpty()
 									  join lo in CurrentLeagueOwners on ((pick != null) ? pick.UserId : -1) equals lo.UserId into loLeft
 									  from lo in loLeft.DefaultIfEmpty()
-									  select GetRankedPlayer(pr, p, t, ph, pick, u, lo)).OrderBy(p => Convert.ToInt32(p.HighlightRankNum)).ToList();
+									  select PlayerRankModelHelper.Instance.GetRankedPlayer(pr, p, t, ph, pick, u, lo)).OrderBy(p => Convert.ToInt32(p.HighlightRankNum)).ToList();
 
             return GetDraftedTruePlayersFor(highlightedPlayers);
 		}
@@ -240,7 +214,16 @@ namespace DodgeDynasty.Models
 			CompareRank = compareRankModel;
 			CompareRank.CategoryRankHeader = string.Format("{0} ({1})", compareRankModel.CurrentRank.RankName, 
 				compareRankModel.CurrentRank.RankDate.ToString("M/d/yy"));
+			AveragePlayerRank = null;
             return this;
+		}
+
+		public IPlayerRankModel SetAverageRankCategory(RankCategory category, IPlayerRankModel rankModel)
+		{
+			CurrentRankCategory = RankCategoryFactory.RankCatDict[category](rankModel);
+			AveragePlayerRank = rankModel;
+			CompareRank = null;
+			return this;
 		}
 
 		public List<SelectListItem> GetHighlightColors()

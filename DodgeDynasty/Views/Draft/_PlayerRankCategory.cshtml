@@ -21,13 +21,25 @@
 		}
 		else
 		{
+			if (Model.AveragePlayerRank != null && !DodgeDynasty.Shared.Utilities.ToBool(historyMode))
+			{
+				<div class="cr-avg-ranks bold center">Average Selected Rankings</div>
+			}
 			<caption class="ba-header">@Model.CurrentRankCategory.Header
 				<span class="ba-hide-cat-text">(<a class="ba-hide-cat-link" data-hide-id="@Model.CurrentRankCategory.HideId">Hide</a>)</span>
 			</caption>
 		}
 		<tbody>
 			<tr>
-				<th>Rk</th>
+				@if (Model.AveragePlayerRank != null && !DodgeDynasty.Shared.Utilities.ToBool(historyMode))
+				{
+					<th>#</th>
+					<th>Avg</th>
+				}
+				else
+				{
+					<th>Rk</th>
+				}
 				<th>Player</th>
 				<th>Tm</th>
 				@if (showPos) {
@@ -44,6 +56,10 @@
 								@((player.HighlightClass != null ? "highlighted " + player.HighlightClass : " "))"
 					data-player-id="@player.PlayerId">
 					<td>@player.RankNum</td>
+					@if (Model.AveragePlayerRank != null && !DodgeDynasty.Shared.Utilities.ToBool(historyMode))
+					{
+						<td>@string.Format("{0:0.##}", player.AvgRankNum)</td>
+					}
 					<td class="ba-player-name" data-player-id="@player.PlayerId">
 						@if (Model.IsDraftActive() && Model.IsUserTurn() && player.PickNum == null)
 						{
@@ -81,9 +97,18 @@
 				</tr>
 			}
 			<tr>
-				<td colspan="@((showPos && showBye) ? "5" : ((showPos || showBye) ? "4" : "3"))" class="expand">
-					<a href="#" id="@Model.CurrentRankCategory.ExpandId" class="expand-link" data-expand="@Model.CurrentRankCategory.ExpandValue">More...</a>
-				</td>
+				@if (Model.AveragePlayerRank != null && !DodgeDynasty.Shared.Utilities.ToBool(historyMode))
+				{
+					<td colspan="@((showPos && showBye) ? "6" : ((showPos || showBye) ? "5" : "4"))" class="expand">
+						<a href="#" id="@Model.CurrentRankCategory.ExpandId" class="expand-link" data-expand="@Model.CurrentRankCategory.ExpandValue">More...</a>
+					</td>
+				}
+				else
+				{
+					<td colspan="@((showPos && showBye) ? "5" : ((showPos || showBye) ? "4" : "3"))" class="expand">
+						<a href="#" id="@Model.CurrentRankCategory.ExpandId" class="expand-link" data-expand="@Model.CurrentRankCategory.ExpandValue">More...</a>
+					</td>
+				}
 			</tr>
 		</tbody>
 	</table>

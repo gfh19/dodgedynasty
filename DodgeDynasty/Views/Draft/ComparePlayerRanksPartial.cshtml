@@ -57,6 +57,10 @@
 	<div class="rank-container">
 		<div class="ba-rankings">
 			@Html.Partial(Url.Content("../Draft/HighlightQueuePartial"), Model)
+			@if (Model.Options.ShowAvgCompRanks && Model.AveragePlayerRank != null)
+			{
+				@Html.Partial(Url.Content("../Draft/_PlayerRankCategory"), Model.SetAverageRankCategory(DodgeDynasty.Models.ViewTypes.RankCategory.Overall, Model.AveragePlayerRank))
+			}
 			@foreach (var compareRankModel in Model.CompareRankModels)
 			{
 				@Html.Partial(Url.Content("../Draft/_PlayerRankCategory"), Model.SetCompareRanksCategory(DodgeDynasty.Models.ViewTypes.RankCategory.Overall, compareRankModel))
