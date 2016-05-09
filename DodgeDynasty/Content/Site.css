@@ -1565,11 +1565,15 @@ ul.menu li a.current-page
 	white-space: normal;
 	cursor: initial !important;
 }
-.cr-add-rank-content {
+.cr-add-rank-msg {
 	width: 232px;
 }
 .cr-add-rank-text {
 	cursor: pointer;
+}
+.cr-add-rank-text, .cr-show-avg {
+	margin-right: 5px;
+	margin-left: 5px;
 }
 .cr-add-rank img {
 	vertical-align: bottom;

@@ -65,25 +65,25 @@
 			{
 				@Html.Partial(Url.Content("../Draft/_PlayerRankCategory"), Model.SetCompareRanksCategory(DodgeDynasty.Models.ViewTypes.RankCategory.Overall, compareRankModel))
 			}
-			@if (Model.CompareRankModels.Count < DodgeDynasty.Shared.Constants.MaxCompareRanks)
-			{
-				<div class="ba-category cr-add-compare">
-					<div class="cr-add-rank-content">
-						<span class="cr-add-rank-text">Add ranking to compare </span><a href="#" class="cr-add-rank" tabindex="-1"><img src="@Url.Content("~/Content/images/plus.png")" alt="Move Up" /></a>
-						@if (Model.CompareRankModels.Count == 0)
-						{
-						<div class="center">
-							<p>Click the add button (<a href="#" class="cr-add-rank" tabindex="-1"><img src="@Url.Content("~/Content/images/plus.png")" alt="Move Up" /></a>) above to add multiple different rankings!</p>
-						</div>
-						}
-						else
-						{
-						<div class="center">
-							<p>@Html.CheckBoxFor(m => m.Options.ShowAvgCompRanks, new { @class = "cr-chk-show-avg" }) @Html.LabelFor(m => m.Options.ShowAvgCompRanks, "Show Averages?", new { @class = "cr-lbl-show-avg" })</p>
-						</div>
-						}
-					</div>
+			<div class="ba-category cr-add-compare">
+				<div class="cr-add-rank-content">
+				@if (Model.CompareRankModels.Count < DodgeDynasty.Shared.Constants.MaxCompareRanks)
+				{
+					<span class="cr-add-rank-text">Add ranking to compare <a href="#" class="cr-add-rank" tabindex="-1"><img src="@Url.Content("~/Content/images/plus.png")" alt="Move Up" /></a> </span>
+				}
+				@if (Model.CompareRankModels.Count == 0)
+				{
+				<div class="center cr-add-rank-msg">
+					<p>Click the add button (<a href="#" class="cr-add-rank" tabindex="-1"><img src="@Url.Content("~/Content/images/plus.png")" alt="Move Up" /></a>) above to add multiple different rankings!</p>
 				</div>
-			}
+				}
+				else
+				{
+				<div class="center cr-show-avg">
+					<p>@Html.CheckBoxFor(m => m.Options.ShowAvgCompRanks, new { @class = "cr-chk-show-avg" }) @Html.LabelFor(m => m.Options.ShowAvgCompRanks, "Show Averages?", new { @class = "cr-lbl-show-avg" })</p>
+				</div>
+				}
+				</div>
+			</div>
 	</div>
 </div>
