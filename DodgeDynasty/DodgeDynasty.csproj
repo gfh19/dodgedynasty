@@ -316,6 +316,7 @@
     <Compile Include="Models\Types\OwnerUser.cs" />
     <Compile Include="Models\Types\PlayerRankOptionsCookie.cs" />
     <Compile Include="Models\Types\RankedPlayer.cs" />
+    <Compile Include="Models\Types\RankedPlayerAverage.cs" />
     <Compile Include="Models\Types\UserChatMessage.cs" />
     <Compile Include="Models\ViewTypes\RankCategoryFactory.cs" />
     <Compile Include="Models\ViewTypes\RankCategoryModel.cs" />

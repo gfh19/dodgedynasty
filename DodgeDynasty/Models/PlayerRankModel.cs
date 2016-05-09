@@ -31,10 +31,12 @@ namespace DodgeDynasty.Models
 		public string RankStatus { get; set; }
 		public PlayerModel Player { get; set; }
 		public RankCategoryModel CurrentRankCategory { get; set; }
-		//public List<PlayerHighlight> PlayerHighlights { get; set; }
 		public List<RankedPlayer> HighlightedPlayers { get; set; }
+
+		/* Compare Ranks */
 		public List<PlayerRankingsModel> CompareRankModels { get; set; }
 		public IPlayerRankModel CompareRank { get; set; }
+		public List<RankedPlayerAverage> AveragePlayerRanks { get; set; }
 		public string CategoryRankHeader { get; set; }
 
 		public PlayerRankModel(int rankId, int? draftId = null)
