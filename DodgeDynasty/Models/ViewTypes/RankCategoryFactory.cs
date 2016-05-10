@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DodgeDynasty.Models.Types;
 
 namespace DodgeDynasty.Models.ViewTypes
 {
@@ -13,7 +14,10 @@ namespace DodgeDynasty.Models.ViewTypes
 		RB,
 		WRTE,
 		DEF,
-		K
+		K,
+
+		CompRank,
+		Avg
 	}
 
 	public static class RankCategoryFactory
@@ -25,7 +29,9 @@ namespace DodgeDynasty.Models.ViewTypes
 			{ RankCategory.RB, new RankCatFn(CreateCategoryRB) },
 			{ RankCategory.WRTE, new RankCatFn(CreateCategoryWRTE) },
 			{ RankCategory.DEF, new RankCatFn(CreateCategoryDEF) },
-			{ RankCategory.K, new RankCatFn(CreateCategoryK) }
+			{ RankCategory.K, new RankCatFn(CreateCategoryK) },
+			{ RankCategory.CompRank, new RankCatFn(CreateCategoryCompRank) },
+			{ RankCategory.Avg, new RankCatFn(CreateCategoryAvg) }
 		};
 
 		public static RankCategoryModel CreateCategoryOverall(IPlayerRankModel playerRankModel)
@@ -99,6 +105,40 @@ namespace DodgeDynasty.Models.ViewTypes
 			result.ExpandValue = playerRankModel.Options.ExpandK.ToString().ToLower();
 			result.PlayerList = playerRankModel.KRankedPlayers;
 			return result;
+		}
+		public static RankCategoryModel CreateCategoryCompRank(IPlayerRankModel playerRankModel)
+		{
+			RankCategoryModel result = new RankCategoryModel();
+			result.DataLink = result.ExpandId = "ExpandCR-" + playerRankModel.RankId;
+			result.Header = "OVERALL";
+			result.ShowPos = true;
+			result.ShowByeWeek = true;
+			result.ExpandValue = GetCRExpandValue(playerRankModel.Options, playerRankModel.RankId);
+			result.PlayerList = playerRankModel.OverallRankedPlayers;
+			return result;
+		}
+		public static RankCategoryModel CreateCategoryAvg(IPlayerRankModel playerRankModel)
+		{
+			RankCategoryModel result = new RankCategoryModel();
+			result.DataLink = result.ExpandId = "ExpandAvg";
+			result.HideId = "HideAvg";
+			result.Header = "OVERALL";
+			result.ShowPos = true;
+			result.ShowByeWeek = true;
+			result.ExpandValue = playerRankModel.Options.ExpandAvg.ToString().ToLower();
+			result.PlayerList = playerRankModel.OverallRankedPlayers;
+			return result;
+		}
+
+		//Helpers
+		public static string GetCRExpandValue(PlayerRankOptions options, int rankId)
+		{
+			if (!string.IsNullOrEmpty(options.CompRankExpandIds))
+			{
+				var compRankExpIds = options.CompRankExpandIds.Split(',');
+				return compRankExpIds.Contains(rankId.ToString()).ToString().ToLower();
+			}
+			return "false";
 		}
 	}
 

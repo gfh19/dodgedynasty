@@ -120,9 +120,36 @@ function setCookieOptions(options) {
 }
 
 function flipCookieValue(property) {
-	clientCookieOptions[property] = !clientCookieOptions[property];
+	var response = false;
+	if (property.startsWith("ExpandCR-")) {
+		var currentRankId = property.replace("ExpandCR-", "");
+		response = setCompRankExpandIds(currentRankId);
+	}
+	else {
+		clientCookieOptions[property] = !clientCookieOptions[property];
+		response = clientCookieOptions[property];
+	}
 	setCookieOptions(clientCookieOptions);
-	return clientCookieOptions[property];
+	return response;
+}
+
+function setCompRankExpandIds(currentRankId) {
+	var response = false;
+	var compRankExpLinks = $('.expand-link[id^="ExpandCR-"]');
+	var compRankExpIds = "";
+	$.each(compRankExpLinks, function (ix, expLink) {
+		var expValue = $(expLink).attr("data-expand");
+		if (toBool(expValue)) {
+			var rankId = $(expLink).attr("id").replace("ExpandCR-", "");
+			compRankExpIds += rankId + ",";
+			if (currentRankId && rankId == currentRankId) {
+				response = true;
+			}
+		}
+	});
+	compRankExpIds = compRankExpIds.removeTrailing(",");
+	clientCookieOptions["CompRankExpandIds"] = compRankExpIds;
+	return response;
 }
 
 //On load, opens tables to whatever is stored in cookie
@@ -134,8 +161,20 @@ function toggleRanksWindows() {
 
 function toggleRanksTable(table) {
 	var linkId = $(table).attr("data-link");
-	var expandRows = clientCookieOptions[linkId];
+	var expandRows;
+	if (linkId.startsWith("ExpandCR-")) {
+		var currentRankId = linkId.replace("ExpandCR-", "")
+		expandRows = getCompRankExpanded(currentRankId);
+	}
+	else {
+		expandRows = clientCookieOptions[linkId];
+	}
 	toggleExpandTableRows(table, expandRows, linkId);
+}
+
+function getCompRankExpanded(rankId) {
+	return (clientCookieOptions["CompRankExpandIds"] &&
+		clientCookieOptions["CompRankExpandIds"].split(",").indexOf(rankId) > -1);
 }
 
 function toggleExpandTableRows(table, expandRows, linkId) {
@@ -535,7 +574,10 @@ function updateCompareRankIds(removeRankId) {
 	});
 	compareRankIds = compareRankIds.removeTrailing(",")
 	ajaxPostReplace({ compRankIds: compareRankIds, isBestAvailable: isBestAvailablePage() },
-		"Draft/UpdateCompareRankIds", replaceElementId);
+		"Draft/UpdateCompareRankIds", replaceElementId, function () {
+			setCompRankExpandIds();
+			setCookieOptions(clientCookieOptions);
+		});
 }
 
 function updatePlayerRankOptions(options) {

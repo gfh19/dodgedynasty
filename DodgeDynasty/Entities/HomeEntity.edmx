@@ -273,6 +273,7 @@
           <Property Name="ExpandDEF" Type="bit" Nullable="false" />
           <Property Name="ExpandK" Type="bit" Nullable="false" />
           <Property Name="ExpandQueue" Type="bit" Nullable="false" />
+          <Property Name="ExpandAvg" Type="bit" Nullable="false" />
           <Property Name="HideOverall" Type="bit" Nullable="false" />
           <Property Name="HideQB" Type="bit" Nullable="false" />
           <Property Name="HideRB" Type="bit" Nullable="false" />
@@ -280,14 +281,17 @@
           <Property Name="HideDEF" Type="bit" Nullable="false" />
           <Property Name="HideK" Type="bit" Nullable="false" />
           <Property Name="HideQueue" Type="bit" Nullable="false" />
+          <Property Name="HideAvg" Type="bit" Nullable="false" />
           <Property Name="ShowHighlighting" Type="bit" Nullable="false" />
           <Property Name="LockHighlighting" Type="bit" Nullable="false" />
           <Property Name="HighlightColor" Type="varchar" MaxLength="50" />
           <Property Name="IsComparingRanks" Type="bit" Nullable="false" />
           <Property Name="CompareRankIds" Type="varchar" MaxLength="50" />
+          <Property Name="CompRankExpandIds" Type="varchar" MaxLength="50" />
+          <Property Name="CompRanksExpandAll" Type="bit" Nullable="false" />
+          <Property Name="ShowAvgCompRanks" Type="bit" Nullable="false" />
           <Property Name="AddTimestamp" Type="datetime" />
           <Property Name="LastUpdateTimestamp" Type="datetime" />
-          <Property Name="ShowAvgCompRanks" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Position">
           <Key>
@@ -1874,6 +1878,10 @@
           <Property Name="IsComparingRanks" Type="Boolean" Nullable="false" />
           <Property Name="CompareRankIds" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ShowAvgCompRanks" Type="Boolean" Nullable="false" />
+          <Property Name="ExpandAvg" Type="Boolean" Nullable="false" />
+          <Property Name="HideAvg" Type="Boolean" Nullable="false" />
+          <Property Name="CompRankExpandIds" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CompRanksExpandAll" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -2295,6 +2303,10 @@
           <EntitySetMapping Name="PlayerRankOptions">
             <EntityTypeMapping TypeName="HomeModel.PlayerRankOption">
               <MappingFragment StoreEntitySet="PlayerRankOption">
+                <ScalarProperty Name="CompRanksExpandAll" ColumnName="CompRanksExpandAll" />
+                <ScalarProperty Name="CompRankExpandIds" ColumnName="CompRankExpandIds" />
+                <ScalarProperty Name="HideAvg" ColumnName="HideAvg" />
+                <ScalarProperty Name="ExpandAvg" ColumnName="ExpandAvg" />
                 <ScalarProperty Name="ShowAvgCompRanks" ColumnName="ShowAvgCompRanks" />
                 <ScalarProperty Name="CompareRankIds" ColumnName="CompareRankIds" />
                 <ScalarProperty Name="IsComparingRanks" ColumnName="IsComparingRanks" />

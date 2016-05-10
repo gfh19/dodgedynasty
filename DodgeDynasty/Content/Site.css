@@ -1452,7 +1452,7 @@ ul.menu li a.current-page
 	background-color: #DFDFDF;
 }
 
-.ba-hide-cat-link {
+.ba-hide-cat-link, .cr-remove-link {
 	cursor: pointer;
 }
 

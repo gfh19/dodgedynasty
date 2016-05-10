@@ -208,9 +208,9 @@ namespace DodgeDynasty.Models
 			return this;
 		}
 		
-		public IPlayerRankModel SetCompareRanksCategory(RankCategory category, IPlayerRankModel compareRankModel)
+		public IPlayerRankModel SetCompareRanksCategory(IPlayerRankModel compareRankModel)
 		{
-			CurrentRankCategory = RankCategoryFactory.RankCatDict[category](compareRankModel);
+			CurrentRankCategory = RankCategoryFactory.RankCatDict[RankCategory.CompRank](compareRankModel);
 			CompareRank = compareRankModel;
 			CompareRank.CategoryRankHeader = string.Format("{0} ({1})", compareRankModel.CurrentRank.RankName, 
 				compareRankModel.CurrentRank.RankDate.ToString("M/d/yy"));
@@ -218,9 +218,9 @@ namespace DodgeDynasty.Models
             return this;
 		}
 
-		public IPlayerRankModel SetAverageRankCategory(RankCategory category, IPlayerRankModel rankModel)
+		public IPlayerRankModel SetAverageRankCategory(IPlayerRankModel rankModel)
 		{
-			CurrentRankCategory = RankCategoryFactory.RankCatDict[category](rankModel);
+			CurrentRankCategory = RankCategoryFactory.RankCatDict[RankCategory.Avg](rankModel);
 			AveragePlayerRank = rankModel;
 			CompareRank = null;
 			return this;

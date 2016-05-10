@@ -37,6 +37,7 @@ namespace DodgeDynasty.Mappers.Ranks
 				ExpandDEF = options.ExpandDEF,
 				ExpandK = options.ExpandK,
 				ExpandQueue = options.ExpandQueue,
+				ExpandAvg = options.ExpandAvg,
 				HideOverall = options.HideOverall,
 				HideQB = options.HideQB,
 				HideRB = options.HideRB,
@@ -44,11 +45,14 @@ namespace DodgeDynasty.Mappers.Ranks
 				HideDEF = options.HideDEF,
 				HideK = options.HideK,
 				HideQueue = options.HideQueue,
-				ShowHighlighting = options.ShowHighlighting,
+				HideAvg = options.HideAvg,
+                ShowHighlighting = options.ShowHighlighting,
 				LockHighlighting = options.LockHighlighting,
 				HighlightColor = options.HighlightColor,
 				IsComparingRanks = options.IsComparingRanks,
 				CompareRankIds = options.CompareRankIds,
+				CompRankExpandIds = options.CompRankExpandIds,
+				CompRanksExpandAll = options.CompRanksExpandAll,
 				ShowAvgCompRanks = options.ShowAvgCompRanks
 			};
 		}
@@ -96,6 +100,7 @@ namespace DodgeDynasty.Mappers.Ranks
 			options.ExpandDEF = model.ExpandDEF;
 			options.ExpandK = model.ExpandK;
 			options.ExpandQueue = model.ExpandQueue;
+			options.ExpandAvg = model.ExpandAvg;
 			options.HideOverall = model.HideOverall;
 			options.HideQB = model.HideQB;
 			options.HideRB = model.HideRB;
@@ -103,11 +108,14 @@ namespace DodgeDynasty.Mappers.Ranks
 			options.HideDEF = model.HideDEF;
 			options.HideK = model.HideK;
 			options.HideQueue = model.HideQueue;
+			options.HideAvg = model.HideAvg;
 			options.ShowHighlighting = model.ShowHighlighting;
 			options.LockHighlighting = model.LockHighlighting;
 			options.HighlightColor = GetSafeHighlightColor(model.HighlightColor);
 			options.IsComparingRanks = model.IsComparingRanks;
 			options.CompareRankIds = model.CompareRankIds;
+			options.CompRankExpandIds = model.CompRankExpandIds;
+			options.CompRanksExpandAll = model.CompRanksExpandAll;
 			options.ShowAvgCompRanks = model.ShowAvgCompRanks;
             options.LastUpdateTimestamp = DateTime.Now;
 			return options;

@@ -44,6 +44,13 @@ GO
 
 
 
+ALTER TABLE [dbo].[PlayerRankOption]
+ADD [ExpandAvg] bit NOT NULL DEFAULT(0)
+GO
+
+ALTER TABLE [dbo].[PlayerRankOption]
+ADD [HideAvg] bit NOT NULL DEFAULT(0)
+GO
 
 ALTER TABLE [dbo].[PlayerRankOption]
 ADD [IsComparingRanks] bit NOT NULL DEFAULT(0)
@@ -54,8 +61,17 @@ ADD [CompareRankIds] varchar(50) NULL
 GO
 
 ALTER TABLE [dbo].[PlayerRankOption]
+ADD [CompRankExpandIds] varchar(50) NULL
+GO
+
+ALTER TABLE [dbo].[PlayerRankOption]
+ADD [CompRanksExpandAll] bit NOT NULL DEFAULT(0)
+GO
+
+ALTER TABLE [dbo].[PlayerRankOption]
 ADD [ShowAvgCompRanks] bit NOT NULL DEFAULT(0)
 GO
+
 
 
 

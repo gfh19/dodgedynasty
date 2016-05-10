@@ -10,48 +10,26 @@
 	</script>
 	@Html.Partial(Url.Content("../Draft/CurrentDraftPickPartial"), Model)
 	<div class="rank-header">
-		<div class="rank-name" data-rank-id="@Model.CurrentRank.RankId">
+		<div class="rank-name">
 			<text>Compare Rankings - @ViewBag.Title</text>
 		</div>
 		<div class="more-rank-opts">
-			@{
-				var draftId = DodgeDynasty.Shared.Utilities.GetRouteDraftId(Url.RequestContext.RouteData);
-				var historyMode = Request.QueryString[DodgeDynasty.Shared.Constants.QS.HistoryMode];
-				if (draftId != null && DodgeDynasty.Shared.Utilities.ToBool(historyMode))
-				{
-					if (ViewBag.Title == "Best Available")
-					{
-						<a href="@Url.Content("~/Draft/PlayerRanks/" + draftId + "?rankId=" + Model.RankId + "&historyMode=true")" id="allPlayersLink">Show All Players</a>
-					}
-					else
-					{
-						<a href="@Url.Content("~/Draft/BestAvailable/" + draftId + "?rankId=" + Model.RankId + "&historyMode=true")" id="bestAvailLink">Show Best Available</a>
-					}
-					<text>&#8226; <a href="@Url.Content("~/Draft/RankingsList/" + draftId + "?historyMode=true")" id="otherRanksLink">More Rankings...</a></text>
-				}
-				else
-				{
-					if (ViewBag.Title == "Best Available")
-					{
-						<a href="@Url.Content("~/Draft/PlayerRanks?rankId=" + Model.RankId)" id="allPlayersLink">Show All Players</a>
-					}
-					else
-					{
-						<a href="@Url.Content("~/Draft/BestAvailable?rankId=" + Model.RankId)" id="bestAvailLink">Show Best Available</a>
-					}
-					<text>&#8226; <a href="@Url.Content("~/Draft/RankingsList")" id="otherRanksLink">More Rankings...</a></text>
-				}
+			@if (ViewBag.Title == "Best Available")
+			{
+				<a href="@Url.Content("~/Draft/PlayerRanks")" id="allPlayersLink">Show All Players</a>
 			}
+			else
+			{
+				<a href="@Url.Content("~/Draft/BestAvailable")" id="bestAvailLink">Show Best Available</a>
+			}
+			<text>&#8226; <a href="@Url.Content("~/Draft/RankingsList")" id="otherRanksLink">More Rankings...</a></text>
 			<div class="pr-toggle-links">
 				<a class="pr-expand-all" href="#">Expand All</a>/<a class="pr-collapse-all" href="#">Collapse All</a>
 			</div>
-			@if (!DodgeDynasty.Shared.Utilities.ToBool(historyMode))
-			{
-				<div class="pr-highlight-links">
-					<a class="pr-toggle-highlight" href="#">Show Highlighting *NEW!*</a>
-					<span class="pr-highlight-options">&#8226; <a class="pr-edit-highlight" href="#">Turn Edit Off</a></span>
-				</div>
-			}
+			<div class="pr-highlight-links">
+				<a class="pr-toggle-highlight" href="#">Show Highlighting *NEW!*</a>
+				<span class="pr-highlight-options">&#8226; <a class="pr-edit-highlight" href="#">Turn Edit Off</a></span>
+			</div>
 		</div>
 	</div>
 	<div class="rank-container">
@@ -59,11 +37,11 @@
 			@Html.Partial(Url.Content("../Draft/HighlightQueuePartial"), Model)
 			@if (Model.Options.ShowAvgCompRanks && Model.AveragePlayerRank != null)
 			{
-				@Html.Partial(Url.Content("../Draft/_PlayerRankCategory"), Model.SetAverageRankCategory(DodgeDynasty.Models.ViewTypes.RankCategory.Overall, Model.AveragePlayerRank))
+				@Html.Partial(Url.Content("../Draft/_PlayerRankCategory"), Model.SetAverageRankCategory(Model.AveragePlayerRank))
 			}
 			@foreach (var compareRankModel in Model.CompareRankModels)
 			{
-				@Html.Partial(Url.Content("../Draft/_PlayerRankCategory"), Model.SetCompareRanksCategory(DodgeDynasty.Models.ViewTypes.RankCategory.Overall, compareRankModel))
+				@Html.Partial(Url.Content("../Draft/_PlayerRankCategory"), Model.SetCompareRanksCategory(compareRankModel))
 			}
 			<div class="ba-category cr-add-compare">
 				<div class="cr-add-rank-content">
