@@ -378,5 +378,14 @@ namespace DodgeDynasty.Controllers
 			mapper.UpdateEntity(new InactivatePlayersModel { PlayerGroup = playerGroup });
 			return Json(new { status = "" });
 		}
+
+		[HttpGet]
+		[AdminAccess]
+		public ActionResult GetWebsiteRanks()
+		{
+			var mapper = new ReadRankMapper();
+			mapper.GetModel();
+			return RedirectToAction(Constants.Views.Display, "Draft");
+		}
 	}
 }
