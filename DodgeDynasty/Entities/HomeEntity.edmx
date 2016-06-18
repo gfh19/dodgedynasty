@@ -310,6 +310,7 @@
           <Property Name="Year" Type="smallint" Nullable="false" />
           <Property Name="RankDate" Type="date" Nullable="false" />
           <Property Name="Url" Type="varchar" MaxLength="1000" />
+          <Property Name="AutoImport" Type="bit" Nullable="false" />
           <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
           <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
         </EntityType>
@@ -783,6 +784,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="usp_LoadPlayerRanks_V2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FirstName" Type="varchar" Mode="In" />
+          <Parameter Name="LastName" Type="varchar" Mode="In" />
+          <Parameter Name="Position" Type="varchar" Mode="In" />
+          <Parameter Name="NFLTeam" Type="varchar" Mode="In" />
+          <Parameter Name="DateOfBirth" Type="date" Mode="In" />
+          <Parameter Name="RankId" Type="int" Mode="In" />
+          <Parameter Name="RankNum" Type="int" Mode="In" />
+          <Parameter Name="PosRankNum" Type="int" Mode="In" />
+          <Parameter Name="AuctionValue" Type="decimal" Mode="In" />
+          <Parameter Name="DraftYear" Type="smallint" Mode="In" />
+        </Function>
         <EntityContainer Name="HomeModelStoreContainer">
           <EntitySet Name="AdminStatus" EntityType="Self.AdminStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ByeWeek" EntityType="Self.ByeWeek" Schema="dbo" store:Type="Tables" />
@@ -1116,6 +1129,18 @@
             <End Role="User" EntitySet="Users" />
             <End Role="AdminStatu" EntitySet="AdminStatus" />
           </AssociationSet>
+          <FunctionImport Name="usp_LoadPlayerRanks_V2">
+            <Parameter Name="FirstName" Mode="In" Type="String" />
+            <Parameter Name="LastName" Mode="In" Type="String" />
+            <Parameter Name="Position" Mode="In" Type="String" />
+            <Parameter Name="NFLTeam" Mode="In" Type="String" />
+            <Parameter Name="DateOfBirth" Mode="In" Type="DateTime" />
+            <Parameter Name="RankId" Mode="In" Type="Int32" />
+            <Parameter Name="RankNum" Mode="In" Type="Int32" />
+            <Parameter Name="PosRankNum" Mode="In" Type="Int32" />
+            <Parameter Name="AuctionValue" Mode="In" Type="Decimal" />
+            <Parameter Name="DraftYear" Mode="In" Type="Int16" />
+          </FunctionImport>
           </EntityContainer>
         <EntityType Name="NFLTeam">
           <Key>
@@ -1180,6 +1205,7 @@
           <Property Type="DateTime" Name="AddTimestamp" Nullable="false" Precision="3" />
           <Property Type="DateTime" Name="LastUpdateTimestamp" Nullable="false" Precision="3" />
           <NavigationProperty Name="PlayerRanks" Relationship="HomeModel.FK_PlayerRank_Rank" FromRole="Rank" ToRole="PlayerRank" />
+          <Property Name="AutoImport" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="UserApplicant">
           <Key>
@@ -2023,6 +2049,7 @@
           <EntitySetMapping Name="Ranks">
             <EntityTypeMapping TypeName="HomeModel.Rank">
               <MappingFragment StoreEntitySet="Rank">
+                <ScalarProperty Name="AutoImport" ColumnName="AutoImport" />
                 <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
                 <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
                 <ScalarProperty Name="Url" ColumnName="Url" />
@@ -2366,6 +2393,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="usp_LoadPlayerRanks_V2" FunctionName="HomeModel.Store.usp_LoadPlayerRanks_V2" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -8,10 +8,12 @@ using DodgeDynasty.Filters;
 using DodgeDynasty.Mappers;
 using DodgeDynasty.Mappers.Admin;
 using DodgeDynasty.Mappers.PlayerAdjustments;
+using DodgeDynasty.Mappers.RankAdjustments;
 using DodgeDynasty.Models;
 using DodgeDynasty.Models.Account;
 using DodgeDynasty.Models.Admin;
 using DodgeDynasty.Models.PlayerAdjustments;
+using DodgeDynasty.Models.RankAdjustments;
 using DodgeDynasty.Shared;
 
 namespace DodgeDynasty.Controllers
@@ -337,7 +339,7 @@ namespace DodgeDynasty.Controllers
 
 		[HttpGet]
 		[AdminAccess]
-		public ActionResult PlayerAdjustments(string page)
+		public ActionResult PlayerAdjustments()
 		{
 			var mapper = new GetPlayerAdjustmentsMapper();
 			return View(mapper.GetModel());
@@ -381,9 +383,26 @@ namespace DodgeDynasty.Controllers
 
 		[HttpGet]
 		[AdminAccess]
-		public ActionResult GetWebsiteRanks()
+		public ActionResult RankAdjustments()
 		{
-			var mapper = new ReadRankMapper();
+			var mapper = new GetRankAdjustmentsMapper();
+			return View(mapper.GetModel());
+		}
+
+		[HttpPost]
+		[AdminAccess]
+		public JsonResult AddNewRank(AdminRankModel rank)
+		{
+			var mapper = new AdminAddRankMapper();
+			mapper.UpdateEntity(rank);
+			return Json(new { status = "" });
+		}
+
+		[HttpPost]
+		[AdminAccess]
+		public ActionResult AutoImportRank(string rankId, bool confirmed)
+		{
+			var mapper = new ImportRankMapper(rankId, confirmed);
 			mapper.GetModel();
 			return RedirectToAction(Constants.Views.Display, "Draft");
 		}

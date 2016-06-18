@@ -127,6 +127,15 @@ mark
 {
 	display: block;
 }
+.inline-block
+{
+	display: inline-block;
+}
+
+.mid-hrz-margin
+{
+	margin: 0px 5px;
+}
 
 .clear-fix:after
 {
@@ -2331,25 +2340,25 @@ span.player-select
 
 /* Player Adjustments
 ----------------------------------------------------------*/
-.pa-table
+.disp-table
 {
 	min-width: 1024px;
 	margin: 0 auto;
 	border: 1px solid black;
 }
 
-.pa-table tr:first-child
+.disp-table tr:first-child
 {
 	border: 1px solid black;
 }
 
-.pa-table th
+.disp-table th
 {
 	padding: 1px 5px;
 	border: 1px solid black;
 }
 
-.pa-table td
+.disp-table td
 {
 	padding: 1px 5px;
 	border: 1px dashed black;
@@ -2367,7 +2376,7 @@ span.player-select
 #playerAdjustments .deactivate {
 	color: #FF0000 !important;
 }
-.pa-player-dialog {
+.visible-dialog {
 	overflow: visible !important;
 }
 .pa-player-id {
@@ -2379,6 +2388,45 @@ span.player-select
 	display: inline;
 	margin-left: 14px;
 }
+
+
+
+/* Rank Adjustments
+----------------------------------------------------------*/
+.small-dialog
+{
+	font-size: 0.80em;
+}
+.small-dialog label
+{
+	font-size: 1.0em !important;
+	font-weight: bold;
+}
+.small-dialog .ui-button-text
+{
+	font-size: 0.9em;
+}
+.small-dialog .field-validation-error
+{
+	display: block;
+	font-size: 12px;
+}
+#raf-rank-rname {
+	width: 200px;
+}
+#raf-rank-url {
+	width: 415px;
+}
+#raf-rank-year {
+	width: 50px;
+}
+#raf-rank-date {
+	width: 100px;
+}
+#raf-rank-draft-id {
+	width: 50px;
+}
+
 
 
 

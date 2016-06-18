@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using DodgeDynasty.Models.Types;
 using DodgeDynasty.Shared;
 using HtmlAgilityPack;
@@ -87,7 +88,8 @@ namespace DodgeDynasty.Parsers
 
 		public string GetPlayerPos(HtmlNodeCollection columns)
 		{
-			return columns[2].InnerText;
+			var posAndRank = columns[2].InnerText;
+            return Regex.Replace(posAndRank, @"[\d-]", string.Empty);
 		}
 
 		public void AddRankedPlayer(List<RankedPlayer> rankedPlayers, string rank, string player, string nflTeam, string pos)

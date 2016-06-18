@@ -167,7 +167,7 @@ function showPlayerDialog(dialogId, formId, header, getPlayerFn, playerFn) {
 		height: 'auto',
 		width: '295px',
 		modal: true,
-		dialogClass: "pa-player-dialog",
+		dialogClass: "visible-dialog",
 		buttons: [
 					{
 						text: header, click: function () {

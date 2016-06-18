@@ -1,0 +1,85 @@
+﻿@model DodgeDynasty.Models.RankAdjustments.RankAdjustmentsModel
+
+@{
+	ViewBag.Title = "Rank Adjustments";
+}
+@section scripts {
+	<script type="text/javascript" src="@Url.Script("~/Scripts/RankAdjustments.js")"></script>
+	<script type="text/javascript">
+		$(function () {
+			initRankAdjustments();
+		});
+	</script>
+}
+<div id="rankAdjustments">
+	<div class="page-entries">
+		<div class="page-section">
+			<div class="rank-actions">
+				<a class="ra-add-rank" href="#">Add Public Rank</a>
+			</div>
+		</div>
+		<div class="page-section">
+			<div class="page-header">
+				Public Rankings
+			</div>
+			<table id="ra-public-ranks" class="disp-table">
+				<tbody>
+					<tr>
+						<th>Rank Name</th>
+						<th>Player Count</th>
+						<th>Last Updated</th>
+						<th>Edit Rank Details</th>
+						<th>Edit Player Ranks</th>
+						<th>Auto Import Ranks</th>
+					</tr>
+
+					@foreach (var rank in Model.PublicRanks)
+					{
+						<tr data-rank-id="@rank.RankId">
+							<td>@rank.RankName</td>
+							<td>@rank.PlayerCount</td>
+							<td>@rank.LastUpdateTimestamp</td>
+							<td>&lt;<a class="ra-edit-details" href="#">Edit Details</a>&gt;</td>
+							<td>&lt;<a class="ra-edit-plyr-ranks" href="#">Edit</a>&gt;</td>
+							<td>&lt;<a class="ra-auto-import" href="#">Auto Import</a>&gt;</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div id="raRankDialog" class="center hide-yo-kids small-dialog" title="Add New Rank">
+		@using (Html.BeginForm("", "", FormMethod.Post, new { id = "raRankForm" }))
+		{
+			<div class="page-section-small">
+				<span class="inline-block mid-hrz-margin">
+					@Html.LabelFor(m => m.Rank.RankName)
+					@Html.TextBoxFor(m => m.Rank.RankName, new { id = "raf-rank-rname", maxLength = "100" })
+					@Html.ValidationMessageFor(m => m.Rank.RankName)
+				</span>
+				<span class="inline-block mid-hrz-margin">
+					@Html.LabelFor(m => m.Rank.Year) @Html.TextBoxFor(m => m.Rank.Year, new { id = "raf-rank-year", type = "number", maxLength = "4" })
+					@Html.ValidationMessageFor(m => m.Rank.Year)
+				</span>
+				<span class="inline-block">
+					@Html.LabelFor(m => m.Rank.Url)
+					@Html.TextBoxFor(m => m.Rank.Url, new { id = "raf-rank-url", maxLength = "1000" })
+					@Html.ValidationMessageFor(m => m.Rank.Url)
+				</span>
+				<span class="inline-block mid-hrz-margin">
+					@Html.LabelFor(m => m.Rank.DraftId, new { id = "inline-label" })
+					@Html.TextBoxFor(m => m.Rank.DraftId, new { id = "raf-rank-draft-id" })
+					@Html.ValidationMessageFor(m => m.Rank.DraftId)
+				</span>
+				<span class="inline-block mid-hrz-margin">
+					@Html.LabelFor(m => m.Rank.PrimaryDraftRanking, new { id = "inline-label" })
+					@Html.CheckBoxFor(m => m.Rank.PrimaryDraftRanking, new { id = "raf-rank-primary", @class = "vert-middle", @checked = "checked" })
+				</span>
+				<span class="inline-block mid-hrz-margin">
+					@Html.LabelFor(m => m.Rank.AutoImport, new { id = "inline-label" })
+					@Html.CheckBoxFor(m => m.Rank.AutoImport, new { id = "raf-rank-import", @class = "vert-middle", @checked = "checked" })
+				</span>
+			</div>
+		}
+	</div>
+</div>

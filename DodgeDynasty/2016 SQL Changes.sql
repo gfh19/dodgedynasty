@@ -6,6 +6,26 @@ BEGIN TRANSACTION;
 
 
 
+
+/* TODO !!! */
+ALSO DONT FORGET TO ALTER THE LPR SP!
+
+
+
+/* TODO: Handle LA / Sunsetting StL !!! */
+
+USE [Home]
+GO
+
+INSERT INTO [dbo].[NFLTeam]
+     VALUES
+           ('LA', 'LA', 'Los Angeles', 'Rams', 'NFC', 'West')
+GO
+
+
+
+
+
 USE [Home]
 GO
 
@@ -42,6 +62,13 @@ ALTER TABLE [dbo].[AdminStatus] CHECK CONSTRAINT [FK_AdminStatus_User]
 GO
 
 
+
+
+
+
+ALTER TABLE [dbo].[Rank]
+ADD [AutoImport] bit NOT NULL DEFAULT(0)
+GO
 
 
 ALTER TABLE [dbo].[PlayerRankOption]

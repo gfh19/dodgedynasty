@@ -203,7 +203,7 @@ BEGIN
 					INSERT INTO dbo.PlayerAdjustment
 						([OldPlayerId],[NewPlayerId],[TruePlayerId],[NewFirstName],[NewLastName],[NewPosition],[NewNFLTeam],[Action],[UserId],[AddTimestamp],[LastUpdateTimestamp])
 						SELECT @ExistingActivePlayerId, @PlayerId, TruePlayerId, FirstName, LastName, Position, NFLTeam,
-							'Deactivate Drafted Player - New Team', NULL, getdate(), getdate()
+							'Deactivate Drafted Player - New Team (2)', NULL, getdate(), getdate()
 						FROM dbo.Player
 						WHERE PlayerId = @ExistingActivePlayerId
 
@@ -223,6 +223,13 @@ BEGIN
 							AND r.[Year] = @DraftYear
 
 						PRINT 'Updated Rankings Rowcount: ' + CAST(@@ROWCOUNT AS VARCHAR);
+
+						INSERT INTO dbo.PlayerAdjustment
+							([OldPlayerId],[NewPlayerId],[TruePlayerId],[NewFirstName],[NewLastName],[NewPosition],[NewNFLTeam],[Action],[UserId],[AddTimestamp],[LastUpdateTimestamp])
+							SELECT @OldPlayerId, @PlayerId, TruePlayerId, FirstName, LastName, Position, NFLTeam,
+								'Updated Rankings Rowcount: ' + CAST(@@ROWCOUNT AS VARCHAR), NULL, getdate(), getdate()
+							FROM dbo.Player
+							WHERE PlayerId = @OldPlayerId
 
 						SET @AddPlayerMatchBoth = @AddPlayerMatchBoth + ' (& Ranks)';
 					END
@@ -333,7 +340,7 @@ BEGIN
 				INSERT INTO dbo.PlayerAdjustment
 					([OldPlayerId],[NewPlayerId],[TruePlayerId],[NewFirstName],[NewLastName],[NewPosition],[NewNFLTeam],[Action],[UserId],[AddTimestamp],[LastUpdateTimestamp])
 					SELECT @OldPlayerId, @PlayerId, TruePlayerId, FirstName, LastName, Position, NFLTeam,
-						'Deactivate Drafted Player - New Team (2)', NULL, getdate(), getdate()
+						'Deactivate Drafted Player - New Team', NULL, getdate(), getdate()
 					FROM dbo.Player
 					WHERE PlayerId = @OldPlayerId
 
@@ -356,7 +363,7 @@ BEGIN
 					INSERT INTO dbo.PlayerAdjustment
 						([OldPlayerId],[NewPlayerId],[TruePlayerId],[NewFirstName],[NewLastName],[NewPosition],[NewNFLTeam],[Action],[UserId],[AddTimestamp],[LastUpdateTimestamp])
 						SELECT @OldPlayerId, @PlayerId, TruePlayerId, FirstName, LastName, Position, NFLTeam,
-							'Deactivate Drafted Player - New Team', NULL, getdate(), getdate()
+							'Updated Rankings Rowcount: ' + CAST(@@ROWCOUNT AS VARCHAR), NULL, getdate(), getdate()
 						FROM dbo.Player
 						WHERE PlayerId = @OldPlayerId
 

@@ -758,6 +758,128 @@ namespace DodgeDynasty.Entities
 
         #endregion
 
+        #region Function Imports
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="firstName">No Metadata Documentation available.</param>
+        /// <param name="lastName">No Metadata Documentation available.</param>
+        /// <param name="position">No Metadata Documentation available.</param>
+        /// <param name="nFLTeam">No Metadata Documentation available.</param>
+        /// <param name="dateOfBirth">No Metadata Documentation available.</param>
+        /// <param name="rankId">No Metadata Documentation available.</param>
+        /// <param name="rankNum">No Metadata Documentation available.</param>
+        /// <param name="posRankNum">No Metadata Documentation available.</param>
+        /// <param name="auctionValue">No Metadata Documentation available.</param>
+        /// <param name="draftYear">No Metadata Documentation available.</param>
+        public int usp_LoadPlayerRanks_V2(global::System.String firstName, global::System.String lastName, global::System.String position, global::System.String nFLTeam, Nullable<global::System.DateTime> dateOfBirth, Nullable<global::System.Int32> rankId, Nullable<global::System.Int32> rankNum, Nullable<global::System.Int32> posRankNum, Nullable<global::System.Decimal> auctionValue, Nullable<global::System.Int16> draftYear)
+        {
+            ObjectParameter firstNameParameter;
+            if (firstName != null)
+            {
+                firstNameParameter = new ObjectParameter("FirstName", firstName);
+            }
+            else
+            {
+                firstNameParameter = new ObjectParameter("FirstName", typeof(global::System.String));
+            }
+    
+            ObjectParameter lastNameParameter;
+            if (lastName != null)
+            {
+                lastNameParameter = new ObjectParameter("LastName", lastName);
+            }
+            else
+            {
+                lastNameParameter = new ObjectParameter("LastName", typeof(global::System.String));
+            }
+    
+            ObjectParameter positionParameter;
+            if (position != null)
+            {
+                positionParameter = new ObjectParameter("Position", position);
+            }
+            else
+            {
+                positionParameter = new ObjectParameter("Position", typeof(global::System.String));
+            }
+    
+            ObjectParameter nFLTeamParameter;
+            if (nFLTeam != null)
+            {
+                nFLTeamParameter = new ObjectParameter("NFLTeam", nFLTeam);
+            }
+            else
+            {
+                nFLTeamParameter = new ObjectParameter("NFLTeam", typeof(global::System.String));
+            }
+    
+            ObjectParameter dateOfBirthParameter;
+            if (dateOfBirth.HasValue)
+            {
+                dateOfBirthParameter = new ObjectParameter("DateOfBirth", dateOfBirth);
+            }
+            else
+            {
+                dateOfBirthParameter = new ObjectParameter("DateOfBirth", typeof(global::System.DateTime));
+            }
+    
+            ObjectParameter rankIdParameter;
+            if (rankId.HasValue)
+            {
+                rankIdParameter = new ObjectParameter("RankId", rankId);
+            }
+            else
+            {
+                rankIdParameter = new ObjectParameter("RankId", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter rankNumParameter;
+            if (rankNum.HasValue)
+            {
+                rankNumParameter = new ObjectParameter("RankNum", rankNum);
+            }
+            else
+            {
+                rankNumParameter = new ObjectParameter("RankNum", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter posRankNumParameter;
+            if (posRankNum.HasValue)
+            {
+                posRankNumParameter = new ObjectParameter("PosRankNum", posRankNum);
+            }
+            else
+            {
+                posRankNumParameter = new ObjectParameter("PosRankNum", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter auctionValueParameter;
+            if (auctionValue.HasValue)
+            {
+                auctionValueParameter = new ObjectParameter("AuctionValue", auctionValue);
+            }
+            else
+            {
+                auctionValueParameter = new ObjectParameter("AuctionValue", typeof(global::System.Decimal));
+            }
+    
+            ObjectParameter draftYearParameter;
+            if (draftYear.HasValue)
+            {
+                draftYearParameter = new ObjectParameter("DraftYear", draftYear);
+            }
+            else
+            {
+                draftYearParameter = new ObjectParameter("DraftYear", typeof(global::System.Int16));
+            }
+    
+            return base.ExecuteFunction("usp_LoadPlayerRanks_V2", firstNameParameter, lastNameParameter, positionParameter, nFLTeamParameter, dateOfBirthParameter, rankIdParameter, rankNumParameter, posRankNumParameter, auctionValueParameter, draftYearParameter);
+        }
+
+        #endregion
+
     }
 
     #endregion
@@ -7957,7 +8079,8 @@ namespace DodgeDynasty.Entities
         /// <param name="rankDate">Initial value of the RankDate property.</param>
         /// <param name="addTimestamp">Initial value of the AddTimestamp property.</param>
         /// <param name="lastUpdateTimestamp">Initial value of the LastUpdateTimestamp property.</param>
-        public static Rank CreateRank(global::System.Int32 rankId, global::System.String rankName, global::System.Int16 year, global::System.DateTime rankDate, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp)
+        /// <param name="autoImport">Initial value of the AutoImport property.</param>
+        public static Rank CreateRank(global::System.Int32 rankId, global::System.String rankName, global::System.Int16 year, global::System.DateTime rankDate, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp, global::System.Boolean autoImport)
         {
             Rank rank = new Rank();
             rank.RankId = rankId;
@@ -7966,6 +8089,7 @@ namespace DodgeDynasty.Entities
             rank.RankDate = rankDate;
             rank.AddTimestamp = addTimestamp;
             rank.LastUpdateTimestamp = lastUpdateTimestamp;
+            rank.AutoImport = autoImport;
             return rank;
         }
 
@@ -8143,6 +8267,30 @@ namespace DodgeDynasty.Entities
         private global::System.DateTime _LastUpdateTimestamp;
         partial void OnLastUpdateTimestampChanging(global::System.DateTime value);
         partial void OnLastUpdateTimestampChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean AutoImport
+        {
+            get
+            {
+                return _AutoImport;
+            }
+            set
+            {
+                OnAutoImportChanging(value);
+                ReportPropertyChanging("AutoImport");
+                _AutoImport = StructuralObject.SetValidValue(value, "AutoImport");
+                ReportPropertyChanged("AutoImport");
+                OnAutoImportChanged();
+            }
+        }
+        private global::System.Boolean _AutoImport;
+        partial void OnAutoImportChanging(global::System.Boolean value);
+        partial void OnAutoImportChanged();
 
         #endregion
 

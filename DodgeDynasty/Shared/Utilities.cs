@@ -28,6 +28,15 @@ namespace DodgeDynasty.Shared
 			return dbName;
 		}
 
+		public static string FormatNamePunctuation(string name)
+		{
+			if (!string.IsNullOrEmpty(name))
+			{
+				return name.Replace("-", "").Replace(".", "").Replace("'", "");
+			}
+			return name;
+		}
+
 		public static bool CheckStartsWith(string dbName, string inputName)
 		{
 			if (string.IsNullOrEmpty(inputName))

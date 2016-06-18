@@ -186,9 +186,10 @@
     <Compile Include="Mappers\AdminPasswordMapper.cs" />
     <Compile Include="Mappers\AdminShared\ActivateDraftMapper.cs" />
     <Compile Include="Mappers\Admin\AddUserMapper.cs" />
+    <Compile Include="Mappers\RankAdjustments\AdminAddRankMapper.cs" />
     <Compile Include="Mappers\Admin\AdminManageDraftsMapper.cs" />
     <Compile Include="Mappers\Admin\ManageUsersMapper.cs" />
-    <Compile Include="Mappers\Admin\ReadRankMapper.cs" />
+    <Compile Include="Mappers\Admin\ImportRankMapper.cs" />
     <Compile Include="Mappers\Admin\UserInfoMapper.cs" />
     <Compile Include="Mappers\Admin\UserStatusMapper.cs" />
     <Compile Include="Mappers\Commish\CommishActivateDraftMapper.cs" />
@@ -227,6 +228,7 @@
     <Compile Include="Mappers\PlayerAdjustments\AdminAddPlayerMapper.cs" />
     <Compile Include="Mappers\PlayerAdjustments\AdminEditPlayerMapper.cs" />
     <Compile Include="Mappers\PlayerAdjustments\GetPlayerAdjustmentsMapper.cs" />
+    <Compile Include="Mappers\PlayerAdjustments\GetRankAdjustmentsMapper.cs" />
     <Compile Include="Mappers\PlayerAdjustments\InactivatePlayersMapper.cs" />
     <Compile Include="Mappers\RankSetupMapper.cs" />
     <Compile Include="Mappers\Highlights\AddPlayerHighlightMapper.cs" />
@@ -251,7 +253,6 @@
     <Compile Include="Models\Admin\IDraftIdModel.cs" />
     <Compile Include="Models\Admin\ILeagueIdModel.cs" />
     <Compile Include="Models\Admin\ManageUsersModel.cs" />
-    <Compile Include="Models\Admin\ReadRankModel.cs" />
     <Compile Include="Models\Admin\UserStatusModel.cs" />
     <Compile Include="Models\Drafts\DraftViewModel.cs" />
     <Compile Include="Models\Drafts\SingleDraftModel.cs" />
@@ -280,6 +281,9 @@
     <Compile Include="Models\PlayerAdjustments\DraftsRanksTextModel.cs" />
     <Compile Include="Models\PlayerAdjustments\InactivatePlayersModel.cs" />
     <Compile Include="Models\PlayerAdjustments\PlayerAdjustmentsModel.cs" />
+    <Compile Include="Models\RankAdjustments\AdminRankModel.cs" />
+    <Compile Include="Models\RankAdjustments\ImportRankModel.cs" />
+    <Compile Include="Models\RankAdjustments\RankAdjustmentsModel.cs" />
     <Compile Include="Models\PlayerRankingsModel.cs" />
     <Compile Include="Models\Shared\DraftChatModel.cs" />
     <Compile Include="Models\Site\MessagesCountModel.cs" />
@@ -350,6 +354,7 @@
     <Content Include="Media\NFL_Draft_Tone.wav" />
     <Content Include="Scripts\lib\jQuery-addTouch.js" />
     <Content Include="Scripts\PlayerAdjustments.js" />
+    <Content Include="Scripts\RankAdjustments.js" />
     <Content Include="SQL\OLD - 2015 SQL Changes.sql" />
     <Content Include="Content\bootstrap\css\bootstrap-theme.css" />
     <Content Include="Content\bootstrap\css\bootstrap-theme.min.css" />
@@ -534,6 +539,7 @@
     <Content Include="Views\Admin\PlayerAdjustments.cshtml" />
     <Content Include="Views\Admin\_DraftsRanksPartial.cshtml" />
     <Content Include="Views\Draft\ComparePlayerRanksPartial.cshtml" />
+    <Content Include="Views\Admin\RankAdjustments.cshtml" />
     <None Include="Web.local.config">
       <SubType>Designer</SubType>
     </None>
