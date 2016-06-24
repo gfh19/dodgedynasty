@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
-using DodgeDynasty.Models.Admin;
 using DodgeDynasty.Models.RankAdjustments;
+using DodgeDynasty.Models.Types;
 using DodgeDynasty.Parsers;
 using DodgeDynasty.Shared;
 using HtmlAgilityPack;
@@ -27,19 +28,21 @@ namespace DodgeDynasty.Mappers.Admin
 		{
 			Year = Convert.ToInt16(Utilities.GetEasternTime().Year);
 			HtmlNode rankDoc = null;
+			List<RankedPlayer> rankedPlayers = null;
 			try
 			{
 				rankDoc = LoadRankHtmlDoc();
+				var parser = ParserFactory.Create();
+				rankedPlayers = parser.ParseRankHtml(rankDoc);
 			}
 			catch (Exception ex)
 			{
 				Model.ErrorMessage = ex.Message;
 			}
 
-			var parser = ParserFactory.Create();
-			var rankedPlayers = parser.ParseRankHtml(rankDoc);
 			if (Confirmed)
 			{
+				DeleteExistingPlayerRanks();
 				foreach (var rankedPlayer in rankedPlayers)
 				{
 					AddPlayerRank(rankedPlayer);
@@ -76,7 +79,7 @@ namespace DodgeDynasty.Mappers.Admin
 			return rankDoc;
 		}
 
-		private void AddPlayerRank(Models.Types.RankedPlayer rankedPlayer)
+		private void AddPlayerRank(RankedPlayer rankedPlayer)
 		{
 			string firstName = "";
 			string lastName = "";
@@ -95,16 +98,32 @@ namespace DodgeDynasty.Mappers.Admin
 			else
 			{
 				var firstSpace = playerName.Trim().IndexOf(" ");
+				if (firstSpace < 0)
+				{
+					Model.ErrorMessage = "Error - No space found in: " + playerName;
+					return;
+				}
 				firstName = playerName.Substring(0, firstSpace);
-				lastName = playerName.Substring(firstSpace+1, playerName.Length-firstSpace);
+				lastName = playerName.Substring(firstSpace+1, playerName.Length-firstSpace-1);
 			}
 			AddPlayerRank(rankedPlayer, firstName, lastName);
 		}
 
-		private void AddPlayerRank(Models.Types.RankedPlayer rankedPlayer, string firstName, string lastName)
+		private void AddPlayerRank(RankedPlayer rankedPlayer, string firstName, string lastName)
 		{
 			HomeEntity.usp_LoadPlayerRanks_V2(firstName, lastName, rankedPlayer.Position, rankedPlayer.NFLTeam, null,
 				Utilities.ToNullInt(RankId), rankedPlayer.RankNum, null, null, Year);
 		}
-	}
+
+		private void DeleteExistingPlayerRanks()
+		{
+			var rankId = Utilities.ToNullInt(RankId);
+            var oldPlayerRanks = HomeEntity.PlayerRanks.Where(o => o.RankId == rankId);
+			foreach (var playerRank in oldPlayerRanks)
+			{
+				HomeEntity.PlayerRanks.DeleteObject(playerRank);
+			}
+			HomeEntity.SaveChanges();
+        }
+    }
 }

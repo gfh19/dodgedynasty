@@ -20,7 +20,7 @@ function bindAutoImportLinks() {
 			e.preventDefault();
 			if ($(link).parents("tr[data-rank-id]").length > 0) {
 				var rankId = $(link).parents("tr[data-rank-id]").attr("data-rank-id");
-				autoImportRank(rankId, false);
+				confirmAutoImportRank(rankId, $("td", $(link).parents("tr[data-rank-id]")).first().text());
 			}
 		});
 	});
@@ -69,23 +69,43 @@ function getEditRank() {
 }
 
 function addNewRank(rank) {
+	addWaitCursor();
 	ajaxPost(rank, "Admin/AddNewRank", function () {
 		window.location.reload();
-	});
+	}, removeWaitCursor);
 }
 
 function editRank(rank) {
+	addWaitCursor();
 	ajaxPost(rank, "Admin/EditPlayer", function () {
 		window.location.reload();
-	});
+	}, removeWaitCursor);
 }
 
-function autoImportRank(rankId, confirmed) {
-	ajaxPost({RankId: rankId, Confirmed: true}, "Admin/AutoImportRank", function () {
+function confirmAutoImportRank(rankId, rankName) {
+	addWaitCursor();
+	ajaxPost({ RankId: rankId, Confirmed: false }, "Admin/AutoImportRank", function (data) {
+		removeWaitCursor();
+		var response = JSON.parse(data);
+		if (response.error) {
+			showAlertDialog("Error:  " + response.error);
+		}
+		else {
+			var text = "First Player:<br/>" + response.first + "<br/><br/>"
+					+ "Last Player:<br/>" + response.last + "<br/><br/>"
+					+ "Player Count: " + response.count + "<br/><br/>"
+					+ "Do you want to import <br/>'" + rankName + "' now?";
+			showConfirmDialog(text, function () { autoImportRank(rankId); });
+		}
+	}, removeWaitCursor);
+}
+
+function autoImportRank(rankId) {
+	addWaitCursor();
+	ajaxPost({ RankId: rankId, Confirmed: true }, "Admin/AutoImportRank", function () {
 		window.location.reload();
-	});
+	}, removeWaitCursor);
 }
-
 
 function showAddNewRankDialog() {
 	showRankDialog("#raRankDialog", "#raRankForm", "Add New Rank", getNewRank, addNewRank);

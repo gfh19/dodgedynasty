@@ -792,6 +792,23 @@ function showConfirmDialog(dialogText, okFn, cancelFn) {
 	});
 }
 
+function showAlertDialog(dialogText, okFn) {
+	okFn = okFn || function () { $(this).dialog("close"); };
+	var dialog = '<div class="center hide-yo-kids" title="Alert"><p>' + dialogText + '</p></div>';
+
+	$(dialog).dialog({
+		resizable: false,
+		height: 'auto',
+		width: '280px',
+		modal: true,
+		buttons: [
+					{
+						text: "OK", click: okFn
+					},
+		]
+	});
+}
+
 /*  End Helper Function */
 
 

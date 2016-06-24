@@ -28,7 +28,7 @@ function bindAddNewPlayerLink() {
 		e.preventDefault();
 		showAddNewPlayerDialog();
 		setTruePlayerAutoComplete(null, "#add-plyr-tpid", "#add-plyr-fname", "#add-plyr-lname",
-			"#add-plyr-pos", "#add-plyr-nfl", "#add-plyr-active");
+			"#add-plyr-pos", "#add-plyr-nfl", "#add-plyr-active", "#add-plyr-drafted");
 		$("#add-plyr-fname").focus();
 	});
 	$(".pa-clear-add").click(clearAddPlayer);
@@ -44,7 +44,7 @@ function bindEditPlayerLink() {
 				var playerHint = $(playerHints).where("id", playerId);
 				if (playerHint.length > 0) {
 					setSelectedPlayer("#edit-plyr-id", "#edit-plyr-tpid", "#edit-plyr-fname", "#edit-plyr-lname",
-						"#edit-plyr-pos", "#edit-plyr-nfl", "#edit-plyr-active", playerHint[0]);
+						"#edit-plyr-pos", "#edit-plyr-nfl", "#edit-plyr-active", "#edit-plyr-drafted", playerHint[0]);
 				}
 				else {
 					clearEditPlayer();
@@ -55,7 +55,7 @@ function bindEditPlayerLink() {
 			}
 			showEditPlayerDialog();
 			setTruePlayerAutoComplete("#edit-plyr-id", "#edit-plyr-tpid", "#edit-plyr-fname", "#edit-plyr-lname",
-				"#edit-plyr-pos", "#edit-plyr-nfl", "#edit-plyr-active");
+				"#edit-plyr-pos", "#edit-plyr-nfl", "#edit-plyr-active", "#edit-plyr-drafted");
 			$("#edit-plyr-fname").focus();
 		});
 	});
@@ -106,6 +106,7 @@ function clearAddPlayer() {
 	$("#add-plyr-pos").val("");
 	$("#add-plyr-nfl").val("");
 	$("#add-plyr-active").prop("checked", true);
+	$("#add-plyr-drafted").prop("checked", true);
 }
 
 function clearEditPlayer() {
@@ -116,6 +117,7 @@ function clearEditPlayer() {
 	$("#edit-plyr-pos").val("");
 	$("#edit-plyr-nfl").val("");
 	$("#edit-plyr-active").prop("checked", true);
+	$("#edit-plyr-drafted").prop("checked", true);
 }
 
 function getNewPlayer() {
@@ -126,6 +128,7 @@ function getNewPlayer() {
 	player.Position = $("#add-plyr-pos").val();
 	player.NFLTeam = $("#add-plyr-nfl").val();
 	player.IsActive = $("#add-plyr-active").prop('checked');
+	player.IsDrafted = $("#add-plyr-drafted").prop('checked');
 	return player;
 }
 
@@ -138,6 +141,7 @@ function getEditPlayer() {
 	player.Position = $("#edit-plyr-pos").val();
 	player.NFLTeam = $("#edit-plyr-nfl").val();
 	player.IsActive = $("#edit-plyr-active").prop('checked');
+	player.IsDrafted = $("#edit-plyr-drafted").prop('checked');
 	return player;
 }
 
@@ -187,7 +191,7 @@ function showPlayerDialog(dialogId, formId, header, getPlayerFn, playerFn) {
 	});
 }
 
-function setTruePlayerAutoComplete(pid, tpid, fname, lname, pos, nfl, active) {
+function setTruePlayerAutoComplete(pid, tpid, fname, lname, pos, nfl, active, drafted) {
 	pid = pid || "";
 	$(fname).autocomplete({
 		source: function (request, response) {
@@ -204,13 +208,13 @@ function setTruePlayerAutoComplete(pid, tpid, fname, lname, pos, nfl, active) {
 			response(filteredArray);
 		},
 		select: function (event, ui) {
-			setSelectedPlayer(pid, tpid, fname, lname, pos, nfl, active, ui.item);
+			setSelectedPlayer(pid, tpid, fname, lname, pos, nfl, active, drafted, ui.item);
 			return false;
 		}
 	});
 };
 
-function setSelectedPlayer(pid, tpid, fname, lname, pos, nfl, active, plyrHint) {
+function setSelectedPlayer(pid, tpid, fname, lname, pos, nfl, active, drafted, plyrHint) {
 	$(pid).val(plyrHint.id);
 	$(tpid).val(plyrHint.tpid);
 	$(fname).val(plyrHint.firstName);
@@ -218,6 +222,7 @@ function setSelectedPlayer(pid, tpid, fname, lname, pos, nfl, active, plyrHint) 
 	$(pos).val(plyrHint.pos);
 	$(nfl).val(plyrHint.nflTeamDisplay);
 	$(active).prop("checked", toBool(plyrHint.active));
+	$(drafted).prop("checked", toBool(plyrHint.drafted));
 	setTimeout(function () { $("#inputSubmit").focus(); }, 0);
 }
 

@@ -36,7 +36,14 @@
 					@foreach (var rank in Model.PublicRanks)
 					{
 						<tr data-rank-id="@rank.RankId">
-							<td>@rank.RankName</td>
+							@if (!string.IsNullOrEmpty(rank.Url))
+							{
+								<td><a href="@rank.Url" target="_blank">@rank.RankName</a></td>
+							}
+							else
+							{
+								<td>@rank.RankName</td>
+							}
 							<td>@rank.PlayerCount</td>
 							<td>@rank.LastUpdateTimestamp</td>
 							<td>&lt;<a class="ra-edit-details" href="#">Edit Details</a>&gt;</td>

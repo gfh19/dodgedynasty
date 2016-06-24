@@ -36,6 +36,7 @@ namespace DodgeDynasty.Models
 		public int? TruePlayerId { get; set; }
 		[Display(Name = "Is Active?")]
 		public bool IsActive { get; set; }
+		[Display(Name = "Is Drafted?")]
 		public bool IsDrafted { get; set; }
 	}
 }

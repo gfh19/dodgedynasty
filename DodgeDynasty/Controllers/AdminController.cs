@@ -403,8 +403,13 @@ namespace DodgeDynasty.Controllers
 		public ActionResult AutoImportRank(string rankId, bool confirmed)
 		{
 			var mapper = new ImportRankMapper(rankId, confirmed);
-			mapper.GetModel();
-			return RedirectToAction(Constants.Views.Display, "Draft");
+			var model = mapper.GetModel();
+			return Json(new {
+				error = model.ErrorMessage,
+				first = model.FirstPlayerText,
+				last = model.LastPlayerText,
+				count = model.PlayerCount
+			});
 		}
 	}
 }

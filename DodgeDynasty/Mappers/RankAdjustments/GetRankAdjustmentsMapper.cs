@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using DodgeDynasty.Models.RankAdjustments;
 using DodgeDynasty.Shared;
 
-namespace DodgeDynasty.Mappers.PlayerAdjustments
+namespace DodgeDynasty.Mappers.RankAdjustments
 {
 	public class GetRankAdjustmentsMapper : MapperBase<RankAdjustmentsModel>
 	{

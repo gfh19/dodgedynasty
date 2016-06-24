@@ -19,6 +19,7 @@ namespace DodgeDynasty.Mappers.PlayerAdjustments
 				Position = playerModel.Position.ToUpper(),
 				NFLTeam = playerModel.NFLTeam.ToUpper(),
 				IsActive = playerModel.IsActive,
+				IsDrafted = playerModel.IsDrafted,
 				AddTimestamp = DateTime.Now,
 				LastUpdateTimestamp = DateTime.Now
 			};

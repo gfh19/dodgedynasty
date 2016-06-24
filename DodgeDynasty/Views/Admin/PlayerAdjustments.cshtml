@@ -241,6 +241,9 @@
 				<div>
 					@Html.LabelFor(m => m.Player.IsActive, new { @class = "inline-label" })
 					@Html.CheckBoxFor(m => m.Player.IsActive, new { id = "add-plyr-active", @class = "vert-middle", @checked = "checked" })
+
+					@Html.LabelFor(m => m.Player.IsDrafted, new { @class = "inline-label" })
+					@Html.CheckBoxFor(m => m.Player.IsDrafted, new { id = "add-plyr-drafted", @class = "vert-middle", @checked = "checked" })
 				</div>
 			</div>
 			<div class="page-section-small">
@@ -273,6 +276,9 @@
 				<div>
 					@Html.LabelFor(m => m.Player.IsActive, new { @class = "inline-label" })
 					@Html.CheckBoxFor(m => m.Player.IsActive, new { id = "edit-plyr-active", @class = "vert-middle", @checked = "checked" })
+
+					@Html.LabelFor(m => m.Player.IsDrafted, new { @class = "inline-label" })
+					@Html.CheckBoxFor(m => m.Player.IsDrafted, new { id = "edit-plyr-drafted", @class = "vert-middle", @checked = "checked" })
 				</div>
 			</div>
 		}

@@ -96,7 +96,7 @@ namespace DodgeDynasty.Mappers.PlayerAdjustments
 				Position = ap.NewPosition,
 				Action = ap.Action,
 				UserId = (u != null) ? u.UserId.ToString() : null,
-				UserFullName = (u != null) ? u.FullName : null,
+				UserFullName = (u != null) ? u.FullName : "---",
 				DraftsRanks = GetDraftsRanks(p, drafts, ranks),
 				IsActive = p.IsActive,
 				IsDrafted = p.IsDrafted,
