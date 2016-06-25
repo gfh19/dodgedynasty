@@ -74,17 +74,17 @@
 					@Html.ValidationMessageFor(m => m.Rank.Url)
 				</span>
 				<span class="inline-block mid-hrz-margin">
-					@Html.LabelFor(m => m.Rank.DraftId, new { id = "inline-label" })
+					@Html.LabelFor(m => m.Rank.DraftId, new { @class = "inline-label" })
 					@Html.TextBoxFor(m => m.Rank.DraftId, new { id = "raf-rank-draft-id" })
 					@Html.ValidationMessageFor(m => m.Rank.DraftId)
 				</span>
 				<span class="inline-block mid-hrz-margin">
-					@Html.LabelFor(m => m.Rank.PrimaryDraftRanking, new { id = "inline-label" })
+					@Html.LabelFor(m => m.Rank.PrimaryDraftRanking, new { @class = "inline-label" })
 					@Html.CheckBoxFor(m => m.Rank.PrimaryDraftRanking, new { id = "raf-rank-primary", @class = "vert-middle", @checked = "checked" })
 				</span>
 				<span class="inline-block mid-hrz-margin">
-					@Html.LabelFor(m => m.Rank.AutoImport, new { id = "inline-label" })
-					@Html.CheckBoxFor(m => m.Rank.AutoImport, new { id = "raf-rank-import", @class = "vert-middle", @checked = "checked" })
+					@Html.LabelFor(m => m.Rank.AutoImportId)
+					@Html.DropDownListFor(m => m.Rank.AutoImportId, Model.GetAutoImportChoices(Model.Rank.AutoImportId))
 				</span>
 			</div>
 		}

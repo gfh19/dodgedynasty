@@ -12,6 +12,88 @@ ALSO DONT FORGET TO ALTER THE LPR SP!
 
 
 
+
+
+USE [Home]
+GO
+
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[AutoImport](
+	[AutoImportId] [int] IDENTITY(1,1) NOT NULL,
+	[RankName] [varchar](100) NOT NULL,
+	[DefaultUrl] [varchar](1000) NULL,
+	[AddTimestamp] [datetime] NOT NULL,
+	[LastUpdateTimestamp] [datetime] NOT NULL,
+ CONSTRAINT [PK_AutoImport] PRIMARY KEY CLUSTERED 
+(
+	[AutoImportId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+
+
+
+
+ALTER TABLE [dbo].[Rank]
+ADD [AutoImportId] [int] NULL
+GO
+
+
+ALTER TABLE [dbo].[Rank]  WITH CHECK ADD  CONSTRAINT [FK_Rank_AutoImport] FOREIGN KEY([AutoImportId])
+REFERENCES [dbo].[AutoImport] ([AutoImportId])
+GO
+
+ALTER TABLE [dbo].[Rank] CHECK CONSTRAINT [FK_Rank_AutoImport]
+GO
+
+
+
+INSERT INTO [dbo].[AutoImport]
+           ([RankName],[DefaultUrl],[AddTimestamp],[LastUpdateTimestamp])
+     VALUES
+           ('ESPN Top 300','http://espn.go.com/fantasy/football/story/_/id/16287927/fantasy-football-rankings-2016-espn-nfl-rankings-top-300-overall',getdate(), getdate())
+GO
+
+INSERT INTO [dbo].[AutoImport]
+           ([RankName],[DefaultUrl],[AddTimestamp],[LastUpdateTimestamp])
+     VALUES
+           ('Fantasypros - Standard','http://fantasypros.com/nfl/rankings/consensus-cheatsheets.php',getdate(), getdate())
+GO
+
+INSERT INTO [dbo].[AutoImport]
+           ([RankName],[DefaultUrl],[AddTimestamp],[LastUpdateTimestamp])
+     VALUES
+           ('ESPN ADP','http://games.espn.go.com/ffl/livedraftresults',getdate(), getdate())
+GO
+
+INSERT INTO [dbo].[AutoImport]
+           ([RankName],[DefaultUrl],[AddTimestamp],[LastUpdateTimestamp])
+     VALUES
+           ('Fantasypros - ADP','https://www.fantasypros.com/nfl/adp/overall.php',getdate(), getdate())
+GO
+
+
+
+
+
+
+
+
+
+
 /* TODO: Handle LA / Sunsetting StL !!! */
 
 USE [Home]
@@ -21,6 +103,7 @@ INSERT INTO [dbo].[NFLTeam]
      VALUES
            ('LA', 'LA', 'Los Angeles', 'Rams', 'NFC', 'West')
 GO
+
 
 
 
@@ -63,12 +146,6 @@ GO
 
 
 
-
-
-
-ALTER TABLE [dbo].[Rank]
-ADD [AutoImport] bit NOT NULL DEFAULT(0)
-GO
 
 
 ALTER TABLE [dbo].[PlayerRankOption]

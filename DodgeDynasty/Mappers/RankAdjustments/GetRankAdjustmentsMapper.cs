@@ -29,11 +29,12 @@ namespace DodgeDynasty.Mappers.RankAdjustments
 									 Url = r.Url,
 									 DraftId = dr.DraftId,
 									 PrimaryDraftRanking = dr.PrimaryDraftRanking.Value,
-									 AutoImport = r.AutoImport,
+									 AutoImportId = r.AutoImportId,
 									 AddTimestamp = r.AddTimestamp,
 									 LastUpdateTimestamp = r.LastUpdateTimestamp,
 									 PlayerCount = HomeEntity.PlayerRanks.Where(o => o.RankId == r.RankId).Count()
 								 }).ToList();
-		}
+			Model.AutoImports = HomeEntity.AutoImports.ToList();
+        }
 	}
 }

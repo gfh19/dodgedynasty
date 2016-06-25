@@ -12,6 +12,16 @@
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="LastPlayerAdjView" Type="datetime" />
         </EntityType>
+        <EntityType Name="AutoImport">
+          <Key>
+            <PropertyRef Name="AutoImportId" />
+          </Key>
+          <Property Name="AutoImportId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RankName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="DefaultUrl" Type="varchar" MaxLength="1000" />
+          <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
+          <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="ByeWeek">
           <Key>
             <PropertyRef Name="ByeWeekId" />
@@ -310,7 +320,7 @@
           <Property Name="Year" Type="smallint" Nullable="false" />
           <Property Name="RankDate" Type="date" Nullable="false" />
           <Property Name="Url" Type="varchar" MaxLength="1000" />
-          <Property Name="AutoImport" Type="bit" Nullable="false" />
+          <Property Name="AutoImportId" Type="int" />
           <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
           <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
         </EntityType>
@@ -748,6 +758,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Rank_AutoImport">
+          <End Role="AutoImport" Type="Self.AutoImport" Multiplicity="0..1" />
+          <End Role="Rank" Type="Self.Rank" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AutoImport">
+              <PropertyRef Name="AutoImportId" />
+            </Principal>
+            <Dependent Role="Rank">
+              <PropertyRef Name="AutoImportId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserRole_League">
           <End Role="League" Type="Self.League" Multiplicity="0..1" />
           <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
@@ -798,6 +820,7 @@
         </Function>
         <EntityContainer Name="HomeModelStoreContainer">
           <EntitySet Name="AdminStatus" EntityType="Self.AdminStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AutoImport" EntityType="Self.AutoImport" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ByeWeek" EntityType="Self.ByeWeek" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CssColor" EntityType="Self.CssColor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Draft" EntityType="Self.Draft" Schema="dbo" store:Type="Tables" />
@@ -948,6 +971,10 @@
             <End Role="Rank" EntitySet="Rank" />
             <End Role="PlayerRank" EntitySet="PlayerRank" />
           </AssociationSet>
+          <AssociationSet Name="FK_Rank_AutoImport" Association="Self.FK_Rank_AutoImport">
+            <End Role="AutoImport" EntitySet="AutoImport" />
+            <End Role="Rank" EntitySet="Rank" />
+          </AssociationSet>
           <AssociationSet Name="FK_UserRole_League" Association="Self.FK_UserRole_League">
             <End Role="League" EntitySet="League" />
             <End Role="UserRole" EntitySet="UserRole" />
@@ -970,13 +997,8 @@
           <EntitySet Name="PlayerRanks" EntityType="HomeModel.PlayerRank" />
           <EntitySet Name="PlayerRankHistories" EntityType="HomeModel.PlayerRankHistory" />
           <EntitySet Name="Positions" EntityType="HomeModel.Position" />
-          <EntitySet Name="Ranks" EntityType="HomeModel.Rank" />
           <EntitySet Name="UserApplicants" EntityType="HomeModel.UserApplicant" />
           <EntitySet Name="UserProfiles" EntityType="HomeModel.UserProfile" />
-          <AssociationSet Name="FK_PlayerRank_Rank" Association="HomeModel.FK_PlayerRank_Rank">
-            <End Role="Rank" EntitySet="Ranks" />
-            <End Role="PlayerRank" EntitySet="PlayerRanks" />
-          </AssociationSet>
           <EntitySet Name="Users" EntityType="HomeModel.User" />
           <EntitySet Name="DraftRanks" EntityType="HomeModel.DraftRank" />
           <EntitySet Name="DraftOwners" EntityType="HomeModel.DraftOwner" />
@@ -1141,6 +1163,16 @@
             <Parameter Name="AuctionValue" Mode="In" Type="Decimal" />
             <Parameter Name="DraftYear" Mode="In" Type="Int16" />
           </FunctionImport>
+          <EntitySet Name="AutoImports" EntityType="HomeModel.AutoImport" />
+          <EntitySet Name="Ranks" EntityType="HomeModel.Rank" />
+          <AssociationSet Name="FK_Rank_AutoImport" Association="HomeModel.FK_Rank_AutoImport">
+            <End Role="AutoImport" EntitySet="AutoImports" />
+            <End Role="Rank" EntitySet="Ranks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlayerRank_Rank" Association="HomeModel.FK_PlayerRank_Rank">
+            <End Role="Rank" EntitySet="Ranks" />
+            <End Role="PlayerRank" EntitySet="PlayerRanks" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="NFLTeam">
           <Key>
@@ -1168,8 +1200,8 @@
           <Property Type="Decimal" Name="AuctionValue" Precision="5" Scale="2" />
           <Property Type="DateTime" Name="AddTimestamp" Nullable="false" Precision="3" />
           <Property Type="DateTime" Name="LastUpdateTimestamp" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Rank" Relationship="HomeModel.FK_PlayerRank_Rank" FromRole="PlayerRank" ToRole="Rank" />
           <NavigationProperty Name="Player" Relationship="HomeModel.FK_PlayerRank_Player" FromRole="PlayerRank" ToRole="Player" />
+          <NavigationProperty Name="Rank" Relationship="HomeModel.FK_PlayerRank_Rank" FromRole="PlayerRank" ToRole="Rank" />
         </EntityType>
         <EntityType Name="PlayerRankHistory">
           <Key>
@@ -1192,20 +1224,6 @@
           <Property Type="Int32" Name="PosId" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Type="String" Name="PosCode" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="PosDesc" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="Rank">
-          <Key>
-            <PropertyRef Name="RankId" />
-          </Key>
-          <Property Type="Int32" Name="RankId" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
-          <Property Type="String" Name="RankName" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Type="Int16" Name="Year" Nullable="false" />
-          <Property Type="DateTime" Name="RankDate" Nullable="false" Precision="0" />
-          <Property Type="String" Name="Url" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="AddTimestamp" Nullable="false" Precision="3" />
-          <Property Type="DateTime" Name="LastUpdateTimestamp" Nullable="false" Precision="3" />
-          <NavigationProperty Name="PlayerRanks" Relationship="HomeModel.FK_PlayerRank_Rank" FromRole="Rank" ToRole="PlayerRank" />
-          <Property Name="AutoImport" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="UserApplicant">
           <Key>
@@ -1231,18 +1249,6 @@
           <Property Type="Int32" Name="UserId" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Type="String" Name="UserName" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
-        <Association Name="FK_PlayerRank_Rank">
-          <End Type="HomeModel.Rank" Role="Rank" Multiplicity="1" />
-          <End Type="HomeModel.PlayerRank" Role="PlayerRank" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Rank">
-              <PropertyRef Name="RankId" />
-            </Principal>
-            <Dependent Role="PlayerRank">
-              <PropertyRef Name="RankId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="UserId" />
@@ -1989,6 +1995,56 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="AutoImport">
+          <Key>
+            <PropertyRef Name="AutoImportId" />
+          </Key>
+          <Property Name="AutoImportId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RankName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DefaultUrl" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Ranks" Relationship="HomeModel.FK_Rank_AutoImport" FromRole="AutoImport" ToRole="Rank" />
+        </EntityType>
+        <EntityType Name="Rank">
+          <Key>
+            <PropertyRef Name="RankId" />
+          </Key>
+          <Property Name="RankId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RankName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Year" Type="Int16" Nullable="false" />
+          <Property Name="RankDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Url" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="AutoImportId" Type="Int32" />
+          <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="AutoImport" Relationship="HomeModel.FK_Rank_AutoImport" FromRole="Rank" ToRole="AutoImport" />
+          <NavigationProperty Name="PlayerRanks" Relationship="HomeModel.FK_PlayerRank_Rank" FromRole="Rank" ToRole="PlayerRank" />
+        </EntityType>
+        <Association Name="FK_Rank_AutoImport">
+          <End Type="HomeModel.AutoImport" Role="AutoImport" Multiplicity="0..1" />
+          <End Type="HomeModel.Rank" Role="Rank" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AutoImport">
+              <PropertyRef Name="AutoImportId" />
+            </Principal>
+            <Dependent Role="Rank">
+              <PropertyRef Name="AutoImportId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlayerRank_Rank">
+          <End Type="HomeModel.Rank" Role="Rank" Multiplicity="1" />
+          <End Type="HomeModel.PlayerRank" Role="PlayerRank" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rank">
+              <PropertyRef Name="RankId" />
+            </Principal>
+            <Dependent Role="PlayerRank">
+              <PropertyRef Name="RankId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2043,20 +2099,6 @@
                 <ScalarProperty Name="PosDesc" ColumnName="PosDesc" />
                 <ScalarProperty Name="PosCode" ColumnName="PosCode" />
                 <ScalarProperty Name="PosId" ColumnName="PosId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Ranks">
-            <EntityTypeMapping TypeName="HomeModel.Rank">
-              <MappingFragment StoreEntitySet="Rank">
-                <ScalarProperty Name="AutoImport" ColumnName="AutoImport" />
-                <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
-                <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
-                <ScalarProperty Name="Url" ColumnName="Url" />
-                <ScalarProperty Name="RankDate" ColumnName="RankDate" />
-                <ScalarProperty Name="Year" ColumnName="Year" />
-                <ScalarProperty Name="RankName" ColumnName="RankName" />
-                <ScalarProperty Name="RankId" ColumnName="RankId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2394,6 +2436,31 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="usp_LoadPlayerRanks_V2" FunctionName="HomeModel.Store.usp_LoadPlayerRanks_V2" />
+          <EntitySetMapping Name="AutoImports">
+            <EntityTypeMapping TypeName="HomeModel.AutoImport">
+              <MappingFragment StoreEntitySet="AutoImport">
+                <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
+                <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
+                <ScalarProperty Name="DefaultUrl" ColumnName="DefaultUrl" />
+                <ScalarProperty Name="RankName" ColumnName="RankName" />
+                <ScalarProperty Name="AutoImportId" ColumnName="AutoImportId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ranks">
+            <EntityTypeMapping TypeName="HomeModel.Rank">
+              <MappingFragment StoreEntitySet="Rank">
+                <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
+                <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
+                <ScalarProperty Name="AutoImportId" ColumnName="AutoImportId" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="RankDate" ColumnName="RankDate" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="RankName" ColumnName="RankName" />
+                <ScalarProperty Name="RankId" ColumnName="RankId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2421,14 +2488,8 @@
         <edmx:EntityTypeShape EntityType="HomeModel.PlayerRank" Width="1.5" PointX="8.25" PointY="8.25" Height="2.9417936197916674" />
         <edmx:EntityTypeShape EntityType="HomeModel.PlayerRankHistory" Width="1.5" PointX="12.75" PointY="14.5" Height="2.7494921875000102" />
         <edmx:EntityTypeShape EntityType="HomeModel.Position" Width="1.5" PointX="0.75" PointY="16.5" Height="1.5956835937500102" />
-        <edmx:EntityTypeShape EntityType="HomeModel.Rank" Width="1.5" PointX="6" PointY="1.25" Height="2.5571907552083246" />
         <edmx:EntityTypeShape EntityType="HomeModel.UserApplicant" Width="1.5" PointX="2.75" PointY="16.5" Height="3.326396484374996" />
         <edmx:EntityTypeShape EntityType="HomeModel.UserProfile" Width="1.5" PointX="4.75" PointY="16.5" Height="1.4033821614583246" />
-        <edmx:AssociationConnector Association="HomeModel.FK_PlayerRank_Rank">
-          <edmx:ConnectorPoint PointX="7.15625" PointY="3.8071907552083246" />
-          <edmx:ConnectorPoint PointX="7.15625" PointY="8.40211826822918" />
-          <edmx:ConnectorPoint PointX="8.25" PointY="8.40211826822918" />
-        </edmx:AssociationConnector>
         <edmx:EntityTypeShape EntityType="HomeModel.User" Width="1.5" PointX="7.75" PointY="13" />
         <edmx:EntityTypeShape EntityType="HomeModel.DraftRank" Width="1.5" PointX="0.75" PointY="0.75" />
         <edmx:EntityTypeShape EntityType="HomeModel.DraftOwner" Width="1.5" PointX="0.75" PointY="13" />
@@ -2482,6 +2543,10 @@
         <edmx:AssociationConnector Association="HomeModel.FK_UserRole_User" />
         <edmx:EntityTypeShape EntityType="HomeModel.AdminStatu" Width="1.5" PointX="10" PointY="14.125" />
         <edmx:AssociationConnector Association="HomeModel.FK_AdminStatus_User" />
+        <edmx:EntityTypeShape EntityType="HomeModel.AutoImport" Width="1.5" PointX="3.75" PointY="28.75" />
+        <edmx:EntityTypeShape EntityType="HomeModel.Rank" Width="1.5" PointX="6" PointY="28.375" />
+        <edmx:AssociationConnector Association="HomeModel.FK_Rank_AutoImport" />
+        <edmx:AssociationConnector Association="HomeModel.FK_PlayerRank_Rank" />
         </edmx:Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

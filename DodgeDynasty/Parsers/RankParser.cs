@@ -7,13 +7,13 @@ using HtmlAgilityPack;
 
 namespace DodgeDynasty.Parsers
 {
-	public class RankParser : IRankParser
+	public abstract class RankParser : IRankParser
 	{
-		public string RankTableSelect { get { return "//div[contains(@class, 'mobile-table')]//table"; } }
-		public string RankRowSelect { get { return "//div[contains(@class, 'mobile-table')]//table//tr[contains(@class, 'mpb-player')]"; } }
-		public string RankColSelect { get { return "./td"; } }
+		public virtual string RankTableSelect() { return "//div[contains(@class, 'mobile-table')]//table"; }
+		public virtual string RankRowSelect() { return "//div[contains(@class, 'mobile-table')]//table//tr[contains(@class, 'mpb-player')]"; }
+		public virtual string RankColSelect() { return "./td"; }
 
-		public List<RankedPlayer> ParseRankHtml(HtmlNode rankHtml)
+		public virtual List<RankedPlayer> ParseRankHtml(HtmlNode rankHtml)
 		{
 			List<RankedPlayer> rankedPlayers = new List<RankedPlayer>();
 			HtmlNode rankTable = GetRankTable(rankHtml);
@@ -39,9 +39,9 @@ namespace DodgeDynasty.Parsers
 			return rankedPlayers;
 		}
 
-		public HtmlNode GetRankTable(HtmlNode rankHtml)
+		public virtual HtmlNode GetRankTable(HtmlNode rankHtml)
 		{
-			var tables = rankHtml.SelectNodes(RankTableSelect);
+			var tables = rankHtml.SelectNodes(RankTableSelect());
 			if (tables != null && tables.Count > 0)
 			{
 				return tables[0];
@@ -49,22 +49,22 @@ namespace DodgeDynasty.Parsers
 			return null;
 		}
 
-		public HtmlNodeCollection GetRankRows(HtmlNode rankTable)
+		public virtual HtmlNodeCollection GetRankRows(HtmlNode rankTable)
 		{
-			return rankTable.SelectNodes(RankRowSelect);
+			return rankTable.SelectNodes(RankRowSelect());
 		}
 
-		private HtmlNodeCollection GetRankColumns(HtmlNode rankRow)
+		public virtual HtmlNodeCollection GetRankColumns(HtmlNode rankRow)
 		{
-			return rankRow.SelectNodes(RankColSelect);
+			return rankRow.SelectNodes(RankColSelect());
 		}
 
-		public string GetPlayerRankNum(HtmlNodeCollection columns)
+		public virtual string GetPlayerRankNum(HtmlNodeCollection columns)
 		{
 			return columns[0].InnerText;
 		}
 
-		public string GetPlayerName(HtmlNodeCollection columns)
+		public virtual string GetPlayerName(HtmlNodeCollection columns)
 		{
 			var playerTeamNode = columns[1];
 			var anch = "./a";
@@ -72,7 +72,7 @@ namespace DodgeDynasty.Parsers
 			return player;
 		}
 
-		public string GetPlayerNFLTeam(HtmlNodeCollection columns)
+		public virtual string GetPlayerNFLTeam(HtmlNodeCollection columns)
 		{
 			var playerTeamNode = columns[1];
 			var small = "./small";
@@ -86,13 +86,13 @@ namespace DodgeDynasty.Parsers
 			return nflTeam;
 		}
 
-		public string GetPlayerPos(HtmlNodeCollection columns)
+		public virtual string GetPlayerPos(HtmlNodeCollection columns)
 		{
 			var posAndRank = columns[2].InnerText;
             return Regex.Replace(posAndRank, @"[\d-]", string.Empty);
 		}
 
-		public void AddRankedPlayer(List<RankedPlayer> rankedPlayers, string rank, string player, string nflTeam, string pos)
+		public virtual void AddRankedPlayer(List<RankedPlayer> rankedPlayers, string rank, string player, string nflTeam, string pos)
 		{
 			rankedPlayers.Add(new RankedPlayer
 			{

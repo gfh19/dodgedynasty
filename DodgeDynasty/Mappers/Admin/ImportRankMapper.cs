@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using DodgeDynasty.Entities;
 using DodgeDynasty.Models.RankAdjustments;
 using DodgeDynasty.Models.Types;
 using DodgeDynasty.Parsers;
@@ -27,12 +28,14 @@ namespace DodgeDynasty.Mappers.Admin
 		protected override void PopulateModel()
 		{
 			Year = Convert.ToInt16(Utilities.GetEasternTime().Year);
+			var rankId = Convert.ToInt32(RankId);
+            var rank = HomeEntity.Ranks.FirstOrDefault(o => o.RankId == rankId);
 			HtmlNode rankDoc = null;
 			List<RankedPlayer> rankedPlayers = null;
 			try
 			{
-				rankDoc = LoadRankHtmlDoc();
-				var parser = ParserFactory.Create();
+				rankDoc = LoadRankHtmlDoc(rank);
+				var parser = ParserFactory.Create(rank.AutoImportId);
 				rankedPlayers = parser.ParseRankHtml(rankDoc);
 			}
 			catch (Exception ex)
@@ -64,14 +67,13 @@ namespace DodgeDynasty.Mappers.Admin
 			}
 		}
 
-		private HtmlNode LoadRankHtmlDoc()
+		private HtmlNode LoadRankHtmlDoc(Rank rank)
 		{
 			HttpClient http = new HttpClient();
-			//var response = await http.GetByteArrayAsync("");
-			var task = http.GetByteArrayAsync("https://www.fantasypros.com/nfl/rankings/consensus-cheatsheets.php");
+			var task = http.GetByteArrayAsync(rank.Url);
 			task.Wait();
 			var response = task.Result;
-			String source = Encoding.GetEncoding("utf-8").GetString(response, 0, response.Length - 1);
+			var source = Encoding.GetEncoding("utf-8").GetString(response, 0, response.Length - 1);
 			source = WebUtility.HtmlDecode(source);
 			HtmlDocument rankHtml = new HtmlDocument();
 			rankHtml.LoadHtml(source);

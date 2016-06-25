@@ -1,9 +1,22 @@
-﻿namespace DodgeDynasty.Parsers
+﻿using System;
+using System.Collections.Generic;
+
+namespace DodgeDynasty.Parsers
 {
-	public class ParserFactory
+	public static class ParserFactory
 	{
-		public static IRankParser Create() {
-			return new RankParser();
+		public static Dictionary<int, IRankParser> RankParserDict = new Dictionary<int, IRankParser>
+		{
+			{ 2, new FprosStandardParser() }
+		};
+
+		public static IRankParser Create(int? autoImportId)
+		{
+			if (autoImportId == null)
+			{
+				throw new Exception("AutoImportId is null!");
+			}
+			return RankParserDict[autoImportId.Value];
 		}
 	}
 }

@@ -16,7 +16,7 @@ namespace DodgeDynasty.Mappers.RankAdjustments
 				RankName = rankModel.RankName,
 				Year = Convert.ToInt16(rankModel.Year),
 				Url = string.IsNullOrEmpty(rankModel.Url) ? null : rankModel.Url,
-				AutoImport = rankModel.AutoImport,
+				AutoImportId = rankModel.AutoImportId,
 				RankDate = DateTime.Now.Date,
 				AddTimestamp = DateTime.Now,
 				LastUpdateTimestamp = DateTime.Now

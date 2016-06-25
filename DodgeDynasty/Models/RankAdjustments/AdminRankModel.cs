@@ -26,7 +26,7 @@ namespace DodgeDynasty.Models.RankAdjustments
 		public bool PrimaryDraftRanking { get; set; }
 		[Display(Name = "Auto Import Enabled?")]
 		[Required]
-		public bool AutoImport { get; set; }
+		public int? AutoImportId { get; set; }
 		public DateTime AddTimestamp { get; set; }
 		public DateTime LastUpdateTimestamp { get; set; }
 		public int PlayerCount { get; set; }

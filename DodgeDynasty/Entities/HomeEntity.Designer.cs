@@ -19,7 +19,6 @@ using System.Xml.Serialization;
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
 
-[assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerRank_Rank", "Rank", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Rank), "PlayerRank", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerRank), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_LeagueOwner_CssColor", "CssColor", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.CssColor), "LeagueOwner", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.LeagueOwner), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_LeagueOwner_League", "League", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.League), "LeagueOwner", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.LeagueOwner), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_Message_League", "League", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.League), "Message", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.Message), true)]
@@ -53,6 +52,8 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_UserRole_Role", "Role", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Role), "UserRole", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.UserRole), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_UserRole_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.User), "UserRole", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.UserRole), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_AdminStatus_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.User), "AdminStatu", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.AdminStatu), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_Rank_AutoImport", "AutoImport", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.AutoImport), "Rank", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.Rank), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerRank_Rank", "Rank", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Rank), "PlayerRank", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerRank), true)]
 
 #endregion
 
@@ -167,22 +168,6 @@ namespace DodgeDynasty.Entities
             }
         }
         private ObjectSet<Position> _Positions;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<Rank> Ranks
-        {
-            get
-            {
-                if ((_Ranks == null))
-                {
-                    _Ranks = base.CreateObjectSet<Rank>("Ranks");
-                }
-                return _Ranks;
-            }
-        }
-        private ObjectSet<Rank> _Ranks;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -535,6 +520,38 @@ namespace DodgeDynasty.Entities
             }
         }
         private ObjectSet<AdminStatu> _AdminStatus;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<AutoImport> AutoImports
+        {
+            get
+            {
+                if ((_AutoImports == null))
+                {
+                    _AutoImports = base.CreateObjectSet<AutoImport>("AutoImports");
+                }
+                return _AutoImports;
+            }
+        }
+        private ObjectSet<AutoImport> _AutoImports;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Rank> Ranks
+        {
+            get
+            {
+                if ((_Ranks == null))
+                {
+                    _Ranks = base.CreateObjectSet<Rank>("Ranks");
+                }
+                return _Ranks;
+            }
+        }
+        private ObjectSet<Rank> _Ranks;
 
         #endregion
 
@@ -570,14 +587,6 @@ namespace DodgeDynasty.Entities
         public void AddToPositions(Position position)
         {
             base.AddObject("Positions", position);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the Ranks EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToRanks(Rank rank)
-        {
-            base.AddObject("Ranks", rank);
         }
     
         /// <summary>
@@ -754,6 +763,22 @@ namespace DodgeDynasty.Entities
         public void AddToAdminStatus(AdminStatu adminStatu)
         {
             base.AddObject("AdminStatus", adminStatu);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the AutoImports EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToAutoImports(AutoImport autoImport)
+        {
+            base.AddObject("AutoImports", autoImport);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Ranks EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToRanks(Rank rank)
+        {
+            base.AddObject("Ranks", rank);
         }
 
         #endregion
@@ -1000,6 +1025,190 @@ namespace DodgeDynasty.Entities
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("HomeModel.FK_AdminStatus_User", "User", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="HomeModel", Name="AutoImport")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class AutoImport : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new AutoImport object.
+        /// </summary>
+        /// <param name="autoImportId">Initial value of the AutoImportId property.</param>
+        /// <param name="rankName">Initial value of the RankName property.</param>
+        /// <param name="addTimestamp">Initial value of the AddTimestamp property.</param>
+        /// <param name="lastUpdateTimestamp">Initial value of the LastUpdateTimestamp property.</param>
+        public static AutoImport CreateAutoImport(global::System.Int32 autoImportId, global::System.String rankName, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp)
+        {
+            AutoImport autoImport = new AutoImport();
+            autoImport.AutoImportId = autoImportId;
+            autoImport.RankName = rankName;
+            autoImport.AddTimestamp = addTimestamp;
+            autoImport.LastUpdateTimestamp = lastUpdateTimestamp;
+            return autoImport;
+        }
+
+        #endregion
+
+        #region Simple Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 AutoImportId
+        {
+            get
+            {
+                return _AutoImportId;
+            }
+            set
+            {
+                if (_AutoImportId != value)
+                {
+                    OnAutoImportIdChanging(value);
+                    ReportPropertyChanging("AutoImportId");
+                    _AutoImportId = StructuralObject.SetValidValue(value, "AutoImportId");
+                    ReportPropertyChanged("AutoImportId");
+                    OnAutoImportIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _AutoImportId;
+        partial void OnAutoImportIdChanging(global::System.Int32 value);
+        partial void OnAutoImportIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String RankName
+        {
+            get
+            {
+                return _RankName;
+            }
+            set
+            {
+                OnRankNameChanging(value);
+                ReportPropertyChanging("RankName");
+                _RankName = StructuralObject.SetValidValue(value, false, "RankName");
+                ReportPropertyChanged("RankName");
+                OnRankNameChanged();
+            }
+        }
+        private global::System.String _RankName;
+        partial void OnRankNameChanging(global::System.String value);
+        partial void OnRankNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String DefaultUrl
+        {
+            get
+            {
+                return _DefaultUrl;
+            }
+            set
+            {
+                OnDefaultUrlChanging(value);
+                ReportPropertyChanging("DefaultUrl");
+                _DefaultUrl = StructuralObject.SetValidValue(value, true, "DefaultUrl");
+                ReportPropertyChanged("DefaultUrl");
+                OnDefaultUrlChanged();
+            }
+        }
+        private global::System.String _DefaultUrl;
+        partial void OnDefaultUrlChanging(global::System.String value);
+        partial void OnDefaultUrlChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime AddTimestamp
+        {
+            get
+            {
+                return _AddTimestamp;
+            }
+            set
+            {
+                OnAddTimestampChanging(value);
+                ReportPropertyChanging("AddTimestamp");
+                _AddTimestamp = StructuralObject.SetValidValue(value, "AddTimestamp");
+                ReportPropertyChanged("AddTimestamp");
+                OnAddTimestampChanged();
+            }
+        }
+        private global::System.DateTime _AddTimestamp;
+        partial void OnAddTimestampChanging(global::System.DateTime value);
+        partial void OnAddTimestampChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime LastUpdateTimestamp
+        {
+            get
+            {
+                return _LastUpdateTimestamp;
+            }
+            set
+            {
+                OnLastUpdateTimestampChanging(value);
+                ReportPropertyChanging("LastUpdateTimestamp");
+                _LastUpdateTimestamp = StructuralObject.SetValidValue(value, "LastUpdateTimestamp");
+                ReportPropertyChanged("LastUpdateTimestamp");
+                OnLastUpdateTimestampChanged();
+            }
+        }
+        private global::System.DateTime _LastUpdateTimestamp;
+        partial void OnLastUpdateTimestampChanging(global::System.DateTime value);
+        partial void OnLastUpdateTimestampChanged();
+
+        #endregion
+
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_Rank_AutoImport", "Rank")]
+        public EntityCollection<Rank> Ranks
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Rank>("HomeModel.FK_Rank_AutoImport", "Rank");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Rank>("HomeModel.FK_Rank_AutoImport", "Rank", value);
                 }
             }
         }
@@ -6826,44 +7035,6 @@ namespace DodgeDynasty.Entities
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_PlayerRank_Rank", "Rank")]
-        public Rank Rank
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Rank>("HomeModel.FK_PlayerRank_Rank", "Rank").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Rank>("HomeModel.FK_PlayerRank_Rank", "Rank").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<Rank> RankReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Rank>("HomeModel.FK_PlayerRank_Rank", "Rank");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Rank>("HomeModel.FK_PlayerRank_Rank", "Rank", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_PlayerRank_Player", "Player")]
         public Player Player
         {
@@ -6892,6 +7063,44 @@ namespace DodgeDynasty.Entities
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Player>("HomeModel.FK_PlayerRank_Player", "Player", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_PlayerRank_Rank", "Rank")]
+        public Rank Rank
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Rank>("HomeModel.FK_PlayerRank_Rank", "Rank").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Rank>("HomeModel.FK_PlayerRank_Rank", "Rank").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Rank> RankReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Rank>("HomeModel.FK_PlayerRank_Rank", "Rank");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Rank>("HomeModel.FK_PlayerRank_Rank", "Rank", value);
                 }
             }
         }
@@ -8079,8 +8288,7 @@ namespace DodgeDynasty.Entities
         /// <param name="rankDate">Initial value of the RankDate property.</param>
         /// <param name="addTimestamp">Initial value of the AddTimestamp property.</param>
         /// <param name="lastUpdateTimestamp">Initial value of the LastUpdateTimestamp property.</param>
-        /// <param name="autoImport">Initial value of the AutoImport property.</param>
-        public static Rank CreateRank(global::System.Int32 rankId, global::System.String rankName, global::System.Int16 year, global::System.DateTime rankDate, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp, global::System.Boolean autoImport)
+        public static Rank CreateRank(global::System.Int32 rankId, global::System.String rankName, global::System.Int16 year, global::System.DateTime rankDate, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp)
         {
             Rank rank = new Rank();
             rank.RankId = rankId;
@@ -8089,7 +8297,6 @@ namespace DodgeDynasty.Entities
             rank.RankDate = rankDate;
             rank.AddTimestamp = addTimestamp;
             rank.LastUpdateTimestamp = lastUpdateTimestamp;
-            rank.AutoImport = autoImport;
             return rank;
         }
 
@@ -8223,6 +8430,30 @@ namespace DodgeDynasty.Entities
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> AutoImportId
+        {
+            get
+            {
+                return _AutoImportId;
+            }
+            set
+            {
+                OnAutoImportIdChanging(value);
+                ReportPropertyChanging("AutoImportId");
+                _AutoImportId = StructuralObject.SetValidValue(value, "AutoImportId");
+                ReportPropertyChanged("AutoImportId");
+                OnAutoImportIdChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _AutoImportId;
+        partial void OnAutoImportIdChanging(Nullable<global::System.Int32> value);
+        partial void OnAutoImportIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
         public global::System.DateTime AddTimestamp
@@ -8267,34 +8498,48 @@ namespace DodgeDynasty.Entities
         private global::System.DateTime _LastUpdateTimestamp;
         partial void OnLastUpdateTimestampChanging(global::System.DateTime value);
         partial void OnLastUpdateTimestampChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Boolean AutoImport
-        {
-            get
-            {
-                return _AutoImport;
-            }
-            set
-            {
-                OnAutoImportChanging(value);
-                ReportPropertyChanging("AutoImport");
-                _AutoImport = StructuralObject.SetValidValue(value, "AutoImport");
-                ReportPropertyChanged("AutoImport");
-                OnAutoImportChanged();
-            }
-        }
-        private global::System.Boolean _AutoImport;
-        partial void OnAutoImportChanging(global::System.Boolean value);
-        partial void OnAutoImportChanged();
 
         #endregion
 
         #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_Rank_AutoImport", "AutoImport")]
+        public AutoImport AutoImport
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<AutoImport>("HomeModel.FK_Rank_AutoImport", "AutoImport").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<AutoImport>("HomeModel.FK_Rank_AutoImport", "AutoImport").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<AutoImport> AutoImportReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<AutoImport>("HomeModel.FK_Rank_AutoImport", "AutoImport");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<AutoImport>("HomeModel.FK_Rank_AutoImport", "AutoImport", value);
+                }
+            }
+        }
     
         /// <summary>
         /// No Metadata Documentation available.
