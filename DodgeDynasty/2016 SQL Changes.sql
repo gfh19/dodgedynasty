@@ -45,7 +45,7 @@ GO
 CREATE TABLE [dbo].[AutoImport](
 	[AutoImportId] [int] IDENTITY(1,1) NOT NULL,
 	[RankName] [varchar](100) NOT NULL,
-	[DefaultUrl] [varchar](1000) NULL,
+	[ImportUrl] [varchar](1000) NOT NULL,
 	[AddTimestamp] [datetime] NOT NULL,
 	[LastUpdateTimestamp] [datetime] NOT NULL,
  CONSTRAINT [PK_AutoImport] PRIMARY KEY CLUSTERED 
@@ -78,31 +78,31 @@ GO
 
 
 INSERT INTO [dbo].[AutoImport]
-           ([RankName],[DefaultUrl],[AddTimestamp],[LastUpdateTimestamp])
+           ([RankName],[ImportUrl],[AddTimestamp],[LastUpdateTimestamp])
      VALUES
            ('ESPN Top 300','http://espn.go.com/fantasy/football/story/_/id/16287927/fantasy-football-rankings-2016-espn-nfl-rankings-top-300-overall',getdate(), getdate())
 GO
 
 INSERT INTO [dbo].[AutoImport]
-           ([RankName],[DefaultUrl],[AddTimestamp],[LastUpdateTimestamp])
+           ([RankName],[ImportUrl],[AddTimestamp],[LastUpdateTimestamp])
      VALUES
            ('Fantasypros - Standard','http://fantasypros.com/nfl/rankings/consensus-cheatsheets.php',getdate(), getdate())
 GO
 
 INSERT INTO [dbo].[AutoImport]
-           ([RankName],[DefaultUrl],[AddTimestamp],[LastUpdateTimestamp])
+           ([RankName],[ImportUrl],[AddTimestamp],[LastUpdateTimestamp])
      VALUES
            ('ESPN ADP','http://games.espn.go.com/ffl/livedraftresults',getdate(), getdate())
 GO
 
 INSERT INTO [dbo].[AutoImport]
-           ([RankName],[DefaultUrl],[AddTimestamp],[LastUpdateTimestamp])
+           ([RankName],[ImportUrl],[AddTimestamp],[LastUpdateTimestamp])
      VALUES
            ('Fantasypros ADP','https://www.fantasypros.com/nfl/adp/overall.php',getdate(), getdate())
 GO
 
 INSERT INTO [dbo].[AutoImport]
-           ([RankName],[DefaultUrl],[AddTimestamp],[LastUpdateTimestamp])
+           ([RankName],[ImportUrl],[AddTimestamp],[LastUpdateTimestamp])
      VALUES
            ('Yahoo!','https://partners.fantasypros.com/external/widget/nfl-staff-rankings.php?source=2&year=2016&week=0&position=ALL&scoring=STD&ajax=true&width=640',getdate(), getdate())
 GO

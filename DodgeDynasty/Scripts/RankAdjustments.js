@@ -20,7 +20,7 @@ function bindAddNewRankLink() {
 		if (autoImportRanks.length > 0) {
 			var rank = autoImportRanks[0];
 			$("#raf-rank-rname").val(rank.rankName);
-			$("#raf-rank-url").val(rank.defaultUrl);
+			$("#raf-rank-url").val(rank.importUrl);
 		}
 	});
 }

@@ -34,15 +34,14 @@ namespace DodgeDynasty.Mappers.Ranks
                     Model = helper.CreatePlayerRankingsModel(PlayerRankModel);
 					helper.SetPlayerRanks(PlayerRankModel, HomeEntity, rankId);
 					helper.SetPlayerRanks(Model, HomeEntity, rankId);
+					Model.RankedPlayers = PlayerRankModel.GetRankedPlayersAllWithDraftPickInfo();
 					if (ShowBestAvailable)
 					{
-						Model.RankedPlayers = PlayerRankModel.GetRankedPlayersAll();
-						helper.GetBestAvailOverallCompRanks(Model);
+						Model.OverallRankedPlayers = helper.GetBestAvailOverallCompRanks(Model.RankedPlayers, Model.DraftedPlayers);
 					}
 					else
 					{
-						Model.RankedPlayers = PlayerRankModel.GetRankedPlayersAllWithDraftPickInfo();
-						helper.GetAllPlayersOverallCompRanks(Model);
+						Model.OverallRankedPlayers = helper.GetAllPlayersOverallCompRanks(Model.RankedPlayers);
 					}
 					PlayerRankModel.CompareRankModels.Add(Model);
 				}
@@ -50,7 +49,14 @@ namespace DodgeDynasty.Mappers.Ranks
 				{
 					var averagePlayerRank = helper.CreatePlayerRankingsModel(PlayerRankModel);
 					averagePlayerRank.RankedPlayers = CalculateAvgCompareRanks();
-					averagePlayerRank.OverallRankedPlayers = averagePlayerRank.RankedPlayers;
+					if (ShowBestAvailable)
+					{
+						averagePlayerRank.OverallRankedPlayers = helper.GetBestAvailOverallCompRanks(averagePlayerRank.RankedPlayers, Model.DraftedPlayers);
+					}
+					else
+					{
+						averagePlayerRank.OverallRankedPlayers = helper.GetAllPlayersOverallCompRanks(averagePlayerRank.RankedPlayers);
+					}
 					PlayerRankModel.AveragePlayerRank = averagePlayerRank;
 				}
 			}
@@ -60,7 +66,7 @@ namespace DodgeDynasty.Mappers.Ranks
 		{
 			List<RankedPlayerAverage> rankedPlayerAverages = new List<RankedPlayerAverage>();
 			List<RankedPlayer> allRankedPlayers = new List<RankedPlayer>();
-			PlayerRankModel.CompareRankModels.ForEach(o => allRankedPlayers.AddRange(o.OverallRankedPlayers));
+			PlayerRankModel.CompareRankModels.ForEach(o => allRankedPlayers.AddRange(o.RankedPlayers));
 			var distinctTruePlayerIds = (from player in allRankedPlayers
 										 select player.TruePlayerId).Distinct().OrderBy(o=>o).ToList();
             for (int i=0; i<PlayerRankModel.CompareRankModels.Count; i++)

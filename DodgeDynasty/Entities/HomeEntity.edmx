@@ -18,7 +18,7 @@
           </Key>
           <Property Name="AutoImportId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RankName" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="DefaultUrl" Type="varchar" MaxLength="1000" />
+          <Property Name="ImportUrl" Type="varchar" MaxLength="1000" Nullable="false" />
           <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
           <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
         </EntityType>
@@ -1155,12 +1155,7 @@
             <Parameter Name="AuctionValue" Mode="In" Type="Decimal" />
             <Parameter Name="DraftYear" Mode="In" Type="Int16" />
           </FunctionImport>
-          <EntitySet Name="AutoImports" EntityType="HomeModel.AutoImport" />
           <EntitySet Name="Ranks" EntityType="HomeModel.Rank" />
-          <AssociationSet Name="FK_Rank_AutoImport" Association="HomeModel.FK_Rank_AutoImport">
-            <End Role="AutoImport" EntitySet="AutoImports" />
-            <End Role="Rank" EntitySet="Ranks" />
-          </AssociationSet>
           <AssociationSet Name="FK_PlayerRank_Rank" Association="HomeModel.FK_PlayerRank_Rank">
             <End Role="Rank" EntitySet="Ranks" />
             <End Role="PlayerRank" EntitySet="PlayerRanks" />
@@ -1173,6 +1168,11 @@
           <AssociationSet Name="FK_Player_NFLTeam" Association="HomeModel.FK_Player_NFLTeam">
             <End Role="NFLTeam" EntitySet="NFLTeams" />
             <End Role="Player" EntitySet="Players" />
+          </AssociationSet>
+          <EntitySet Name="AutoImports" EntityType="HomeModel.AutoImport" />
+          <AssociationSet Name="FK_Rank_AutoImport" Association="HomeModel.FK_Rank_AutoImport">
+            <End Role="AutoImport" EntitySet="AutoImports" />
+            <End Role="Rank" EntitySet="Ranks" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="PlayerRank">
@@ -1958,17 +1958,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="AutoImport">
-          <Key>
-            <PropertyRef Name="AutoImportId" />
-          </Key>
-          <Property Name="AutoImportId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RankName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="DefaultUrl" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Ranks" Relationship="HomeModel.FK_Rank_AutoImport" FromRole="AutoImport" ToRole="Rank" />
-        </EntityType>
         <EntityType Name="Rank">
           <Key>
             <PropertyRef Name="RankId" />
@@ -1981,21 +1970,9 @@
           <Property Name="AutoImportId" Type="Int32" />
           <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="AutoImport" Relationship="HomeModel.FK_Rank_AutoImport" FromRole="Rank" ToRole="AutoImport" />
           <NavigationProperty Name="PlayerRanks" Relationship="HomeModel.FK_PlayerRank_Rank" FromRole="Rank" ToRole="PlayerRank" />
+          <NavigationProperty Name="AutoImport" Relationship="HomeModel.FK_Rank_AutoImport" FromRole="Rank" ToRole="AutoImport" />
         </EntityType>
-        <Association Name="FK_Rank_AutoImport">
-          <End Type="HomeModel.AutoImport" Role="AutoImport" Multiplicity="0..1" />
-          <End Type="HomeModel.Rank" Role="Rank" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AutoImport">
-              <PropertyRef Name="AutoImportId" />
-            </Principal>
-            <Dependent Role="Rank">
-              <PropertyRef Name="AutoImportId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_PlayerRank_Rank">
           <End Type="HomeModel.Rank" Role="Rank" Multiplicity="1" />
           <End Type="HomeModel.PlayerRank" Role="PlayerRank" Multiplicity="*" />
@@ -2044,6 +2021,29 @@
             </Principal>
             <Dependent Role="Player">
               <PropertyRef Name="NFLTeam" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AutoImport">
+          <Key>
+            <PropertyRef Name="AutoImportId" />
+          </Key>
+          <Property Name="AutoImportId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RankName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ImportUrl" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Ranks" Relationship="HomeModel.FK_Rank_AutoImport" FromRole="AutoImport" ToRole="Rank" />
+        </EntityType>
+        <Association Name="FK_Rank_AutoImport">
+          <End Type="HomeModel.AutoImport" Role="AutoImport" Multiplicity="0..1" />
+          <End Type="HomeModel.Rank" Role="Rank" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AutoImport">
+              <PropertyRef Name="AutoImportId" />
+            </Principal>
+            <Dependent Role="Rank">
+              <PropertyRef Name="AutoImportId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2425,17 +2425,6 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="usp_LoadPlayerRanks_V2" FunctionName="HomeModel.Store.usp_LoadPlayerRanks_V2" />
-          <EntitySetMapping Name="AutoImports">
-            <EntityTypeMapping TypeName="HomeModel.AutoImport">
-              <MappingFragment StoreEntitySet="AutoImport">
-                <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
-                <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
-                <ScalarProperty Name="DefaultUrl" ColumnName="DefaultUrl" />
-                <ScalarProperty Name="RankName" ColumnName="RankName" />
-                <ScalarProperty Name="AutoImportId" ColumnName="AutoImportId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Ranks">
             <EntityTypeMapping TypeName="HomeModel.Rank">
               <MappingFragment StoreEntitySet="Rank">
@@ -2461,6 +2450,17 @@
                 <ScalarProperty Name="AbbrDisplay" ColumnName="AbbrDisplay" />
                 <ScalarProperty Name="TeamAbbr" ColumnName="TeamAbbr" />
                 <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AutoImports">
+            <EntityTypeMapping TypeName="HomeModel.AutoImport">
+              <MappingFragment StoreEntitySet="AutoImport">
+                <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
+                <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
+                <ScalarProperty Name="ImportUrl" ColumnName="ImportUrl" />
+                <ScalarProperty Name="RankName" ColumnName="RankName" />
+                <ScalarProperty Name="AutoImportId" ColumnName="AutoImportId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2543,13 +2543,13 @@
         <edmx:AssociationConnector Association="HomeModel.FK_UserRole_User" />
         <edmx:EntityTypeShape EntityType="HomeModel.AdminStatu" Width="1.5" PointX="10" PointY="14.125" />
         <edmx:AssociationConnector Association="HomeModel.FK_AdminStatus_User" />
-        <edmx:EntityTypeShape EntityType="HomeModel.AutoImport" Width="1.5" PointX="3.75" PointY="28.75" />
         <edmx:EntityTypeShape EntityType="HomeModel.Rank" Width="1.5" PointX="6" PointY="28.375" />
-        <edmx:AssociationConnector Association="HomeModel.FK_Rank_AutoImport" />
         <edmx:AssociationConnector Association="HomeModel.FK_PlayerRank_Rank" />
         <edmx:EntityTypeShape EntityType="HomeModel.NFLTeam" Width="1.5" PointX="0.75" PointY="13.875" />
         <edmx:AssociationConnector Association="HomeModel.FK_ByeWeek_NFLTeam" />
         <edmx:AssociationConnector Association="HomeModel.FK_Player_NFLTeam" />
+        <edmx:EntityTypeShape EntityType="HomeModel.AutoImport" Width="1.5" PointX="3.75" PointY="28.75" />
+        <edmx:AssociationConnector Association="HomeModel.FK_Rank_AutoImport" />
         </edmx:Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

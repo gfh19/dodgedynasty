@@ -50,10 +50,10 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_UserRole_Role", "Role", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Role), "UserRole", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.UserRole), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_UserRole_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.User), "UserRole", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.UserRole), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_AdminStatus_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.User), "AdminStatu", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.AdminStatu), true)]
-[assembly: EdmRelationshipAttribute("HomeModel", "FK_Rank_AutoImport", "AutoImport", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.AutoImport), "Rank", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.Rank), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerRank_Rank", "Rank", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Rank), "PlayerRank", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerRank), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_ByeWeek_NFLTeam", "NFLTeam", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.NFLTeam), "ByeWeek", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.ByeWeek), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_Player_NFLTeam", "NFLTeam", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.NFLTeam), "Player", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.Player), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_Rank_AutoImport", "AutoImport", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.AutoImport), "Rank", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.Rank), true)]
 
 #endregion
 
@@ -508,22 +508,6 @@ namespace DodgeDynasty.Entities
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<AutoImport> AutoImports
-        {
-            get
-            {
-                if ((_AutoImports == null))
-                {
-                    _AutoImports = base.CreateObjectSet<AutoImport>("AutoImports");
-                }
-                return _AutoImports;
-            }
-        }
-        private ObjectSet<AutoImport> _AutoImports;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<Rank> Ranks
         {
             get
@@ -552,6 +536,22 @@ namespace DodgeDynasty.Entities
             }
         }
         private ObjectSet<NFLTeam> _NFLTeams;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<AutoImport> AutoImports
+        {
+            get
+            {
+                if ((_AutoImports == null))
+                {
+                    _AutoImports = base.CreateObjectSet<AutoImport>("AutoImports");
+                }
+                return _AutoImports;
+            }
+        }
+        private ObjectSet<AutoImport> _AutoImports;
 
         #endregion
 
@@ -758,14 +758,6 @@ namespace DodgeDynasty.Entities
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the AutoImports EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToAutoImports(AutoImport autoImport)
-        {
-            base.AddObject("AutoImports", autoImport);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the Ranks EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToRanks(Rank rank)
@@ -779,6 +771,14 @@ namespace DodgeDynasty.Entities
         public void AddToNFLTeams(NFLTeam nFLTeam)
         {
             base.AddObject("NFLTeams", nFLTeam);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the AutoImports EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToAutoImports(AutoImport autoImport)
+        {
+            base.AddObject("AutoImports", autoImport);
         }
 
         #endregion
@@ -1048,13 +1048,15 @@ namespace DodgeDynasty.Entities
         /// </summary>
         /// <param name="autoImportId">Initial value of the AutoImportId property.</param>
         /// <param name="rankName">Initial value of the RankName property.</param>
+        /// <param name="importUrl">Initial value of the ImportUrl property.</param>
         /// <param name="addTimestamp">Initial value of the AddTimestamp property.</param>
         /// <param name="lastUpdateTimestamp">Initial value of the LastUpdateTimestamp property.</param>
-        public static AutoImport CreateAutoImport(global::System.Int32 autoImportId, global::System.String rankName, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp)
+        public static AutoImport CreateAutoImport(global::System.Int32 autoImportId, global::System.String rankName, global::System.String importUrl, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp)
         {
             AutoImport autoImport = new AutoImport();
             autoImport.AutoImportId = autoImportId;
             autoImport.RankName = rankName;
+            autoImport.ImportUrl = importUrl;
             autoImport.AddTimestamp = addTimestamp;
             autoImport.LastUpdateTimestamp = lastUpdateTimestamp;
             return autoImport;
@@ -1118,26 +1120,26 @@ namespace DodgeDynasty.Entities
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String DefaultUrl
+        public global::System.String ImportUrl
         {
             get
             {
-                return _DefaultUrl;
+                return _ImportUrl;
             }
             set
             {
-                OnDefaultUrlChanging(value);
-                ReportPropertyChanging("DefaultUrl");
-                _DefaultUrl = StructuralObject.SetValidValue(value, true, "DefaultUrl");
-                ReportPropertyChanged("DefaultUrl");
-                OnDefaultUrlChanged();
+                OnImportUrlChanging(value);
+                ReportPropertyChanging("ImportUrl");
+                _ImportUrl = StructuralObject.SetValidValue(value, false, "ImportUrl");
+                ReportPropertyChanged("ImportUrl");
+                OnImportUrlChanged();
             }
         }
-        private global::System.String _DefaultUrl;
-        partial void OnDefaultUrlChanging(global::System.String value);
-        partial void OnDefaultUrlChanged();
+        private global::System.String _ImportUrl;
+        partial void OnImportUrlChanging(global::System.String value);
+        partial void OnImportUrlChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -8535,6 +8537,28 @@ namespace DodgeDynasty.Entities
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_PlayerRank_Rank", "PlayerRank")]
+        public EntityCollection<PlayerRank> PlayerRanks
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<PlayerRank>("HomeModel.FK_PlayerRank_Rank", "PlayerRank");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PlayerRank>("HomeModel.FK_PlayerRank_Rank", "PlayerRank", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_Rank_AutoImport", "AutoImport")]
         public AutoImport AutoImport
         {
@@ -8563,28 +8587,6 @@ namespace DodgeDynasty.Entities
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<AutoImport>("HomeModel.FK_Rank_AutoImport", "AutoImport", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_PlayerRank_Rank", "PlayerRank")]
-        public EntityCollection<PlayerRank> PlayerRanks
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<PlayerRank>("HomeModel.FK_PlayerRank_Rank", "PlayerRank");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PlayerRank>("HomeModel.FK_PlayerRank_Rank", "PlayerRank", value);
                 }
             }
         }

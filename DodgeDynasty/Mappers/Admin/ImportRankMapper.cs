@@ -30,11 +30,12 @@ namespace DodgeDynasty.Mappers.Admin
 			Year = Convert.ToInt16(Utilities.GetEasternTime().Year);
 			var rankId = Convert.ToInt32(RankId);
             var rank = HomeEntity.Ranks.FirstOrDefault(o => o.RankId == rankId);
+            var autoImport = HomeEntity.AutoImports.FirstOrDefault(o => o.AutoImportId == rank.AutoImportId);
 			HtmlNode rankDoc = null;
 			List<RankedPlayer> rankedPlayers = null;
 			try
 			{
-				rankDoc = LoadRankHtmlDoc(rank);
+				rankDoc = LoadRankHtmlDoc(autoImport);
 				var parser = ParserFactory.Create(rank.AutoImportId);
 				if (parser.CheckPositions)
 				{
@@ -72,10 +73,10 @@ namespace DodgeDynasty.Mappers.Admin
 			}
 		}
 
-		private HtmlNode LoadRankHtmlDoc(Rank rank)
+		private HtmlNode LoadRankHtmlDoc(AutoImport autoImport)
 		{
 			HttpClient http = new HttpClient();
-			var task = http.GetByteArrayAsync(rank.Url);
+			var task = http.GetByteArrayAsync(autoImport.ImportUrl);
 			task.Wait();
 			var response = task.Result;
 			var source = Encoding.GetEncoding("utf-8").GetString(response, 0, response.Length - 1);

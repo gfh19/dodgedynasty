@@ -152,8 +152,19 @@ namespace DodgeDynasty.Models
 
 		public List<RankedPlayer> GetAllHighlightedPlayers()
 		{
+			List<PlayerRank> playerRanks = PlayerRanks;
+			if (Options.ShowAvgCompRanks && AveragePlayerRank != null)
+			{
+				playerRanks = AveragePlayerRank.RankedPlayers.Select(rp => new PlayerRank
+				{
+					RankId = -1,
+					PlayerId = rp.PlayerId,
+					RankNum = rp.RankNum
+				}).ToList();
+            }
+
 			var highlightedPlayers = (from ph in CurrentPlayerHighlights
-									  join pr in PlayerRanks on ph.PlayerId equals pr.PlayerId into prLeft      //Left Outer Join
+									  join pr in playerRanks on ph.PlayerId equals pr.PlayerId into prLeft      //Left Outer Join
 									  from pr in prLeft.DefaultIfEmpty()
 									  join pick in DraftPicks on ph.PlayerId equals pick.PlayerId into dpLeft    //Left Outer Join
 									  from pick in dpLeft.DefaultIfEmpty()
@@ -213,7 +224,7 @@ namespace DodgeDynasty.Models
 			CurrentRankCategory = RankCategoryFactory.RankCatDict[RankCategory.CompRank](compareRankModel);
 			CompareRank = compareRankModel;
 			CompareRank.CategoryRankHeader = string.Format("{0} ({1})", compareRankModel.CurrentRank.RankName, 
-				compareRankModel.CurrentRank.RankDate.ToString("M/d/yy"));
+				compareRankModel.CurrentRank.RankDate.ToString("M/d"));
 			AveragePlayerRank = null;
             return this;
 		}

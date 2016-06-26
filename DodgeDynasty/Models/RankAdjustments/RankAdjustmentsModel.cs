@@ -25,9 +25,9 @@ namespace DodgeDynasty.Models.RankAdjustments
 			StringBuilder autoImportHints = new StringBuilder("[");
 			foreach (var autoImport in AutoImports)
 			{
-				autoImportHints.Append(string.Format("{{id:\"{0}\",rankName:\"{1}\",defaultUrl:\"{2}\"}},",
+				autoImportHints.Append(string.Format("{{id:\"{0}\",rankName:\"{1}\",importUrl:\"{2}\"}},",
 					Utilities.JsonEncode(autoImport.AutoImportId.ToString()), Utilities.JsonEncode(autoImport.RankName), 
-					Utilities.JsonEncode(autoImport.DefaultUrl)));
+					Utilities.JsonEncode(autoImport.ImportUrl)));
 			}
 			autoImportHints.Append("]");
 			return autoImportHints.ToString();

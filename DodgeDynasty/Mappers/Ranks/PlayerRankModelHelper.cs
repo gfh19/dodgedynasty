@@ -44,14 +44,14 @@ namespace DodgeDynasty.Mappers.Ranks
 			model.PlayerRanks = homeEntity.PlayerRanks.Where(pr => pr.RankId == rankId).ToList();
 		}
 
-		public void GetBestAvailOverallCompRanks(IPlayerRankModel model)
+		public List<RankedPlayer> GetBestAvailOverallCompRanks(List<RankedPlayer> rankedPlayers, List<Player> draftedPlayers)
 		{
-			model.OverallRankedPlayers = model.RankedPlayers.Where(rp => !model.DraftedPlayers.Any(dp => rp.TruePlayerId == dp.TruePlayerId)).ToList();
+			return rankedPlayers.Where(rp => !draftedPlayers.Any(dp => rp.TruePlayerId == dp.TruePlayerId)).ToList();
 		}
 
-		public void GetAllPlayersOverallCompRanks(IPlayerRankModel model)
+		public List<RankedPlayer> GetAllPlayersOverallCompRanks(List<RankedPlayer> rankedPlayers)
 		{
-			model.OverallRankedPlayers = model.RankedPlayers.ToList();
+			return rankedPlayers.ToList();
 		}
 
 		public RankedPlayer GetRankedPlayer(PlayerRank pr, Player p, NFLTeam t, PlayerHighlight ph = null, DraftPick pick = null,
