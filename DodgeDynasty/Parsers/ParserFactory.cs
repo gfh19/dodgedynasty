@@ -10,7 +10,7 @@ namespace DodgeDynasty.Parsers
 			{ 1, new EspnTop300Parser() },		//ESPN Top 300
 			{ 2, new FprosStandardParser() },	//Fantasypros - Standard
 			{ 3, new EspnAdpParser() },			//ESPN ADP
-			{ 4, new FprosStandardParser() }	//Fantasypros ADP
+			{ 4, new FprosAdpParser() }			//Fantasypros ADP
 		};
 
 		public static IRankParser Create(int? autoImportId)
