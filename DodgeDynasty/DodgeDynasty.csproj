@@ -337,6 +337,7 @@
     <Compile Include="Parsers\ParserFactory.cs" />
     <Compile Include="Parsers\FprosStandardParser.cs" />
     <Compile Include="Parsers\RankParser.cs" />
+    <Compile Include="Parsers\YahooParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shared\DBUtilities.cs" />
     <Compile Include="Shared\Extensions\UrlHelperExtensions.cs" />

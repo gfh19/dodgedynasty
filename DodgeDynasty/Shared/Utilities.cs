@@ -126,6 +126,10 @@ namespace DodgeDynasty.Shared
 				new RouteValueDictionary(new { controller = "Shared", action = "Unauthorized" }));
 		}
 
+		public static bool HasNumber(this string input)
+		{
+			return input.Where(x => Char.IsDigit(x)).Any();
+		}
 
 
 		/* Conversion methods */

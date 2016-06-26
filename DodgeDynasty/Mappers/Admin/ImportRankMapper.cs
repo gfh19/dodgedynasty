@@ -36,6 +36,10 @@ namespace DodgeDynasty.Mappers.Admin
 			{
 				rankDoc = LoadRankHtmlDoc(rank);
 				var parser = ParserFactory.Create(rank.AutoImportId);
+				if (parser.CheckPositions)
+				{
+					parser.Positions = HomeEntity.Positions.ToList();
+				}
 				rankedPlayers = parser.ParseRankHtml(rankDoc);
 			}
 			catch (Exception ex)

@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using DodgeDynasty.Entities;
 using DodgeDynasty.Models.Types;
 using DodgeDynasty.Shared;
 using HtmlAgilityPack;
@@ -9,6 +11,9 @@ namespace DodgeDynasty.Parsers
 {
 	public abstract class RankParser : IRankParser
 	{
+		public virtual bool CheckPositions { get { return false; } }
+		public List<Position> Positions { get; set; }
+
 		public virtual string RankTableSelect() { return "//div[contains(@class, 'mobile-table')]//table"; }
 		public virtual string RankRowSelect() { return "//div[contains(@class, 'mobile-table')]//table//tr[contains(@class, 'mpb-player')]"; }
 		public virtual string RankColSelect() { return "./td"; }
@@ -27,6 +32,7 @@ namespace DodgeDynasty.Parsers
 						List<HtmlNode> columns = GetRankColumns(row);
 						if (columns != null)
 						{
+							StartParsingPlayer(columns);
 							string rank = GetPlayerRankNum(columns);
 							string player = GetPlayerName(columns);
 							string nflTeam = GetPlayerNFLTeam(columns);
@@ -58,6 +64,9 @@ namespace DodgeDynasty.Parsers
 		{
 			return rankRow.SelectNodes(RankColSelect()).ToList();
 		}
+
+		public virtual void StartParsingPlayer(List<HtmlNode> columns)
+		{ }
 
 		public virtual string GetPlayerRankNum(List<HtmlNode> columns)
 		{

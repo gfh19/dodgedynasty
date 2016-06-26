@@ -104,7 +104,7 @@ BEGIN
 		OR (LTRIM(RTRIM(UPPER(REPLACE(TeamName, '.', '')))) = UPPER(REPLACE(@ScrubbedFirstName, '.', ''))
 			   AND UPPER(REPLACE(@ScrubbedLastName, '/', '')) IN ('DST', 'DEF', 'D', '')))
 
-	--If First/Last Name = NFLTeam (location & team name), set NFLTeam and Position
+	--If First/Last Name = NFLTeam (location & team name, i.e. a Defense), set NFLTeam and Position 'DEF'
 	IF @ScrubbedNFLTeam IS NOT NULL
 	BEGIN
 		SET @ScrubbedPosition = 'DEF';
@@ -146,6 +146,14 @@ BEGIN
 			WHEN 'DST' THEN 'DEF'
 			ELSE LTRIM(RTRIM(UPPER(@Position)))
 			END
+
+		--Yahoo:  FA not listed with Pos, have to lookup
+		IF (@ScrubbedNFLTeam = 'FA' AND @ScrubbedPosition = '')
+		BEGIN
+			SELECT TOP 1 @ScrubbedPosition = p.Position FROM dbo.Player p
+			WHERE UPPER(REPLACE(REPLACE(p.FirstName, '''', ''), '.', '')) = RTRIM(UPPER(REPLACE(REPLACE(@ScrubbedFirstName, '''', ''), '.', ''))) 
+				AND UPPER(REPLACE(REPLACE(p.LastName, '''', ''), '.', '')) = RTRIM(UPPER(REPLACE(REPLACE(@ScrubbedLastName, '''', ''), '.', '')))
+		END
 	END
 
 	--First, check for EXACT match in ACTIVE players

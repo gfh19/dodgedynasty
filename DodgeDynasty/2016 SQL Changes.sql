@@ -101,6 +101,12 @@ INSERT INTO [dbo].[AutoImport]
            ('Fantasypros ADP','https://www.fantasypros.com/nfl/adp/overall.php',getdate(), getdate())
 GO
 
+INSERT INTO [dbo].[AutoImport]
+           ([RankName],[DefaultUrl],[AddTimestamp],[LastUpdateTimestamp])
+     VALUES
+           ('Yahoo!','https://partners.fantasypros.com/external/widget/nfl-staff-rankings.php?source=2&year=2016&week=0&position=ALL&scoring=STD&ajax=true&width=640',getdate(), getdate())
+GO
+
 
 
 
