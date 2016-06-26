@@ -17,6 +17,18 @@ Dont Run This Script until below has been addressed!
 
 
 
+ALTER TABLE [dbo].[NFLTeam]
+ADD [IsActive] bit NOT NULL DEFAULT(1)
+GO
+
+UPDATE [dbo].[NFLTeam]
+SET IsActive = 0
+WHERE TeamAbbr = 'STL'
+
+
+
+
+
 
 USE [Home]
 GO
@@ -86,7 +98,7 @@ GO
 INSERT INTO [dbo].[AutoImport]
            ([RankName],[DefaultUrl],[AddTimestamp],[LastUpdateTimestamp])
      VALUES
-           ('Fantasypros - ADP','https://www.fantasypros.com/nfl/adp/overall.php',getdate(), getdate())
+           ('Fantasypros ADP','https://www.fantasypros.com/nfl/adp/overall.php',getdate(), getdate())
 GO
 
 
@@ -100,21 +112,25 @@ GO
 
 /* TODO: Handle LA / Sunsetting StL !!! */
 
-USE [Home]
-GO
 
 INSERT INTO [dbo].[NFLTeam]
      VALUES
            ('LA', 'LA', 'Los Angeles', 'Rams', 'NFC', 'West')
 GO
 
-
-
-
-
-
 USE [Home]
 GO
+
+INSERT INTO [dbo].[Player]
+           ([TruePlayerId],[FirstName],[LastName],[Position],[NFLTeam],[DateOfBirth],[IsActive],[IsDrafted],[AddTimestamp],[LastUpdateTimestamp])
+     VALUES
+           (144,'Los Angeles','Rams','DEF','LA',NULL,1,1,getdate(),getdate())
+GO
+
+
+
+
+
 
 ALTER TABLE [dbo].[AdminStatus] DROP CONSTRAINT [FK_AdminStatus_User]
 GO

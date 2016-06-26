@@ -96,15 +96,25 @@ BEGIN
 		END
 
 	SELECT TOP 1 @ScrubbedNFLTeam = TeamAbbr FROM NFLTeam
-		WHERE (LTRIM(RTRIM(UPPER(REPLACE(LocationName, '.', '')))) = UPPER(REPLACE(@ScrubbedFirstName, '.', ''))
+		WHERE IsActive = 1
+		AND ((LTRIM(RTRIM(UPPER(REPLACE(LocationName, '.', '')))) = UPPER(REPLACE(@ScrubbedFirstName, '.', ''))
 			   AND LTRIM(RTRIM(UPPER(REPLACE(TeamName, '.', '')))) = UPPER(REPLACE(@ScrubbedLastName, '.', '')))
 		OR (LTRIM(RTRIM(UPPER(REPLACE(LocationName, '.', '')))) + ' ' + LTRIM(RTRIM(UPPER(REPLACE(TeamName, '.', ''))))
 			= UPPER(REPLACE(@ScrubbedFirstName, '.', '')) + ' ' + UPPER(REPLACE(@ScrubbedLastName, '.', '')))
+		OR (LTRIM(RTRIM(UPPER(REPLACE(TeamName, '.', '')))) = UPPER(REPLACE(@ScrubbedFirstName, '.', ''))
+			   AND UPPER(REPLACE(@ScrubbedLastName, '/', '')) IN ('DST', 'DEF', 'D', '')))
 
 	--If First/Last Name = NFLTeam (location & team name), set NFLTeam and Position
 	IF @ScrubbedNFLTeam IS NOT NULL
 	BEGIN
 		SET @ScrubbedPosition = 'DEF';
+		--If Name format is "XXXX D/ST" for example, then retrieve real first/last name from NFLTeam table
+		IF (UPPER(REPLACE(@ScrubbedLastName, '/', '')) IN ('DST', 'DEF', 'D', ''))
+		BEGIN
+			SELECT TOP 1 @ScrubbedFirstName = LocationName, @ScrubbedLastName = TeamName FROM NFLTeam
+				WHERE IsActive = 1
+				AND LTRIM(RTRIM(UPPER(REPLACE(TeamName, '.', '')))) = UPPER(REPLACE(@ScrubbedFirstName, '.', ''))
+		END
 	END
 	ELSE
 	BEGIN

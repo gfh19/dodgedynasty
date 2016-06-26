@@ -19,12 +19,12 @@ namespace DodgeDynasty.Parsers
 			HtmlNode rankTable = GetRankTable(rankHtml);
 			if (rankTable != null)
 			{
-				HtmlNodeCollection rows = GetRankRows(rankTable);
+				List<HtmlNode> rows = GetRankRows(rankTable);
 				if (rows != null)
 				{
 					foreach (var row in rows)
 					{
-						HtmlNodeCollection columns = GetRankColumns(row);
+						List<HtmlNode> columns = GetRankColumns(row);
 						if (columns != null)
 						{
 							string rank = GetPlayerRankNum(columns);
@@ -49,22 +49,22 @@ namespace DodgeDynasty.Parsers
 			return null;
 		}
 
-		public virtual HtmlNodeCollection GetRankRows(HtmlNode rankTable)
+		public virtual List<HtmlNode> GetRankRows(HtmlNode rankTable)
 		{
-			return rankTable.SelectNodes(RankRowSelect());
+			return rankTable.SelectNodes(RankRowSelect()).Where(o=>!string.IsNullOrWhiteSpace(o.InnerText)).ToList();
 		}
 
-		public virtual HtmlNodeCollection GetRankColumns(HtmlNode rankRow)
+		public virtual List<HtmlNode> GetRankColumns(HtmlNode rankRow)
 		{
-			return rankRow.SelectNodes(RankColSelect());
+			return rankRow.SelectNodes(RankColSelect()).ToList();
 		}
 
-		public virtual string GetPlayerRankNum(HtmlNodeCollection columns)
+		public virtual string GetPlayerRankNum(List<HtmlNode> columns)
 		{
 			return columns[0].InnerText;
 		}
 
-		public virtual string GetPlayerName(HtmlNodeCollection columns)
+		public virtual string GetPlayerName(List<HtmlNode> columns)
 		{
 			var playerTeamNode = columns[1];
 			var anch = "./a";
@@ -72,7 +72,7 @@ namespace DodgeDynasty.Parsers
 			return player;
 		}
 
-		public virtual string GetPlayerNFLTeam(HtmlNodeCollection columns)
+		public virtual string GetPlayerNFLTeam(List<HtmlNode> columns)
 		{
 			var playerTeamNode = columns[1];
 			var small = "./small";
@@ -86,7 +86,7 @@ namespace DodgeDynasty.Parsers
 			return nflTeam;
 		}
 
-		public virtual string GetPlayerPos(HtmlNodeCollection columns)
+		public virtual string GetPlayerPos(List<HtmlNode> columns)
 		{
 			var posAndRank = columns[2].InnerText;
             return Regex.Replace(posAndRank, @"[\d-]", string.Empty);

@@ -330,6 +330,7 @@
     <Compile Include="Models\Types\UserChatMessage.cs" />
     <Compile Include="Models\ViewTypes\RankCategoryFactory.cs" />
     <Compile Include="Models\ViewTypes\RankCategoryModel.cs" />
+    <Compile Include="Parsers\EspnAdpParser.cs" />
     <Compile Include="Parsers\EspnTop300Parser.cs" />
     <Compile Include="Parsers\IRankParser.cs" />
     <Compile Include="Parsers\ParserFactory.cs" />

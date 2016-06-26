@@ -13,26 +13,26 @@ namespace DodgeDynasty.Parsers
 		public override string RankRowSelect() { return RankTableSelect() + "//tbody//tr"; }
 		public override string RankColSelect() { return "./td"; }
 		
-		public override string GetPlayerRankNum(HtmlNodeCollection columns)
+		public override string GetPlayerRankNum(List<HtmlNode> columns)
 		{
 			var rkNumAndPlayer = columns[0].InnerText;
 			var firstDot = rkNumAndPlayer.IndexOf(". ");
 			return rkNumAndPlayer.Substring(0, firstDot).Trim();
 		}
 
-		public override string GetPlayerName(HtmlNodeCollection columns)
+		public override string GetPlayerName(List<HtmlNode> columns)
 		{
 			var rkNumAndPlayer = columns[0].InnerText;
 			var firstDot = rkNumAndPlayer.IndexOf(".");
 			return rkNumAndPlayer.Substring(firstDot + 2, rkNumAndPlayer.Length - (firstDot + 2)).Trim();
 		}
 
-		public override string GetPlayerPos(HtmlNodeCollection columns)
+		public override string GetPlayerPos(List<HtmlNode> columns)
 		{
 			return columns[1].InnerText;
 		}
 
-		public override string GetPlayerNFLTeam(HtmlNodeCollection columns)
+		public override string GetPlayerNFLTeam(List<HtmlNode> columns)
 		{
 			return columns[2].InnerText;
 		}

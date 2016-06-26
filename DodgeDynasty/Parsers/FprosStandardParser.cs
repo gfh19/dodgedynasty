@@ -13,22 +13,12 @@ namespace DodgeDynasty.Parsers
 		public override string RankRowSelect() { return "//div[contains(@class, 'mobile-table')]//table//tr[contains(@class, 'mpb-player')]"; }
 		public override string RankColSelect() { return "./td"; }
 
-		public override HtmlNodeCollection GetRankRows(HtmlNode rankTable)
-		{
-			return rankTable.SelectNodes(RankRowSelect());
-		}
-
-		public override HtmlNodeCollection GetRankColumns(HtmlNode rankRow)
-		{
-			return rankRow.SelectNodes(RankColSelect());
-		}
-
-		public override string GetPlayerRankNum(HtmlNodeCollection columns)
+		public override string GetPlayerRankNum(List<HtmlNode> columns)
 		{
 			return columns[0].InnerText;
 		}
 
-		public override string GetPlayerName(HtmlNodeCollection columns)
+		public override string GetPlayerName(List<HtmlNode> columns)
 		{
 			var playerTeamNode = columns[1];
 			var anch = "./a";
@@ -36,7 +26,7 @@ namespace DodgeDynasty.Parsers
 			return player;
 		}
 
-		public override string GetPlayerNFLTeam(HtmlNodeCollection columns)
+		public override string GetPlayerNFLTeam(List<HtmlNode> columns)
 		{
 			var playerTeamNode = columns[1];
 			var small = "./small";
@@ -50,21 +40,10 @@ namespace DodgeDynasty.Parsers
 			return nflTeam;
 		}
 
-		public override string GetPlayerPos(HtmlNodeCollection columns)
+		public override string GetPlayerPos(List<HtmlNode> columns)
 		{
 			var posAndRank = columns[2].InnerText;
             return Regex.Replace(posAndRank, @"[\d-]", string.Empty);
-		}
-
-		public override void AddRankedPlayer(List<RankedPlayer> rankedPlayers, string rank, string player, string nflTeam, string pos)
-		{
-			rankedPlayers.Add(new RankedPlayer
-			{
-				RankNum = Utilities.ToNullInt(rank),
-				PlayerName = player,
-				NFLTeam = nflTeam,
-				Position = pos
-			});
 		}
 	}
 }
