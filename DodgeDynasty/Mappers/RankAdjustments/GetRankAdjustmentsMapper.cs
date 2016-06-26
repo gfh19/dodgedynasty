@@ -33,7 +33,7 @@ namespace DodgeDynasty.Mappers.RankAdjustments
 									 AddTimestamp = r.AddTimestamp,
 									 LastUpdateTimestamp = r.LastUpdateTimestamp,
 									 PlayerCount = HomeEntity.PlayerRanks.Where(o => o.RankId == r.RankId).Count()
-								 }).ToList();
+								 }).OrderByDescending(o=>o.LastUpdateTimestamp).ToList();
 			Model.AutoImports = HomeEntity.AutoImports.ToList();
         }
 	}

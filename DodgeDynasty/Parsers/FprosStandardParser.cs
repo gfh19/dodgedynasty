@@ -12,16 +12,6 @@ namespace DodgeDynasty.Parsers
 		public override string RankTableSelect() { return "//div[contains(@class, 'mobile-table')]//table"; }
 		public override string RankRowSelect() { return "//div[contains(@class, 'mobile-table')]//table//tr[contains(@class, 'mpb-player')]"; }
 		public override string RankColSelect() { return "./td"; }
-		
-		public override HtmlNode GetRankTable(HtmlNode rankHtml)
-		{
-			var tables = rankHtml.SelectNodes(RankTableSelect());
-			if (tables != null && tables.Count > 0)
-			{
-				return tables[0];
-			}
-			return null;
-		}
 
 		public override HtmlNodeCollection GetRankRows(HtmlNode rankTable)
 		{

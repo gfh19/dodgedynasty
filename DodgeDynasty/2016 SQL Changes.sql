@@ -6,9 +6,13 @@ BEGIN TRANSACTION;
 
 
 
-
 /* TODO !!! */
-ALSO DONT FORGET TO ALTER THE LPR SP!
+Dont Run This Script until below has been addressed!
+-Players to Update:
+	-- Ted Ginn Jr.
+	-- Duke Johnson Jr.
+	-- Benjamin Cunningham
+-* ALSO DONT FORGET TO ALTER THE LoadPlayerRanks SP!
 
 
 

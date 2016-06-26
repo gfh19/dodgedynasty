@@ -50,6 +50,7 @@ namespace DodgeDynasty.Mappers.Admin
 				{
 					AddPlayerRank(rankedPlayer);
 				}
+				SetRankLastUpdate(rank);
 				UpdateSucceeded = true;
 			}
 			else
@@ -127,5 +128,12 @@ namespace DodgeDynasty.Mappers.Admin
 			}
 			HomeEntity.SaveChanges();
         }
-    }
+
+		private void SetRankLastUpdate(Rank rank)
+		{
+			rank.RankDate = Utilities.GetEasternTime();
+			rank.LastUpdateTimestamp = Utilities.GetEasternTime();
+			HomeEntity.SaveChanges();
+		}
+	}
 }

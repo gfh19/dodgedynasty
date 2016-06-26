@@ -1,4 +1,5 @@
-﻿
+﻿var autoImportHints = [];
+
 function initRankAdjustments() {
 	bindAddNewRankLink();
 	bindAutoImportLinks();
@@ -11,6 +12,17 @@ function bindAddNewRankLink() {
 		$("#add-rank-name").focus();
 	});
 	$(".ra-clear-add").click(clearAddRank);
+	$("#raf-rank-import").change(function (e) {
+		var autoImportId = $("#raf-rank-import").val();
+		var autoImportRanks = $(autoImportHints).filter(function (el) {
+			return $(this)[0].id == autoImportId;
+		});
+		if (autoImportRanks.length > 0) {
+			var rank = autoImportRanks[0];
+			$("#raf-rank-rname").val(rank.rankName);
+			$("#raf-rank-url").val(rank.defaultUrl);
+		}
+	});
 }
 
 function bindAutoImportLinks() {
@@ -36,13 +48,13 @@ function clearAddRank() {
 }
 
 function clearEditRank() {
-	$("#edit-plyr-id").val("");
-	$("#edit-plyr-tpid").val("");
-	$("#edit-plyr-fname").val("");
-	$("#edit-plyr-lname").val("");
-	$("#edit-plyr-pos").val("");
-	$("#edit-plyr-nfl").val("");
-	$("#edit-plyr-active").prop("checked", true);
+	//$("#edit-plyr-id").val("");
+	//$("#edit-plyr-tpid").val("");
+	//$("#edit-plyr-fname").val("");
+	//$("#edit-plyr-lname").val("");
+	//$("#edit-plyr-pos").val("");
+	//$("#edit-plyr-nfl").val("");
+	//$("#edit-plyr-active").prop("checked", true);
 }
 
 function getNewRank() {
@@ -52,19 +64,12 @@ function getNewRank() {
 	rank.Url = $("#raf-rank-url").val();
 	rank.DraftId = $("#raf-rank-draft-id").val();
 	rank.PrimaryDraftRanking = $("#raf-rank-primary").prop('checked');
-	rank.AutoImport = $("#raf-rank-import").prop('checked');
+	rank.AutoImportId = $("#raf-rank-import").val();
 	return rank;
 }
 
 function getEditRank() {
 	var rank = {};
-	rank.rankId = $("#edit-plyr-id").val();
-	rank.TruerankId = $("#edit-plyr-tpid").val();
-	rank.FirstName = $("#edit-plyr-fname").val();
-	rank.LastName = $("#edit-plyr-lname").val();
-	rank.Position = $("#edit-plyr-pos").val();
-	rank.NFLTeam = $("#edit-plyr-nfl").val();
-	rank.IsActive = $("#edit-plyr-active").prop('checked');
 	return rank;
 }
 

@@ -7,6 +7,7 @@
 	<script type="text/javascript" src="@Url.Script("~/Scripts/RankAdjustments.js")"></script>
 	<script type="text/javascript">
 		$(function () {
+			autoImportHints = @Html.Raw(@Model.GetAutoImportHints());
 			initRankAdjustments();
 		});
 	</script>
@@ -48,7 +49,14 @@
 							<td>@rank.LastUpdateTimestamp</td>
 							<td>&lt;<a class="ra-edit-details" href="#">Edit Details</a>&gt;</td>
 							<td>&lt;<a class="ra-edit-plyr-ranks" href="#">Edit</a>&gt;</td>
-							<td>&lt;<a class="ra-auto-import" href="#">Auto Import</a>&gt;</td>
+							@if (rank.AutoImportId.HasValue)
+							{
+								<td>&lt;<a class="ra-auto-import" href="#">Auto Import</a>&gt;</td>
+							}
+							else
+							{
+								<td>N/A</td>
+							}
 						</tr>
 					}
 				</tbody>
@@ -84,7 +92,8 @@
 				</span>
 				<span class="inline-block mid-hrz-margin">
 					@Html.LabelFor(m => m.Rank.AutoImportId)
-					@Html.DropDownListFor(m => m.Rank.AutoImportId, Model.GetAutoImportChoices(Model.Rank.AutoImportId))
+					@Html.DropDownListFor(m => m.Rank.AutoImportId, Model.GetAutoImportChoices(Model.Rank.AutoImportId), 
+						new { id = "raf-rank-import" })
 				</span>
 			</div>
 		}

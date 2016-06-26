@@ -7,7 +7,8 @@ namespace DodgeDynasty.Parsers
 	{
 		public static Dictionary<int, IRankParser> RankParserDict = new Dictionary<int, IRankParser>
 		{
-			{ 2, new FprosStandardParser() }
+			{ 1, new EspnTop300Parser() },
+            { 2, new FprosStandardParser() }
 		};
 
 		public static IRankParser Create(int? autoImportId)

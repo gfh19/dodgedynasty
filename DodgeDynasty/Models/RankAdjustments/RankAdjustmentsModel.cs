@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web.Mvc;
 using DodgeDynasty.Entities;
 using DodgeDynasty.Shared;
@@ -17,6 +18,19 @@ namespace DodgeDynasty.Models.RankAdjustments
 			return Utilities.GetListItems<AutoImport>(AutoImports.OrderBy(o => o.AutoImportId).ToList(),
 				o => string.Format("{0}-{1}", o.AutoImportId, o.RankName), o => o.AutoImportId.ToString(), true, 
 				autoImportId.HasValue ? autoImportId.ToString() : null);
+		}
+
+		public string GetAutoImportHints()
+		{
+			StringBuilder autoImportHints = new StringBuilder("[");
+			foreach (var autoImport in AutoImports)
+			{
+				autoImportHints.Append(string.Format("{{id:\"{0}\",rankName:\"{1}\",defaultUrl:\"{2}\"}},",
+					Utilities.JsonEncode(autoImport.AutoImportId.ToString()), Utilities.JsonEncode(autoImport.RankName), 
+					Utilities.JsonEncode(autoImport.DefaultUrl)));
+			}
+			autoImportHints.Append("]");
+			return autoImportHints.ToString();
 		}
 	}
 }
