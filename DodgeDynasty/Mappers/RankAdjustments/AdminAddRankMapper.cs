@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DodgeDynasty.Models.RankAdjustments;
+using DodgeDynasty.Shared;
 
 namespace DodgeDynasty.Mappers.RankAdjustments
 {
@@ -11,15 +12,16 @@ namespace DodgeDynasty.Mappers.RankAdjustments
 	{
 		protected override void DoUpdate(AdminRankModel rankModel)
 		{
+			var now = Utilities.GetEasternTime();
 			var rank = new Entities.Rank
 			{
 				RankName = rankModel.RankName,
 				Year = Convert.ToInt16(rankModel.Year),
 				Url = string.IsNullOrEmpty(rankModel.Url) ? null : rankModel.Url,
 				AutoImportId = rankModel.AutoImportId,
-				RankDate = DateTime.Now.Date,
-				AddTimestamp = DateTime.Now,
-				LastUpdateTimestamp = DateTime.Now
+				RankDate = now.Date,
+				AddTimestamp = now,
+				LastUpdateTimestamp = now
 			};
 			HomeEntity.Ranks.AddObject(rank);
 			HomeEntity.SaveChanges();
@@ -29,8 +31,8 @@ namespace DodgeDynasty.Mappers.RankAdjustments
 				RankId = rank.RankId,
 				DraftId = rankModel.DraftId,
 				PrimaryDraftRanking = rankModel.PrimaryDraftRanking,
-                AddTimestamp = DateTime.Now,
-				LastUpdateTimestamp = DateTime.Now
+                AddTimestamp = now,
+				LastUpdateTimestamp = now
 			};
 			HomeEntity.DraftRanks.AddObject(draftRank);
 			HomeEntity.SaveChanges();

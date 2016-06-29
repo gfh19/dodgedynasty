@@ -400,12 +400,23 @@ namespace DodgeDynasty.Controllers
 
 		[HttpPost]
 		[AdminAccess]
+		public JsonResult EditRank(AdminRankModel rank)
+		{
+			var mapper = new AdminEditRankMapper();
+			mapper.UpdateEntity(rank);
+			return Json(new { status = "" });
+		}
+
+		[HttpPost]
+		[AdminAccess]
 		public ActionResult AutoImportRank(string rankId, bool confirmed)
 		{
 			var mapper = new ImportRankMapper(rankId, confirmed);
 			var model = mapper.GetModel();
-			return Json(new {
+			return Json(new
+			{
 				error = model.ErrorMessage,
+				stack = model.StackTrace,
 				first = model.FirstPlayerText,
 				last = model.LastPlayerText,
 				count = model.PlayerCount

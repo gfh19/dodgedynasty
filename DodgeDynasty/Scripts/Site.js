@@ -779,7 +779,7 @@ function showConfirmDialog(dialogText, okFn, cancelFn) {
 	$(confirmDialog).dialog({
 		resizable: false,
 		height: 'auto',
-		width: '280px',
+		width: '295px',
 		modal: true,
 		buttons: [
 					{
@@ -792,14 +792,15 @@ function showConfirmDialog(dialogText, okFn, cancelFn) {
 	});
 }
 
-function showAlertDialog(dialogText, okFn) {
+function showAlertDialog(title, dialogText, okFn) {
+	title = title || "Alert";
 	okFn = okFn || function () { $(this).dialog("close"); };
-	var dialog = '<div class="center hide-yo-kids" title="Alert"><p>' + dialogText + '</p></div>';
+	var dialog = '<div class="center hide-yo-kids" title="' + title + '"><p>' + dialogText + '</p></div>';
 
 	$(dialog).dialog({
 		resizable: false,
 		height: 'auto',
-		width: '280px',
+		width: '295px',
 		modal: true,
 		buttons: [
 					{

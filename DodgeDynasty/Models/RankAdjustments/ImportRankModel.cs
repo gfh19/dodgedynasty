@@ -12,6 +12,7 @@ namespace DodgeDynasty.Models.RankAdjustments
 		public string LastPlayerText { get; set; }
 		public int PlayerCount { get; set; }
 		public string ErrorMessage { get; set; }
+		public string StackTrace { get; set; }
 		public bool MyProperty { get; set; }
 	}
 }

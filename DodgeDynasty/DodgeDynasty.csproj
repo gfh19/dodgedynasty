@@ -186,6 +186,7 @@
     <Compile Include="Mappers\AdminPasswordMapper.cs" />
     <Compile Include="Mappers\AdminShared\ActivateDraftMapper.cs" />
     <Compile Include="Mappers\Admin\AddUserMapper.cs" />
+    <Compile Include="Mappers\RankAdjustments\AdminEditRankMapper.cs" />
     <Compile Include="Mappers\RankAdjustments\AdminAddRankMapper.cs" />
     <Compile Include="Mappers\Admin\AdminManageDraftsMapper.cs" />
     <Compile Include="Mappers\Admin\ManageUsersMapper.cs" />
@@ -285,6 +286,7 @@
     <Compile Include="Models\RankAdjustments\ImportRankModel.cs" />
     <Compile Include="Models\RankAdjustments\RankAdjustmentsModel.cs" />
     <Compile Include="Models\PlayerRankingsModel.cs" />
+    <Compile Include="Models\Shared\AuditPlayerHelper.cs" />
     <Compile Include="Models\Shared\DraftChatModel.cs" />
     <Compile Include="Models\Site\MessagesCountModel.cs" />
     <Compile Include="Models\Site\MessagesModel.cs" />
@@ -357,6 +359,7 @@
     <Content Include="2016 SQL Changes.sql" />
     <Content Include="Media\NFL Draft Tone.mp3" />
     <Content Include="Media\NFL_Draft_Tone.wav" />
+    <Content Include="Scripts\AdjustmentsShared.js" />
     <Content Include="Scripts\lib\jQuery-addTouch.js" />
     <Content Include="Scripts\PlayerAdjustments.js" />
     <Content Include="Scripts\RankAdjustments.js" />

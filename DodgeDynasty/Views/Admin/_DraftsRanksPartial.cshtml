@@ -8,8 +8,8 @@ else
 {
 	<td>
 		@{var drText = (Model.DraftsRanks[0].UserId == null) ? @Model.DraftsRanks[0].Text : "<Private Ranking>";}
-		@drText (<a href="#" class="pa-dr-more-link">&amp; more@(Model.DraftsRanks.Count==1 ? "":"...")</a>)
-	<div id="pa-more-id-@Model.AdjustmentId" class="pa-dr-more-dialog center hide-yo-wives" title="Drafts/Ranks Found">
+		@drText (<a href="#" class="dr-more-link">&amp; more@(Model.DraftsRanks.Count==1 ? "":"...")</a>)
+	<div id="pa-more-id-@Model.AdjustmentId" class="dr-more-dialog center hide-yo-wives" title="Drafts/Ranks Found">
 		<br />
 		@foreach (var draftRank in Model.DraftsRanks)
 		{

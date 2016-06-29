@@ -1,17 +1,28 @@
 ﻿var autoImportHints = [];
 
 function initRankAdjustments() {
-	bindAddNewRankLink();
+	bindAddEditRankLinks();
 	bindAutoImportLinks();
+	bindDraftsRanksMoreLinks();
 }
 
-function bindAddNewRankLink() {
+function bindAddEditRankLinks() {
 	$(".ra-add-rank").click(function (e) {
 		e.preventDefault();
 		showAddNewRankDialog();
-		$("#add-rank-name").focus();
+		$("#raf-rank-rname").focus();
 	});
-	$(".ra-clear-add").click(clearAddRank);
+	var editLinks = $(".ra-edit-details");
+	$.each(editLinks, function (index, link) {
+		$(link).click(function (e) {
+			e.preventDefault();
+			var rankRow = $(link).parents("tr");
+			var rankId = $(rankRow).attr("data-rank-id");
+			setEditRankValues(rankRow);
+			showEditRankDialog(rankId);
+			$("#raf-rank-rname").focus();
+		});
+	});
 	$("#raf-rank-import").change(function (e) {
 		var autoImportId = $("#raf-rank-import").val();
 		var autoImportRanks = $(autoImportHints).filter(function (el) {
@@ -38,25 +49,6 @@ function bindAutoImportLinks() {
 	});
 }
 
-function clearAddRank() {
-	$("#add-rank-tpid").val("");
-	$("#add-rank-fname").val("");
-	$("#add-rank-lname").val("");
-	$("#add-rank-pos").val("");
-	$("#add-rank-nfl").val("");
-	$("#add-rank-active").prop("checked", true);
-}
-
-function clearEditRank() {
-	//$("#edit-plyr-id").val("");
-	//$("#edit-plyr-tpid").val("");
-	//$("#edit-plyr-fname").val("");
-	//$("#edit-plyr-lname").val("");
-	//$("#edit-plyr-pos").val("");
-	//$("#edit-plyr-nfl").val("");
-	//$("#edit-plyr-active").prop("checked", true);
-}
-
 function getNewRank() {
 	var rank = {};
 	rank.RankName = $("#raf-rank-rname").val();
@@ -68,9 +60,19 @@ function getNewRank() {
 	return rank;
 }
 
-function getEditRank() {
-	var rank = {};
+function getEditRank(rankId) {
+	var rank = getNewRank();
+	rank.RankId = rankId;
 	return rank;
+}
+
+function setEditRankValues(rankRow) {
+	$("#raf-rank-rname").val($(".ra-edit-rname", rankRow).val());
+	$("#raf-rank-year").val($(".ra-edit-year", rankRow).val());
+	$("#raf-rank-url").val($(".ra-edit-url", rankRow).val());
+	$("#raf-rank-draft-id").val($(".ra-edit-draft-id", rankRow).val());
+	$("#raf-rank-primary").prop("checked", toBool($(".ra-edit-primary", rankRow).val()));
+	$("#raf-rank-import").val($(".ra-edit-import", rankRow).val());
 }
 
 function addNewRank(rank) {
@@ -82,7 +84,7 @@ function addNewRank(rank) {
 
 function editRank(rank) {
 	addWaitCursor();
-	ajaxPost(rank, "Admin/EditPlayer", function () {
+	ajaxPost(rank, "Admin/EditRank", function () {
 		window.location.reload();
 	}, removeWaitCursor);
 }
@@ -93,7 +95,8 @@ function confirmAutoImportRank(rankId, rankName) {
 		removeWaitCursor();
 		var response = JSON.parse(data);
 		if (response.error) {
-			showAlertDialog("Error:  " + response.error);
+			var text = response.error + "<br/><br/>" + response.stack;
+			showAlertDialog("Error", text);
 		}
 		else {
 			var text = "First Player:<br/>" + response.first + "<br/><br/>"
@@ -116,8 +119,8 @@ function showAddNewRankDialog() {
 	showRankDialog("#raRankDialog", "#raRankForm", "Add New Rank", getNewRank, addNewRank);
 }
 
-function showEditRankDialog() {
-	showRankDialog("#raRankDialog", "#raRankForm", "Edit Rank", getEditRank, editRank);
+function showEditRankDialog(rankId) {
+	showRankDialog("#raRankDialog", "#raRankForm", "Edit Rank", function () { return getEditRank(rankId); }, editRank);
 }
 
 function showRankDialog(dialogId, formId, header, getRankFn, rankFn) {

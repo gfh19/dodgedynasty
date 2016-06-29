@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DodgeDynasty.Entities;
 using DodgeDynasty.Models.PlayerAdjustments;
+using DodgeDynasty.Models.Shared;
 using DodgeDynasty.Models.Types;
 using DodgeDynasty.Shared;
 
@@ -79,11 +80,12 @@ namespace DodgeDynasty.Mappers.PlayerAdjustments
 							 join t in HomeEntity.NFLTeams on ap.NewNFLTeam equals t.TeamAbbr
 							 join u in HomeEntity.Users on ((ap.UserId != null) ? ap.UserId : -1) equals u.UserId into uLeft  //Left Outer Join
 							 from u in uLeft.DefaultIfEmpty()
-							 select GetAdjustedPlayer(ap, p, t, u, GetMatchingDrafts(p), GetMatchingRanks(p)));
+							 select GetAdjustedPlayer(ap, p, t, u, GetMatchingDrafts(p), GetMatchingRanks(p), HomeEntity.DraftRanks));
 			return players;
 		}
 		
-		private AdjustedPlayer GetAdjustedPlayer(PlayerAdjustment ap, Player p, NFLTeam t, User u, List<Draft> drafts, List<Rank> ranks)
+		private AdjustedPlayer GetAdjustedPlayer(PlayerAdjustment ap, Player p, NFLTeam t, User u, List<Draft> drafts, List<Rank> ranks, 
+			IEnumerable<DraftRank> draftRanks)
 		{
 			return new AdjustedPlayer
 			{
@@ -97,7 +99,7 @@ namespace DodgeDynasty.Mappers.PlayerAdjustments
 				Action = ap.Action,
 				UserId = (u != null) ? u.UserId.ToString() : null,
 				UserFullName = (u != null) ? u.FullName : "---",
-				DraftsRanks = GetDraftsRanks(p, drafts, ranks),
+				DraftsRanks = AuditPlayerHelper.GetDraftsRanks(p, drafts, ranks, draftRanks),
 				IsActive = p.IsActive,
 				IsDrafted = p.IsDrafted,
 				AddTimestamp = ap.AddTimestamp
@@ -111,14 +113,12 @@ namespace DodgeDynasty.Mappers.PlayerAdjustments
 							   from p2 in HomeEntity.Players.Where(p2 =>
 								  p1.FirstName == p2.FirstName && p1.LastName == p2.LastName && p1.Position == p2.Position &&
 								  p1.NFLTeam == p2.NFLTeam && p1.PlayerId != p2.PlayerId && p1.TruePlayerId != p2.TruePlayerId)
-								  .DefaultIfEmpty()
-							   join t in HomeEntity.NFLTeams on p2.NFLTeam equals t.TeamAbbr
 							   orderby p2.PlayerName, p2.AddTimestamp descending
-							   select new { Player = p2, NFLTeam = t };
+							   select p2;
 			foreach (var auditPlayer in auditPlayers)
 			{
-				players.Add(GetAuditedPlayer(auditPlayer.Player, auditPlayer.NFLTeam,
-					GetMatchingDrafts(auditPlayer.Player), GetMatchingRanks(auditPlayer.Player)));
+				players.Add(AuditPlayerHelper.GetAuditedPlayer(auditPlayer,
+					GetMatchingDrafts(auditPlayer), GetMatchingRanks(auditPlayer), HomeEntity.DraftRanks));
 			}
 			return players;
 		}
@@ -132,75 +132,17 @@ namespace DodgeDynasty.Mappers.PlayerAdjustments
 								   where grp.Count() > 1
 								   select grp.Key;
 			var auditPlayers = from p in HomeEntity.Players
-							   join t in HomeEntity.NFLTeams on p.NFLTeam equals t.TeamAbbr
 							   where auditPlayerTpids.Contains(p.TruePlayerId)
 							   orderby p.TruePlayerId, p.AddTimestamp descending
-							   select new { Player = p, NFLTeam = t };
+							   select p;
 			foreach (var auditPlayer in auditPlayers)
 			{
-				players.Add(GetAuditedPlayer(auditPlayer.Player, auditPlayer.NFLTeam,
-					GetMatchingDrafts(auditPlayer.Player), GetMatchingRanks(auditPlayer.Player)));
+				players.Add(AuditPlayerHelper.GetAuditedPlayer(auditPlayer,
+					GetMatchingDrafts(auditPlayer), GetMatchingRanks(auditPlayer), HomeEntity.DraftRanks));
 			}
 			return players;
 		}
-
-		private AdjustedPlayer GetAuditedPlayer(Player p, NFLTeam t, List<Draft> drafts, List<Rank> ranks)
-		{
-			return new AdjustedPlayer
-			{
-				PlayerId = p.PlayerId,
-				TruePlayerId = p.TruePlayerId.Value,
-				PlayerName = p.PlayerName,
-				NFLTeam = p.NFLTeam,
-				NFLTeamDisplay = t.AbbrDisplay,
-				Position = p.Position,
-				DraftsRanks = GetDraftsRanks(p, drafts, ranks),
-				IsActive = p.IsActive,
-				IsDrafted = p.IsDrafted,
-				AddTimestamp = p.AddTimestamp.Value
-			};
-		}
-
-		private List<DraftsRanksTextModel> GetDraftsRanks(Player p, List<Draft> drafts, List<Rank> ranks)
-		{
-			List<DraftsRanksTextModel> results = new List<DraftsRanksTextModel>();
-
-			results.AddRange(drafts.OrderByDescending(o => o.DraftDate).Select(o => new DraftsRanksTextModel
-			{
-				Text = string.Format("{0} {1} Draft", o.DraftYear, o.LeagueName),
-				Timestamp = o.DraftDate
-			}));
-			results.AddRange(ranks.Join(HomeEntity.DraftRanks, r=>r.RankId, dr=>dr.RankId,
-				(r, dr) => new
-				{
-					Rank = r,
-					DraftRank = dr
-				})
-				.OrderByDescending(o => o.Rank.AddTimestamp).Select(o => new DraftsRanksTextModel
-			{
-				Text = string.Format("{0} {1}", o.Rank.Year, FormatRankTextName(o.Rank)),
-				UserId = o.DraftRank.UserId,
-				Timestamp = o.Rank.AddTimestamp
-			}));
-			results = results.OrderByDescending(o => o.Timestamp).ToList();
-			if (results.Count == 0)
-			{
-				results.Add(new DraftsRanksTextModel { Text = "---", Timestamp = DateTime.Now });
-			}
-
-			return results;
-		}
-
-		private string FormatRankTextName(Rank rank)
-		{
-			var rankName = rank.RankName;
-			if (!rank.RankName.EndsWith(" Ranks"))
-			{
-				rankName = rankName + " Ranks";
-			}
-			return rankName;
-        }
-
+		
 		private List<Draft> GetMatchingDrafts(Player p)
 		{
 			return (from d in HomeEntity.Drafts

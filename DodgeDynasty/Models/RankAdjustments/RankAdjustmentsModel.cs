@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 using DodgeDynasty.Entities;
+using DodgeDynasty.Models.Types;
 using DodgeDynasty.Shared;
 
 namespace DodgeDynasty.Models.RankAdjustments
@@ -12,6 +13,8 @@ namespace DodgeDynasty.Models.RankAdjustments
 		public List<AdminRankModel> PublicRanks { get; set; }
 		public AdminRankModel Rank { get; set; }
 		public List<AutoImport> AutoImports { get; set; }
+		public List<AdjustedPlayer> InactiveRankedPlayers { get; set; }
+		public List<AdjustedPlayer> DuplicateRankedPlayers { get; set; }
 
 		public List<SelectListItem> GetAutoImportChoices(int? autoImportId)
 		{

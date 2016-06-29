@@ -37,7 +37,7 @@ namespace DodgeDynasty.Mappers.Admin
 			{
 				rankDoc = LoadRankHtmlDoc(autoImport);
 				var parser = ParserFactory.Create(rank.AutoImportId);
-				if (parser.CheckPositions)
+                if (parser.CheckPositions)
 				{
 					parser.Positions = HomeEntity.Positions.ToList();
 				}
@@ -46,6 +46,12 @@ namespace DodgeDynasty.Mappers.Admin
 			catch (Exception ex)
 			{
 				Model.ErrorMessage = ex.Message;
+				Model.StackTrace = ex.StackTrace;
+				if (Model.StackTrace.Length > 100)
+				{
+					Model.StackTrace = Model.StackTrace.Substring(0, 250) + "...";
+                }
+                return;
 			}
 
 			if (Confirmed)

@@ -4,6 +4,7 @@
 	ViewBag.Title = "Rank Adjustments";
 }
 @section scripts {
+	<script type="text/javascript" src="@Url.Script("~/Scripts/AdjustmentsShared.js")"></script>
 	<script type="text/javascript" src="@Url.Script("~/Scripts/RankAdjustments.js")"></script>
 	<script type="text/javascript">
 		$(function () {
@@ -37,6 +38,12 @@
 					@foreach (var rank in Model.PublicRanks)
 					{
 						<tr data-rank-id="@rank.RankId">
+							<input type="hidden" class="ra-edit-rname" value="@rank.RankName" />
+							<input type="hidden" class="ra-edit-year" value="@rank.Year" />
+							<input type="hidden" class="ra-edit-url" value="@rank.Url" />
+							<input type="hidden" class="ra-edit-draft-id" value="@rank.DraftId" />
+							<input type="hidden" class="ra-edit-primary" value="@(rank.PrimaryDraftRanking?"true":"")" />
+							<input type="hidden" class="ra-edit-import" value="@rank.AutoImportId" />
 							@if (!string.IsNullOrEmpty(rank.Url))
 							{
 								<td><a href="@rank.Url" target="_blank">@rank.RankName</a></td>
@@ -48,7 +55,7 @@
 							<td>@rank.PlayerCount</td>
 							<td>@rank.LastUpdateTimestamp</td>
 							<td>&lt;<a class="ra-edit-details" href="#">Edit Details</a>&gt;</td>
-							<td>&lt;<a class="ra-edit-plyr-ranks" href="#">Edit</a>&gt;</td>
+							<td>&lt;<a class="ra-edit-plyr-ranks" href="@Url.Content("~/Rank/SetupRank?rankId=" + rank.RankId)">Edit</a>&gt;</td>
 							@if (rank.AutoImportId.HasValue)
 							{
 								<td>&lt;<a class="ra-auto-import" href="#">Auto Import</a>&gt;</td>
@@ -61,6 +68,79 @@
 					}
 				</tbody>
 			</table>
+		</div>
+		<div class="page-section">
+			<div class="page-header">Rank Audit View</div>
+			@if (Model.InactiveRankedPlayers.Count == 0)
+			{
+				<div><span class="bold">Inactive Ranked Player Check: </span><span> (None found)</span></div>
+			}
+			else
+			{
+				<table id="ra-inactive-check" class="disp-table invalid-border">
+					<caption>Inactive Ranked Player Check</caption>
+					<tbody>
+						<tr>
+							<th>Id</th>
+							<th>TPId</th>
+							<th>Player Name</th>
+							<th>Pos</th>
+							<th>NFL Team</th>
+							<th>Drafts/Ranks</th>
+							<th>Time</th>
+						</tr>
+
+						@foreach (var player in Model.InactiveRankedPlayers)
+						{
+							<tr data-player-id="@player.PlayerId">
+								<td>@player.PlayerId</td>
+								<td>@player.TruePlayerId</td>
+								<td>@player.PlayerName</td>
+								<td>@player.Position</td>
+								<td>@player.NFLTeam</td>
+								@Html.Partial("_DraftsRanksPartial", player)
+								<td class="nowrap">@player.AddTimestamp</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+			}
+			@if (Model.DuplicateRankedPlayers.Count == 0)
+			{
+				<div><span class="bold">Duplicate Ranked Player Check: </span><span> (None found)</span></div>
+			}
+			else
+			{
+				<div class="page-section">
+					<table id="ra-unique-check" class="disp-table invalid-border">
+						<caption>Duplicate Ranked Player Check</caption>
+						<tbody>
+							<tr>
+								<th>Id</th>
+								<th>TPId</th>
+								<th>Player Name</th>
+								<th>Pos</th>
+								<th>NFL Team</th>
+								<th>Drafts/Ranks</th>
+								<th>Time</th>
+							</tr>
+
+							@foreach (var player in Model.DuplicateRankedPlayers)
+							{
+								<tr data-player-id="@player.PlayerId">
+									<td>@player.PlayerId</td>
+									<td>@player.TruePlayerId</td>
+									<td>@player.PlayerName</td>
+									<td>@player.Position</td>
+									<td>@player.NFLTeam</td>
+									@Html.Partial("_DraftsRanksPartial", player)
+									<td class="nowrap">@player.AddTimestamp</td>
+								</tr>
+							}
+						</tbody>
+					</table>
+				</div>
+			}
 		</div>
 	</div>
 	<div id="raRankDialog" class="center hide-yo-kids small-dialog" title="Add New Rank">
