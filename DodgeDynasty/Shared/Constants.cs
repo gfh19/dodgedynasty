@@ -19,8 +19,11 @@ namespace DodgeDynasty.Shared
 			public const string RefreshTimer = "RefreshTimer";
 			public const string FastRefreshTimer = "FastRefreshTimer";
 			public const string MaxTabConnections = "MaxTabConnections";
+			public const string MaxDailyAudioCalls = "MaxDailyAudioCalls";
 			public const string WebSocketsKillSwitch = "WebSocketsKillSwitch";
 			public const string DraftChatKillSwitch = "DraftChatKillSwitch";
+			public const string AudioKillSwitch = "AudioKillSwitch";
+			public const string TextToVoiceKillSwitch = "TextToVoiceKillSwitch";
 			public const string MajorVersion = "MajorVersion";
 			public const string JSVersion = "JSVersion";
 		}

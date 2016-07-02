@@ -30,7 +30,7 @@ namespace DodgeDynasty.Models.Site
 		{
 			OwnerLeagues = OwnerLeagues.OrderBy(o => o.LeagueName).ToList();
 			OwnerLeagues.Insert(0, new LeagueOwner{LeagueId=0, LeagueName="Everyone (All My Leagues)"});
-			if (Utilities.IsUserAdmin()) {
+			if (DBUtilities.IsUserAdmin()) {
 				OwnerLeagues.Insert(0, new LeagueOwner{LeagueId=-1, LeagueName="Entire Site"});
 			}
 			return Utilities.GetListItems<LeagueOwner>(OwnerLeagues.ToList(),

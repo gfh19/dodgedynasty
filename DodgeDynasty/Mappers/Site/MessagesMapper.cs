@@ -25,7 +25,7 @@ namespace DodgeDynasty.Mappers.Site
 			Model.Messages = userMessages;
 
 			//Get User DraftChats Display
-			var isUserAdmin = Utilities.IsUserAdmin();
+			var isUserAdmin = DBUtilities.IsUserAdmin();
 			var userDraftIds = HomeEntity.DraftOwners.Where(o => o.UserId == user.UserId).Select(o => o.DraftId).ToList();
 			var userChatMessages = HomeEntity.DraftChats.Where(dc => userDraftIds.Contains(dc.DraftId) || isUserAdmin)
 									.OrderBy(dc=>dc.AddTimestamp).ToList();

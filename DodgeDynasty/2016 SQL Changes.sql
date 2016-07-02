@@ -17,6 +17,115 @@ Dont Run This Script until below has been addressed!
 
 
 
+
+USE [Home]
+GO
+
+/****** Object:  Table [dbo].[AudioApi]    Script Date: 7/1/2016 11:31:54 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[AudioApi](
+	[AudioApiCode] [varchar](10) NOT NULL,
+	[AudioApiKey] [varchar](50) NULL,
+	[AudioApiUrl] [varchar](250) NOT NULL,
+	[AddTimestamp] [datetime] NOT NULL,
+	[LastUpdateTimestamp] [datetime] NOT NULL,
+ CONSTRAINT [PK_AudioApi] PRIMARY KEY CLUSTERED 
+(
+	[AudioApiId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+
+
+
+
+
+
+/****** Object:  Table [dbo].[AudioCount]    Script Date: 7/2/2016 3:15:35 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[AudioCount](
+	[AudioCountId] [int] IDENTITY(1,1) NOT NULL,
+	[AudioApiCode] [varchar](10) NOT NULL,
+	[CallDate] [date] NOT NULL,
+	[CallCount] [int] NOT NULL,
+	[AddTimestamp] [datetime] NOT NULL,
+	[LastUpdateTimestamp] [datetime] NOT NULL,
+ CONSTRAINT [PK_AudioCount] PRIMARY KEY CLUSTERED 
+(
+	[AudioCountId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+ALTER TABLE [dbo].[AudioCount]  WITH CHECK ADD  CONSTRAINT [FK_AudioCount_AudioApi] FOREIGN KEY([AudioApiCode])
+REFERENCES [dbo].[AudioApi] ([AudioApiCode])
+GO
+
+ALTER TABLE [dbo].[AudioCount] CHECK CONSTRAINT [FK_AudioCount_AudioApi]
+GO
+
+
+
+
+
+
+ALTER TABLE [dbo].[LeagueOwner]
+ADD [AnnounceAllPicks] bit NOT NULL DEFAULT(0)
+GO
+
+ALTER TABLE [dbo].[LeagueOwner]
+ADD [AnnouncePrevPick] bit NOT NULL DEFAULT(0)
+GO
+
+
+
+
+USE [Home]
+GO
+
+INSERT INTO [dbo].[AudioApi]
+           ([AudioApiCode],[AudioApiKey],[AudioApiUrl],[AddTimestamp],[LastUpdateTimestamp])
+     VALUES
+           ('first','dacf8932bf0c48d2883e623eddffee0b','http://api.voicerss.org/?key=dacf8932bf0c48d2883e623eddffee0b&src=<<audiotext>>&hl=en-us&f=16khz_16bit_stereo&c=mp3', getdate(), getdate()),
+		   ('second','1858b3683b964a1fabed914b373de36f','http://api.voicerss.org/?key=1858b3683b964a1fabed914b373de36f&src=<<audiotext>>&hl=en-us&f=16khz_16bit_stereo&c=mp3', getdate(), getdate()),
+		   ('demo',NULL,'http://www.voicerss.org/controls/speech.ashx?hl=en-us&src=<<audiotext>>&c=mp3&rnd=', getdate(), getdate())
+GO
+
+
+
+
+
+
+
+
+
+
+
 ALTER TABLE [dbo].[NFLTeam]
 ADD [IsActive] bit NOT NULL DEFAULT(1)
 GO

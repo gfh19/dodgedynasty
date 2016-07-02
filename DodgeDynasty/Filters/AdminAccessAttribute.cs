@@ -13,7 +13,7 @@ namespace DodgeDynasty.Filters
 	{
 		public override void OnActionExecuting(ActionExecutingContext filterContext)
 		{
-			if (!Utilities.IsUserAdmin())
+			if (!DBUtilities.IsUserAdmin())
 			{
 				filterContext.Result = Utilities.GetUnauthorizedRedirect();
 			}

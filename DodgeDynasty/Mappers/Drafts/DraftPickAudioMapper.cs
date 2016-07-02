@@ -1,13 +1,28 @@
 ﻿using System;
+using System.Configuration;
 using System.Linq;
 using DodgeDynasty.Entities;
-using DodgeDynasty.Models.Types;
+using DodgeDynasty.Models.Audio;
 using DodgeDynasty.Shared;
 
 namespace DodgeDynasty.Mappers.Drafts
 {
 	public class DraftPickAudioMapper : MapperBase<DraftPickAudio>
 	{
+		private string _demoApiCode = "demo";
+		private int? _maxDailyAudioCalls = null;
+		public int MaxDailyAudioCalls
+		{
+			get
+			{
+				if (!_maxDailyAudioCalls.HasValue)
+				{
+					_maxDailyAudioCalls = Int32.Parse(ConfigurationManager.AppSettings[Constants.AppSettings.MaxDailyAudioCalls] ?? "340");
+				}
+				return _maxDailyAudioCalls.Value;
+			}
+		}
+
 		protected override void PopulateModel()
 		{
 			SingleDraftMapper mapper = new SingleDraftMapper();
@@ -16,15 +31,33 @@ namespace DodgeDynasty.Mappers.Drafts
 				.OrderByDescending(o=>o.PickNum).FirstOrDefault();
 			if (lastDraftPick != null)
 			{
+				var now = Utilities.GetEasternTime();
 				var player = HomeEntity.Players.Where(o => o.PlayerId == lastDraftPick.PlayerId).First();
 				var nflTeam = HomeEntity.NFLTeams.Where(o => o.TeamAbbr == player.NFLTeam).First();
 				var position = HomeEntity.Positions.Where(o => o.PosCode == player.Position).First();
+				//TODO: Add AudioKillSwitch & TextToVoiceKillSwitch check 
+				var exhaustedApiCodes = HomeEntity.AudioCounts.Where(o => o.CallDate == now.Date && o.CallCount >= MaxDailyAudioCalls).
+					Select(o=>o.AudioApiCode).ToList();
+				var selectedApi = HomeEntity.AudioApis.Where(o => !exhaustedApiCodes.Contains(o.AudioApiCode) && o.AudioApiCode != _demoApiCode)
+					.FirstOrDefault();
+				if (selectedApi == null)
+				{
+					selectedApi = HomeEntity.AudioApis.Where(o => o.AudioApiCode == _demoApiCode).FirstOrDefault();
+					if (selectedApi != null)
+					{
+						var random = new Random(DateTime.Now.Millisecond);
+						selectedApi.AudioApiUrl = selectedApi.AudioApiUrl + "0." + random.Next(10000, Int32.MaxValue);
+					}
+                }
+
 				Model = new DraftPickAudio
 				{
 					playerId = lastDraftPick.PlayerId.ToString(),
 					name = GetPlayerName(player),
 					pos = GetPositionAudio(position, nflTeam),
-					team = GetTeamNameAudio(position, nflTeam)
+					team = GetTeamNameAudio(position, nflTeam),
+					apiCode = (selectedApi != null) ? selectedApi.AudioApiCode : "",
+					url = (selectedApi != null) ? selectedApi.AudioApiUrl : ""
 				};
 			}
 		}

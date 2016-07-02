@@ -13,6 +13,9 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using DodgeDynasty.UIHelpers;
 using DodgeDynasty.Mappers.Drafts;
+using DodgeDynasty.Mappers.Audio;
+using DodgeDynasty.Models.Audio;
+using System.Net;
 
 namespace DodgeDynasty.Controllers
 {
@@ -207,6 +210,14 @@ namespace DodgeDynasty.Controllers
 		{
 			var mapper = new DraftPickAudioMapper();
 			return Json(mapper.GetModel(), JsonRequestBehavior.AllowGet);
+		}
+
+		[HttpPost]
+		public HttpStatusCode UpdateLastDraftPickAudioCount(string apiCode)
+		{
+			var mapper = new AudioCountMapper();
+			mapper.UpdateEntity(new DraftPickAudio { apiCode = apiCode });
+			return HttpStatusCode.OK;
 		}
 	}
 }

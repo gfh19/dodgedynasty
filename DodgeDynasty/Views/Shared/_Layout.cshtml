@@ -12,6 +12,8 @@
 	@{
 		var webSocketsKillSwitch = System.Configuration.ConfigurationManager.AppSettings[DodgeDynasty.Shared.Constants.AppSettings.WebSocketsKillSwitch];
 		var draftChatKillSwitch = System.Configuration.ConfigurationManager.AppSettings[DodgeDynasty.Shared.Constants.AppSettings.DraftChatKillSwitch];
+		var audioKillSwitch = System.Configuration.ConfigurationManager.AppSettings[DodgeDynasty.Shared.Constants.AppSettings.AudioKillSwitch];
+		var textToVoiceKillSwitch = System.Configuration.ConfigurationManager.AppSettings[DodgeDynasty.Shared.Constants.AppSettings.TextToVoiceKillSwitch];
 		if (DodgeDynasty.Shared.Utilities.IsUserLoggedIn() && !DodgeDynasty.Shared.Utilities.ToBool(webSocketsKillSwitch))
 		{
 			<script src="@Url.Content("~/signalr/hubs")"></script>
@@ -201,7 +203,8 @@
 		var baseURL = '@Url.Content("~")';
 		var webSocketsKillSwitch = @webSocketsKillSwitch;
 		var draftChatKillSwitch = @draftChatKillSwitch;
-		var audioKillSwitch = true;
+		var audioKillSwitch = @audioKillSwitch;
+		var textToVoiceKillSwitch = @textToVoiceKillSwitch;
 		var defaultRefreshTimer = @System.Configuration.ConfigurationManager.AppSettings[DodgeDynasty.Shared.Constants.AppSettings.RefreshTimer];
 		var fastRefreshTimer = @System.Configuration.ConfigurationManager.AppSettings[DodgeDynasty.Shared.Constants.AppSettings.FastRefreshTimer];
 		var refreshTimer = webSocketsKillSwitch ? fastRefreshTimer : defaultRefreshTimer;

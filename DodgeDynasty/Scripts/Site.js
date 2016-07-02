@@ -13,7 +13,6 @@ var touchScrollDiv = null;
 var touchScrollLeft = null;
 var lastPickAudio = null;
 var pickAudioBed = null;
-var pickPlayerAudio = null;
 
 /* Init functions */
 
@@ -147,12 +146,9 @@ function broadcastChatMessage(msg) {
 
 //Server to client:  Draft Pick broadcast-received.  Bound to server-side (C#) hub client handle
 function broadcastDraft() {
+	getLastPickAndPlayAudio();
 	if (typeof pageBroadcastDraftHandler !== "undefined" && !isHistoryMode()) {
-		getLastPickAndPlayAudio();
 		pageBroadcastDraftHandler();
-	}
-	else {
-		getLastPickAndPlayAudio();
 	}
 	checkUserTurnDialog();
 }
@@ -620,25 +616,43 @@ function getLastPickAndPlayAudio() {
 			if (lastPickAudio && pickAudio && pickAudio.playerId) {
 				if (lastPickAudio.playerId != pickAudio.playerId) {
 					lastPickAudio = pickAudio;
-					playPickAudio(pickAudio);
+					playPickAudio();
 				}
 			}
 			else if (pickAudio && pickAudio.playerId) {
 				lastPickAudio = pickAudio;
-				playPickAudio(pickAudio);
+				playPickAudio();
 			}
 		});
 	}
 }
 
 function playPickAudio() {
-	//TODO:  Scrub for missing pos/team
-	pickPlayerAudio = new Audio("http://www.voicerss.org/controls/speech.ashx?hl=en-us&src=" + lastPickAudio.name +
-		",%20" + lastPickAudio.pos + ",%20" + lastPickAudio.team + "&c=mp3&rnd=" + Math.random());
-	pickPlayerAudio.play();
-	setTimeout(function () {
+	var pickText = lastPickAudio.name;
+	if (lastPickAudio.pos) {
+		pickText = pickText + ",%20" + lastPickAudio.pos;
+	}
+	if (lastPickAudio.team) {
+		pickText = pickText + ",%20" + lastPickAudio.team;
+	}
+	if (!textToVoiceKillSwitch && lastPickAudio.url) {
+		var audioUrl = lastPickAudio.url.replaceAll("<<audiotext>>", pickText);
+		var pickPlayerAudio = new Audio(audioUrl);
+		pickPlayerAudio.play();
+		setTimeout(function () {
+			pickAudioBed.play();
+			updateLastDraftPickAudioCount(lastPickAudio.apiCode);
+		}, 125);
+	}
+	else {
 		pickAudioBed.play();
-	}, 125);
+	}
+}
+
+function updateLastDraftPickAudioCount(apiCode) {
+	if (apiCode) {
+		ajaxPost({ apiCode: apiCode }, "Draft/UpdateLastDraftPickAudioCount", function () { });
+	}
 }
 
 /*  End Draft Pick Audio */

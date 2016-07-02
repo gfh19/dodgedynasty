@@ -255,13 +255,6 @@ namespace DodgeDynasty.Shared
 			return ownerDrafts.Last();
 		}
 
-		//TODO:  Move to DBUtilities? Or other like class
-		public static bool IsUserAdmin()
-		{
-			LoginModel model = new LoginModel { UserName = Utilities.GetLoggedInUserName() };
-			return model.IsUserAdmin();
-		}
-
 		public static string GetAutoCompletePlayerHints(List<Player> playersSorted, List<NFLTeam> nflTeams, 
 			bool excludeDrafted, List<int?> draftedPlayerIds)
 		{

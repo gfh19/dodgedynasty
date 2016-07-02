@@ -37,25 +37,5 @@ namespace DodgeDynasty.Models
 			}
 			return loginSuccess;
 		}
-
-		public bool IsUserAdmin()
-		{
-			bool isUserAdmin = false;
-			if (HttpContext.Current.User == null)
-			{
-				return isUserAdmin;
-			}
-			using (HomeEntity = new Entities.HomeEntity())
-			{
-				var identity = HttpContext.Current.User.Identity;
-				var user = HomeEntity.Users.FirstOrDefault(u => u.UserName == identity.Name);
-				if (user != null)
-				{
-					var matches = HomeEntity.UserRoles.Where(ur => ur.UserId == user.UserId && ur.RoleId == Constants.Roles.Admin);
-					isUserAdmin = matches.Count() > 0;
-				}
-			}
-			return isUserAdmin;
-		}
 	}
 }

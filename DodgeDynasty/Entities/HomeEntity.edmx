@@ -12,6 +12,27 @@
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="LastPlayerAdjView" Type="datetime" />
         </EntityType>
+        <EntityType Name="AudioApi">
+          <Key>
+            <PropertyRef Name="AudioApiCode" />
+          </Key>
+          <Property Name="AudioApiCode" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="AudioApiKey" Type="varchar" MaxLength="50" />
+          <Property Name="AudioApiUrl" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
+          <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AudioCount">
+          <Key>
+            <PropertyRef Name="AudioCountId" />
+          </Key>
+          <Property Name="AudioCountId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AudioApiCode" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="CallDate" Type="date" Nullable="false" />
+          <Property Name="CallCount" Type="int" Nullable="false" />
+          <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
+          <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="AutoImport">
           <Key>
             <PropertyRef Name="AutoImportId" />
@@ -162,6 +183,8 @@
           <Property Name="TeamName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CssClass" Type="varchar" MaxLength="20" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="AnnounceAllPicks" Type="bit" Nullable="false" />
+          <Property Name="AnnouncePrevPick" Type="bit" Nullable="false" />
           <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
           <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
         </EntityType>
@@ -396,6 +419,18 @@
             </Principal>
             <Dependent Role="AdminStatus">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AudioCount_AudioApi">
+          <End Role="AudioApi" Type="Self.AudioApi" Multiplicity="1" />
+          <End Role="AudioCount" Type="Self.AudioCount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AudioApi">
+              <PropertyRef Name="AudioApiCode" />
+            </Principal>
+            <Dependent Role="AudioCount">
+              <PropertyRef Name="AudioApiCode" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -821,6 +856,8 @@
         </Function>
         <EntityContainer Name="HomeModelStoreContainer">
           <EntitySet Name="AdminStatus" EntityType="Self.AdminStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AudioApi" EntityType="Self.AudioApi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AudioCount" EntityType="Self.AudioCount" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AutoImport" EntityType="Self.AutoImport" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ByeWeek" EntityType="Self.ByeWeek" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CssColor" EntityType="Self.CssColor" Schema="dbo" store:Type="Tables" />
@@ -851,6 +888,10 @@
           <AssociationSet Name="FK_AdminStatus_User" Association="Self.FK_AdminStatus_User">
             <End Role="User" EntitySet="User" />
             <End Role="AdminStatus" EntitySet="AdminStatus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AudioCount_AudioApi" Association="Self.FK_AudioCount_AudioApi">
+            <End Role="AudioApi" EntitySet="AudioApi" />
+            <End Role="AudioCount" EntitySet="AudioCount" />
           </AssociationSet>
           <AssociationSet Name="FK_ByeWeek_NFLTeam" Association="Self.FK_ByeWeek_NFLTeam">
             <End Role="NFLTeam" EntitySet="NFLTeam" />
@@ -1174,6 +1215,12 @@
             <End Role="AutoImport" EntitySet="AutoImports" />
             <End Role="Rank" EntitySet="Ranks" />
           </AssociationSet>
+          <EntitySet Name="AudioApis" EntityType="HomeModel.AudioApi" />
+          <EntitySet Name="AudioCounts" EntityType="HomeModel.AudioCount" />
+          <AssociationSet Name="FK_AudioCount_AudioApi" Association="HomeModel.FK_AudioCount_AudioApi">
+            <End Role="AudioApi" EntitySet="AudioApis" />
+            <End Role="AudioCount" EntitySet="AudioCounts" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="PlayerRank">
           <Key>
@@ -1351,6 +1398,8 @@
           <NavigationProperty Name="CssColor" Relationship="HomeModel.FK_LeagueOwner_CssColor" FromRole="LeagueOwner" ToRole="CssColor" />
           <NavigationProperty Name="League" Relationship="HomeModel.FK_LeagueOwner_League" FromRole="LeagueOwner" ToRole="League" />
           <NavigationProperty Name="User" Relationship="HomeModel.FK_LeagueOwner_User" FromRole="LeagueOwner" ToRole="User" />
+          <Property Name="AnnounceAllPicks" Type="Boolean" Nullable="false" />
+          <Property Name="AnnouncePrevPick" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_LeagueOwner_CssColor">
           <End Type="HomeModel.CssColor" Role="CssColor" Multiplicity="0..1" />
@@ -2047,6 +2096,41 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="AudioApi">
+          <Key>
+            <PropertyRef Name="AudioApiCode" />
+          </Key>
+          <Property Name="AudioApiCode" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="AudioApiKey" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AudioApiUrl" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="AudioCounts" Relationship="HomeModel.FK_AudioCount_AudioApi" FromRole="AudioApi" ToRole="AudioCount" />
+        </EntityType>
+        <EntityType Name="AudioCount">
+          <Key>
+            <PropertyRef Name="AudioCountId" />
+          </Key>
+          <Property Name="AudioCountId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AudioApiCode" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CallDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CallCount" Type="Int32" Nullable="false" />
+          <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="AudioApi" Relationship="HomeModel.FK_AudioCount_AudioApi" FromRole="AudioCount" ToRole="AudioApi" />
+        </EntityType>
+        <Association Name="FK_AudioCount_AudioApi">
+          <End Type="HomeModel.AudioApi" Role="AudioApi" Multiplicity="1" />
+          <End Type="HomeModel.AudioCount" Role="AudioCount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AudioApi">
+              <PropertyRef Name="AudioApiCode" />
+            </Principal>
+            <Dependent Role="AudioCount">
+              <PropertyRef Name="AudioApiCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2200,6 +2284,8 @@
           <EntitySetMapping Name="LeagueOwners">
             <EntityTypeMapping TypeName="HomeModel.LeagueOwner">
               <MappingFragment StoreEntitySet="LeagueOwner">
+                <ScalarProperty Name="AnnouncePrevPick" ColumnName="AnnouncePrevPick" />
+                <ScalarProperty Name="AnnounceAllPicks" ColumnName="AnnounceAllPicks" />
                 <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
                 <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
@@ -2464,7 +2550,30 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          <EntitySetMapping Name="AudioApis">
+            <EntityTypeMapping TypeName="HomeModel.AudioApi">
+              <MappingFragment StoreEntitySet="AudioApi">
+                <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
+                <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
+                <ScalarProperty Name="AudioApiUrl" ColumnName="AudioApiUrl" />
+                <ScalarProperty Name="AudioApiKey" ColumnName="AudioApiKey" />
+                <ScalarProperty Name="AudioApiCode" ColumnName="AudioApiCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AudioCounts">
+            <EntityTypeMapping TypeName="HomeModel.AudioCount">
+              <MappingFragment StoreEntitySet="AudioCount">
+                <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
+                <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
+                <ScalarProperty Name="CallCount" ColumnName="CallCount" />
+                <ScalarProperty Name="CallDate" ColumnName="CallDate" />
+                <ScalarProperty Name="AudioApiCode" ColumnName="AudioApiCode" />
+                <ScalarProperty Name="AudioCountId" ColumnName="AudioCountId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>
@@ -2550,6 +2659,9 @@
         <edmx:AssociationConnector Association="HomeModel.FK_Player_NFLTeam" />
         <edmx:EntityTypeShape EntityType="HomeModel.AutoImport" Width="1.5" PointX="3.75" PointY="28.75" />
         <edmx:AssociationConnector Association="HomeModel.FK_Rank_AutoImport" />
+        <edmx:EntityTypeShape EntityType="HomeModel.AudioApi" Width="1.5" PointX="18.375" PointY="9" />
+        <edmx:EntityTypeShape EntityType="HomeModel.AudioCount" Width="1.5" PointX="20.625" PointY="9" />
+        <edmx:AssociationConnector Association="HomeModel.FK_AudioCount_AudioApi" />
         </edmx:Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

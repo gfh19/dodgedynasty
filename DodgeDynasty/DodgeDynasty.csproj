@@ -186,6 +186,7 @@
     <Compile Include="Mappers\AdminPasswordMapper.cs" />
     <Compile Include="Mappers\AdminShared\ActivateDraftMapper.cs" />
     <Compile Include="Mappers\Admin\AddUserMapper.cs" />
+    <Compile Include="Mappers\Audio\AudioCountMapper.cs" />
     <Compile Include="Mappers\RankAdjustments\AdminEditRankMapper.cs" />
     <Compile Include="Mappers\RankAdjustments\AdminAddRankMapper.cs" />
     <Compile Include="Mappers\Admin\AdminManageDraftsMapper.cs" />
@@ -298,7 +299,7 @@
     <Compile Include="Models\Types\AdjustedPlayer.cs" />
     <Compile Include="Models\Types\ChatJson.cs" />
     <Compile Include="Models\Types\DodgeDynastyContent.cs" />
-    <Compile Include="Models\Types\DraftPickAudio.cs" />
+    <Compile Include="Models\Audio\DraftPickAudio.cs" />
     <Compile Include="Models\Types\DraftPickPlayer.cs" />
     <Compile Include="Models\Types\DraftPlayerHighlight.cs" />
     <Compile Include="Models\Types\DraftRankModel.cs" />

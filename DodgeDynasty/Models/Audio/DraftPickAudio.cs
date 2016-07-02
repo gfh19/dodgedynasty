@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace DodgeDynasty.Models.Types
+namespace DodgeDynasty.Models.Audio
 {
 	public class DraftPickAudio
 	{
@@ -11,5 +11,7 @@ namespace DodgeDynasty.Models.Types
 		public string name { get; set; }
 		public string pos { get; set; }
 		public string team { get; set; }
+		public string apiCode { get; set; }
+		public string url { get; set; }
 	}
 }

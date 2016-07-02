@@ -54,6 +54,7 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_ByeWeek_NFLTeam", "NFLTeam", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.NFLTeam), "ByeWeek", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.ByeWeek), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_Player_NFLTeam", "NFLTeam", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.NFLTeam), "Player", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.Player), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_Rank_AutoImport", "AutoImport", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.AutoImport), "Rank", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.Rank), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_AudioCount_AudioApi", "AudioApi", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.AudioApi), "AudioCount", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.AudioCount), true)]
 
 #endregion
 
@@ -552,6 +553,38 @@ namespace DodgeDynasty.Entities
             }
         }
         private ObjectSet<AutoImport> _AutoImports;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<AudioApi> AudioApis
+        {
+            get
+            {
+                if ((_AudioApis == null))
+                {
+                    _AudioApis = base.CreateObjectSet<AudioApi>("AudioApis");
+                }
+                return _AudioApis;
+            }
+        }
+        private ObjectSet<AudioApi> _AudioApis;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<AudioCount> AudioCounts
+        {
+            get
+            {
+                if ((_AudioCounts == null))
+                {
+                    _AudioCounts = base.CreateObjectSet<AudioCount>("AudioCounts");
+                }
+                return _AudioCounts;
+            }
+        }
+        private ObjectSet<AudioCount> _AudioCounts;
 
         #endregion
 
@@ -779,6 +812,22 @@ namespace DodgeDynasty.Entities
         public void AddToAutoImports(AutoImport autoImport)
         {
             base.AddObject("AutoImports", autoImport);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the AudioApis EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToAudioApis(AudioApi audioApi)
+        {
+            base.AddObject("AudioApis", audioApi);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the AudioCounts EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToAudioCounts(AudioCount audioCount)
+        {
+            base.AddObject("AudioCounts", audioCount);
         }
 
         #endregion
@@ -1025,6 +1074,418 @@ namespace DodgeDynasty.Entities
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("HomeModel.FK_AdminStatus_User", "User", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="HomeModel", Name="AudioApi")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class AudioApi : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new AudioApi object.
+        /// </summary>
+        /// <param name="audioApiCode">Initial value of the AudioApiCode property.</param>
+        /// <param name="audioApiUrl">Initial value of the AudioApiUrl property.</param>
+        /// <param name="addTimestamp">Initial value of the AddTimestamp property.</param>
+        /// <param name="lastUpdateTimestamp">Initial value of the LastUpdateTimestamp property.</param>
+        public static AudioApi CreateAudioApi(global::System.String audioApiCode, global::System.String audioApiUrl, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp)
+        {
+            AudioApi audioApi = new AudioApi();
+            audioApi.AudioApiCode = audioApiCode;
+            audioApi.AudioApiUrl = audioApiUrl;
+            audioApi.AddTimestamp = addTimestamp;
+            audioApi.LastUpdateTimestamp = lastUpdateTimestamp;
+            return audioApi;
+        }
+
+        #endregion
+
+        #region Simple Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String AudioApiCode
+        {
+            get
+            {
+                return _AudioApiCode;
+            }
+            set
+            {
+                if (_AudioApiCode != value)
+                {
+                    OnAudioApiCodeChanging(value);
+                    ReportPropertyChanging("AudioApiCode");
+                    _AudioApiCode = StructuralObject.SetValidValue(value, false, "AudioApiCode");
+                    ReportPropertyChanged("AudioApiCode");
+                    OnAudioApiCodeChanged();
+                }
+            }
+        }
+        private global::System.String _AudioApiCode;
+        partial void OnAudioApiCodeChanging(global::System.String value);
+        partial void OnAudioApiCodeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String AudioApiKey
+        {
+            get
+            {
+                return _AudioApiKey;
+            }
+            set
+            {
+                OnAudioApiKeyChanging(value);
+                ReportPropertyChanging("AudioApiKey");
+                _AudioApiKey = StructuralObject.SetValidValue(value, true, "AudioApiKey");
+                ReportPropertyChanged("AudioApiKey");
+                OnAudioApiKeyChanged();
+            }
+        }
+        private global::System.String _AudioApiKey;
+        partial void OnAudioApiKeyChanging(global::System.String value);
+        partial void OnAudioApiKeyChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String AudioApiUrl
+        {
+            get
+            {
+                return _AudioApiUrl;
+            }
+            set
+            {
+                OnAudioApiUrlChanging(value);
+                ReportPropertyChanging("AudioApiUrl");
+                _AudioApiUrl = StructuralObject.SetValidValue(value, false, "AudioApiUrl");
+                ReportPropertyChanged("AudioApiUrl");
+                OnAudioApiUrlChanged();
+            }
+        }
+        private global::System.String _AudioApiUrl;
+        partial void OnAudioApiUrlChanging(global::System.String value);
+        partial void OnAudioApiUrlChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime AddTimestamp
+        {
+            get
+            {
+                return _AddTimestamp;
+            }
+            set
+            {
+                OnAddTimestampChanging(value);
+                ReportPropertyChanging("AddTimestamp");
+                _AddTimestamp = StructuralObject.SetValidValue(value, "AddTimestamp");
+                ReportPropertyChanged("AddTimestamp");
+                OnAddTimestampChanged();
+            }
+        }
+        private global::System.DateTime _AddTimestamp;
+        partial void OnAddTimestampChanging(global::System.DateTime value);
+        partial void OnAddTimestampChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime LastUpdateTimestamp
+        {
+            get
+            {
+                return _LastUpdateTimestamp;
+            }
+            set
+            {
+                OnLastUpdateTimestampChanging(value);
+                ReportPropertyChanging("LastUpdateTimestamp");
+                _LastUpdateTimestamp = StructuralObject.SetValidValue(value, "LastUpdateTimestamp");
+                ReportPropertyChanged("LastUpdateTimestamp");
+                OnLastUpdateTimestampChanged();
+            }
+        }
+        private global::System.DateTime _LastUpdateTimestamp;
+        partial void OnLastUpdateTimestampChanging(global::System.DateTime value);
+        partial void OnLastUpdateTimestampChanged();
+
+        #endregion
+
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_AudioCount_AudioApi", "AudioCount")]
+        public EntityCollection<AudioCount> AudioCounts
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<AudioCount>("HomeModel.FK_AudioCount_AudioApi", "AudioCount");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<AudioCount>("HomeModel.FK_AudioCount_AudioApi", "AudioCount", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="HomeModel", Name="AudioCount")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class AudioCount : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new AudioCount object.
+        /// </summary>
+        /// <param name="audioCountId">Initial value of the AudioCountId property.</param>
+        /// <param name="audioApiCode">Initial value of the AudioApiCode property.</param>
+        /// <param name="callDate">Initial value of the CallDate property.</param>
+        /// <param name="callCount">Initial value of the CallCount property.</param>
+        /// <param name="addTimestamp">Initial value of the AddTimestamp property.</param>
+        /// <param name="lastUpdateTimestamp">Initial value of the LastUpdateTimestamp property.</param>
+        public static AudioCount CreateAudioCount(global::System.Int32 audioCountId, global::System.String audioApiCode, global::System.DateTime callDate, global::System.Int32 callCount, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp)
+        {
+            AudioCount audioCount = new AudioCount();
+            audioCount.AudioCountId = audioCountId;
+            audioCount.AudioApiCode = audioApiCode;
+            audioCount.CallDate = callDate;
+            audioCount.CallCount = callCount;
+            audioCount.AddTimestamp = addTimestamp;
+            audioCount.LastUpdateTimestamp = lastUpdateTimestamp;
+            return audioCount;
+        }
+
+        #endregion
+
+        #region Simple Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 AudioCountId
+        {
+            get
+            {
+                return _AudioCountId;
+            }
+            set
+            {
+                if (_AudioCountId != value)
+                {
+                    OnAudioCountIdChanging(value);
+                    ReportPropertyChanging("AudioCountId");
+                    _AudioCountId = StructuralObject.SetValidValue(value, "AudioCountId");
+                    ReportPropertyChanged("AudioCountId");
+                    OnAudioCountIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _AudioCountId;
+        partial void OnAudioCountIdChanging(global::System.Int32 value);
+        partial void OnAudioCountIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String AudioApiCode
+        {
+            get
+            {
+                return _AudioApiCode;
+            }
+            set
+            {
+                OnAudioApiCodeChanging(value);
+                ReportPropertyChanging("AudioApiCode");
+                _AudioApiCode = StructuralObject.SetValidValue(value, false, "AudioApiCode");
+                ReportPropertyChanged("AudioApiCode");
+                OnAudioApiCodeChanged();
+            }
+        }
+        private global::System.String _AudioApiCode;
+        partial void OnAudioApiCodeChanging(global::System.String value);
+        partial void OnAudioApiCodeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime CallDate
+        {
+            get
+            {
+                return _CallDate;
+            }
+            set
+            {
+                OnCallDateChanging(value);
+                ReportPropertyChanging("CallDate");
+                _CallDate = StructuralObject.SetValidValue(value, "CallDate");
+                ReportPropertyChanged("CallDate");
+                OnCallDateChanged();
+            }
+        }
+        private global::System.DateTime _CallDate;
+        partial void OnCallDateChanging(global::System.DateTime value);
+        partial void OnCallDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 CallCount
+        {
+            get
+            {
+                return _CallCount;
+            }
+            set
+            {
+                OnCallCountChanging(value);
+                ReportPropertyChanging("CallCount");
+                _CallCount = StructuralObject.SetValidValue(value, "CallCount");
+                ReportPropertyChanged("CallCount");
+                OnCallCountChanged();
+            }
+        }
+        private global::System.Int32 _CallCount;
+        partial void OnCallCountChanging(global::System.Int32 value);
+        partial void OnCallCountChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime AddTimestamp
+        {
+            get
+            {
+                return _AddTimestamp;
+            }
+            set
+            {
+                OnAddTimestampChanging(value);
+                ReportPropertyChanging("AddTimestamp");
+                _AddTimestamp = StructuralObject.SetValidValue(value, "AddTimestamp");
+                ReportPropertyChanged("AddTimestamp");
+                OnAddTimestampChanged();
+            }
+        }
+        private global::System.DateTime _AddTimestamp;
+        partial void OnAddTimestampChanging(global::System.DateTime value);
+        partial void OnAddTimestampChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime LastUpdateTimestamp
+        {
+            get
+            {
+                return _LastUpdateTimestamp;
+            }
+            set
+            {
+                OnLastUpdateTimestampChanging(value);
+                ReportPropertyChanging("LastUpdateTimestamp");
+                _LastUpdateTimestamp = StructuralObject.SetValidValue(value, "LastUpdateTimestamp");
+                ReportPropertyChanged("LastUpdateTimestamp");
+                OnLastUpdateTimestampChanged();
+            }
+        }
+        private global::System.DateTime _LastUpdateTimestamp;
+        partial void OnLastUpdateTimestampChanging(global::System.DateTime value);
+        partial void OnLastUpdateTimestampChanged();
+
+        #endregion
+
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_AudioCount_AudioApi", "AudioApi")]
+        public AudioApi AudioApi
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<AudioApi>("HomeModel.FK_AudioCount_AudioApi", "AudioApi").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<AudioApi>("HomeModel.FK_AudioCount_AudioApi", "AudioApi").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<AudioApi> AudioApiReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<AudioApi>("HomeModel.FK_AudioCount_AudioApi", "AudioApi");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<AudioApi>("HomeModel.FK_AudioCount_AudioApi", "AudioApi", value);
                 }
             }
         }
@@ -4373,7 +4834,9 @@ namespace DodgeDynasty.Entities
         /// <param name="isActive">Initial value of the IsActive property.</param>
         /// <param name="addTimestamp">Initial value of the AddTimestamp property.</param>
         /// <param name="lastUpdateTimestamp">Initial value of the LastUpdateTimestamp property.</param>
-        public static LeagueOwner CreateLeagueOwner(global::System.Int32 leagueOwnerId, global::System.Int32 userId, global::System.Int32 leagueId, global::System.String teamName, global::System.Boolean isActive, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp)
+        /// <param name="announceAllPicks">Initial value of the AnnounceAllPicks property.</param>
+        /// <param name="announcePrevPick">Initial value of the AnnouncePrevPick property.</param>
+        public static LeagueOwner CreateLeagueOwner(global::System.Int32 leagueOwnerId, global::System.Int32 userId, global::System.Int32 leagueId, global::System.String teamName, global::System.Boolean isActive, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp, global::System.Boolean announceAllPicks, global::System.Boolean announcePrevPick)
         {
             LeagueOwner leagueOwner = new LeagueOwner();
             leagueOwner.LeagueOwnerId = leagueOwnerId;
@@ -4383,6 +4846,8 @@ namespace DodgeDynasty.Entities
             leagueOwner.IsActive = isActive;
             leagueOwner.AddTimestamp = addTimestamp;
             leagueOwner.LastUpdateTimestamp = lastUpdateTimestamp;
+            leagueOwner.AnnounceAllPicks = announceAllPicks;
+            leagueOwner.AnnouncePrevPick = announcePrevPick;
             return leagueOwner;
         }
 
@@ -4608,6 +5073,54 @@ namespace DodgeDynasty.Entities
         private global::System.DateTime _LastUpdateTimestamp;
         partial void OnLastUpdateTimestampChanging(global::System.DateTime value);
         partial void OnLastUpdateTimestampChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean AnnounceAllPicks
+        {
+            get
+            {
+                return _AnnounceAllPicks;
+            }
+            set
+            {
+                OnAnnounceAllPicksChanging(value);
+                ReportPropertyChanging("AnnounceAllPicks");
+                _AnnounceAllPicks = StructuralObject.SetValidValue(value, "AnnounceAllPicks");
+                ReportPropertyChanged("AnnounceAllPicks");
+                OnAnnounceAllPicksChanged();
+            }
+        }
+        private global::System.Boolean _AnnounceAllPicks;
+        partial void OnAnnounceAllPicksChanging(global::System.Boolean value);
+        partial void OnAnnounceAllPicksChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean AnnouncePrevPick
+        {
+            get
+            {
+                return _AnnouncePrevPick;
+            }
+            set
+            {
+                OnAnnouncePrevPickChanging(value);
+                ReportPropertyChanging("AnnouncePrevPick");
+                _AnnouncePrevPick = StructuralObject.SetValidValue(value, "AnnouncePrevPick");
+                ReportPropertyChanged("AnnouncePrevPick");
+                OnAnnouncePrevPickChanged();
+            }
+        }
+        private global::System.Boolean _AnnouncePrevPick;
+        partial void OnAnnouncePrevPickChanging(global::System.Boolean value);
+        partial void OnAnnouncePrevPickChanged();
 
         #endregion
 
