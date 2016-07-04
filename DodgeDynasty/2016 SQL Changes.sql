@@ -121,6 +121,76 @@ GO
 
 
 
+/****** Object:  Table [dbo].[AudioUserCount]    Script Date: 7/3/2016 1:08:35 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[AudioUserCount](
+	[AudioUserCountId] [int] IDENTITY(1,1) NOT NULL,
+	[UserId] [int] NOT NULL,
+	[DraftId] [int] NOT NULL,
+	[PickNum] [int] NOT NULL,
+	[PlayerId] [int] NOT NULL,
+	[AddTimestamp] [datetime] NOT NULL,
+	[LastUpdateTimestamp] [datetime] NOT NULL,
+ CONSTRAINT [PK_AudioUserCount] PRIMARY KEY CLUSTERED 
+(
+	[AudioUserCountId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+/****** Object:  Index [IX_UserDraftPickPlayer]    Script Date: 7/3/2016 1:08:35 AM ******/
+CREATE UNIQUE NONCLUSTERED INDEX [IX_UserDraftPickPlayer] ON [dbo].[AudioUserCount]
+(
+	[UserId] ASC,
+	[DraftId] ASC,
+	[PickNum] ASC,
+	[PlayerId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[AudioUserCount]  WITH CHECK ADD  CONSTRAINT [FK_AudioUserCount_AudioUserCount] FOREIGN KEY([AudioUserCountId])
+REFERENCES [dbo].[AudioUserCount] ([AudioUserCountId])
+GO
+
+ALTER TABLE [dbo].[AudioUserCount] CHECK CONSTRAINT [FK_AudioUserCount_AudioUserCount]
+GO
+
+ALTER TABLE [dbo].[AudioUserCount]  WITH CHECK ADD  CONSTRAINT [FK_AudioUserCount_Draft] FOREIGN KEY([DraftId])
+REFERENCES [dbo].[Draft] ([DraftId])
+GO
+
+ALTER TABLE [dbo].[AudioUserCount] CHECK CONSTRAINT [FK_AudioUserCount_Draft]
+GO
+
+ALTER TABLE [dbo].[AudioUserCount]  WITH CHECK ADD  CONSTRAINT [FK_AudioUserCount_Player] FOREIGN KEY([PlayerId])
+REFERENCES [dbo].[Player] ([PlayerId])
+GO
+
+ALTER TABLE [dbo].[AudioUserCount] CHECK CONSTRAINT [FK_AudioUserCount_Player]
+GO
+
+ALTER TABLE [dbo].[AudioUserCount]  WITH CHECK ADD  CONSTRAINT [FK_AudioUserCount_User] FOREIGN KEY([UserId])
+REFERENCES [dbo].[User] ([UserId])
+GO
+
+ALTER TABLE [dbo].[AudioUserCount] CHECK CONSTRAINT [FK_AudioUserCount_User]
+GO
+
+
+
+
+
+
+
+
+
+
 
 
 

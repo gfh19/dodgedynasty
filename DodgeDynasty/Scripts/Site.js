@@ -146,7 +146,7 @@ function broadcastChatMessage(msg) {
 
 //Server to client:  Draft Pick broadcast-received.  Bound to server-side (C#) hub client handle
 function broadcastDraft() {
-	getLastPickAndPlayAudio();
+	getLastPickAndPlayAudio(isUserTurn);
 	if (typeof pageBroadcastDraftHandler !== "undefined" && !isHistoryMode()) {
 		pageBroadcastDraftHandler();
 	}
@@ -609,9 +609,9 @@ function initLastPickAudio() {
 	}
 }
 
-function getLastPickAndPlayAudio() {
+function getLastPickAndPlayAudio(origIsUserTurn) {
 	if (!audioKillSwitch && draftActive && !(window.location.href.indexOf("/Admin/Input") > 0)
-		&& (!(window.location.href.indexOf("/Draft/Pick") > 0) || !isUserTurn)) {
+		&& (!(window.location.href.indexOf("/Draft/Pick") > 0) || !origIsUserTurn)) {
 		ajaxGetJson("Draft/GetLastDraftPickAudio", function (pickAudio) {
 			if (lastPickAudio && pickAudio && pickAudio.playerId) {
 				if (lastPickAudio.playerId != pickAudio.playerId) {
@@ -628,24 +628,36 @@ function getLastPickAndPlayAudio() {
 }
 
 function playPickAudio() {
-	var pickText = lastPickAudio.name;
-	if (lastPickAudio.pos) {
-		pickText = pickText + ",%20" + lastPickAudio.pos;
-	}
-	if (lastPickAudio.team) {
-		pickText = pickText + ",%20" + lastPickAudio.team;
-	}
-	if (!textToVoiceKillSwitch && lastPickAudio.url) {
-		var audioUrl = lastPickAudio.url.replaceAll("<<audiotext>>", pickText);
-		var pickPlayerAudio = new Audio(audioUrl);
-		pickPlayerAudio.play();
-		setTimeout(function () {
-			pickAudioBed.play();
-			updateLastDraftPickAudioCount(lastPickAudio.apiCode);
-		}, 125);
-	}
-	else {
-		pickAudioBed.play();
+	if (!audioKillSwitch) {
+		//Check if this tab's call is the only one to succeed, else don't play any audio on this tab
+		if (toBool(lastPickAudio.success)) {
+			var pickText = lastPickAudio.name;
+			if (lastPickAudio.pos) {
+				pickText = pickText + ",%20" + lastPickAudio.pos;
+			}
+			if (lastPickAudio.team) {
+				pickText = pickText + ",%20" + lastPickAudio.team;
+			}
+			if (!textToVoiceKillSwitch && lastPickAudio.url) {
+				var audioUrl = lastPickAudio.url.replaceAll("<<audiotext>>", pickText);
+				var pickPlayerAudio = new Audio(audioUrl);
+				pickPlayerAudio.play();
+				setTimeout(function () {
+					pickAudioBed.play();
+					updateLastDraftPickAudioCount(lastPickAudio.apiCode);
+				}, 125);
+			}
+			else {
+				pickAudioBed.play();
+			}
+		}
+		else {
+			var text = "Audio already played on another browser/tab.";
+			if (lastPickAudio.error) {
+				text += " (Error: " + lastPickAudio.error + ")";
+			}
+			console.log(text);
+		}
 	}
 }
 
@@ -806,7 +818,7 @@ function showConfirmDialog(dialogText, okFn, cancelFn) {
 	});
 }
 
-function showAlertDialog(title, dialogText, okFn) {
+function showAlertDialog(dialogText, title, okFn) {
 	title = title || "Alert";
 	okFn = okFn || function () { $(this).dialog("close"); };
 	var dialog = '<div class="center hide-yo-kids" title="' + title + '"><p>' + dialogText + '</p></div>';

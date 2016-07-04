@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using System.Data.SqlClient;
 using System.Linq;
 using DodgeDynasty.Entities;
 using DodgeDynasty.Models.Audio;
@@ -31,24 +32,19 @@ namespace DodgeDynasty.Mappers.Drafts
 				.OrderByDescending(o=>o.PickNum).FirstOrDefault();
 			if (lastDraftPick != null)
 			{
-				var now = Utilities.GetEasternTime();
 				var player = HomeEntity.Players.Where(o => o.PlayerId == lastDraftPick.PlayerId).First();
 				var nflTeam = HomeEntity.NFLTeams.Where(o => o.TeamAbbr == player.NFLTeam).First();
 				var position = HomeEntity.Positions.Where(o => o.PosCode == player.Position).First();
+
 				//TODO: Add AudioKillSwitch & TextToVoiceKillSwitch check 
-				var exhaustedApiCodes = HomeEntity.AudioCounts.Where(o => o.CallDate == now.Date && o.CallCount >= MaxDailyAudioCalls).
-					Select(o=>o.AudioApiCode).ToList();
-				var selectedApi = HomeEntity.AudioApis.Where(o => !exhaustedApiCodes.Contains(o.AudioApiCode) && o.AudioApiCode != _demoApiCode)
-					.FirstOrDefault();
-				if (selectedApi == null)
+				string errorText;
+				var isAudioUserSuccessful = ThrottleOneAudioUser(currentDraftId, lastDraftPick, out errorText);
+
+				AudioApi selectedApi = null;
+				if (isAudioUserSuccessful)
 				{
-					selectedApi = HomeEntity.AudioApis.Where(o => o.AudioApiCode == _demoApiCode).FirstOrDefault();
-					if (selectedApi != null)
-					{
-						var random = new Random(DateTime.Now.Millisecond);
-						selectedApi.AudioApiUrl = selectedApi.AudioApiUrl + "0." + random.Next(10000, Int32.MaxValue);
-					}
-                }
+					selectedApi = SelectAvailableAudioApi();
+				}
 
 				Model = new DraftPickAudio
 				{
@@ -57,9 +53,64 @@ namespace DodgeDynasty.Mappers.Drafts
 					pos = GetPositionAudio(position, nflTeam),
 					team = GetTeamNameAudio(position, nflTeam),
 					apiCode = (selectedApi != null) ? selectedApi.AudioApiCode : "",
-					url = (selectedApi != null) ? selectedApi.AudioApiUrl : ""
+					url = (selectedApi != null) ? selectedApi.AudioApiUrl : "",
+					success = isAudioUserSuccessful.ToString(),
+					error = errorText
 				};
 			}
+		}
+
+		private bool ThrottleOneAudioUser(int currentDraftId, DraftPick lastDraftPick, out string errorText)
+		{
+			//Throttle to only one audio call per user/draft/pick/playerId, in case of multiple tabs/devices per user
+			var isAudioUserSuccessful = false;
+			errorText = null;
+			var userId = HomeEntity.Users.GetLoggedInUserId();
+			try
+			{
+				if (!HomeEntity.AudioUserCounts.Any(o => o.UserId == userId && o.DraftId == currentDraftId
+					&& o.PickNum == lastDraftPick.PickNum && o.PlayerId == lastDraftPick.PlayerId.Value))
+				{
+					var now = Utilities.GetEasternTime();
+					HomeEntity.AudioUserCounts.AddObject(new AudioUserCount
+					{
+						UserId = userId,
+						DraftId = currentDraftId,
+						PickNum = lastDraftPick.PickNum,
+						PlayerId = lastDraftPick.PlayerId.Value,
+						AddTimestamp = now,
+						LastUpdateTimestamp = now
+					});
+					HomeEntity.SaveChanges();
+					isAudioUserSuccessful = true;
+				}
+			}
+			catch (SqlException ex)
+			{
+				isAudioUserSuccessful = false;
+				errorText = ex.Message;
+			}
+			return isAudioUserSuccessful;
+        }
+
+		private AudioApi SelectAvailableAudioApi()
+		{
+			var now = Utilities.GetEasternTime();
+			var exhaustedApiCodes = HomeEntity.AudioCounts.Where(o => o.CallDate == now.Date && o.CallCount >= MaxDailyAudioCalls).
+				Select(o => o.AudioApiCode).ToList();
+			var selectedApi = HomeEntity.AudioApis.Where(o => !exhaustedApiCodes.Contains(o.AudioApiCode) && o.AudioApiCode != _demoApiCode)
+				.FirstOrDefault();
+			if (selectedApi == null)
+			{
+				selectedApi = HomeEntity.AudioApis.Where(o => o.AudioApiCode == _demoApiCode).FirstOrDefault();
+				if (selectedApi != null)
+				{
+					var random = new Random(DateTime.Now.Millisecond);
+					selectedApi.AudioApiUrl = selectedApi.AudioApiUrl + "0." + random.Next(100000, Int32.MaxValue);
+				}
+			}
+
+			return selectedApi;
 		}
 
 		private static string GetPlayerName(Player player)

@@ -96,7 +96,7 @@ function confirmAutoImportRank(rankId, rankName) {
 		var response = JSON.parse(data);
 		if (response.error) {
 			var text = response.error + "<br/><br/>" + response.stack;
-			showAlertDialog("Error", text);
+			showAlertDialog(text, "Error");
 		}
 		else {
 			var text = "First Player:<br/>" + response.first + "<br/><br/>"

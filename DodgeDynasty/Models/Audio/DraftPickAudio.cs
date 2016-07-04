@@ -13,5 +13,7 @@ namespace DodgeDynasty.Models.Audio
 		public string team { get; set; }
 		public string apiCode { get; set; }
 		public string url { get; set; }
+		public string success { get; set; }
+		public string error { get; set; }
 	}
 }

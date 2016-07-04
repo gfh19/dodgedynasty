@@ -55,6 +55,10 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_Player_NFLTeam", "NFLTeam", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.NFLTeam), "Player", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.Player), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_Rank_AutoImport", "AutoImport", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.AutoImport), "Rank", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.Rank), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_AudioCount_AudioApi", "AudioApi", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.AudioApi), "AudioCount", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.AudioCount), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_AudioUserCount_AudioUserCount", "AudioUserCount", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.AudioUserCount), "AudioUserCount1", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.AudioUserCount), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_AudioUserCount_Draft", "Draft", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Draft), "AudioUserCount", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.AudioUserCount), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_AudioUserCount_Player", "Player", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Player), "AudioUserCount", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.AudioUserCount), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_AudioUserCount_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.User), "AudioUserCount", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.AudioUserCount), true)]
 
 #endregion
 
@@ -585,6 +589,22 @@ namespace DodgeDynasty.Entities
             }
         }
         private ObjectSet<AudioCount> _AudioCounts;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<AudioUserCount> AudioUserCounts
+        {
+            get
+            {
+                if ((_AudioUserCounts == null))
+                {
+                    _AudioUserCounts = base.CreateObjectSet<AudioUserCount>("AudioUserCounts");
+                }
+                return _AudioUserCounts;
+            }
+        }
+        private ObjectSet<AudioUserCount> _AudioUserCounts;
 
         #endregion
 
@@ -828,6 +848,14 @@ namespace DodgeDynasty.Entities
         public void AddToAudioCounts(AudioCount audioCount)
         {
             base.AddObject("AudioCounts", audioCount);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the AudioUserCounts EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToAudioUserCounts(AudioUserCount audioUserCount)
+        {
+            base.AddObject("AudioUserCounts", audioUserCount);
         }
 
         #endregion
@@ -1486,6 +1514,412 @@ namespace DodgeDynasty.Entities
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<AudioApi>("HomeModel.FK_AudioCount_AudioApi", "AudioApi", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="HomeModel", Name="AudioUserCount")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class AudioUserCount : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new AudioUserCount object.
+        /// </summary>
+        /// <param name="audioUserCountId">Initial value of the AudioUserCountId property.</param>
+        /// <param name="userId">Initial value of the UserId property.</param>
+        /// <param name="draftId">Initial value of the DraftId property.</param>
+        /// <param name="pickNum">Initial value of the PickNum property.</param>
+        /// <param name="playerId">Initial value of the PlayerId property.</param>
+        /// <param name="addTimestamp">Initial value of the AddTimestamp property.</param>
+        /// <param name="lastUpdateTimestamp">Initial value of the LastUpdateTimestamp property.</param>
+        public static AudioUserCount CreateAudioUserCount(global::System.Int32 audioUserCountId, global::System.Int32 userId, global::System.Int32 draftId, global::System.Int32 pickNum, global::System.Int32 playerId, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp)
+        {
+            AudioUserCount audioUserCount = new AudioUserCount();
+            audioUserCount.AudioUserCountId = audioUserCountId;
+            audioUserCount.UserId = userId;
+            audioUserCount.DraftId = draftId;
+            audioUserCount.PickNum = pickNum;
+            audioUserCount.PlayerId = playerId;
+            audioUserCount.AddTimestamp = addTimestamp;
+            audioUserCount.LastUpdateTimestamp = lastUpdateTimestamp;
+            return audioUserCount;
+        }
+
+        #endregion
+
+        #region Simple Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 AudioUserCountId
+        {
+            get
+            {
+                return _AudioUserCountId;
+            }
+            set
+            {
+                if (_AudioUserCountId != value)
+                {
+                    OnAudioUserCountIdChanging(value);
+                    ReportPropertyChanging("AudioUserCountId");
+                    _AudioUserCountId = StructuralObject.SetValidValue(value, "AudioUserCountId");
+                    ReportPropertyChanged("AudioUserCountId");
+                    OnAudioUserCountIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _AudioUserCountId;
+        partial void OnAudioUserCountIdChanging(global::System.Int32 value);
+        partial void OnAudioUserCountIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 UserId
+        {
+            get
+            {
+                return _UserId;
+            }
+            set
+            {
+                OnUserIdChanging(value);
+                ReportPropertyChanging("UserId");
+                _UserId = StructuralObject.SetValidValue(value, "UserId");
+                ReportPropertyChanged("UserId");
+                OnUserIdChanged();
+            }
+        }
+        private global::System.Int32 _UserId;
+        partial void OnUserIdChanging(global::System.Int32 value);
+        partial void OnUserIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 DraftId
+        {
+            get
+            {
+                return _DraftId;
+            }
+            set
+            {
+                OnDraftIdChanging(value);
+                ReportPropertyChanging("DraftId");
+                _DraftId = StructuralObject.SetValidValue(value, "DraftId");
+                ReportPropertyChanged("DraftId");
+                OnDraftIdChanged();
+            }
+        }
+        private global::System.Int32 _DraftId;
+        partial void OnDraftIdChanging(global::System.Int32 value);
+        partial void OnDraftIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 PickNum
+        {
+            get
+            {
+                return _PickNum;
+            }
+            set
+            {
+                OnPickNumChanging(value);
+                ReportPropertyChanging("PickNum");
+                _PickNum = StructuralObject.SetValidValue(value, "PickNum");
+                ReportPropertyChanged("PickNum");
+                OnPickNumChanged();
+            }
+        }
+        private global::System.Int32 _PickNum;
+        partial void OnPickNumChanging(global::System.Int32 value);
+        partial void OnPickNumChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 PlayerId
+        {
+            get
+            {
+                return _PlayerId;
+            }
+            set
+            {
+                OnPlayerIdChanging(value);
+                ReportPropertyChanging("PlayerId");
+                _PlayerId = StructuralObject.SetValidValue(value, "PlayerId");
+                ReportPropertyChanged("PlayerId");
+                OnPlayerIdChanged();
+            }
+        }
+        private global::System.Int32 _PlayerId;
+        partial void OnPlayerIdChanging(global::System.Int32 value);
+        partial void OnPlayerIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime AddTimestamp
+        {
+            get
+            {
+                return _AddTimestamp;
+            }
+            set
+            {
+                OnAddTimestampChanging(value);
+                ReportPropertyChanging("AddTimestamp");
+                _AddTimestamp = StructuralObject.SetValidValue(value, "AddTimestamp");
+                ReportPropertyChanged("AddTimestamp");
+                OnAddTimestampChanged();
+            }
+        }
+        private global::System.DateTime _AddTimestamp;
+        partial void OnAddTimestampChanging(global::System.DateTime value);
+        partial void OnAddTimestampChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime LastUpdateTimestamp
+        {
+            get
+            {
+                return _LastUpdateTimestamp;
+            }
+            set
+            {
+                OnLastUpdateTimestampChanging(value);
+                ReportPropertyChanging("LastUpdateTimestamp");
+                _LastUpdateTimestamp = StructuralObject.SetValidValue(value, "LastUpdateTimestamp");
+                ReportPropertyChanged("LastUpdateTimestamp");
+                OnLastUpdateTimestampChanged();
+            }
+        }
+        private global::System.DateTime _LastUpdateTimestamp;
+        partial void OnLastUpdateTimestampChanging(global::System.DateTime value);
+        partial void OnLastUpdateTimestampChanged();
+
+        #endregion
+
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_AudioUserCount_AudioUserCount", "AudioUserCount1")]
+        public AudioUserCount AudioUserCount1
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<AudioUserCount>("HomeModel.FK_AudioUserCount_AudioUserCount", "AudioUserCount1").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<AudioUserCount>("HomeModel.FK_AudioUserCount_AudioUserCount", "AudioUserCount1").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<AudioUserCount> AudioUserCount1Reference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<AudioUserCount>("HomeModel.FK_AudioUserCount_AudioUserCount", "AudioUserCount1");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<AudioUserCount>("HomeModel.FK_AudioUserCount_AudioUserCount", "AudioUserCount1", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_AudioUserCount_AudioUserCount", "AudioUserCount")]
+        public AudioUserCount AudioUserCount2
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<AudioUserCount>("HomeModel.FK_AudioUserCount_AudioUserCount", "AudioUserCount").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<AudioUserCount>("HomeModel.FK_AudioUserCount_AudioUserCount", "AudioUserCount").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<AudioUserCount> AudioUserCount2Reference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<AudioUserCount>("HomeModel.FK_AudioUserCount_AudioUserCount", "AudioUserCount");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<AudioUserCount>("HomeModel.FK_AudioUserCount_AudioUserCount", "AudioUserCount", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_AudioUserCount_Draft", "Draft")]
+        public Draft Draft
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Draft>("HomeModel.FK_AudioUserCount_Draft", "Draft").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Draft>("HomeModel.FK_AudioUserCount_Draft", "Draft").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Draft> DraftReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Draft>("HomeModel.FK_AudioUserCount_Draft", "Draft");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Draft>("HomeModel.FK_AudioUserCount_Draft", "Draft", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_AudioUserCount_Player", "Player")]
+        public Player Player
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Player>("HomeModel.FK_AudioUserCount_Player", "Player").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Player>("HomeModel.FK_AudioUserCount_Player", "Player").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Player> PlayerReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Player>("HomeModel.FK_AudioUserCount_Player", "Player");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Player>("HomeModel.FK_AudioUserCount_Player", "Player", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_AudioUserCount_User", "User")]
+        public User User
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_AudioUserCount_User", "User").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_AudioUserCount_User", "User").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<User> UserReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_AudioUserCount_User", "User");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("HomeModel.FK_AudioUserCount_User", "User", value);
                 }
             }
         }
@@ -2766,6 +3200,28 @@ namespace DodgeDynasty.Entities
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PlayerHighlight>("HomeModel.FK_PlayerHighlight_Draft", "PlayerHighlight", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_AudioUserCount_Draft", "AudioUserCount")]
+        public EntityCollection<AudioUserCount> AudioUserCounts
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<AudioUserCount>("HomeModel.FK_AudioUserCount_Draft", "AudioUserCount");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<AudioUserCount>("HomeModel.FK_AudioUserCount_Draft", "AudioUserCount", value);
                 }
             }
         }
@@ -6449,6 +6905,28 @@ namespace DodgeDynasty.Entities
                 }
             }
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_AudioUserCount_Player", "AudioUserCount")]
+        public EntityCollection<AudioUserCount> AudioUserCounts
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<AudioUserCount>("HomeModel.FK_AudioUserCount_Player", "AudioUserCount");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<AudioUserCount>("HomeModel.FK_AudioUserCount_Player", "AudioUserCount", value);
+                }
+            }
+        }
 
         #endregion
 
@@ -9898,6 +10376,28 @@ namespace DodgeDynasty.Entities
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<AdminStatu>("HomeModel.FK_AdminStatus_User", "AdminStatu", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_AudioUserCount_User", "AudioUserCount")]
+        public EntityCollection<AudioUserCount> AudioUserCounts
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<AudioUserCount>("HomeModel.FK_AudioUserCount_User", "AudioUserCount");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<AudioUserCount>("HomeModel.FK_AudioUserCount_User", "AudioUserCount", value);
                 }
             }
         }

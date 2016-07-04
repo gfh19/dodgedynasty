@@ -33,6 +33,18 @@
           <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
           <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="AudioUserCount">
+          <Key>
+            <PropertyRef Name="AudioUserCountId" />
+          </Key>
+          <Property Name="AudioUserCountId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="DraftId" Type="int" Nullable="false" />
+          <Property Name="PickNum" Type="int" Nullable="false" />
+          <Property Name="PlayerId" Type="int" Nullable="false" />
+          <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
+          <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="AutoImport">
           <Key>
             <PropertyRef Name="AutoImportId" />
@@ -431,6 +443,54 @@
             </Principal>
             <Dependent Role="AudioCount">
               <PropertyRef Name="AudioApiCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AudioUserCount_AudioUserCount">
+          <End Role="AudioUserCount" Type="Self.AudioUserCount" Multiplicity="1" />
+          <End Role="AudioUserCount1" Type="Self.AudioUserCount" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="AudioUserCount">
+              <PropertyRef Name="AudioUserCountId" />
+            </Principal>
+            <Dependent Role="AudioUserCount1">
+              <PropertyRef Name="AudioUserCountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AudioUserCount_Draft">
+          <End Role="Draft" Type="Self.Draft" Multiplicity="1" />
+          <End Role="AudioUserCount" Type="Self.AudioUserCount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Draft">
+              <PropertyRef Name="DraftId" />
+            </Principal>
+            <Dependent Role="AudioUserCount">
+              <PropertyRef Name="DraftId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AudioUserCount_Player">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="AudioUserCount" Type="Self.AudioUserCount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="PlayerId" />
+            </Principal>
+            <Dependent Role="AudioUserCount">
+              <PropertyRef Name="PlayerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AudioUserCount_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="AudioUserCount" Type="Self.AudioUserCount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="AudioUserCount">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -858,6 +918,7 @@
           <EntitySet Name="AdminStatus" EntityType="Self.AdminStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AudioApi" EntityType="Self.AudioApi" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AudioCount" EntityType="Self.AudioCount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AudioUserCount" EntityType="Self.AudioUserCount" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AutoImport" EntityType="Self.AutoImport" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ByeWeek" EntityType="Self.ByeWeek" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CssColor" EntityType="Self.CssColor" Schema="dbo" store:Type="Tables" />
@@ -892,6 +953,22 @@
           <AssociationSet Name="FK_AudioCount_AudioApi" Association="Self.FK_AudioCount_AudioApi">
             <End Role="AudioApi" EntitySet="AudioApi" />
             <End Role="AudioCount" EntitySet="AudioCount" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AudioUserCount_AudioUserCount" Association="Self.FK_AudioUserCount_AudioUserCount">
+            <End Role="AudioUserCount" EntitySet="AudioUserCount" />
+            <End Role="AudioUserCount1" EntitySet="AudioUserCount" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AudioUserCount_Draft" Association="Self.FK_AudioUserCount_Draft">
+            <End Role="Draft" EntitySet="Draft" />
+            <End Role="AudioUserCount" EntitySet="AudioUserCount" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AudioUserCount_Player" Association="Self.FK_AudioUserCount_Player">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="AudioUserCount" EntitySet="AudioUserCount" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AudioUserCount_User" Association="Self.FK_AudioUserCount_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="AudioUserCount" EntitySet="AudioUserCount" />
           </AssociationSet>
           <AssociationSet Name="FK_ByeWeek_NFLTeam" Association="Self.FK_ByeWeek_NFLTeam">
             <End Role="NFLTeam" EntitySet="NFLTeam" />
@@ -1221,6 +1298,23 @@
             <End Role="AudioApi" EntitySet="AudioApis" />
             <End Role="AudioCount" EntitySet="AudioCounts" />
           </AssociationSet>
+          <EntitySet Name="AudioUserCounts" EntityType="HomeModel.AudioUserCount" />
+          <AssociationSet Name="FK_AudioUserCount_AudioUserCount" Association="HomeModel.FK_AudioUserCount_AudioUserCount">
+            <End Role="AudioUserCount" EntitySet="AudioUserCounts" />
+            <End Role="AudioUserCount1" EntitySet="AudioUserCounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AudioUserCount_Draft" Association="HomeModel.FK_AudioUserCount_Draft">
+            <End Role="Draft" EntitySet="Drafts" />
+            <End Role="AudioUserCount" EntitySet="AudioUserCounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AudioUserCount_Player" Association="HomeModel.FK_AudioUserCount_Player">
+            <End Role="Player" EntitySet="Players" />
+            <End Role="AudioUserCount" EntitySet="AudioUserCounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AudioUserCount_User" Association="HomeModel.FK_AudioUserCount_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="AudioUserCount" EntitySet="AudioUserCounts" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="PlayerRank">
           <Key>
@@ -1312,6 +1406,7 @@
           <NavigationProperty Name="PlayerHighlights" Relationship="HomeModel.FK_PlayerHighlight_User" FromRole="User" ToRole="PlayerHighlight" />
           <NavigationProperty Name="UserRoles" Relationship="HomeModel.FK_UserRole_User" FromRole="User" ToRole="UserRole" />
           <NavigationProperty Name="AdminStatu" Relationship="HomeModel.FK_AdminStatus_User" FromRole="User" ToRole="AdminStatu" />
+          <NavigationProperty Name="AudioUserCounts" Relationship="HomeModel.FK_AudioUserCount_User" FromRole="User" ToRole="AudioUserCount" />
         </EntityType>
         <EntityType Name="DraftRank">
           <Key>
@@ -1583,6 +1678,7 @@
           <NavigationProperty Name="DraftPicks" Relationship="HomeModel.FK_DraftPick_Draft" FromRole="Draft" ToRole="DraftPick" />
           <NavigationProperty Name="DraftRanks" Relationship="HomeModel.FK_DraftRank_Draft" FromRole="Draft" ToRole="DraftRank" />
           <NavigationProperty Name="PlayerHighlights" Relationship="HomeModel.FK_PlayerHighlight_Draft" FromRole="Draft" ToRole="PlayerHighlight" />
+          <NavigationProperty Name="AudioUserCounts" Relationship="HomeModel.FK_AudioUserCount_Draft" FromRole="Draft" ToRole="AudioUserCount" />
         </EntityType>
         <EntityType Name="PlayerAdjustment">
           <Key>
@@ -1725,6 +1821,7 @@
           <NavigationProperty Name="PlayerRanks" Relationship="HomeModel.FK_PlayerRank_Player" FromRole="Player" ToRole="PlayerRank" />
           <NavigationProperty Name="PlayerHighlights" Relationship="HomeModel.FK_PlayerHighlight_Player" FromRole="Player" ToRole="PlayerHighlight" />
           <NavigationProperty Name="NFLTeam1" Relationship="HomeModel.FK_Player_NFLTeam" FromRole="Player" ToRole="NFLTeam" />
+          <NavigationProperty Name="AudioUserCounts" Relationship="HomeModel.FK_AudioUserCount_Player" FromRole="Player" ToRole="AudioUserCount" />
         </EntityType>
         <Association Name="FK_DraftPick_Player">
           <End Type="HomeModel.Player" Role="Player" Multiplicity="0..1" />
@@ -2128,6 +2225,71 @@
             </Principal>
             <Dependent Role="AudioCount">
               <PropertyRef Name="AudioApiCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AudioUserCount">
+          <Key>
+            <PropertyRef Name="AudioUserCountId" />
+          </Key>
+          <Property Name="AudioUserCountId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="DraftId" Type="Int32" Nullable="false" />
+          <Property Name="PickNum" Type="Int32" Nullable="false" />
+          <Property Name="PlayerId" Type="Int32" Nullable="false" />
+          <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="AudioUserCount1" Relationship="HomeModel.FK_AudioUserCount_AudioUserCount" FromRole="AudioUserCount" ToRole="AudioUserCount1" />
+          <NavigationProperty Name="AudioUserCount2" Relationship="HomeModel.FK_AudioUserCount_AudioUserCount" FromRole="AudioUserCount1" ToRole="AudioUserCount" />
+          <NavigationProperty Name="Draft" Relationship="HomeModel.FK_AudioUserCount_Draft" FromRole="AudioUserCount" ToRole="Draft" />
+          <NavigationProperty Name="Player" Relationship="HomeModel.FK_AudioUserCount_Player" FromRole="AudioUserCount" ToRole="Player" />
+          <NavigationProperty Name="User" Relationship="HomeModel.FK_AudioUserCount_User" FromRole="AudioUserCount" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_AudioUserCount_AudioUserCount">
+          <End Type="HomeModel.AudioUserCount" Role="AudioUserCount" Multiplicity="1" />
+          <End Type="HomeModel.AudioUserCount" Role="AudioUserCount1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="AudioUserCount">
+              <PropertyRef Name="AudioUserCountId" />
+            </Principal>
+            <Dependent Role="AudioUserCount1">
+              <PropertyRef Name="AudioUserCountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AudioUserCount_Draft">
+          <End Type="HomeModel.Draft" Role="Draft" Multiplicity="1" />
+          <End Type="HomeModel.AudioUserCount" Role="AudioUserCount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Draft">
+              <PropertyRef Name="DraftId" />
+            </Principal>
+            <Dependent Role="AudioUserCount">
+              <PropertyRef Name="DraftId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AudioUserCount_Player">
+          <End Type="HomeModel.Player" Role="Player" Multiplicity="1" />
+          <End Type="HomeModel.AudioUserCount" Role="AudioUserCount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="PlayerId" />
+            </Principal>
+            <Dependent Role="AudioUserCount">
+              <PropertyRef Name="PlayerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AudioUserCount_User">
+          <End Type="HomeModel.User" Role="User" Multiplicity="1" />
+          <End Type="HomeModel.AudioUserCount" Role="AudioUserCount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="AudioUserCount">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2573,6 +2735,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="AudioUserCounts">
+            <EntityTypeMapping TypeName="HomeModel.AudioUserCount">
+              <MappingFragment StoreEntitySet="AudioUserCount">
+                <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
+                <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
+                <ScalarProperty Name="PlayerId" ColumnName="PlayerId" />
+                <ScalarProperty Name="PickNum" ColumnName="PickNum" />
+                <ScalarProperty Name="DraftId" ColumnName="DraftId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="AudioUserCountId" ColumnName="AudioUserCountId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2662,6 +2837,11 @@
         <edmx:EntityTypeShape EntityType="HomeModel.AudioApi" Width="1.5" PointX="18.375" PointY="9" />
         <edmx:EntityTypeShape EntityType="HomeModel.AudioCount" Width="1.5" PointX="20.625" PointY="9" />
         <edmx:AssociationConnector Association="HomeModel.FK_AudioCount_AudioApi" />
+        <edmx:EntityTypeShape EntityType="HomeModel.AudioUserCount" Width="1.5" PointX="20" PointY="12.125" />
+        <edmx:AssociationConnector Association="HomeModel.FK_AudioUserCount_AudioUserCount" />
+        <edmx:AssociationConnector Association="HomeModel.FK_AudioUserCount_Draft" />
+        <edmx:AssociationConnector Association="HomeModel.FK_AudioUserCount_Player" />
+        <edmx:AssociationConnector Association="HomeModel.FK_AudioUserCount_User" />
         </edmx:Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
