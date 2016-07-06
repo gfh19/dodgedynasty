@@ -47,12 +47,12 @@
 				<div class="cr-add-rank-content">
 				@if (Model.CompareRankModels.Count < DodgeDynasty.Shared.Constants.MaxCompareRanks)
 				{
-					<span class="cr-add-rank-text">Add ranking to compare <a href="#" class="cr-add-rank" tabindex="-1"><img src="@Url.Content("~/Content/images/plus.png")" alt="Move Up" /></a> </span>
+					<span class="cr-add-rank-text">Add ranking to compare</span><a href="#" class="cr-add-rank" tabindex="-1"><img src="@Url.Content("~/Content/images/plus.png")" alt="Add Rank" /></a>
 				}
 				@if (Model.CompareRankModels.Count == 0)
 				{
 				<div class="center cr-add-rank-msg">
-					<p>Click the add button (<a href="#" class="cr-add-rank" tabindex="-1"><img src="@Url.Content("~/Content/images/plus.png")" alt="Move Up" /></a>) above to add multiple different rankings!</p>
+					<p>Click the add button (<a href="#" class="cr-add-rank" tabindex="-1"><img src="@Url.Content("~/Content/images/plus.png")" alt="Add Rank" /></a>) above to add multiple different rankings!</p>
 				</div>
 				}
 				else

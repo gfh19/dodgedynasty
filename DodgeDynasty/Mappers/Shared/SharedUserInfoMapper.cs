@@ -124,6 +124,11 @@ namespace DodgeDynasty.Mappers.Account
 				leagueOwner.TeamName = ownerLeague.TeamName;
 				leagueOwner.CssClass = ownerLeague.CssClass;
 				leagueOwner.IsActive = ownerLeague.IsActive;
+				leagueOwner.AnnouncePrevPick = ownerLeague.AnnouncePrevPick;
+				if (!ownerLeague.AnnouncePrevPick)
+				{
+					leagueOwner.AnnounceAllPicks = false;
+                }
 				leagueOwner.LastUpdateTimestamp = DateTime.Now;
 			}
 			HomeEntity.SaveChanges();

@@ -50,6 +50,7 @@
 							<label class="mi-teamname-header">Team Name</label>
 							<label class="mi-color-header">Color</label>
 							<label class="mi-active-header @(!Model.AdminMode?"hide-yo-wives":"")">Active?</label>
+							<label class="mi-audio-header">Audio?</label>
 						</div>
 					}
 					@for (int i = 0; i < Model.OwnerLeagues.Count; i++)
@@ -74,6 +75,11 @@
 							</span>
 							<span class="mi-active @(!Model.AdminMode?"hide-yo-wives":"")">
 								@Html.CheckBoxFor(o => Model.OwnerLeagues[i].IsActive, new { @class = "mi-active-chkbx" })
+							</span>
+							<span class="mi-audio">
+								@Html.HiddenFor(o => Model.OwnerLeagues[i].AnnouncePrevPick, new { @class = "mi-prevpick-hidden" })
+								@{ var playAudio = Model.OwnerLeagues[i].AnnounceAllPicks || Model.OwnerLeagues[i].AnnouncePrevPick; }
+								@Html.CheckBoxFor(o => playAudio, new { @class = "mi-audio-chkbx" })
 							</span>
 						</div>
 					}

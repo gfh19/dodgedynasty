@@ -60,6 +60,8 @@ namespace DodgeDynasty.Mappers
 					TeamName = lo.TeamName,
 					CssClass = lo.CssClass,
 					IsActive = lo.IsActive,
+					AnnounceAllPicks = lo.AnnounceAllPicks,
+					AnnouncePrevPick = lo.AnnouncePrevPick,
 					AddTimestamp = DateTime.Now,
 					LastUpdateTimestamp = DateTime.Now
 				};

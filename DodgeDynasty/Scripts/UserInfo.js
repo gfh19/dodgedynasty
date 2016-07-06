@@ -48,6 +48,9 @@ function getUserInfoModel() {
 		lo.TeamName = $(".mi-team-input", ownerLeague).val();
 		lo.CssClass = $(".mi-color-select option:selected", ownerLeague).val();
 		lo.IsActive = $(".mi-active-chkbx", ownerLeague).prop('checked');
+		lo.AnnouncePrevPick = $(".mi-audio-chkbx", ownerLeague).prop('checked');
+		//Set hidden field due to OR condition on audio chkbox display
+		$(".mi-prevpick-hidden", ownerLeague).val(lo.AnnouncePrevPick);
 
 		ownerLeagues.push(lo);
 	});

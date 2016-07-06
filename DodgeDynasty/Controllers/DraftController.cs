@@ -116,7 +116,7 @@ namespace DodgeDynasty.Controllers
 		public ActionResult HighlightQueuePartial(bool isBestAvailable)
 		{
 			var helper = PlayerRankUIHelper.Instance;
-			var playerRankModel = helper.GetPlayerRankPartial(null, false, Request, Response);
+			var playerRankModel = helper.GetPlayerRankPartial(null, isBestAvailable, Request, Response);
 			return PartialView(Constants.Views.HighlightQueuePartial, playerRankModel);
 		}
 

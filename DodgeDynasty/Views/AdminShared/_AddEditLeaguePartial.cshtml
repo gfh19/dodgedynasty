@@ -58,20 +58,21 @@
 						<label class="lo-teamname-header">Team Name</label>
 						<label class="lo-color-header">Color</label>
 						<label class="lo-active-header">Active?</label>
+						<label class="lo-audio-header">Audio?</label>
 						<label class="lo-controls-header"> </label>
 					</div>
 					@for (int i = 0; i < Model.LeagueOwnerUsers.Count; i++)
 					{
 						<div class="league-owner-entry">
-							<div class="league-owner">
+							<span class="league-owner">
 								@Html.DropDownListFor(o => Model.LeagueOwnerUsers[i].UserId, Model.GetActiveLeagueUsers(
 								Model.LeagueOwnerUsers[i].UserId == null ? null : Model.LeagueOwnerUsers[i].UserId.ToString()),
 								new { @class = "lo-select" })
-							</div>
-							<div class="lo-team-name">
+							</span>
+							<span class="lo-team-name">
 								@Html.TextBoxFor(o => Model.LeagueOwnerUsers[i].TeamName, new { @class = "lo-team-input" })
-							</div>
-							<div class="lo-color">
+							</span>
+							<span class="lo-color">
 								<span class="lo-outer outline">
 									@{ var cssClass = Model.LeagueOwnerUsers[i].CssClass; }
 									<span class="lo-selected-color @cssClass">
@@ -85,14 +86,19 @@
 											})
 									</span>
 								</span>
-							</div>
-							<div class="lo-active">
+							</span>
+							<span class="lo-active">
 								@Html.CheckBoxFor(o => Model.LeagueOwnerUsers[i].IsActive, new { @class = "lo-active-chkbx", @checked = "checked" })
-							</div>
-							<div class="owner-controls">
+							</span>
+							<span class="lo-audio">
+								@Html.DropDownListFor(o => Model.LeagueOwnerUsers[i].AnnounceAllPicks,
+										Model.GetAudioOptions(Model.LeagueOwnerUsers[i]),
+										new { @class = "lo-audio-select" })
+							</span>
+							<span class="owner-controls">
 								<a href="#" class="league-remove-owner" tabindex="-1"><img src="@Url.Content("~/Content/images/minus.png")" alt="Remove Owner" /></a>
 								<a href="#" class="league-add-owner" tabindex="-1"><img src="@Url.Content("~/Content/images/plus.png")" alt="Add Owner" /></a>
-							</div>
+							</span>
 						</div>
 					}
 				</div>

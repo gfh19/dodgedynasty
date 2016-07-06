@@ -24,5 +24,7 @@ namespace DodgeDynasty.Models.Types
 		public string CssClass { get; set; }
 		public string TeamName { get; set; }
 		public bool IsActive { get; set; }
+		public bool AnnounceAllPicks { get; set; }
+		public bool AnnouncePrevPick { get; set; }
 	}
 }

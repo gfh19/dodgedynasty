@@ -629,8 +629,8 @@ function getLastPickAndPlayAudio(origIsUserTurn) {
 
 function playPickAudio() {
 	if (!audioKillSwitch) {
-		//Check if this tab's call is the only one to succeed, else don't play any audio on this tab
-		if (toBool(lastPickAudio.success)) {
+		//Check if has access & this tab's call is only one to succeed, else don't play audio on this tab
+		if (toBool(lastPickAudio.access) && toBool(lastPickAudio.success)) {
 			var pickText = lastPickAudio.name;
 			if (lastPickAudio.pos) {
 				pickText = pickText + ",%20" + lastPickAudio.pos;
@@ -642,6 +642,9 @@ function playPickAudio() {
 				var audioUrl = lastPickAudio.url.replaceAll("<<audiotext>>", pickText);
 				var pickPlayerAudio = new Audio(audioUrl);
 				pickPlayerAudio.play();
+				pickPlayerAudio.addEventListener('ended', function (e) {
+					checkFinalDraftPick();
+				});
 				setTimeout(function () {
 					pickAudioBed.play();
 					updateLastDraftPickAudioCount(lastPickAudio.apiCode);
@@ -651,7 +654,7 @@ function playPickAudio() {
 				pickAudioBed.play();
 			}
 		}
-		else {
+		else if (toBool(lastPickAudio.access)) {
 			var text = "Audio already played on another browser/tab.";
 			if (lastPickAudio.error) {
 				text += " (Error: " + lastPickAudio.error + ")";
@@ -667,6 +670,15 @@ function updateLastDraftPickAudioCount(apiCode) {
 	}
 }
 
+function checkFinalDraftPick() {
+	if (toBool(lastPickAudio.final)) {
+		var audioUrl = lastPickAudio.url.replaceAll("<<audiotext>>", "The%20draft%20has%20completed,%20have%20a%20great%20season");
+		var pickPlayerAudio = new Audio(audioUrl);
+		setTimeout(function () {
+			pickPlayerAudio.play();
+		}, 750);
+	}
+}
 /*  End Draft Pick Audio */
 
 

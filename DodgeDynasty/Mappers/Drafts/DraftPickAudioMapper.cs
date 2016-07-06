@@ -10,7 +10,6 @@ namespace DodgeDynasty.Mappers.Drafts
 {
 	public class DraftPickAudioMapper : MapperBase<DraftPickAudio>
 	{
-		private string _demoApiCode = "demo";
 		private int? _maxDailyAudioCalls = null;
 		public int MaxDailyAudioCalls
 		{
@@ -27,7 +26,8 @@ namespace DodgeDynasty.Mappers.Drafts
 		protected override void PopulateModel()
 		{
 			SingleDraftMapper mapper = new SingleDraftMapper();
-			var currentDraftId = mapper.GetModel().DraftId;
+			var currentDraft = mapper.GetModel();
+            var currentDraftId = currentDraft.DraftId;
 			var lastDraftPick = HomeEntity.DraftPicks.Where(o => o.DraftId == currentDraftId && o.PlayerId != null)
 				.OrderByDescending(o=>o.PickNum).FirstOrDefault();
 			if (lastDraftPick != null)
@@ -37,13 +37,24 @@ namespace DodgeDynasty.Mappers.Drafts
 				var position = HomeEntity.Positions.Where(o => o.PosCode == player.Position).First();
 
 				//TODO: Add AudioKillSwitch & TextToVoiceKillSwitch check 
-				string errorText;
-				var isAudioUserSuccessful = ThrottleOneAudioUser(currentDraftId, lastDraftPick, out errorText);
-
 				AudioApi selectedApi = null;
-				if (isAudioUserSuccessful)
+				bool isAudioUserSuccessful = false;
+				bool isFinalDraftPick = false;
+				bool access = false;
+				string errorText = null;
+				var userId = HomeEntity.Users.GetLoggedInUserId();
+				var leagueOwner = HomeEntity.LeagueOwners.FirstOrDefault(o => o.LeagueId == currentDraft.LeagueId && o.UserId == userId);
+				if (leagueOwner != null)
 				{
-					selectedApi = SelectAvailableAudioApi();
+					access = ShouldPlayPickAudio(currentDraftId, leagueOwner, out isFinalDraftPick);
+					if (access)
+					{
+						isAudioUserSuccessful = ThrottleOneAudioUser(userId, currentDraftId, lastDraftPick, out errorText);
+						if (isAudioUserSuccessful)
+						{
+							selectedApi = SelectAvailableAudioApi();
+						}
+					}
 				}
 
 				Model = new DraftPickAudio
@@ -54,18 +65,44 @@ namespace DodgeDynasty.Mappers.Drafts
 					team = GetTeamNameAudio(position, nflTeam),
 					apiCode = (selectedApi != null) ? selectedApi.AudioApiCode : "",
 					url = (selectedApi != null) ? selectedApi.AudioApiUrl : "",
-					success = isAudioUserSuccessful.ToString(),
+					access = access.ToString(),
+					final = isFinalDraftPick.ToString(),
+                    success = isAudioUserSuccessful.ToString(),
 					error = errorText
 				};
 			}
 		}
 
-		private bool ThrottleOneAudioUser(int currentDraftId, DraftPick lastDraftPick, out string errorText)
+		private bool ShouldPlayPickAudio(int currentDraftId, LeagueOwner leagueOwner, out bool isFinalDraftPick)
+		{
+			isFinalDraftPick = false;
+            bool access = false;
+			if (leagueOwner.AnnounceAllPicks)
+			{
+				access = true;
+			}
+			else if (leagueOwner.AnnouncePrevPick)
+			{
+				var nextDraftPick = HomeEntity.DraftPicks.Where(o => o.DraftId == currentDraftId && o.PlayerId == null)
+					.OrderBy(p => p.PickNum).FirstOrDefault();
+				if (nextDraftPick != null)
+				{
+					access = nextDraftPick.UserId == leagueOwner.UserId;
+				}
+				else
+				{
+					isFinalDraftPick = true;
+					access = true;
+				}
+			}
+			return access;
+		}
+
+		private bool ThrottleOneAudioUser(int userId, int currentDraftId, DraftPick lastDraftPick, out string errorText)
 		{
 			//Throttle to only one audio call per user/draft/pick/playerId, in case of multiple tabs/devices per user
 			var isAudioUserSuccessful = false;
 			errorText = null;
-			var userId = HomeEntity.Users.GetLoggedInUserId();
 			try
 			{
 				if (!HomeEntity.AudioUserCounts.Any(o => o.UserId == userId && o.DraftId == currentDraftId
@@ -98,11 +135,11 @@ namespace DodgeDynasty.Mappers.Drafts
 			var now = Utilities.GetEasternTime();
 			var exhaustedApiCodes = HomeEntity.AudioCounts.Where(o => o.CallDate == now.Date && o.CallCount >= MaxDailyAudioCalls).
 				Select(o => o.AudioApiCode).ToList();
-			var selectedApi = HomeEntity.AudioApis.Where(o => !exhaustedApiCodes.Contains(o.AudioApiCode) && o.AudioApiCode != _demoApiCode)
+			var selectedApi = HomeEntity.AudioApis.Where(o => !exhaustedApiCodes.Contains(o.AudioApiCode) && o.AudioApiCode != Constants.Audio.Demo)
 				.FirstOrDefault();
 			if (selectedApi == null)
 			{
-				selectedApi = HomeEntity.AudioApis.Where(o => o.AudioApiCode == _demoApiCode).FirstOrDefault();
+				selectedApi = HomeEntity.AudioApis.Where(o => o.AudioApiCode == Constants.Audio.Demo).FirstOrDefault();
 				if (selectedApi != null)
 				{
 					var random = new Random(DateTime.Now.Millisecond);
@@ -119,7 +156,7 @@ namespace DodgeDynasty.Mappers.Drafts
 			switch (audio)
 			{
 				case "Ben Roethlisberger":
-					audio = "Alleged Sex Offender Ben Roethlisberger";
+					audio = "Alleged Sex Offender Ben Rawthlisberger";
 					break;
 				case "San Francisco 49ers":
 					audio = "San Francisco Forty-Niners";
@@ -140,7 +177,7 @@ namespace DodgeDynasty.Mappers.Drafts
 					audio = "Receiver";
 					break;
 				case "DEF":
-					audio = (nflTeam.TeamAbbr == "FA") ? "" : "Dee-fence";
+					audio = (nflTeam.TeamAbbr == "FA") ? "" : "Dee-fense";
 					break;
 			}
 			return audio.ToUrlEncodedString();
@@ -164,6 +201,18 @@ namespace DodgeDynasty.Mappers.Drafts
 					case "SF":
 						audio = "Forty-Niners";
 						break;
+				}
+				if (random.Next(1, 3) % 2 == 0)
+				{
+					switch (nflTeam.TeamAbbr)
+					{
+						case "CLE":
+							audio = "Here we go BROWNIES";
+							break;
+						case "NYJ":
+							audio = "J-E-T-S JETS JETS JETS";
+							break;
+					}
 				}
 			}
 			return audio.ToUrlEncodedString();

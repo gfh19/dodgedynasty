@@ -12,7 +12,6 @@ namespace DodgeDynasty.Shared
 		public const string ChatTimeFormat = "h:mmtt";
 		public const int MaxCompareRanks = 8;
 
-
 		public static class AppSettings
 		{
 			public const string DefaultNumOwners = "DefaultNumOwners";
@@ -26,6 +25,18 @@ namespace DodgeDynasty.Shared
 			public const string TextToVoiceKillSwitch = "TextToVoiceKillSwitch";
 			public const string MajorVersion = "MajorVersion";
 			public const string JSVersion = "JSVersion";
+		}
+
+		public static class Audio
+		{
+			public const string Demo = "demo";
+			public const string None = "<none>";
+			public const string All = "all";
+			public const string Prev = "prev";
+
+			public const string NoneText = "<none>";
+			public const string AllText = "All Picks";
+			public const string PrevText = "Before Their Pick";
 		}
 
 		public static class Cookies

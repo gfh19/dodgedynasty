@@ -44,6 +44,9 @@ function getAddEditLeagueModel() {
 		lo.TeamName = $(".lo-team-input", ownerUser).val();
 		lo.CssClass = $(".lo-color-select", ownerUser).val();
 		lo.IsActive = $(".lo-active-chkbx", ownerUser).prop('checked');
+		var audioOption = $(".lo-audio-select", ownerUser).val();
+		lo.AnnounceAllPicks = audioOption == "all";
+		lo.AnnouncePrevPick = audioOption == "prev";
 
 		leagueOwnerUsers.push(lo);
 		leagueUserIds[ix++] = lo.UserId;

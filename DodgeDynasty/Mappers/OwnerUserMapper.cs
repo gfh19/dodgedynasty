@@ -31,7 +31,9 @@ namespace DodgeDynasty.Models
 				LeagueName = lo.LeagueName,
 				CssClass = lo.CssClass,
 				TeamName = lo.TeamName ?? u.FullName,
-				IsActive = lo.IsActive
+				IsActive = lo.IsActive,
+				AnnounceAllPicks = lo.AnnounceAllPicks,
+				AnnouncePrevPick = lo.AnnouncePrevPick
 			};
 		}
 
