@@ -12,6 +12,7 @@ namespace DodgeDynasty.Mappers.PlayerAdjustments
 	{
 		protected override void DoUpdate(AdminPlayerModel playerModel)
 		{
+			var now = Utilities.GetEasternTime();
 			var player = new Entities.Player
 			{
 				FirstName = playerModel.FirstName,
@@ -20,14 +21,15 @@ namespace DodgeDynasty.Mappers.PlayerAdjustments
 				NFLTeam = playerModel.NFLTeam.ToUpper(),
 				IsActive = playerModel.IsActive,
 				IsDrafted = playerModel.IsDrafted,
-				AddTimestamp = DateTime.Now,
-				LastUpdateTimestamp = DateTime.Now
+				AddTimestamp = now,
+				LastUpdateTimestamp = now
 			};
 			HomeEntity.Players.AddObject(player);
 			HomeEntity.SaveChanges();
 			player.TruePlayerId = playerModel.TruePlayerId ?? player.PlayerId;
 			HomeEntity.SaveChanges();
 
+			now = Utilities.GetEasternTime();
 			var userId = HomeEntity.Users.GetLoggedInUserId();
             var playerAdd = new Entities.PlayerAdjustment
 			{
@@ -39,8 +41,8 @@ namespace DodgeDynasty.Mappers.PlayerAdjustments
 				NewNFLTeam = player.NFLTeam.ToUpper(),
 				Action = "Admin Add Player",
 				UserId = userId,
-				AddTimestamp = DateTime.Now,
-				LastUpdateTimestamp = DateTime.Now
+				AddTimestamp = now,
+				LastUpdateTimestamp = now
 			};
 			if (player.TruePlayerId != player.PlayerId)
 			{

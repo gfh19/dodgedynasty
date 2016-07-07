@@ -13,8 +13,7 @@ namespace DodgeDynasty.Mappers.PlayerAdjustments
 			{
 				HomeEntity.Players.Join(HomeEntity.NFLTeams.Where(o=>o.IsActive), p=>p.NFLTeam, t=>t.TeamAbbr, (p, t) => p)
 					.Where(o => o.Position == "DEF" && o.NFLTeam != "FA")
-
-				.ForEach(o=>o.IsActive = true);
+					.ForEach(o=>o.IsActive = true);
 			}
 			HomeEntity.SaveChanges();
 		}

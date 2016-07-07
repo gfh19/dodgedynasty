@@ -12,6 +12,7 @@ Dont Run This Script until below has been addressed!
 	-- Ted Ginn Jr.
 	-- Duke Johnson Jr.
 	-- Benjamin Cunningham
+	-- Terrelle Pryor?
 -* ALSO DONT FORGET TO ALTER THE LoadPlayerRanks SP!
 
 
