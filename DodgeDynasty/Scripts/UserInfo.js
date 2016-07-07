@@ -1,7 +1,9 @@
 ﻿function initUserInfo() {
+	toggleTestAudio();
 	bindColorSelects();
 	bindSubmitUserInfo();
 	bindUserNameSelect();
+	bindTestAudio();
 }
 
 function bindColorSelects() {

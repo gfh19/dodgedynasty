@@ -32,7 +32,7 @@ $(function () {
 
 
 function setUserAgentInfo() {	//Currently just for tablet/phablet CSS
-	if (/Android|iPad|iPhone|iPod|KFAPWI|Tablet|Touch/i.test(navigator.userAgent)) {
+	if (isTouchDevice()) {
 		//is possible tablet/phablet
 		$("body").addClass("possible-touch");
 	}
@@ -601,7 +601,7 @@ function scrollDraftChatBottom() {
 /* Draft Pick Audio */
 
 function initLastPickAudio() {
-	if (!audioKillSwitch && draftActive) {
+	if (!audioKillSwitch && draftActive && !isMobileBrowser()) {
 		ajaxGetJson("Draft/GetLastDraftPickAudio", function (pickAudio) {
 			lastPickAudio = pickAudio;
 		});
@@ -610,7 +610,7 @@ function initLastPickAudio() {
 }
 
 function getLastPickAndPlayAudio(origIsUserTurn) {
-	if (!audioKillSwitch && draftActive && !(window.location.href.indexOf("/Admin/Input") > 0)
+	if (!audioKillSwitch && draftActive && !isMobileBrowser() && !(window.location.href.indexOf("/Admin/Input") > 0)
 		&& (!(window.location.href.indexOf("/Draft/Pick") > 0) || !origIsUserTurn)) {
 		ajaxGetJson("Draft/GetLastDraftPickAudio", function (pickAudio) {
 			if (lastPickAudio && pickAudio && pickAudio.playerId) {
@@ -679,6 +679,30 @@ function checkFinalDraftPick() {
 		}, 750);
 	}
 }
+
+function bindTestAudio() {
+	$(".test-audio-btn").click(function () {
+		var testAudioBed = new Audio(baseURL + "Media/NFL Draft Tone.mp3");
+		addWaitCursor();
+		try {
+			testAudioBed.play();
+		}
+		finally {
+			setTimeout(removeWaitCursor, 2000);
+		}
+	});
+}
+
+function toggleTestAudio() {
+	if (isMobileBrowser()) {
+		$(".test-audio-enabled").hide();
+	}
+	else {
+		$(".test-audio-disabled").hide();
+	}
+	$(".test-audio").removeClass("hide-yo-wives");
+}
+
 /*  End Draft Pick Audio */
 
 
@@ -779,6 +803,14 @@ function formatAutoCompName(name) {
 
 function formatName(name) {
 	return name.replace(/\.|'|-|\*|\(|\)|\"|,|\d|	| /g, "").trim().toLowerCase();
+}
+
+function isTouchDevice() {
+	return (/Android|iPad|iPhone|iPod|KFAPWI|Tablet|Touch/i.test(navigator.userAgent));
+}
+
+function isMobileBrowser() {
+	return (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
 }
 
 function isBrowserIE() {

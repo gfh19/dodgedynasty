@@ -10,15 +10,15 @@ namespace DodgeDynasty.Shared
 		public const int NewPlayerId = -1;
 		public const string ChatDateTimeFormat = "M/d h:mmtt";
 		public const string ChatTimeFormat = "h:mmtt";
-		public const int MaxCompareRanks = 8;
 
 		public static class AppSettings
 		{
 			public const string DefaultNumOwners = "DefaultNumOwners";
 			public const string RefreshTimer = "RefreshTimer";
 			public const string FastRefreshTimer = "FastRefreshTimer";
-			public const string MaxTabConnections = "MaxTabConnections";
+			public const string MaxCompareRanks = "MaxCompareRanks";
 			public const string MaxDailyAudioCalls = "MaxDailyAudioCalls";
+			public const string MaxTabConnections = "MaxTabConnections";
 			public const string WebSocketsKillSwitch = "WebSocketsKillSwitch";
 			public const string DraftChatKillSwitch = "DraftChatKillSwitch";
 			public const string AudioKillSwitch = "AudioKillSwitch";
@@ -36,9 +36,9 @@ namespace DodgeDynasty.Shared
 
 			public const string NoneText = "<none>";
 			public const string AllText = "All Picks";
-			public const string PrevText = "Before Their Pick";
+			public const string PrevText = "Before Their Turn";
 		}
-
+		
 		public static class Cookies
 		{
 			public const string DodgeDynasty = "dodgeDynastyCk";
@@ -132,6 +132,7 @@ namespace DodgeDynasty.Shared
 			public const string Messages = "Messages";
 			public const string DraftChatPartial = "_DraftChatPartial";
 			public const string HighlightQueuePartial = "HighlightQueuePartial";
+			public const string TestAudioPartial = "_TestAudioPartial";
 		}
 	}
 }

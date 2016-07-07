@@ -549,6 +549,7 @@
     <Content Include="Views\Admin\_DraftsRanksPartial.cshtml" />
     <Content Include="Views\Draft\ComparePlayerRanksPartial.cshtml" />
     <Content Include="Views\Admin\RankAdjustments.cshtml" />
+    <Content Include="Views\Shared\_TestAudioPartial.cshtml" />
     <None Include="Web.local.config">
       <SubType>Designer</SubType>
     </None>

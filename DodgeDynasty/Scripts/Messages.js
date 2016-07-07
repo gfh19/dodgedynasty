@@ -56,22 +56,23 @@ function showAddMessageDialog() {
 }
 
 function bindDraftChatDisplayLinks() {
-	$(".draft-chat-link").click(function (e) {
-		e.preventDefault();
-		var draftChatSection = $(e.toElement).closest('.draft-chat-section');
-		var flip = $(".draft-chat-flip", draftChatSection);
-		var expandVal = $(flip).attr("data-chat-expand");
-		if (expandVal == "collapse") {
-			$(flip).attr("data-chat-expand", "expand");
-			$(".draft-chat-entries", draftChatSection).removeClass("hide-yo-wives");
-			$(flip).text("collapse");
-		}
-		else {
-			$(flip).attr("data-chat-expand", "collapse");
-			$(".draft-chat-entries", draftChatSection).addClass("hide-yo-wives");
-			$(flip).text("expand");
-		}
-	});
+	$.each($(".draft-chat-link"), function (ix, link) {
+		$(link).click(function (e) {
+			e.preventDefault();
+			var draftChatSection = $(e.target).closest('.draft-chat-section');
+			var flip = $(".draft-chat-flip", draftChatSection);
+			var expandVal = $(link).attr("data-chat-expand");
+			if (expandVal == "collapse") {
+				$(link).attr("data-chat-expand", "expand");
+				$(".draft-chat-entries", draftChatSection).removeClass("hide-yo-wives");
+				$(flip).text("collapse");
+			}
+			else {
+				$(link).attr("data-chat-expand", "collapse");
+				$(".draft-chat-entries", draftChatSection).addClass("hide-yo-wives");
+				$(flip).text("expand");
+			}
+		});
 }
 
 function displayLineBreaks() {

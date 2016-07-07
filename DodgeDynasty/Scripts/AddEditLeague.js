@@ -2,6 +2,7 @@
 var leagueUserIds = null;
 
 function initAddEditLeague() {
+	toggleTestAudio();
 	displayLinks();
 	bindAddOwnerLinks();
 	bindRemoveOwnerLinks();
@@ -11,6 +12,7 @@ function initAddEditLeague() {
 	bindSubmitLeague();
 	bindColorSelects();
 	initColorSelects();
+	bindTestAudio()
 	$('html').keydown(preventBackspaceNav);
 	$('html').keypress(preventBackspaceNav);
 }
@@ -94,6 +96,14 @@ function validateAddEditLeagueModel() {
 			isValid = false;
 		}
 	});
+
+	var audioSelects = $(".lo-audio option:selected[value=all]").closest("select");
+	if (audioSelects.length > 2) {
+		$(".max-all-picks-msg").removeClass("hide-yo-wives");
+		$(audioSelects).addClass("invalid-border");
+		isValid = false;
+	}
+
 	return isValid;
 }
 

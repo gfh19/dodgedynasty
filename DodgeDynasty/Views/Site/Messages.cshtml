@@ -51,9 +51,9 @@
 				foreach (var draft in Model.UserChatDrafts)
 				{
 					<div class="draft-chat-section">
-						<a href="#" class="draft-chat-link">@draft.DraftYear @draft.LeagueName 
+						<a href="#" class="draft-chat-link" data-chat-expand="collapse">@draft.DraftYear @draft.LeagueName 
 							<span class="mobile-hide">Draft Chat</span> 
-							(<span class="draft-chat-flip" data-chat-expand="collapse">expand</span>)
+							(<span class="draft-chat-flip">expand</span>)
 						</a>
 						<div class="draft-chat-entries hide-yo-wives">
 							@{var draftChats = Model.DraftChatMessages.Where(o=>o.DraftId == draft.DraftId).ToList();}

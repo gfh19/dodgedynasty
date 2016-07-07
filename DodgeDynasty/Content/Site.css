@@ -221,7 +221,7 @@ footer
 	clear: both;
 	background-color: #e2e2e2;
 	font-size: .8em;
-	height: 100px;
+	height: 180px;
 	width: 100%;
 }
 
@@ -2060,6 +2060,27 @@ span.player-select
 	display:table;
 	margin:0 auto;
 }
+
+		/* --------- Audio ----------*/
+
+.test-audio {
+	width: 515px;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 5px;
+	border: 2px solid silver;
+	border-radius: 8px;
+	-webkit-border-radius: 8px;
+	font-size: 14px;
+	-webkit-text-size-adjust: 100%;
+}
+
+.test-audio-note {
+	vertical-align: middle;
+	width: 60%;
+}
+
+
 
 
 /* Messages (menu & tab)

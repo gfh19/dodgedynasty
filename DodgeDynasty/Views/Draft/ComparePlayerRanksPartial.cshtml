@@ -27,7 +27,7 @@
 				<a class="pr-expand-all" href="#">Expand All</a>/<a class="pr-collapse-all" href="#">Collapse All</a>
 			</div>
 			<div class="pr-highlight-links">
-				<a class="pr-toggle-highlight" href="#">Show Highlighting *NEW!*</a>
+				<a class="pr-toggle-highlight" href="#">Show Highlighting *NEW*</a>
 				<span class="pr-highlight-options">&#8226; <a class="pr-edit-highlight" href="#">Turn Edit Off</a></span>
 			</div>
 		</div>
@@ -45,7 +45,7 @@
 			}
 			<div class="ba-category cr-add-compare">
 				<div class="cr-add-rank-content">
-				@if (Model.CompareRankModels.Count < DodgeDynasty.Shared.Constants.MaxCompareRanks)
+				@if (Model.CompareRankModels.Count < DodgeDynasty.Shared.Utilities.GetMaxCompareRanks())
 				{
 					<span class="cr-add-rank-text">Add ranking to compare</span><a href="#" class="cr-add-rank" tabindex="-1"><img src="@Url.Content("~/Content/images/plus.png")" alt="Add Rank" /></a>
 				}

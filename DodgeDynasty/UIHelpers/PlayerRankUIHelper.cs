@@ -188,7 +188,7 @@ namespace DodgeDynasty.UIHelpers
 					options.CompareRankIds = string.Empty;
 				}
 				var compareRankIds = options.CompareRankIds.Split(',');
-                if (compareRankIds.Length < Constants.MaxCompareRanks)
+				if (compareRankIds.Length < Utilities.GetMaxCompareRanks())
 				{
 					RankingsListModel rankingsListModel = DraftFactory.GetRankingsListModel();
 					var rankings = rankingsListModel.GetAllUserDraftRankings();

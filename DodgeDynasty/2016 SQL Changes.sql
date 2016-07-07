@@ -366,11 +366,11 @@ ADD [IsComparingRanks] bit NOT NULL DEFAULT(0)
 GO
 
 ALTER TABLE [dbo].[PlayerRankOption]
-ADD [CompareRankIds] varchar(50) NULL
+ADD [CompareRankIds] varchar(500) NULL
 GO
 
 ALTER TABLE [dbo].[PlayerRankOption]
-ADD [CompRankExpandIds] varchar(50) NULL
+ADD [CompRankExpandIds] varchar(500) NULL
 GO
 
 ALTER TABLE [dbo].[PlayerRankOption]

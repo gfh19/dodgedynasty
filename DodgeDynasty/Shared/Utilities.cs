@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Objects;
 using System.Linq;
 using System.Linq.Expressions;
@@ -130,6 +131,27 @@ namespace DodgeDynasty.Shared
 		{
 			return input.Where(x => Char.IsDigit(x)).Any();
 		}
+
+		public static string GetConfigVal(string configKey)
+		{
+			return ConfigurationManager.AppSettings[configKey];
+		}
+
+
+		/* Config access methods */
+
+		public static int GetMaxCompareRanks()
+		{
+			var maxCompareRanks = GetConfigVal(Constants.AppSettings.MaxCompareRanks);
+			if (!string.IsNullOrEmpty(maxCompareRanks))
+			{
+				return Int32.Parse(maxCompareRanks);
+			}
+            return 10;
+		}
+
+		/* End Config access methods */
+
 
 
 		/* Conversion methods */

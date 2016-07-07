@@ -268,7 +268,7 @@ function enableHighlighting() {
 function disableHighlighting() {
 	$(".pr-highlight-section").addClass("hide-yo-wives");
 	$("tr[data-player-id]").removeClass("on");
-	$(".pr-toggle-highlight").text("Show Highlighting *NEW!*");
+	$(".pr-toggle-highlight").text("Show Highlighting *NEW*");
 	$(".pr-highlight-options").toggle(false);
 	disableEditHighlighting();
 }
