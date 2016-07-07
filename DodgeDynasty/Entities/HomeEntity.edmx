@@ -332,8 +332,8 @@
           <Property Name="LockHighlighting" Type="bit" Nullable="false" />
           <Property Name="HighlightColor" Type="varchar" MaxLength="50" />
           <Property Name="IsComparingRanks" Type="bit" Nullable="false" />
-          <Property Name="CompareRankIds" Type="varchar" MaxLength="50" />
-          <Property Name="CompRankExpandIds" Type="varchar" MaxLength="50" />
+          <Property Name="CompareRankIds" Type="varchar" MaxLength="500" />
+          <Property Name="CompRankExpandIds" Type="varchar" MaxLength="500" />
           <Property Name="CompRanksExpandAll" Type="bit" Nullable="false" />
           <Property Name="ShowAvgCompRanks" Type="bit" Nullable="false" />
           <Property Name="AddTimestamp" Type="datetime" />
@@ -913,6 +913,7 @@
           <Parameter Name="PosRankNum" Type="int" Mode="In" />
           <Parameter Name="AuctionValue" Type="decimal" Mode="In" />
           <Parameter Name="DraftYear" Type="smallint" Mode="In" />
+          <Parameter Name="Now" Type="datetime" Mode="In" />
         </Function>
         <EntityContainer Name="HomeModelStoreContainer">
           <EntitySet Name="AdminStatus" EntityType="Self.AdminStatus" Schema="dbo" store:Type="Tables" />
@@ -1272,6 +1273,7 @@
             <Parameter Name="PosRankNum" Mode="In" Type="Int32" />
             <Parameter Name="AuctionValue" Mode="In" Type="Decimal" />
             <Parameter Name="DraftYear" Mode="In" Type="Int16" />
+            <Parameter Name="Now" Mode="In" Type="DateTime" />
           </FunctionImport>
           <EntitySet Name="Ranks" EntityType="HomeModel.Rank" />
           <AssociationSet Name="FK_PlayerRank_Rank" Association="HomeModel.FK_PlayerRank_Rank">
@@ -2017,11 +2019,11 @@
           <Property Name="AddTimestamp" Type="DateTime" Precision="3" />
           <Property Name="LastUpdateTimestamp" Type="DateTime" Precision="3" />
           <Property Name="IsComparingRanks" Type="Boolean" Nullable="false" />
-          <Property Name="CompareRankIds" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CompareRankIds" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="ShowAvgCompRanks" Type="Boolean" Nullable="false" />
           <Property Name="ExpandAvg" Type="Boolean" Nullable="false" />
           <Property Name="HideAvg" Type="Boolean" Nullable="false" />
-          <Property Name="CompRankExpandIds" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CompRankExpandIds" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="CompRanksExpandAll" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Role">

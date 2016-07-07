@@ -16,7 +16,8 @@ ALTER PROCEDURE [dbo].[usp_LoadPlayerRanks_V2]
 	@RankNum int,
 	@PosRankNum int,
 	@AuctionValue decimal,
-	@DraftYear smallint
+	@DraftYear smallint,
+	@Now datetime
 AS
 BEGIN
 	SET NOCOUNT ON;
@@ -168,7 +169,7 @@ BEGIN
 		--If Exact Player Match Found, just set update time
 		UPDATE Player
 		SET IsActive = 1,
-			LastUpdateTimestamp = getdate()
+			LastUpdateTimestamp = @Now
 		WHERE PlayerId = @PlayerId
 	END		
 	ELSE --else no EXACT ACTIVE match
@@ -212,7 +213,7 @@ BEGIN
 						   ,[AddTimestamp]
 						   ,[LastUpdateTimestamp])
 						SELECT @OldPlayerId, @PlayerId, TruePlayerId, FirstName, LastName, Position, NFLTeam, 
-							'Select TruePlayer, Active Drafted', NULL, getdate(), getdate()
+							'Select TruePlayer, Active Drafted', NULL, @Now, @Now
 						FROM dbo.Player
 						WHERE PlayerId = @PlayerId
 					END
@@ -235,8 +236,8 @@ BEGIN
 							@ScrubbedNFLTeam,
 							@DateOfBirth,
 							1,
-							getdate(),
-							getdate()
+							@Now,
+							@Now
 						)
 						SET @PlayerId = SCOPE_IDENTITY()
 
@@ -253,7 +254,7 @@ BEGIN
 						INSERT INTO dbo.PlayerAdjustment
 							([OldPlayerId],[NewPlayerId],[TruePlayerId],[NewFirstName],[NewLastName],[NewPosition],[NewNFLTeam],[Action],[UserId],[AddTimestamp],[LastUpdateTimestamp])
 							SELECT @ExistingActivePlayerId, @PlayerId, TruePlayerId, FirstName, LastName, Position, NFLTeam,
-								'Deactivate Drafted Player - New Team (2)', NULL, getdate(), getdate()
+								'Deactivate Drafted Player - New Team (2)', NULL, @Now, @Now
 							FROM dbo.Player
 							WHERE PlayerId = @ExistingActivePlayerId
 
@@ -277,7 +278,7 @@ BEGIN
 							INSERT INTO dbo.PlayerAdjustment
 								([OldPlayerId],[NewPlayerId],[TruePlayerId],[NewFirstName],[NewLastName],[NewPosition],[NewNFLTeam],[Action],[UserId],[AddTimestamp],[LastUpdateTimestamp])
 								SELECT @OldPlayerId, @PlayerId, TruePlayerId, FirstName, LastName, Position, NFLTeam,
-									'Updated Rankings Rowcount: ' + CAST(@@ROWCOUNT AS VARCHAR), NULL, getdate(), getdate()
+									'Updated Rankings Rowcount: ' + CAST(@@ROWCOUNT AS VARCHAR), NULL, @Now, @Now
 								FROM dbo.Player
 								WHERE PlayerId = @OldPlayerId
 
@@ -296,7 +297,7 @@ BEGIN
 							,[AddTimestamp]
 							,[LastUpdateTimestamp])
 						SELECT @OldPlayerId, @PlayerId, TruePlayerId, FirstName, LastName, Position, NFLTeam,
-							@AddPlayerMatchBoth, NULL, getdate(), getdate()
+							@AddPlayerMatchBoth, NULL, @Now, @Now
 						FROM dbo.Player
 						WHERE PlayerId = @PlayerId
 					END
@@ -323,7 +324,7 @@ BEGIN
 					   ,[AddTimestamp]
 					   ,[LastUpdateTimestamp])
 					SELECT @OldPlayerId, @PlayerId, TruePlayerId, FirstName, LastName, Position, NFLTeam, 
-						@UpdateActiveNotDrafted, NULL, getdate(), getdate()
+						@UpdateActiveNotDrafted, NULL, @Now, @Now
 					FROM dbo.Player
 					WHERE PlayerId = @PlayerId
 				
@@ -331,7 +332,7 @@ BEGIN
 					UPDATE Player
 					SET NFLTeam = @ScrubbedNFLTeam,
 						IsActive = 1,
-						LastUpdateTimestamp = getdate()
+						LastUpdateTimestamp = @Now
 					WHERE PlayerId = @PlayerId
 				END
 			END
@@ -340,7 +341,7 @@ BEGIN
 				--No other active found, so update inactive player to active & set update time			
 				UPDATE Player
 				SET IsActive = 1,
-					LastUpdateTimestamp = getdate()
+					LastUpdateTimestamp = @Now
 				WHERE PlayerId = @PlayerId
 			END
 		END
@@ -380,8 +381,8 @@ BEGIN
 					@ScrubbedNFLTeam,
 					@DateOfBirth,
 					1,
-					getdate(),
-					getdate()
+					@Now,
+					@Now
 				)
 				SET @PlayerId = SCOPE_IDENTITY()
 
@@ -398,7 +399,7 @@ BEGIN
 				INSERT INTO dbo.PlayerAdjustment
 					([OldPlayerId],[NewPlayerId],[TruePlayerId],[NewFirstName],[NewLastName],[NewPosition],[NewNFLTeam],[Action],[UserId],[AddTimestamp],[LastUpdateTimestamp])
 					SELECT @OldPlayerId, @PlayerId, TruePlayerId, FirstName, LastName, Position, NFLTeam,
-						'Deactivate Drafted Player - New Team', NULL, getdate(), getdate()
+						'Deactivate Drafted Player - New Team', NULL, @Now, @Now
 					FROM dbo.Player
 					WHERE PlayerId = @OldPlayerId
 
@@ -421,7 +422,7 @@ BEGIN
 					INSERT INTO dbo.PlayerAdjustment
 						([OldPlayerId],[NewPlayerId],[TruePlayerId],[NewFirstName],[NewLastName],[NewPosition],[NewNFLTeam],[Action],[UserId],[AddTimestamp],[LastUpdateTimestamp])
 						SELECT @OldPlayerId, @PlayerId, TruePlayerId, FirstName, LastName, Position, NFLTeam,
-							'Updated Rankings Rowcount: ' + CAST(@@ROWCOUNT AS VARCHAR), NULL, getdate(), getdate()
+							'Updated Rankings Rowcount: ' + CAST(@@ROWCOUNT AS VARCHAR), NULL, @Now, @Now
 						FROM dbo.Player
 						WHERE PlayerId = @OldPlayerId
 
@@ -441,7 +442,7 @@ BEGIN
 					,[AddTimestamp]
 					,[LastUpdateTimestamp])
 				SELECT @OldPlayerId, @PlayerId, TruePlayerId, FirstName, LastName, Position, NFLTeam,
-					@AddPlayerMatchActive, NULL, getdate(), getdate()
+					@AddPlayerMatchActive, NULL, @Now, @Now
 				FROM dbo.Player
 				WHERE PlayerId = @PlayerId
 			END
@@ -460,7 +461,7 @@ BEGIN
 					,[AddTimestamp]
 					,[LastUpdateTimestamp])
 				SELECT @PlayerId, NULL, TruePlayerId, FirstName, LastName, Position, NFLTeam, 
-					'Update NFL Team, (Re)activate', NULL, getdate(), getdate()
+					'Update NFL Team, (Re)activate', NULL, @Now, @Now
 				FROM dbo.Player
 				WHERE PlayerId = @PlayerId
 				
@@ -468,7 +469,7 @@ BEGIN
 				UPDATE Player
 				SET NFLTeam = @ScrubbedNFLTeam,
 					IsActive = 1,
-					LastUpdateTimestamp = getdate()
+					LastUpdateTimestamp = @Now
 				WHERE PlayerId = @PlayerId
 			END
 		END
@@ -516,7 +517,7 @@ BEGIN
 						   ,[AddTimestamp]
 						   ,[LastUpdateTimestamp])
 						SELECT @OldPlayerId, @PlayerId, TruePlayerId, FirstName, LastName, Position, NFLTeam, 
-							'Select TruePlayer, Active Drafted (2)', NULL, getdate(), getdate()
+							'Select TruePlayer, Active Drafted (2)', NULL, @Now, @Now
 						FROM dbo.Player
 						WHERE PlayerId = @PlayerId
 					END
@@ -539,8 +540,8 @@ BEGIN
 							@ScrubbedNFLTeam,
 							@DateOfBirth,
 							1,
-							getdate(),
-							getdate()
+							@Now,
+							@Now
 						)
 						SET @PlayerId = SCOPE_IDENTITY()
 
@@ -557,7 +558,7 @@ BEGIN
 						INSERT INTO dbo.PlayerAdjustment
 							([OldPlayerId],[NewPlayerId],[TruePlayerId],[NewFirstName],[NewLastName],[NewPosition],[NewNFLTeam],[Action],[UserId],[AddTimestamp],[LastUpdateTimestamp])
 							SELECT @ExistingActivePlayerId, @PlayerId, TruePlayerId, FirstName, LastName, Position, NFLTeam,
-								'Deactivate Drafted Player - New Team (3)', NULL, getdate(), getdate()
+								'Deactivate Drafted Player - New Team (3)', NULL, @Now, @Now
 							FROM dbo.Player
 							WHERE PlayerId = @ExistingActivePlayerId
 
@@ -581,7 +582,7 @@ BEGIN
 							INSERT INTO dbo.PlayerAdjustment
 								([OldPlayerId],[NewPlayerId],[TruePlayerId],[NewFirstName],[NewLastName],[NewPosition],[NewNFLTeam],[Action],[UserId],[AddTimestamp],[LastUpdateTimestamp])
 								SELECT @OldPlayerId, @PlayerId, TruePlayerId, FirstName, LastName, Position, NFLTeam,
-									'Updated Rankings Rowcount: ' + CAST(@@ROWCOUNT AS VARCHAR), NULL, getdate(), getdate()
+									'Updated Rankings Rowcount: ' + CAST(@@ROWCOUNT AS VARCHAR), NULL, @Now, @Now
 								FROM dbo.Player
 								WHERE PlayerId = @OldPlayerId
 
@@ -600,7 +601,7 @@ BEGIN
 							,[AddTimestamp]
 							,[LastUpdateTimestamp])
 						SELECT @OldPlayerId, @PlayerId, TruePlayerId, FirstName, LastName, Position, NFLTeam,
-							@AddPlayerBothDiff, NULL, getdate(), getdate()
+							@AddPlayerBothDiff, NULL, @Now, @Now
 						FROM dbo.Player
 						WHERE PlayerId = @PlayerId
 					END
@@ -627,7 +628,7 @@ BEGIN
 					   ,[AddTimestamp]
 					   ,[LastUpdateTimestamp])
 					SELECT @OldPlayerId, @PlayerId, TruePlayerId, FirstName, LastName, Position, NFLTeam, 
-						@UpdateActiveNotDrafted2, NULL, getdate(), getdate()
+						@UpdateActiveNotDrafted2, NULL, @Now, @Now
 					FROM dbo.Player
 					WHERE PlayerId = @PlayerId
 				
@@ -635,7 +636,7 @@ BEGIN
 					UPDATE Player
 					SET NFLTeam = @ScrubbedNFLTeam,
 						IsActive = 1,
-						LastUpdateTimestamp = getdate()
+						LastUpdateTimestamp = @Now
 					WHERE PlayerId = @PlayerId
 				END
 			END
@@ -660,8 +661,8 @@ BEGIN
 					@ScrubbedNFLTeam,
 					@DateOfBirth,
 					1,
-					getdate(),
-					getdate()
+					@Now,
+					@Now
 				)
 				SET @PlayerId = SCOPE_IDENTITY()
 
@@ -682,7 +683,7 @@ BEGIN
 					,[AddTimestamp]
 					,[LastUpdateTimestamp])
 				SELECT @OldPlayerId, @PlayerId, TruePlayerId, FirstName, LastName, Position, NFLTeam,
-					'Add Player, Match Inactive, IsDrafted', NULL, getdate(), getdate()
+					'Add Player, Match Inactive, IsDrafted', NULL, @Now, @Now
 				FROM dbo.Player
 				WHERE PlayerId = @PlayerId
 			END
@@ -701,7 +702,7 @@ BEGIN
 					,[AddTimestamp]
 					,[LastUpdateTimestamp])
 				SELECT @PlayerId, NULL, TruePlayerId, FirstName, LastName, Position, NFLTeam, 
-					'Update NFL Team, Activate', NULL, getdate(), getdate()
+					'Update NFL Team, Activate', NULL, @Now, @Now
 				FROM dbo.Player
 				WHERE PlayerId = @PlayerId
 
@@ -709,7 +710,7 @@ BEGIN
 				UPDATE Player
 				SET NFLTeam = @ScrubbedNFLTeam,
 					IsActive = 1,
-					LastUpdateTimestamp = getdate()
+					LastUpdateTimestamp = @Now
 				WHERE PlayerId = @PlayerId
 			END
 		END
@@ -735,8 +736,8 @@ BEGIN
 			@ScrubbedNFLTeam,
 			@DateOfBirth,
 			1,
-			getdate(),
-			getdate()
+			@Now,
+			@Now
 		)
 		SET @PlayerId = SCOPE_IDENTITY()
 
@@ -757,7 +758,7 @@ BEGIN
 			,[AddTimestamp]
 			,[LastUpdateTimestamp])
 		SELECT NULL, @PlayerId, TruePlayerId, FirstName, LastName, Position, NFLTeam,
-			'Add Player', NULL, getdate(), getdate()
+			'Add Player', NULL, @Now, @Now
 		FROM dbo.Player
 		WHERE PlayerId = @PlayerId
 	END
@@ -802,7 +803,7 @@ BEGIN
 			,[AddTimestamp]
 			,[LastUpdateTimestamp])
 		SELECT @OldPlayerId, @PlayerId, TruePlayerId, FirstName, LastName, Position, NFLTeam,
-			'Merge Player, Active Diff Pos', NULL, getdate(), getdate()
+			'Merge Player, Active Diff Pos', NULL, @Now, @Now
 		FROM dbo.Player
 		WHERE PlayerId = @PlayerId
 	END
@@ -822,6 +823,6 @@ BEGIN
 		,@RankNum
 		,@PosRankNum
 		,@AuctionValue
-		,getdate(),
-		getdate())
+		,@Now,
+		@Now)
 END

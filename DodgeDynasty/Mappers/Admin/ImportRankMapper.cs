@@ -125,8 +125,9 @@ namespace DodgeDynasty.Mappers.Admin
 
 		private void AddPlayerRank(RankedPlayer rankedPlayer, string firstName, string lastName)
 		{
+			var now = Utilities.GetEasternTime();
 			HomeEntity.usp_LoadPlayerRanks_V2(firstName, lastName, rankedPlayer.Position, rankedPlayer.NFLTeam, null,
-				Utilities.ToNullInt(RankId), rankedPlayer.RankNum, null, null, Year);
+				Utilities.ToNullInt(RankId), rankedPlayer.RankNum, null, null, Year, now);
 		}
 
 		private void DeleteExistingPlayerRanks()

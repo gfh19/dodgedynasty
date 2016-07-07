@@ -875,7 +875,8 @@ namespace DodgeDynasty.Entities
         /// <param name="posRankNum">No Metadata Documentation available.</param>
         /// <param name="auctionValue">No Metadata Documentation available.</param>
         /// <param name="draftYear">No Metadata Documentation available.</param>
-        public int usp_LoadPlayerRanks_V2(global::System.String firstName, global::System.String lastName, global::System.String position, global::System.String nFLTeam, Nullable<global::System.DateTime> dateOfBirth, Nullable<global::System.Int32> rankId, Nullable<global::System.Int32> rankNum, Nullable<global::System.Int32> posRankNum, Nullable<global::System.Decimal> auctionValue, Nullable<global::System.Int16> draftYear)
+        /// <param name="now">No Metadata Documentation available.</param>
+        public int usp_LoadPlayerRanks_V2(global::System.String firstName, global::System.String lastName, global::System.String position, global::System.String nFLTeam, Nullable<global::System.DateTime> dateOfBirth, Nullable<global::System.Int32> rankId, Nullable<global::System.Int32> rankNum, Nullable<global::System.Int32> posRankNum, Nullable<global::System.Decimal> auctionValue, Nullable<global::System.Int16> draftYear, Nullable<global::System.DateTime> now)
         {
             ObjectParameter firstNameParameter;
             if (firstName != null)
@@ -977,7 +978,17 @@ namespace DodgeDynasty.Entities
                 draftYearParameter = new ObjectParameter("DraftYear", typeof(global::System.Int16));
             }
     
-            return base.ExecuteFunction("usp_LoadPlayerRanks_V2", firstNameParameter, lastNameParameter, positionParameter, nFLTeamParameter, dateOfBirthParameter, rankIdParameter, rankNumParameter, posRankNumParameter, auctionValueParameter, draftYearParameter);
+            ObjectParameter nowParameter;
+            if (now.HasValue)
+            {
+                nowParameter = new ObjectParameter("Now", now);
+            }
+            else
+            {
+                nowParameter = new ObjectParameter("Now", typeof(global::System.DateTime));
+            }
+    
+            return base.ExecuteFunction("usp_LoadPlayerRanks_V2", firstNameParameter, lastNameParameter, positionParameter, nFLTeamParameter, dateOfBirthParameter, rankIdParameter, rankNumParameter, posRankNumParameter, auctionValueParameter, draftYearParameter, nowParameter);
         }
 
         #endregion
