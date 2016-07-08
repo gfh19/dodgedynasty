@@ -186,28 +186,18 @@ namespace DodgeDynasty.Models
 
 		public List<RankedPlayer> GetDraftedTruePlayersFor(List<RankedPlayer> players)
 		{
-			var draftPickTruePlayers = DraftPicks.Join(AllPlayers, dp => dp.PlayerId, p => p.PlayerId, (dp, p) => new
+			foreach (var player in players.Where(o => o.PickNum == null))
 			{
-				DraftPickId = dp.DraftPickId,
-				PlayerId = p.PlayerId,
-				TruePlayerId = p.TruePlayerId,
-				PickNum = dp.PickNum,
-				UserId = dp.UserId,
-			});
-
-			foreach (var player in players)
-			{
-				if (player.PickNum == null)
+				var truePlayer = AllPlayers.FirstOrDefault(o => o.TruePlayerId == player.TruePlayerId &&
+					o.PlayerId != player.TruePlayerId && DraftPicks.Any(dp => dp.PlayerId == player.PlayerId));
+				if (truePlayer != null)
 				{
-					var draftPickTruePlayer = draftPickTruePlayers.FirstOrDefault(dp => dp.TruePlayerId == player.TruePlayerId);
-					if (draftPickTruePlayer != null)
-					{
-						player.PickNum = draftPickTruePlayer.PickNum.ToString();
-						player.UserId = draftPickTruePlayer.UserId.ToString();
-						player.NickName = Users.FirstOrDefault(lo => lo.UserId == draftPickTruePlayer.UserId).NickName;
-						var leagueOwner = CurrentLeagueOwners.FirstOrDefault(lo => lo.UserId == draftPickTruePlayer.UserId);
-						player.CssClass = (leagueOwner != null) ? leagueOwner.CssClass : null;
-					}
+					var draftPick = DraftPicks.First(dp => dp.PlayerId == player.PlayerId);
+					player.PickNum = draftPick.PickNum.ToString();
+					player.UserId = draftPick.UserId.ToString();
+					player.NickName = Users.FirstOrDefault(lo => lo.UserId == draftPick.UserId).NickName;
+					var leagueOwner = CurrentLeagueOwners.FirstOrDefault(lo => lo.UserId == draftPick.UserId);
+					player.CssClass = (leagueOwner != null) ? leagueOwner.CssClass : null;
 				}
 			}
 			return players;
