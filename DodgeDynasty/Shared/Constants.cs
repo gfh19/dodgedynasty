@@ -23,6 +23,7 @@ namespace DodgeDynasty.Shared
 			public const string DraftChatKillSwitch = "DraftChatKillSwitch";
 			public const string AudioKillSwitch = "AudioKillSwitch";
 			public const string TextToVoiceKillSwitch = "TextToVoiceKillSwitch";
+			public const string UserEditAudioKillSwitch = "UserEditAudioKillSwitch";
 			public const string MajorVersion = "MajorVersion";
 			public const string JSVersion = "JSVersion";
 		}

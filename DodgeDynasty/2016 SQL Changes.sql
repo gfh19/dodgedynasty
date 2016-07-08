@@ -1,4 +1,35 @@
-﻿/* 4/27/16 */
+﻿
+SET XACT_ABORT ON
+BEGIN TRANSACTION;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+COMMIT TRANSACTION;
+
+
+
+
+
+
+
+
+
+
+
+/* Below Run in Production on 7/6/16 */
+
+/* 4/27/16 */
 --Guess could've called it "AuditStatus" table
 
 SET XACT_ABORT ON

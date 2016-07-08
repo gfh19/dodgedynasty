@@ -50,7 +50,10 @@
 							<label class="mi-teamname-header">Team Name</label>
 							<label class="mi-color-header">Color</label>
 							<label class="mi-active-header @(!Model.AdminMode?"hide-yo-wives":"")">Active?</label>
+							@if (!DodgeDynasty.Shared.Utilities.GetBoolConfigVal(DodgeDynasty.Shared.Constants.AppSettings.UserEditAudioKillSwitch))
+							{
 							<label class="mi-audio-header">Audio?</label>
+							}
 						</div>
 					}
 					@for (int i = 0; i < Model.OwnerLeagues.Count; i++)
@@ -76,14 +79,20 @@
 							<span class="mi-active @(!Model.AdminMode?"hide-yo-wives":"")">
 								@Html.CheckBoxFor(o => Model.OwnerLeagues[i].IsActive, new { @class = "mi-active-chkbx" })
 							</span>
+							@if (!DodgeDynasty.Shared.Utilities.GetBoolConfigVal(DodgeDynasty.Shared.Constants.AppSettings.UserEditAudioKillSwitch))
+							{
 							<span class="mi-audio">
 								@Html.HiddenFor(o => Model.OwnerLeagues[i].AnnouncePrevPick, new { @class = "mi-prevpick-hidden" })
 								@{ var playAudio = Model.OwnerLeagues[i].AnnounceAllPicks || Model.OwnerLeagues[i].AnnouncePrevPick; }
 								@Html.CheckBoxFor(o => playAudio, new { @class = "mi-audio-chkbx" })
 							</span>
+							}
 						</div>
 					}
-					@Html.Partial(DodgeDynasty.Shared.Constants.Views.TestAudioPartial, "Audio (*NEW*): Select the \"Audio?\" checkbox above to hear the pick made right before your turn!")
+					@if (!DodgeDynasty.Shared.Utilities.GetBoolConfigVal(DodgeDynasty.Shared.Constants.AppSettings.UserEditAudioKillSwitch))
+					{
+						@Html.Partial(DodgeDynasty.Shared.Constants.Views.TestAudioPartial, "Audio (*NEW*): Select the \"Audio?\" checkbox above to hear the pick made right before your turn!")
+					}
 				</div>
 			</div>
 			<div class="page-section"><button class="submit-info" type="submit">Submit</button></div>

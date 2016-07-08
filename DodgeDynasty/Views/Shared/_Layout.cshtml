@@ -14,10 +14,11 @@
 		var draftChatKillSwitch = System.Configuration.ConfigurationManager.AppSettings[DodgeDynasty.Shared.Constants.AppSettings.DraftChatKillSwitch];
 		var audioKillSwitch = System.Configuration.ConfigurationManager.AppSettings[DodgeDynasty.Shared.Constants.AppSettings.AudioKillSwitch];
 		var textToVoiceKillSwitch = System.Configuration.ConfigurationManager.AppSettings[DodgeDynasty.Shared.Constants.AppSettings.TextToVoiceKillSwitch];
-		if (DodgeDynasty.Shared.Utilities.IsUserLoggedIn() && !DodgeDynasty.Shared.Utilities.ToBool(webSocketsKillSwitch))
+		var userEditAudioKillSwitch = System.Configuration.ConfigurationManager.AppSettings[DodgeDynasty.Shared.Constants.AppSettings.UserEditAudioKillSwitch];
+        if (DodgeDynasty.Shared.Utilities.IsUserLoggedIn() && !DodgeDynasty.Shared.Utilities.ToBool(webSocketsKillSwitch))
 		{
-			<script src="@Url.Content("~/signalr/hubs")"></script>
-		}
+            <script src="@Url.Content("~/signalr/hubs")"></script>
+        }
 	}
 	<script type="text/javascript" src="@Url.Script("~/Scripts/Site.js")"></script>
 	@if (DodgeDynasty.Shared.Utilities.IsUserLoggedIn())
@@ -205,6 +206,7 @@
 		var draftChatKillSwitch = @draftChatKillSwitch;
 		var audioKillSwitch = @audioKillSwitch;
 		var textToVoiceKillSwitch = @textToVoiceKillSwitch;
+		var userEditAudioKillSwitch = @userEditAudioKillSwitch;
 		var defaultRefreshTimer = @System.Configuration.ConfigurationManager.AppSettings[DodgeDynasty.Shared.Constants.AppSettings.RefreshTimer];
 		var fastRefreshTimer = @System.Configuration.ConfigurationManager.AppSettings[DodgeDynasty.Shared.Constants.AppSettings.FastRefreshTimer];
 		var refreshTimer = webSocketsKillSwitch ? fastRefreshTimer : defaultRefreshTimer;

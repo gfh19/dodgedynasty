@@ -1,5 +1,7 @@
 ﻿function initUserInfo() {
-	toggleTestAudio();
+	if (!userEditAudioKillSwitch) {
+		toggleTestAudio();
+	}
 	bindColorSelects();
 	bindSubmitUserInfo();
 	bindUserNameSelect();

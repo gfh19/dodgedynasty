@@ -132,18 +132,28 @@ namespace DodgeDynasty.Shared
 			return input.Where(x => Char.IsDigit(x)).Any();
 		}
 
+
+		/* Config access methods */
+
 		public static string GetConfigVal(string configKey)
 		{
 			return ConfigurationManager.AppSettings[configKey];
 		}
 
-
-		/* Config access methods */
+		public static bool GetBoolConfigVal(string configKey)
+		{
+			var val = ConfigurationManager.AppSettings[configKey];
+			if (!string.IsNullOrWhiteSpace(val))
+			{
+				return bool.Parse(val);
+			}
+			return false;
+		}
 
 		public static int GetMaxCompareRanks()
 		{
 			var maxCompareRanks = GetConfigVal(Constants.AppSettings.MaxCompareRanks);
-			if (!string.IsNullOrEmpty(maxCompareRanks))
+			if (!string.IsNullOrWhiteSpace(maxCompareRanks))
 			{
 				return Int32.Parse(maxCompareRanks);
 			}
