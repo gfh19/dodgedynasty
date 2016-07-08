@@ -73,6 +73,7 @@ function bindDraftChatDisplayLinks() {
 				$(flip).text("expand");
 			}
 		});
+	});
 }
 
 function displayLineBreaks() {
