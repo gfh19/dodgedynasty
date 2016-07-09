@@ -34,6 +34,7 @@ BEGIN
 	DECLARE @ScrubbedFirstName varchar(25);
 	DECLARE @ScrubbedLastName varchar(25);
 	DECLARE @ScrubbedPosition varchar(10);
+	DECLARE @RowCnt int;
 
 	/*	Steps: */
 	/*	- Scrubs for known NFLTeam/FirstName/LastName/Pos
@@ -253,7 +254,7 @@ BEGIN
 
 						INSERT INTO dbo.PlayerAdjustment
 							([OldPlayerId],[NewPlayerId],[TruePlayerId],[NewFirstName],[NewLastName],[NewPosition],[NewNFLTeam],[Action],[UserId],[AddTimestamp],[LastUpdateTimestamp])
-							SELECT @ExistingActivePlayerId, @PlayerId, TruePlayerId, FirstName, LastName, Position, NFLTeam,
+							SELECT @ExistingActivePlayerId, @ExistingActivePlayerId, TruePlayerId, FirstName, LastName, Position, NFLTeam,
 								'Deactivate Drafted Player - New Team (2)', NULL, @Now, @Now
 							FROM dbo.Player
 							WHERE PlayerId = @ExistingActivePlayerId
@@ -273,12 +274,31 @@ BEGIN
 							WHERE pr.PlayerId = @ExistingActivePlayerId
 								AND r.[Year] = @DraftYear
 
-							PRINT 'Updated Rankings Rowcount: ' + CAST(@@ROWCOUNT AS VARCHAR);
+							SELECT @RowCnt = @@ROWCOUNT;
+
+							PRINT 'Updated Rankings Rowcount: ' + CAST(@RowCnt AS VARCHAR);
 
 							INSERT INTO dbo.PlayerAdjustment
 								([OldPlayerId],[NewPlayerId],[TruePlayerId],[NewFirstName],[NewLastName],[NewPosition],[NewNFLTeam],[Action],[UserId],[AddTimestamp],[LastUpdateTimestamp])
 								SELECT @OldPlayerId, @PlayerId, TruePlayerId, FirstName, LastName, Position, NFLTeam,
-									'Updated Rankings Rowcount: ' + CAST(@@ROWCOUNT AS VARCHAR), NULL, @Now, @Now
+									'Updated Rankings Rowcount: ' + CAST(@RowCnt AS VARCHAR), NULL, @Now, @Now
+								FROM dbo.Player
+								WHERE PlayerId = @OldPlayerId
+
+							-- * Update all current year's Plyr HIGHLIGHTS of trueplyr to New Player Id too!
+							UPDATE ph
+							SET ph.[PlayerId] = @PlayerId
+							FROM [dbo].[PlayerHighlight] ph
+							JOIN [dbo].[Draft] d ON ph.DraftId = d.DraftId
+							WHERE ph.PlayerId = @ExistingActivePlayerId
+								AND d.[DraftYear] = @DraftYear
+
+							SELECT @RowCnt = @@ROWCOUNT;
+
+							INSERT INTO dbo.PlayerAdjustment
+								([OldPlayerId],[NewPlayerId],[TruePlayerId],[NewFirstName],[NewLastName],[NewPosition],[NewNFLTeam],[Action],[UserId],[AddTimestamp],[LastUpdateTimestamp])
+								SELECT @OldPlayerId, @PlayerId, TruePlayerId, FirstName, LastName, Position, NFLTeam,
+									'Updated Highlights Rowcount: ' + CAST(@RowCnt AS VARCHAR), NULL, @Now, @Now
 								FROM dbo.Player
 								WHERE PlayerId = @OldPlayerId
 
@@ -398,7 +418,7 @@ BEGIN
 
 				INSERT INTO dbo.PlayerAdjustment
 					([OldPlayerId],[NewPlayerId],[TruePlayerId],[NewFirstName],[NewLastName],[NewPosition],[NewNFLTeam],[Action],[UserId],[AddTimestamp],[LastUpdateTimestamp])
-					SELECT @OldPlayerId, @PlayerId, TruePlayerId, FirstName, LastName, Position, NFLTeam,
+					SELECT @OldPlayerId, @OldPlayerId, TruePlayerId, FirstName, LastName, Position, NFLTeam,
 						'Deactivate Drafted Player - New Team', NULL, @Now, @Now
 					FROM dbo.Player
 					WHERE PlayerId = @OldPlayerId
@@ -417,12 +437,31 @@ BEGIN
 					WHERE pr.PlayerId = @OldPlayerId
 						AND r.[Year] = @DraftYear
 
-					PRINT 'Updated Rankings Rowcount: ' + CAST(@@ROWCOUNT AS VARCHAR);
+					SELECT @RowCnt = @@ROWCOUNT;
+
+					PRINT 'Updated Rankings Rowcount: ' + CAST(@RowCnt AS VARCHAR);
 					
 					INSERT INTO dbo.PlayerAdjustment
 						([OldPlayerId],[NewPlayerId],[TruePlayerId],[NewFirstName],[NewLastName],[NewPosition],[NewNFLTeam],[Action],[UserId],[AddTimestamp],[LastUpdateTimestamp])
 						SELECT @OldPlayerId, @PlayerId, TruePlayerId, FirstName, LastName, Position, NFLTeam,
-							'Updated Rankings Rowcount: ' + CAST(@@ROWCOUNT AS VARCHAR), NULL, @Now, @Now
+							'Updated Rankings Rowcount: ' + CAST(@RowCnt AS VARCHAR), NULL, @Now, @Now
+						FROM dbo.Player
+						WHERE PlayerId = @OldPlayerId
+
+					-- * Update all current year's Plyr HIGHLIGHTS of trueplyr to New Player Id too!
+					UPDATE ph
+					SET ph.[PlayerId] = @PlayerId
+					FROM [dbo].[PlayerHighlight] ph
+					JOIN [dbo].[Draft] d ON ph.DraftId = d.DraftId
+					WHERE ph.PlayerId = @OldPlayerId
+						AND d.[DraftYear] = @DraftYear
+
+					SELECT @RowCnt = @@ROWCOUNT;
+
+					INSERT INTO dbo.PlayerAdjustment
+						([OldPlayerId],[NewPlayerId],[TruePlayerId],[NewFirstName],[NewLastName],[NewPosition],[NewNFLTeam],[Action],[UserId],[AddTimestamp],[LastUpdateTimestamp])
+						SELECT @OldPlayerId, @PlayerId, TruePlayerId, FirstName, LastName, Position, NFLTeam,
+							'Updated Highlights Rowcount: ' + CAST(@RowCnt AS VARCHAR), NULL, @Now, @Now
 						FROM dbo.Player
 						WHERE PlayerId = @OldPlayerId
 
@@ -557,7 +596,7 @@ BEGIN
 
 						INSERT INTO dbo.PlayerAdjustment
 							([OldPlayerId],[NewPlayerId],[TruePlayerId],[NewFirstName],[NewLastName],[NewPosition],[NewNFLTeam],[Action],[UserId],[AddTimestamp],[LastUpdateTimestamp])
-							SELECT @ExistingActivePlayerId, @PlayerId, TruePlayerId, FirstName, LastName, Position, NFLTeam,
+							SELECT @ExistingActivePlayerId, @ExistingActivePlayerId, TruePlayerId, FirstName, LastName, Position, NFLTeam,
 								'Deactivate Drafted Player - New Team (3)', NULL, @Now, @Now
 							FROM dbo.Player
 							WHERE PlayerId = @ExistingActivePlayerId
@@ -577,14 +616,33 @@ BEGIN
 							WHERE pr.PlayerId = @ExistingActivePlayerId
 								AND r.[Year] = @DraftYear
 
-							PRINT 'Updated Rankings Rowcount: ' + CAST(@@ROWCOUNT AS VARCHAR);
+							SELECT @RowCnt = @@ROWCOUNT;
+
+							PRINT 'Updated Rankings Rowcount: ' + CAST(@RowCnt AS VARCHAR);
 
 							INSERT INTO dbo.PlayerAdjustment
 								([OldPlayerId],[NewPlayerId],[TruePlayerId],[NewFirstName],[NewLastName],[NewPosition],[NewNFLTeam],[Action],[UserId],[AddTimestamp],[LastUpdateTimestamp])
-								SELECT @OldPlayerId, @PlayerId, TruePlayerId, FirstName, LastName, Position, NFLTeam,
-									'Updated Rankings Rowcount: ' + CAST(@@ROWCOUNT AS VARCHAR), NULL, @Now, @Now
+								SELECT @ExistingActivePlayerId, @PlayerId, TruePlayerId, FirstName, LastName, Position, NFLTeam,
+									'Updated Rankings Rowcount: ' + CAST(@RowCnt AS VARCHAR), NULL, @Now, @Now
 								FROM dbo.Player
-								WHERE PlayerId = @OldPlayerId
+								WHERE PlayerId = @ExistingActivePlayerId
+
+							-- * Update all current year's Plyr HIGHLIGHTS of trueplyr to New Player Id too!
+							UPDATE ph
+							SET ph.[PlayerId] = @PlayerId
+							FROM [dbo].[PlayerHighlight] ph
+							JOIN [dbo].[Draft] d ON ph.DraftId = d.DraftId
+							WHERE ph.PlayerId = @ExistingActivePlayerId
+								AND d.[DraftYear] = @DraftYear
+
+							SELECT @RowCnt = @@ROWCOUNT;
+
+							INSERT INTO dbo.PlayerAdjustment
+								([OldPlayerId],[NewPlayerId],[TruePlayerId],[NewFirstName],[NewLastName],[NewPosition],[NewNFLTeam],[Action],[UserId],[AddTimestamp],[LastUpdateTimestamp])
+								SELECT @ExistingActivePlayerId, @PlayerId, TruePlayerId, FirstName, LastName, Position, NFLTeam,
+									'Updated Highlights Rowcount: ' + CAST(@RowCnt AS VARCHAR), NULL, @Now, @Now
+								FROM dbo.Player
+								WHERE PlayerId = @ExistingActivePlayerId
 
 							SET @AddPlayerBothDiff = @AddPlayerBothDiff + ' (& Ranks)';
 						END
@@ -600,7 +658,7 @@ BEGIN
 							,[UserId]
 							,[AddTimestamp]
 							,[LastUpdateTimestamp])
-						SELECT @OldPlayerId, @PlayerId, TruePlayerId, FirstName, LastName, Position, NFLTeam,
+						SELECT @ExistingActivePlayerId, @PlayerId, TruePlayerId, FirstName, LastName, Position, NFLTeam,
 							@AddPlayerBothDiff, NULL, @Now, @Now
 						FROM dbo.Player
 						WHERE PlayerId = @PlayerId

@@ -4,7 +4,9 @@ BEGIN TRANSACTION;
 
 
 
+/* TODO */
 
+- Index TruePlayerId column in Player table
 
 
 
@@ -37,7 +39,7 @@ BEGIN TRANSACTION;
 
 
 
-/* TODO !!! */
+-- DONE
 Dont Run This Script until below has been addressed!
 -Players to Update:
 	-- Ted Ginn Jr.

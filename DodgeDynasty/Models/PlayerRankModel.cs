@@ -189,10 +189,10 @@ namespace DodgeDynasty.Models
 			foreach (var player in players.Where(o => o.PickNum == null))
 			{
 				var truePlayer = AllPlayers.FirstOrDefault(o => o.TruePlayerId == player.TruePlayerId &&
-					o.PlayerId != player.TruePlayerId && DraftPicks.Any(dp => dp.PlayerId == player.PlayerId));
+					o.PlayerId != player.PlayerId && DraftPicks.Any(dp => dp.PlayerId == o.PlayerId));
 				if (truePlayer != null)
 				{
-					var draftPick = DraftPicks.First(dp => dp.PlayerId == player.PlayerId);
+					var draftPick = DraftPicks.First(dp => dp.PlayerId == truePlayer.PlayerId);
 					player.PickNum = draftPick.PickNum.ToString();
 					player.UserId = draftPick.UserId.ToString();
 					player.NickName = Users.FirstOrDefault(lo => lo.UserId == draftPick.UserId).NickName;
