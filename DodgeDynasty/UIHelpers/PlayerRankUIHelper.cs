@@ -20,13 +20,13 @@ namespace DodgeDynasty.UIHelpers
 			get { return new PlayerRankUIHelper(); }
 		}
 
-		public PlayerRankModel GetPlayerRankPartial(string rankId, bool showBestAvailable, 
+		public PlayerRankModel GetPlayerRankPartial(string rankId, string draftId, bool showBestAvailable, 
 			HttpRequestBase request, HttpResponseBase response)
 		{
 			var options = GetPlayerRankOptions(request, response);
 			var historyMode = Utilities.ToBool(request.QueryString[Constants.QS.HistoryMode]);
 			UpdateIsComparingRanks(options, request, response, historyMode);
-			PlayerRankModel playerRankModel = DetermineRankModel(rankId, null, options, response, false);
+			PlayerRankModel playerRankModel = DetermineRankModel(rankId, draftId, options, response, false);
 			playerRankModel.Options = options;
 			if (playerRankModel.Options.IsComparingRanks && !historyMode)
 			{

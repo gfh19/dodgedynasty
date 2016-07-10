@@ -572,12 +572,14 @@ function updateCompareRankIds(removeRankId) {
 			compareRankIds += $(select).val() + ",";
 		}
 	});
-	compareRankIds = compareRankIds.removeTrailing(",")
+	compareRankIds = compareRankIds.removeTrailing(",");
+	addWaitCursor();
 	ajaxPostReplace({ compRankIds: compareRankIds, isBestAvailable: isBestAvailablePage() },
 		"Draft/UpdateCompareRankIds", replaceElementId, function () {
+			removeWaitCursor();
 			setCompRankExpandIds();
 			setCookieOptions(clientCookieOptions);
-		});
+		}, removeWaitCursor);
 }
 
 function updatePlayerRankOptions(options) {
@@ -597,7 +599,9 @@ function bindAddCompareRank(link) {
 	$(link).unbind("click");
 	$(link).click(function (e) {
 		e.preventDefault();
-		ajaxPostReplace({ isBestAvailable: isBestAvailablePage() }, "Draft/AddCompareRank", replaceElementId);
+		addWaitCursor();
+		ajaxPostReplace({ isBestAvailable: isBestAvailablePage() }, "Draft/AddCompareRank", replaceElementId,
+			removeWaitCursor, removeWaitCursor);
 	});
 }
 

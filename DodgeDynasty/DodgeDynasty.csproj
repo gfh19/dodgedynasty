@@ -336,6 +336,8 @@
     <Compile Include="Parsers\EspnAdpParser.cs" />
     <Compile Include="Parsers\EspnTop300Parser.cs" />
     <Compile Include="Parsers\FprosAdpParser.cs" />
+    <Compile Include="Parsers\FprosDynasty.cs" />
+    <Compile Include="Parsers\FprosParser.cs" />
     <Compile Include="Parsers\IRankParser.cs" />
     <Compile Include="Parsers\ParserFactory.cs" />
     <Compile Include="Parsers\FprosStandardParser.cs" />

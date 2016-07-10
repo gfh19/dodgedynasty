@@ -80,7 +80,7 @@ namespace DodgeDynasty.Controllers
 		public ActionResult BestAvailable(string rankId, string id)
 		{
 			var helper = PlayerRankUIHelper.Instance;
-			var playerRankModel = helper.GetPlayerRankPartial(rankId, true, Request, Response);
+			var playerRankModel = helper.GetPlayerRankPartial(rankId, id, true, Request, Response);
 			return View(playerRankModel);
 		}
 
@@ -89,7 +89,7 @@ namespace DodgeDynasty.Controllers
 		public ActionResult BestAvailablePartial(string rankId)
 		{
 			var helper = PlayerRankUIHelper.Instance;
-			var playerRankModel = helper.GetPlayerRankPartial(rankId, true, Request, Response);
+			var playerRankModel = helper.GetPlayerRankPartial(rankId, null, true, Request, Response);
 			return PartialView(Constants.Views.BestAvailable, playerRankModel);
 		}
 
@@ -98,7 +98,7 @@ namespace DodgeDynasty.Controllers
 		public ActionResult PlayerRanks(string rankId, string id)
 		{
 			var helper = PlayerRankUIHelper.Instance;
-			var playerRankModel = helper.GetPlayerRankPartial(rankId, false, Request, Response);
+			var playerRankModel = helper.GetPlayerRankPartial(rankId, id, false, Request, Response);
 			return View(playerRankModel);
 		}
 
@@ -107,7 +107,7 @@ namespace DodgeDynasty.Controllers
 		public ActionResult PlayerRanksPartial(string rankId)
 		{
 			var helper = PlayerRankUIHelper.Instance;
-			var playerRankModel = helper.GetPlayerRankPartial(rankId, false, Request, Response);
+			var playerRankModel = helper.GetPlayerRankPartial(rankId, null, false, Request, Response);
 			return PartialView(Constants.Views.PlayerRanks, playerRankModel);
 		}
 
@@ -116,7 +116,7 @@ namespace DodgeDynasty.Controllers
 		public ActionResult HighlightQueuePartial(bool isBestAvailable)
 		{
 			var helper = PlayerRankUIHelper.Instance;
-			var playerRankModel = helper.GetPlayerRankPartial(null, isBestAvailable, Request, Response);
+			var playerRankModel = helper.GetPlayerRankPartial(null, null, isBestAvailable, Request, Response);
 			return PartialView(Constants.Views.HighlightQueuePartial, playerRankModel);
 		}
 
@@ -131,7 +131,7 @@ namespace DodgeDynasty.Controllers
 			{
 				helper.UpdatePlayerRankOptions(options, Response);
 			}
-			var playerRankModel = helper.GetPlayerRankPartial(null, isBestAvailable, Request, Response);
+			var playerRankModel = helper.GetPlayerRankPartial(null, null, isBestAvailable, Request, Response);
 			return PartialView(isBestAvailable ? Constants.Views.BestAvailable : Constants.Views.PlayerRanks, playerRankModel);
 		}
 
@@ -142,7 +142,7 @@ namespace DodgeDynasty.Controllers
 			//Not coding CompareRankIds Validation; call UpdateCompareRankIds instead
 			var helper = PlayerRankUIHelper.Instance;
 			helper.UpdatePlayerRankOptions(options, Response);
-			var playerRankModel = helper.GetPlayerRankPartial(null, isBestAvailable, Request, Response);
+			var playerRankModel = helper.GetPlayerRankPartial(null, null, isBestAvailable, Request, Response);
 			return PartialView(isBestAvailable ? Constants.Views.BestAvailable : Constants.Views.PlayerRanks, playerRankModel);
 		}
 
@@ -154,7 +154,7 @@ namespace DodgeDynasty.Controllers
 			var helper = PlayerRankUIHelper.Instance;
 			var options = helper.GetPlayerRankOptions(Request, Response);
 			helper.AddCompareRank(options, Response);
-			var playerRankModel = helper.GetPlayerRankPartial(null, isBestAvailable, Request, Response);
+			var playerRankModel = helper.GetPlayerRankPartial(null, null, isBestAvailable, Request, Response);
 			return PartialView(isBestAvailable ? Constants.Views.BestAvailable : Constants.Views.PlayerRanks, playerRankModel);
 		}
 		

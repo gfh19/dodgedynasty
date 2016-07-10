@@ -44,14 +44,15 @@ namespace DodgeDynasty.Mappers
 			int rankId;
 			using (HomeEntity = new HomeEntity())
 			{
+				var now = Utilities.GetEasternTime();
 				var rank = new Rank
 				{
 					RankName = model.RankName,
 					Year = model.DraftYear,
-					RankDate = DateTime.Now,
+					RankDate = now,
 					Url = null,
-					AddTimestamp = DateTime.Now,
-					LastUpdateTimestamp = DateTime.Now
+					AddTimestamp = now,
+					LastUpdateTimestamp = now
 				};
 				HomeEntity.Ranks.AddObject(rank);
 				HomeEntity.SaveChanges();
@@ -62,8 +63,8 @@ namespace DodgeDynasty.Mappers
 					RankId = rankId,
 					PrimaryDraftRanking = true,
 					UserId = model.UserId,
-					AddTimestamp = DateTime.Now,
-					LastUpdateTimestamp = DateTime.Now
+					AddTimestamp = now,
+					LastUpdateTimestamp = now
 				};
 				HomeEntity.DraftRanks.AddObject(draftRank);
 				HomeEntity.SaveChanges();
@@ -77,8 +78,8 @@ namespace DodgeDynasty.Mappers
 						RankNum = player.RankNum,
 						PosRankNum = player.PosRankNum,
 						AuctionValue = player.AuctionValue,
-						AddTimestamp = DateTime.Now,
-						LastUpdateTimestamp = DateTime.Now
+						AddTimestamp = now,
+						LastUpdateTimestamp = now
 					});
 				}
 				HomeEntity.SaveChanges();
@@ -88,8 +89,9 @@ namespace DodgeDynasty.Mappers
 
 		private static void SetRankInfo(RankingsListModel model, RankSetupModel rankSetupModel)
 		{
+			var now = Utilities.GetEasternTime();
 			rankSetupModel.DraftId = model.DraftId;
-			rankSetupModel.DraftYear = model.CurrentDraft.DraftYear ?? Convert.ToInt16(DateTime.Now.Year);
+			rankSetupModel.DraftYear = model.CurrentDraft.DraftYear ?? Convert.ToInt16(now.Year);
 			rankSetupModel.UserId = model.CurrentLoggedInOwnerUser.UserId;
 			SetAddRankName(model, rankSetupModel);
 		}
@@ -132,6 +134,7 @@ namespace DodgeDynasty.Mappers
 
 			using (HomeEntity = new HomeEntity())
 			{
+				var now = Utilities.GetEasternTime();
 				int? inactiveTruePlayerId = null;
 				bool justActivated = false;
 				Player player = DBUtilities.FindMatchingPlayer("Rank",
@@ -147,8 +150,8 @@ namespace DodgeDynasty.Mappers
 						Position = rankSetupModel.Player.Position.ToUpper(),
 						NFLTeam = rankSetupModel.Player.NFLTeam.ToUpper(),
 						IsActive = true,
-						AddTimestamp = DateTime.Now,
-						LastUpdateTimestamp = DateTime.Now
+						AddTimestamp = now,
+						LastUpdateTimestamp = now
 					};
 					HomeEntity.Players.AddObject(player);
 					HomeEntity.SaveChanges();
@@ -167,8 +170,8 @@ namespace DodgeDynasty.Mappers
 						NewNFLTeam = player.NFLTeam.ToUpper(),
 						Action = "Rank Add Player",
 						UserId = HomeEntity.Users.First(u => u.UserName == loggedInUserName).UserId,
-						AddTimestamp = DateTime.Now,
-						LastUpdateTimestamp = DateTime.Now
+						AddTimestamp = now,
+						LastUpdateTimestamp = now
 					};
 					if (inactiveTruePlayerId != null)
 					{
@@ -188,15 +191,17 @@ namespace DodgeDynasty.Mappers
 
 		private void UpdateRankInfo(RankSetupModel rankSetupModel)
 		{
+			var now = Utilities.GetEasternTime();
 			var rank = HomeEntity.Ranks.First(r => r.RankId == rankSetupModel.RankId);
 			rank.RankName = rankSetupModel.RankName;
-			rank.RankDate = DateTime.Now;
-			rank.LastUpdateTimestamp = DateTime.Now;
+			rank.RankDate = now;
+			rank.LastUpdateTimestamp = now;
 			HomeEntity.SaveChanges();
 		}
 
 		private void SaveNewPlayerRanks(RankSetupModel rankSetupModel)
 		{
+			var now = Utilities.GetEasternTime();
 			var newRankedPlayers = rankSetupModel.RankedPlayers.ToList();
 			foreach (var player in newRankedPlayers)
 			{
@@ -207,8 +212,8 @@ namespace DodgeDynasty.Mappers
 					RankNum = player.RankNum,
 					PosRankNum = player.PosRankNum,
 					AuctionValue = player.AuctionValue,
-					AddTimestamp = DateTime.Now,
-					LastUpdateTimestamp = DateTime.Now
+					AddTimestamp = now,
+					LastUpdateTimestamp = now
 				});
 			}
 			HomeEntity.SaveChanges();
@@ -216,6 +221,7 @@ namespace DodgeDynasty.Mappers
 
 		private void ArchiveAndDeletePlayerRanks(RankSetupModel rankSetupModel, int newGroupId)
 		{
+			var now = Utilities.GetEasternTime();
 			var currentRankedPlayers = HomeEntity.PlayerRanks.Where(pr => pr.RankId == rankSetupModel.RankId).ToList();
 			foreach (var player in currentRankedPlayers)
 			{
@@ -228,7 +234,7 @@ namespace DodgeDynasty.Mappers
 					PosRankNum = player.PosRankNum,
 					AuctionValue = player.AuctionValue,
 					AddTimestamp = player.AddTimestamp,
-					LastUpdateTimestamp = DateTime.Now
+					LastUpdateTimestamp = now
 				});
 				HomeEntity.PlayerRanks.DeleteObject(player);
 			}

@@ -66,6 +66,7 @@ namespace DodgeDynasty.Models
 		{
 			using (HomeEntity = new HomeEntity())
 			{
+				var now = Utilities.GetEasternTime();
 				int? inactiveTruePlayerId = null;
 				bool justActivated = false;
 				Player draftedPlayer = DBUtilities.FindMatchingPlayer("Draft",
@@ -80,8 +81,8 @@ namespace DodgeDynasty.Models
 						LastName = playerModel.LastName,
 						Position = playerModel.Position.ToUpper(),
 						NFLTeam = playerModel.NFLTeam.ToUpper(),
-						AddTimestamp = DateTime.Now,
-						LastUpdateTimestamp = DateTime.Now,
+						AddTimestamp = now,
+						LastUpdateTimestamp = now,
 						IsActive = true,
 						IsDrafted = true
 					};
@@ -101,8 +102,8 @@ namespace DodgeDynasty.Models
 						NewNFLTeam = draftedPlayer.NFLTeam.ToUpper(),
 						Action = "Draft Add Player",
 						UserId = HomeEntity.Users.First(u => u.UserName == userName).UserId,
-						AddTimestamp = DateTime.Now,
-						LastUpdateTimestamp = DateTime.Now
+						AddTimestamp = now,
+						LastUpdateTimestamp = now
 					};
 					if (inactiveTruePlayerId != null)
 					{
@@ -124,21 +125,20 @@ namespace DodgeDynasty.Models
 					//Mark player drafted
 					draftedPlayer = HomeEntity.Players.FirstOrDefault(p => p.PlayerId == draftedPlayer.PlayerId);
 					draftedPlayer.IsDrafted = true;
-					draftedPlayer.LastUpdateTimestamp = DateTime.Now;
+					draftedPlayer.LastUpdateTimestamp = now;
 					HomeEntity.SaveChanges();
 				}
 
 				var draftPick = HomeEntity.DraftPicks.First(p => p.DraftPickId == playerModel.DraftPickId);
 				draftPick.PlayerId = draftedPlayer.PlayerId;
-				draftPick.LastUpdateTimestamp = DateTime.Now;
-				draftPick.PickEndDateTime = GetCurrentTimeEastern(DateTime.UtcNow);
+				draftPick.LastUpdateTimestamp = now;
+				draftPick.PickEndDateTime = Utilities.GetEasternTime();
 				HomeEntity.SaveChanges();
 				var nextDraftPick = HomeEntity.DraftPicks.Where(d => d.DraftId == DraftId)
 					.OrderBy(p => p.PickNum).FirstOrDefault(p => p.PlayerId == null);
 				if (nextDraftPick != null)
 				{
-					var currentTime = DateTime.Now;
-					nextDraftPick.PickStartDateTime = GetCurrentTimeEastern(DateTime.UtcNow.AddSeconds(2));
+					nextDraftPick.PickStartDateTime = Utilities.GetEasternTime();
 					HomeEntity.SaveChanges();
 				}
 			}

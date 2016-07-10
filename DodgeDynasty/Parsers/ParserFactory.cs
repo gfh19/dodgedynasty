@@ -12,6 +12,7 @@ namespace DodgeDynasty.Parsers
 			{ 3, new EspnAdpParser() },			//ESPN ADP
 			{ 4, new FprosAdpParser() },		//Fantasypros ADP
 			{ 5, new YahooParser() },			//Yahoo!
+			{ 5, new FprosDynasty() },			//Fantasypros - Dynasty
 		};
 
 		public static IRankParser Create(int? autoImportId)

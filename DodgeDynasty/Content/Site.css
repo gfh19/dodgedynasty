@@ -1574,6 +1574,9 @@ ul.menu li a.current-page
 	white-space: normal;
 	cursor: initial !important;
 }
+.cr-add-rank-content, .cr-add-rank-content div {
+	margin: 0 auto;
+}
 .cr-add-rank-msg {
 	width: 232px;
 }
@@ -2563,7 +2566,7 @@ span.player-select
 	table
 	{
 		margin: auto;
-		max-width: 285px;
+		max-width: 295px;
 	}
 	.ba-category 
 	{
@@ -2574,6 +2577,7 @@ span.player-select
 	.ba-category td {
 		max-width: 130px;
 		white-space: normal;
+		padding-right: 0.5em;
 	}
 		/*    -------- Highlighting */
 	.pr-highlight-section {
@@ -2585,9 +2589,6 @@ span.player-select
 		padding-right: 3px;
 	}
 		/*    -------- Compare Ranks */
-	.cr-add-rank-content {
-		margin: 0 auto;
-	}
 	.cr-add-compare {
 		padding-top: 15px;
 	}

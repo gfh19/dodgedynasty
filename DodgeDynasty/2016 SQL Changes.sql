@@ -1,17 +1,72 @@
-﻿
+﻿/* 7/10/16 */
+
+SET XACT_ABORT ON
+BEGIN TRANSACTION;
+
+
+INSERT INTO [dbo].[AutoImport]
+           ([RankName],[ImportUrl],[AddTimestamp],[LastUpdateTimestamp])
+     VALUES
+           ('Fantasypros - Dynasty','https://www.fantasypros.com/nfl/rankings/dynasty-overall.php',getdate(),getdate())
+GO
+
+
+
+
+
+
+COMMIT TRANSACTION;
+
+
+
+
+
+
+
+
+
+
+/* Below Run in Production on 7/10/16 */
+
+/* 7/7/16 */
+
 SET XACT_ABORT ON
 BEGIN TRANSACTION;
 
 
 
-/* TODO */
-
-- Index TruePlayerId column in Player table
-
-
-
-
-
+INSERT INTO dbo.ByeWeek VALUES (2016, 'ARI', '9', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2016, 'ATL', '11', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2016, 'BAL', '8', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2016, 'BUF', '10', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2016, 'CAR', '7', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2016, 'CHI', '9', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2016, 'CIN', '9', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2016, 'CLE', '13', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2016, 'DAL', '7', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2016, 'DEN', '11', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2016, 'DET', '10', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2016, 'GB', '4', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2016, 'HOU', '9', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2016, 'IND', '10', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2016, 'JAX', '5', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2016, 'KC', '5', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2016, 'LA', '8', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2016, 'MIA', '8', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2016, 'MIN', '6', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2016, 'NE', '9', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2016, 'NO', '5', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2016, 'NYG', '8', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2016, 'NYJ', '11', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2016, 'OAK', '10', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2016, 'PHI', '4', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2016, 'PIT', '8', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2016, 'SD', '11', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2016, 'SF', '8', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2016, 'SEA', '5', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2016, 'TB', '6', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2016, 'TEN', '13', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2016, 'WAS', '9', getdate(), getdate());
 
 
 
