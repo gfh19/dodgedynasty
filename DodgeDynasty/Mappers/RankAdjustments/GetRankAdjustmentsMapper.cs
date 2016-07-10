@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DodgeDynasty.Entities;
+using DodgeDynasty.Models.PlayerAdjustments;
 using DodgeDynasty.Models.RankAdjustments;
 using DodgeDynasty.Models.Shared;
 using DodgeDynasty.Models.Types;
@@ -47,7 +48,6 @@ namespace DodgeDynasty.Mappers.RankAdjustments
 		{
 			List<AdjustedPlayer> players = new List<AdjustedPlayer>();
 			var auditPlayers = (from r in HomeEntity.Ranks
-								join dr in HomeEntity.DraftRanks on r.RankId equals dr.RankId
 								join pr in HomeEntity.PlayerRanks on r.RankId equals pr.RankId
 								join p in HomeEntity.Players on pr.PlayerId equals p.PlayerId
 								where r.Year == Year && !p.IsActive
@@ -57,30 +57,45 @@ namespace DodgeDynasty.Mappers.RankAdjustments
 				players.Add(AuditPlayerHelper.GetAuditedPlayer(auditPlayer,
 					new List<Draft>(), GetMatchingRanks(auditPlayer), HomeEntity.DraftRanks));
 			}
+			var auditHighlightPlayers = (from ph in HomeEntity.PlayerHighlights
+								join d in HomeEntity.Drafts on ph.DraftId equals d.DraftId
+								join p in HomeEntity.Players on ph.PlayerId equals p.PlayerId
+								where d.DraftYear == Year && !p.IsActive
+								select p).Distinct().OrderBy(o => o.PlayerName).ThenByDescending(o => o.AddTimestamp);
+			foreach (var auditHighlightPlayer in auditHighlightPlayers)
+			{
+				var newAuditPlayer = AuditPlayerHelper.GetAuditedPlayer(auditHighlightPlayer,
+					new List<Draft>(), GetMatchingRanks(auditHighlightPlayer), HomeEntity.DraftRanks);
+				newAuditPlayer.DraftsRanks.Insert(0, new DraftsRanksTextModel { Text = "Player Highlights!" });
+                players.Add(newAuditPlayer);
+			}
 			return players;
 		}
 
 		private List<AdjustedPlayer> GetDuplicateRankedPlayers()
 		{
 			List<AdjustedPlayer> players = new List<AdjustedPlayer>();
-			var auditPlayers = from r in HomeEntity.Ranks
-							  join dr in HomeEntity.DraftRanks on r.RankId equals dr.RankId
+			var auditTruePlayers = from r in HomeEntity.Ranks
 							  join pr in HomeEntity.PlayerRanks on r.RankId equals pr.RankId
 							  join p in HomeEntity.Players on pr.PlayerId equals p.PlayerId
 							  where r.Year == Year
 							  group p by new
 							  {
-								  PlayerId = p.PlayerId,
+								  TruePlayerId = p.TruePlayerId,
 								  RankId = r.RankId,
-								  Player = p,
                                   Rank = r
 							  } into rp
 							  where rp.Count() > 1
-							  select new { RankId = rp.Key.RankId, Player = rp.Key.Player, Rank = rp.Key.Rank };
-			foreach (var auditPlayer in auditPlayers)
+							  select new { RankId = rp.Key.RankId, TruePlayerId = rp.Key.TruePlayerId, Rank = rp.Key.Rank };
+			foreach (var auditTruePlayer in auditTruePlayers)
 			{
-				players.Add(AuditPlayerHelper.GetAuditedPlayer(auditPlayer.Player,
-					new List<Draft>(), new List<Rank> { auditPlayer.Rank }, HomeEntity.DraftRanks));
+				var auditPlayers = HomeEntity.Players.Where(o => o.TruePlayerId == auditTruePlayer.TruePlayerId).ToList();
+				foreach (var auditPlayer in auditPlayers.Where(o=> HomeEntity.PlayerRanks.Any(
+					p => p.RankId == auditTruePlayer.RankId && p.PlayerId == o.PlayerId)))
+				{
+					players.Add(AuditPlayerHelper.GetAuditedPlayer(auditPlayer,
+						new List<Draft>(), new List<Rank> { auditTruePlayer.Rank }, HomeEntity.DraftRanks));
+				}
 			}
 			return players;
 		}
