@@ -47,9 +47,10 @@ namespace DodgeDynasty.Mappers.Admin
 			{
 				Model.ErrorMessage = ex.Message;
 				Model.StackTrace = ex.StackTrace;
-				if (Model.StackTrace.Length > 100)
+				var maxStackTrace = 250;
+                if (Model.StackTrace.Length > maxStackTrace)
 				{
-					Model.StackTrace = Model.StackTrace.Substring(0, 250) + "...";
+					Model.StackTrace = Model.StackTrace.Substring(0, maxStackTrace) + "...";
                 }
                 return;
 			}

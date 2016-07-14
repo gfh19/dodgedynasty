@@ -72,6 +72,18 @@ header {
 	margin-top: 4px;
 }
 
+.page-caption-large {
+	margin-bottom: 20px;
+}
+
+.page-caption {
+	margin-bottom: 12px;
+}
+
+.page-caption-small {
+	margin-bottom: 4px;
+}
+
 .wait {
 	cursor: wait;
 }
@@ -1609,8 +1621,14 @@ ul.menu li a.current-page
 {
 	font-size: 11px;
 }
-.not-available {
-	margin-bottom: 5px;
+.rank-paste-section {
+	height: 40px;
+}
+.rank-paste-section div {
+	margin-top: -5px;
+}
+.rank-paste-new {
+	line-height: 35px;
 }
 #setupRank 
 {

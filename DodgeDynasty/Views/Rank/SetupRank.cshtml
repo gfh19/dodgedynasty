@@ -55,7 +55,12 @@
 	<div class="buttons"><button type="submit" class="submit-rankings">Update Rankings</button></div>
 
 	<div class="rank-setup-section clear-fix">
-		<div class="note-text not-available">Player not available?  <a href="#" class="add-new-player">Add New Player</a></div>
+		<div class="note-text page-caption-small">Player not available?  <a href="#" class="add-new-player">Add New Player</a></div>
+		<div class="rank-paste-section">
+			<div><a href="#" class="rank-paste-new">(Open the Paste Rankings textbox)</a></div>
+			<div class="rank-paste-ctrls hide-yo-wives"><input class="rank-paste-txt" placeholder="Paste Rankings Here" />
+			<a href="#" class="rank-paste-cancel note-text">Cancel</a></div>
+		</div>
 		<div class="copy-pr-entry clear-fix hide-yo-kids">
 			<div class="rank-vertical-controls">
 				<a href="#" class="rank-move-up" tabindex="-1"><img src="@Url.Content("~/Content/images/up.png")" alt="Move Up" /></a>
@@ -140,6 +145,6 @@
 			@Html.DropDownListFor(m => m.Player.NFLTeam, Model.GetNFLListItems(), new { id = "add-plyr-nfl" });
 			@Html.ValidationMessageFor(m => m.Player.NFLTeam)
 		}
-		<p class="note-text">Save your current rankings and Add a New Player (Do not submit if player has already been found)</p>
+		<p class="note-text">Saves the current rankings and Adds a New Player (Do not submit if player has already been found)</p>
 	</div>
 </div>

@@ -106,21 +106,26 @@ function bindMoveUpPlayerLinks() {
 function bindMoveUpPlayerLink(link) {
 	$(link).click(function (e) {
 		e.preventDefault();
-		var playerRankEntry = $(link).closest('.player-rank-entry');
-		var playerRankNum = parseInt($(".player-rank-num", playerRankEntry).text());
-		var prevPlayerRankEntry = $(playerRankEntry).prev();
-		var prevPlayerRankNum = parseInt($(".player-rank-num", prevPlayerRankEntry).text());
-		setNewPlayerRankNum(prevPlayerRankEntry, prevPlayerRankNum, 1);
-		setNewPlayerRankNum(playerRankEntry, playerRankNum, -1);
-		var oldPos = $($(".player-select", playerRankEntry)).offset().top;
-		$(playerRankEntry).insertBefore($(prevPlayerRankEntry));
-		setElementTopPosition($(".player-select", playerRankEntry), oldPos, (-1 * $(playerRankEntry).height()));
-		$(playerRankEntry).css("display", "none");
+		var playerRankEntry = moveUpPlayer(link);
 		$(playerRankEntry).fadeIn(180);
 		$(playerRankEntry).focus();
-		displayLinks();
 	});
 }
+
+function moveUpPlayer(link) {
+	var playerRankEntry = $(link).closest('.player-rank-entry');
+	var playerRankNum = parseInt($(".player-rank-num", playerRankEntry).text());
+	var prevPlayerRankEntry = $(playerRankEntry).prev();
+	var prevPlayerRankNum = parseInt($(".player-rank-num", prevPlayerRankEntry).text());
+	setNewPlayerRankNum(prevPlayerRankEntry, prevPlayerRankNum, 1);
+	setNewPlayerRankNum(playerRankEntry, playerRankNum, -1);
+	var oldPos = $($(".player-select", playerRankEntry)).offset().top;
+	$(playerRankEntry).insertBefore($(prevPlayerRankEntry));
+	setElementTopPosition($(".player-select", playerRankEntry), oldPos, (-1 * $(playerRankEntry).height()));
+	$(playerRankEntry).css("display", "none");
+	displayLinks();
+	return playerRankEntry;
+};
 
 function bindMoveDownPlayerLinks() {
 	var links = $(".rank-move-down");
@@ -178,36 +183,61 @@ function bindPastePlayerHandlers() {
 			}
 		});
 	}
+
+	$(".rank-paste-new").unbind("click");
+	$(".rank-paste-new").click(function (e) {
+		e.preventDefault();
+		$(".rank-paste-new").addClass("hide-yo-wives");
+		$(".rank-paste-ctrls").removeClass("hide-yo-wives");
+	});
+
+	$(".rank-paste-cancel").unbind("click");
+	$(".rank-paste-cancel").click(function (e) {
+		e.preventDefault();
+		$(".rank-paste-ctrls").addClass("hide-yo-wives");
+		$(".rank-paste-new").removeClass("hide-yo-wives");
+	});
 }
 
 function pastePlayerHandler(clipboardData) {
 	$("body").css("cursor", "wait");
 	var pastedText = (clipboardData) ? clipboardData.getData('Text') : null;
-	if (pastedText && $(document.activeElement).is("select") && $(document.activeElement).hasClass("player-select")) {
-		var pastedArray;
-		if (pastedText.indexOf("\r\n") > 0) {
-			pastedArray = pastedText.split("\r\n");
-		}
-		else if (pastedText.indexOf("\r") > 0) {
-			pastedArray = pastedText.split("\r");
-		}
-		else {
-			pastedArray = pastedText.split("\n");
-		}
-		if (pastedArray.length > 0 && pastedArray[pastedArray.length - 1] == "") {
-			pastedArray = pastedArray.splice(0, pastedArray.length - 1);
-		}
-		var destSelect = document.activeElement;
-		if (pastedArray.length > 0) {
-			$.each(pastedArray, function (ix, txt) {
-				selectPastedPlayer(txt, destSelect);
-				var newDestSelect = $(".player-select", $(destSelect).parent().parent().next());
-				if (ix < (pastedArray.length - 1) && ($(newDestSelect).length == 0 || $(newDestSelect).is("span"))) {
-					$(".rank-add-player", $(destSelect).parent().parent()).click();
-					newDestSelect = $(".player-select", $(destSelect).parent().parent().next());
-				}
-				destSelect = newDestSelect;
-			});
+	if (pastedText) {
+		var onPlayerSelect = $(document.activeElement).is("select") && $(document.activeElement).hasClass("player-select");
+		var onPasteTextbox = $(document.activeElement).is("input") && $(document.activeElement).hasClass("rank-paste-txt");
+		if (onPlayerSelect || onPasteTextbox) {
+			var destSelect = document.activeElement;
+			if (onPasteTextbox) {
+				$(".rank-add-player").eq(1).click();
+				var newMoveUpLink = $(".rank-move-up").eq(2);
+				var playerRankEntry = moveUpPlayer(newMoveUpLink);
+				$(playerRankEntry).show();
+				destSelect = $(".player-select", playerRankEntry);
+			}
+			var pastedArray;
+			if (pastedText.indexOf("\r\n") > 0) {
+				pastedArray = pastedText.split("\r\n");
+			}
+			else if (pastedText.indexOf("\r") > 0) {
+				pastedArray = pastedText.split("\r");
+			}
+			else {
+				pastedArray = pastedText.split("\n");
+			}
+			if (pastedArray.length > 0 && pastedArray[pastedArray.length - 1] == "") {
+				pastedArray = pastedArray.splice(0, pastedArray.length - 1);
+			}
+			if (pastedArray.length > 0) {
+				$.each(pastedArray, function (ix, txt) {
+					selectPastedPlayer(txt, destSelect);
+					var newDestSelect = $(".player-select", $(destSelect).parent().parent().next());
+					if (ix < (pastedArray.length - 1) && ($(newDestSelect).length == 0 || $(newDestSelect).is("span"))) {
+						$(".rank-add-player", $(destSelect).parent().parent()).click();
+						newDestSelect = $(".player-select", $(destSelect).parent().parent().next());
+					}
+					destSelect = newDestSelect;
+				});
+			}
 		}
 	}
 	$("body").css("cursor", "default");
@@ -216,52 +246,61 @@ function pastePlayerHandler(clipboardData) {
 function selectPastedPlayer(txt, destSelect) {
 	if (txt && txt.length > 0) {
 		var matchedVal = null;
-		$.each($("option", destSelect), function (ix, option) {
-			if (matchedVal == null) {
-				var optText = $(option).html();
-				var playerNameLength = optText.indexOf(" (");
-				if (playerNameLength < 0) { playerNameLength = optText.length; }
-				var playerName = optText.substr(0, playerNameLength);
-				var defenseName = null;
-				if (isDEF(optText)) {
-					var teamNameIx = playerName.lastIndexOf(" ");
-					if (teamNameIx > 0) {
-						defenseName = playerName.substr(teamNameIx + 1, playerNameLength);
-					}
-				}
+		var pastedPlayerLength = txt.indexOf("(");
+		if (pastedPlayerLength < 0) { pastedPlayerLength = txt.length; }
+		var pastedPlayer = txt.substr(0, pastedPlayerLength);
+		pastedPlayerLength = pastedPlayer.indexOf(",");
+		if (pastedPlayerLength > 0) {
+			pastedPlayer = txt.substr(0, pastedPlayerLength);
+		}
+		var scrubbedPlayer = scrubPlayerName(pastedPlayer);
+		var formattedUnsubbedPlayer = formatName(pastedPlayer);
 
-				var pastedPlayerLength = txt.indexOf("(");
-				if (pastedPlayerLength < 0) { pastedPlayerLength = txt.length; }
-				var pastedPlayer = txt.substr(0, pastedPlayerLength);
-				pastedPlayerLength = pastedPlayer.indexOf(",");
-				if (pastedPlayerLength > 0) {
-					pastedPlayer = txt.substr(0, pastedPlayerLength);
-				}
-				var scrubbedPlayer = scrubPlayerName(pastedPlayer);
-
-				$.each(_playerNameIds, function (playerKey, playerValue) {
-					if (scrubbedPlayer.startsWith(playerKey)) {
-						matchedVal = _playerNameIds[playerKey];
-						return false;
-					}
-				});
-
-				if (matchedVal != null) {
-					return matchedVal;
-				}
-
-				if (playerNameLength > 0
-					&& (formatName(optText).startsWith(scrubbedPlayer)
-					|| scrubbedPlayer.startsWith(formatName(playerName)))
-					|| (defenseName != null
-						&& (formatName(defenseName).startsWith(scrubbedPlayer)
-						|| scrubbedPlayer.startsWith(formatName(defenseName) + ' d')))
-					) {
-					matchedVal = $(option).val();
-					return false;
-				}
+		$.each(_playerNameIds, function (playerKey, playerValue) {
+			if (scrubbedPlayer.startsWith(playerKey)) {
+				matchedVal = _playerNameIds[playerKey];
+				return false;
 			}
 		});
+		if (matchedVal == null) {
+			$.each($("option", destSelect), function (ix, option) {
+				if (matchedVal == null) {
+					var optText = $(option).html();
+					var playerNameLength = optText.indexOf(" (");
+					if (playerNameLength < 0) { playerNameLength = optText.length; }
+					var playerName = optText.substr(0, playerNameLength);
+					var defenseName = null;
+					if (isDEF(optText)) {
+						var teamNameIx = playerName.lastIndexOf(" ");
+						if (teamNameIx > 0) {
+							defenseName = playerName.substr(teamNameIx + 1, playerNameLength);
+						}
+					}
+
+					if (matchedVal != null) {
+						return matchedVal;
+					}
+
+					if (playerNameLength > 0) {
+						if ((formatName(optText).startsWith(scrubbedPlayer)
+							|| scrubbedPlayer.startsWith(formatName(playerName)))
+							|| (defenseName != null
+								&& (formatName(defenseName).startsWith(scrubbedPlayer)
+								|| scrubbedPlayer.startsWith(formatName(defenseName) + ' d')))
+							) {
+							matchedVal = $(option).val();
+							return false;
+						}
+						else if (scrubbedPlayer != formattedUnsubbedPlayer
+							&& (formatName(optText).startsWith(formattedUnsubbedPlayer)
+							|| formattedUnsubbedPlayer.startsWith(formatName(playerName)))) {
+							//If non-scrubbed name matches, set but allow to keep looking for scrubbed name
+							matchedVal = $(option).val();
+						}
+					}
+				}
+			});
+		}
 		if (matchedVal && matchedVal >= 0) {
 			(isBrowserIE()) ? $('option[value=' + matchedVal + ']', destSelect).prop('selected', true)
 							: $(destSelect).val(matchedVal);
@@ -476,6 +515,7 @@ function showAddNewPlayerDialog() {
 		height: 'auto',
 		width: '280px',
 		modal: true,
+		dialogClass: "visible-dialog",
 		buttons: [
 					{
 						text: "Save Changes & Add Player", click: function () {
@@ -509,7 +549,7 @@ function showClearRanksDialog() {
 		buttons: [
 					{
 						text: "OK", click: function () {
-							$(".rank-add-player").last().click()
+							$(".rank-add-player").last().click();
 							$(".rank-remove-player").not(":last").click();
 							$(this).dialog("close");
 						}

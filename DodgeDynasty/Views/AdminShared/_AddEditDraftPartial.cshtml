@@ -55,13 +55,13 @@
 		}
 		<div class="page-section">
 			<div class="copy-lo-entry hide-yo-wives">
-				<div class="league-owner">
+				<span class="league-owner">
 					@Html.DropDownList("UserId", Model.GetLeagueOwnerUserItems(), new { @class = "lo-select" })
-				</div>
-				<div class="owner-controls">
+				</span>
+				<span class="owner-controls">
 					<a href="#" class="league-remove-owner" tabindex="-1"><img src="@Url.Content("~/Content/images/minus.png")" alt="Remove Owner" /></a>
 					<a href="#" class="league-add-owner" tabindex="-1"><img src="@Url.Content("~/Content/images/plus.png")" alt="Add Owner" /></a>
-				</div>
+				</span>
 			</div>
 			<div class="league-owners">
 				<div class="lo-entry-header">
@@ -71,13 +71,13 @@
 				@foreach (var ownerUser in Model.DraftOwnerUsers)
 				{
 					<div class="league-owner-entry">
-						<div class="league-owner">
+						<span class="league-owner">
 							@Html.DropDownListFor(o => ownerUser.UserId, Model.GetLeagueOwnerUserItems(ownerUser), new { @class = "lo-select" })
-						</div>
-						<div class="owner-controls">
+						</span>
+						<span class="owner-controls">
 							<a href="#" class="league-remove-owner" tabindex="-1"><img src="@Url.Content("~/Content/images/minus.png")" alt="Remove Owner" /></a>
 							<a href="#" class="league-add-owner" tabindex="-1"><img src="@Url.Content("~/Content/images/plus.png")" alt="Add Owner" /></a>
-						</div>
+						</span>
 					</div>
 				}
 			</div>
