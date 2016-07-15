@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using DodgeDynasty.Models;
 using DodgeDynasty.Mappers;
 using DodgeDynasty.Shared;
 using DodgeDynasty.Filters;
-using DodgeDynasty.Shared.Exceptions;
 using DodgeDynasty.Models.Types;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using DodgeDynasty.UIHelpers;
 using DodgeDynasty.Mappers.Drafts;
 using DodgeDynasty.Mappers.Audio;
@@ -113,11 +107,11 @@ namespace DodgeDynasty.Controllers
 
 		[HttpGet]
 		[OwnerRankAccess]
-		public ActionResult HighlightQueuePartial(bool isBestAvailable)
+		public ActionResult HighlightQueueInnerPartial(bool isBestAvailable)
 		{
 			var helper = PlayerRankUIHelper.Instance;
 			var playerRankModel = helper.GetPlayerRankPartial(null, null, isBestAvailable, Request, Response);
-			return PartialView(Constants.Views.HighlightQueuePartial, playerRankModel);
+			return PartialView(Constants.Views.HighlightQueueInnerPartial, playerRankModel);
 		}
 
 		[HttpPost]

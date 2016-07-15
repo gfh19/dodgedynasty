@@ -842,6 +842,14 @@ function toggleDisplay(element, condition) {
 	}
 }
 
+function getRandom(min, max) {
+	return Math.floor(Math.random() * (max - min)) + min;
+}
+
+function getRandomInt() {
+	return getRandom(0, 100000000);
+}
+
 function showConfirmDialog(dialogText, okFn, cancelFn) {
 	cancelFn = cancelFn || function () { $(this).dialog("close"); };
 	var confirmDialog = '<div class="center hide-yo-kids" title="Confirmation"><p>' + dialogText + '</p></div>';

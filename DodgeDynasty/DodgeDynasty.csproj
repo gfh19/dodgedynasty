@@ -503,6 +503,7 @@
     <Content Include="Views\Admin\ManageDrafts.cshtml" />
     <Content Include="Views\Admin\ManageLeagues.cshtml" />
     <Content Include="Views\Commish\ManageDrafts.cshtml" />
+    <Content Include="Views\Draft\HighlightQueuePartial.cshtml" />
     <Content Include="Views\Shared\Unauthorized.cshtml" />
     <Content Include="Views\Draft\Pick.cshtml" />
     <Content Include="Views\Draft\CurrentDraftPickPartial.cshtml" />
@@ -533,7 +534,6 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\_DraftChatPartial.cshtml" />
     <Content Include="Views\Draft\_PlayerRankCategory.cshtml" />
-    <Content Include="Views\Draft\HighlightQueuePartial.cshtml" />
     <Content Include="Views\AdminShared\_ManageLeaguesPartial.cshtml" />
     <Content Include="Views\Commish\ManageLeagues.cshtml" />
     <Content Include="Views\AdminShared\_ManageDraftsPartial.cshtml" />
@@ -552,6 +552,7 @@
     <Content Include="Views\Draft\ComparePlayerRanksPartial.cshtml" />
     <Content Include="Views\Admin\RankAdjustments.cshtml" />
     <Content Include="Views\Shared\_TestAudioPartial.cshtml" />
+    <Content Include="Views\Draft\_HighlightQueueInnerPartial.cshtml" />
     <None Include="Web.local.config">
       <SubType>Designer</SubType>
     </None>

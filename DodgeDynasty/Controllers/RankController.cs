@@ -9,8 +9,6 @@ using DodgeDynasty.Models.Highlights;
 using System.Net;
 using DodgeDynasty.UIHelpers;
 using DodgeDynasty.Models.Types;
-using System.Web.Helpers;
-using DodgeDynasty.Mappers.Ranks;
 
 namespace DodgeDynasty.Controllers
 {

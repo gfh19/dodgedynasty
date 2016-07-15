@@ -133,6 +133,7 @@ namespace DodgeDynasty.Shared
 			public const string Messages = "Messages";
 			public const string DraftChatPartial = "_DraftChatPartial";
 			public const string HighlightQueuePartial = "HighlightQueuePartial";
+			public const string HighlightQueueInnerPartial = "_HighlightQueueInnerPartial";
 			public const string TestAudioPartial = "_TestAudioPartial";
 		}
 	}

@@ -154,11 +154,14 @@ function bindMoveDownPlayerLink(link) {
 }
 
 function bindPastePlayerHandlers() {
-	if (!isBrowserIE()) {
-		$(document).on("paste", function (e) {
-			pastePlayerHandler(e.originalEvent.clipboardData);
-		});
-	}
+	$(document).on("paste", function (e) {
+		if (isBrowserIE()) {
+			pastePlayerHandler(window.clipboardData, e);
+		}
+		else {
+			pastePlayerHandler(e.originalEvent.clipboardData, e);
+		}
+	});
 
 	if (isBrowserIE()) {
 		var pasteKeysPressed = false;
@@ -199,7 +202,7 @@ function bindPastePlayerHandlers() {
 	});
 }
 
-function pastePlayerHandler(clipboardData) {
+function pastePlayerHandler(clipboardData, e) {
 	$("body").css("cursor", "wait");
 	var pastedText = (clipboardData) ? clipboardData.getData('Text') : null;
 	if (pastedText) {
@@ -237,6 +240,15 @@ function pastePlayerHandler(clipboardData) {
 					}
 					destSelect = newDestSelect;
 				});
+				if (onPasteTextbox) {
+					if (e) {
+						e.preventDefault();
+					}
+					setTimeout(function () {
+						$(".rank-paste-txt").val("");
+						$(':focus').blur();
+					}, 0);
+				}
 			}
 		}
 	}

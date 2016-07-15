@@ -1,5 +1,6 @@
 ﻿var ranksWindow;
 var clientCookieOptions = null;
+var lastQueueUpdate = null;
 
 function initPlayerRanksShared() {
 	syncCookies();
@@ -384,9 +385,11 @@ function getPlayerHighlightModel(playerRow) {
 }
 
 function addPlayerHighlighting(playerRow) {
+	var updateId = $(playerRow).hasClass("highlighted") ? getRandomInt() : null;
+	lastQueueUpdate = updateId;
 	var playerRankModel = getPlayerHighlightModel(playerRow);
 	ajaxPost(playerRankModel, "Rank/AddPlayerHighlight", function () {
-		refreshHighlightQueue();
+		refreshHighlightQueue(updateId);
 		clientAddPlayerHighlight(playerRankModel);
 	}, pageBroadcastDraftHandler);	//Refresh whole ranks partial only on error
 }
@@ -394,16 +397,23 @@ function addPlayerHighlighting(playerRow) {
 function removePlayerHighlighting(playerRow) {
 	var playerRankModel = getPlayerHighlightModel(playerRow);
 	ajaxPost(playerRankModel, "Rank/DeletePlayerHighlight", function () {
-		refreshHighlightQueue();
+		refreshHighlightQueue(null);
 		clientRemovePlayerHighlight(playerRankModel);
 	}, pageBroadcastDraftHandler);	//Refresh whole ranks partial only on error
 }
 
-function refreshHighlightQueue() {
+function refreshHighlightQueue(updateId) {
 	var isBestAvailable = isBestAvailablePage();
-	ajaxGetReplace("Draft/HighlightQueuePartial?isBestAvailable=" + isBestAvailable, "#highlightQueuePartial", function () {
-		toggleHighlighting(true);
-	}, pageBroadcastDraftHandler);	//Refresh whole ranks partial only on error
+	ajaxGet("Draft/HighlightQueueInnerPartial?isBestAvailable=" + isBestAvailable, function (response) {
+		if (lastQueueUpdate == updateId || lastQueueUpdate == null) {
+			replaceWith("#highlightQueueInnerPartial", response);
+			toggleHighlighting(true);
+			lastQueueUpdate = null;
+		}
+	}, function () {
+		pageBroadcastDraftHandler();
+		lastQueueUpdate = null;
+	});
 }
 
 function clientAddPlayerHighlight(playerRankModel) {
