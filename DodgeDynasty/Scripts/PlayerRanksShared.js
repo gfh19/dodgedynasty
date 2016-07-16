@@ -302,11 +302,11 @@ function toggleEditHighlighting() {
 	$(".pr-highlight-section").toggleClass("highlight-locked", lockHighlighting);
 	$(".pr-empty-edit-msg").toggle(lockHighlighting);
 	if (lockHighlighting) {
-		$(".pr-edit-highlight").text("Turn Edit ON");
+		$(".pr-edit-highlight").text("Turn Highlighter ON");
 		disableEditHighlighting();
 	}
 	else {
-		$(".pr-edit-highlight").text("Turn Edit Off");
+		$(".pr-edit-highlight").text("Turn Highlighter Off");
 		enableEditHighlighting();
 	}
 	toggleDeleteHighlightDisplay();
