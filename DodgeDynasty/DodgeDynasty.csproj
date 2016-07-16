@@ -354,6 +354,7 @@
     <Compile Include="Shared\Utilities.cs" />
     <Compile Include="Controllers\RankController.cs" />
     <Compile Include="UIHelpers\PlayerRankUIHelper.cs" />
+    <Compile Include="UIHelpers\UIHelper.cs" />
     <Compile Include="WebSockets\DraftHub.cs" />
     <Compile Include="WebSockets\DraftHubHelper.cs" />
     <Compile Include="WebSockets\DD_SignalR.cs" />

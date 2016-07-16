@@ -156,10 +156,10 @@ function bindMoveDownPlayerLink(link) {
 function bindPastePlayerHandlers() {
 	$(document).on("paste", function (e) {
 		if (isBrowserIE()) {
-			pastePlayerHandler(window.clipboardData, e);
+			pastePlayerHandler(window.clipboardData, e, false);
 		}
 		else {
-			pastePlayerHandler(e.originalEvent.clipboardData, e);
+			pastePlayerHandler(e.originalEvent.clipboardData, e, false);
 		}
 	});
 
@@ -181,7 +181,7 @@ function bindPastePlayerHandlers() {
 				map[e.keyCode] = false;
 				if (pasteKeysPressed) {
 					pasteKeysPressed = false;
-					pastePlayerHandler(window.clipboardData);
+					pastePlayerHandler(window.clipboardData, e, true);
 				}
 			}
 		});
@@ -202,12 +202,12 @@ function bindPastePlayerHandlers() {
 	});
 }
 
-function pastePlayerHandler(clipboardData, e) {
+function pastePlayerHandler(clipboardData, e, skipPasteTextbox) {
 	$("body").css("cursor", "wait");
 	var pastedText = (clipboardData) ? clipboardData.getData('Text') : null;
 	if (pastedText) {
 		var onPlayerSelect = $(document.activeElement).is("select") && $(document.activeElement).hasClass("player-select");
-		var onPasteTextbox = $(document.activeElement).is("input") && $(document.activeElement).hasClass("rank-paste-txt");
+		var onPasteTextbox = $(document.activeElement).is("input") && $(document.activeElement).hasClass("rank-paste-txt") && !skipPasteTextbox;
 		if (onPlayerSelect || onPasteTextbox) {
 			var destSelect = document.activeElement;
 			if (onPasteTextbox) {

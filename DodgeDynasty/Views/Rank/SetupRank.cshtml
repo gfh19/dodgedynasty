@@ -1,4 +1,5 @@
 ﻿@model DodgeDynasty.Models.PlayerRankModel
+@using DodgeDynasty.UIHelpers;
 @{
 	ViewBag.Title = "Update Rankings";
 }
@@ -63,8 +64,8 @@
 		</div>
 		<div class="copy-pr-entry clear-fix hide-yo-kids">
 			<div class="rank-vertical-controls">
-				<a href="#" class="rank-move-up" tabindex="-1"><img src="@Url.Content("~/Content/images/up.png")" alt="Move Up" /></a>
-				<a href="#" class="rank-move-down" tabindex="-1"><img src="@Url.Content("~/Content/images/down.png")" alt="Move Down" /></a>
+				<a href="#" class="rank-move-up" tabindex="-1"><img src="@Url.FullPath("~/Content/images/up.png")" alt="Move Up" /></a>
+				<a href="#" class="rank-move-down" tabindex="-1"><img src="@Url.FullPath("~/Content/images/down.png")" alt="Move Down" /></a>
 			</div>
 
 			<div class="ranked-player">
@@ -72,8 +73,8 @@
 				@Html.DropDownList("PlayerId", Model.GetRankPlayersListItem("0"), new { @class = "player-select" })
 			</div>
 			<div class="rank-change-controls">
-				<a href="#" class="rank-remove-player" tabindex="-1"><img src="@Url.Content("~/Content/images/minus.png")" alt="Remove Player" /></a>
-				<a href="#" class="rank-add-player" tabindex="-1"><img src="@Url.Content("~/Content/images/plus.png")" alt="Add Player" /></a>
+				<a href="#" class="rank-remove-player" tabindex="-1"><img src="@Url.FullPath("~/Content/images/minus.png")" alt="Remove Player" /></a>
+				<a href="#" class="rank-add-player" tabindex="-1"><img src="@Url.FullPath("~/Content/images/plus.png")" alt="Add Player" /></a>
 			</div>
 		</div>
 		@if (Model.RankedPlayers.Count > 0)
@@ -82,8 +83,8 @@
 			{
 				<div class="player-rank-entry clear-fix">
 					<div class="rank-vertical-controls">
-						<a href="#" class="rank-move-up" tabindex="-1"><img src="@Url.Content("~/Content/images/up.png")" alt="Move Up" /></a>
-						<a href="#" class="rank-move-down" tabindex="-1"><img src="@Url.Content("~/Content/images/down.png")" alt="Move Down" /></a>
+						<a href="#" class="rank-move-up" tabindex="-1"><img src="@Url.FullPath("~/Content/images/up.png")" alt="Move Up" /></a>
+						<a href="#" class="rank-move-down" tabindex="-1"><img src="@Url.FullPath("~/Content/images/down.png")" alt="Move Down" /></a>
 					</div>
 
 					<div class="ranked-player">
@@ -91,8 +92,8 @@
 						<span class="player-select" data-player-id="@player.PlayerId">@Model.GetPlayerDetails(player.PlayerName, player.NFLTeam, player.Position)</span>
 					</div>
 					<div class="rank-change-controls">
-						<a href="#" class="rank-remove-player" tabindex="-1"><img src="@Url.Content("~/Content/images/minus.png")" alt="Remove Player" /></a>
-						<a href="#" class="rank-add-player" tabindex="-1"><img src="@Url.Content("~/Content/images/plus.png")" alt="Add Player" /></a>
+						<a href="#" class="rank-remove-player" tabindex="-1"><img src="@Url.FullPath("~/Content/images/minus.png")" alt="Remove Player" /></a>
+						<a href="#" class="rank-add-player" tabindex="-1"><img src="@Url.FullPath("~/Content/images/plus.png")" alt="Add Player" /></a>
 					</div>
 				</div>
 			}
@@ -101,8 +102,8 @@
 		{
 			<div class="player-rank-entry clear-fix">
 				<div class="rank-vertical-controls">
-					<a href="#" class="rank-move-up" tabindex="-1"><img src="@Url.Content("~/Content/images/up.png")" alt="Move Up" /></a>
-					<a href="#" class="rank-move-down" tabindex="-1"><img src="@Url.Content("~/Content/images/down.png")" alt="Move Down" /></a>
+					<a href="#" class="rank-move-up" tabindex="-1"><img src="@Url.FullPath("~/Content/images/up.png")" alt="Move Up" /></a>
+					<a href="#" class="rank-move-down" tabindex="-1"><img src="@Url.FullPath("~/Content/images/down.png")" alt="Move Down" /></a>
 				</div>
 
 				<div class="ranked-player">
@@ -110,8 +111,8 @@
 					@Html.DropDownList("PlayerId", Model.GetRankPlayersListItem("0"), new { @class = "player-select" })
 				</div>
 				<div class="rank-change-controls">
-					<a href="#" class="rank-remove-player" tabindex="-1"><img src="@Url.Content("~/Content/images/minus.png")" alt="Remove Player" /></a>
-					<a href="#" class="rank-add-player" tabindex="-1"><img src="@Url.Content("~/Content/images/plus.png")" alt="Add Player" /></a>
+					<a href="#" class="rank-remove-player" tabindex="-1"><img src="@Url.FullPath("~/Content/images/minus.png")" alt="Remove Player" /></a>
+					<a href="#" class="rank-add-player" tabindex="-1"><img src="@Url.FullPath("~/Content/images/plus.png")" alt="Add Player" /></a>
 				</div>
 			</div>
 		}
