@@ -17,11 +17,11 @@ function initPlayerRanksShared() {
 function bindExpandLinks() {
 	var expandLinks = $(".expand-link");
 	$.each(expandLinks, function (index, link) {
-		bindToggleLink(link);
+		bindToggleExpandLink(link);
 	});
 }
 
-function bindToggleLink(link) {
+function bindToggleExpandLink(link) {
 	$(link).unbind("click");
 	$(link).click(function (e) {
 		e.preventDefault();
@@ -259,7 +259,7 @@ function bindQueuePlayerLinks() {
 function enableHighlighting() {
 	$(".pr-highlight-section").removeClass("hide-yo-wives");
 	toggleQueueDisplay();
-	$("tr[data-player-id]").addClass("on");
+	$(".ba-table tr[data-player-id]").addClass("on");
 	$(".pr-toggle-highlight").text("Hide Highlighting");
 	$(".pr-highlight-options").toggle(true);
 	toggleEditHighlighting();
@@ -268,7 +268,7 @@ function enableHighlighting() {
 
 function disableHighlighting() {
 	$(".pr-highlight-section").addClass("hide-yo-wives");
-	$("tr[data-player-id]").removeClass("on");
+	$(".ba-table tr[data-player-id]").removeClass("on");
 	$(".pr-toggle-highlight").text("Show Highlighting *NEW*");
 	$(".pr-highlight-options").toggle(false);
 	disableEditHighlighting();
@@ -314,8 +314,8 @@ function toggleEditHighlighting() {
 
 function enableEditHighlighting() {
 	$(".ba-category").css("cursor", "pointer");
-	$("tr[data-player-id]").unbind("click");
-	$("tr[data-player-id]").click(function (e) {
+	$(".ba-table tr[data-player-id]").unbind("click");
+	$(".ba-table tr[data-player-id]").click(function (e) {
 		e.preventDefault();
 		handlePlayerHighlightClick();
 	});
@@ -324,7 +324,7 @@ function enableEditHighlighting() {
 
 function disableEditHighlighting() {
 	$(".ba-category").css("cursor", "auto");
-	$("tr[data-player-id]").unbind("click");
+	$(".ba-table tr[data-player-id]").unbind("click");
 	unbindSortableQueue();
 }
 
@@ -417,7 +417,7 @@ function refreshHighlightQueue(updateId) {
 }
 
 function clientAddPlayerHighlight(playerRankModel) {
-	var playerRows = $("tr[data-player-id=" + playerRankModel.PlayerId + "]");
+	var playerRows = $(".ba-table tr[data-player-id=" + playerRankModel.PlayerId + "]");
 	$.each(playerRows, function (ix, playerRow) {
 		wipeAllHighlightColors(playerRow);
 		$(playerRow).addClass("highlighted " + playerRankModel.HighlightClass);
@@ -425,7 +425,7 @@ function clientAddPlayerHighlight(playerRankModel) {
 }
 
 function clientRemovePlayerHighlight(playerRankModel) {
-	var playerRows = $("tr[data-player-id=" + playerRankModel.PlayerId + "]");
+	var playerRows = $(".ba-table tr[data-player-id=" + playerRankModel.PlayerId + "]");
 	$.each(playerRows, function (ix, playerRow) {
 		wipeAllHighlightColors(playerRow);
 	});

@@ -4,7 +4,7 @@
 {	<text>
 	.@color.ClassName
 	{
-		border-color: @color.ColorValue;
+		border-color: @color.ColorValue !important;
 	}</text>
 }
 @{var highlightModel = new DodgeDynasty.Mappers.Highlights.HighlightsMapper().GetModel(); }
@@ -12,7 +12,7 @@
 {	<text>
 	.hq-color-span.@highlight.HighlightClass, .highlighted.on.@highlight.HighlightClass
 	{
-		background-color: @highlight.HighlightValue;
+		background-color: @highlight.HighlightValue !important;
 	}</text>
 }
 	.hq-color-span.bg-black, .highlighted.on.bg-black, .highlighted.on.bg-black a {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using DodgeDynasty.Entities;
+using DodgeDynasty.Mappers.Ranks;
 using DodgeDynasty.Models.Types;
 
 namespace DodgeDynasty.Models
@@ -22,26 +23,7 @@ namespace DodgeDynasty.Models
 			List<DraftRankModel> publicRankings = new List<DraftRankModel>();
 			var currentDraftRanks = GetCurrentAvailableDraftRanks();
 
-			return GetDraftPublicRankings(DraftId.Value, currentDraftRanks);
-		}
-
-		public static List<DraftRankModel> GetDraftPublicRankings(int draftId,
-			List<DraftRankModel> currentDraftRanks)
-		{
-			List<DraftRankModel> publicRankings = new List<DraftRankModel>();
-			var allLeaguesRanks = currentDraftRanks.Where(dr => dr.DraftId == null && dr.UserId == null);
-			var thisLeagueRanks = currentDraftRanks.Where(dr => dr.DraftId == draftId && dr.UserId == null);
-			var primaryCurrentLeagueRanks = currentDraftRanks.Where(dr => dr.UserId == null &&
-				(dr.PrimaryDraftRanking.HasValue && dr.PrimaryDraftRanking.Value));
-
-			publicRankings.AddRange(primaryCurrentLeagueRanks
-				.OrderByDescending(r => r.RankDate).ThenByDescending(r => r.LastUpdateTimestamp));
-			publicRankings.AddRange(thisLeagueRanks.Where(r => !primaryCurrentLeagueRanks.Contains(r))
-				.OrderByDescending(r => r.RankDate).ThenByDescending(r => r.LastUpdateTimestamp));
-			publicRankings.AddRange(allLeaguesRanks.Where(r => !primaryCurrentLeagueRanks.Contains(r))
-				.OrderByDescending(r => r.RankDate).ThenByDescending(r => r.LastUpdateTimestamp));
-
-			return publicRankings;
+			return PlayerRankModelHelper.GetDraftPublicRankings(DraftId.Value, currentDraftRanks);
 		}
 
 		public List<DraftRankModel> GetPrivateRankings()

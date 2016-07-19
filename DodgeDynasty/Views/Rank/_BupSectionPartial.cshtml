@@ -1,0 +1,42 @@
+﻿@model DodgeDynasty.Models.PlayerRankModel
+@using DodgeDynasty.UIHelpers;
+
+<div id="bup-section" class="ba-category">
+	<div class="bold center">
+		@Html.DropDownList("ComparedRank",
+					Model.GetDraftPublicRankItems(Model.CompareRank.RankId.ToString()),
+					new { @class = "bup-rank-select" })
+	</div>
+	<div class="bup-empty">
+		<div class="bup-header bold">@Model.CompareRank.CategoryRankHeader (@Model.CompareRank.CurrentRank.RankDate.ToString("M/d"))</div>
+		<div class="">&lt;No Players Found&gt;</div>
+	</div>
+	<table class="bup-table" data-link="ExpandBUP">
+		<caption class="bup-header">@Model.CompareRank.CategoryRankHeader (@Model.CompareRank.CurrentRank.RankDate.ToString("M/d"))</caption>
+		<tbody>
+			<tr>
+				<th>Rk</th>
+				<th>Player</th>
+				<th>Add?</th>
+			</tr>
+			@foreach (var player in Model.CompareRank.RankedPlayers)
+			{
+				<tr class="ba-player-row bup-player-row unranked" data-player-id="@player.PlayerId">
+					<td>@player.RankNum</td>
+					<td class="bup-player-name" data-player-id="@player.PlayerId">
+						@player.PlayerName (@player.NFLTeamDisplay-@player.Position)
+					</td>
+					<td class="bup-ctrls">
+						<a href="#" class="bup-player-add" tabindex="-1">
+							<img src="@Url.FullPath("~/Content/images/plus.png")" alt="Add to Bottom" />
+						</a>
+					</td>
+				</tr>
+			}
+		<td colspan="3" class="expand">
+			<a href="#" id="ExpandBUP" class="bup-expand-link" data-expand="@Model.Options.ExpandBUP">More...</a>
+		</td>
+		</tbody>
+	</table>
+</div>
+

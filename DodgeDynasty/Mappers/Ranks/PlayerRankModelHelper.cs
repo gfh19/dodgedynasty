@@ -18,7 +18,7 @@ namespace DodgeDynasty.Mappers.Ranks
 			get { return _instance; }
 		}
 
-		public PlayerRankingsModel CreatePlayerRankingsModel(IPlayerRankModel model)
+		public static PlayerRankingsModel CreatePlayerRankingsModel(IPlayerRankModel model)
 		{
 			var response = new PlayerRankingsModel
 			{
@@ -37,24 +37,61 @@ namespace DodgeDynasty.Mappers.Ranks
 			return response;
 		}
 
-		public void SetPlayerRanks(IPlayerRankModel model, HomeEntity homeEntity, int rankId)
+		public static void SetPlayerRanks(IPlayerRankModel model, HomeEntity homeEntity, int rankId)
 		{
 			model.RankId = rankId;
 			model.CurrentRank = homeEntity.Ranks.First(r => r.RankId == rankId);
 			model.PlayerRanks = homeEntity.PlayerRanks.Where(pr => pr.RankId == rankId).ToList();
 		}
 
-		public List<RankedPlayer> GetBestAvailOverallCompRanks(List<RankedPlayer> rankedPlayers, List<Player> draftedPlayers)
+		public static List<RankedPlayer> GetRankedPlayersAllWithDraftPickInfo(List<PlayerRank> playerRanks, DraftModel currentDraftModel)
+		{
+			var rankedPlayers = (from pr in playerRanks
+								 join p in currentDraftModel.AllPlayers on pr.PlayerId equals p.PlayerId
+								 join t in currentDraftModel.NFLTeams on p.NFLTeam equals t.TeamAbbr
+								 join pick in currentDraftModel.DraftPicks on pr.PlayerId equals pick.PlayerId into dpLeft    //Left Outer Join
+								 from pick in dpLeft.DefaultIfEmpty()
+								 join u in currentDraftModel.Users on ((pick != null) ? pick.UserId : -1) equals u.UserId into uLeft  //Left Outer Join
+								 from u in uLeft.DefaultIfEmpty()
+								 join lo in currentDraftModel.CurrentLeagueOwners on ((pick != null) ? pick.UserId : -1) equals lo.UserId into loLeft
+								 from lo in loLeft.DefaultIfEmpty()
+								 join ph in currentDraftModel.CurrentPlayerHighlights on pr.PlayerId equals ph.PlayerId into phLeft
+								 from ph in phLeft.DefaultIfEmpty()
+								 select GetRankedPlayer(pr, p, t, ph, pick, u, lo)).OrderBy(p => p.RankNum).ToList();
+
+			return GetDraftedTruePlayersFor(rankedPlayers, currentDraftModel);
+		}
+
+		public static List<RankedPlayer> GetDraftedTruePlayersFor(List<RankedPlayer> players, DraftModel currentDraftModel)
+		{
+			foreach (var player in players.Where(o => o.PickNum == null))
+			{
+				var truePlayer = currentDraftModel.AllPlayers.FirstOrDefault(o => o.TruePlayerId == player.TruePlayerId &&
+					o.PlayerId != player.PlayerId && currentDraftModel.DraftPicks.Any(dp => dp.PlayerId == o.PlayerId));
+				if (truePlayer != null)
+				{
+					var draftPick = currentDraftModel.DraftPicks.First(dp => dp.PlayerId == truePlayer.PlayerId);
+					player.PickNum = draftPick.PickNum.ToString();
+					player.UserId = draftPick.UserId.ToString();
+					player.NickName = currentDraftModel.Users.FirstOrDefault(lo => lo.UserId == draftPick.UserId).NickName;
+					var leagueOwner = currentDraftModel.CurrentLeagueOwners.FirstOrDefault(lo => lo.UserId == draftPick.UserId);
+					player.CssClass = (leagueOwner != null) ? leagueOwner.CssClass : null;
+				}
+			}
+			return players;
+		}
+
+		public static List<RankedPlayer> GetBestAvailOverallCompRanks(List<RankedPlayer> rankedPlayers, List<Player> draftedPlayers)
 		{
 			return rankedPlayers.Where(rp => !draftedPlayers.Any(dp => rp.TruePlayerId == dp.TruePlayerId)).ToList();
 		}
 
-		public List<RankedPlayer> GetAllPlayersOverallCompRanks(List<RankedPlayer> rankedPlayers)
+		public static List<RankedPlayer> GetAllPlayersOverallCompRanks(List<RankedPlayer> rankedPlayers)
 		{
 			return rankedPlayers.ToList();
 		}
 
-		public RankedPlayer GetRankedPlayer(PlayerRank pr, Player p, NFLTeam t, PlayerHighlight ph = null, DraftPick pick = null,
+		public static RankedPlayer GetRankedPlayer(PlayerRank pr, Player p, NFLTeam t, PlayerHighlight ph = null, DraftPick pick = null,
 			User u = null, LeagueOwner lo = null)
 		{
 			return new RankedPlayer
@@ -81,7 +118,7 @@ namespace DodgeDynasty.Mappers.Ranks
 			};
 		}
 
-		public RankedPlayer CopyRankedPlayer(RankedPlayer rp)
+		public static RankedPlayer CopyRankedPlayer(RankedPlayer rp)
 		{
 			return new RankedPlayer
 			{
@@ -105,6 +142,24 @@ namespace DodgeDynasty.Mappers.Ranks
 				HighlightClass = rp.HighlightClass,
 				HighlightRankNum = rp.HighlightRankNum
 			};
+		}
+
+		public static List<DraftRankModel> GetDraftPublicRankings(int draftId, List<DraftRankModel> currentDraftRanks)
+		{
+			List<DraftRankModel> publicRankings = new List<DraftRankModel>();
+			var allLeaguesRanks = currentDraftRanks.Where(dr => dr.DraftId == null && dr.UserId == null);
+			var thisLeagueRanks = currentDraftRanks.Where(dr => dr.DraftId == draftId && dr.UserId == null);
+			var primaryCurrentLeagueRanks = currentDraftRanks.Where(dr => dr.UserId == null &&
+				(dr.PrimaryDraftRanking.HasValue && dr.PrimaryDraftRanking.Value));
+
+			publicRankings.AddRange(primaryCurrentLeagueRanks
+				.OrderByDescending(r => r.RankDate).ThenByDescending(r => r.LastUpdateTimestamp));
+			publicRankings.AddRange(thisLeagueRanks.Where(r => !primaryCurrentLeagueRanks.Contains(r))
+				.OrderByDescending(r => r.RankDate).ThenByDescending(r => r.LastUpdateTimestamp));
+			publicRankings.AddRange(allLeaguesRanks.Where(r => !primaryCurrentLeagueRanks.Contains(r))
+				.OrderByDescending(r => r.RankDate).ThenByDescending(r => r.LastUpdateTimestamp));
+
+			return publicRankings;
 		}
 	}
 }

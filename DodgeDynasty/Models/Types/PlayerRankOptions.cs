@@ -58,5 +58,11 @@ namespace DodgeDynasty.Models.Types
 		public bool CompRanksExpandAll { get; set; }
 		[JsonProperty()]
 		public bool ShowAvgCompRanks { get; set; }
+		[JsonProperty()]
+		public bool ExpandBUP { get; set; }
+		[JsonProperty()]
+		public bool HideBUP{ get; set; }
+		[JsonProperty()]
+		public string BUPId { get; set; }
 	}
 }

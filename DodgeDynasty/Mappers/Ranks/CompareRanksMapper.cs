@@ -23,7 +23,6 @@ namespace DodgeDynasty.Mappers.Ranks
 
 		protected override void PopulateModel()
 		{
-			var helper = PlayerRankModelHelper.Instance;
 			PlayerRankModel.CompareRankModels = new List<PlayerRankingsModel>();
 			if (!string.IsNullOrEmpty(PlayerRankModel.Options.CompareRankIds))
 			{
@@ -31,31 +30,31 @@ namespace DodgeDynasty.Mappers.Ranks
                 foreach (var compareRankId in compRankIds)
 				{
 					var rankId = Convert.ToInt32(compareRankId);
-                    Model = helper.CreatePlayerRankingsModel(PlayerRankModel);
-					helper.SetPlayerRanks(PlayerRankModel, HomeEntity, rankId);
-					helper.SetPlayerRanks(Model, HomeEntity, rankId);
+                    Model = PlayerRankModelHelper.CreatePlayerRankingsModel(PlayerRankModel);
+					PlayerRankModelHelper.SetPlayerRanks(PlayerRankModel, HomeEntity, rankId);
+					PlayerRankModelHelper.SetPlayerRanks(Model, HomeEntity, rankId);
 					Model.RankedPlayers = PlayerRankModel.GetRankedPlayersAllWithDraftPickInfo();
 					if (ShowBestAvailable)
 					{
-						Model.OverallRankedPlayers = helper.GetBestAvailOverallCompRanks(Model.RankedPlayers, Model.DraftedPlayers);
+						Model.OverallRankedPlayers = PlayerRankModelHelper.GetBestAvailOverallCompRanks(Model.RankedPlayers, Model.DraftedPlayers);
 					}
 					else
 					{
-						Model.OverallRankedPlayers = helper.GetAllPlayersOverallCompRanks(Model.RankedPlayers);
+						Model.OverallRankedPlayers = PlayerRankModelHelper.GetAllPlayersOverallCompRanks(Model.RankedPlayers);
 					}
 					PlayerRankModel.CompareRankModels.Add(Model);
 				}
 				if (PlayerRankModel.Options.ShowAvgCompRanks && PlayerRankModel.CompareRankModels.Count > 0)
 				{
-					var averagePlayerRank = helper.CreatePlayerRankingsModel(PlayerRankModel);
+					var averagePlayerRank = PlayerRankModelHelper.CreatePlayerRankingsModel(PlayerRankModel);
 					averagePlayerRank.RankedPlayers = CalculateAvgCompareRanks();
 					if (ShowBestAvailable)
 					{
-						averagePlayerRank.OverallRankedPlayers = helper.GetBestAvailOverallCompRanks(averagePlayerRank.RankedPlayers, Model.DraftedPlayers);
+						averagePlayerRank.OverallRankedPlayers = PlayerRankModelHelper.GetBestAvailOverallCompRanks(averagePlayerRank.RankedPlayers, Model.DraftedPlayers);
 					}
 					else
 					{
-						averagePlayerRank.OverallRankedPlayers = helper.GetAllPlayersOverallCompRanks(averagePlayerRank.RankedPlayers);
+						averagePlayerRank.OverallRankedPlayers = PlayerRankModelHelper.GetAllPlayersOverallCompRanks(averagePlayerRank.RankedPlayers);
 					}
 					PlayerRankModel.AveragePlayerRank = averagePlayerRank;
 				}
@@ -111,7 +110,7 @@ namespace DodgeDynasty.Mappers.Ranks
             }
 			if (rankedPlayer != null)
 			{
-				playerAvg.RankedPlayer = playerAvg.RankedPlayer ?? PlayerRankModelHelper.Instance.CopyRankedPlayer(rankedPlayer);
+				playerAvg.RankedPlayer = playerAvg.RankedPlayer ?? PlayerRankModelHelper.CopyRankedPlayer(rankedPlayer);
 				playerAvg.AllRankNums[rankIx] = rankedPlayer.RankNum.Value;
 			}
 			else

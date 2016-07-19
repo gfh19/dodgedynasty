@@ -1,5 +1,6 @@
 ﻿/* 7/10/16 */
 
+
 SET XACT_ABORT ON
 BEGIN TRANSACTION;
 
@@ -9,6 +10,23 @@ INSERT INTO [dbo].[AutoImport]
      VALUES
            ('Fantasypros - Dynasty','https://www.fantasypros.com/nfl/rankings/dynasty-overall.php',getdate(),getdate())
 GO
+
+
+
+
+
+ALTER TABLE [dbo].[PlayerRankOption]
+ADD [ExpandBUP] bit NOT NULL DEFAULT(0)
+GO
+
+ALTER TABLE [dbo].[PlayerRankOption]
+ADD [HideBUP] bit NOT NULL DEFAULT(0)
+GO
+
+ALTER TABLE [dbo].[PlayerRankOption]
+ADD [BUPId] int NULL
+GO
+
 
 
 

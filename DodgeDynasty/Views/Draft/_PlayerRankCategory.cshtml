@@ -53,7 +53,7 @@
 			@foreach (var player in Model.CurrentRankCategory.PlayerList)
 			{
 				<tr class="@((player.PickNum != null) ? ("ba-selected " + player.CssClass + ((Model.IsLoggedInUser(player.UserId) ? " you " : " "))) : "")
-								@((player.HighlightClass != null ? "highlighted " + player.HighlightClass : " "))"
+								@((player.HighlightClass != null ? "highlighted " + player.HighlightClass : " ")) ba-player-row"
 					data-player-id="@player.PlayerId">
 					<td>@player.RankNum</td>
 					@if (Model.AveragePlayerRank != null && !DodgeDynasty.Shared.Utilities.ToBool(historyMode))

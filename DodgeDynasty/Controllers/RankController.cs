@@ -41,6 +41,8 @@ namespace DodgeDynasty.Controllers
 			PlayerRankModel model = DraftFactory.GetPlayerRankModel(rankId);
 			model.Options = PlayerRankUIHelper.Instance.GetPlayerRankOptions(Request, Response);
 			model.GetRankedPlayersAllWithDraftPickInfo();
+			//Populate Compare Rank for Best Unranked Players
+			model.SetUnrankedCompareList();
 			if (TempData.ContainsKey(Constants.TempData.RankStatus))
 			{
 				model.RankStatus = (string)TempData[Constants.TempData.RankStatus];
@@ -120,5 +122,27 @@ namespace DodgeDynasty.Controllers
 			var mapper = MapperFactory.CreatePlayerRankOptionsMapper(options.Id);
 			return (mapper.UpdateEntity(options)) ? HttpStatusCode.OK : HttpStatusCode.InternalServerError;
 		}
-	}
+
+		[HttpPost]
+		public HttpStatusCode UpdateBestUnrankedOptions(PlayerRankOptions options)
+		{
+			var mapper = MapperFactory.CreatePlayerRankOptionsMapper(options.Id);
+			var currentOptions = mapper.GetModel();
+			currentOptions.ExpandBUP = options.ExpandBUP;
+			currentOptions.HideBUP = options.HideBUP;
+			currentOptions.BUPId = options.BUPId;
+			return (mapper.UpdateEntity(currentOptions)) ? HttpStatusCode.OK : HttpStatusCode.InternalServerError;
+		}
+
+		[HttpGet]
+		[OwnerRankAccess]
+		public ActionResult BupSectionPartial(int rankId)
+		{
+			GetPlayerRankOptions();
+			PlayerRankModel model = DraftFactory.GetPlayerRankModel(rankId);
+			model.Options = PlayerRankUIHelper.Instance.GetPlayerRankOptions(Request, Response);
+			model.SetUnrankedCompareList();
+			return PartialView(Constants.Views.BupSectionPartial, model);
+		}
+    }
 }

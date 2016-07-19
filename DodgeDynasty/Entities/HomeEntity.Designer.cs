@@ -8431,7 +8431,9 @@ namespace DodgeDynasty.Entities
         /// <param name="expandAvg">Initial value of the ExpandAvg property.</param>
         /// <param name="hideAvg">Initial value of the HideAvg property.</param>
         /// <param name="compRanksExpandAll">Initial value of the CompRanksExpandAll property.</param>
-        public static PlayerRankOption CreatePlayerRankOption(global::System.Guid playerRankOptionId, global::System.Int32 userId, global::System.Boolean expandOverall, global::System.Boolean expandQB, global::System.Boolean expandRB, global::System.Boolean expandWRTE, global::System.Boolean expandDEF, global::System.Boolean expandK, global::System.Boolean expandQueue, global::System.Boolean hideOverall, global::System.Boolean hideQB, global::System.Boolean hideRB, global::System.Boolean hideWRTE, global::System.Boolean hideDEF, global::System.Boolean hideK, global::System.Boolean hideQueue, global::System.Boolean showHighlighting, global::System.Boolean lockHighlighting, global::System.Boolean isComparingRanks, global::System.Boolean showAvgCompRanks, global::System.Boolean expandAvg, global::System.Boolean hideAvg, global::System.Boolean compRanksExpandAll)
+        /// <param name="expandBUP">Initial value of the ExpandBUP property.</param>
+        /// <param name="hideBUP">Initial value of the HideBUP property.</param>
+        public static PlayerRankOption CreatePlayerRankOption(global::System.Guid playerRankOptionId, global::System.Int32 userId, global::System.Boolean expandOverall, global::System.Boolean expandQB, global::System.Boolean expandRB, global::System.Boolean expandWRTE, global::System.Boolean expandDEF, global::System.Boolean expandK, global::System.Boolean expandQueue, global::System.Boolean hideOverall, global::System.Boolean hideQB, global::System.Boolean hideRB, global::System.Boolean hideWRTE, global::System.Boolean hideDEF, global::System.Boolean hideK, global::System.Boolean hideQueue, global::System.Boolean showHighlighting, global::System.Boolean lockHighlighting, global::System.Boolean isComparingRanks, global::System.Boolean showAvgCompRanks, global::System.Boolean expandAvg, global::System.Boolean hideAvg, global::System.Boolean compRanksExpandAll, global::System.Boolean expandBUP, global::System.Boolean hideBUP)
         {
             PlayerRankOption playerRankOption = new PlayerRankOption();
             playerRankOption.PlayerRankOptionId = playerRankOptionId;
@@ -8457,6 +8459,8 @@ namespace DodgeDynasty.Entities
             playerRankOption.ExpandAvg = expandAvg;
             playerRankOption.HideAvg = hideAvg;
             playerRankOption.CompRanksExpandAll = compRanksExpandAll;
+            playerRankOption.ExpandBUP = expandBUP;
+            playerRankOption.HideBUP = hideBUP;
             return playerRankOption;
         }
 
@@ -9186,6 +9190,78 @@ namespace DodgeDynasty.Entities
         private global::System.Boolean _CompRanksExpandAll;
         partial void OnCompRanksExpandAllChanging(global::System.Boolean value);
         partial void OnCompRanksExpandAllChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean ExpandBUP
+        {
+            get
+            {
+                return _ExpandBUP;
+            }
+            set
+            {
+                OnExpandBUPChanging(value);
+                ReportPropertyChanging("ExpandBUP");
+                _ExpandBUP = StructuralObject.SetValidValue(value, "ExpandBUP");
+                ReportPropertyChanged("ExpandBUP");
+                OnExpandBUPChanged();
+            }
+        }
+        private global::System.Boolean _ExpandBUP;
+        partial void OnExpandBUPChanging(global::System.Boolean value);
+        partial void OnExpandBUPChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean HideBUP
+        {
+            get
+            {
+                return _HideBUP;
+            }
+            set
+            {
+                OnHideBUPChanging(value);
+                ReportPropertyChanging("HideBUP");
+                _HideBUP = StructuralObject.SetValidValue(value, "HideBUP");
+                ReportPropertyChanged("HideBUP");
+                OnHideBUPChanged();
+            }
+        }
+        private global::System.Boolean _HideBUP;
+        partial void OnHideBUPChanging(global::System.Boolean value);
+        partial void OnHideBUPChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> BUPId
+        {
+            get
+            {
+                return _BUPId;
+            }
+            set
+            {
+                OnBUPIdChanging(value);
+                ReportPropertyChanging("BUPId");
+                _BUPId = StructuralObject.SetValidValue(value, "BUPId");
+                ReportPropertyChanged("BUPId");
+                OnBUPIdChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _BUPId;
+        partial void OnBUPIdChanging(Nullable<global::System.Int32> value);
+        partial void OnBUPIdChanged();
 
         #endregion
 

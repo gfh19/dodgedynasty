@@ -357,7 +357,7 @@ namespace DodgeDynasty.Models
 			return fullDraftRanks.ToList();
 		}
 
-		public DraftRankModel GetDraftRankModel(DraftRank dr, Rank r)
+		public static DraftRankModel GetDraftRankModel(DraftRank dr, Rank r)
 		{
 			return new DraftRankModel
 			{

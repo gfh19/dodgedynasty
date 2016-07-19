@@ -1481,10 +1481,13 @@ ul.menu li a.current-page
     margin-bottom: -3px;
 }
 
-.ba-hide-cat-text {
+.ba-hide-cat-text, .bup-hide-text {
 	display: inline-block;
 	font-weight: normal;
 	font-size: 11px;
+}
+
+.ba-hide-cat-text {
 	vertical-align: middle;
 	padding-bottom: 4px;
 }
@@ -1521,7 +1524,14 @@ ul.menu li a.current-page
 .ba-table {
 	margin: 0 auto;
 }
-
+.ba-player-row {
+	border-bottom: 1px solid silver;
+	border-left: 1px solid black;
+	border-right: 1px solid black;
+}
+/*.ba-player-row:nth-last-child(-n+2) {
+	border-bottom: none;
+}*/
 	/*    -------- Highlighting */
 
 .pr-highlight-section {
@@ -1625,10 +1635,11 @@ ul.menu li a.current-page
 	height: 40px;
 }
 .rank-paste-section div {
-	margin-top: -5px;
+	margin-top: -3px;
 }
 .rank-paste-new {
 	line-height: 35px;
+	font-size: 13px;
 }
 #setupRank 
 {
@@ -1653,10 +1664,29 @@ ul.menu li a.current-page
 {
 	display: inline;
 }
-.rank-setup-section 
+.sr-outer-section
 {
 	display: inline-block;
 	margin: 18px 0px 12px 0px;
+}
+.rank-setup-section, .rank-avail-section
+{
+	float: left;
+	display: inline-block;
+	margin: 0px 12px 0px 12px;
+}
+.rank-setup-section
+{
+    border: 2px solid navy;
+    border-radius: 6px;
+    padding: 3px 4px 8px 4px;
+    box-shadow: #898989 4px 4px;
+}
+.player-rank-entry {
+	border-bottom: 1px dotted darkgray;
+}
+.player-rank-entry:nth-last-child(-n+2) {
+	border-bottom: none;
 }
 .rank-vertical-controls, .ranked-player, .rank-change-controls, .rank-move-to
 {
@@ -1675,6 +1705,7 @@ ul.menu li a.current-page
 .rank-change-controls img
 {
 	vertical-align: middle;
+	margin-top: -3px;
 }
 .rank-move-up, .rank-move-up img
 {
@@ -1698,15 +1729,20 @@ ul.menu li a.current-page
 .player-select 
 {
 	display: inline-block;
-	width: 230px;
+}
+select.player-select 
+{
+	width: 229px;
+}
+span.player-select 
+{
+	font-size: 14.5px;
+	width: 231px;
 }
 .clear-ranks {
 	display: inline-block;
 	margin-top: 8px;
-}
-span.player-select 
-{
-	font-size: 15px;
+	font-size: 13px;
 }
 .messages-ph
 {
@@ -1758,6 +1794,18 @@ span.player-select
 	display: block;
 	font-size: 12px;
 }
+.bup-table {
+	margin: 0 auto;
+	font-size: 13px;
+}
+.bup-ctrls {
+	text-align: center;
+}
+.bup-ctrls img {
+	vertical-align: middle;
+	margin-top: -3px;
+}
+
 /* Setup Draft
 ----------------------------------------------------------*/
 

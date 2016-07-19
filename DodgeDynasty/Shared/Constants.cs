@@ -135,6 +135,7 @@ namespace DodgeDynasty.Shared
 			public const string HighlightQueuePartial = "HighlightQueuePartial";
 			public const string HighlightQueueInnerPartial = "_HighlightQueueInnerPartial";
 			public const string TestAudioPartial = "_TestAudioPartial";
+			public const string BupSectionPartial = "_BupSectionPartial";
 		}
 	}
 }

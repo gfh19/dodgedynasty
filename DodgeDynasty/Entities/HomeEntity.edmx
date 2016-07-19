@@ -336,6 +336,9 @@
           <Property Name="CompRankExpandIds" Type="varchar" MaxLength="500" />
           <Property Name="CompRanksExpandAll" Type="bit" Nullable="false" />
           <Property Name="ShowAvgCompRanks" Type="bit" Nullable="false" />
+          <Property Name="ExpandBUP" Type="bit" Nullable="false" />
+          <Property Name="HideBUP" Type="bit" Nullable="false" />
+          <Property Name="BUPId" Type="int" />
           <Property Name="AddTimestamp" Type="datetime" />
           <Property Name="LastUpdateTimestamp" Type="datetime" />
         </EntityType>
@@ -2025,6 +2028,9 @@
           <Property Name="HideAvg" Type="Boolean" Nullable="false" />
           <Property Name="CompRankExpandIds" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="CompRanksExpandAll" Type="Boolean" Nullable="false" />
+          <Property Name="ExpandBUP" Type="Boolean" Nullable="false" />
+          <Property Name="HideBUP" Type="Boolean" Nullable="false" />
+          <Property Name="BUPId" Type="Int32" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -2611,6 +2617,9 @@
           <EntitySetMapping Name="PlayerRankOptions">
             <EntityTypeMapping TypeName="HomeModel.PlayerRankOption">
               <MappingFragment StoreEntitySet="PlayerRankOption">
+                <ScalarProperty Name="BUPId" ColumnName="BUPId" />
+                <ScalarProperty Name="HideBUP" ColumnName="HideBUP" />
+                <ScalarProperty Name="ExpandBUP" ColumnName="ExpandBUP" />
                 <ScalarProperty Name="CompRanksExpandAll" ColumnName="CompRanksExpandAll" />
                 <ScalarProperty Name="CompRankExpandIds" ColumnName="CompRankExpandIds" />
                 <ScalarProperty Name="HideAvg" ColumnName="HideAvg" />

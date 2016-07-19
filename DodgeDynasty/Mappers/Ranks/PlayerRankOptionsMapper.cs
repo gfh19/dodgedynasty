@@ -53,7 +53,10 @@ namespace DodgeDynasty.Mappers.Ranks
 				CompareRankIds = options.CompareRankIds,
 				CompRankExpandIds = options.CompRankExpandIds,
 				CompRanksExpandAll = options.CompRanksExpandAll,
-				ShowAvgCompRanks = options.ShowAvgCompRanks
+				ShowAvgCompRanks = options.ShowAvgCompRanks,
+				ExpandBUP = options.ExpandBUP,
+				HideBUP = options.HideBUP,
+				BUPId = options.BUPId.ToStringFromNullInt()
 			};
 		}
 
@@ -75,6 +78,7 @@ namespace DodgeDynasty.Mappers.Ranks
 
 		private Entities.PlayerRankOption AddNewPlayerRankOptions(PlayerRankOptions model, int userId)
 		{
+			var now = Utilities.GetEasternTime();
 			var playerRankOptionGuid = new Guid(PlayerRankOptionId);
 			//If optionId exists in DB for a different user (i.e. new user logged into same browser)
 			if (HomeEntity.PlayerRankOptions.Any(o => o.PlayerRankOptionId == playerRankOptionGuid))
@@ -84,13 +88,14 @@ namespace DodgeDynasty.Mappers.Ranks
 			Entities.PlayerRankOption options = new Entities.PlayerRankOption();
 			options.PlayerRankOptionId = new Guid(PlayerRankOptionId);
 			options.UserId = userId;
-			options.AddTimestamp = DateTime.Now;
+			options.AddTimestamp = now;
 			HomeEntity.PlayerRankOptions.AddObject(SetPlayerRankOptions(options, model));
 			return options;
 		}
 
 		private Entities.PlayerRankOption SetPlayerRankOptions(Entities.PlayerRankOption options, PlayerRankOptions model)
 		{
+			var now = Utilities.GetEasternTime();
 			options.RankId = model.RankId.ToNullInt();
 			options.DraftId = model.DraftId.ToNullInt();
 			options.ExpandOverall = model.ExpandOverall;
@@ -117,7 +122,10 @@ namespace DodgeDynasty.Mappers.Ranks
 			options.CompRankExpandIds = model.CompRankExpandIds;
 			options.CompRanksExpandAll = model.CompRanksExpandAll;
 			options.ShowAvgCompRanks = model.ShowAvgCompRanks;
-            options.LastUpdateTimestamp = DateTime.Now;
+			options.ExpandBUP = model.ExpandBUP;
+			options.HideBUP = model.HideBUP;
+			options.BUPId = model.BUPId.ToNullInt();
+			options.LastUpdateTimestamp = now;
 			return options;
         }
 
