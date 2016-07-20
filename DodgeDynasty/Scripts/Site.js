@@ -825,11 +825,11 @@ function removeWaitCursor() {
 	$('body').removeClass('wait');
 }
 
-function addQSValue(urlString, qsValue) {
-	if (urlString.indexOf("?") > 0) {
-		return urlString + "&" + qsValue;
+function addQSValue(urlString, qsNameValue) {
+	if (urlString.indexOf("?") >= 0) {
+		return urlString + "&" + qsNameValue;
 	}
-	return urlString + "?" + qsValue;
+	return urlString + "?" + qsNameValue;
 }
 
 //Already exists as javascript "toggle"; refactor

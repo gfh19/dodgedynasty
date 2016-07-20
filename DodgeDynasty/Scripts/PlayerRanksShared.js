@@ -201,11 +201,16 @@ function syncCookies() {
 }
 
 function getRankIdUrlPath() {
+	var rankIdAndCompQS = "";
 	var rankId = $(".rank-name").attr("data-rank-id");
 	if (rankId != undefined && rankId.length > 0) {
-		return "?rankId=" + rankId;
+		rankIdAndCompQS = addQSValue(rankIdAndCompQS, "rankId=" + rankId);
 	}
-	return "";
+	var compRank = $(".rank-name").attr("data-compare-val");
+	if (compRank != undefined && compRank.length > 0) {
+		rankIdAndCompQS = addQSValue(rankIdAndCompQS, "compare=" + compRank);
+	}
+	return rankIdAndCompQS;
 }
 
 function isBestAvailablePage() {

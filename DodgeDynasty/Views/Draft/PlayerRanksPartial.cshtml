@@ -10,7 +10,7 @@
 	</script>
 	@Html.Partial(Url.Content("../Draft/CurrentDraftPickPartial"), Model)
 	<div class="rank-header">
-		<div class="rank-name" data-rank-id="@Model.CurrentRank.RankId">
+		<div class="rank-name" data-rank-id="@Model.CurrentRank.RankId" data-compare-val="false">
 			@if (!string.IsNullOrEmpty(Model.CurrentRank.Url))
 			{
 				<a href="@Model.CurrentRank.Url" target="_blank">@Model.CurrentRank.RankName</a><text> - @ViewBag.Title (@Model.CurrentRank.RankDate.ToString("M/d/yy"))</text>
