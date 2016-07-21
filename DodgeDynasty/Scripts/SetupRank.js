@@ -442,7 +442,9 @@ function pastePlayerHandler(clipboardData, e, skipPasteTextbox) {
 						$(':focus').blur();
 					}, 0);
 				}
-				toggleUnrankedPlayers();
+				setTimeout(function () {
+					toggleUnrankedPlayers();
+				}, 0);
 			}
 		}
 	}

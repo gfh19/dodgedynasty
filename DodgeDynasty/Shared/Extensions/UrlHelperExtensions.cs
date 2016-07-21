@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace DodgeDynasty.Shared.Extensions
 {
+	//TODO:  Combine with DodgeDynasty.Helpers.UIHelper
 	public static class UrlHelperExtensions
 	{
 		private readonly static string _majorVersion = ConfigurationManager.AppSettings[Constants.AppSettings.MajorVersion];

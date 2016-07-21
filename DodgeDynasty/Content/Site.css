@@ -1682,12 +1682,14 @@ ul.menu li a.current-page
     padding: 3px 4px 8px 4px;
     box-shadow: #898989 4px 4px;
 }
+/*
 .player-rank-entry {
 	border-bottom: 1px dotted darkgray;
 }
 .player-rank-entry:nth-last-child(-n+2) {
 	border-bottom: none;
 }
+*/
 .rank-vertical-controls, .ranked-player, .rank-change-controls, .rank-move-to
 {
 	float: left;
