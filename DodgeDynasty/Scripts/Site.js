@@ -818,10 +818,12 @@ function isBrowserIE() {
 }
 
 function addWaitCursor() {
+	$('body').css("cursor", "");
 	$('body').addClass('wait');
 }
 
 function removeWaitCursor() {
+	$('body').css("cursor", "");
 	$('body').removeClass('wait');
 }
 

@@ -11,32 +11,42 @@
 		<div class="bup-header bold">@Model.CompareRank.CategoryRankHeader (@Model.CompareRank.CurrentRank.RankDate.ToString("M/d"))</div>
 		<div class="">&lt;No Players Found&gt;</div>
 	</div>
-	<table class="bup-table" data-link="ExpandBUP">
-		<caption class="bup-header">@Model.CompareRank.CategoryRankHeader (@Model.CompareRank.CurrentRank.RankDate.ToString("M/d"))</caption>
-		<tbody>
-			<tr>
-				<th>Rk</th>
-				<th>Player</th>
-				<th>Add?</th>
-			</tr>
-			@foreach (var player in Model.CompareRank.RankedPlayers)
+	<div class="bup-full">
+		<table class="bup-table" data-link="ExpandBUP">
+			<caption class="bup-header">@Model.CompareRank.CategoryRankHeader (@Model.CompareRank.CurrentRank.RankDate.ToString("M/d"))</caption>
+			<tbody>
+				<tr>
+					<th>Rk</th>
+					<th>Player</th>
+					<th>Add?</th>
+				</tr>
+				@foreach (var player in Model.CompareRank.RankedPlayers)
 			{
-				<tr class="ba-player-row bup-player-row unranked" data-player-id="@player.PlayerId">
-					<td>@player.RankNum</td>
-					<td class="bup-player-name" data-player-id="@player.PlayerId">
-						@player.PlayerName (@player.NFLTeamDisplay-@player.Position)
-					</td>
-					<td class="bup-ctrls">
-						<a href="#" class="bup-player-add" tabindex="-1">
-							<img src="@Url.FullPath("~/Content/images/plus.png")" alt="Add to Bottom" />
-						</a>
+					<tr class="ba-player-row bup-player-row unranked" data-player-id="@player.PlayerId">
+						<td>@player.RankNum</td>
+						<td class="bup-player-name" data-player-id="@player.PlayerId">
+							@player.PlayerName (@player.NFLTeamDisplay-@player.Position)
+						</td>
+						<td class="bup-ctrls">
+							<a href="#" class="bup-player-add" tabindex="-1">
+								<img src="@Url.FullPath("~/Content/images/plus.png")" alt="Add to Bottom" />
+							</a>
+						</td>
+					</tr>
+			}
+				<tr>
+					<td colspan="3" class="expand">
+						<a href="#" id="ExpandBUP" class="bup-expand-link" data-expand="@Model.Options.ExpandBUP">More...</a>
 					</td>
 				</tr>
-			}
-		<td colspan="3" class="expand">
-			<a href="#" id="ExpandBUP" class="bup-expand-link" data-expand="@Model.Options.ExpandBUP">More...</a>
-		</td>
-		</tbody>
-	</table>
+			</tbody>
+		</table>
+		<div>
+			<div class="page-section">
+				<button id="bup-add-all">Add All Players</button>
+				<div class="bup-add-multi-text">To add multiple players at once, copy a list of player names and paste them onto any open player dropdown box, or click the "Add All Players" button.</div>
+			</div>
+		</div>
+	</div>
 </div>
 

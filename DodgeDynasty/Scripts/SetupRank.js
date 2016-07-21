@@ -34,6 +34,7 @@ var changeUnrankedListTimeout = null;
 	bindAddNewPlayerLink();
 	bindClearRankingsLink();
 	saveCookieRankId();
+	bindPlayerSelectChange($("select.player-select"));
 	$('html').keydown(preventBackspaceNav);
 	$('html').keypress(preventBackspaceNav);
 }
@@ -63,6 +64,7 @@ function displayBestUnrankedPlayers() {
 	$(".rank-avail-section").removeClass("hide-yo-husbands-too");
 	toggleUnrankedPlayers();
 	bindAddUnrankedPlayers();
+	bindAddAllUnrankedPlayers();
 	bindExpandUnrankedLink();
 	bindHideUnrankedList();
 	bindChangeUnrankedList();
@@ -110,11 +112,11 @@ function toggleUnrankedPlayerRow(unrankedPlayerRow, show) {
 
 function toggleUnrankedTableEmpty() {
 	if ($(".bup-player-row.unranked").length == 0) {
-		$(".bup-table").addClass("hide-yo-wives");
+		$(".bup-full").addClass("hide-yo-wives");
 		$(".bup-empty").removeClass("hide-yo-wives");
 	}
 	else {
-		$(".bup-table").removeClass("hide-yo-wives");
+		$(".bup-full").removeClass("hide-yo-wives");
 		$(".bup-empty").addClass("hide-yo-wives");
 	}
 }
@@ -132,6 +134,22 @@ function bindAddUnrankedPlayers() {
 			toggleUnrankedPlayerRow(unrankedPlayerRow, false);
 			toggleExpandUnrankedRows(toBool($(".bup-expand-link").attr("data-expand")));
 		});
+	});
+}
+
+function bindAddAllUnrankedPlayers() {
+	$("#bup-add-all").unbind("click");
+	$("#bup-add-all").click(function (e) {
+		addWaitCursor();
+		var unrankedAddLinks = $(".unranked .bup-player-add")
+		setTimeout(function () {
+			$.each($(unrankedAddLinks), function (ix, link) {
+				$(link).click();
+				if (ix == unrankedAddLinks.length - 1) {
+					removeWaitCursor();
+				}
+			});
+		}, 1);
 	});
 }
 
@@ -191,7 +209,7 @@ function bindChangeUnrankedList() {
 		if (changeUnrankedListTimeout) {
 			clearTimeout(changeUnrankedListTimeout);
 		}
-		changeUnrankedListTimeout = setTimeout(changeUnrankedList, 75);
+		changeUnrankedListTimeout = setTimeout(changeUnrankedList, 60);
 	});
 }
 
@@ -244,7 +262,7 @@ function bindPlayerSelectChange(playerSelect) {
 		if (toggleUnrankedTimeout) {
 			clearTimeout(toggleUnrankedTimeout);
 		}
-		toggleUnrankedTimeout = setTimeout(toggleUnrankedPlayers, 75);
+		toggleUnrankedTimeout = setTimeout(toggleUnrankedPlayers, 60);
 	});
 }
 
@@ -379,7 +397,7 @@ function bindPastePlayerHandlers() {
 }
 
 function pastePlayerHandler(clipboardData, e, skipPasteTextbox) {
-	$("body").css("cursor", "wait");
+	addWaitCursor();
 	var pastedText = (clipboardData) ? clipboardData.getData('Text') : null;
 	if (pastedText) {
 		var onPlayerSelect = $(document.activeElement).is("select") && $(document.activeElement).hasClass("player-select");
@@ -428,7 +446,7 @@ function pastePlayerHandler(clipboardData, e, skipPasteTextbox) {
 			}
 		}
 	}
-	$("body").css("cursor", "default");
+	removeWaitCursor();
 }
 
 function selectPastedPlayer(txt, destSelect) {

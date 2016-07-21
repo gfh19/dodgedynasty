@@ -85,7 +85,7 @@ header {
 }
 
 .wait {
-	cursor: wait;
+	cursor: wait !important;
 }
 .wait > * {
     pointer-events:none;
@@ -884,7 +884,7 @@ input[type="submit"], input[type="button"], button
 	font-size: 1.2em;
 	font-weight: 600;
 	padding: 7px;
-	margin-right: 8px;
+	margin-right: 4px;
 	width: auto;
 }
 
@@ -1632,7 +1632,7 @@ ul.menu li a.current-page
 	font-size: 11px;
 }
 .rank-paste-section {
-	height: 40px;
+	height: 55px;
 }
 .rank-paste-section div {
 	margin-top: -3px;
@@ -1804,6 +1804,10 @@ span.player-select
 .bup-ctrls img {
 	vertical-align: middle;
 	margin-top: -3px;
+}
+.bup-add-multi-text {
+	width: 225px;
+	margin: 12px auto 0px auto;
 }
 
 /* Setup Draft
