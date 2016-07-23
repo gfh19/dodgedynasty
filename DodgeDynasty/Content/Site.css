@@ -1631,11 +1631,13 @@ ul.menu li a.current-page
 {
 	font-size: 11px;
 }
-.rank-paste-section {
-	height: 55px;
+.sr-ranking-hdr {
+	font-size: 16px;
+	font-weight: bold;
+	margin-top: -2px;
 }
-.rank-paste-section div {
-	margin-top: -3px;
+.rank-paste-section {
+	height: 80px;
 }
 .rank-paste-new {
 	line-height: 35px;
@@ -1667,20 +1669,26 @@ ul.menu li a.current-page
 .sr-outer-section
 {
 	display: inline-block;
-	margin: 18px 0px 12px 0px;
+	margin: 12px 0px 12px 0px;
+}
+.sr-new-player {
+	margin: 2px 0px 4px 0px;
 }
 .rank-setup-section, .rank-avail-section
 {
-	float: left;
 	display: inline-block;
-	margin: 0px 12px 0px 12px;
+	vertical-align: top;
 }
 .rank-setup-section
 {
+	margin: 0px 1px 20px 1px;
     border: 2px solid navy;
     border-radius: 6px;
     padding: 3px 4px 8px 4px;
     box-shadow: #898989 4px 4px;
+}
+.rank-avail-section {
+	margin: 10px 35px 20px 35px;
 }
 /*
 .player-rank-entry {
@@ -1810,6 +1818,12 @@ span.player-select
 .bup-add-multi-text {
 	width: 225px;
 	margin: 12px auto 0px auto;
+}
+.bup-player-name {
+	padding-right: 0px !important;
+}
+#bup-add-all {
+	font-size: 15px;
 }
 
 /* Setup Draft
@@ -2686,19 +2700,27 @@ span.player-select
 	}
 	.player-rank-entry 
 	{
-		min-width: 280px;
-	}
-	.player-select
-	{
-		width: 190px;
+		min-width: 278px;
 	}
 	span.player-select 
 	{
 		font-size: 13px;
+		width: 192px;
+	}
+	select.player-select 
+	{
+		font-size: 13px;
+		width: 190px;
 	}
 	.personal-rank-name input
 	{
 		width: 250px;
+	}
+	.rank-avail-section {
+		margin: 10px;
+	}
+	.bup-player-name {
+		max-width: 175px !important;
 	}
 	
 	/* Activate Draft

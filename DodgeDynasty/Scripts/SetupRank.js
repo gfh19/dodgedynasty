@@ -126,6 +126,7 @@ function bindAddUnrankedPlayers() {
 		$(link).unbind("click");
 		$(link).click(function (e) {
 			e.preventDefault();
+			var tempScrollTop = $(window).scrollTop();
 			var lastAddPlayer = $(".rank-add-player").last();
 			$(lastAddPlayer).click();
 			var newPlayer = $(lastAddPlayer).parents(".player-rank-entry").next();
@@ -133,6 +134,8 @@ function bindAddUnrankedPlayers() {
 			$(".player-select", newPlayer).val($(unrankedPlayerRow).attr("data-player-id"));
 			toggleUnrankedPlayerRow(unrankedPlayerRow, false);
 			toggleExpandUnrankedRows(toBool($(".bup-expand-link").attr("data-expand")));
+			toggleUnrankedTableEmpty();
+			$(window).scrollTop(tempScrollTop);
 		});
 	});
 }
@@ -143,12 +146,15 @@ function bindAddAllUnrankedPlayers() {
 		addWaitCursor();
 		var unrankedAddLinks = $(".unranked .bup-player-add")
 		setTimeout(function () {
+			var tempScrollTop = $(window).scrollTop();
 			$.each($(unrankedAddLinks), function (ix, link) {
 				$(link).click();
 				if (ix == unrankedAddLinks.length - 1) {
 					removeWaitCursor();
 				}
 			});
+			toggleUnrankedTableEmpty();
+			$(window).scrollTop(tempScrollTop);
 		}, 1);
 	});
 }
