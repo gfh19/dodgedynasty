@@ -1756,7 +1756,7 @@ span.player-select
 }
 .messages-ph
 {
-	min-height: 20px;
+	min-height: 12px;
 }
 .error-messages, .error-messages {
 	text-align: center;
