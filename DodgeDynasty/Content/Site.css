@@ -2,6 +2,7 @@
 {
   -webkit-box-sizing: content-box;
      -moz-box-sizing: content-box;
+	  -ms-box-sizing: content-box;
           box-sizing: content-box;
 }
 html
@@ -1816,11 +1817,17 @@ span.player-select
 	margin-top: -3px;
 }
 .bup-add-multi-text {
-	width: 225px;
+	width: 265px;
 	margin: 12px auto 0px auto;
+}
+.bup-paste-options li {
+	padding-bottom: 10px;
 }
 .bup-player-name {
 	padding-right: 0px !important;
+}
+.bup-paste-options {
+	padding-left: 20px;
 }
 #bup-add-all {
 	font-size: 15px;
@@ -2702,6 +2709,10 @@ span.player-select
 	{
 		min-width: 278px;
 	}
+	.sr-plyr-select-col {
+		width: 192px;
+		display: inline-block;
+	}
 	span.player-select 
 	{
 		font-size: 13px;
@@ -2710,7 +2721,8 @@ span.player-select
 	select.player-select 
 	{
 		font-size: 13px;
-		width: 190px;
+		max-width: 178px;
+		padding: 0px;
 	}
 	.personal-rank-name input
 	{

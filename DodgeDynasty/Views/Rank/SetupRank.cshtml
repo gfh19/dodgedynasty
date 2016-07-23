@@ -74,7 +74,9 @@
 
 				<span class="ranked-player">
 					<span class="player-rank-num"></span>
-					@Html.DropDownList("PlayerId", Model.GetRankPlayersListItem("0"), new { @class = "player-select" })
+					<span class="sr-plyr-select-col">
+						@Html.DropDownList("PlayerId", Model.GetRankPlayersListItem("0"), new { @class = "player-select" })
+					</span>
 				</span>
 				<span class="rank-change-controls">
 					<a href="#" class="rank-remove-player" tabindex="-1"><img src="@Url.FullPath("~/Content/images/minus.png")" alt="Remove Player" /></a>
@@ -112,7 +114,9 @@
 
 					<span class="ranked-player">
 						<span class="player-rank-num">1</span>
-						@Html.DropDownList("PlayerId", Model.GetRankPlayersListItem("0"), new { @class = "player-select" })
+						<span class="sr-plyr-select-col">
+							@Html.DropDownList("PlayerId", Model.GetRankPlayersListItem("0"), new { @class = "player-select" })
+						</span>
 					</span>
 					<span class="rank-change-controls">
 						<a href="#" class="rank-remove-player" tabindex="-1"><img src="@Url.FullPath("~/Content/images/minus.png")" alt="Remove Player" /></a>

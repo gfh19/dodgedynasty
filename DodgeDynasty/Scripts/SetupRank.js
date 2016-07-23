@@ -435,8 +435,8 @@ function pastePlayerHandler(clipboardData, e, skipPasteTextbox) {
 					selectPastedPlayer(txt, destSelect);
 					//var newDestSelect = $(".player-select", $(destSelect).parent().parent().next());
 					if (ix < (pastedArray.length - 1)) {
-						$(".rank-add-player", $(destSelect).parent().parent()).click();
-						destSelect = $(".player-select", $(destSelect).parent().parent().next());
+						$(".rank-add-player", $(destSelect).parents(".player-rank-entry")).click();
+						destSelect = $(".player-select", $(destSelect).parents(".player-rank-entry").next());
 					}
 				});
 				if (onPasteTextbox) {
