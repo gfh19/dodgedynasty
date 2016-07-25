@@ -35,6 +35,7 @@ namespace DodgeDynasty.Mappers.Admin
 			Model.NumRounds = draft.NumRounds.Value;
 			Model.NumKeepers = draft.NumKeepers.Value;
 			Model.Format = draft.Format;
+			Model.PickTimeSeconds = draft.PickTimeSeconds;
 			Model.DraftOwnerUsers = (from dro in HomeEntity.DraftOwners.AsEnumerable()
 									 join u in users on dro.UserId equals u.UserId
 									 join lo in leagueOwners on u.UserId equals lo.UserId
@@ -59,6 +60,7 @@ namespace DodgeDynasty.Mappers.Admin
 			draft.NumRounds = Convert.ToInt16(model.NumRounds);
 			draft.NumKeepers = Convert.ToInt16(model.NumKeepers);
 			draft.Format = model.Format;
+			draft.PickTimeSeconds = Convert.ToInt16(model.PickTimeSeconds);
 			draft.WinnerId = model.WinnerId;
 			draft.RunnerUpId = model.RunnerUpId;
 			draft.HasCoWinners = model.HasCoWinners;

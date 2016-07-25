@@ -97,6 +97,7 @@
           <Property Name="HasCoWinners" Type="bit" />
           <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
           <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
+          <Property Name="PickTimeSeconds" Type="smallint" Nullable="false" />
         </EntityType>
         <EntityType Name="DraftChat">
           <Key>
@@ -1684,6 +1685,7 @@
           <NavigationProperty Name="DraftRanks" Relationship="HomeModel.FK_DraftRank_Draft" FromRole="Draft" ToRole="DraftRank" />
           <NavigationProperty Name="PlayerHighlights" Relationship="HomeModel.FK_PlayerHighlight_Draft" FromRole="Draft" ToRole="PlayerHighlight" />
           <NavigationProperty Name="AudioUserCounts" Relationship="HomeModel.FK_AudioUserCount_Draft" FromRole="Draft" ToRole="AudioUserCount" />
+          <Property Name="PickTimeSeconds" Type="Int16" Nullable="false" />
         </EntityType>
         <EntityType Name="PlayerAdjustment">
           <Key>
@@ -2501,6 +2503,7 @@
           <EntitySetMapping Name="Drafts">
             <EntityTypeMapping TypeName="HomeModel.Draft">
               <MappingFragment StoreEntitySet="Draft">
+                <ScalarProperty Name="PickTimeSeconds" ColumnName="PickTimeSeconds" />
                 <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
                 <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
                 <ScalarProperty Name="HasCoWinners" ColumnName="HasCoWinners" />

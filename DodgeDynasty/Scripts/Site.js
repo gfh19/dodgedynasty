@@ -452,6 +452,25 @@ function closeUserTurnDialog() {
 	$("#userTurnDialog").dialog("close");
 }
 
+function getDynastySettingsCookie() {
+	var settings;
+	if ($.cookie("dynastySettings")) {
+		settings = jQuery.parseJSON($.cookie("dynastySettings"));
+	}
+	else {
+		settings = {
+			disableBrowserAudio: false
+		};
+	}
+	return settings;
+}
+
+function setDynastySettingsCookie(settings) {
+	var cookieSettings = {};
+	cookieSettings.disableBrowserAudio = settings.disableBrowserAudio || false;
+	$.cookie("dynastySettings", JSON.stringify(cookieSettings), { path: baseURL });
+}
+
 function markInvalidId(userId, selects) {
 	selects = selects || $("select");
 	if (userId === "") {
@@ -601,7 +620,7 @@ function scrollDraftChatBottom() {
 /* Draft Pick Audio */
 
 function initLastPickAudio() {
-	if (!audioKillSwitch && draftActive && !isMobileBrowser()) {
+	if (!audioKillSwitch && draftActive && !isMobileBrowser() && !(window.location.href.indexOf("/Admin/Input") > 0)) {
 		ajaxGetJson("Draft/GetLastDraftPickAudio", function (pickAudio) {
 			lastPickAudio = pickAudio;
 		});
@@ -611,7 +630,8 @@ function initLastPickAudio() {
 
 function getLastPickAndPlayAudio(origIsUserTurn) {
 	if (!audioKillSwitch && draftActive && !isMobileBrowser() && !(window.location.href.indexOf("/Admin/Input") > 0)
-		&& (!(window.location.href.indexOf("/Draft/Pick") > 0) || !origIsUserTurn)) {
+		&& (!(window.location.href.indexOf("/Draft/Pick") > 0) || !origIsUserTurn)
+		&& !getDynastySettingsCookie().disableBrowserAudio) {
 		ajaxGetJson("Draft/GetLastDraftPickAudio", function (pickAudio) {
 			if (lastPickAudio && pickAudio && pickAudio.playerId) {
 				if (lastPickAudio.playerId != pickAudio.playerId) {

@@ -6,6 +6,7 @@
 	bindSubmitUserInfo();
 	bindUserNameSelect();
 	bindTestAudio();
+	toggleDisableBrowserAudio();
 }
 
 function bindColorSelects() {
@@ -33,6 +34,7 @@ function bindSubmitUserInfo() {
 		var userInfoFormValid = $('#userInfoForm').valid()
 		var userInfoValid = validateUserInfoModel(userInfoModel);
 		if (userInfoFormValid && userInfoValid) {
+			setDisableBrowserAudio();
 			updateUserInfoModel(userInfoModel);
 		}
 	});
@@ -88,4 +90,13 @@ function bindUserNameSelect() {
 			$(".mi-user-name").focus();
 		});
 	});
+}
+
+function toggleDisableBrowserAudio() {
+	var settings = getDynastySettingsCookie();
+	$("#disable-browser-audio").prop('checked', settings.disableBrowserAudio);
+}
+
+function setDisableBrowserAudio() {
+	setDynastySettingsCookie({ disableBrowserAudio: $("#disable-browser-audio").prop('checked') });
 }

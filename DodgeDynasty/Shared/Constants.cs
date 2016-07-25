@@ -52,6 +52,11 @@ namespace DodgeDynasty.Shared
 			public const string NoneText = "None (Black)";
 		}
 
+		public class Defaults
+		{
+			public const int PickTimeSeconds = 120;
+		}
+
 		public class DraftFormats
 		{
 			public const string Repeat = "repeat";

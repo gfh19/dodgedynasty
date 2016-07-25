@@ -1992,6 +1992,7 @@ span.player-select
 
 .owner-controls, .lo-active {
 	width: 40px;
+	vertical-align: middle;
 }
 
 .lo-teamname-header, .lo-active-header, .lo-color-header, .lo-controls-header, .lo-audio-header, 
@@ -2016,6 +2017,7 @@ span.player-select
 ----------------------------------------------------------*/
 #addDraft label {
 	display: inline-block;
+	margin-left: 5px;
 }
 .add-draft-date {
 	width: 125px;
@@ -2031,6 +2033,9 @@ span.player-select
 }
 .ad-num-owners, .ad-num-rounds, .ad-num-keepers {
 	width: 30px;
+}
+.ad-pick-time {
+	width: 42px;
 }
 
 
@@ -2174,6 +2179,11 @@ span.player-select
 .test-audio-note {
 	vertical-align: middle;
 	width: 60%;
+}
+
+#disable-browser-audio {
+	margin: 0px;
+	vertical-align: bottom;
 }
 
 

@@ -91,7 +91,7 @@
 					}
 					@if (!DodgeDynasty.Shared.Utilities.GetBoolConfigVal(DodgeDynasty.Shared.Constants.AppSettings.UserEditAudioKillSwitch))
 					{
-						@Html.Partial(DodgeDynasty.Shared.Constants.Views.TestAudioPartial, "Audio (*NEW*): Select the \"Audio?\" checkbox above to hear the pick made right before your turn!")
+						@Html.Partial(DodgeDynasty.Shared.Constants.Views.TestAudioPartial, true)
 					}
 				</div>
 			</div>

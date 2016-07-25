@@ -34,15 +34,19 @@
 				<div>@Html.ValidationMessageFor(m => m.DraftYear)</div>
 				<div>@Html.ValidationMessageFor(m => m.DraftLocation)</div>
 				<div>
-					@Html.LabelFor(m => m.NumOwners): @Html.TextBoxFor(m => m.NumOwners, new { @class = "ad-num-owners" })
-					@Html.LabelFor(m => m.NumRounds): @Html.TextBoxFor(m => m.NumRounds, new { @class = "ad-num-rounds" })
-					@Html.LabelFor(m => m.NumKeepers): @Html.TextBoxFor(m => m.NumKeepers, new { @class = "ad-num-keepers" })
-					@Html.LabelFor(m => m.Format): @Html.DropDownListFor(m => m.Format, Model.GetDraftFormatItems(), new { @class = "add-draft-format" })
+					@Html.LabelFor(m => m.NumOwners): @Html.TextBoxFor(m => m.NumOwners, new { @class = "ad-num-owners", type = "number" })
+					@Html.LabelFor(m => m.NumRounds): @Html.TextBoxFor(m => m.NumRounds, new { @class = "ad-num-rounds", type = "number" })
+					@Html.LabelFor(m => m.NumKeepers): @Html.TextBoxFor(m => m.NumKeepers, new { @class = "ad-num-keepers", type = "number" })
 				</div>
 				<div>@Html.ValidationMessageFor(m => m.NumOwners)</div>
 				<div>@Html.ValidationMessageFor(m => m.NumRounds)</div>
 				<div>@Html.ValidationMessageFor(m => m.NumKeepers)</div>
+				<div>
+					@Html.LabelFor(m => m.Format): @Html.DropDownListFor(m => m.Format, Model.GetDraftFormatItems(), new { @class = "add-draft-format" })
+					@Html.LabelFor(m => m.PickTimeSeconds): @Html.TextBoxFor(m => m.PickTimeSeconds, new { @class = "ad-pick-time", type = "number" })
+				</div>
 				<div>@Html.ValidationMessageFor(m => m.Format)</div>
+				<div>@Html.ValidationMessageFor(m => m.PickTimeSeconds)</div>
 				@if (Model.DraftId != 0)
 				{
 				<div>
@@ -50,7 +54,17 @@
 					@Html.LabelFor(m => m.RunnerUpId): @Html.DropDownListFor(m => Model.RunnerUpId, Model.GetDraftOwnerUserItems(Model.RunnerUpId), new { @class = "ad-runner-up" })
 					@Html.LabelFor(m => m.HasCoWinners): @Html.CheckBoxFor(m => m.HasCoWinners, new { @class = "ad-co-winners" })
 				</div>
+				<div class="page-section-small">
+				@if (Model.AdminMode == DodgeDynasty.Shared.Constants.Modes.Admin)
+				{
+					<text>(<a href="@Url.Content("~/Admin/SetupDraft/"+Model.DraftId)">Go to Setup Draft Picks page</a>)</text>
 				}
+				else
+				{
+					<text>(<a href="@Url.Content("~/Commish/SetupDraft/"+Model.DraftId)">Go to Setup Draft Picks page</a>)</text>
+				}
+                </div>
+                }
 			</div>
 		}
 		<div class="page-section">

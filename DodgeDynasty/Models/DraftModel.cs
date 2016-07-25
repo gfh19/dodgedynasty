@@ -53,8 +53,6 @@ namespace DodgeDynasty.Models
 		public DraftModel(int? draftId)
 		{
 			DraftId = draftId;
-			int seconds;
-			PickTimeSeconds = int.TryParse(ConfigurationManager.AppSettings["PickTimeSeconds"], out seconds) ? seconds : 0;
 		}
 
 		public Draft GetCurrentDraft(int? draftId = null)
@@ -96,6 +94,7 @@ namespace DodgeDynasty.Models
 			CurrentLeagueOwners = LeagueOwners.Where(lo => lo.LeagueId == CurrentDraft.LeagueId).ToList();
 			var leagueOwner = CurrentLeagueOwners.FirstOrDefault(lo => lo.UserId == user.UserId);
 			CurrentLoggedInOwnerUser = OwnerUserMapper.GetOwnerUser(user, leagueOwner);
+			PickTimeSeconds = CurrentDraft.PickTimeSeconds;
             return DraftId;
 		}
 

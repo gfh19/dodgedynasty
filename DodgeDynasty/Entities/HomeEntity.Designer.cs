@@ -2559,7 +2559,8 @@ namespace DodgeDynasty.Entities
         /// <param name="isComplete">Initial value of the IsComplete property.</param>
         /// <param name="addTimestamp">Initial value of the AddTimestamp property.</param>
         /// <param name="lastUpdateTimestamp">Initial value of the LastUpdateTimestamp property.</param>
-        public static Draft CreateDraft(global::System.Int32 draftId, global::System.Int32 leagueId, global::System.DateTime draftDate, global::System.Boolean isActive, global::System.Boolean isComplete, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp)
+        /// <param name="pickTimeSeconds">Initial value of the PickTimeSeconds property.</param>
+        public static Draft CreateDraft(global::System.Int32 draftId, global::System.Int32 leagueId, global::System.DateTime draftDate, global::System.Boolean isActive, global::System.Boolean isComplete, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp, global::System.Int16 pickTimeSeconds)
         {
             Draft draft = new Draft();
             draft.DraftId = draftId;
@@ -2569,6 +2570,7 @@ namespace DodgeDynasty.Entities
             draft.IsComplete = isComplete;
             draft.AddTimestamp = addTimestamp;
             draft.LastUpdateTimestamp = lastUpdateTimestamp;
+            draft.PickTimeSeconds = pickTimeSeconds;
             return draft;
         }
 
@@ -2986,6 +2988,30 @@ namespace DodgeDynasty.Entities
         private global::System.DateTime _LastUpdateTimestamp;
         partial void OnLastUpdateTimestampChanging(global::System.DateTime value);
         partial void OnLastUpdateTimestampChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int16 PickTimeSeconds
+        {
+            get
+            {
+                return _PickTimeSeconds;
+            }
+            set
+            {
+                OnPickTimeSecondsChanging(value);
+                ReportPropertyChanging("PickTimeSeconds");
+                _PickTimeSeconds = StructuralObject.SetValidValue(value, "PickTimeSeconds");
+                ReportPropertyChanged("PickTimeSeconds");
+                OnPickTimeSecondsChanged();
+            }
+        }
+        private global::System.Int16 _PickTimeSeconds;
+        partial void OnPickTimeSecondsChanging(global::System.Int16 value);
+        partial void OnPickTimeSecondsChanged();
 
         #endregion
 

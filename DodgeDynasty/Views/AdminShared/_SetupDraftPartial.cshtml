@@ -1,7 +1,7 @@
 ﻿@model DodgeDynasty.Models.DraftSetupModel
 
 <div id="setupDraft" data-draft-id="@Model.DraftId.Value">
-	<h2>Draft Setup - @Model.GetCurrentDraftName() Draft</h2>
+	<h2>Setup Draft Picks - @Model.GetCurrentDraftName() Draft</h2>
 	@Html.ValidationSummary(false)
 	<div class="error-messages">
 		<div class="blank-owner-msg invalid hide-yo-wives">Error - Owner cannot be left blank.</div>

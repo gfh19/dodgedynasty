@@ -16,7 +16,7 @@ function bindSubmitDraft() {
 		$(".submit-draft").first().focus();
 		resetValidations();
 		var addEditDraftModel = getAddEditDraftModel();
-		var draftFormValid = $('#draftForm').valid()
+		var draftFormValid = $('#draftForm').valid();
 		var ownersValid = validateAddEditDraftModel(addEditDraftModel);
 		if (draftFormValid && ownersValid) {
 			updateAddEditDraftModel(addEditDraftModel);

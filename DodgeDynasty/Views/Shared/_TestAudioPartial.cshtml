@@ -1,10 +1,24 @@
-﻿@model string
+﻿@model bool
 
+@{ var isUserInfo = Model; }
 <div class="test-audio page-section hide-yo-wives">
-	<div>@Model</div>
+	@if (isUserInfo) {
+	<div class="test-audio-msg">Audio (*NEW*): Select the "Audio?" checkbox above to hear the pick made right before your turn!</div>
+	}
+	else
+	{
+	<div class="test-audio-msg">Audio (*NEW*): Under "Audio?" above, select "All Picks" for them to hear all draft picks, or "Before Their Turn" for only the picks made before they are up.</div>
+	}
 	<div class="test-audio-enabled page-section vert-middle">
 		<span class="test-audio-note">NOTE:  Does not work on mobile devices. <br />(Click "Test Audio" to try on your machine)</span>
 		<span><input class="test-audio-btn" type="button" value="Test Audio" /></span>
+		@if (isUserInfo)
+		{
+		<div class="page-section note-text"> 
+			<input id="disable-browser-audio" type="checkbox"/>
+			Disable audio on this browser (i.e. if you are logged in on multiple machines)
+		</div>
+		}
 	</div>
 	<div class="test-audio-disabled page-section vert-middle">
 		<span class="test-audio-err-note invalid">Warning:  Mobile device detected; Audio auto-playback does not work on mobile browsers.</span>

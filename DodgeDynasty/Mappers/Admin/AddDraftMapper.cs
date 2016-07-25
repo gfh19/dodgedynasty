@@ -5,6 +5,7 @@ using System.Web;
 using DodgeDynasty.Entities;
 using DodgeDynasty.Mappers.Shared;
 using DodgeDynasty.Models;
+using DodgeDynasty.Shared;
 
 namespace DodgeDynasty.Mappers.Admin
 {
@@ -29,7 +30,9 @@ namespace DodgeDynasty.Mappers.Admin
 			Model.NumOwners = Model.LeagueOwnerUsers.Count;
 			Model.NumRounds = 15;
 			Model.NumKeepers = 0;
-			Model.Format = DodgeDynasty.Shared.Constants.DraftFormats.Snake;
+			//TODO:  Add League setting & default here
+			Model.Format = Constants.DraftFormats.Snake;
+			Model.PickTimeSeconds = Constants.Defaults.PickTimeSeconds;
 			Model.DraftOwnerUsers = Model.LeagueOwnerUsers;
 		}
 
@@ -46,6 +49,7 @@ namespace DodgeDynasty.Mappers.Admin
 				NumRounds = Convert.ToInt16(model.NumRounds),
 				NumKeepers = Convert.ToInt16(model.NumKeepers),
 				Format = model.Format,
+				PickTimeSeconds = Convert.ToInt16(model.PickTimeSeconds),
 				AddTimestamp = DateTime.Now,
 				LastUpdateTimestamp = DateTime.Now
 			};

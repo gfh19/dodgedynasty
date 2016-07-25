@@ -1,5 +1,35 @@
-﻿/* 7/10/16 */
+﻿/* 7/24/16 */
 
+SET XACT_ABORT ON
+BEGIN TRANSACTION;
+
+
+
+
+
+ALTER TABLE [dbo].[Draft]
+ADD [PickTimeSeconds] smallint NOT NULL DEFAULT(120)
+GO
+
+
+
+
+
+
+
+
+COMMIT TRANSACTION;
+
+
+
+
+
+
+
+
+/* Below Run in Production on 7/22/16 */
+
+/* 7/10/16 */
 
 SET XACT_ABORT ON
 BEGIN TRANSACTION;

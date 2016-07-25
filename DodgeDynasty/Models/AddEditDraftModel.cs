@@ -17,37 +17,58 @@ namespace DodgeDynasty.Models
 		[Display(Name = "Draft Date/Time")]
 		[Required]
 		public string DraftDate { get; set; }
+
 		[Display(Name = "Draft Time")]
 		[Required]
 		public string DraftTime { get; set; }
+
 		[Display(Name = "Location")]
 		[Required]
 		public string DraftLocation { get; set; }
+
 		[Display(Name = "Draft Year")]
 		[Required]
+		[Range(0, 9999)]
 		public short DraftYear { get; set; }
+
 		[Display(Name = "Owners")]
 		[Required]
+		[Range(0, 99)]
 		public int NumOwners { get; set; }
+
 		[Display(Name = "Rounds")]
 		[Required]
+		[Range(0, 99)]
 		public int NumRounds { get; set; }
+
 		[Display(Name = "Keepers")]
 		[Required]
+		[Range(0, 99)]
 		public int NumKeepers { get; set; }
+
 		[Display(Name = "Format")]
 		[Required]
 		public string Format { get; set; }
+
+		[Display(Name = "Seconds per Pick (0 for no timer)")]
+		[Required]
+		[Range(0, 999)]
+		public int PickTimeSeconds { get; set; }
+
 		[Display(Name = "Active?")]
 		[Required]
 		public bool IsActive { get; set; }
+
 		[Display(Name = "Complete?")]
 		[Required]
 		public bool IsComplete { get; set; }
+
 		[Display(Name = "Winner")]
 		public int? WinnerId { get; set; }
+
 		[Display(Name = "Runner Up")]
 		public int? RunnerUpId { get; set; }
+
 		[Display(Name = "Co Winners?")]
 		public bool HasCoWinners { get; set; }
 
