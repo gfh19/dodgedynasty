@@ -71,24 +71,29 @@ function displayBestUnrankedPlayers() {
 }
 
 function toggleUnrankedPlayers() {
-	$.each($(".bup-player-row:hidden"), function (ix, elem) {
-		var playerId = $(elem).attr("data-player-id");
-		if ($(".player-select[data-player-id=" + playerId + "]").length == 0 &&
-			$("select.player-select:visible option[value='" + playerId + "']:selected").length == 0) {
-			toggleUnrankedPlayer(playerId, true);
+	//var rankedPlayerIds = $(".bup-player-row").not(".unranked").map(function () { return $(this).attr("data-player-id") });
+	//var unrankedPlayerIds = $(".bup-player-row.unranked").map(function () { return $(this).attr("data-player-id") });
+
+	var rankedPlayerIds = $(".player-select").map(function () {
+		if ($(this).is(":visible")) {
+			return getPlayerSelectId($(this));
 		}
 	});
-	$.each($(".player-select[data-player-id]"), function (ix, elem) {
-		var playerId = $(elem).attr("data-player-id");
-		toggleUnrankedPlayer(playerId, false);
+	$.each($(".bup-player-row"), function (ix, elem) {
+		var bupPlayerId = $(elem).attr("data-player-id");
+		var isRanked = ($.inArray(bupPlayerId, rankedPlayerIds) >= 0);
+		if (isRanked && $(elem).hasClass("unranked")) {
+			toggleUnrankedPlayerRow(elem, false);
+		}
+		else if (!isRanked && !$(elem).hasClass("unranked")){
+			toggleUnrankedPlayerRow(elem, true);
+		}
 	});
-	$.each($("select.player-select:visible"), function (ix, elem) {
-		var playerId = $(elem).val();
-		toggleUnrankedPlayer(playerId, false);
-	});
+
 	toggleUnrankedTableEmpty();
 	toggleHideUnrankedList(clientCookieOptions.HideBUP);
 	toggleExpandUnrankedRows(clientCookieOptions.ExpandBUP);
+	toggleUnrankedTimeout = null;
 }
 
 function toggleUnrankedPlayer(playerId, show) {
@@ -237,6 +242,17 @@ function updateBestUnrankedOptions(successFn, errorFn) {
 
 /* End Best Unranked Players */
 
+function getPlayerSelectId(elem) {
+	var playerId = null;
+	if (hasAttr($(elem), "data-player-id")) {
+		playerId = $(elem).attr("data-player-id");
+	}
+	else if ($(elem).is("select")) {
+		playerId = $(elem).val();
+	}
+	return playerId;
+}
+
 function bindAddPlayerLinks() {
 	var links = $(".rank-add-player");
 	$.each(links, function (index, link) {
@@ -264,11 +280,12 @@ function bindAddPlayerLink(link) {
 }
 
 function bindPlayerSelectChange(playerSelect) {
+	$(playerSelect).unbind("change");
 	$(playerSelect).change(function (e) {
 		if (toggleUnrankedTimeout) {
 			clearTimeout(toggleUnrankedTimeout);
 		}
-		toggleUnrankedTimeout = setTimeout(toggleUnrankedPlayers, 60);
+		toggleUnrankedTimeout = setTimeout(toggleUnrankedPlayers, 35);
 	});
 }
 
@@ -286,7 +303,7 @@ function bindRemovePlayerLink(link) {
 		var playerRankNum = parseInt($(".player-rank-num", playerRankEntry).text());
 		changeAllPlayerRankNums(playerRankNum, -1);
 		$(playerRankEntry).remove();
-		var playerId = $(".player-select", playerRankEntry).attr("data-player-id");
+		var playerId = getPlayerSelectId($(".player-select", playerRankEntry));
 		var unrankedPlayer = $(".bup-player-row[data-player-id=" + playerId + "]");
 		$(unrankedPlayer).show();
 		$(unrankedPlayer).addClass("unranked");

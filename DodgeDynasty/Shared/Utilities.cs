@@ -33,7 +33,7 @@ namespace DodgeDynasty.Shared
 		{
 			if (!string.IsNullOrEmpty(name))
 			{
-				return name.Replace("-", "").Replace(".", "").Replace("'", "");
+				return name.Replace("-", "").Replace(".", "").Replace("'", "").Replace("*", "");
 			}
 			return name;
 		}

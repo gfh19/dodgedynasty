@@ -872,6 +872,11 @@ function getRandomInt() {
 	return getRandom(0, 100000000);
 }
 
+function hasAttr(elem, attribute) {
+	var attr = $(elem).attr(attribute);
+	return (typeof attr !== typeof undefined && attr !== false);
+}
+
 function showConfirmDialog(dialogText, okFn, cancelFn) {
 	cancelFn = cancelFn || function () { $(this).dialog("close"); };
 	var confirmDialog = '<div class="center hide-yo-kids" title="Confirmation"><p>' + dialogText + '</p></div>';
