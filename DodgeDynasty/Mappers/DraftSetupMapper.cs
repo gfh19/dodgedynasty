@@ -5,6 +5,7 @@ using System.Web;
 using DodgeDynasty.Models;
 using DodgeDynasty.Entities;
 using DodgeDynasty.Shared;
+using DodgeDynasty.Models.Shared;
 
 namespace DodgeDynasty.Mappers
 {
@@ -52,31 +53,7 @@ namespace DodgeDynasty.Mappers
 				}
 				HomeEntity.SaveChanges();
 
-				SetFirstPickStartTime(currentModel, picksModel);
-			}
-		}
-
-		private void SetFirstPickStartTime(DraftSetupModel currentModel, DraftPicksModel picksModel)
-		{
-			var firstDraftPick = HomeEntity.DraftPicks.Where(p => p.DraftId == picksModel.DraftId && p.PlayerId == null)
-				.OrderBy(p => p.PickNum).FirstOrDefault();
-			if (firstDraftPick != null)
-			{
-				var currentDateTime = Utilities.GetEasternTime();
-				//Past Draft - Set PickStart time to current time
-				if (currentDateTime > currentModel.CurrentDraft.DraftDate)
-				{
-					if (!firstDraftPick.PickStartDateTime.HasValue || firstDraftPick.PickStartDateTime > currentDateTime)
-					{
-						firstDraftPick.PickStartDateTime = currentDateTime;
-					}
-				}
-				//Future Draft - Set PickStart to draft time
-				else
-				{
-					firstDraftPick.PickStartDateTime = currentModel.CurrentDraft.DraftDate;
-				}
-				HomeEntity.SaveChanges();
+				DraftHelper.SetFirstPickStartTime(HomeEntity, currentModel.CurrentDraft);
 			}
 		}
 	}

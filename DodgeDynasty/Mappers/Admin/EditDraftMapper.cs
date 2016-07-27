@@ -5,6 +5,7 @@ using System.Web;
 using DodgeDynasty.Entities;
 using DodgeDynasty.Mappers.Shared;
 using DodgeDynasty.Models;
+using DodgeDynasty.Models.Shared;
 
 namespace DodgeDynasty.Mappers.Admin
 {
@@ -86,6 +87,8 @@ namespace DodgeDynasty.Mappers.Admin
 				HomeEntity.DraftOwners.AddObject(owner);
 			}
 			HomeEntity.SaveChanges();
+
+			DraftHelper.SetFirstPickStartTime(HomeEntity, draft);
 		}
 	}
 }

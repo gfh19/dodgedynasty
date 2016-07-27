@@ -289,6 +289,7 @@
     <Compile Include="Models\PlayerRankingsModel.cs" />
     <Compile Include="Models\Shared\AuditPlayerHelper.cs" />
     <Compile Include="Models\Shared\DraftChatModel.cs" />
+    <Compile Include="Models\Shared\DraftHelper.cs" />
     <Compile Include="Models\Site\MessagesCountModel.cs" />
     <Compile Include="Models\Site\MessagesModel.cs" />
     <Compile Include="Models\RankIdModel.cs" />
