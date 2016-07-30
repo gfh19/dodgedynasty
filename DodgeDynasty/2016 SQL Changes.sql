@@ -1,4 +1,27 @@
-﻿/* 7/24/16 */
+﻿/* 7/29/16 */
+
+SET XACT_ABORT ON
+BEGIN TRANSACTION;
+
+
+
+UPDATE [dbo].[CssColor]
+SET ColorValue = '#4477FB'
+WHERE ClassName = 'blue'
+
+
+
+
+
+COMMIT TRANSACTION;
+
+
+
+
+
+/* Below run in Production on 7/27/16 */
+
+/* 7/24/16 */
 
 SET XACT_ABORT ON
 BEGIN TRANSACTION;
@@ -10,8 +33,6 @@ BEGIN TRANSACTION;
 ALTER TABLE [dbo].[Draft]
 ADD [PickTimeSeconds] smallint NOT NULL DEFAULT(120)
 GO
-
-
 
 
 

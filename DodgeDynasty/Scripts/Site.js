@@ -3,6 +3,7 @@ var playerHints = [];
 var hasModelErrors = false;
 var isRefreshPage = false;
 var draftActive = false;	//Means ANY draftActive, not necessarily this one (check historyMode)
+							//Currently only ever set to true in DraftChatPartial
 var isUserTurn = false;
 var currentServerTime = null;
 var clientServerTimeOffset = null;
@@ -23,11 +24,13 @@ $(function () {
 	setUserAgentInfo();
 	highlightCurrentPageLink();
 	bindMenuLinks();
+	initWebSockets();
 	if (!draftChatKillSwitch) {
 		bindDraftChatWindow();
 	}
 	checkUserTurnDialog();
 	initLastPickAudio();
+	refreshDraftChat();
 });
 
 
@@ -58,15 +61,15 @@ function bindGotoPickNum() {
 
 /*		--- WebSockets */
 
-function initPage() {
+function initWebSockets() {
 	if (draftActive && !webSocketsKillSwitch) {
 		draftHub = $.connection.draftHub;
 		draftHub.client.broadcastDraft = (typeof broadcastDraft !== "undefined") ? broadcastDraft : function () { };
 		draftHub.client.broadcastChat = (typeof broadcastChat !== "undefined") ? broadcastChat : function () { };
 		draftHub.client.broadcastDisconnect = (typeof broadcastDisconnect !== "undefined") ? broadcastDisconnect : function () { };
 		startHubConnection();
+		checkStillSocketConnected(true);
 	}
-	checkStillSocketConnected(true);
 }
 
 function startHubConnection(startFn, forceAttempt) {
@@ -159,6 +162,7 @@ function broadcastDisconnect() {
 	$(".dchat-close-link").click();
 	$.connection.hub.stop();
 	broadcastDraft();
+	draftActive = false;
 }
 
 //Chat broadcast-received:  Function bound to server-side (C#) hub client handle
@@ -187,16 +191,18 @@ function checkStillSocketConnected(recursive) {
 				});
 			}
 		}, 1000);
-	}
-	if (recursive) {
-		setTimeout(function () {
-			checkStillSocketConnected(true);
-		}, 10000);
+		if (recursive) {
+			setTimeout(function () {
+				if (draftActive) {
+					checkStillSocketConnected(true);
+				}
+			}, 10000);
+		}
 	}
 }
 
 function refreshDraftChat() {
-	if (!draftChatKillSwitch) {
+	if (!draftChatKillSwitch && draftActive) {
 		ajaxGetReplace("Site/DraftChatPartial", "#dchat-partial", function () {
 			bindDraftChatWindow();
 		});
@@ -284,11 +290,13 @@ function highlightCurrentPageLink() {
 
 function refreshPageWithPickTimer(url, elementId, timer) {
 	timer = (timer === undefined) ? refreshTimer : timer;
-	setTimeout(function () {
-		callRefreshPageWithPickTimer(url, elementId);
-		console.log("Refreshed page at " + new Date());
-	},
-	timer);
+	if (draftActive) {
+		setTimeout(function () {
+			callRefreshPageWithPickTimer(url, elementId);
+			console.log("Refreshed page at " + new Date());
+		},
+		timer);
+	}
 };
 
 function callRefreshPageWithPickTimer(url, elementId) {

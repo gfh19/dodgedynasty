@@ -234,7 +234,7 @@ footer
 	clear: both;
 	background-color: #e2e2e2;
 	font-size: .8em;
-	height: 180px;
+	height: 215px;
 	width: 100%;
 }
 
@@ -2326,10 +2326,10 @@ span.player-select
     position:fixed;
     bottom:5px;
     right:15px;
-	height: 32px;
-	width: 360px;
+	height: 35px;
+	width: 430px;
 	font-family: "Segoe UI", Arial, Sans-Serif;
-	font-size: 12px;
+	font-size: 14px;
 	border: 1px solid darkgray;
 	background-color: #EEEEEE;
 	border-radius: 4px;
@@ -2339,6 +2339,7 @@ span.player-select
 }
 .dchat-header {
 	padding: 1px;
+	height: 33px;
 }
 .dchat-toggle, .dchat-close {
 	float: right;
@@ -2356,28 +2357,31 @@ span.player-select
 	padding: 6px 20px;
 }
 .dchat-ease-expand {
-	height: 261px;
+	height: 275px;
     -webkit-transition: height 0.10s linear;
     -moz-transition: height 0.10s linear;
     -o-transition: height 0.10s linear;
     transition: height 0.10s linear;
 }
 .dchat-ease-collapse {
-	height: 32px;
+	height: 35px;
     -webkit-transition: height 0.10s linear;
     -moz-transition: height 0.10s linear;
     -o-transition: height 0.10s linear;
     transition: height 0.10s linear;
 }
 .dchat-preview {
-	width: 280px;
-	min-height: 23px;
-	font-size: 12px;
+	width: 350px;
+	min-height: 28px;
+	font-size: 14px;
 	display: inline-block;
 	padding-top: 4px;
 	overflow: hidden;
 	white-space: nowrap;
 	cursor: pointer;
+}
+.dchat-prev-content {
+	vertical-align: middle;
 }
 .dchat-prev-outline, .draft-chat-outline {
 	display: inline-block;
@@ -2397,7 +2401,7 @@ span.player-select
 }
 .dchat-prev-stamp, .draft-chat-stamp {
 	display: inline-block;
-	font-size: 10px;
+	font-size: 11px;
 	font-weight: bold;
 	border: 2px solid;
 	border-radius: 6px;
@@ -2406,7 +2410,7 @@ span.player-select
 }
 .dchat-body {
 	padding: 1px;
-	height: 199px;
+	height: 210px;
 	overflow-y: scroll;
 	-webkit-overflow-scrolling: touch;
 	border-top: 1px solid darkgray;
@@ -2419,13 +2423,13 @@ span.player-select
 	vertical-align: top;
 }
 .dchat-body, .dchat-footer {
-	width: 358px;
+	width: 428px;
 }
 .dchat-input {
 	padding: 5px;
 	margin: 1px;
 	height: 12px;
-	width: 300px;
+	width: 369px;
 	border: 1px solid lightgray;
 	border-radius: 3px;
 	webkit-border-radius: 3px;
@@ -2851,19 +2855,27 @@ span.player-select
 	/* Draft Chat
 	------------------------------------*/
 	.dchat-window, .dchat-window-error {
+		font-size: 12px;
+		height: 32px;
 		width: 285px;
+	}
+	.dchat-ease-collapse {
+		height: 32px;
 	}
 	.dchat-ease-expand {
 		height: 226px;
 	}
 	.dchat-preview {
+		font-size: 12px;
+		min-height: 28px;
 		width: 205px;
 	}
 	.dchat-body {
 		height: 164px;
-	}
-	.dchat-body {
 		width: 283px;
+	}
+	.dchat-header {
+		height: 30px;
 	}
 	.dchat-footer {
 		width: 285px;
@@ -2877,6 +2889,9 @@ span.player-select
 	}
 	.dchat-window-error .dchat-body {
 		width: 276px;
+	}
+	.dchat-prev-stamp, .draft-chat-stamp {
+		font-size: 10px;
 	}
 }
 
