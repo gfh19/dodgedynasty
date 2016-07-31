@@ -1,9 +1,16 @@
 ﻿var adminMode = null;
 var ownerHints = [];
+var isPageSubmitted = false;
 
  $(function () {
 	bindActionLinks();
 });
+
+function pageBroadcastDraftHandler() {
+	if (!isPageSubmitted) {
+ 		showStaleDraftDialog();
+	}
+}
 
 function bindActionLinks() {
 	bindAddRoundLinks();
@@ -257,6 +264,7 @@ function bindSubmitDraftPicks() {
 		draftPicksModel.DraftPicks = draftPicks;
 		if (validateDraftPicksModel(userIds)) {
 			addWaitCursor();
+			isPageSubmitted = true;
 			ajaxPost(draftPicksModel, adminMode + "/SetupDraft", function (response) {
 				$("#setupDraftForm").submit();
 			}, removeWaitCursor);

@@ -12,6 +12,12 @@ WHERE ClassName = 'blue'
 
 
 
+UPDATE [dbo].[Highlight]
+SET HighlightValue = '#FFB0CB'
+WHERE HighlightName = 'pink'
+
+
+
 
 COMMIT TRANSACTION;
 

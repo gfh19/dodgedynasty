@@ -1,10 +1,18 @@
 ﻿var adminMode = null;
+var isPageSubmitted = false;
 
 function initInput() {
 	setPlayerAutoComplete();
 	bindInputPrevious();
 	bindInputNext();
 	bindInputDelete();
+	bindInputFormSubmit();
+}
+
+function pageBroadcastDraftHandler() {
+	if (!isPageSubmitted) {
+		showStaleDraftDialog();
+	}
 }
 
 function bindInputPrevious() {
@@ -41,5 +49,11 @@ function bindInputDelete() {
 				]
 		});
 		return false;
+	});
+}
+
+function bindInputFormSubmit() {
+	$("#draftInputForm").on("submit", function () {
+		isPageSubmitted = true;
 	});
 }

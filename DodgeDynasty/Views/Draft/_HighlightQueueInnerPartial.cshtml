@@ -32,12 +32,15 @@
 					<th style="">#</th>
 					<th>Rk</th>
 					<th class="hq-player-th">Player</th>
-					<th>Tm</th>
-					<th>Pos</th>
 					@if (Model.AreYearByeWeeksFound())
 					{
-						<th>Bye</th>
+						<th>Tm <span class="ba-bye-week">(Bye)</span></th>
 					}
+					else
+					{
+						<th>Tm</th>
+					}
+					<th>Pos</th>
 				</tr>
 				@{int hpCnt = 1;}
 				@foreach (var player in Model.HighlightedPlayers)
@@ -57,29 +60,32 @@
 						</td>
 						@if (player.PickNum != null)
 						{
-							<td colspan="@(Model.AreYearByeWeeksFound() ? "3" : "2")">(@player.NickName, #@player.PickNum)</td>
+							<td colspan="2">(@player.NickName, #@player.PickNum)</td>
 						}
 						else
 						{
-							<td>@player.NFLTeamDisplay</td>
-							<td>@player.Position</td>
 							if (Model.AreYearByeWeeksFound())
 							{
 								var byeWeek = Model.GetNFLTeamByeWeek(player.NFLTeam);
 								if (byeWeek != null)
 								{
-									<td class="ba-bye-week">(@byeWeek)</td>
+									<td>@player.NFLTeamDisplay <span class="ba-bye-week">(@byeWeek)</span></td>
 								}
 								else
 								{
-									<td class="ba-bye-week"></td>
+									<td>@player.NFLTeamDisplay</td>
 								}
 							}
+							else
+							{
+								<td>@player.NFLTeamDisplay</td>
+							}
+							<td>@player.Position</td>
 						}
 					</tr>
 				}
 				<tr class="unsortable">
-					<td colspan="@(Model.AreYearByeWeeksFound() ? "6" : "5")" class="expand">
+					<td colspan="5" class="expand">
 						<a href="#" id="ExpandQueue" class="expand-link" data-expand="@Model.Options.ExpandQueue.ToString().ToLower()">More...</a>
 					</td>
 				</tr>

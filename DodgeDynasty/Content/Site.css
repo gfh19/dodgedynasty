@@ -1264,7 +1264,7 @@ ul.menu li a.current-page
 	border-width: 3px;
 	border-style: solid;
 	padding: 1px;
-	width: 118px;
+	width: 120px;
 	white-space: normal;
 	overflow: hidden;
 }
@@ -1354,7 +1354,7 @@ ul.menu li a.current-page
 	border-width: 3px;
 	border-style: solid;
 	padding: 1px;
-	width: 118px;
+	width: 120px;
 	white-space: normal;
 	overflow: hidden;
 }
@@ -1516,7 +1516,7 @@ ul.menu li a.current-page
 	font-size: 10px;
 }
 .ba-bye-week {
-	font-size: 12px;
+	font-size: 10px;
 }
 
 .ba-category th:last-child, .ba-category td:last-child {

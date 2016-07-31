@@ -77,7 +77,7 @@ function bindActivatePlayerLinks() {
 function bindInactivateAllPlayerButtons() {
 	$(".activate-defs").click(function (e) {
 		e.preventDefault();
-		showConfirmDialog("Are you sure you want to Inactivate all but 32 DEFs? <br/><br/>(This is irreversible)", function () {
+		showConfirmDialog("Are you sure you want to Inactivate all but 32 DEFs? <br/><br/>(This is irreversible)", null, function () {
 			ajaxPost({ playerGroup: "def" }, "Admin/InactivatePlayers", function () {
 				window.location.reload();
 			});
@@ -85,7 +85,7 @@ function bindInactivateAllPlayerButtons() {
 	});
 	$(".inactivate-all").click(function (e) {
 		e.preventDefault();
-		showConfirmDialog("Are you sure you want to Inactivate ALL PLAYERS? <br/><br/>(This is irreversible)", function () {
+		showConfirmDialog("Are you sure you want to Inactivate ALL PLAYERS? <br/><br/>(This is irreversible)", null, function () {
 			ajaxPost({ playerGroup: "all" }, "Admin/InactivatePlayers", function () {
 				window.location.reload();
 			});

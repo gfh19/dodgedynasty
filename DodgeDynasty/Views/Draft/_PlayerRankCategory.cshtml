@@ -41,13 +41,16 @@
 					<th>Rk</th>
 				}
 				<th>Player</th>
-				<th>Tm</th>
-				@if (showPos) {
-					<th>Pos</th>
-				}
 				@if (showBye)
 				{
-					<th>Bye</th>
+					<th>Tm <span class="ba-bye-week">(Bye)</span></th>
+				}
+				else
+				{
+					<th>Tm</th>
+				}
+				@if (showPos) {
+					<th>Pos</th>
 				}
 			</tr>
 			@foreach (var player in Model.CurrentRankCategory.PlayerList)
@@ -72,26 +75,25 @@
 					</td>
 					@if (player.PickNum != null)
 					{
-						<td colspan="@((showPos && showBye) ? "3" : ((showPos || showBye) ? "2" : "1"))">(@player.NickName, #@player.PickNum)</td>
+						<td colspan="@(showPos ? "2" : "1")">(@player.NickName, #@player.PickNum)</td>
 					}
 					else
 					{
-						<td>@player.NFLTeamDisplay</td>
-						if (showPos)
-						{
-							<td>@player.Position</td>
-						}
 						if (showBye)
 						{
 							var byeWeek = Model.GetNFLTeamByeWeek(player.NFLTeam);
 							if (byeWeek != null)
 							{
-								<td class="ba-bye-week">(@byeWeek)</td>
+							<td>@player.NFLTeamDisplay <span class="ba-bye-week">(@byeWeek)</span></td>
 							}
-							else
-							{
-								<td class="ba-bye-week"></td>
-							}
+						}
+						else
+						{
+							<td>@player.NFLTeamDisplay</td>
+						}
+						if (showPos)
+						{
+							<td>@player.Position</td>
 						}
 					}
 				</tr>
@@ -99,13 +101,13 @@
 			<tr>
 				@if (Model.AveragePlayerRank != null && !DodgeDynasty.Shared.Utilities.ToBool(historyMode))
 				{
-					<td colspan="@((showPos && showBye) ? "6" : ((showPos || showBye) ? "5" : "4"))" class="expand">
+					<td colspan="@(showPos ? "5" : "4")" class="expand">
 						<a href="#" id="@Model.CurrentRankCategory.ExpandId" class="expand-link" data-expand="@Model.CurrentRankCategory.ExpandValue">More...</a>
 					</td>
 				}
 				else
 				{
-					<td colspan="@((showPos && showBye) ? "5" : ((showPos || showBye) ? "4" : "3"))" class="expand">
+					<td colspan="@(showPos ? "4" : "3")" class="expand">
 						<a href="#" id="@Model.CurrentRankCategory.ExpandId" class="expand-link" data-expand="@Model.CurrentRankCategory.ExpandValue">More...</a>
 					</td>
 				}

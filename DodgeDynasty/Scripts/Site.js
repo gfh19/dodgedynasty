@@ -14,6 +14,7 @@ var touchScrollDiv = null;
 var touchScrollLeft = null;
 var lastPickAudio = null;
 var pickAudioBed = null;
+var adminLastPickTime = null;
 
 /* Init functions */
 
@@ -519,6 +520,14 @@ function easeHideToggleMsgs() {
 	}
 }
 
+function showStaleDraftDialog() {
+	showConfirmDialog("The draft has been updated, and the page you're viewing may be stale. <br/><br/>Would you like to refresh this page?",
+			"Draft Updated", function () {
+				location.reload(true);
+			}, null, "Refresh", "Cancel");
+}
+
+
 /*		--- Draft Chat */
 
 function bindDraftChatWindow() {
@@ -885,9 +894,13 @@ function hasAttr(elem, attribute) {
 	return (typeof attr !== typeof undefined && attr !== false);
 }
 
-function showConfirmDialog(dialogText, okFn, cancelFn) {
+function showConfirmDialog(dialogText, title, okFn, cancelFn, okText, cancelText) {
+	title = title || "Confirmation";
+	okFn = okFn || function () { $(this).dialog("close"); };
 	cancelFn = cancelFn || function () { $(this).dialog("close"); };
-	var confirmDialog = '<div class="center hide-yo-kids" title="Confirmation"><p>' + dialogText + '</p></div>';
+	okText = okText || "OK";
+	cancelText = cancelText || "Cancel";
+	var confirmDialog = '<div class="center hide-yo-kids" title="' + title + '"><p>' + dialogText + '</p></div>';
 
 	$(confirmDialog).dialog({
 		resizable: false,
@@ -896,10 +909,10 @@ function showConfirmDialog(dialogText, okFn, cancelFn) {
 		modal: true,
 		buttons: [
 					{
-						text: "OK", click: okFn
+						text: okText, click: okFn
 					},
 					{
-						text: "Cancel", click: cancelFn
+						text: cancelText, click: cancelFn
 					},
 		]
 	});

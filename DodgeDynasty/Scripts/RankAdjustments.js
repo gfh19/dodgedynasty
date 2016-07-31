@@ -103,7 +103,7 @@ function confirmAutoImportRank(rankId, rankName) {
 					+ "Last Player:<br/>" + response.last + "<br/><br/>"
 					+ "Player Count: " + response.count + "<br/><br/>"
 					+ "Do you want to import <br/>'" + rankName + "' now?";
-			showConfirmDialog(text, function () { autoImportRank(rankId); });
+			showConfirmDialog(text, null, function () { autoImportRank(rankId); });
 		}
 	}, removeWaitCursor);
 }
