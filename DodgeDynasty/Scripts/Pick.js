@@ -49,12 +49,6 @@ function callRefreshUserPickWithPickTimer() {
 };
 
 function setNewPickUserTurnCookie() {
-	var settings;
-	if ($.cookie("userTurnSettings")) {
-		settings = jQuery.parseJSON($.cookie("userTurnSettings"));
-	}
-	else {
-		settings = { neverShowAgain: false };
-	}
+	var settings = getUserTurnCookie();
 	setUserTurnCookie(false, settings.neverShowAgain);
 }

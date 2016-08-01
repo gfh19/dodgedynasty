@@ -421,9 +421,24 @@ function showUserTurnDialog() {
 				modal: false,
 				autoOpen: true,
 				buttons: [
-							{ text: "Make Pick", click: function () { location.href = baseURL + "Draft/Pick"; $(this).dialog("close"); } },
-							{ text: "Close", click: function () { $(this).dialog("close"); } },
-				]
+							{
+								id: "btnUserMakePick",
+								text: "Make Pick", click: function () {
+									setHideUserTurn("#chkHideUserTurn");
+									location.href = baseURL + "Draft/Pick";
+									$(this).dialog("close");
+								}
+							},
+							{
+								text: "Close", click: function () {
+									setHideUserTurn("#chkHideUserTurn");
+									$(this).dialog("close");
+								}
+							},
+				],
+				open: function () {
+					$("#btnUserMakePick").focus();
+				}
 			});
 		});
 	}
@@ -448,6 +463,17 @@ function setLatestUserTurnPickInfo(showFn) {
 	});
 }
 
+function getUserTurnCookie() {
+	var settings;
+	if ($.cookie("userTurnSettings")) {
+		settings = jQuery.parseJSON($.cookie("userTurnSettings"));
+	}
+	else {
+		settings = { shown: false, neverShowAgain: false };
+	}
+	return settings;
+}
+
 function setUserTurnCookie(shown, neverShowAgain) {
 	var settings = { shown: shown, neverShowAgain: neverShowAgain };
 	$.cookie("userTurnSettings", JSON.stringify(settings), { path: baseURL });
@@ -455,6 +481,10 @@ function setUserTurnCookie(shown, neverShowAgain) {
 
 function isUserTurnDialogOpen() {
 	return $("#userTurnDialog").dialog({autoOpen: false}).dialog("isOpen");
+}
+
+function setHideUserTurn(chkId) {
+	setUserTurnCookie(getUserTurnCookie().shown, $(chkId).prop('checked'));
 }
 
 function closeUserTurnDialog() {

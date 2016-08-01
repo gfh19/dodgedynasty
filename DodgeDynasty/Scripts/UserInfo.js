@@ -5,6 +5,7 @@
 	bindColorSelects();
 	bindSubmitUserInfo();
 	bindUserNameSelect();
+	bindHideUserTurnCheckbox();
 	bindTestAudio();
 	toggleDisableBrowserAudio();
 }
@@ -35,6 +36,7 @@ function bindSubmitUserInfo() {
 		var userInfoValid = validateUserInfoModel(userInfoModel);
 		if (userInfoFormValid && userInfoValid) {
 			setDisableBrowserAudio();
+			setHideUserTurn("#chkMIHideUserTurn");
 			updateUserInfoModel(userInfoModel);
 		}
 	});
@@ -90,6 +92,10 @@ function bindUserNameSelect() {
 			$(".mi-user-name").focus();
 		});
 	});
+}
+
+function bindHideUserTurnCheckbox() {
+	$("#chkMIHideUserTurn").prop('checked', getUserTurnCookie().neverShowAgain);
 }
 
 function toggleDisableBrowserAudio() {

@@ -89,6 +89,9 @@
 							}
 						</div>
 					}
+					<div class="page-section-small note-text">
+						<input id="chkMIHideUserTurn" class="vert-middle" type="checkbox" /> <span class="note-text">Do not show the "Your Turn" dialog again</span>
+					</div>
 					@if (!DodgeDynasty.Shared.Utilities.GetBoolConfigVal(DodgeDynasty.Shared.Constants.AppSettings.UserEditAudioKillSwitch))
 					{
 						@Html.Partial(DodgeDynasty.Shared.Constants.Views.TestAudioPartial, true)
