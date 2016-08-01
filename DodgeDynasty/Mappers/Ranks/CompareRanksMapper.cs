@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using DodgeDynasty.Entities;
 using DodgeDynasty.Models;
 using DodgeDynasty.Models.Types;
 
@@ -14,6 +15,7 @@ namespace DodgeDynasty.Mappers.Ranks
 
 		public PlayerRankModel PlayerRankModel { get; set; }
 		public bool ShowBestAvailable { get; set; }
+		public bool WrongDraftCompRankFound { get; set; }
 
 		public CompareRanksMapper(PlayerRankModel playerRankModel, bool showBestAvailable)
 		{
@@ -27,11 +29,26 @@ namespace DodgeDynasty.Mappers.Ranks
 			if (!string.IsNullOrEmpty(PlayerRankModel.Options.CompareRankIds))
 			{
 				var compRankIds = PlayerRankModel.Options.CompareRankIds.Split(',');
-                foreach (var compareRankId in compRankIds)
+				Rank firstRank = null;
+				List<PlayerRank> firstPlayerRanks = null;
+				foreach (var compareRankId in compRankIds)
 				{
 					var rankId = Convert.ToInt32(compareRankId);
+					var draftRank = HomeEntity.DraftRanks.FirstOrDefault(o => o.RankId == rankId);
+					//If Comp Rank Id is draft-specific and no longer the current draft, abort
+					if (draftRank == null || (draftRank.DraftId != null && draftRank.DraftId != PlayerRankModel.GetCurrentDraftId()))
+					{
+						WrongDraftCompRankFound = true;
+                        PlayerRankModel.CompareRankModels.Clear();
+						break;
+                    }
                     Model = PlayerRankModelHelper.CreatePlayerRankingsModel(PlayerRankModel);
 					PlayerRankModelHelper.SetPlayerRanks(PlayerRankModel, HomeEntity, rankId);
+					if (firstRank == null)
+					{
+						firstRank = PlayerRankModel.CurrentRank;
+						firstPlayerRanks = PlayerRankModel.PlayerRanks;
+                    }
 					PlayerRankModelHelper.SetPlayerRanks(Model, HomeEntity, rankId);
 					Model.RankedPlayers = PlayerRankModel.GetRankedPlayersAllWithDraftPickInfo();
 					if (ShowBestAvailable)
@@ -44,6 +61,8 @@ namespace DodgeDynasty.Mappers.Ranks
 					}
 					PlayerRankModel.CompareRankModels.Add(Model);
 				}
+				PlayerRankModel.CurrentRank = firstRank;
+				PlayerRankModel.PlayerRanks = firstPlayerRanks;
 				if (PlayerRankModel.Options.ShowAvgCompRanks && PlayerRankModel.CompareRankModels.Count > 0)
 				{
 					var averagePlayerRank = PlayerRankModelHelper.CreatePlayerRankingsModel(PlayerRankModel);

@@ -54,6 +54,10 @@ namespace DodgeDynasty.UIHelpers
 			ValidateOrClearCompareRankIds(options, response);
 			var compareRankMapper = MapperFactory.CreateCompareRanksMapper(playerRankModel, showBestAvailable);
 			compareRankMapper.GetModel();
+			if (compareRankMapper.WrongDraftCompRankFound)
+			{
+				ClearCompareRankIds(options, response);
+			}
 			playerRankModel = compareRankMapper.PlayerRankModel;
 			playerRankModel.HighlightedPlayers = (showBestAvailable)
 				? playerRankModel.GetBestAvailHighlightedPlayers()
@@ -72,14 +76,19 @@ namespace DodgeDynasty.UIHelpers
 					int? rankId = Utilities.ToNullInt(compareRankId);
 					if (rankId == null || !accessModel.CanUserAccessRank(rankId.Value))
 					{
-						options.CompareRankIds = "";
-						UpdatePlayerRankOptions(options, response);
+						ClearCompareRankIds(options, response);
 						isValid = false;
-                        break;
+						break;
 					}
 				}
 			}
 			return isValid;
+		}
+
+		public void ClearCompareRankIds(PlayerRankOptions options, HttpResponseBase response)
+		{
+			options.CompareRankIds = "";
+			UpdatePlayerRankOptions(options, response);
 		}
 
 		public PlayerRankOptions GetPlayerRankOptions(HttpRequestBase request, HttpResponseBase response)

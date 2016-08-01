@@ -2392,7 +2392,7 @@ span.player-select
 }
 .dchat-prev-holder {
 	display: inline-block;
-	font-size: 11px;
+	font-size: 14px;
 	font-weight: bold;
 	border: 2px solid;
 	border-radius: 6px;
@@ -2892,6 +2892,9 @@ span.player-select
 	}
 	.dchat-prev-stamp, .draft-chat-stamp {
 		font-size: 10px;
+	}
+	.dchat-prev-holder {
+		font-size: 11px;
 	}
 }
 
