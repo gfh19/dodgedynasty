@@ -11,5 +11,6 @@ namespace DodgeDynasty.Models.Highlights
 		public string HighlightName { get; set; }
 		public string HighlightClass { get; set; }
 		public string HighlightValue { get; set; }
+		public short? HighlightOrder { get; set; }
 	}
 }

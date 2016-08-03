@@ -5032,6 +5032,30 @@ namespace DodgeDynasty.Entities
         private global::System.String _HighlightName;
         partial void OnHighlightNameChanging(global::System.String value);
         partial void OnHighlightNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int16> HighlightOrder
+        {
+            get
+            {
+                return _HighlightOrder;
+            }
+            set
+            {
+                OnHighlightOrderChanging(value);
+                ReportPropertyChanging("HighlightOrder");
+                _HighlightOrder = StructuralObject.SetValidValue(value, "HighlightOrder");
+                ReportPropertyChanged("HighlightOrder");
+                OnHighlightOrderChanged();
+            }
+        }
+        private Nullable<global::System.Int16> _HighlightOrder;
+        partial void OnHighlightOrderChanging(Nullable<global::System.Int16> value);
+        partial void OnHighlightOrderChanged();
 
         #endregion
 

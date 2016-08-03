@@ -9,12 +9,64 @@ UPDATE [dbo].[CssColor]
 SET ColorValue = '#4477FB'
 WHERE ClassName = 'blue'
 
+UPDATE [dbo].[CssColor]
+SET ColorValue = 'purple'
+WHERE ClassName = 'purple'
 
+
+
+
+
+ALTER TABLE [dbo].[Highlight]
+ADD [HighlightOrder] smallint NULL
+GO
+
+
+INSERT INTO [dbo].[Highlight]
+           ([HighlightName],[HighlightClass],[HighlightValue],[HighlightOrder],[AddTimestamp],[LastUpdateTimestamp])
+     VALUES
+           ('Dark Grey','bg-dark-grey','darkgrey',NULL,getdate(),getdate())
+GO
+
+
+INSERT INTO [dbo].[Highlight]
+           ([HighlightName],[HighlightClass],[HighlightValue],[HighlightOrder],[AddTimestamp],[LastUpdateTimestamp])
+     VALUES
+           ('Purple','bg-purple','purple',NULL,getdate(),getdate())
+GO
+
+
+INSERT INTO [dbo].[Highlight]
+           ([HighlightName],[HighlightClass],[HighlightValue],[HighlightOrder],[AddTimestamp],[LastUpdateTimestamp])
+     VALUES
+           ('Maroon','bg-maroon','maroon',NULL,getdate(),getdate())
+GO
+
+
+DELETE FROM [dbo].[Highlight] WHERE HighlightName = 'White'
+
+
+UPDATE [dbo].[Highlight] SET HighlightOrder = 1 WHERE HighlightName = 'Yellow'
+UPDATE [dbo].[Highlight] SET HighlightOrder = 2 WHERE HighlightName = 'Lime'
+UPDATE [dbo].[Highlight] SET HighlightOrder = 3 WHERE HighlightName = 'Cyan'
+UPDATE [dbo].[Highlight] SET HighlightOrder = 4 WHERE HighlightName = 'Orange'
+UPDATE [dbo].[Highlight] SET HighlightOrder = 5 WHERE HighlightName = 'Pink'
+UPDATE [dbo].[Highlight] SET HighlightOrder = 6 WHERE HighlightName = 'Red'
+UPDATE [dbo].[Highlight] SET HighlightOrder = 7 WHERE HighlightName = 'Magenta'
+UPDATE [dbo].[Highlight] SET HighlightOrder = 8 WHERE HighlightName = 'Light Blue'
+UPDATE [dbo].[Highlight] SET HighlightOrder = 9 WHERE HighlightName = 'Blue'
+UPDATE [dbo].[Highlight] SET HighlightOrder = 10 WHERE HighlightName = 'Green'
+UPDATE [dbo].[Highlight] SET HighlightOrder = 11 WHERE HighlightName = 'Brown'
+UPDATE [dbo].[Highlight] SET HighlightOrder = 12 WHERE HighlightName = 'Dark Grey'
+UPDATE [dbo].[Highlight] SET HighlightOrder = 13 WHERE HighlightName = 'Purple'
+UPDATE [dbo].[Highlight] SET HighlightOrder = 14 WHERE HighlightName = 'Maroon'
+UPDATE [dbo].[Highlight] SET HighlightOrder = 15 WHERE HighlightName = 'Grey (clear)'
+UPDATE [dbo].[Highlight] SET HighlightOrder = 16 WHERE HighlightName = 'Black'
 
 
 UPDATE [dbo].[Highlight]
 SET HighlightValue = '#FFB0CB'
-WHERE HighlightName = 'pink'
+WHERE HighlightName = 'Pink'
 
 
 

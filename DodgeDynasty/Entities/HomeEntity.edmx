@@ -173,6 +173,7 @@
           <Property Name="HighlightName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="HighlightClass" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="HighlightValue" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="HighlightOrder" Type="smallint" />
           <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
           <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
         </EntityType>
@@ -1913,6 +1914,7 @@
           <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="HighlightName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="PlayerHighlights" Relationship="HomeModel.FK_PlayerHighlight_Highlight" FromRole="Highlight" ToRole="PlayerHighlight" />
+          <Property Name="HighlightOrder" Type="Int16" />
         </EntityType>
         <EntityType Name="DraftPickHistory">
           <Key>
@@ -2576,6 +2578,7 @@
           <EntitySetMapping Name="Highlights">
             <EntityTypeMapping TypeName="HomeModel.Highlight">
               <MappingFragment StoreEntitySet="Highlight">
+                <ScalarProperty Name="HighlightOrder" ColumnName="HighlightOrder" />
                 <ScalarProperty Name="HighlightName" ColumnName="HighlightName" />
                 <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
                 <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />

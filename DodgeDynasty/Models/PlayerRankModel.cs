@@ -239,10 +239,12 @@ namespace DodgeDynasty.Models
 			var model = mapper.GetModel();
 			var highlightColors = model.Highlights;
 			var maxHighlightId = model.Highlights.Select(o => o.HighlightId).DefaultIfEmpty().Max();
+			var maxHighlightOrder = model.Highlights.Select(o => o.HighlightOrder).DefaultIfEmpty().Max();
 			highlightColors.Add(
 				new HighlightModel { HighlightId = (maxHighlightId+100),
+					HighlightOrder = (short)(maxHighlightOrder.GetValueOrDefault() + 100),
 					HighlightName="<Remove>", HighlightClass = "<remove>", HighlightValue = "<remove>" });
-            return Utilities.GetListItems<HighlightModel>(highlightColors.OrderBy(o => o.HighlightId).ToList(),
+            return Utilities.GetListItems<HighlightModel>(highlightColors.OrderBy(o => o.HighlightOrder).ToList(),
 				o => o.HighlightName, o => o.HighlightClass.ToString(), false, GetSelectedHighlightColor());
 		}
 

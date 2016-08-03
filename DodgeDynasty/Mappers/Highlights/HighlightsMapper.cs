@@ -14,7 +14,8 @@ namespace DodgeDynasty.Mappers.Highlights
 				HighlightId = o.HighlightId,
 				HighlightName = o.HighlightName,
 				HighlightClass = o.HighlightClass,
-				HighlightValue = o.HighlightValue
+				HighlightValue = o.HighlightValue,
+				HighlightOrder = o.HighlightOrder
 			}));
 		}
 	}
