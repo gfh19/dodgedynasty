@@ -69,16 +69,16 @@
 								var byeWeek = Model.GetNFLTeamByeWeek(player.NFLTeam);
 								if (byeWeek != null)
 								{
-									<td>@player.NFLTeamDisplay <span class="ba-bye-week">(@byeWeek)</span></td>
+									<td class="nowrap">@player.NFLTeamDisplay <span class="ba-bye-week">(@byeWeek)</span></td>
 								}
 								else
 								{
-									<td>@player.NFLTeamDisplay</td>
+									<td class="nowrap">@player.NFLTeamDisplay</td>
 								}
 							}
 							else
 							{
-								<td>@player.NFLTeamDisplay</td>
+								<td class="nowrap">@player.NFLTeamDisplay</td>
 							}
 							<td>@player.Position</td>
 						}

@@ -1,4 +1,18 @@
-﻿/* 7/29/16 */
+﻿SET XACT_ABORT ON
+BEGIN TRANSACTION;
+
+
+
+
+COMMIT TRANSACTION;
+
+
+
+
+
+/* Below run in Production on 8/2/16 */
+
+/* 7/29/16 */
 
 SET XACT_ABORT ON
 BEGIN TRANSACTION;
@@ -43,7 +57,16 @@ INSERT INTO [dbo].[Highlight]
 GO
 
 
-DELETE FROM [dbo].[Highlight] WHERE HighlightName = 'White'
+--DELETE FROM [dbo].[Highlight] WHERE HighlightName = 'White'
+/* 8/2/16 Changed my mind again! */
+/*
+INSERT INTO [dbo].[Highlight]
+           ([HighlightName],[HighlightClass],[HighlightValue],[HighlightOrder],[AddTimestamp],[LastUpdateTimestamp])
+     VALUES
+           ('White','bg-white','white',NULL,getdate(),getdate())
+GO
+
+*/
 
 
 UPDATE [dbo].[Highlight] SET HighlightOrder = 1 WHERE HighlightName = 'Yellow'
@@ -61,7 +84,9 @@ UPDATE [dbo].[Highlight] SET HighlightOrder = 12 WHERE HighlightName = 'Dark Gre
 UPDATE [dbo].[Highlight] SET HighlightOrder = 13 WHERE HighlightName = 'Purple'
 UPDATE [dbo].[Highlight] SET HighlightOrder = 14 WHERE HighlightName = 'Maroon'
 UPDATE [dbo].[Highlight] SET HighlightOrder = 15 WHERE HighlightName = 'Grey (clear)'
-UPDATE [dbo].[Highlight] SET HighlightOrder = 16 WHERE HighlightName = 'Black'
+UPDATE [dbo].[Highlight] SET HighlightOrder = 16 WHERE HighlightName = 'White'
+UPDATE [dbo].[Highlight] SET HighlightOrder = 17 WHERE HighlightName = 'Black'
+
 
 
 UPDATE [dbo].[Highlight]

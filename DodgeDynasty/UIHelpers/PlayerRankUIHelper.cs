@@ -55,8 +55,14 @@ namespace DodgeDynasty.UIHelpers
 			if (!string.IsNullOrEmpty(position))
 			{
 				playerRankModel.CompRankPosition = position;
-				playerRankModel.CompareRankModels.ForEach(o => o.CompRankPosition = position);
-				playerRankModel.AveragePlayerRank.CompRankPosition = position;
+				if (playerRankModel.CompareRankModels != null)
+				{
+					playerRankModel.CompareRankModels.ForEach(o => o.CompRankPosition = position);
+				}
+				if (playerRankModel.AveragePlayerRank != null)
+				{
+					playerRankModel.AveragePlayerRank.CompRankPosition = position;
+				}
 			}
 		}
 
