@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DodgeDynasty.Models.Types;
+using DodgeDynasty.Shared;
 
 namespace DodgeDynasty.Models.ViewTypes
 {
@@ -110,24 +111,38 @@ namespace DodgeDynasty.Models.ViewTypes
 		{
 			RankCategoryModel result = new RankCategoryModel();
 			result.DataLink = result.ExpandId = "ExpandCR-" + playerRankModel.RankId;
-			result.Header = "OVERALL";
 			result.ShowPos = true;
 			result.ShowByeWeek = true;
 			result.ExpandValue = GetCRExpandValue(playerRankModel.Options, playerRankModel.RankId);
-			result.PlayerList = playerRankModel.OverallRankedPlayers;
+			CheckCompRankPosition(playerRankModel, result);
 			return result;
 		}
+
 		public static RankCategoryModel CreateCategoryAvg(IPlayerRankModel playerRankModel)
 		{
 			RankCategoryModel result = new RankCategoryModel();
 			result.DataLink = result.ExpandId = "ExpandAvg";
 			result.HideId = "HideAvg";
-			result.Header = "OVERALL";
 			result.ShowPos = true;
 			result.ShowByeWeek = true;
 			result.ExpandValue = playerRankModel.Options.ExpandAvg.ToString().ToLower();
-			result.PlayerList = playerRankModel.OverallRankedPlayers;
+			CheckCompRankPosition(playerRankModel, result);
 			return result;
+		}
+
+		private static void CheckCompRankPosition(IPlayerRankModel playerRankModel, RankCategoryModel result)
+		{
+			if (string.IsNullOrEmpty(playerRankModel.CompRankPosition) || playerRankModel.CompRankPosition == Constants.Positions.Overall)
+			{
+				result.Header = "OVERALL";
+				result.PlayerList = playerRankModel.OverallRankedPlayers;
+			}
+			else
+			{
+				result.Header = string.Format("***{0} ONLY***", playerRankModel.CompRankPosition);
+				var positions = playerRankModel.CompRankPosition.Split('/');
+				result.PlayerList = playerRankModel.OverallRankedPlayers.Where(o => positions.Contains(o.Position)).ToList();
+			}
 		}
 
 		//Helpers

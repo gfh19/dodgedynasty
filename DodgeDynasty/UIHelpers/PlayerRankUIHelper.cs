@@ -31,6 +31,7 @@ namespace DodgeDynasty.UIHelpers
 			if (playerRankModel.Options.IsComparingRanks && !historyMode)
 			{
 				playerRankModel = GetCompareRanksPlayerModel(playerRankModel, showBestAvailable, response);
+				SetCompareRankPosition(playerRankModel, request);
 			}
 			else
 			{
@@ -46,6 +47,17 @@ namespace DodgeDynasty.UIHelpers
 			}
 
 			return playerRankModel;
+		}
+
+		public void SetCompareRankPosition(PlayerRankModel playerRankModel, HttpRequestBase request)
+		{
+			var position = request.QueryString[Constants.QS.Position];
+			if (!string.IsNullOrEmpty(position))
+			{
+				playerRankModel.CompRankPosition = position;
+				playerRankModel.CompareRankModels.ForEach(o => o.CompRankPosition = position);
+				playerRankModel.AveragePlayerRank.CompRankPosition = position;
+			}
 		}
 
 		public PlayerRankModel GetCompareRanksPlayerModel(PlayerRankModel playerRankModel, bool showBestAvailable, HttpResponseBase response)

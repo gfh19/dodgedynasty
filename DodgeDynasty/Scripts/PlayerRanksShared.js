@@ -210,7 +210,17 @@ function getRankIdUrlPath() {
 	if (compRank != undefined && compRank.length > 0) {
 		rankIdAndCompQS = addQSValue(rankIdAndCompQS, "compare=" + compRank);
 	}
+	rankIdAndCompQS = getCompRankPosQS(rankIdAndCompQS);
 	return rankIdAndCompQS;
+}
+
+function getCompRankPosQS(rankIdAndCompQS) {
+	var qsText = rankIdAndCompQS || "";
+	var compRankPos = $(".rank-name").attr("data-compare-pos");
+	if (compRankPos != undefined && compRankPos.length > 0) {
+		qsText = addQSValue(qsText, "position=" + compRankPos);
+	}
+	return qsText;
 }
 
 function isBestAvailablePage() {
@@ -307,11 +317,11 @@ function toggleEditHighlighting() {
 	$(".pr-highlight-section").toggleClass("highlight-locked", lockHighlighting);
 	$(".pr-empty-edit-msg").toggle(lockHighlighting);
 	if (lockHighlighting) {
-		$(".pr-edit-highlight").text("Turn Highlighter ON");
+		$(".pr-edit-highlight").text("Unlock Highlighter");
 		disableEditHighlighting();
 	}
 	else {
-		$(".pr-edit-highlight").text("Turn Highlighter Off");
+		$(".pr-edit-highlight").text("Lock Highlighter");
 		enableEditHighlighting();
 	}
 	toggleDeleteHighlightDisplay();
@@ -578,6 +588,8 @@ function bindCompareRanks() {
 	});
 
 	bindShowAvgCompRanks($(".cr-chk-show-avg"));
+
+	bindCompRankPosition($("#crPosition"));
 }
 
 function updateCompareRankIds(removeRankId) {
@@ -590,7 +602,7 @@ function updateCompareRankIds(removeRankId) {
 	compareRankIds = compareRankIds.removeTrailing(",");
 	addWaitCursor();
 	ajaxPostReplace({ compRankIds: compareRankIds, isBestAvailable: isBestAvailablePage() },
-		"Draft/UpdateCompareRankIds", replaceElementId, function () {
+		"Draft/UpdateCompareRankIds" + getCompRankPosQS(), replaceElementId, function () {
 			removeWaitCursor();
 			setCompRankExpandIds();
 			setCookieOptions(clientCookieOptions);
@@ -615,7 +627,7 @@ function bindAddCompareRank(link) {
 	$(link).click(function (e) {
 		e.preventDefault();
 		addWaitCursor();
-		ajaxPostReplace({ isBestAvailable: isBestAvailablePage() }, "Draft/AddCompareRank", replaceElementId,
+		ajaxPostReplace({ isBestAvailable: isBestAvailablePage() }, "Draft/AddCompareRank" + getCompRankPosQS(), replaceElementId,
 			removeWaitCursor, removeWaitCursor);
 	});
 }
@@ -635,5 +647,15 @@ function bindShowAvgCompRanks(checkbox) {
 		var showAvg = $(checkbox).prop('checked');
 		clientCookieOptions["ShowAvgCompRanks"] = showAvg;
 		updatePlayerRankOptions(clientCookieOptions);
+	});
+}
+
+function bindCompRankPosition(select) {
+	$(select).unbind("change");
+	$(select).change(function (e) {
+		addWaitCursor();
+		var crPosition = $(select).val();
+		$(".rank-name").attr("data-compare-pos", crPosition);
+		pageBroadcastDraftHandler();
 	});
 }

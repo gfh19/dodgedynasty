@@ -86,6 +86,17 @@ namespace DodgeDynasty.Shared
 			public const string HistoryMode = "historyMode";
 			public const string ByPositions = "byPositions";
 			public const string IsComparingRanks = "compare";
+			public const string Position = "position";
+		}
+
+		public static class Positions
+		{
+			public const string Overall = "OVERALL";
+			public const string QB = "QB";
+			public const string RB = "RB";
+			public const string WRTE = "WR/TE";
+			public const string DEF = "DEF";
+            public const string K = "K";
 		}
 
 		public static class Roles

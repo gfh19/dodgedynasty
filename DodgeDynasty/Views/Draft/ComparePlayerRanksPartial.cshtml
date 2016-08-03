@@ -10,7 +10,7 @@
 	</script>
 	@Html.Partial(Url.Content("../Draft/CurrentDraftPickPartial"), Model)
 	<div class="rank-header">
-		<div class="rank-name" data-compare-val="true">
+		<div class="rank-name" data-compare-val="true" data-compare-pos="@Model.CompRankPosition">
 			<text>Compare Rankings - @ViewBag.Title</text>
 		</div>
 		<div class="more-rank-opts">
@@ -25,7 +25,7 @@
 			<text>&#8226; <a href="@Url.Content("~/Draft/RankingsList")" id="otherRanksLink">More Rankings...</a></text>
 			<div class="pr-highlight-links">
 				<a class="pr-toggle-highlight" href="#">Show Highlighting *NEW*</a>
-				<span class="pr-highlight-options">&#8226; <a class="pr-edit-highlight" href="#">Turn Highlighter Off</a></span>
+				<span class="pr-highlight-options">&#8226; <a class="pr-edit-highlight" href="#">Lock Highlighter</a></span>
 			</div>
 			<div class="pr-toggle-links">
 				<a class="pr-expand-all" href="#">Expand All</a>/<a class="pr-collapse-all" href="#">Collapse All</a>
@@ -59,6 +59,7 @@
 				{
 				<div class="center cr-show-avg">
 					<p>@Html.CheckBoxFor(m => m.Options.ShowAvgCompRanks, new { @class = "cr-chk-show-avg" }) @Html.LabelFor(m => m.Options.ShowAvgCompRanks, "Show Averages?", new { @class = "cr-lbl-show-avg" })</p>
+					<p>@Html.LabelFor(m => m.CompRankPosition, "Position:", new { @class = "cr-lbl-show-avg" }) @Html.DropDownListFor(m => m.CompRankPosition, Model.GetPositions(Model.CompRankPosition), new { id = "crPosition" })</p>
 				</div>
 				}
 				</div>

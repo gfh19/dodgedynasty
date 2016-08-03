@@ -309,14 +309,21 @@ function callRefreshPageWithPickTimer(url, elementId) {
 	}
 };
 
-function callRefreshPage(url, elementId) {
+function callRefreshPage(url, elementId, successFn, errorFn) {
 	saveTouchScrollPos();
 	var refreshUrl = getDynamicUrl(url);
 	ajaxGetReplace(refreshUrl, elementId, function () {
 		restoreTouchScrollPos();
 		setPickTimer(false);
+		removeWaitCursor();
+		if (successFn) {
+			successFn();
+		}
+	}, function () {
+		if (errorFn) {
+			errorFn();
+		}
 	});
-	//TODO:  Add refresh Chat window for back button defect
 }
 
 function getDynamicUrl(url) {

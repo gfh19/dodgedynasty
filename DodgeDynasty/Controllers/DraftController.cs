@@ -151,7 +151,7 @@ namespace DodgeDynasty.Controllers
 			var playerRankModel = helper.GetPlayerRankPartial(null, null, isBestAvailable, Request, Response);
 			return PartialView(isBestAvailable ? Constants.Views.BestAvailable : Constants.Views.PlayerRanks, playerRankModel);
 		}
-		
+
 		[HttpGet]
 		public ActionResult RankingsList(string id)
 		{

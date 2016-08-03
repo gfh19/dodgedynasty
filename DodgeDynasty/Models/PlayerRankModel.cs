@@ -40,6 +40,7 @@ namespace DodgeDynasty.Models
 		public IPlayerRankModel CompareRank { get; set; }
 		public IPlayerRankModel AveragePlayerRank { get; set; }
 		public string CategoryRankHeader { get; set; }
+		public string CompRankPosition { get; set; }
 
 		public PlayerRankModel(int rankId, int? draftId = null)
 			: this(draftId)
@@ -272,11 +273,12 @@ namespace DodgeDynasty.Models
 			var currentDraftRanks = GetCurrentAvailableDraftRanks();
 			var publicRanks = PlayerRankModelHelper.GetDraftPublicRankings(DraftId.Value, currentDraftRanks);
 			DraftRankModel selectedCompareRank = null;
-            if (Options.BUPId != null && publicRanks.Any(o=>o.RankId == Options.BUPId.ToNullInt()))
+			if (Options.BUPId != null && publicRanks.Any(o => o.RankId == Options.BUPId.ToNullInt()))
 			{
 				selectedCompareRank = publicRanks.First(o => o.RankId == Options.BUPId.ToNullInt());
-            }
-			else {
+			}
+			else
+			{
 				selectedCompareRank = publicRanks.FirstOrDefault();
 				Options.BUPId = selectedCompareRank.RankId.ToString();
 				PlayerRankOptionsMapper mapper = MapperFactory.CreatePlayerRankOptionsMapper(Options.Id);
@@ -291,6 +293,20 @@ namespace DodgeDynasty.Models
 				CompareRank = compareRank;
 			}
 			return CompareRank;
+		}
+
+		public List<SelectListItem> GetPositions(string pos)
+		{
+			//TODO:  Read positions from League value (create SQL column, add to lg Add/Edit, and modify rank category logic)
+			List<KeyValuePair<string, string>> positions = new List<KeyValuePair<string, string>>();
+			positions.Add(new KeyValuePair<string, string>("OVERALL", "Overall"));
+			positions.Add(new KeyValuePair<string, string>("QB", "QB"));
+			positions.Add(new KeyValuePair<string, string>("RB", "RB"));
+			positions.Add(new KeyValuePair<string, string>("WR/TE", "WR/TE"));
+			positions.Add(new KeyValuePair<string, string>("DEF", "DEF"));
+			positions.Add(new KeyValuePair<string, string>("K", "K"));
+
+			return Utilities.GetListItems(positions, r => r.Value, r => r.Key, false, pos);
 		}
 	}
 }
