@@ -739,7 +739,7 @@ aside ul li
 }
 
 .nowrap {
-	white-space: nowrap;
+	white-space: nowrap !important;
 }
 
 .vert-middle {
