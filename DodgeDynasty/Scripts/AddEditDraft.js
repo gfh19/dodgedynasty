@@ -16,7 +16,7 @@ function bindSubmitDraft() {
 		$(".submit-draft").first().focus();
 		resetValidations();
 		var addEditDraftModel = getAddEditDraftModel();
-		var draftFormValid = $('#draftForm').valid();
+		var draftFormValid = $('#addEditDraftForm').valid();
 		var ownersValid = validateAddEditDraftModel(addEditDraftModel);
 		if (draftFormValid && ownersValid) {
 			updateAddEditDraftModel(addEditDraftModel);
@@ -25,7 +25,7 @@ function bindSubmitDraft() {
 }
 
 function getAddEditDraftModel() {
-	var addEditDraftModel = $("#draftForm").serializeObject();
+	var addEditDraftModel = $("#addEditDraftForm").serializeObject();
 	var draftOwnerUsers = new Array();
 	draftUserIds = new Array();
 	var ix = 0;

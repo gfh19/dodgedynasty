@@ -1945,66 +1945,67 @@ span.player-select
 	display: inline-block;
 }
 
-.lo-color {
+#addEditLeague .lo-color {
 	margin-top: 2px;
 }
 
-.league-owner-entry {
+#addEditLeague .league-owner-entry {
 	min-width: 436px;
 }
-.lo-entry-header {
+#addEditLeague .lo-entry-header {
 	display: block;
 }
-.lo-owner-header {
+#addEditLeague .lo-owner-header {
 	width: 148px;
 }
-.lo-teamname-header {
+#addEditLeague .lo-teamname-header {
 	width: 212px;
 }
-.lo-active-header {
+#addEditLeague .lo-active-header {
 	width: 46px;
 }
-.lo-color-header {
+#addEditLeague .lo-color-header {
 	width: 115px;
 }
-.lo-audio-header {
+#addEditLeague .lo-audio-header {
 	width: 118px;
 }
-.lo-controls-header {
+#addEditLeague .lo-controls-header {
 	width: 44px;
 }
 
-.league-name, .lo-team-input
+#addEditLeague .league-name, #addEditLeague .lo-team-input
 {
 	width: 200px;
 }
-.lo-team-input {
+#addEditLeague .lo-team-input {
 	margin: 2px 0px;
 }
-.lo-select {
+#addEditLeague .lo-select {
 	width: 145px;
 }
-.lo-color-select {
+#addEditLeague .lo-color-select {
 	width: 105px;
 }
 
-.lo-selected-color {
+#addEditLeague .lo-selected-color {
 	border: 3px solid;
 	padding: 1px 1px;
 	font-size: 12px;
 }
 
-.owner-controls, .lo-active {
+#addEditLeague .owner-controls, #addEditLeague .lo-active {
 	width: 40px;
 	vertical-align: middle;
 }
 
-.lo-teamname-header, .lo-active-header, .lo-color-header, .lo-controls-header, .lo-audio-header, 
-.lo-team-name, .lo-active, .lo-color, .lo-audio, .owner-controls {
+#addEditLeague .lo-teamname-header, #addEditLeague .lo-active-header, #addEditLeague .lo-color-header, #addEditLeague .lo-controls-header, 
+#addEditLeague .lo-audio-header, #addEditLeague .lo-team-name, #addEditLeague .lo-active, #addEditLeague .lo-color, #addEditLeague .lo-audio, 
+#addEditLeague .owner-controls {
 	margin-left: 5px;
 }
 
-.league-owners {
+#addEditLeague .league-owners {
 	min-width: 732px;
 }
 
@@ -2041,7 +2042,23 @@ span.player-select
 .ad-pick-time {
 	width: 42px;
 }
+#addEditDraftForm {
+    min-width: 510px;
+}
 
+#addDraft .league-owner-entry {
+	min-width: 205px;
+}
+#addDraft .lo-owner-header {
+	width: 148px;
+}
+#addDraft .lo-select {
+	width: 145px;
+}
+#addDraft .owner-controls {
+	width: 40px;
+	vertical-align: middle;
+}
 
 /* Activate Draft
 ----------------------------------------------------------*/
@@ -2832,13 +2849,6 @@ span.player-select
 	.mi-active-header, .mi-active {
 		width: 58px;
 	}
-	.mobile-touch-scroll {
-		height: 100%;
-		width: 100%;
-		overflow-y: hidden;
-		overflow-x: auto;
-		-webkit-overflow-scrolling: touch;
-	}
 
 
 	/* Messages (tab)
@@ -2899,6 +2909,23 @@ span.player-select
 	}
 	.dchat-prev-holder {
 		font-size: 11px;
+	}
+
+	/* Misc Mobile
+	------------------------------------*/
+	
+	.mobile-touch-scroll {
+		height: 100%;
+		width: 100%;
+		overflow-y: hidden;
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+	}
+	.mobile-sect-border {
+	    border: 1px solid black;
+		border-radius: 5px;
+		-webkit-border-radius: 5px;
+		padding: 5px 0px;
 	}
 }
 

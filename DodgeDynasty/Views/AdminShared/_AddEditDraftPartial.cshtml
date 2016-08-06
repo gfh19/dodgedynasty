@@ -16,57 +16,59 @@
 		<div class="dup-owner-msg invalid hide-yo-wives">Error - Owner selected more than once.</div>
 	</div>
 	<div class="page-entries">
-		@using (Html.BeginForm("EditDraft", Model.AdminMode, FormMethod.Post, new { id = "draftForm" }))
-		{
-			<div>
-				@Html.HiddenFor(m => m.LeagueId)
-				@Html.HiddenFor(m => m.DraftId)
+		<div class="mobile-touch-scroll mobile-sect-border">
+			@using (Html.BeginForm("EditDraft", Model.AdminMode, FormMethod.Post, new { id = "addEditDraftForm" }))
+			{
 				<div>
-					@Html.LabelFor(m => m.DraftDate): @Html.TextBoxFor(m => m.DraftDate, new { @class = "add-draft-date", type = "date", maxLength = "10" })
-					@Html.TextBoxFor(m => m.DraftTime, new { @class = "add-draft-time", type = "time", maxLength = "10" })
-				</div>
-				<div>@Html.ValidationMessageFor(m => m.DraftDate)</div>
-				<div>@Html.ValidationMessageFor(m => m.DraftTime)</div>
-				<div>
-					@Html.LabelFor(m => m.DraftYear): @Html.TextBoxFor(m => m.DraftYear, new { @class = "add-draft-year", maxLength = "4" })
-					@Html.LabelFor(m => m.DraftLocation): @Html.TextBoxFor(m => m.DraftLocation, new { @class = "add-draft-location", maxLength = "50" })
-				</div>
-				<div>@Html.ValidationMessageFor(m => m.DraftYear)</div>
-				<div>@Html.ValidationMessageFor(m => m.DraftLocation)</div>
-				<div>
-					@Html.LabelFor(m => m.NumOwners): @Html.TextBoxFor(m => m.NumOwners, new { @class = "ad-num-owners", type = "number" })
-					@Html.LabelFor(m => m.NumRounds): @Html.TextBoxFor(m => m.NumRounds, new { @class = "ad-num-rounds", type = "number" })
-					@Html.LabelFor(m => m.NumKeepers): @Html.TextBoxFor(m => m.NumKeepers, new { @class = "ad-num-keepers", type = "number" })
-				</div>
-				<div>@Html.ValidationMessageFor(m => m.NumOwners)</div>
-				<div>@Html.ValidationMessageFor(m => m.NumRounds)</div>
-				<div>@Html.ValidationMessageFor(m => m.NumKeepers)</div>
-				<div>
-					@Html.LabelFor(m => m.Format): @Html.DropDownListFor(m => m.Format, Model.GetDraftFormatItems(), new { @class = "add-draft-format" })
-					@Html.LabelFor(m => m.PickTimeSeconds): @Html.TextBoxFor(m => m.PickTimeSeconds, new { @class = "ad-pick-time", type = "number" })
-				</div>
-				<div>@Html.ValidationMessageFor(m => m.Format)</div>
-				<div>@Html.ValidationMessageFor(m => m.PickTimeSeconds)</div>
-				@if (Model.DraftId != 0)
+					@Html.HiddenFor(m => m.LeagueId)
+					@Html.HiddenFor(m => m.DraftId)
+					<div>
+						@Html.LabelFor(m => m.DraftDate): @Html.TextBoxFor(m => m.DraftDate, new { @class = "add-draft-date", type = "date", maxLength = "10" })
+						@Html.TextBoxFor(m => m.DraftTime, new { @class = "add-draft-time", type = "time", maxLength = "10" })
+					</div>
+					<div>@Html.ValidationMessageFor(m => m.DraftDate)</div>
+					<div>@Html.ValidationMessageFor(m => m.DraftTime)</div>
+					<div>
+						@Html.LabelFor(m => m.DraftYear): @Html.TextBoxFor(m => m.DraftYear, new { @class = "add-draft-year", maxLength = "4" })
+						@Html.LabelFor(m => m.DraftLocation): @Html.TextBoxFor(m => m.DraftLocation, new { @class = "add-draft-location", maxLength = "50" })
+					</div>
+					<div>@Html.ValidationMessageFor(m => m.DraftYear)</div>
+					<div>@Html.ValidationMessageFor(m => m.DraftLocation)</div>
+					<div>
+						@Html.LabelFor(m => m.NumOwners): @Html.TextBoxFor(m => m.NumOwners, new { @class = "ad-num-owners", type = "number" })
+						@Html.LabelFor(m => m.NumRounds): @Html.TextBoxFor(m => m.NumRounds, new { @class = "ad-num-rounds", type = "number" })
+						@Html.LabelFor(m => m.NumKeepers): @Html.TextBoxFor(m => m.NumKeepers, new { @class = "ad-num-keepers", type = "number" })
+					</div>
+					<div>@Html.ValidationMessageFor(m => m.NumOwners)</div>
+					<div>@Html.ValidationMessageFor(m => m.NumRounds)</div>
+					<div>@Html.ValidationMessageFor(m => m.NumKeepers)</div>
+					<div>
+						@Html.LabelFor(m => m.Format): @Html.DropDownListFor(m => m.Format, Model.GetDraftFormatItems(), new { @class = "add-draft-format" })
+						@Html.LabelFor(m => m.PickTimeSeconds): @Html.TextBoxFor(m => m.PickTimeSeconds, new { @class = "ad-pick-time", type = "number" })
+					</div>
+					<div>@Html.ValidationMessageFor(m => m.Format)</div>
+					<div>@Html.ValidationMessageFor(m => m.PickTimeSeconds)</div>
+					@if (Model.DraftId != 0)
 				{
-				<div>
-					@Html.LabelFor(m => m.WinnerId): @Html.DropDownListFor(m => Model.WinnerId, Model.GetDraftOwnerUserItems(Model.WinnerId), new { @class = "ad-winner" })
-					@Html.LabelFor(m => m.RunnerUpId): @Html.DropDownListFor(m => Model.RunnerUpId, Model.GetDraftOwnerUserItems(Model.RunnerUpId), new { @class = "ad-runner-up" })
-					@Html.LabelFor(m => m.HasCoWinners): @Html.CheckBoxFor(m => m.HasCoWinners, new { @class = "ad-co-winners" })
+						<div>
+							@Html.LabelFor(m => m.WinnerId): @Html.DropDownListFor(m => Model.WinnerId, Model.GetDraftOwnerUserItems(Model.WinnerId), new { @class = "ad-winner" })
+							@Html.LabelFor(m => m.RunnerUpId): @Html.DropDownListFor(m => Model.RunnerUpId, Model.GetDraftOwnerUserItems(Model.RunnerUpId), new { @class = "ad-runner-up" })
+							@Html.LabelFor(m => m.HasCoWinners): @Html.CheckBoxFor(m => m.HasCoWinners, new { @class = "ad-co-winners" })
+						</div>
+					}
 				</div>
-				<div class="page-section-small">
-				@if (Model.AdminMode == DodgeDynasty.Shared.Constants.Modes.Admin)
-				{
-					<text>(<a href="@Url.Content("~/Admin/SetupDraft/"+Model.DraftId)">Go to Setup Draft Picks page</a>)</text>
-				}
-				else
-				{
-					<text>(<a href="@Url.Content("~/Commish/SetupDraft/"+Model.DraftId)">Go to Setup Draft Picks page</a>)</text>
-				}
-                </div>
-                }
-			</div>
-		}
+			}
+		</div>
+		<div class="page-section-small">
+			@if (Model.AdminMode == DodgeDynasty.Shared.Constants.Modes.Admin)
+			{
+				<text>(<a href="@Url.Content("~/Admin/SetupDraft/"+Model.DraftId)">Go to Setup Draft Picks page</a>)</text>
+			}
+			else
+			{
+				<text>(<a href="@Url.Content("~/Commish/SetupDraft/"+Model.DraftId)">Go to Setup Draft Picks page</a>)</text>
+			}
+		</div>
 		<div class="page-section">
 			<div class="copy-lo-entry hide-yo-wives">
 				<span class="league-owner">
