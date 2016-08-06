@@ -149,13 +149,15 @@ function bindAddAllUnrankedPlayers() {
 	$("#bup-add-all").unbind("click");
 	$("#bup-add-all").click(function (e) {
 		addWaitCursor();
-		var unrankedAddLinks = $(".unranked .bup-player-add")
+		showLoadingDialog();
+		var unrankedAddLinks = $(".unranked .bup-player-add");
 		setTimeout(function () {
 			var tempScrollTop = $(window).scrollTop();
 			$.each($(unrankedAddLinks), function (ix, link) {
 				$(link).click();
 				if (ix == unrankedAddLinks.length - 1) {
 					removeWaitCursor();
+					closeAllDialogs();
 				}
 			});
 			toggleUnrankedTableEmpty();

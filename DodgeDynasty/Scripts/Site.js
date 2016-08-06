@@ -998,9 +998,9 @@ function showMessageDialog(dialogText, title) {
 }
 
 function showLoadingDialog() {
-	title = "Please Wait";
+	title = "Loading";
 	var dialog = '<div class="center hide-yo-kids" title="' + title +
-		'"><p>Loading... <img style="vertical-align: top;" src="' + baseURL + '/Content/images/ajax-loader.gif"/></p></div>';
+		'"><p>Please Wait... <img style="vertical-align: top;" src="' + baseURL + '/Content/images/ajax-loader.gif"/></p></div>';
 
 	$(dialog).dialog({
 		resizable: false,

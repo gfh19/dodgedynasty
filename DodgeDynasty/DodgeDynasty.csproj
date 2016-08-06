@@ -362,6 +362,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="2016 SQL Changes.sql" />
+    <Content Include="Content\images\ajax-loader.gif" />
     <Content Include="Media\NFL Draft Tone.mp3" />
     <Content Include="Media\NFL_Draft_Tone.wav" />
     <Content Include="Scripts\AdjustmentsShared.js" />
