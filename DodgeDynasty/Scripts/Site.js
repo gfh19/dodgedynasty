@@ -15,6 +15,9 @@ var touchScrollLeft = null;
 var lastPickAudio = null;
 var pickAudioBed = null;
 var adminLastPickTime = null;
+var pleaseWaitTimer = 1200;
+var pleaseWaitNeeded = false;
+
 
 /* Init functions */
 
@@ -931,6 +934,15 @@ function hasAttr(elem, attribute) {
 	return (typeof attr !== typeof undefined && attr !== false);
 }
 
+function showPleaseWait() {
+	pleaseWaitNeeded = true;
+	setTimeout(function () {
+		if (pleaseWaitNeeded) {
+			showLoadingDialog();
+		}
+	}, pleaseWaitTimer);
+}
+
 function showConfirmDialog(dialogText, title, okFn, cancelFn, okText, cancelText) {
 	title = title || "Confirmation";
 	okFn = okFn || function () { $(this).dialog("close"); };
@@ -971,6 +983,40 @@ function showAlertDialog(dialogText, title, okFn) {
 					},
 		]
 	});
+}
+
+function showMessageDialog(dialogText, title) {
+	title = title || "Information";
+	var dialog = '<div class="center hide-yo-kids" title="' + title + '"><p>' + dialogText + '</p></div>';
+
+	$(dialog).dialog({
+		resizable: false,
+		height: 'auto',
+		width: '295px',
+		modal: true
+	});
+}
+
+function showLoadingDialog() {
+	title = "Please Wait";
+	var dialog = '<div class="center hide-yo-kids" title="' + title +
+		'"><p>Loading... <img style="vertical-align: top;" src="' + baseURL + '/Content/images/ajax-loader.gif"/></p></div>';
+
+	$(dialog).dialog({
+		resizable: false,
+		height: 'auto',
+		width: '215px',
+		modal: true
+	});
+}
+
+function closeAllDialogs() {
+	$(".ui-dialog-content").dialog("close");
+}
+
+function closePleaseWait() {
+	pleaseWaitNeeded = false;
+	closeAllDialogs();
 }
 
 /*  End Helper Function */

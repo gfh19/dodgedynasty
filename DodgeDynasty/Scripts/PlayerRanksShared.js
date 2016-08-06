@@ -601,8 +601,10 @@ function updateCompareRankIds(removeRankId) {
 	});
 	compareRankIds = compareRankIds.removeTrailing(",");
 	addWaitCursor();
+	showPleaseWait();
 	ajaxPostReplace({ compRankIds: compareRankIds, isBestAvailable: isBestAvailablePage() },
 		"Draft/UpdateCompareRankIds" + getCompRankPosQS(), replaceElementId, function () {
+			closePleaseWait();
 			removeWaitCursor();
 			setCompRankExpandIds();
 			setCookieOptions(clientCookieOptions);
@@ -627,8 +629,12 @@ function bindAddCompareRank(link) {
 	$(link).click(function (e) {
 		e.preventDefault();
 		addWaitCursor();
+		showPleaseWait();
 		ajaxPostReplace({ isBestAvailable: isBestAvailablePage() }, "Draft/AddCompareRank" + getCompRankPosQS(), replaceElementId,
-			removeWaitCursor, removeWaitCursor);
+			function () {
+				closePleaseWait();
+				removeWaitCursor();
+			}, removeWaitCursor);
 	});
 }
 
