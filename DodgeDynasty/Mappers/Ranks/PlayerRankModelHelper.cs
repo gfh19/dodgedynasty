@@ -43,6 +43,18 @@ namespace DodgeDynasty.Mappers.Ranks
 			model.CurrentRank = homeEntity.Ranks.First(r => r.RankId == rankId);
 			model.PlayerRanks = homeEntity.PlayerRanks.Where(pr => pr.RankId == rankId).ToList();
 		}
+		
+		public static List<RankedPlayer> GetRankedPlayersAll(List<PlayerRank> playerRanks, DraftModel currentDraftModel)
+		{
+			var rankedPlayers = (from pr in playerRanks
+								 join p in currentDraftModel.AllPlayers on pr.PlayerId equals p.PlayerId
+								 join t in currentDraftModel.NFLTeams on p.NFLTeam equals t.TeamAbbr
+								 join ph in currentDraftModel.CurrentPlayerHighlights on pr.PlayerId equals ph.PlayerId into phLeft
+								 from ph in phLeft.DefaultIfEmpty()
+								 select GetRankedPlayer(pr, p, t, ph)).OrderBy(p => p.RankNum).ToList();
+			//return GetDraftedTruePlayersFor(rankedPlayers, currentDraftModel);
+			return rankedPlayers;
+		}
 
 		public static List<RankedPlayer> GetRankedPlayersAllWithDraftPickInfo(List<PlayerRank> playerRanks, DraftModel currentDraftModel)
 		{
@@ -59,7 +71,8 @@ namespace DodgeDynasty.Mappers.Ranks
 								 from ph in phLeft.DefaultIfEmpty()
 								 select GetRankedPlayer(pr, p, t, ph, pick, u, lo)).OrderBy(p => p.RankNum).ToList();
 
-			return GetDraftedTruePlayersFor(rankedPlayers, currentDraftModel);
+			//return GetDraftedTruePlayersFor(rankedPlayers, currentDraftModel);
+			return rankedPlayers;
 		}
 
 		public static List<RankedPlayer> GetDraftedTruePlayersFor(List<RankedPlayer> players, DraftModel currentDraftModel)

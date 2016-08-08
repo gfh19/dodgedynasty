@@ -6,5 +6,10 @@ $(function () {
 });
 
 function pageBroadcastDraftHandler() {
-	callRefreshPage("Draft/BestAvailablePartial" + getRankIdUrlPath(), replaceElementId);
+	var suspended = suspendHighlighting();
+	callRefreshPage("Draft/BestAvailablePartial" + getRankIdUrlPath(), replaceElementId, function () {
+		restoreHighlighting(suspended);
+	}, function () {
+		restoreHighlighting(suspended);
+	});
 }

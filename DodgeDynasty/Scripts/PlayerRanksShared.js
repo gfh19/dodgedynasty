@@ -567,6 +567,20 @@ function updateQueueRankNums(playerQueueOrderModel) {
 	});
 }
 
+function suspendHighlighting() {
+	var suspended = false;
+	if (clientCookieOptions["ShowHighlighting"] && !clientCookieOptions["LockHighlighting"]) {
+		suspended = true;
+		disableEditHighlighting();
+	}
+}
+
+function restoreHighlighting(suspended) {
+	if (suspended) {
+		enableEditHighlighting();
+	}
+}
+
 
 
 //Compare Ranks
