@@ -152,7 +152,7 @@ namespace DodgeDynasty.Mappers.Drafts
 
 		private static string GetPlayerName(Player player)
 		{
-			string audio = player.PlayerName;
+			string audio = player.PlayerName.Replace("'", "").ToLower();
 			switch (audio)
 			{
 				case "Ben Roethlisberger":

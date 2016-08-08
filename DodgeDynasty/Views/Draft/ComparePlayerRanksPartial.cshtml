@@ -16,11 +16,11 @@
 		<div class="more-rank-opts">
 			@if (ViewBag.Title == "Best Available")
 			{
-				<a href="@Url.Content("~/Draft/PlayerRanks")" id="allPlayersLink">Show All Players</a>
+				<a href="@Url.Content("~/Draft/PlayerRanks?compare=true")" id="allPlayersLink">Show All Players</a>
 			}
 			else
 			{
-				<a href="@Url.Content("~/Draft/BestAvailable")" id="bestAvailLink">Show Best Available</a>
+				<a href="@Url.Content("~/Draft/BestAvailable?compare=true")" id="bestAvailLink">Show Best Available</a>
 			}
 			<text>&#8226; <a href="@Url.Content("~/Draft/RankingsList")" id="otherRanksLink">More Rankings...</a></text>
 			<div class="pr-highlight-links">

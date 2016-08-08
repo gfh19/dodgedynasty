@@ -1,15 +1,12 @@
 ﻿var replaceElementId = "#allPlayerRanks";
 $(function () {
+	callRefreshPageWithPickTimer("Draft/PlayerRanksPartial" + getRankIdUrlPath(), replaceElementId,
+		restoreHighlighting, restoreHighlighting, suspendHighlighting);
 	setPickTimer(true);
-	callRefreshPageWithPickTimer("Draft/PlayerRanksPartial" + getRankIdUrlPath(), replaceElementId);
 	touchScrollDiv = ".rank-container";
 });
 
 function pageBroadcastDraftHandler() {
-	var suspended = suspendHighlighting();
-	callRefreshPage("Draft/PlayerRanksPartial" + getRankIdUrlPath(), replaceElementId, function () {
-		restoreHighlighting(suspended);
-	}, function () {
-		restoreHighlighting(suspended);
-	});
+	callRefreshPage("Draft/PlayerRanksPartial" + getRankIdUrlPath(), replaceElementId,
+		restoreHighlighting, restoreHighlighting, suspendHighlighting);
 }

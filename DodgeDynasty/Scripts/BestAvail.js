@@ -1,15 +1,12 @@
 ﻿var replaceElementId = "#bestAvailable";
 $(function () {
+	callRefreshPageWithPickTimer("Draft/BestAvailablePartial" + getRankIdUrlPath(), replaceElementId,
+		restoreHighlighting, restoreHighlighting, suspendHighlighting);
 	setPickTimer(true);
-	callRefreshPageWithPickTimer("Draft/BestAvailablePartial" + getRankIdUrlPath(), replaceElementId);
 	touchScrollDiv = ".rank-container";
 });
 
 function pageBroadcastDraftHandler() {
-	var suspended = suspendHighlighting();
-	callRefreshPage("Draft/BestAvailablePartial" + getRankIdUrlPath(), replaceElementId, function () {
-		restoreHighlighting(suspended);
-	}, function () {
-		restoreHighlighting(suspended);
-	});
+	callRefreshPage("Draft/BestAvailablePartial" + getRankIdUrlPath(), replaceElementId,
+		restoreHighlighting, restoreHighlighting, suspendHighlighting);
 }

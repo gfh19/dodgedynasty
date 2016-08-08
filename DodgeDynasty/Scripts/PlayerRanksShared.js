@@ -568,15 +568,13 @@ function updateQueueRankNums(playerQueueOrderModel) {
 }
 
 function suspendHighlighting() {
-	var suspended = false;
 	if (clientCookieOptions["ShowHighlighting"] && !clientCookieOptions["LockHighlighting"]) {
-		suspended = true;
 		disableEditHighlighting();
 	}
 }
 
-function restoreHighlighting(suspended) {
-	if (suspended) {
+function restoreHighlighting() {
+	if (clientCookieOptions["ShowHighlighting"] && !clientCookieOptions["LockHighlighting"]) {
 		enableEditHighlighting();
 	}
 }

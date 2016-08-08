@@ -292,29 +292,32 @@ function highlightCurrentPageLink() {
 	return;
 }
 
-function refreshPageWithPickTimer(url, elementId, timer) {
-	timer = (timer === undefined) ? refreshTimer : timer;
+function refreshPageWithPickTimer(url, elementId, timer, successFn, errorFn, preRefreshFn) {
+	timer = timer || refreshTimer;
 	if (draftActive) {
 		setTimeout(function () {
-			callRefreshPageWithPickTimer(url, elementId);
+			callRefreshPageWithPickTimer(url, elementId, successFn, errorFn, preRefreshFn);
 			console.log("Refreshed page at " + new Date());
 		},
 		timer);
 	}
 };
 
-function callRefreshPageWithPickTimer(url, elementId) {
+function callRefreshPageWithPickTimer(url, elementId, successFn, errorFn, preRefreshFn) {
 	if (!isHistoryMode()) {
 		if (draftActive) {
-			callRefreshPage(url, elementId);
-			refreshPageWithPickTimer(url, elementId);
+			callRefreshPage(url, elementId, successFn, errorFn, preRefreshFn);
+			refreshPageWithPickTimer(url, elementId, null, successFn, errorFn, preRefreshFn);
 		}
 	}
 };
 
-function callRefreshPage(url, elementId, successFn, errorFn) {
+function callRefreshPage(url, elementId, successFn, errorFn, preRefreshFn) {
 	saveTouchScrollPos();
 	var refreshUrl = getDynamicUrl(url);
+	if (preRefreshFn) {
+		preRefreshFn();
+	}
 	ajaxGetReplace(refreshUrl, elementId, function () {
 		restoreTouchScrollPos();
 		setPickTimer(false);
