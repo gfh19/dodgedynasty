@@ -44,6 +44,10 @@ namespace DodgeDynasty.Parsers
 			{
 				nflTeam = nflTeam.Substring(0, nflTeam.IndexOf(','));
 			}
+			if (!string.IsNullOrEmpty(nflTeam) && nflTeam.IndexOf('(') > -1)
+			{
+				nflTeam = nflTeam.Substring(0, nflTeam.IndexOf('(')).Trim();
+			}
 
 			return nflTeam;
 		}
