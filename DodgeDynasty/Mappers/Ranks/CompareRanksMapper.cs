@@ -31,6 +31,8 @@ namespace DodgeDynasty.Mappers.Ranks
 				var compRankIds = PlayerRankModel.Options.CompareRankIds.Split(',');
 				Rank firstRank = null;
 				List<PlayerRank> firstPlayerRanks = null;
+				var inactiveDraftedPlayers = PlayerRankModel.DraftedPlayers.Where(o => !o.IsActive).ToList();
+				var draftedTruePlayers = PlayerRankModelHelper.GetDraftedTruePlayersFor(inactiveDraftedPlayers, PlayerRankModel);
 				foreach (var compareRankId in compRankIds)
 				{
 					var rankId = Convert.ToInt32(compareRankId);
@@ -50,13 +52,14 @@ namespace DodgeDynasty.Mappers.Ranks
 						firstPlayerRanks = PlayerRankModel.PlayerRanks;
                     }
 					PlayerRankModelHelper.SetPlayerRanks(Model, HomeEntity, rankId);
-					Model.RankedPlayers = PlayerRankModel.GetRankedPlayersAllWithDraftPickInfo();
 					if (ShowBestAvailable)
 					{
+						Model.RankedPlayers = PlayerRankModel.GetRankedPlayersAll();
 						Model.OverallRankedPlayers = PlayerRankModelHelper.GetBestAvailOverallCompRanks(Model.RankedPlayers, Model.DraftedPlayers);
 					}
 					else
 					{
+                        Model.RankedPlayers = PlayerRankModel.GetRankedPlayersAllWithDraftPickInfo(draftedTruePlayers);
 						Model.OverallRankedPlayers = PlayerRankModelHelper.GetAllPlayersOverallCompRanks(Model.RankedPlayers);
 					}
 					PlayerRankModel.CompareRankModels.Add(Model);

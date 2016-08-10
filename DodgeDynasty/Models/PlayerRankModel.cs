@@ -79,7 +79,9 @@ namespace DodgeDynasty.Models
 
 		public void GetAllPlayerRanksByPosition()
 		{
-			GetRankedPlayersAllWithDraftPickInfo();
+			var inactiveDraftedPlayers = DraftedPlayers.Where(o => !o.IsActive).ToList();
+			var draftedTruePlayers = PlayerRankModelHelper.GetDraftedTruePlayersFor(inactiveDraftedPlayers, this);
+			GetRankedPlayersAllWithDraftPickInfo(draftedTruePlayers);
 
 			OverallRankedPlayers = RankedPlayers.ToList();
 			QBRankedPlayers = OverallRankedPlayers.Where(p => p.Position == "QB").ToList();
@@ -96,9 +98,9 @@ namespace DodgeDynasty.Models
             return RankedPlayers;
 		}
 
-		public List<RankedPlayer> GetRankedPlayersAllWithDraftPickInfo()
+		public List<RankedPlayer> GetRankedPlayersAllWithDraftPickInfo(List<RankedPlayer> draftedTruePlayers = null)
 		{
-			RankedPlayers = PlayerRankModelHelper.GetRankedPlayersAllWithDraftPickInfo(PlayerRanks, this);
+			RankedPlayers = PlayerRankModelHelper.GetRankedPlayersAllWithDraftPickInfo(PlayerRanks, this, draftedTruePlayers);
 			return RankedPlayers;
 		}
 
@@ -253,7 +255,7 @@ namespace DodgeDynasty.Models
 				var compareRank = PlayerRankModelHelper.CreatePlayerRankingsModel(this);
 				compareRank.CategoryRankHeader = selectedCompareRank.RankName;
 				SetPlayerRanks(selectedCompareRank.RankId, compareRank);
-				compareRank.RankedPlayers = PlayerRankModelHelper.GetRankedPlayersAllWithDraftPickInfo(compareRank.PlayerRanks, this);
+				compareRank.RankedPlayers = PlayerRankModelHelper.GetRankedPlayersAll(compareRank.PlayerRanks, this);
 				CompareRank = compareRank;
 			}
 			return CompareRank;

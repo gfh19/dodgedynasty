@@ -40,7 +40,7 @@ namespace DodgeDynasty.Controllers
 			GetPlayerRankOptions();
 			PlayerRankModel model = DraftFactory.GetPlayerRankModel(rankId);
 			model.Options = PlayerRankUIHelper.Instance.GetPlayerRankOptions(Request, Response);
-			model.GetRankedPlayersAllWithDraftPickInfo();
+			model.GetRankedPlayersAll();
 			//Populate Compare Rank for Best Unranked Players
 			model.SetUnrankedCompareList();
 			if (TempData.ContainsKey(Constants.TempData.RankStatus))
