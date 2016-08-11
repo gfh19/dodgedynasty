@@ -23,7 +23,8 @@ namespace DodgeDynasty
 			AreaRegistration.RegisterAllAreas();
 
 			WebApiConfig.Register(GlobalConfiguration.Configuration);
-			FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+			//Removed to allow Applicaton_Error to fire
+			//FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
 			RouteConfig.RegisterRoutes(RouteTable.Routes);
 			BundleConfig.RegisterBundles(BundleTable.Bundles);
 			AuthConfig.RegisterAuth();
