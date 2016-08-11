@@ -6,6 +6,10 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using DodgeDynasty.Mappers.Drafts;
+using DodgeDynasty.Models;
+using DodgeDynasty.Shared;
+using DodgeDynasty.Shared.Log;
 
 namespace DodgeDynasty
 {
@@ -23,6 +27,23 @@ namespace DodgeDynasty
 			RouteConfig.RegisterRoutes(RouteTable.Routes);
 			BundleConfig.RegisterBundles(BundleTable.Bundles);
 			AuthConfig.RegisterAuth();
+		}
+
+		protected void Application_Error()
+		{
+			var ex = Server.GetLastError() ?? new Exception("Application_Error handler reached.");
+			HttpContext httpContext = HttpContext.Current;
+			if (httpContext != null)
+			{
+				var requestUrl = httpContext.Request.Url.AbsoluteUri;
+				var userName = Utilities.GetLoggedInUserName();
+				var currentDraft = Factory.Create<SingleDraftMapper>().GetModel();
+				Logger.LogError(ex, requestUrl, userName, currentDraft.DraftId);
+			}
+			else
+			{
+				Logger.LogError(ex);
+			}
 		}
 	}
 }

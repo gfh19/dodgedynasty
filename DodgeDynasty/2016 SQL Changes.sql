@@ -1,5 +1,61 @@
-﻿SET XACT_ABORT ON
+﻿/* 8/10/16 */
+
+SET XACT_ABORT ON
 BEGIN TRANSACTION;
+
+
+
+CREATE NONCLUSTERED INDEX [IX_TruePlayerId] ON [dbo].[Player]
+(
+	[TruePlayerId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+
+
+
+
+
+
+/****** Object:  Table [dbo].[ErrorLog]    Script Date: 8/10/2016 11:16:39 PM ******/
+DROP TABLE [dbo].[ErrorLog]
+GO
+
+/****** Object:  Table [dbo].[ErrorLog]    Script Date: 8/10/2016 11:16:39 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[ErrorLog](
+	[ErrorId] [int] IDENTITY(1,1) NOT NULL,
+	[ErrorType] [varchar](20) NULL,
+	[MessageText] [varchar](1000) NOT NULL,
+	[StackTrace] [varchar](3000) NULL,
+	[Request] [varchar](500) NULL,
+	[UserName] [varchar](20) NULL,
+	[DraftId] [int] NULL,
+	[AddTimestamp] [datetime] NOT NULL,
+	[LastUpdateTimestamp] [datetime] NOT NULL,
+ CONSTRAINT [PK_ErrorLog] PRIMARY KEY CLUSTERED 
+(
+	[ErrorId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+
+
+
+
+
 
 
 
@@ -74,7 +130,7 @@ GO
 INSERT INTO [dbo].[Highlight]
            ([HighlightName],[HighlightClass],[HighlightValue],[HighlightOrder],[AddTimestamp],[LastUpdateTimestamp])
      VALUES
-           ('Gold','bg-gold','#CCAB42',NULL,getdate(),getdate())
+           ('Gold','bg-gold','#E7C531',NULL,getdate(),getdate())
 GO
 
 
@@ -115,6 +171,11 @@ UPDATE [dbo].[Highlight] SET HighlightOrder = 19 WHERE HighlightName = 'Black'
 
 UPDATE [dbo].[Highlight]
 SET HighlightValue = '#FFB0CB'
+WHERE HighlightName = 'Pink'
+
+
+UPDATE [dbo].[Highlight]
+SET HighlightValue = '#E7C531'
 WHERE HighlightName = 'Pink'
 
 
@@ -271,13 +332,13 @@ BEGIN TRANSACTION;
 
 
 -- DONE
-Dont Run This Script until below has been addressed!
--Players to Update:
+--Dont Run This Script until below has been addressed!
+--Players to Update:
 	-- Ted Ginn Jr.
 	-- Duke Johnson Jr.
 	-- Benjamin Cunningham
 	-- Terrelle Pryor?
--* ALSO DONT FORGET TO ALTER THE LoadPlayerRanks SP!
+--* ALSO DONT FORGET TO ALTER THE LoadPlayerRanks SP!
 
 
 

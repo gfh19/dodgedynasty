@@ -132,6 +132,15 @@ namespace DodgeDynasty.Shared
 			return input.Where(x => Char.IsDigit(x)).Any();
 		}
 
+		public static string Truncate(this string input, int maxLength)
+		{
+			if (string.IsNullOrEmpty(input))
+			{
+				return input;
+			}
+			return input.Substring(0, input.Length < maxLength ? input.Length : maxLength);
+        }
+
 
 		/* Config access methods */
 

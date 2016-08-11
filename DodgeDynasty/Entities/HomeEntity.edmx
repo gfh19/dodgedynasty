@@ -165,6 +165,20 @@
           <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
           <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="ErrorLog">
+          <Key>
+            <PropertyRef Name="ErrorId" />
+          </Key>
+          <Property Name="ErrorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ErrorType" Type="varchar" MaxLength="20" />
+          <Property Name="MessageText" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="StackTrace" Type="varchar" MaxLength="3000" />
+          <Property Name="Request" Type="varchar" MaxLength="500" />
+          <Property Name="UserName" Type="varchar" MaxLength="20" />
+          <Property Name="DraftId" Type="int" />
+          <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
+          <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="Highlight">
           <Key>
             <PropertyRef Name="HighlightId" />
@@ -934,6 +948,7 @@
           <EntitySet Name="DraftPick" EntityType="Self.DraftPick" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DraftPickHistory" EntityType="Self.DraftPickHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DraftRank" EntityType="Self.DraftRank" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ErrorLog" EntityType="Self.ErrorLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Highlight" EntityType="Self.Highlight" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="League" EntityType="Self.League" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LeagueOwner" EntityType="Self.LeagueOwner" Schema="dbo" store:Type="Tables" />
@@ -1322,6 +1337,7 @@
             <End Role="User" EntitySet="Users" />
             <End Role="AudioUserCount" EntitySet="AudioUserCounts" />
           </AssociationSet>
+          <EntitySet Name="ErrorLogs" EntityType="HomeModel.ErrorLog" />
           </EntityContainer>
         <EntityType Name="PlayerRank">
           <Key>
@@ -2305,6 +2321,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ErrorLog">
+          <Key>
+            <PropertyRef Name="ErrorId" />
+          </Key>
+          <Property Name="ErrorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ErrorType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="MessageText" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="StackTrace" Type="String" MaxLength="3000" FixedLength="false" Unicode="false" />
+          <Property Name="Request" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="UserName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DraftId" Type="Int32" />
+          <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2765,6 +2795,21 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ErrorLogs">
+            <EntityTypeMapping TypeName="HomeModel.ErrorLog">
+              <MappingFragment StoreEntitySet="ErrorLog">
+                <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
+                <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
+                <ScalarProperty Name="DraftId" ColumnName="DraftId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Request" ColumnName="Request" />
+                <ScalarProperty Name="StackTrace" ColumnName="StackTrace" />
+                <ScalarProperty Name="MessageText" ColumnName="MessageText" />
+                <ScalarProperty Name="ErrorType" ColumnName="ErrorType" />
+                <ScalarProperty Name="ErrorId" ColumnName="ErrorId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2859,6 +2904,7 @@
         <edmx:AssociationConnector Association="HomeModel.FK_AudioUserCount_Draft" />
         <edmx:AssociationConnector Association="HomeModel.FK_AudioUserCount_Player" />
         <edmx:AssociationConnector Association="HomeModel.FK_AudioUserCount_User" />
+        <edmx:EntityTypeShape EntityType="HomeModel.ErrorLog" Width="1.5" PointX="5.375" PointY="0.875" />
         </edmx:Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
