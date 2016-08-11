@@ -604,10 +604,10 @@ function bindCompareRanks() {
 	bindCompRankPosition($("#crPosition"));
 }
 
-function updateCompareRankIds(removeRankId) {
+function updateCompareRankIds(removeRankId, removeRankIndex) {
 	var compareRankIds = "";
 	$.each($(".cr-rank-select"), function (ix, select) {
-		if (!removeRankId || removeRankId != $(select).val()) {
+		if (!removeRankId || removeRankId != $(select).val() || removeRankIndex < 0 || ix != removeRankIndex) {
 			compareRankIds += $(select).val() + ",";
 		}
 	});
@@ -655,7 +655,11 @@ function bindRemoveCompareRankLink(link) {
 	$(link).click(function (e) {
 		e.preventDefault();
 		var removeRankId = $(link).attr('data-rank-id');
-		updateCompareRankIds(removeRankId);
+		var removeRankGuid = $(link).attr('data-rank-guid');
+		var guids = $("a[data-rank-guid]").map(function() {
+			return $(this).attr("data-rank-guid");
+		});
+		updateCompareRankIds(removeRankId, $.inArray(removeRankGuid, guids));
 	});
 }
 
