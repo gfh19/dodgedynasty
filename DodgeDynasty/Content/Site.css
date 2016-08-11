@@ -1693,7 +1693,7 @@ ul.menu li a.current-page
     box-shadow: #898989 4px 4px;
 }
 .rank-avail-section {
-	margin: 10px 35px 20px 35px;
+	margin: 10px 30px 20px 30px;
 }
 /*
 .player-rank-entry {
@@ -2734,7 +2734,7 @@ span.player-select
 	{
 		margin-bottom: 0px;
 	}
-	/* Ranks
+	/* Ranks / Setup Rank
 	------------------------------------*/
 	.rname-input-div 
 	{
@@ -2769,6 +2769,11 @@ span.player-select
 	.bup-player-name {
 		max-width: 175px !important;
 	}
+	.sr-outer-section
+	{
+		display: block;
+	}
+
 	
 	/* Activate Draft
 	------------------------------------*/
