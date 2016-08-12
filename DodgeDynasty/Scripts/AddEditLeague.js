@@ -98,7 +98,7 @@ function validateAddEditLeagueModel() {
 	});
 
 	var audioSelects = $(".lo-audio option:selected[value=all]").closest("select");
-	if (audioSelects.length > 2) {
+	if (!isAdmin(adminMode) && audioSelects.length > 2) {
 		$(".max-all-picks-msg").removeClass("hide-yo-wives");
 		$(audioSelects).addClass("invalid-border");
 		isValid = false;

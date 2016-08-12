@@ -2763,17 +2763,19 @@ span.player-select
 	{
 		width: 250px;
 	}
+	.sr-outer-section
+	{
+		display: block;
+	}
 	.rank-avail-section {
 		margin: 10px;
 	}
 	.bup-player-name {
 		max-width: 175px !important;
 	}
-	.sr-outer-section
-	{
-		display: block;
+	.bup-add-multi-text {
+		width: auto;
 	}
-
 	
 	/* Activate Draft
 	------------------------------------*/

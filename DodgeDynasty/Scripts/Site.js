@@ -937,6 +937,12 @@ function hasAttr(elem, attribute) {
 	return (typeof attr !== typeof undefined && attr !== false);
 }
 
+function isAdmin(adminMode) {
+	return (adminMode && adminMode.trim().toLowerCase() == "admin");
+}
+
+/* Dialogs */
+
 function showPleaseWait() {
 	pleaseWaitNeeded = true;
 	setTimeout(function () {
@@ -1021,6 +1027,8 @@ function closePleaseWait() {
 	pleaseWaitNeeded = false;
 	closeAllDialogs();
 }
+
+/* End Dialogs */
 
 /*  End Helper Function */
 
