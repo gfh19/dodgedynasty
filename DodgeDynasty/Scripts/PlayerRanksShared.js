@@ -1,6 +1,7 @@
 ﻿var ranksWindow;
 var clientCookieOptions = null;
 var lastQueueUpdate = null;
+var playerRanksBroadcastFn = null;
 
 function initPlayerRanksShared() {
 	syncCookies();
@@ -620,7 +621,11 @@ function updateCompareRankIds(removeRankId, removeRankIndex) {
 			removeWaitCursor();
 			setCompRankExpandIds();
 			setCookieOptions(clientCookieOptions);
-		}, removeWaitCursor);
+		},
+		function () {
+			closePleaseWait();
+			removeWaitCursor();
+		});
 }
 
 function updatePlayerRankOptions(options) {
@@ -646,7 +651,11 @@ function bindAddCompareRank(link) {
 			function () {
 				closePleaseWait();
 				removeWaitCursor();
-			}, removeWaitCursor);
+			},
+			function () {
+				closePleaseWait();
+				removeWaitCursor();
+			});
 	});
 }
 
@@ -678,6 +687,19 @@ function bindCompRankPosition(select) {
 		addWaitCursor();
 		var crPosition = $(select).val();
 		$(".rank-name").attr("data-compare-pos", crPosition);
+		playerRanksBroadcastFn = tempPlayerRanksRefreshFn;
+		addWaitCursor();
+		showPleaseWait();
 		pageBroadcastDraftHandler();
 	});
+}
+
+function tempPlayerRanksRefreshFn() {
+	removeWaitCursor();
+	closePleaseWait();
+	clearPlayerRanksBroadcastFn();
+}
+
+function clearPlayerRanksBroadcastFn() {
+	playerRanksBroadcastFn = null;
 }

@@ -1,4 +1,5 @@
 ﻿var replaceElementId = "#allPlayerRanks";
+
 $(function () {
 	callRefreshPageWithPickTimer("Draft/PlayerRanksPartial" + getRankIdUrlPath(), replaceElementId,
 		restoreHighlighting, restoreHighlighting, suspendHighlighting);
@@ -8,5 +9,11 @@ $(function () {
 
 function pageBroadcastDraftHandler() {
 	callRefreshPage("Draft/PlayerRanksPartial" + getRankIdUrlPath(), replaceElementId,
-		restoreHighlighting, restoreHighlighting, suspendHighlighting);
+		function () {
+			if (playerRanksBroadcastFn) { playerRanksBroadcastFn(); }
+			restoreHighlighting();
+		}, function () {
+			if (playerRanksBroadcastFn) { playerRanksBroadcastFn(); }
+			restoreHighlighting();
+		}, suspendHighlighting);
 }

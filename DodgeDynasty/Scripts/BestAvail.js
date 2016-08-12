@@ -8,5 +8,11 @@ $(function () {
 
 function pageBroadcastDraftHandler() {
 	callRefreshPage("Draft/BestAvailablePartial" + getRankIdUrlPath(), replaceElementId,
-		restoreHighlighting, restoreHighlighting, suspendHighlighting);
+		function () {
+			if (playerRanksBroadcastFn) { playerRanksBroadcastFn(); }
+			restoreHighlighting();
+		}, function () {
+			if (playerRanksBroadcastFn) { playerRanksBroadcastFn(); }
+			restoreHighlighting();
+		}, suspendHighlighting);
 }
