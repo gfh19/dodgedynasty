@@ -941,6 +941,24 @@ function isAdmin(adminMode) {
 	return (adminMode && adminMode.trim().toLowerCase() == "admin");
 }
 
+function removeHeaderFreeze() {
+	$("body").removeClass("header-freeze");
+}
+
+function changeViewport(minScale, maxScale, initScale, width) {
+	width = width || "device-width";
+	initScale = initScale || "1";
+	if (minScale != 0) {
+		minScale = minScale || "1.0";
+	}
+	maxScale = maxScale || "1.2";
+
+	$('head').append('<meta name="viewport" content="width=' + width + 
+		', initial-scale=' + initScale + 
+		', minimum-scale=' + minScale +
+		', maximum-scale=' + maxScale + '">');
+}
+
 /* Dialogs */
 
 function showPleaseWait() {

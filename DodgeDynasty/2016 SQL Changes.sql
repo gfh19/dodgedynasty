@@ -1,4 +1,33 @@
-﻿/* 8/10/16 */
+﻿
+
+/* 8/13/16 */
+
+SET XACT_ABORT ON
+BEGIN TRANSACTION;
+
+
+ALTER TABLE [dbo].[User]
+ADD [LoginDomain] varchar(30);
+GO
+
+ALTER TABLE [dbo].[User]
+ADD [LoginUserAgent] varchar(512);
+GO
+
+
+
+
+
+COMMIT TRANSACTION;
+
+
+
+
+
+
+/* Below run in Production on 8/11/16 */
+
+/* 8/10/16 */
 
 SET XACT_ABORT ON
 BEGIN TRANSACTION;

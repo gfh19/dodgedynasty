@@ -14,22 +14,22 @@ html
 
 body
 {
-	border-top: solid 6px #000;
-	color: #333;
 	font-size: 0.9em;
-	font-family: "Segoe UI", Helvetica, Sans-Serif;
+	font-family: "Segoe UI", Arial, Sans-Serif;
 	margin: 0;
 	padding: 0;
 }
 
 header {
 	background-color: #fff;
+	z-index: 99999;
+	border-bottom: 1px solid #e6e6e6;
 }
 
-/*.content-width {
-    float: left;
-    min-width: 100%;
-}*/
+.header-top {
+	border-top: solid 6px #000;
+    color: #333;
+}
 
 .small-page-header, .page-header, .large-page-header, .left-small-page-header {
 	text-align: center;
@@ -250,7 +250,7 @@ footer
 	/*color: #B0E0E6;
 	font-family: 'Brush Script MT', 'Brush Script MT Italic', Arial, sans-serif;
 	font-size: 27px;*/	
-	height: 20px;
+	height: 29px;
 	margin: -2px 0px 0px 0px;
 	padding-left: 10px;
 }
@@ -307,6 +307,7 @@ footer
 ----------------------------------------------------------*/
 .top-nav{
 	min-width: 297px;
+	height: 23px;
 }
 ul.menu
 {
@@ -359,6 +360,9 @@ ul.menu li.mobileNav a {
 
 .navbar-nav {
 	/* width: 100%; */
+}
+.toggle-li {
+	font-size: 8px;
 }
 .navbar-toggle {
   padding: 4px 4px;
@@ -1078,7 +1082,7 @@ ul.menu li a.current-page
 }
 .welcome 
 {
-	font-size: 1.8em;
+	font-size: 26px;
 	font-weight: bold;
 }
 #btnStartDrafting {
@@ -2272,8 +2276,9 @@ span.player-select
 
 .toggle-msgs-section {
 	display: inline-block;
-	margin-left: -10px;
+	margin-left: -8px;
 	min-width: 10px;
+	font-size: 18px !important;
 }
 
 .menu-msgs-section {
@@ -2303,7 +2308,7 @@ span.player-select
 }
 
 #messages .ui-widget {
-	font-family: "Segoe UI" , Verdana, Helvetica, Sans-Serif;
+	font-family: "Segoe UI", Arial, Sans-Serif;
 	font-size: 15px;
 }
 
@@ -2626,10 +2631,18 @@ span.player-select
 	}
 	.site-logo-img-mobile {
 		display: inline;
-		height: 21px;
+		height: 22px;
 		width: 36px;
 	}
-
+	
+	.header-freeze header {
+		width: 100%;
+		position: fixed;
+		top: 0;
+	}
+	.header-freeze .content-width {
+		margin-top: 35px;
+	}
 
 	ul.menu li.desktopNav {
 		display: none;
@@ -2916,7 +2929,7 @@ span.player-select
 		width: 205px;
 	}
 	.dchat-body {
-		height: 164px;
+		height: 163px;
 		width: 283px;
 	}
 	.dchat-header {
@@ -2926,8 +2939,8 @@ span.player-select
 		width: 285px;
 	}
 	.dchat-input {
-		width: 221px;
-		margin-left: 3px;
+		width: 225px;
+		margin-left: 1px;
 	}
 	.dchat-window-error .dchat-preview {
 		width: 196px;

@@ -11,7 +11,7 @@
 	else {
 	<link href="@Url.Content("~/favicon.ico")" rel="shortcut icon" type="image/x-icon" />
 	}
-	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.2" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0001, user-scalable=yes" />
 	@Styles.Render("~/Content/css")
 	@Styles.Render("~/Content/themes/base/css")
 	@Scripts.Render("~/bundles/jquery")
@@ -33,19 +33,20 @@
 		@Html.Partial(DodgeDynasty.Shared.Constants.Views.ColorStyles)
 	}
 </head>
-<body>
+<body class="header-freeze">
 	<header>
+		<div class="header-top"></div>
 		<div class="content-wrapper">
 			<div class="float-left">
-				<p class="site-logo">
+				<p class="site-logo" onclick="javascript:$('<a target=\'_new\' href=\'https://www.youtube.com/watch?v=G8fe4I8ZTCE\'/>')[0].click();">
 					@if (isStartDrafting)
 					{
-					<img src="@Url.Content("~/Content/images/StartDrafting.png")" class="site-logo-img" onclick="javascript:$('<a target=\'_new\' href=\'https://en.wikipedia.org/wiki/Dodge_Dynasty\'/>')[0].click();" />
+					<img src="@Url.Content("~/Content/images/StartDrafting.png")" class="site-logo-img" />
 					<img src="@Url.Content("~/Content/images/SD.png")" class="site-logo-img-mobile" />
 					}
 					else
 					{
-					<img src="@Url.Content("~/Content/images/DodgeDynasty.png")" class="site-logo-img" onclick="javascript:$('<a target=\'_new\' href=\'https://en.wikipedia.org/wiki/Dodge_Dynasty\' />')[0].click();" />
+					<img src="@Url.Content("~/Content/images/DodgeDynasty.png")" class="site-logo-img" />
 					<img src="@Url.Content("~/Content/images/DD.png")" class="site-logo-img-mobile" />
 					}
 				</p>
@@ -79,7 +80,7 @@
 								<li>@Html.ActionLink("Teams", "TeamDisplay", "Draft")</li>
 								<li>@Html.ActionLink("Ranks", "BestAvailable", "Draft")</li>
 							}
-							<li>
+							<li class="toggle-li">
 								@if (userRoleAccessModel.IsUserAdmin && userRoleAccessModel.NewPlayerAdjExists)
 								{
 									<button type="button" class="navbar-toggle invalid-border" data-toggle="collapse" data-target=".navbar-collapse">
@@ -213,7 +214,7 @@
 		<footer>
 			<div class="content-wrapper">
 				<div class="float-left">
-					<p onclick="javascript:$('<a target=\'_new\' href=\'https://www.youtube.com/watch?v=G8fe4I8ZTCE\'/>')[0].click();" >&copy; @DateTime.Now.Year - @(isStartDrafting ? "StartDrafting.com" : "Dodge Dynasty League")</p>
+					<p onclick="javascript:$('<a target=\'_new\' href=\'https://en.wikipedia.org/wiki/Dodge_Dynasty\'/>')[0].click();" >&copy; @DateTime.Now.Year - @(isStartDrafting ? "startdrafting.com" : "Dodge Dynasty League")</p>
 				</div>
 			</div>
 		</footer>

@@ -1,6 +1,7 @@
 ﻿var playerAdjWindow = 6;
 
 function initPlayerAdjustments() {
+	removeHeaderFreeze();
 	displayAdjustmentWindows();
 	bindToggleWindowLinks();
 	bindAddNewPlayerLink();

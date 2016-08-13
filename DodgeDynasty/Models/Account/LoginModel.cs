@@ -19,7 +19,7 @@ namespace DodgeDynasty.Models
 		[Display(Name = "Password")]
 		public string Password { get; set; }
 
-		public bool Login()
+		public bool Login(HttpRequestBase request)
 		{
 			bool loginSuccess = false;
 			using (HomeEntity = new Entities.HomeEntity())
@@ -31,6 +31,8 @@ namespace DodgeDynasty.Models
 					if (loginSuccess)
 					{
 						user.LastLogin = DateTime.Now;
+						user.LoginDomain = request.Url.Host.Truncate(30);
+						user.LoginUserAgent = request.UserAgent.Truncate(512);
 						HomeEntity.SaveChanges();
 					}
 				}

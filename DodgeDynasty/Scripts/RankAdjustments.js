@@ -1,6 +1,7 @@
 ﻿var autoImportHints = [];
 
 function initRankAdjustments() {
+	removeHeaderFreeze();
 	bindAddEditRankLinks();
 	bindAutoImportLinks();
 	bindDraftsRanksMoreLinks();

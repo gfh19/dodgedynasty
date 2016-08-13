@@ -2,7 +2,9 @@
 var ownerHints = [];
 var isPageSubmitted = false;
 
- $(function () {
+$(function () {
+	removeHeaderFreeze();
+	changeViewport(0.5, 2.0);
 	bindActionLinks();
 });
 

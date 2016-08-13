@@ -275,7 +275,8 @@ namespace DodgeDynasty.Shared
 		}
 		public static bool IsStartDraftingDomain(HttpRequestBase request)
 		{
-			return request.Url.Host.Contains("startdrafting.com");
+			return request.Url.Host.ToLower().Contains("startdrafting.com") || 
+				(request.Url.Host == "george-pc" && request.Url.LocalPath.StartsWith("/StartDrafting"));
 		}
 
 		public static string GetMessageCountDisplay(int newMessageCount)

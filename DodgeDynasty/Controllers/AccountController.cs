@@ -40,7 +40,7 @@ namespace DodgeDynasty.Controllers
 			{
 				model.UserName = model.UserName.Trim().ToLower();
 			}
-			if (ModelState.IsValid && model.Login())
+			if (ModelState.IsValid && model.Login(Request))
 			{
 				FormsAuthentication.SetAuthCookie(model.UserName, true);
 				GetDodgeDynastyCookie();

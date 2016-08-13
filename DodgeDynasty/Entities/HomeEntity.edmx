@@ -398,13 +398,15 @@
           <Property Name="Salt" Type="binary" MaxLength="8" />
           <Property Name="FirstName" Type="varchar" MaxLength="15" />
           <Property Name="LastName" Type="varchar" MaxLength="25" />
-          <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
-          <Property Name="LastLogin" Type="datetime" />
-          <Property Name="FullName" Type="varchar" MaxLength="41" StoreGeneratedPattern="Computed" Nullable="false" />
-          <Property Name="IsActive" Type="bit" Nullable="false" />
-          <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
+          <Property Name="FullName" Type="varchar" MaxLength="41" StoreGeneratedPattern="Computed" />
           <Property Name="NickName" Type="varchar" MaxLength="10" />
+          <Property Name="LastLogin" Type="datetime" />
+          <Property Name="LoginDomain" Type="varchar" MaxLength="30" />
+          <Property Name="LoginUserAgent" Type="varchar" MaxLength="512" />
           <Property Name="LastMessageView" Type="datetime" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
+          <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="UserApplicant">
           <Key>
@@ -1408,7 +1410,7 @@
           <Property Name="UserName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="FirstName" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="LastName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="FullName" Type="String" MaxLength="41" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" Nullable="false" />
+          <Property Name="FullName" Type="String" MaxLength="41" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Name="NickName" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Password" Type="Binary" MaxLength="128" FixedLength="false" />
           <Property Name="Salt" Type="Binary" MaxLength="8" FixedLength="true" />
@@ -1430,6 +1432,8 @@
           <NavigationProperty Name="UserRoles" Relationship="HomeModel.FK_UserRole_User" FromRole="User" ToRole="UserRole" />
           <NavigationProperty Name="AdminStatu" Relationship="HomeModel.FK_AdminStatus_User" FromRole="User" ToRole="AdminStatu" />
           <NavigationProperty Name="AudioUserCounts" Relationship="HomeModel.FK_AudioUserCount_User" FromRole="User" ToRole="AudioUserCount" />
+          <Property Name="LoginUserAgent" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
+          <Property Name="LoginDomain" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="DraftRank">
           <Key>
@@ -2408,6 +2412,8 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="HomeModel.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="LoginDomain" ColumnName="LoginDomain" />
+                <ScalarProperty Name="LoginUserAgent" ColumnName="LoginUserAgent" />
                 <ScalarProperty Name="LastMessageView" ColumnName="LastMessageView" />
                 <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
                 <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />

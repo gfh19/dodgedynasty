@@ -10176,16 +10176,14 @@ namespace DodgeDynasty.Entities
         /// </summary>
         /// <param name="userId">Initial value of the UserId property.</param>
         /// <param name="userName">Initial value of the UserName property.</param>
-        /// <param name="fullName">Initial value of the FullName property.</param>
         /// <param name="isActive">Initial value of the IsActive property.</param>
         /// <param name="addTimestamp">Initial value of the AddTimestamp property.</param>
         /// <param name="lastUpdateTimestamp">Initial value of the LastUpdateTimestamp property.</param>
-        public static User CreateUser(global::System.Int32 userId, global::System.String userName, global::System.String fullName, global::System.Boolean isActive, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp)
+        public static User CreateUser(global::System.Int32 userId, global::System.String userName, global::System.Boolean isActive, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp)
         {
             User user = new User();
             user.UserId = userId;
             user.UserName = userName;
-            user.FullName = fullName;
             user.IsActive = isActive;
             user.AddTimestamp = addTimestamp;
             user.LastUpdateTimestamp = lastUpdateTimestamp;
@@ -10298,7 +10296,7 @@ namespace DodgeDynasty.Entities
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
         public global::System.String FullName
         {
@@ -10510,6 +10508,54 @@ namespace DodgeDynasty.Entities
         private Nullable<global::System.DateTime> _LastMessageView;
         partial void OnLastMessageViewChanging(Nullable<global::System.DateTime> value);
         partial void OnLastMessageViewChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String LoginUserAgent
+        {
+            get
+            {
+                return _LoginUserAgent;
+            }
+            set
+            {
+                OnLoginUserAgentChanging(value);
+                ReportPropertyChanging("LoginUserAgent");
+                _LoginUserAgent = StructuralObject.SetValidValue(value, true, "LoginUserAgent");
+                ReportPropertyChanged("LoginUserAgent");
+                OnLoginUserAgentChanged();
+            }
+        }
+        private global::System.String _LoginUserAgent;
+        partial void OnLoginUserAgentChanging(global::System.String value);
+        partial void OnLoginUserAgentChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String LoginDomain
+        {
+            get
+            {
+                return _LoginDomain;
+            }
+            set
+            {
+                OnLoginDomainChanging(value);
+                ReportPropertyChanging("LoginDomain");
+                _LoginDomain = StructuralObject.SetValidValue(value, true, "LoginDomain");
+                ReportPropertyChanged("LoginDomain");
+                OnLoginDomainChanged();
+            }
+        }
+        private global::System.String _LoginDomain;
+        partial void OnLoginDomainChanging(global::System.String value);
+        partial void OnLoginDomainChanged();
 
         #endregion
 
