@@ -4,10 +4,11 @@
     <div class="center">
 		@if (DodgeDynasty.Shared.Utilities.IsStartDraftingDomain(Request))
 		{
-			<a href="@Url.Content("~/Draft/Display")" class="welcome">Start Drafting here!</a>
+			<p><a href="@Url.Content("~/Draft/Display")" class="welcome noline">Welcome to StartDrafting.com!</a></p>
 		}
 		else
 		{
-			<a href="@Url.Content("~/Draft/Display")" class="welcome">Welcome to the Dodge Dynasty League!</a>
+			<p><a href="@Url.Content("~/Draft/Display")" class="welcome noline">Welcome to the Dodge Dynasty League!</a></p>
 		}
+		<p><a href="@Url.Content("~/Draft/Display")" id="btnStartDrafting">Start Drafting</a></p>
     </div>
