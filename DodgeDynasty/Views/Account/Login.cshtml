@@ -1,7 +1,7 @@
 ﻿@model DodgeDynasty.Models.LoginModel
 
 @{
-	ViewBag.Title = "Dodge Dynasty Login";
+	ViewBag.Title = (DodgeDynasty.Shared.Utilities.IsStartDraftingDomain(Request)) ? "Start Drafting Login" : "Dodge Dynasty Login";
 }
 
 <hgroup class="title">

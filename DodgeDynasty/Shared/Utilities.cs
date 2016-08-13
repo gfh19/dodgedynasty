@@ -273,6 +273,10 @@ namespace DodgeDynasty.Shared
 		{
 			return System.Web.HttpContext.Current.User != null && System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
 		}
+		public static bool IsStartDraftingDomain(HttpRequestBase request)
+		{
+			return request.Url.Host.Contains("startdrafting.com");
+		}
 
 		public static string GetMessageCountDisplay(int newMessageCount)
 		{

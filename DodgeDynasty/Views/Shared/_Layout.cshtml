@@ -2,8 +2,15 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
-	<title>@ViewBag.Title - Dodge Dynasty League</title>
-	<link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+	@{ var isStartDrafting = DodgeDynasty.Shared.Utilities.IsStartDraftingDomain(Request);}
+	<title>@ViewBag.Title - @(isStartDrafting ? "StartDrafting" : "Dodge Dynasty League")</title>
+	@if (isStartDrafting)
+	{
+	<link href="@Url.Content("~/Content/favicon.ico")" rel="shortcut icon" type="image/x-icon" />
+	}
+	else {
+	<link href="@Url.Content("~/favicon.ico")" rel="shortcut icon" type="image/x-icon" />
+	}
 	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.2" />
 	@Styles.Render("~/Content/css")
 	@Styles.Render("~/Content/themes/base/css")
@@ -31,8 +38,16 @@
 		<div class="content-wrapper">
 			<div class="float-left">
 				<p class="site-logo">
-					<img src="@Url.Content("~/Content/images/DodgeDynasty.png")" class="site-logo-img" onclick="javascript:$('<a target=\'_new\' href=\'http://blackacrebrewing.com/hey.swf\'/>')[0].click();" />
+					@if (isStartDrafting)
+					{
+					<img src="@Url.Content("~/Content/images/StartDrafting.png")" class="site-logo-img" onclick="javascript:$('<a target=\'_new\' href=\'https://en.wikipedia.org/wiki/Dodge_Dynasty\'/>')[0].click();" />
+					<img src="@Url.Content("~/Content/images/SD.png")" class="site-logo-img-mobile" />
+					}
+					else
+					{
+					<img src="@Url.Content("~/Content/images/DodgeDynasty.png")" class="site-logo-img" onclick="javascript:$('<a target=\'_new\' href=\'https://en.wikipedia.org/wiki/Dodge_Dynasty\' />')[0].click();" />
 					<img src="@Url.Content("~/Content/images/DD.png")" class="site-logo-img-mobile" />
+					}
 				</p>
 			</div>
 			<div>
@@ -198,7 +213,7 @@
 		<footer>
 			<div class="content-wrapper">
 				<div class="float-left">
-					<p onclick="javascript:$('<a target=\'_new\' href=\'https://www.youtube.com/watch?v=G8fe4I8ZTCE\'/>')[0].click();" >&copy; @DateTime.Now.Year - Dodge Dynasty League</p>
+					<p onclick="javascript:$('<a target=\'_new\' href=\'https://www.youtube.com/watch?v=G8fe4I8ZTCE\'/>')[0].click();" >&copy; @DateTime.Now.Year - @(isStartDrafting ? "StartDrafting.com" : "Dodge Dynasty League")</p>
 				</div>
 			</div>
 		</footer>

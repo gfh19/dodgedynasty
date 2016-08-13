@@ -2,5 +2,12 @@
 	ViewBag.Title = "Home";
 }
     <div class="center">
-		<a href="@Url.Content("~/Draft/Display")" class="welcome">Welcome to the Dodge Dynasty League!</a>
+		@if (DodgeDynasty.Shared.Utilities.IsStartDraftingDomain(Request))
+		{
+			<a href="@Url.Content("~/Draft/Display")" class="welcome">Start Drafting here!</a>
+		}
+		else
+		{
+			<a href="@Url.Content("~/Draft/Display")" class="welcome">Welcome to the Dodge Dynasty League!</a>
+		}
     </div>
