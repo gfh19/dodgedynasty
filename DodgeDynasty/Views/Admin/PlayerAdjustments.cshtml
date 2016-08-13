@@ -244,10 +244,10 @@
 				@Html.ValidationMessageFor(m => m.Player.NFLTeam)
 				<div>
 					@Html.LabelFor(m => m.Player.IsActive, new { @class = "inline-label" })
-					@Html.CheckBoxFor(m => m.Player.IsActive, new { id = "add-plyr-active", @class = "vert-middle", @checked = "checked" })
+					@Html.CheckBoxFor(m => m.Player.IsActive, new { id = "add-plyr-active", @class = "vert-middle" })
 
 					@Html.LabelFor(m => m.Player.IsDrafted, new { @class = "inline-label" })
-					@Html.CheckBoxFor(m => m.Player.IsDrafted, new { id = "add-plyr-drafted", @class = "vert-middle", @checked = "checked" })
+					@Html.CheckBoxFor(m => m.Player.IsDrafted, new { id = "add-plyr-drafted", @class = "vert-middle" })
 				</div>
 			</div>
 			<div class="page-section-small">

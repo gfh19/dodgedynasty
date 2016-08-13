@@ -106,8 +106,8 @@ function clearAddPlayer() {
 	$("#add-plyr-lname").val("");
 	$("#add-plyr-pos").val("");
 	$("#add-plyr-nfl").val("");
-	$("#add-plyr-active").prop("checked", true);
-	$("#add-plyr-drafted").prop("checked", true);
+	$("#add-plyr-active").prop("checked", false);
+	$("#add-plyr-drafted").prop("checked", false);
 }
 
 function clearEditPlayer() {

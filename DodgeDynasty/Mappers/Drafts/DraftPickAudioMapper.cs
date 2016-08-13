@@ -202,18 +202,6 @@ namespace DodgeDynasty.Mappers.Drafts
 						audio = "Forty-Niners";
 						break;
 				}
-				if (random.Next(1, 3) % 2 == 0)
-				{
-					switch (nflTeam.TeamAbbr)
-					{
-						case "CLE":
-							audio = "Here we go BROWNIES";
-							break;
-						case "NYJ":
-							audio = "J-E-T-S JETS JETS JETS";
-							break;
-					}
-				}
 			}
 			return audio.ToUrlEncodedString();
 		}
