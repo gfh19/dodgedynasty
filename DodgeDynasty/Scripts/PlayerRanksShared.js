@@ -613,24 +613,19 @@ function updateCompareRankIds(removeRankId, removeRankIndex) {
 		}
 	});
 	compareRankIds = compareRankIds.removeTrailing(",");
-	addWaitCursor();
 	showPleaseWait();
 	ajaxPostReplace({ compRankIds: compareRankIds, isBestAvailable: isBestAvailablePage() },
 		"Draft/UpdateCompareRankIds" + getCompRankPosQS(), replaceElementId, function () {
 			closePleaseWait();
-			removeWaitCursor();
 			setCompRankExpandIds();
 			setCookieOptions(clientCookieOptions);
-		},
-		function () {
-			closePleaseWait();
-			removeWaitCursor();
-		});
+		}, closePleaseWait);
 }
 
 function updatePlayerRankOptions(options) {
+	showPleaseWait();
 	ajaxPostReplace({ options: options, isBestAvailable: isBestAvailablePage() },
-		"Draft/UpdatePlayerRankOptions", replaceElementId);
+		"Draft/UpdatePlayerRankOptions", replaceElementId, closePleaseWait, closePleaseWait);
 }
 
 function bindCompareRanksSelect(select) {
@@ -645,17 +640,9 @@ function bindAddCompareRank(link) {
 	$(link).unbind("click");
 	$(link).click(function (e) {
 		e.preventDefault();
-		addWaitCursor();
 		showPleaseWait();
 		ajaxPostReplace({ isBestAvailable: isBestAvailablePage() }, "Draft/AddCompareRank" + getCompRankPosQS(), replaceElementId,
-			function () {
-				closePleaseWait();
-				removeWaitCursor();
-			},
-			function () {
-				closePleaseWait();
-				removeWaitCursor();
-			});
+			closePleaseWait, closePleaseWait);
 	});
 }
 
@@ -684,18 +671,15 @@ function bindShowAvgCompRanks(checkbox) {
 function bindCompRankPosition(select) {
 	$(select).unbind("change");
 	$(select).change(function (e) {
-		addWaitCursor();
 		var crPosition = $(select).val();
 		$(".rank-name").attr("data-compare-pos", crPosition);
 		playerRanksBroadcastFn = tempPlayerRanksRefreshFn;
-		addWaitCursor();
 		showPleaseWait();
 		pageBroadcastDraftHandler();
 	});
 }
 
 function tempPlayerRanksRefreshFn() {
-	removeWaitCursor();
 	closePleaseWait();
 	clearPlayerRanksBroadcastFn();
 }

@@ -962,6 +962,7 @@ function changeViewport(minScale, maxScale, initScale, width) {
 /* Dialogs */
 
 function showPleaseWait() {
+	addWaitCursor();
 	pleaseWaitNeeded = true;
 	setTimeout(function () {
 		if (pleaseWaitNeeded) {
@@ -1043,6 +1044,7 @@ function closeAllDialogs() {
 
 function closePleaseWait() {
 	pleaseWaitNeeded = false;
+	removeWaitCursor();
 	closeAllDialogs();
 }
 
