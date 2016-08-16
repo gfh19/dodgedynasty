@@ -51,8 +51,9 @@
 	filter:Alpha(Opacity=0);
 }
 
+/* 8/15/16 One that is being used */
 .ui-front {
-	z-index: 100;
+	z-index: 12345;
 }
 
 

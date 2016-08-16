@@ -4,7 +4,7 @@ var isPageSubmitted = false;
 
 $(function () {
 	removeHeaderFreeze();
-	changeViewport(0.5, 2.0);
+	changeViewport(0.25, 3.0);
 	bindActionLinks();
 });
 

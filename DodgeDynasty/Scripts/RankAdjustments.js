@@ -2,6 +2,7 @@
 
 function initRankAdjustments() {
 	removeHeaderFreeze();
+	changeViewport(0.25, 3.0);
 	bindAddEditRankLinks();
 	bindAutoImportLinks();
 	bindDraftsRanksMoreLinks();

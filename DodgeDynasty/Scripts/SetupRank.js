@@ -782,9 +782,14 @@ function showClearRanksDialog() {
 		buttons: [
 					{
 						text: "OK", click: function () {
-							$(".rank-add-player").last().click();
-							$(".rank-remove-player").not(":last").click();
 							$(this).dialog("close");
+							addWaitCursor();
+							showLoadingDialog();
+							setTimeout(function() {
+								$(".rank-add-player").last().click();
+								$(".rank-remove-player").not(":last").click();
+								closePleaseWait();
+							}, 1);
 						}
 					},
 					{

@@ -2,6 +2,7 @@
 
 function initPlayerAdjustments() {
 	removeHeaderFreeze();
+	changeViewport(0.25, 3.0);
 	displayAdjustmentWindows();
 	bindToggleWindowLinks();
 	bindAddNewPlayerLink();
