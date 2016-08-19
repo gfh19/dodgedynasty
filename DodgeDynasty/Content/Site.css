@@ -1604,8 +1604,10 @@ ul.menu li a.current-page
 }
 .hq-selected
 {
-	font-size: 0.9em;
+	font-size: 0.8em;
 	text-decoration: line-through;
+	border-width: 2px;
+	border-style: solid;
 }
 .hq-delete-span {
 	display: inline-block;
