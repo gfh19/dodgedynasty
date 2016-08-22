@@ -422,58 +422,62 @@ function bindPastePlayerHandlers() {
 }
 
 function pastePlayerHandler(clipboardData, e, skipPasteTextbox) {
-	addWaitCursor();
 	var pastedText = (clipboardData) ? clipboardData.getData('Text') : null;
 	if (pastedText) {
 		var onPlayerSelect = $(document.activeElement).is("select") && $(document.activeElement).hasClass("player-select");
 		var onPasteTextbox = $(document.activeElement).is("input") && $(document.activeElement).hasClass("rank-paste-txt") && !skipPasteTextbox;
 		if (onPlayerSelect || onPasteTextbox) {
 			var destSelect = document.activeElement;
-			if (onPasteTextbox) {
-				$(".rank-add-player").eq(1).click();
-				var newMoveUpLink = $(".rank-move-up").eq(2);
-				var playerRankEntry = moveUpPlayer(newMoveUpLink);
-				$(playerRankEntry).show();
-				destSelect = $(".player-select", playerRankEntry);
-			}
-			var pastedArray;
-			if (pastedText.indexOf("\r\n") > 0) {
-				pastedArray = pastedText.split("\r\n");
-			}
-			else if (pastedText.indexOf("\r") > 0) {
-				pastedArray = pastedText.split("\r");
-			}
-			else {
-				pastedArray = pastedText.split("\n");
-			}
-			if (pastedArray.length > 0 && pastedArray[pastedArray.length - 1] == "") {
-				pastedArray = pastedArray.splice(0, pastedArray.length - 1);
-			}
-			if (pastedArray.length > 0) {
-				$.each(pastedArray, function (ix, txt) {
-					selectPastedPlayer(txt, destSelect);
-					//var newDestSelect = $(".player-select", $(destSelect).parent().parent().next());
-					if (ix < (pastedArray.length - 1)) {
-						$(".rank-add-player", $(destSelect).parents(".player-rank-entry")).click();
-						destSelect = $(".player-select", $(destSelect).parents(".player-rank-entry").next());
-					}
-				});
+			addWaitCursor();
+			showLoadingDialog();
+			setTimeout(function () {
 				if (onPasteTextbox) {
-					if (e) {
-						e.preventDefault();
+					$(".rank-add-player").eq(1).click();
+					var newMoveUpLink = $(".rank-move-up").eq(2);
+					var playerRankEntry = moveUpPlayer(newMoveUpLink);
+					$(playerRankEntry).show();
+					destSelect = $(".player-select", playerRankEntry);
+				}
+				var pastedArray;
+				if (pastedText.indexOf("\r\n") > 0) {
+					pastedArray = pastedText.split("\r\n");
+				}
+				else if (pastedText.indexOf("\r") > 0) {
+					pastedArray = pastedText.split("\r");
+				}
+				else {
+					pastedArray = pastedText.split("\n");
+				}
+				if (pastedArray.length > 0 && pastedArray[pastedArray.length - 1] == "") {
+					pastedArray = pastedArray.splice(0, pastedArray.length - 1);
+				}
+				if (pastedArray.length > 0) {
+					$.each(pastedArray, function (ix, txt) {
+						selectPastedPlayer(txt, destSelect);
+						//var newDestSelect = $(".player-select", $(destSelect).parent().parent().next());
+						if (ix < (pastedArray.length - 1)) {
+							$(".rank-add-player", $(destSelect).parents(".player-rank-entry")).click();
+							destSelect = $(".player-select", $(destSelect).parents(".player-rank-entry").next());
+						}
+					});
+					if (onPasteTextbox) {
+						if (e) {
+							e.preventDefault();
+						}
+						setTimeout(function () {
+							$(".rank-paste-txt").val("");
+							$(':focus').blur();
+						}, 0);
 					}
 					setTimeout(function () {
-						$(".rank-paste-txt").val("");
-						$(':focus').blur();
+						toggleUnrankedPlayers();
 					}, 0);
 				}
-				setTimeout(function () {
-					toggleUnrankedPlayers();
-				}, 0);
-			}
+				removeWaitCursor();
+				closeAllDialogs();
+			}, 0);
 		}
 	}
-	removeWaitCursor();
 }
 
 function selectPastedPlayer(txt, destSelect) {
