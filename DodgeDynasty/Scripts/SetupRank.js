@@ -53,7 +53,6 @@ function displayLinks() {
 	$(".rank-remove-player").removeClass("hide-yo-husbands-too");
 	var firstPlayerRank = $(".rank-setup-section").find(".player-rank-entry:first");
 	$(".rank-move-up", firstPlayerRank).addClass("hide-yo-husbands-too");
-	$(".rank-remove-player", firstPlayerRank).addClass("hide-yo-husbands-too");
 	var lastPlayerRank = $(".rank-setup-section").find(".player-rank-entry:last");
 	$(".rank-move-down", lastPlayerRank).addClass("hide-yo-husbands-too");
 }
@@ -301,17 +300,21 @@ function bindRemovePlayerLinks() {
 function bindRemovePlayerLink(link) {
 	$(link).click(function (e) {
 		e.preventDefault();
-		var playerRankEntry = $(link).closest('.player-rank-entry');
-		var playerRankNum = parseInt($(".player-rank-num", playerRankEntry).text());
-		changeAllPlayerRankNums(playerRankNum, -1);
-		$(playerRankEntry).remove();
-		var playerId = getPlayerSelectId($(".player-select", playerRankEntry));
-		var unrankedPlayer = $(".bup-player-row[data-player-id=" + playerId + "]");
-		$(unrankedPlayer).show();
-		$(unrankedPlayer).addClass("unranked");
-		toggleUnrankedTableEmpty();
-		toggleExpandUnrankedRows(toBool($(".bup-expand-link").attr("data-expand")));
-		displayLinks();
+		if ($(".rank-remove-player:visible").length > 1) {
+			var playerRankEntry = $(link).closest('.player-rank-entry');
+			var playerRankNum = parseInt($(".player-rank-num", playerRankEntry).text());
+			changeAllPlayerRankNums(playerRankNum, -1);
+			$(playerRankEntry).remove();
+			var playerId = getPlayerSelectId($(".player-select", playerRankEntry));
+			if (playerId) {
+				var unrankedPlayer = $(".bup-player-row[data-player-id=" + playerId + "]");
+				$(unrankedPlayer).show();
+				$(unrankedPlayer).addClass("unranked");
+			}
+			toggleUnrankedTableEmpty();
+			toggleExpandUnrankedRows(toBool($(".bup-expand-link").attr("data-expand")));
+			displayLinks();
+		}
 	});
 }
 
