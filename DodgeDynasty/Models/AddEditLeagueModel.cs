@@ -75,7 +75,7 @@ namespace DodgeDynasty.Models
 		public List<SelectListItem> GetAudioOptions(OwnerUser leagueOwner)
 		{
 			return Utilities.GetListItems<SelectListItem>(AudioOptions, o=>o.Text, o=>o.Value,
-				false, GetSelectedAudioOption(leagueOwner).Value);
+				false, (leagueOwner!=null) ? GetSelectedAudioOption(leagueOwner).Value : null);
 		}
 
 	}

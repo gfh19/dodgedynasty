@@ -25,13 +25,13 @@
 			</div>
 			<div class="page-section-small">
 				<div class="copy-lo-entry hide-yo-wives">
-					<div class="league-owner">
+					<span class="league-owner">
 						@Html.DropDownList("UserId", Model.GetActiveLeagueUsers(), new { @class = "lo-select" })
-					</div>
-					<div class="lo-team-name">
+					</span>
+					<span class="lo-team-name">
 						@Html.TextBox("TeamName", "", new { @class = "lo-team-input" })
-					</div>
-					<div class="lo-color">
+					</span>
+					<span class="lo-color">
 						<span class="lo-outer outline">
 							<span class="lo-selected-color _none">
 								@Html.DropDownList("CssClass",
@@ -44,14 +44,19 @@
 												})
 							</span>
 						</span>
-					</div>
-					<div class="lo-active">
+					</span>
+					<span class="lo-active">
 						@Html.CheckBox("IsActive", new { @class = "lo-active-chkbx", @checked = "checked" })
-					</div>
-					<div class="owner-controls">
+					</span>
+					<span class="lo-audio">
+						@Html.DropDownList("AnnounceAllPicks",
+										Model.GetAudioOptions(null),
+										new { @class = "lo-audio-select" })
+					</span>
+					<span class="owner-controls">
 						<a href="#" class="league-remove-owner" tabindex="-1"><img src="@Url.Content("~/Content/images/minus.png")" alt="Remove Owner" /></a>
 						<a href="#" class="league-add-owner" tabindex="-1"><img src="@Url.Content("~/Content/images/plus.png")" alt="Add Owner" /></a>
-					</div>
+					</span>
 				</div>
 				<div class="mobile-touch-scroll mobile-sect-border">
 				<div class="league-owners">
