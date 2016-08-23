@@ -77,22 +77,26 @@ namespace DodgeDynasty.Mappers.Drafts
 		{
 			isFinalDraftPick = false;
             bool access = false;
-			if (leagueOwner.AnnounceAllPicks)
-			{
-				access = true;
-			}
-			else if (leagueOwner.AnnouncePrevPick)
+
+			if (leagueOwner.AnnounceAllPicks || leagueOwner.AnnouncePrevPick)
 			{
 				var nextDraftPick = HomeEntity.DraftPicks.Where(o => o.DraftId == currentDraftId && o.PlayerId == null)
 					.OrderBy(p => p.PickNum).FirstOrDefault();
-				if (nextDraftPick != null)
+				isFinalDraftPick = nextDraftPick == null;
+                if (leagueOwner.AnnounceAllPicks)
 				{
-					access = nextDraftPick.UserId == leagueOwner.UserId;
+					access = true;
 				}
 				else
 				{
-					isFinalDraftPick = true;
-					access = true;
+					if (nextDraftPick != null)
+					{
+						access = nextDraftPick.UserId == leagueOwner.UserId;
+					}
+					else
+					{
+						access = true;
+					}
 				}
 			}
 			return access;
