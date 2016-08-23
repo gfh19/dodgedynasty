@@ -15,6 +15,12 @@ ADD [LoginUserAgent] varchar(512);
 GO
 
 
+UPDATE [dbo].[Highlight]
+SET HighlightValue = '#CCAB42'
+WHERE HighlightName = 'Gold'
+
+
+
 
 
 
@@ -205,7 +211,7 @@ WHERE HighlightName = 'Pink'
 
 UPDATE [dbo].[Highlight]
 SET HighlightValue = '#E7C531'
-WHERE HighlightName = 'Pink'
+WHERE HighlightName = 'Gold'
 
 
 

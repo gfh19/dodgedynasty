@@ -680,7 +680,8 @@ function scrollDraftChatBottom() {
 /* Draft Pick Audio */
 
 function initLastPickAudio() {
-	if (!audioKillSwitch && draftActive && !isMobileBrowser() && !(window.location.href.indexOf("/Admin/Input") > 0)) {
+	if (!audioKillSwitch && draftActive && !isMobileBrowser() && !(window.location.href.indexOf("/Admin/Input") > 0)
+		&& !getDynastySettingsCookie().disableBrowserAudio) {
 		ajaxGetJson("Draft/GetLastDraftPickAudio", function (pickAudio) {
 			lastPickAudio = pickAudio;
 		});
