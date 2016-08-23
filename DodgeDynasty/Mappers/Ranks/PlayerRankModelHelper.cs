@@ -72,9 +72,15 @@ namespace DodgeDynasty.Mappers.Ranks
 								 from ph in phLeft.DefaultIfEmpty()
 								 select GetRankedPlayer(pr, p, t, ph, pick, u, lo)).OrderBy(p => p.RankNum).ToList();
 
+			MergeWithDraftedTruePlayers(rankedPlayers, draftedTruePlayers);
+			return rankedPlayers;
+		}
+
+		public static void MergeWithDraftedTruePlayers(List<RankedPlayer> rankedPlayers, List<RankedPlayer> draftedTruePlayers)
+		{
 			if (draftedTruePlayers != null && draftedTruePlayers.Count > 0)
 			{
-				foreach(var dtp in draftedTruePlayers)
+				foreach (var dtp in draftedTruePlayers)
 				{
 					var rankedPlayer = rankedPlayers.FirstOrDefault(o => o.TruePlayerId == dtp.TruePlayerId);
 					if (rankedPlayer != null)
@@ -83,12 +89,11 @@ namespace DodgeDynasty.Mappers.Ranks
 						rankedPlayer.UserId = dtp.UserId;
 						rankedPlayer.NickName = dtp.NickName;
 						rankedPlayer.CssClass = dtp.CssClass;
-						rankedPlayer.HighlightClass = dtp.HighlightClass;
-						rankedPlayer.HighlightRankNum = dtp.HighlightRankNum;
+						rankedPlayer.HighlightClass = dtp.HighlightClass ?? rankedPlayer.HighlightClass;
+						rankedPlayer.HighlightRankNum = dtp.HighlightRankNum ?? rankedPlayer.HighlightRankNum;
 					}
 				}
-            }
-			return rankedPlayers;
+			}
 		}
 
 		//Don't call on every player ranking; only once per page load
@@ -111,24 +116,25 @@ namespace DodgeDynasty.Mappers.Ranks
 			return null;
 		}
 
-		public static List<RankedPlayer> GetDraftedTruePlayersFor(List<RankedPlayer> players, DraftModel currentDraftModel)
-		{
-			foreach (var player in players.Where(o => o.PickNum == null))
-			{
-				var truePlayer = currentDraftModel.AllPlayers.FirstOrDefault(o => o.TruePlayerId == player.TruePlayerId &&
-					o.PlayerId != player.PlayerId && currentDraftModel.DraftPicks.Any(dp => dp.PlayerId == o.PlayerId));
-				if (truePlayer != null)
-				{
-					var draftPick = currentDraftModel.DraftPicks.First(dp => dp.PlayerId == truePlayer.PlayerId);
-					player.PickNum = draftPick.PickNum.ToString();
-					player.UserId = draftPick.UserId.ToString();
-					player.NickName = currentDraftModel.Users.FirstOrDefault(lo => lo.UserId == draftPick.UserId).NickName;
-					var leagueOwner = currentDraftModel.CurrentLeagueOwners.FirstOrDefault(lo => lo.UserId == draftPick.UserId);
-					player.CssClass = (leagueOwner != null) ? leagueOwner.CssClass : null;
-				}
-			}
-			return players;
-		}
+		//TODO:  Unused, cleanup
+		//public static List<RankedPlayer> GetDraftedTruePlayersFor(List<RankedPlayer> players, DraftModel currentDraftModel)
+		//{
+		//	foreach (var player in players.Where(o => o.PickNum == null))
+		//	{
+		//		var truePlayer = currentDraftModel.AllPlayers.FirstOrDefault(o => o.TruePlayerId == player.TruePlayerId &&
+		//			o.PlayerId != player.PlayerId && currentDraftModel.DraftPicks.Any(dp => dp.PlayerId == o.PlayerId));
+		//		if (truePlayer != null)
+		//		{
+		//			var draftPick = currentDraftModel.DraftPicks.First(dp => dp.PlayerId == truePlayer.PlayerId);
+		//			player.PickNum = draftPick.PickNum.ToString();
+		//			player.UserId = draftPick.UserId.ToString();
+		//			player.NickName = currentDraftModel.Users.FirstOrDefault(lo => lo.UserId == draftPick.UserId).NickName;
+		//			var leagueOwner = currentDraftModel.CurrentLeagueOwners.FirstOrDefault(lo => lo.UserId == draftPick.UserId);
+		//			player.CssClass = (leagueOwner != null) ? leagueOwner.CssClass : null;
+		//		}
+		//	}
+		//	return players;
+		//}
 
 		public static List<RankedPlayer> GetBestAvailOverallCompRanks(List<RankedPlayer> rankedPlayers, List<Player> draftedPlayers)
 		{

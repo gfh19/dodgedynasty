@@ -164,7 +164,10 @@ namespace DodgeDynasty.Models
 									  from lo in loLeft.DefaultIfEmpty()
 									  select PlayerRankModelHelper.GetRankedPlayer(pr, p, t, ph, pick, u, lo)).OrderBy(p => Convert.ToInt32(p.HighlightRankNum)).ToList();
 
-            //return GetDraftedTruePlayersFor(highlightedPlayers);
+
+			var inactiveDraftedPlayers = DraftedPlayers.Where(o => !o.IsActive).ToList();
+			var draftedTruePlayers = PlayerRankModelHelper.GetDraftedTruePlayersFor(inactiveDraftedPlayers, this);
+			PlayerRankModelHelper.MergeWithDraftedTruePlayers(highlightedPlayers, draftedTruePlayers);
             return highlightedPlayers;
 		}
 
