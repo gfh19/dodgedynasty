@@ -1093,12 +1093,12 @@ ul.menu li a.current-page
     background-image: -o-linear-gradient(top, #9BF29B, #1F6808);
     background-image: linear-gradient(to bottom, #9BF29B, #1F6808);
 	color: #FFFFFF;
-	font-size: 34px;
+	font-size: 30px;
 	font-weight: bold;
 	text-decoration: none;
 	text-shadow: -1px -1px 0 rgba(0,0,0,0.3);
 	display: inline-block;
-    padding: 7px 20px 12px 20px;
+    padding: 10px 33px 14px 33px;
 	margin: 15px 0px 10px 0px;
     border: 1px solid #496e00;
     -webkit-border-radius: 6px;
