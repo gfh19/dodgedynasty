@@ -34,7 +34,7 @@
 					<th class="hq-player-th">Player</th>
 					@if (Model.AreYearByeWeeksFound())
 					{
-						<th>Tm <span class="ba-bye-week">(Bye)</span></th>
+						<th>Tm<span class="ba-bye-week"> (Bye)</span></th>
 					}
 					else
 					{
@@ -70,7 +70,7 @@
 								var byeWeek = Model.GetNFLTeamByeWeek(player.NFLTeam);
 								if (byeWeek != null)
 								{
-									<td class="nowrap">@player.NFLTeamDisplay <span class="ba-bye-week">(@byeWeek)</span></td>
+									<td class="nowrap">@player.NFLTeamDisplay<span class="ba-bye-week"> (@byeWeek)</span></td>
 								}
 								else
 								{
