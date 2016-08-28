@@ -11,22 +11,31 @@ namespace DodgeDynasty.Parsers
 {
 	public abstract class RankParser : IRankParser
 	{
+		public int MaxPlayerCount { get { return 400; } }
 		public virtual bool CheckPositions { get { return false; } }
 		public List<Position> Positions { get; set; }
+		public int PlayerCount { get; set; }
 
 		public virtual string RankTableSelect() { return "//div[contains(@class, 'mobile-table')]//table"; }
 		public virtual string RankRowSelect() { return "//div[contains(@class, 'mobile-table')]//table//tr[contains(@class, 'mpb-player')]"; }
 		public virtual string RankColSelect() { return "./td"; }
 
-		public virtual List<RankedPlayer> ParseRankHtml(HtmlNode rankHtml)
+		public virtual List<RankedPlayer> ParseRankHtml(HtmlNode rankHtml, bool confirmed, int? userMaxCount)
 		{
 			List<RankedPlayer> rankedPlayers = new List<RankedPlayer>();
 			HtmlNode rankTable = GetRankTable(rankHtml);
+			int origPlayerCount = 0;
 			if (rankTable != null)
 			{
 				List<HtmlNode> rows = GetRankRows(rankTable);
 				if (rows != null)
 				{
+					origPlayerCount = rows.Count;
+					if (RowsExceedMaxCount(rows, confirmed, userMaxCount))
+					{
+						var max = userMaxCount ?? MaxPlayerCount;
+						rows = rows.Take(max).ToList();
+                    }
 					foreach (var row in rows)
 					{
 						List<HtmlNode> columns = GetRankColumns(row);
@@ -42,7 +51,12 @@ namespace DodgeDynasty.Parsers
 					}
 				}
 			}
-			return rankedPlayers;
+			PlayerCount = rankedPlayers.Count;
+            if (!confirmed && origPlayerCount > rankedPlayers.Count && rankedPlayers.Count == MaxPlayerCount)
+			{
+				PlayerCount = origPlayerCount;
+			}
+            return rankedPlayers;
 		}
 
 		public virtual HtmlNode GetRankTable(HtmlNode rankHtml)
@@ -110,6 +124,19 @@ namespace DodgeDynasty.Parsers
 				NFLTeam = nflTeam,
 				Position = pos
 			});
+		}
+
+		public virtual bool RowsExceedMaxCount(List<HtmlNode> rows, bool confirmed, int? userMaxCount)
+		{
+			if (confirmed && userMaxCount.HasValue && rows.Count > userMaxCount)
+			{
+				return true;
+			}
+			else if (!confirmed && rows.Count > MaxPlayerCount)
+			{
+				return true;
+			}
+			return false;
 		}
 	}
 }

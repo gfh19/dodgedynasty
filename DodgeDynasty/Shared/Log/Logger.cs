@@ -11,12 +11,12 @@ namespace DodgeDynasty.Shared.Log
 	{
 		public static void LogError(Exception ex, string requestUrl = null, string userName = null, int? draftId = null)
 		{
-			Log(Constants.LogTypes.Error, ex.Message, ex.StackTrace, requestUrl, userName, draftId);
+			Log(Constants.LogTypes.Error, GetMessage(ex), GetStackTrace(ex), requestUrl, userName, draftId);
 		}
 
-		public static void LogInfo(Exception ex, string requestUrl = null, string userName = null, int? draftId = null)
+		public static void LogInfo(string message, string stackTrace, string requestUrl = null, string userName = null, int? draftId = null)
 		{
-			Log(Constants.LogTypes.Info, ex.Message, ex.StackTrace, requestUrl, userName, draftId);
+			Log(Constants.LogTypes.Info, message, stackTrace, requestUrl, userName, draftId);
 		}
 
 		public static void Log(string logType, string message, string stackTrace, string requestUrl = null, string userName = null, int? draftId = null)
@@ -41,6 +41,34 @@ namespace DodgeDynasty.Shared.Log
                 }
 			}
 			catch { }
+		}
+
+		public static string GetMessage(Exception ex)
+		{
+			var message = new StringBuilder();
+			if (ex != null)
+			{
+				message.Append(ex.Message);
+				if (ex.InnerException != null)
+				{
+					message.Append(string.Format("{0} Inner Exception: {1}", Environment.NewLine, ex.InnerException.Message));
+				}
+			}
+			return message.ToString();
+		}
+
+		public static string GetStackTrace(Exception ex)
+		{
+			var stackTrace = new StringBuilder();
+			if (ex != null)
+			{
+				if (ex.InnerException != null)
+				{
+					stackTrace.Append(string.Format("Inner Exception: {1}{0} Exception: ", Environment.NewLine, ex.InnerException.StackTrace));
+				}
+				stackTrace.Append(ex.StackTrace);
+			}
+			return stackTrace.ToString();
 		}
 	}
 }

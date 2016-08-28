@@ -104,15 +104,30 @@ function confirmAutoImportRank(rankId, rankName) {
 			var text = "First Player:<br/>" + response.first + "<br/><br/>"
 					+ "Last Player:<br/>" + response.last + "<br/><br/>"
 					+ "Player Count: " + response.count + "<br/><br/>"
+					+ getMaxPlayerCountExceededText(response)
 					+ "Do you want to import <br/>'" + rankName + "' now?";
 			showConfirmDialog(text, null, function () { autoImportRank(rankId); });
 		}
 	}, removeWaitCursor);
 }
 
+function getMaxPlayerCountExceededText(response) {
+	var text = "";
+	if (response.count > response.max) {
+		text = "(NOTE: Exceeded " + response.max + " Player Max)<br/>"
+			+ 'Import top:  <input type="text" id="importMaxRowCount" name="importMaxRowCount" value="'+response.max+'" maxlength="4" />'
+			+ "<br/><br/>"
+	}
+	return text;
+}
+
 function autoImportRank(rankId) {
+	var maxCount = null;
+	if ($("#importMaxRowCount").length > 0) {
+		maxCount = $("#importMaxRowCount").val();
+	}
 	addWaitCursor();
-	ajaxPost({ RankId: rankId, Confirmed: true }, "Admin/AutoImportRank", function () {
+	ajaxPost({ RankId: rankId, Confirmed: true, MaxCount: maxCount }, "Admin/AutoImportRank", function () {
 		window.location.reload();
 	}, removeWaitCursor);
 }

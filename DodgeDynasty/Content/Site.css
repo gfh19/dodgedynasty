@@ -2609,7 +2609,9 @@ span.player-select
 #raf-rank-draft-id {
 	width: 50px;
 }
-
+#importMaxRowCount {
+	width: 33px;
+}
 
 
 

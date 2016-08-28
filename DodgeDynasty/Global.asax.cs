@@ -32,19 +32,23 @@ namespace DodgeDynasty
 
 		protected void Application_Error()
 		{
-			var ex = Server.GetLastError() ?? new Exception("Application_Error handler reached.");
-			HttpContext httpContext = HttpContext.Current;
-			if (httpContext != null)
+			try
 			{
-				var requestUrl = httpContext.Request.Url.AbsoluteUri;
-				var userName = Utilities.GetLoggedInUserName();
-				var currentDraft = Factory.Create<SingleDraftMapper>().GetModel();
-				Logger.LogError(ex, requestUrl, userName, currentDraft.DraftId);
+				var ex = Server.GetLastError() ?? new Exception("Application_Error handler reached.");
+				HttpContext httpContext = HttpContext.Current;
+				if (httpContext != null)
+				{
+					var requestUrl = httpContext.Request.Url.AbsoluteUri;
+					var userName = Utilities.GetLoggedInUserName();
+					var currentDraft = Factory.Create<SingleDraftMapper>().GetModel();
+					Logger.LogError(ex, requestUrl, userName, currentDraft.DraftId);
+				}
+				else
+				{
+					Logger.LogError(ex);
+				}
 			}
-			else
-			{
-				Logger.LogError(ex);
-			}
+			catch { }
 		}
 	}
 }

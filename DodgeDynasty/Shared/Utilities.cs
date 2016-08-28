@@ -141,6 +141,15 @@ namespace DodgeDynasty.Shared
 			return input.Substring(0, input.Length < maxLength ? input.Length : maxLength);
         }
 
+		public static string TrimString(this string input, string strVal)
+		{
+			if (input.EndsWith(strVal))
+			{
+				input = input.Replace(strVal, "");
+			}
+			return input;
+        }
+
 
 		/* Config access methods */
 

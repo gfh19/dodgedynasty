@@ -17,31 +17,35 @@ namespace DodgeDynasty.Mappers.Admin
 	{
 		public string RankId { get; set; }
 		public bool Confirmed { get; set; }
+		public int? MaxCount { get; set; }
 		public short Year { get; set; }
 
-		public ImportRankMapper(string rankId, bool confirmed)
+		public ImportRankMapper(string rankId, bool confirmed, int? maxCount)
 		{
 			RankId = rankId;
 			Confirmed = confirmed;
+			MaxCount = maxCount;
 		}
 
 		protected override void PopulateModel()
 		{
+			//TODO:  Year Overridable?  Used in Add Player sp in search for other rankings
 			Year = Convert.ToInt16(Utilities.GetEasternTime().Year);
 			var rankId = Convert.ToInt32(RankId);
             var rank = HomeEntity.Ranks.FirstOrDefault(o => o.RankId == rankId);
             var autoImport = HomeEntity.AutoImports.FirstOrDefault(o => o.AutoImportId == rank.AutoImportId);
 			HtmlNode rankDoc = null;
 			List<RankedPlayer> rankedPlayers = null;
+			IRankParser parser = null;
 			try
 			{
 				rankDoc = LoadRankHtmlDoc(autoImport);
-				var parser = ParserFactory.Create(rank.AutoImportId);
+				parser = ParserFactory.Create(rank.AutoImportId);
                 if (parser.CheckPositions)
 				{
 					parser.Positions = HomeEntity.Positions.ToList();
 				}
-				rankedPlayers = parser.ParseRankHtml(rankDoc);
+				rankedPlayers = parser.ParseRankHtml(rankDoc, Confirmed, MaxCount);
 			}
 			catch (Exception ex)
 			{
@@ -75,7 +79,8 @@ namespace DodgeDynasty.Mappers.Admin
 					var lastPlayer = rankedPlayers[rankedPlayers.Count-1];
 					Model.LastPlayerText = string.Format("{0} ({1}-{2})", lastPlayer.PlayerName, lastPlayer.NFLTeam,
 						lastPlayer.Position);
-					Model.PlayerCount = rankedPlayers.Count;
+					Model.PlayerCount = parser.PlayerCount;
+					Model.MaxPlayerCount = parser.MaxPlayerCount;
 				}
 			}
 		}

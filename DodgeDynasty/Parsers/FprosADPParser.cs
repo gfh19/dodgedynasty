@@ -23,10 +23,8 @@ namespace DodgeDynasty.Parsers
 			var playerTeamNode = columns[1];
 			var anch = "./a";
 			var player = playerTeamNode.SelectNodes(anch)[0].InnerText;
-			if (player.EndsWith(" Defense"))
-			{
-				player = player.Replace(" Defense", "");
-			}
+			player = player.TrimString(" Defense");
+			player = player.TrimString(" DST");
 			return player;
 		}
 

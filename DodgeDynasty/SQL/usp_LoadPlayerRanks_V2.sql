@@ -156,6 +156,21 @@ BEGIN
 			WHERE UPPER(REPLACE(REPLACE(p.FirstName, '''', ''), '.', '')) = RTRIM(UPPER(REPLACE(REPLACE(@ScrubbedFirstName, '''', ''), '.', ''))) 
 				AND UPPER(REPLACE(REPLACE(p.LastName, '''', ''), '.', '')) = RTRIM(UPPER(REPLACE(REPLACE(@ScrubbedLastName, '''', ''), '.', '')))
 		END
+
+		--Fantasypros ADP:  Free Agents listed with no NFLTeam; Lookup active (don't change team), or else change to 'FA'
+		IF (@ScrubbedNFLTeam = '')
+		BEGIN
+			SELECT @ScrubbedNFLTeam = p.NFLTeam FROM dbo.Player p
+			WHERE UPPER(REPLACE(REPLACE(p.FirstName, '''', ''), '.', '')) = RTRIM(UPPER(REPLACE(REPLACE(@ScrubbedFirstName, '''', ''), '.', ''))) 
+				AND UPPER(REPLACE(REPLACE(p.LastName, '''', ''), '.', '')) = RTRIM(UPPER(REPLACE(REPLACE(@ScrubbedLastName, '''', ''), '.', ''))) 
+				AND p.Position = RTRIM(@ScrubbedPosition)
+				AND p.IsActive = 1
+			
+			IF LEN(@ScrubbedNFLTeam) = 0
+			BEGIN
+				SET @ScrubbedNFLTeam = 'FA';
+			END
+		END
 	END
 
 	--First, check for EXACT match in ACTIVE players

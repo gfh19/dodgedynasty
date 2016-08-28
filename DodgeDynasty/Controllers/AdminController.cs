@@ -409,9 +409,9 @@ namespace DodgeDynasty.Controllers
 
 		[HttpPost]
 		[AdminAccess]
-		public ActionResult AutoImportRank(string rankId, bool confirmed)
+		public ActionResult AutoImportRank(string rankId, bool confirmed, int? maxCount)
 		{
-			var mapper = new ImportRankMapper(rankId, confirmed);
+			var mapper = new ImportRankMapper(rankId, confirmed, maxCount);
 			var model = mapper.GetModel();
 			return Json(new
 			{
@@ -419,7 +419,8 @@ namespace DodgeDynasty.Controllers
 				stack = model.StackTrace,
 				first = model.FirstPlayerText,
 				last = model.LastPlayerText,
-				count = model.PlayerCount
+				count = model.PlayerCount,
+				max = model.MaxPlayerCount
 			});
 		}
 	}
