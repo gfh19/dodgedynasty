@@ -40,6 +40,18 @@
 					<text>- Pick @Model.CurrentDraftPick.PickNum</text>
 				}
 			</span>
+			if (isDraftActive && Model.PreviousDraftPick != null)
+			{
+				if (Model.PreviousDraftPick.RoundNum > Model.CurrentDraft.NumKeepers)
+				{
+					var prevPlayer = Model.PreviousDraftPick.Player.PlayerName;
+					var prevUser = Model.PreviousDraftPick.User.NickName;
+					<div class="prev-pick">
+						Last Pick:
+						<span>@prevPlayer (@prevUser)</span>
+					</div>
+				}
+			}
 			if (Model.CurrentDraftPick.PickStartDateTime.HasValue)
 			{
 				<div class="start-time"
@@ -51,17 +63,14 @@
 					 data-use-time-zone="@Model.UseTimeZone()"></div>
 			}
 		}
-		else if (!Model.CurrentDraft.IsComplete && Model.DraftPicks.Count == 0)
+		else if (!Model.CurrentDraft.IsComplete)
 		{
-			if (!isDraftActive)
-            {
-				<div class="start-time"
-					 data-draft-time="@Model.CurrentDraft.DraftDate.ToString("MM/dd/yyyy HH:mm:ss")"
-					 data-pick-start-time="@Model.CurrentDraft.DraftDate.ToString("MM/dd/yyyy HH:mm:ss")"
-					 data-current-time="@Model.GetCurrentTimeEastern(DateTime.UtcNow).ToString("MM/dd/yyyy HH:mm:ss")"
-					 data-pick-time-seconds="@Model.PickTimeSeconds"
-					 data-use-time-zone="@Model.UseTimeZone()"></div>
-			}
+			<div class="start-time"
+					data-draft-time="@Model.CurrentDraft.DraftDate.ToString("MM/dd/yyyy HH:mm:ss")"
+					data-pick-start-time="@Model.CurrentDraft.DraftDate.ToString("MM/dd/yyyy HH:mm:ss")"
+					data-current-time="@Model.GetCurrentTimeEastern(DateTime.UtcNow).ToString("MM/dd/yyyy HH:mm:ss")"
+					data-pick-time-seconds="@Model.PickTimeSeconds"
+					data-use-time-zone="@Model.UseTimeZone()"></div>
 		}
 		else
 		{

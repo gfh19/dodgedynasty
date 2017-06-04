@@ -227,7 +227,7 @@ function setPickTimer(recursive) {
 			displayDraftTime();
 		}
 		else {
-			var currentPick = $(".start-time").attr("data-current-pick");
+			//Calculate current time (compare to server) for accurate current minus pick start value
 			var startTimeString = $(".start-time").attr("data-pick-start-time");
 			var svrCurrTime = $(".start-time").attr("data-current-time");
 			if (currentServerTime != svrCurrTime) {
@@ -239,9 +239,11 @@ function setPickTimer(recursive) {
 			var currentTime = new Date();
 			currentTime.setSeconds(currentTime.getSeconds() + clientServerTimeOffset);
 
+			//Calculate draft pick time remaining & display
 			var timeElapsed = Math.floor((currentTime - startDateTime) / 1000);
-			var diff = (pickTimeSeconds - timeElapsed);
-			if (diff > pickTimeSeconds) {
+			var timeRemaining = (pickTimeSeconds - timeElapsed);
+			if (timeRemaining > pickTimeSeconds) {
+				var currentPick = $(".start-time").attr("data-current-pick");
 				if (currentPick == "1") {
 					displayDraftTime();
 				}
@@ -249,12 +251,12 @@ function setPickTimer(recursive) {
 					displayDraftTime();
 				}
 				else {
-					diff = pickTimeSeconds;
-					displayTimeRemaining(diff);
+					timeRemaining = pickTimeSeconds;
+					displayTimeRemaining(timeRemaining);
 				}
 			}
-			else if (diff > 0) {
-				displayTimeRemaining(diff);
+			else if (timeRemaining > 0) {
+				displayTimeRemaining(timeRemaining);
 			}
 			else {
 				$(".start-time").text("TIME'S UP!");
@@ -268,9 +270,9 @@ function setPickTimer(recursive) {
 	}
 }
 
-function displayTimeRemaining(diff) {
-	var minutes = Math.floor(diff / 60);
-	var seconds = diff - (minutes * 60);
+function displayTimeRemaining(timeRemaining) {
+	var minutes = Math.floor(timeRemaining / 60);
+	var seconds = timeRemaining - (minutes * 60);
 	$(".start-time").text(minutes + ":" + ((seconds < 10) ? "0" : "") + seconds);
 }
 

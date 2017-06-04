@@ -1144,77 +1144,6 @@ ul.menu li a.current-page
 
 /* Owner Styles
 ----------------------------------------------------------*/
-/*
-.brian
-{
-	** light green ***
-	border-color: #00FF00;
-}
-.dave
-{
-	** orange ***
-	border-color: #FF914B;
-}
-.hawkeman
-{
-	** aqua ***
-	border-color: #19E1CC;
-}
-.jen
-{
-	** pink ***
-	border-color: #FFA5FF;
-}
-.jeremiah
-{
-	** yellow ***
-	border-color: #FFE100;
-}
-.joey
-{
-	** gray ***
-	border-color: #B2B2B2;
-}
-.meat
-{
-	** dark blue ***
-	border-color: #638BE7;
-}
-.pohlmann
-{
-	** red ***
-	border-color: #FF0000;
-}
-.shannon
-{
-	** brown ***
-	border-color: #C58A4F;
-}
-.steve
-{
-	** green ***
-	border-color: #50A57F;
-}
-.heckler
-{
-	** purple ***
-	border-color: #551A8B;
-}
-.holda
-{
-	** maroon ***
-	border-color: #B00000;
-}
-.trevor
-{
-	** yellow ***
-	border-color: #FFE100;
-}
-.mitchell
-{
-	** brown ***
-	border-color: #C58A4F;
-}*/
 
 .you 
 {
@@ -1360,6 +1289,10 @@ ul.menu li a.current-page
     margin-top: 2px;
 }
 
+.prev-pick
+{
+	font-size: 12px;
+}
 
 /* Draft Team Display
 ----------------------------------------------------------*/
