@@ -262,7 +262,7 @@ function setPickTimer(recursive) {
 			if (recursive) {
 				setTimeout(function () {
 					setPickTimer(true);
-				}, 999);
+				}, 1000);
 			}
 		}
 	}

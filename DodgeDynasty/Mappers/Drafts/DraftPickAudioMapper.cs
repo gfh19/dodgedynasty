@@ -156,7 +156,7 @@ namespace DodgeDynasty.Mappers.Drafts
 
 		private static string GetPlayerName(Player player)
 		{
-			string audio = player.PlayerName.Replace("'", "").ToLower();
+			string audio = player.PlayerName.Replace("'", "");
 			switch (audio)
 			{
 				case "Ben Roethlisberger":
@@ -166,7 +166,7 @@ namespace DodgeDynasty.Mappers.Drafts
 					audio = "San Francisco Forty-Niners";
 					break;
 			}
-			return audio.ToUrlEncodedString();
+			return audio.ToLower().ToUrlEncodedString();
 		}
 
 		private static string GetPositionAudio(Position position, NFLTeam nflTeam)

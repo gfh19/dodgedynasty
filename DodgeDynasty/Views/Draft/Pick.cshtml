@@ -6,6 +6,7 @@
 @{
 	var currentUserName = DodgeDynasty.Shared.Utilities.GetLoggedInUserName();
 	var nextTurnPickCount = Model.GetPickCountUntilNextTurn(currentUserName);
+	var referrer = Request.UrlReferrer;
 }
 
 @section scripts {
@@ -64,6 +65,7 @@
 					@Html.HiddenFor(m => m.DraftId);
 					@Html.HiddenFor(m => m.Player.TeamName);
 					@Html.HiddenFor(m => m.Player.DraftPickId);
+					@Html.HiddenFor(m => m.Referrer, new { Value = (referrer != null) ? referrer.ToString() : "" });
 					<div class="buttons"><button id="inputSubmit" type="submit">Submit</button></div>
 				}
 				@if (!string.IsNullOrEmpty(Model.Message))

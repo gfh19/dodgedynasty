@@ -1101,9 +1101,9 @@ ul.menu li a.current-page
     padding: 10px 33px 14px 33px;
 	margin: 15px 0px 10px 0px;
     border: 1px solid #496e00;
-    -webkit-border-radius: 6px;
-    -moz-border-radius: 6px;
-    border-radius: 6px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
 }
 .dd-sub-title
 {

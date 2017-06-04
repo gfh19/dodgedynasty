@@ -55,7 +55,11 @@ namespace DodgeDynasty.Controllers
 				playerModel.FirstName, playerModel.LastName, playerModel.TeamName);
 			nextDraftInputModel.PickMade = true;
 			TempData[Constants.TempData.NextDraftInputModel] = nextDraftInputModel;
-			return RedirectToAction(viewName);
+			if (!string.IsNullOrEmpty(draftInputModel.Referrer))
+			{
+				return Redirect(draftInputModel.Referrer);
+			}
+			return RedirectToAction(viewName);			
 		}
 		
 		public DodgeDynastyContent GetDodgeDynastyCookie()
