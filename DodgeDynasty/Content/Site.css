@@ -1289,7 +1289,7 @@ ul.menu li a.current-page
     margin-top: 2px;
 }
 
-.prev-pick
+.prev-pick, .next-pick-count
 {
 	font-size: 12px;
 }

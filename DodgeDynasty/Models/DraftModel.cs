@@ -228,6 +228,11 @@ namespace DodgeDynasty.Models
 			return playerInfo;
 		}
 
+		public int GetPickCountUntilNextTurn()
+		{
+			return GetPickCountUntilNextTurn(Utilities.GetLoggedInUserName());
+		}
+
 		public int GetPickCountUntilNextTurn(string userName)
 		{
 			if (CurrentDraftPick != null)

@@ -40,18 +40,7 @@
 					<text>- Pick @Model.CurrentDraftPick.PickNum</text>
 				}
 			</span>
-			if (isDraftActive && Model.PreviousDraftPick != null)
-			{
-				if (Model.PreviousDraftPick.RoundNum > Model.CurrentDraft.NumKeepers)
-				{
-					var prevPlayer = Model.PreviousDraftPick.Player.PlayerName;
-					var prevUser = Model.PreviousDraftPick.User.NickName;
-					<div class="prev-pick">
-						Last Pick:
-						<span>@prevPlayer (@prevUser)</span>
-					</div>
-				}
-			}
+
 			if (Model.CurrentDraftPick.PickStartDateTime.HasValue)
 			{
 				<div class="start-time"
@@ -62,6 +51,37 @@
 					 data-pick-time-seconds="@Model.PickTimeSeconds"
 					 data-use-time-zone="@Model.UseTimeZone()"></div>
 			}
+
+			var historyMode = Request.QueryString[DodgeDynasty.Shared.Constants.QS.HistoryMode];
+			if (isDraftActive && !DodgeDynasty.Shared.Utilities.ToBool(historyMode)) {
+				if (Model.PreviousDraftPick != null)
+				{
+					if (Model.PreviousDraftPick.RoundNum > Model.CurrentDraft.NumKeepers)
+					{
+						var prevPlayer = Model.PreviousDraftPick.Player.PlayerName;
+						var prevUser = Model.PreviousDraftPick.User.NickName;
+					<div class="prev-pick">
+						Last Pick:
+						<span>@prevPlayer - @prevUser</span>
+					</div>
+					}
+				}
+				var nextTurnPickCount = Model.GetPickCountUntilNextTurn();
+				if (nextTurnPickCount > 0)
+				{
+				<div class="next-pick-count">
+					@if (nextTurnPickCount == 1)
+					{
+						<span>(You're up next...)</span>
+					}
+					else
+					{
+						<span>(You're up after @nextTurnPickCount picks)</span>
+					}
+				</div>
+				}
+			}
+
 		}
 		else if (!Model.CurrentDraft.IsComplete)
 		{
