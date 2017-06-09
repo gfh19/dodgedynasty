@@ -5,103 +5,106 @@
 		initRefreshedPage();
 	});
 </script>
-<div class="draft-info center">
+<div class="draft-info">
 	@{
 		var isDraftActive = Model.IsDraftActive();
-        if (DodgeDynasty.Shared.Utilities.GetRouteDraftId(Url.RequestContext.RouteData) != null)
-			{
-            <div class="draft-history-alert">
-				You're currently viewing <a href="@Url.Content("~/Draft/History")">draft history</a> pages.
-				<a class="latest-draft-link" href="@Url.Content("~/Draft/Display")">Click here for the latest draft.</a>
-			</div>
+		if (DodgeDynasty.Shared.Utilities.GetRouteDraftId(Url.RequestContext.RouteData) != null)
+		{
+		<div class="draft-history-alert">
+			You're currently viewing <a href="@Url.Content("~/Draft/History")">draft history</a> pages.
+			<a class="latest-draft-link" href="@Url.Content("~/Draft/Display")">Click here for the latest draft.</a>
+		</div>
 		}
 	}
 
-	@Model.GetCurrentDraftName()
-	<div class="drafter">
-		@if (Model.CurrentClockOwnerUser != null)
-		{
-			<span class="current-turn">
-				On The Clock:
-				@if (Model.IsUserTurn())
-				{
-					<span class="bold">YOU!</span>
-				}
-				else
-				{
-					<span class="bold">@Model.CurrentClockOwnerUser.NickName</span>
-				}
-				@if (isDraftActive && (Request.Url.AbsoluteUri.Contains("Draft/Display")))
-				{
-					<text>- Pick <a id="gotoPickNum">@Model.CurrentDraftPick.PickNum</a></text>
-				}
-				else
-				{
-					<text>- Pick @Model.CurrentDraftPick.PickNum</text>
-				}
-			</span>
+	<div class="draft-status">
+		<span class="draft-title">@Model.GetCurrentDraftName()</span>
+		<div class="drafter">
+			@if (Model.CurrentClockOwnerUser != null)
+			{
+				<div class="current-turn">
+					On The Clock:
+					@if (Model.IsUserTurn())
+					{
+						<span class="bold">YOU!</span>
+					}
+					else
+					{
+						<span class="bold">@Model.CurrentClockOwnerUser.NickName</span>
+					}
+					@if (isDraftActive && (Request.Url.AbsoluteUri.Contains("Draft/Display")))
+					{
+						<text>- Pick <a id="gotoPickNum">@Model.CurrentDraftPick.PickNum</a></text>
+					}
+					else
+					{
+						<text>- Pick @Model.CurrentDraftPick.PickNum</text>
+					}
+				</div>
 
-			if (Model.CurrentDraftPick.PickStartDateTime.HasValue)
+				if (Model.CurrentDraftPick.PickStartDateTime.HasValue)
+				{
+					<div class="start-time"
+						 data-draft-time="@Model.CurrentDraft.DraftDate.ToString("MM/dd/yyyy HH:mm:ss")"
+						 data-current-pick="@Model.CurrentDraftPick.PickNum"
+						 data-pick-start-time="@Model.CurrentDraftPick.PickStartDateTime.Value.ToString("MM/dd/yyyy HH:mm:ss")"
+						 data-current-time="@Model.GetCurrentTimeEastern(DateTime.UtcNow).ToString("MM/dd/yyyy HH:mm:ss")"
+						 data-pick-time-seconds="@Model.PickTimeSeconds"
+						 data-use-time-zone="@Model.UseTimeZone()"></div>
+				}
+
+				var historyMode = Request.QueryString[DodgeDynasty.Shared.Constants.QS.HistoryMode];
+				if (isDraftActive && !DodgeDynasty.Shared.Utilities.ToBool(historyMode))
+				{
+					if (Model.PreviousDraftPick != null)
+					{
+						if (Model.PreviousDraftPick.RoundNum > Model.CurrentDraft.NumKeepers)
+						{
+							var prevPlayer = Model.PreviousDraftPick.Player.PlayerName;
+							var prevUser = Model.PreviousDraftPick.User.NickName;
+							<div class="prev-pick">
+								Last Pick:
+								<span>@prevPlayer - @prevUser</span>
+							</div>
+						}
+					}
+					var nextTurnPickCount = Model.GetPickCountUntilNextTurn();
+					if (nextTurnPickCount > 0)
+					{
+						<div class="next-pick-count">
+							@if (nextTurnPickCount == 1)
+							{
+								<span>(You're up next...)</span>
+							}
+							else
+							{
+								<span>(You're up after @nextTurnPickCount picks)</span>
+							}
+						</div>
+					}
+				}
+
+				if (isDraftActive && Model.IsUserTurn())
+				{
+					if (ViewBag.Title != "Draft Pick")
+					{
+						<div>Please <a href="@Url.Content("~/Draft/Pick")">enter your draft pick</a>.</div>
+					}
+				}
+			}
+			else if (!Model.CurrentDraft.IsComplete)
 			{
 				<div class="start-time"
 					 data-draft-time="@Model.CurrentDraft.DraftDate.ToString("MM/dd/yyyy HH:mm:ss")"
-					 data-current-pick="@Model.CurrentDraftPick.PickNum"
-					 data-pick-start-time="@Model.CurrentDraftPick.PickStartDateTime.Value.ToString("MM/dd/yyyy HH:mm:ss")"
+					 data-pick-start-time="@Model.CurrentDraft.DraftDate.ToString("MM/dd/yyyy HH:mm:ss")"
 					 data-current-time="@Model.GetCurrentTimeEastern(DateTime.UtcNow).ToString("MM/dd/yyyy HH:mm:ss")"
 					 data-pick-time-seconds="@Model.PickTimeSeconds"
 					 data-use-time-zone="@Model.UseTimeZone()"></div>
 			}
-
-			var historyMode = Request.QueryString[DodgeDynasty.Shared.Constants.QS.HistoryMode];
-			if (isDraftActive && !DodgeDynasty.Shared.Utilities.ToBool(historyMode)) {
-				if (Model.PreviousDraftPick != null)
-				{
-					if (Model.PreviousDraftPick.RoundNum > Model.CurrentDraft.NumKeepers)
-					{
-						var prevPlayer = Model.PreviousDraftPick.Player.PlayerName;
-						var prevUser = Model.PreviousDraftPick.User.NickName;
-					<div class="prev-pick">
-						Last Pick:
-						<span>@prevPlayer - @prevUser</span>
-					</div>
-					}
-				}
-				var nextTurnPickCount = Model.GetPickCountUntilNextTurn();
-				if (nextTurnPickCount > 0)
-				{
-				<div class="next-pick-count">
-					@if (nextTurnPickCount == 1)
-					{
-						<span>(You're up next...)</span>
-					}
-					else
-					{
-						<span>(You're up after @nextTurnPickCount picks)</span>
-					}
-				</div>
-				}
+			else
+			{
+				<text>The Draft Has Completed</text>
 			}
-
-		}
-		else if (!Model.CurrentDraft.IsComplete)
-		{
-			<div class="start-time"
-					data-draft-time="@Model.CurrentDraft.DraftDate.ToString("MM/dd/yyyy HH:mm:ss")"
-					data-pick-start-time="@Model.CurrentDraft.DraftDate.ToString("MM/dd/yyyy HH:mm:ss")"
-					data-current-time="@Model.GetCurrentTimeEastern(DateTime.UtcNow).ToString("MM/dd/yyyy HH:mm:ss")"
-					data-pick-time-seconds="@Model.PickTimeSeconds"
-					data-use-time-zone="@Model.UseTimeZone()"></div>
-		}
-		else
-		{
-			<text>The Draft Has Completed</text>
-		}
+		</div>
 	</div>
-	@if (isDraftActive && Model.IsUserTurn())
-	{
-		if (ViewBag.Title != "Draft Pick")
-		{
-			<div>Please <a href="@Url.Content("~/Draft/Pick")">enter your draft pick</a>.</div>
-		}
-	}
 </div>

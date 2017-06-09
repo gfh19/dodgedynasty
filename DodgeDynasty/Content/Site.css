@@ -1124,10 +1124,37 @@ ul.menu li a.current-page
 	text-align: center;
 	font-size: 14px;
 }
+.draft-status
+{
+	border: 2px solid #898989;
+    border-radius: 8px;
+	max-width: 310px;
+	margin: 0 auto;
+}
+.draft-title {
+	font-weight: bold;
+	width: 100%;
+	display: inline-block;
+	background: #FFFFFF;
+	border-bottom: 2px solid #898989;
+	border-radius: 7px 7px 0px 0px;
+}
+.drafter {
+	padding-bottom: 2px;
+}
+.current-turn, .prev-pick
+{
+	margin-top: 2px;
+}
+.prev-pick, .next-pick-count
+{
+	font-size: 12px;
+}
+
 .draft-history-alert {
 	background: #f5d89e;
 	padding: 4px 5px;
-	margin-bottom: 10px;
+	margin-bottom: 15px;
 	border-radius: 3px;
 	-webkit-border-radius: 3px;
 }
@@ -1287,11 +1314,6 @@ ul.menu li a.current-page
 	font-weight: bold;
 	text-align: left;
     margin-top: 2px;
-}
-
-.prev-pick, .next-pick-count
-{
-	font-size: 12px;
 }
 
 /* Draft Team Display
