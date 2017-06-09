@@ -248,10 +248,13 @@ namespace DodgeDynasty.Models
 			}
 			else
 			{
-				selectedCompareRank = publicRanks.FirstOrDefault();
-				Options.BUPId = selectedCompareRank.RankId.ToString();
-				PlayerRankOptionsMapper mapper = MapperFactory.CreatePlayerRankOptionsMapper(Options.Id);
-				mapper.UpdateEntity(Options);
+				if (publicRanks.Count > 0)
+				{
+					selectedCompareRank = publicRanks.First();
+					Options.BUPId = selectedCompareRank.RankId.ToString();
+					PlayerRankOptionsMapper mapper = MapperFactory.CreatePlayerRankOptionsMapper(Options.Id);
+					mapper.UpdateEntity(Options);
+				}
 			}
 			if (selectedCompareRank != null)
 			{
