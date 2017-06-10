@@ -1126,8 +1126,8 @@ ul.menu li a.current-page
 }
 .draft-status
 {
-	border: 2px solid #898989;
-    border-radius: 8px;
+	border: 1px solid #898989;
+    border-radius: 6px;
 	max-width: 310px;
 	margin: 0 auto;
 }
@@ -1136,8 +1136,8 @@ ul.menu li a.current-page
 	width: 100%;
 	display: inline-block;
 	background: #FFFFFF;
-	border-bottom: 2px solid #898989;
-	border-radius: 7px 7px 0px 0px;
+	border-bottom: 1px solid #898989;
+	border-radius: 6px 6px 0px 0px;
 }
 .drafter {
 	padding-bottom: 2px;
@@ -1150,16 +1150,9 @@ ul.menu li a.current-page
 {
 	font-size: 12px;
 }
-
-.draft-history-alert {
-	background: #f5d89e;
-	padding: 4px 5px;
-	margin-bottom: 15px;
-	border-radius: 3px;
-	-webkit-border-radius: 3px;
-}
-.latest-draft-link {
-	font-weight: bold;
+#gotoPickNum
+{
+	text-decoration: none;
 }
 
 .block-error .field-validation-error {
@@ -1926,7 +1919,7 @@ span.player-select
 	width: 20px;
 }
 
-#addEditLeague label, #addEditLeague span {
+#addEditLeague .league-owner-entry label, #addEditLeague .league-owner-entry span {
 	display: inline-block;
 }
 
@@ -2002,6 +1995,9 @@ span.player-select
 	display: inline;
 	font-size: 12px;
 }
+.league-defaults label {
+	margin-left: 5px;
+}
 
 /* Manage/Add Drafts
 ----------------------------------------------------------*/
@@ -2021,8 +2017,8 @@ span.player-select
 .add-draft-location {
 	width: 150px;
 }
-.ad-num-owners, .ad-num-rounds, .ad-num-keepers {
-	width: 30px;
+.ad-num-rounds, .ad-num-keepers {
+	width: 35px;
 }
 .ad-pick-time {
 	width: 42px;
@@ -2043,6 +2039,10 @@ span.player-select
 #addDraft .owner-controls {
 	width: 40px;
 	vertical-align: middle;
+}
+
+.add-draft-page .goto-setup-picks {
+	display: none;
 }
 
 /* Activate Draft
@@ -2101,6 +2101,16 @@ span.player-select
 }
 .dh-entry span {
 	vertical-align: top;
+}
+.draft-history-alert {
+	background: #f5d89e;
+	padding: 4px 5px;
+	margin-bottom: 15px;
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+.latest-draft-link {
+	font-weight: bold;
 }
 
 /* User Info
@@ -2685,6 +2695,11 @@ span.player-select
 		margin-top: 8px;
 		margin-bottom: 8px;
 	}
+	#gotoPickNum
+	{
+		text-decoration: underline;
+	}
+
 	/* Best Available
 	------------------------------------*/
 	table

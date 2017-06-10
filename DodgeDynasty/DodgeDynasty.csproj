@@ -204,8 +204,8 @@
     <Compile Include="Mappers\Drafts\DraftPickAudioMapper.cs" />
     <Compile Include="Mappers\Drafts\DraftViewMapper.cs" />
     <Compile Include="Mappers\Drafts\SingleDraftMapper.cs" />
-    <Compile Include="Mappers\EditLeagueMapper.cs" />
-    <Compile Include="Mappers\AddLeagueMapper.cs">
+    <Compile Include="Mappers\Admin\EditLeagueMapper.cs" />
+    <Compile Include="Mappers\Admin\AddLeagueMapper.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Filters\OwnerUpdateRankAccessAttribute.cs" />
@@ -362,7 +362,8 @@
     <Compile Include="WebSockets\DD_SignalR.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="2016 SQL Changes.sql" />
+    <Content Include="2017 SQL Changes.sql" />
+    <Content Include="SQL\OLD - 2016 SQL Changes.sql" />
     <Content Include="Content\favicon.ico" />
     <Content Include="Content\images\ajax-loader.gif" />
     <Content Include="Content\images\SD.png" />

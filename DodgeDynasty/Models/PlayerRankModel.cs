@@ -26,6 +26,8 @@ namespace DodgeDynasty.Models
 		public List<RankedPlayer> QBRankedPlayers { get; set; }
 		public List<RankedPlayer> RBRankedPlayers { get; set; }
 		public List<RankedPlayer> WRTERankedPlayers { get; set; }
+		public List<RankedPlayer> WRRankedPlayers { get; set; }
+		public List<RankedPlayer> TERankedPlayers { get; set; }
 		public List<RankedPlayer> DEFRankedPlayers { get; set; }
 		public List<RankedPlayer> KRankedPlayers { get; set; }
 		public PlayerRankOptions Options { get; set; }
@@ -69,11 +71,7 @@ namespace DodgeDynasty.Models
 			GetRankedPlayersAll();
 
 			OverallRankedPlayers = RankedPlayers.Where(rp => !DraftedPlayers.Any(dp => rp.TruePlayerId == dp.TruePlayerId)).ToList();
-			QBRankedPlayers = OverallRankedPlayers.Where(p => p.Position == "QB").ToList();
-			RBRankedPlayers = OverallRankedPlayers.Where(p => p.Position == "RB").ToList();
-			WRTERankedPlayers = OverallRankedPlayers.Where(p => p.Position == "WR" || p.Position == "TE").ToList();
-			DEFRankedPlayers = OverallRankedPlayers.Where(p => p.Position == "DEF").ToList();
-			KRankedPlayers = OverallRankedPlayers.Where(p => p.Position == "K").ToList();
+			SetRankedPlayerByPos();
 			HighlightedPlayers = GetBestAvailHighlightedPlayers();
 		}
 
@@ -84,13 +82,20 @@ namespace DodgeDynasty.Models
 			GetRankedPlayersAllWithDraftPickInfo(draftedTruePlayers);
 
 			OverallRankedPlayers = RankedPlayers.ToList();
+			SetRankedPlayerByPos();
+			HighlightedPlayers = GetAllHighlightedPlayers();
+        }
+
+		private void SetRankedPlayerByPos()
+		{
 			QBRankedPlayers = OverallRankedPlayers.Where(p => p.Position == "QB").ToList();
 			RBRankedPlayers = OverallRankedPlayers.Where(p => p.Position == "RB").ToList();
 			WRTERankedPlayers = OverallRankedPlayers.Where(p => p.Position == "WR" || p.Position == "TE").ToList();
+			WRRankedPlayers = OverallRankedPlayers.Where(p => p.Position == "WR").ToList();
+			TERankedPlayers = OverallRankedPlayers.Where(p => p.Position == "TE").ToList();
 			DEFRankedPlayers = OverallRankedPlayers.Where(p => p.Position == "DEF").ToList();
 			KRankedPlayers = OverallRankedPlayers.Where(p => p.Position == "K").ToList();
-			HighlightedPlayers = GetAllHighlightedPlayers();
-        }
+		}
 
 		public List<RankedPlayer> GetRankedPlayersAll()
 		{

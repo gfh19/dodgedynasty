@@ -14,6 +14,8 @@ namespace DodgeDynasty.Models.ViewTypes
 		QB,
 		RB,
 		WRTE,
+		WR,
+		TE,
 		DEF,
 		K,
 
@@ -29,6 +31,8 @@ namespace DodgeDynasty.Models.ViewTypes
 			{ RankCategory.QB, new RankCatFn(CreateCategoryQB) },
 			{ RankCategory.RB, new RankCatFn(CreateCategoryRB) },
 			{ RankCategory.WRTE, new RankCatFn(CreateCategoryWRTE) },
+			{ RankCategory.WR, new RankCatFn(CreateCategoryWR) },
+			{ RankCategory.TE, new RankCatFn(CreateCategoryTE) },
 			{ RankCategory.DEF, new RankCatFn(CreateCategoryDEF) },
 			{ RankCategory.K, new RankCatFn(CreateCategoryK) },
 			{ RankCategory.CompRank, new RankCatFn(CreateCategoryCompRank) },
@@ -81,6 +85,30 @@ namespace DodgeDynasty.Models.ViewTypes
 			result.ShowByeWeek = false;
 			result.ExpandValue = playerRankModel.Options.ExpandWRTE.ToString().ToLower();
 			result.PlayerList = playerRankModel.WRTERankedPlayers;
+			return result;
+		}
+		public static RankCategoryModel CreateCategoryWR(IPlayerRankModel playerRankModel)
+		{
+			RankCategoryModel result = new RankCategoryModel();
+			result.DataLink = result.ExpandId = "ExpandWR";
+			result.HideId = "HideWR";
+			result.Header = "WR";
+			result.ShowPos = false;
+			result.ShowByeWeek = false;
+			result.ExpandValue = playerRankModel.Options.ExpandWR.ToString().ToLower();
+			result.PlayerList = playerRankModel.WRRankedPlayers;
+			return result;
+		}
+		public static RankCategoryModel CreateCategoryTE(IPlayerRankModel playerRankModel)
+		{
+			RankCategoryModel result = new RankCategoryModel();
+			result.DataLink = result.ExpandId = "ExpandTE";
+			result.HideId = "HideTE";
+			result.Header = "TE";
+			result.ShowPos = false;
+			result.ShowByeWeek = false;
+			result.ExpandValue = playerRankModel.Options.ExpandTE.ToString().ToLower();
+			result.PlayerList = playerRankModel.TERankedPlayers;
 			return result;
 		}
 		public static RankCategoryModel CreateCategoryDEF(IPlayerRankModel playerRankModel)

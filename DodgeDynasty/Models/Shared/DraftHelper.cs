@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 using DodgeDynasty.Entities;
 using DodgeDynasty.Shared;
+using static DodgeDynasty.Shared.Constants;
 
 namespace DodgeDynasty.Models.Shared
 {
@@ -33,6 +35,15 @@ namespace DodgeDynasty.Models.Shared
 				}
 				homeEntity.SaveChanges();
 			}
+		}
+
+		public static List<SelectListItem> GetDraftFormatItems()
+		{
+			List<SelectListItem> items = new List<SelectListItem>();
+			Dictionary<string, string> draftFormats = Utilities.GetStringProperties(new DraftFormats());
+			draftFormats.Keys.ToList().ForEach(prop =>
+				items.Add(new SelectListItem() { Text = draftFormats[prop], Value = prop }));
+			return items;
 		}
 	}
 }

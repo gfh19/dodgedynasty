@@ -7,7 +7,7 @@ using DodgeDynasty.Models;
 using DodgeDynasty.Models.Types;
 using DodgeDynasty.Shared;
 
-namespace DodgeDynasty.Mappers
+namespace DodgeDynasty.Mappers.Admin
 {
 	public class AddLeagueMapper<T> : MapperBase<T> where T : AddEditLeagueModel, new()
 	{
@@ -22,6 +22,12 @@ namespace DodgeDynasty.Mappers
 			{
 				Model.LeagueOwnerUsers.Add(new OwnerUser { UserId = 0, IsActive = true });
 			}
+			Model.NumRounds = 15;
+			Model.NumKeepers = 0;
+			//TODO:  Add League setting & default here
+			Model.Format = Constants.DraftFormats.Durant;
+			Model.CombineWRTE = false;
+			Model.PickTimeSeconds = Constants.Defaults.PickTimeSeconds;
 			Model.CssColors = HomeEntity.CssColors.ToList();
 			Model.CommishUserIds = new List<int>();
 		}
@@ -31,6 +37,11 @@ namespace DodgeDynasty.Mappers
 			League league = new Entities.League
 			{
 				LeagueName = model.LeagueName,
+				NumRounds = Convert.ToInt16(model.NumRounds),
+				NumKeepers = Convert.ToInt16(model.NumKeepers),
+				Format = model.Format,
+				CombineWRTE = model.CombineWRTE,
+                PickTimeSeconds = Convert.ToInt16(model.PickTimeSeconds),
 				AddTimestamp = DateTime.Now,
 				LastUpdateTimestamp = DateTime.Now
 			};

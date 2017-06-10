@@ -19,6 +19,10 @@ namespace DodgeDynasty.Models.Types
 		[JsonProperty()]
 		public bool ExpandWRTE { get; set; }
 		[JsonProperty()]
+		public bool ExpandWR { get; set; }
+		[JsonProperty()]
+		public bool ExpandTE { get; set; }
+		[JsonProperty()]
 		public bool ExpandDEF { get; set; }
 		[JsonProperty()]
 		public bool ExpandK { get; set; }
@@ -34,6 +38,10 @@ namespace DodgeDynasty.Models.Types
 		public bool HideRB { get; set; }
 		[JsonProperty()]
 		public bool HideWRTE { get; set; }
+		[JsonProperty()]
+		public bool HideWR { get; set; }
+		[JsonProperty()]
+		public bool HideTE { get; set; }
 		[JsonProperty()]
 		public bool HideDEF { get; set; }
 		[JsonProperty()]

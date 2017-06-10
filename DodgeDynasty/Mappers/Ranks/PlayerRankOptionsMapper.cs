@@ -34,6 +34,8 @@ namespace DodgeDynasty.Mappers.Ranks
 				ExpandQB = options.ExpandQB,
 				ExpandRB = options.ExpandRB,
 				ExpandWRTE = options.ExpandWRTE,
+				ExpandWR = options.ExpandWR,
+				ExpandTE = options.ExpandTE,
 				ExpandDEF = options.ExpandDEF,
 				ExpandK = options.ExpandK,
 				ExpandQueue = options.ExpandQueue,
@@ -42,6 +44,8 @@ namespace DodgeDynasty.Mappers.Ranks
 				HideQB = options.HideQB,
 				HideRB = options.HideRB,
 				HideWRTE = options.HideWRTE,
+				HideWR = options.HideWR,
+				HideTE = options.HideTE,
 				HideDEF = options.HideDEF,
 				HideK = options.HideK,
 				HideQueue = options.HideQueue,
@@ -102,6 +106,8 @@ namespace DodgeDynasty.Mappers.Ranks
 			options.ExpandQB = model.ExpandQB;
 			options.ExpandRB = model.ExpandRB;
 			options.ExpandWRTE = model.ExpandWRTE;
+			options.ExpandWR = model.ExpandWR;
+			options.ExpandTE = model.ExpandTE;
 			options.ExpandDEF = model.ExpandDEF;
 			options.ExpandK = model.ExpandK;
 			options.ExpandQueue = model.ExpandQueue;
@@ -110,6 +116,8 @@ namespace DodgeDynasty.Mappers.Ranks
 			options.HideQB = model.HideQB;
 			options.HideRB = model.HideRB;
 			options.HideWRTE = model.HideWRTE;
+			options.HideWR = model.HideWR;
+			options.HideTE = model.HideTE;
 			options.HideDEF = model.HideDEF;
 			options.HideK = model.HideK;
 			options.HideQueue = model.HideQueue;

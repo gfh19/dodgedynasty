@@ -8,6 +8,7 @@ using DodgeDynasty.Shared;
 using System.Web.Mvc;
 using DodgeDynasty.Models.Types;
 using DodgeDynasty.Models.Admin;
+using DodgeDynasty.Models.Shared;
 
 namespace DodgeDynasty.Models
 {
@@ -16,6 +17,30 @@ namespace DodgeDynasty.Models
 		[Display(Name = "League Name")]
 		[Required]
 		public string LeagueName { get; set; }
+		
+		[Display(Name = "Rounds")]
+		[Required]
+		[Range(0, 99)]
+		public int NumRounds { get; set; }
+
+		[Display(Name = "Keepers")]
+		[Required]
+		[Range(0, 99)]
+		public int NumKeepers { get; set; }
+
+		[Display(Name = "Format")]
+		[Required]
+		public string Format { get; set; }
+
+		[Display(Name = "Seconds per Pick (0 for no timer)")]
+		[Required]
+		[Range(0, 9999)]
+		public int PickTimeSeconds { get; set; }
+
+		[Display(Name = "Combine WR/TE?")]
+		[Required]
+		public bool CombineWRTE { get; set; }
+
 		public List<OwnerUser> LeagueOwnerUsers { get; set; }
 		public int LeagueId { get; set; }
 		public List<OwnerUser> OwnerUsers { get; set; }
@@ -78,5 +103,9 @@ namespace DodgeDynasty.Models
 				false, (leagueOwner!=null) ? GetSelectedAudioOption(leagueOwner).Value : null);
 		}
 
+		public List<SelectListItem> GetDraftFormatItems()
+		{
+			return DraftHelper.GetDraftFormatItems();
+		}
 	}
 }

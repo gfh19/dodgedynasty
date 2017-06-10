@@ -20,33 +20,21 @@ using System.Xml.Serialization;
 #region EDM Relationship Metadata
 
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_LeagueOwner_CssColor", "CssColor", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.CssColor), "LeagueOwner", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.LeagueOwner), true)]
-[assembly: EdmRelationshipAttribute("HomeModel", "FK_LeagueOwner_League", "League", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.League), "LeagueOwner", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.LeagueOwner), true)]
-[assembly: EdmRelationshipAttribute("HomeModel", "FK_Message_League", "League", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.League), "Message", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.Message), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_Message_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.User), "Message", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.Message), true)]
-[assembly: EdmRelationshipAttribute("HomeModel", "FK_DraftChat_League", "League", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.League), "DraftChat", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.DraftChat), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_DraftChat_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.User), "DraftChat", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.DraftChat), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_DraftOwner_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.User), "DraftOwner", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.DraftOwner), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_DraftPick_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.User), "DraftPick", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.DraftPick), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_DraftRank_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.User), "DraftRank", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.DraftRank), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_LeagueOwner_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.User), "LeagueOwner", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.LeagueOwner), true)]
-[assembly: EdmRelationshipAttribute("HomeModel", "FK_Draft_League", "League", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.League), "Draft", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.Draft), true)]
-[assembly: EdmRelationshipAttribute("HomeModel", "FK_Draft_RunnerUp", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.User), "Draft", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.Draft), true)]
-[assembly: EdmRelationshipAttribute("HomeModel", "FK_Draft_Winner", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.User), "Draft", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.Draft), true)]
-[assembly: EdmRelationshipAttribute("HomeModel", "FK_DraftChat_Draft", "Draft", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Draft), "DraftChat", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.DraftChat), true)]
-[assembly: EdmRelationshipAttribute("HomeModel", "FK_DraftOwner_Draft", "Draft", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Draft), "DraftOwner", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.DraftOwner), true)]
-[assembly: EdmRelationshipAttribute("HomeModel", "FK_DraftPick_Draft", "Draft", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Draft), "DraftPick", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.DraftPick), true)]
-[assembly: EdmRelationshipAttribute("HomeModel", "FK_DraftRank_Draft", "Draft", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.Draft), "DraftRank", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.DraftRank), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerAdjustment_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.User), "PlayerAdjustment", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerAdjustment), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_DraftPick_Player", "Player", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.Player), "DraftPick", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.DraftPick), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_Player_Player", "Player", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Player), "Player1", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.Player), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerAdjustment_PlayerNew", "Player", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.Player), "PlayerAdjustment", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerAdjustment), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerAdjustment_PlayerOld", "Player", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.Player), "PlayerAdjustment", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerAdjustment), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerRank_Player", "Player", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Player), "PlayerRank", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerRank), true)]
-[assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerHighlight_Draft", "Draft", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Draft), "PlayerHighlight", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerHighlight), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerHighlight_Highlight", "Highlight", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Highlight), "PlayerHighlight", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerHighlight), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerHighlight_Player", "Player", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Player), "PlayerHighlight", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerHighlight), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerHighlight_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.User), "PlayerHighlight", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerHighlight), true)]
-[assembly: EdmRelationshipAttribute("HomeModel", "FK_UserRole_League", "League", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.League), "UserRole", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.UserRole), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_UserRole_Role", "Role", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Role), "UserRole", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.UserRole), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_UserRole_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.User), "UserRole", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.UserRole), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_AdminStatus_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.User), "AdminStatu", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.AdminStatu), true)]
@@ -56,9 +44,21 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_Rank_AutoImport", "AutoImport", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.AutoImport), "Rank", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.Rank), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_AudioCount_AudioApi", "AudioApi", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.AudioApi), "AudioCount", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.AudioCount), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_AudioUserCount_AudioUserCount", "AudioUserCount", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.AudioUserCount), "AudioUserCount1", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.AudioUserCount), true)]
-[assembly: EdmRelationshipAttribute("HomeModel", "FK_AudioUserCount_Draft", "Draft", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Draft), "AudioUserCount", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.AudioUserCount), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_AudioUserCount_Player", "Player", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Player), "AudioUserCount", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.AudioUserCount), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_AudioUserCount_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.User), "AudioUserCount", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.AudioUserCount), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_AudioUserCount_Draft", "Draft", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Draft), "AudioUserCount", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.AudioUserCount), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_Draft_RunnerUp", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.User), "Draft", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.Draft), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_Draft_Winner", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.User), "Draft", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.Draft), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_DraftChat_Draft", "Draft", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Draft), "DraftChat", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.DraftChat), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_DraftOwner_Draft", "Draft", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Draft), "DraftOwner", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.DraftOwner), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_DraftPick_Draft", "Draft", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Draft), "DraftPick", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.DraftPick), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_DraftRank_Draft", "Draft", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.Draft), "DraftRank", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.DraftRank), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerHighlight_Draft", "Draft", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Draft), "PlayerHighlight", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerHighlight), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_Draft_League", "League", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.League), "Draft", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.Draft), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_DraftChat_League", "League", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.League), "DraftChat", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.DraftChat), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_LeagueOwner_League", "League", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.League), "LeagueOwner", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.LeagueOwner), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_Message_League", "League", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.League), "Message", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.Message), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_UserRole_League", "League", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.League), "UserRole", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.UserRole), true)]
 
 #endregion
 
@@ -273,22 +273,6 @@ namespace DodgeDynasty.Entities
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<League> Leagues
-        {
-            get
-            {
-                if ((_Leagues == null))
-                {
-                    _Leagues = base.CreateObjectSet<League>("Leagues");
-                }
-                return _Leagues;
-            }
-        }
-        private ObjectSet<League> _Leagues;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<LeagueOwner> LeagueOwners
         {
             get
@@ -333,22 +317,6 @@ namespace DodgeDynasty.Entities
             }
         }
         private ObjectSet<DraftChat> _DraftChats;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<Draft> Drafts
-        {
-            get
-            {
-                if ((_Drafts == null))
-                {
-                    _Drafts = base.CreateObjectSet<Draft>("Drafts");
-                }
-                return _Drafts;
-            }
-        }
-        private ObjectSet<Draft> _Drafts;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -445,22 +413,6 @@ namespace DodgeDynasty.Entities
             }
         }
         private ObjectSet<PlayerHighlight> _PlayerHighlights;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<PlayerRankOption> PlayerRankOptions
-        {
-            get
-            {
-                if ((_PlayerRankOptions == null))
-                {
-                    _PlayerRankOptions = base.CreateObjectSet<PlayerRankOption>("PlayerRankOptions");
-                }
-                return _PlayerRankOptions;
-            }
-        }
-        private ObjectSet<PlayerRankOption> _PlayerRankOptions;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -621,6 +573,54 @@ namespace DodgeDynasty.Entities
             }
         }
         private ObjectSet<ErrorLog> _ErrorLogs;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Draft> Drafts
+        {
+            get
+            {
+                if ((_Drafts == null))
+                {
+                    _Drafts = base.CreateObjectSet<Draft>("Drafts");
+                }
+                return _Drafts;
+            }
+        }
+        private ObjectSet<Draft> _Drafts;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<League> Leagues
+        {
+            get
+            {
+                if ((_Leagues == null))
+                {
+                    _Leagues = base.CreateObjectSet<League>("Leagues");
+                }
+                return _Leagues;
+            }
+        }
+        private ObjectSet<League> _Leagues;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<PlayerRankOption> PlayerRankOptions
+        {
+            get
+            {
+                if ((_PlayerRankOptions == null))
+                {
+                    _PlayerRankOptions = base.CreateObjectSet<PlayerRankOption>("PlayerRankOptions");
+                }
+                return _PlayerRankOptions;
+            }
+        }
+        private ObjectSet<PlayerRankOption> _PlayerRankOptions;
 
         #endregion
 
@@ -707,14 +707,6 @@ namespace DodgeDynasty.Entities
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the Leagues EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToLeagues(League league)
-        {
-            base.AddObject("Leagues", league);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the LeagueOwners EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToLeagueOwners(LeagueOwner leagueOwner)
@@ -736,14 +728,6 @@ namespace DodgeDynasty.Entities
         public void AddToDraftChats(DraftChat draftChat)
         {
             base.AddObject("DraftChats", draftChat);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the Drafts EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToDrafts(Draft draft)
-        {
-            base.AddObject("Drafts", draft);
         }
     
         /// <summary>
@@ -792,14 +776,6 @@ namespace DodgeDynasty.Entities
         public void AddToPlayerHighlights(PlayerHighlight playerHighlight)
         {
             base.AddObject("PlayerHighlights", playerHighlight);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the PlayerRankOptions EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToPlayerRankOptions(PlayerRankOption playerRankOption)
-        {
-            base.AddObject("PlayerRankOptions", playerRankOption);
         }
     
         /// <summary>
@@ -880,6 +856,30 @@ namespace DodgeDynasty.Entities
         public void AddToErrorLogs(ErrorLog errorLog)
         {
             base.AddObject("ErrorLogs", errorLog);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Drafts EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToDrafts(Draft draft)
+        {
+            base.AddObject("Drafts", draft);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Leagues EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToLeagues(League league)
+        {
+            base.AddObject("Leagues", league);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the PlayerRankOptions EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToPlayerRankOptions(PlayerRankOption playerRankOption)
+        {
+            base.AddObject("PlayerRankOptions", playerRankOption);
         }
 
         #endregion
@@ -1851,44 +1851,6 @@ namespace DodgeDynasty.Entities
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_AudioUserCount_Draft", "Draft")]
-        public Draft Draft
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Draft>("HomeModel.FK_AudioUserCount_Draft", "Draft").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Draft>("HomeModel.FK_AudioUserCount_Draft", "Draft").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<Draft> DraftReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Draft>("HomeModel.FK_AudioUserCount_Draft", "Draft");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Draft>("HomeModel.FK_AudioUserCount_Draft", "Draft", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_AudioUserCount_Player", "Player")]
         public Player Player
         {
@@ -1955,6 +1917,44 @@ namespace DodgeDynasty.Entities
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("HomeModel.FK_AudioUserCount_User", "User", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_AudioUserCount_Draft", "Draft")]
+        public Draft Draft
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Draft>("HomeModel.FK_AudioUserCount_Draft", "Draft").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Draft>("HomeModel.FK_AudioUserCount_Draft", "Draft").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Draft> DraftReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Draft>("HomeModel.FK_AudioUserCount_Draft", "Draft");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Draft>("HomeModel.FK_AudioUserCount_Draft", "Draft", value);
                 }
             }
         }
@@ -2579,22 +2579,30 @@ namespace DodgeDynasty.Entities
         /// <param name="draftId">Initial value of the DraftId property.</param>
         /// <param name="leagueId">Initial value of the LeagueId property.</param>
         /// <param name="draftDate">Initial value of the DraftDate property.</param>
+        /// <param name="numRounds">Initial value of the NumRounds property.</param>
+        /// <param name="numKeepers">Initial value of the NumKeepers property.</param>
+        /// <param name="format">Initial value of the Format property.</param>
         /// <param name="isActive">Initial value of the IsActive property.</param>
         /// <param name="isComplete">Initial value of the IsComplete property.</param>
         /// <param name="addTimestamp">Initial value of the AddTimestamp property.</param>
         /// <param name="lastUpdateTimestamp">Initial value of the LastUpdateTimestamp property.</param>
         /// <param name="pickTimeSeconds">Initial value of the PickTimeSeconds property.</param>
-        public static Draft CreateDraft(global::System.Int32 draftId, global::System.Int32 leagueId, global::System.DateTime draftDate, global::System.Boolean isActive, global::System.Boolean isComplete, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp, global::System.Int16 pickTimeSeconds)
+        /// <param name="combineWRTE">Initial value of the CombineWRTE property.</param>
+        public static Draft CreateDraft(global::System.Int32 draftId, global::System.Int32 leagueId, global::System.DateTime draftDate, global::System.Int16 numRounds, global::System.Int16 numKeepers, global::System.String format, global::System.Boolean isActive, global::System.Boolean isComplete, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp, global::System.Int16 pickTimeSeconds, global::System.Boolean combineWRTE)
         {
             Draft draft = new Draft();
             draft.DraftId = draftId;
             draft.LeagueId = leagueId;
             draft.DraftDate = draftDate;
+            draft.NumRounds = numRounds;
+            draft.NumKeepers = numKeepers;
+            draft.Format = format;
             draft.IsActive = isActive;
             draft.IsComplete = isComplete;
             draft.AddTimestamp = addTimestamp;
             draft.LastUpdateTimestamp = lastUpdateTimestamp;
             draft.PickTimeSeconds = pickTimeSeconds;
+            draft.CombineWRTE = combineWRTE;
             return draft;
         }
 
@@ -2752,33 +2760,9 @@ namespace DodgeDynasty.Entities
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int16> NumOwners
-        {
-            get
-            {
-                return _NumOwners;
-            }
-            set
-            {
-                OnNumOwnersChanging(value);
-                ReportPropertyChanging("NumOwners");
-                _NumOwners = StructuralObject.SetValidValue(value, "NumOwners");
-                ReportPropertyChanged("NumOwners");
-                OnNumOwnersChanged();
-            }
-        }
-        private Nullable<global::System.Int16> _NumOwners;
-        partial void OnNumOwnersChanging(Nullable<global::System.Int16> value);
-        partial void OnNumOwnersChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Int16> NumRounds
+        public global::System.Int16 NumRounds
         {
             get
             {
@@ -2793,16 +2777,16 @@ namespace DodgeDynasty.Entities
                 OnNumRoundsChanged();
             }
         }
-        private Nullable<global::System.Int16> _NumRounds;
-        partial void OnNumRoundsChanging(Nullable<global::System.Int16> value);
+        private global::System.Int16 _NumRounds;
+        partial void OnNumRoundsChanging(global::System.Int16 value);
         partial void OnNumRoundsChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int16> NumKeepers
+        public global::System.Int16 NumKeepers
         {
             get
             {
@@ -2817,14 +2801,14 @@ namespace DodgeDynasty.Entities
                 OnNumKeepersChanged();
             }
         }
-        private Nullable<global::System.Int16> _NumKeepers;
-        partial void OnNumKeepersChanging(Nullable<global::System.Int16> value);
+        private global::System.Int16 _NumKeepers;
+        partial void OnNumKeepersChanging(global::System.Int16 value);
         partial void OnNumKeepersChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
         public global::System.String Format
         {
@@ -2836,7 +2820,7 @@ namespace DodgeDynasty.Entities
             {
                 OnFormatChanging(value);
                 ReportPropertyChanging("Format");
-                _Format = StructuralObject.SetValidValue(value, true, "Format");
+                _Format = StructuralObject.SetValidValue(value, false, "Format");
                 ReportPropertyChanged("Format");
                 OnFormatChanged();
             }
@@ -3036,6 +3020,30 @@ namespace DodgeDynasty.Entities
         private global::System.Int16 _PickTimeSeconds;
         partial void OnPickTimeSecondsChanging(global::System.Int16 value);
         partial void OnPickTimeSecondsChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean CombineWRTE
+        {
+            get
+            {
+                return _CombineWRTE;
+            }
+            set
+            {
+                OnCombineWRTEChanging(value);
+                ReportPropertyChanging("CombineWRTE");
+                _CombineWRTE = StructuralObject.SetValidValue(value, "CombineWRTE");
+                ReportPropertyChanged("CombineWRTE");
+                OnCombineWRTEChanged();
+            }
+        }
+        private global::System.Boolean _CombineWRTE;
+        partial void OnCombineWRTEChanging(global::System.Boolean value);
+        partial void OnCombineWRTEChanged();
 
         #endregion
 
@@ -3047,34 +3055,18 @@ namespace DodgeDynasty.Entities
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_Draft_League", "League")]
-        public League League
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_AudioUserCount_Draft", "AudioUserCount")]
+        public EntityCollection<AudioUserCount> AudioUserCounts
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<League>("HomeModel.FK_Draft_League", "League").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<League>("HomeModel.FK_Draft_League", "League").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<League> LeagueReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<League>("HomeModel.FK_Draft_League", "League");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<AudioUserCount>("HomeModel.FK_AudioUserCount_Draft", "AudioUserCount");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<League>("HomeModel.FK_Draft_League", "League", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<AudioUserCount>("HomeModel.FK_AudioUserCount_Draft", "AudioUserCount", value);
                 }
             }
         }
@@ -3271,18 +3263,34 @@ namespace DodgeDynasty.Entities
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_AudioUserCount_Draft", "AudioUserCount")]
-        public EntityCollection<AudioUserCount> AudioUserCounts
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_Draft_League", "League")]
+        public League League
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<AudioUserCount>("HomeModel.FK_AudioUserCount_Draft", "AudioUserCount");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<League>("HomeModel.FK_Draft_League", "League").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<League>("HomeModel.FK_Draft_League", "League").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<League> LeagueReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<League>("HomeModel.FK_Draft_League", "League");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<AudioUserCount>("HomeModel.FK_AudioUserCount_Draft", "AudioUserCount", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<League>("HomeModel.FK_Draft_League", "League", value);
                 }
             }
         }
@@ -3533,44 +3541,6 @@ namespace DodgeDynasty.Entities
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_DraftChat_League", "League")]
-        public League League
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<League>("HomeModel.FK_DraftChat_League", "League").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<League>("HomeModel.FK_DraftChat_League", "League").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<League> LeagueReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<League>("HomeModel.FK_DraftChat_League", "League");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<League>("HomeModel.FK_DraftChat_League", "League", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_DraftChat_User", "User")]
         public User User
         {
@@ -3637,6 +3607,44 @@ namespace DodgeDynasty.Entities
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Draft>("HomeModel.FK_DraftChat_Draft", "Draft", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_DraftChat_League", "League")]
+        public League League
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<League>("HomeModel.FK_DraftChat_League", "League").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<League>("HomeModel.FK_DraftChat_League", "League").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<League> LeagueReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<League>("HomeModel.FK_DraftChat_League", "League");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<League>("HomeModel.FK_DraftChat_League", "League", value);
                 }
             }
         }
@@ -4205,44 +4213,6 @@ namespace DodgeDynasty.Entities
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_DraftPick_Draft", "Draft")]
-        public Draft Draft
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Draft>("HomeModel.FK_DraftPick_Draft", "Draft").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Draft>("HomeModel.FK_DraftPick_Draft", "Draft").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<Draft> DraftReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Draft>("HomeModel.FK_DraftPick_Draft", "Draft");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Draft>("HomeModel.FK_DraftPick_Draft", "Draft", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_DraftPick_Player", "Player")]
         public Player Player
         {
@@ -4271,6 +4241,44 @@ namespace DodgeDynasty.Entities
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Player>("HomeModel.FK_DraftPick_Player", "Player", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_DraftPick_Draft", "Draft")]
+        public Draft Draft
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Draft>("HomeModel.FK_DraftPick_Draft", "Draft").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Draft>("HomeModel.FK_DraftPick_Draft", "Draft").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Draft> DraftReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Draft>("HomeModel.FK_DraftPick_Draft", "Draft");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Draft>("HomeModel.FK_DraftPick_Draft", "Draft", value);
                 }
             }
         }
@@ -5380,11 +5388,21 @@ namespace DodgeDynasty.Entities
         /// </summary>
         /// <param name="leagueId">Initial value of the LeagueId property.</param>
         /// <param name="leagueName">Initial value of the LeagueName property.</param>
-        public static League CreateLeague(global::System.Int32 leagueId, global::System.String leagueName)
+        /// <param name="numRounds">Initial value of the NumRounds property.</param>
+        /// <param name="numKeepers">Initial value of the NumKeepers property.</param>
+        /// <param name="format">Initial value of the Format property.</param>
+        /// <param name="pickTimeSeconds">Initial value of the PickTimeSeconds property.</param>
+        /// <param name="combineWRTE">Initial value of the CombineWRTE property.</param>
+        public static League CreateLeague(global::System.Int32 leagueId, global::System.String leagueName, global::System.Int16 numRounds, global::System.Int16 numKeepers, global::System.String format, global::System.Int16 pickTimeSeconds, global::System.Boolean combineWRTE)
         {
             League league = new League();
             league.LeagueId = leagueId;
             league.LeagueName = leagueName;
+            league.NumRounds = numRounds;
+            league.NumKeepers = numKeepers;
+            league.Format = format;
+            league.PickTimeSeconds = pickTimeSeconds;
+            league.CombineWRTE = combineWRTE;
             return league;
         }
 
@@ -5448,6 +5466,30 @@ namespace DodgeDynasty.Entities
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> LastUpdateTimestamp
+        {
+            get
+            {
+                return _LastUpdateTimestamp;
+            }
+            set
+            {
+                OnLastUpdateTimestampChanging(value);
+                ReportPropertyChanging("LastUpdateTimestamp");
+                _LastUpdateTimestamp = StructuralObject.SetValidValue(value, "LastUpdateTimestamp");
+                ReportPropertyChanged("LastUpdateTimestamp");
+                OnLastUpdateTimestampChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _LastUpdateTimestamp;
+        partial void OnLastUpdateTimestampChanging(Nullable<global::System.DateTime> value);
+        partial void OnLastUpdateTimestampChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
         public Nullable<global::System.DateTime> AddTimestamp
         {
             get
@@ -5470,30 +5512,170 @@ namespace DodgeDynasty.Entities
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public Nullable<global::System.DateTime> LastUpdateTimestamp
+        public global::System.Int16 NumRounds
         {
             get
             {
-                return _LastUpdateTimestamp;
+                return _NumRounds;
             }
             set
             {
-                OnLastUpdateTimestampChanging(value);
-                ReportPropertyChanging("LastUpdateTimestamp");
-                _LastUpdateTimestamp = StructuralObject.SetValidValue(value, "LastUpdateTimestamp");
-                ReportPropertyChanged("LastUpdateTimestamp");
-                OnLastUpdateTimestampChanged();
+                OnNumRoundsChanging(value);
+                ReportPropertyChanging("NumRounds");
+                _NumRounds = StructuralObject.SetValidValue(value, "NumRounds");
+                ReportPropertyChanged("NumRounds");
+                OnNumRoundsChanged();
             }
         }
-        private Nullable<global::System.DateTime> _LastUpdateTimestamp;
-        partial void OnLastUpdateTimestampChanging(Nullable<global::System.DateTime> value);
-        partial void OnLastUpdateTimestampChanged();
+        private global::System.Int16 _NumRounds;
+        partial void OnNumRoundsChanging(global::System.Int16 value);
+        partial void OnNumRoundsChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int16 NumKeepers
+        {
+            get
+            {
+                return _NumKeepers;
+            }
+            set
+            {
+                OnNumKeepersChanging(value);
+                ReportPropertyChanging("NumKeepers");
+                _NumKeepers = StructuralObject.SetValidValue(value, "NumKeepers");
+                ReportPropertyChanged("NumKeepers");
+                OnNumKeepersChanged();
+            }
+        }
+        private global::System.Int16 _NumKeepers;
+        partial void OnNumKeepersChanging(global::System.Int16 value);
+        partial void OnNumKeepersChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Format
+        {
+            get
+            {
+                return _Format;
+            }
+            set
+            {
+                OnFormatChanging(value);
+                ReportPropertyChanging("Format");
+                _Format = StructuralObject.SetValidValue(value, false, "Format");
+                ReportPropertyChanged("Format");
+                OnFormatChanged();
+            }
+        }
+        private global::System.String _Format;
+        partial void OnFormatChanging(global::System.String value);
+        partial void OnFormatChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int16 PickTimeSeconds
+        {
+            get
+            {
+                return _PickTimeSeconds;
+            }
+            set
+            {
+                OnPickTimeSecondsChanging(value);
+                ReportPropertyChanging("PickTimeSeconds");
+                _PickTimeSeconds = StructuralObject.SetValidValue(value, "PickTimeSeconds");
+                ReportPropertyChanged("PickTimeSeconds");
+                OnPickTimeSecondsChanged();
+            }
+        }
+        private global::System.Int16 _PickTimeSeconds;
+        partial void OnPickTimeSecondsChanging(global::System.Int16 value);
+        partial void OnPickTimeSecondsChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean CombineWRTE
+        {
+            get
+            {
+                return _CombineWRTE;
+            }
+            set
+            {
+                OnCombineWRTEChanging(value);
+                ReportPropertyChanging("CombineWRTE");
+                _CombineWRTE = StructuralObject.SetValidValue(value, "CombineWRTE");
+                ReportPropertyChanged("CombineWRTE");
+                OnCombineWRTEChanged();
+            }
+        }
+        private global::System.Boolean _CombineWRTE;
+        partial void OnCombineWRTEChanging(global::System.Boolean value);
+        partial void OnCombineWRTEChanged();
 
         #endregion
 
         #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_Draft_League", "Draft")]
+        public EntityCollection<Draft> Drafts
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Draft>("HomeModel.FK_Draft_League", "Draft");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Draft>("HomeModel.FK_Draft_League", "Draft", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_DraftChat_League", "DraftChat")]
+        public EntityCollection<DraftChat> DraftChats
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<DraftChat>("HomeModel.FK_DraftChat_League", "DraftChat");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DraftChat>("HomeModel.FK_DraftChat_League", "DraftChat", value);
+                }
+            }
+        }
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -5535,50 +5717,6 @@ namespace DodgeDynasty.Entities
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Message>("HomeModel.FK_Message_League", "Message", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_DraftChat_League", "DraftChat")]
-        public EntityCollection<DraftChat> DraftChats
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<DraftChat>("HomeModel.FK_DraftChat_League", "DraftChat");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DraftChat>("HomeModel.FK_DraftChat_League", "DraftChat", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_Draft_League", "Draft")]
-        public EntityCollection<Draft> Drafts
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Draft>("HomeModel.FK_Draft_League", "Draft");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Draft>("HomeModel.FK_Draft_League", "Draft", value);
                 }
             }
         }
@@ -5965,44 +6103,6 @@ namespace DodgeDynasty.Entities
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_LeagueOwner_League", "League")]
-        public League League
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<League>("HomeModel.FK_LeagueOwner_League", "League").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<League>("HomeModel.FK_LeagueOwner_League", "League").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<League> LeagueReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<League>("HomeModel.FK_LeagueOwner_League", "League");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<League>("HomeModel.FK_LeagueOwner_League", "League", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_LeagueOwner_User", "User")]
         public User User
         {
@@ -6031,6 +6131,44 @@ namespace DodgeDynasty.Entities
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("HomeModel.FK_LeagueOwner_User", "User", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_LeagueOwner_League", "League")]
+        public League League
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<League>("HomeModel.FK_LeagueOwner_League", "League").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<League>("HomeModel.FK_LeagueOwner_League", "League").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<League> LeagueReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<League>("HomeModel.FK_LeagueOwner_League", "League");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<League>("HomeModel.FK_LeagueOwner_League", "League", value);
                 }
             }
         }
@@ -6327,44 +6465,6 @@ namespace DodgeDynasty.Entities
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_Message_League", "League")]
-        public League League
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<League>("HomeModel.FK_Message_League", "League").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<League>("HomeModel.FK_Message_League", "League").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<League> LeagueReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<League>("HomeModel.FK_Message_League", "League");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<League>("HomeModel.FK_Message_League", "League", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_Message_User", "User")]
         public User User
         {
@@ -6393,6 +6493,44 @@ namespace DodgeDynasty.Entities
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("HomeModel.FK_Message_User", "User", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_Message_League", "League")]
+        public League League
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<League>("HomeModel.FK_Message_League", "League").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<League>("HomeModel.FK_Message_League", "League").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<League> LeagueReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<League>("HomeModel.FK_Message_League", "League");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<League>("HomeModel.FK_Message_League", "League", value);
                 }
             }
         }
@@ -8005,44 +8143,6 @@ namespace DodgeDynasty.Entities
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_PlayerHighlight_Draft", "Draft")]
-        public Draft Draft
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Draft>("HomeModel.FK_PlayerHighlight_Draft", "Draft").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Draft>("HomeModel.FK_PlayerHighlight_Draft", "Draft").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<Draft> DraftReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Draft>("HomeModel.FK_PlayerHighlight_Draft", "Draft");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Draft>("HomeModel.FK_PlayerHighlight_Draft", "Draft", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_PlayerHighlight_Highlight", "Highlight")]
         public Highlight Highlight
         {
@@ -8147,6 +8247,44 @@ namespace DodgeDynasty.Entities
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("HomeModel.FK_PlayerHighlight_User", "User", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_PlayerHighlight_Draft", "Draft")]
+        public Draft Draft
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Draft>("HomeModel.FK_PlayerHighlight_Draft", "Draft").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Draft>("HomeModel.FK_PlayerHighlight_Draft", "Draft").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Draft> DraftReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Draft>("HomeModel.FK_PlayerHighlight_Draft", "Draft");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Draft>("HomeModel.FK_PlayerHighlight_Draft", "Draft", value);
                 }
             }
         }
@@ -8754,14 +8892,18 @@ namespace DodgeDynasty.Entities
         /// <param name="hideQueue">Initial value of the HideQueue property.</param>
         /// <param name="showHighlighting">Initial value of the ShowHighlighting property.</param>
         /// <param name="lockHighlighting">Initial value of the LockHighlighting property.</param>
-        /// <param name="isComparingRanks">Initial value of the IsComparingRanks property.</param>
-        /// <param name="showAvgCompRanks">Initial value of the ShowAvgCompRanks property.</param>
         /// <param name="expandAvg">Initial value of the ExpandAvg property.</param>
         /// <param name="hideAvg">Initial value of the HideAvg property.</param>
+        /// <param name="isComparingRanks">Initial value of the IsComparingRanks property.</param>
         /// <param name="compRanksExpandAll">Initial value of the CompRanksExpandAll property.</param>
+        /// <param name="showAvgCompRanks">Initial value of the ShowAvgCompRanks property.</param>
         /// <param name="expandBUP">Initial value of the ExpandBUP property.</param>
         /// <param name="hideBUP">Initial value of the HideBUP property.</param>
-        public static PlayerRankOption CreatePlayerRankOption(global::System.Guid playerRankOptionId, global::System.Int32 userId, global::System.Boolean expandOverall, global::System.Boolean expandQB, global::System.Boolean expandRB, global::System.Boolean expandWRTE, global::System.Boolean expandDEF, global::System.Boolean expandK, global::System.Boolean expandQueue, global::System.Boolean hideOverall, global::System.Boolean hideQB, global::System.Boolean hideRB, global::System.Boolean hideWRTE, global::System.Boolean hideDEF, global::System.Boolean hideK, global::System.Boolean hideQueue, global::System.Boolean showHighlighting, global::System.Boolean lockHighlighting, global::System.Boolean isComparingRanks, global::System.Boolean showAvgCompRanks, global::System.Boolean expandAvg, global::System.Boolean hideAvg, global::System.Boolean compRanksExpandAll, global::System.Boolean expandBUP, global::System.Boolean hideBUP)
+        /// <param name="expandWR">Initial value of the ExpandWR property.</param>
+        /// <param name="hideWR">Initial value of the HideWR property.</param>
+        /// <param name="expandTE">Initial value of the ExpandTE property.</param>
+        /// <param name="hideTE">Initial value of the HideTE property.</param>
+        public static PlayerRankOption CreatePlayerRankOption(global::System.Guid playerRankOptionId, global::System.Int32 userId, global::System.Boolean expandOverall, global::System.Boolean expandQB, global::System.Boolean expandRB, global::System.Boolean expandWRTE, global::System.Boolean expandDEF, global::System.Boolean expandK, global::System.Boolean expandQueue, global::System.Boolean hideOverall, global::System.Boolean hideQB, global::System.Boolean hideRB, global::System.Boolean hideWRTE, global::System.Boolean hideDEF, global::System.Boolean hideK, global::System.Boolean hideQueue, global::System.Boolean showHighlighting, global::System.Boolean lockHighlighting, global::System.Boolean expandAvg, global::System.Boolean hideAvg, global::System.Boolean isComparingRanks, global::System.Boolean compRanksExpandAll, global::System.Boolean showAvgCompRanks, global::System.Boolean expandBUP, global::System.Boolean hideBUP, global::System.Boolean expandWR, global::System.Boolean hideWR, global::System.Boolean expandTE, global::System.Boolean hideTE)
         {
             PlayerRankOption playerRankOption = new PlayerRankOption();
             playerRankOption.PlayerRankOptionId = playerRankOptionId;
@@ -8782,13 +8924,17 @@ namespace DodgeDynasty.Entities
             playerRankOption.HideQueue = hideQueue;
             playerRankOption.ShowHighlighting = showHighlighting;
             playerRankOption.LockHighlighting = lockHighlighting;
-            playerRankOption.IsComparingRanks = isComparingRanks;
-            playerRankOption.ShowAvgCompRanks = showAvgCompRanks;
             playerRankOption.ExpandAvg = expandAvg;
             playerRankOption.HideAvg = hideAvg;
+            playerRankOption.IsComparingRanks = isComparingRanks;
             playerRankOption.CompRanksExpandAll = compRanksExpandAll;
+            playerRankOption.ShowAvgCompRanks = showAvgCompRanks;
             playerRankOption.ExpandBUP = expandBUP;
             playerRankOption.HideBUP = hideBUP;
+            playerRankOption.ExpandWR = expandWR;
+            playerRankOption.HideWR = hideWR;
+            playerRankOption.ExpandTE = expandTE;
+            playerRankOption.HideTE = hideTE;
             return playerRankOption;
         }
 
@@ -9306,50 +9452,50 @@ namespace DodgeDynasty.Entities
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public Nullable<global::System.DateTime> AddTimestamp
+        public global::System.Boolean ExpandAvg
         {
             get
             {
-                return _AddTimestamp;
+                return _ExpandAvg;
             }
             set
             {
-                OnAddTimestampChanging(value);
-                ReportPropertyChanging("AddTimestamp");
-                _AddTimestamp = StructuralObject.SetValidValue(value, "AddTimestamp");
-                ReportPropertyChanged("AddTimestamp");
-                OnAddTimestampChanged();
+                OnExpandAvgChanging(value);
+                ReportPropertyChanging("ExpandAvg");
+                _ExpandAvg = StructuralObject.SetValidValue(value, "ExpandAvg");
+                ReportPropertyChanged("ExpandAvg");
+                OnExpandAvgChanged();
             }
         }
-        private Nullable<global::System.DateTime> _AddTimestamp;
-        partial void OnAddTimestampChanging(Nullable<global::System.DateTime> value);
-        partial void OnAddTimestampChanged();
+        private global::System.Boolean _ExpandAvg;
+        partial void OnExpandAvgChanging(global::System.Boolean value);
+        partial void OnExpandAvgChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public Nullable<global::System.DateTime> LastUpdateTimestamp
+        public global::System.Boolean HideAvg
         {
             get
             {
-                return _LastUpdateTimestamp;
+                return _HideAvg;
             }
             set
             {
-                OnLastUpdateTimestampChanging(value);
-                ReportPropertyChanging("LastUpdateTimestamp");
-                _LastUpdateTimestamp = StructuralObject.SetValidValue(value, "LastUpdateTimestamp");
-                ReportPropertyChanged("LastUpdateTimestamp");
-                OnLastUpdateTimestampChanged();
+                OnHideAvgChanging(value);
+                ReportPropertyChanging("HideAvg");
+                _HideAvg = StructuralObject.SetValidValue(value, "HideAvg");
+                ReportPropertyChanged("HideAvg");
+                OnHideAvgChanged();
             }
         }
-        private Nullable<global::System.DateTime> _LastUpdateTimestamp;
-        partial void OnLastUpdateTimestampChanging(Nullable<global::System.DateTime> value);
-        partial void OnLastUpdateTimestampChanged();
+        private global::System.Boolean _HideAvg;
+        partial void OnHideAvgChanging(global::System.Boolean value);
+        partial void OnHideAvgChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -9402,78 +9548,6 @@ namespace DodgeDynasty.Entities
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Boolean ShowAvgCompRanks
-        {
-            get
-            {
-                return _ShowAvgCompRanks;
-            }
-            set
-            {
-                OnShowAvgCompRanksChanging(value);
-                ReportPropertyChanging("ShowAvgCompRanks");
-                _ShowAvgCompRanks = StructuralObject.SetValidValue(value, "ShowAvgCompRanks");
-                ReportPropertyChanged("ShowAvgCompRanks");
-                OnShowAvgCompRanksChanged();
-            }
-        }
-        private global::System.Boolean _ShowAvgCompRanks;
-        partial void OnShowAvgCompRanksChanging(global::System.Boolean value);
-        partial void OnShowAvgCompRanksChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Boolean ExpandAvg
-        {
-            get
-            {
-                return _ExpandAvg;
-            }
-            set
-            {
-                OnExpandAvgChanging(value);
-                ReportPropertyChanging("ExpandAvg");
-                _ExpandAvg = StructuralObject.SetValidValue(value, "ExpandAvg");
-                ReportPropertyChanged("ExpandAvg");
-                OnExpandAvgChanged();
-            }
-        }
-        private global::System.Boolean _ExpandAvg;
-        partial void OnExpandAvgChanging(global::System.Boolean value);
-        partial void OnExpandAvgChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Boolean HideAvg
-        {
-            get
-            {
-                return _HideAvg;
-            }
-            set
-            {
-                OnHideAvgChanging(value);
-                ReportPropertyChanging("HideAvg");
-                _HideAvg = StructuralObject.SetValidValue(value, "HideAvg");
-                ReportPropertyChanged("HideAvg");
-                OnHideAvgChanged();
-            }
-        }
-        private global::System.Boolean _HideAvg;
-        partial void OnHideAvgChanging(global::System.Boolean value);
-        partial void OnHideAvgChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
         public global::System.String CompRankExpandIds
@@ -9518,6 +9592,78 @@ namespace DodgeDynasty.Entities
         private global::System.Boolean _CompRanksExpandAll;
         partial void OnCompRanksExpandAllChanging(global::System.Boolean value);
         partial void OnCompRanksExpandAllChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean ShowAvgCompRanks
+        {
+            get
+            {
+                return _ShowAvgCompRanks;
+            }
+            set
+            {
+                OnShowAvgCompRanksChanging(value);
+                ReportPropertyChanging("ShowAvgCompRanks");
+                _ShowAvgCompRanks = StructuralObject.SetValidValue(value, "ShowAvgCompRanks");
+                ReportPropertyChanged("ShowAvgCompRanks");
+                OnShowAvgCompRanksChanged();
+            }
+        }
+        private global::System.Boolean _ShowAvgCompRanks;
+        partial void OnShowAvgCompRanksChanging(global::System.Boolean value);
+        partial void OnShowAvgCompRanksChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> AddTimestamp
+        {
+            get
+            {
+                return _AddTimestamp;
+            }
+            set
+            {
+                OnAddTimestampChanging(value);
+                ReportPropertyChanging("AddTimestamp");
+                _AddTimestamp = StructuralObject.SetValidValue(value, "AddTimestamp");
+                ReportPropertyChanged("AddTimestamp");
+                OnAddTimestampChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _AddTimestamp;
+        partial void OnAddTimestampChanging(Nullable<global::System.DateTime> value);
+        partial void OnAddTimestampChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> LastUpdateTimestamp
+        {
+            get
+            {
+                return _LastUpdateTimestamp;
+            }
+            set
+            {
+                OnLastUpdateTimestampChanging(value);
+                ReportPropertyChanging("LastUpdateTimestamp");
+                _LastUpdateTimestamp = StructuralObject.SetValidValue(value, "LastUpdateTimestamp");
+                ReportPropertyChanged("LastUpdateTimestamp");
+                OnLastUpdateTimestampChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _LastUpdateTimestamp;
+        partial void OnLastUpdateTimestampChanging(Nullable<global::System.DateTime> value);
+        partial void OnLastUpdateTimestampChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -9590,6 +9736,102 @@ namespace DodgeDynasty.Entities
         private Nullable<global::System.Int32> _BUPId;
         partial void OnBUPIdChanging(Nullable<global::System.Int32> value);
         partial void OnBUPIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean ExpandWR
+        {
+            get
+            {
+                return _ExpandWR;
+            }
+            set
+            {
+                OnExpandWRChanging(value);
+                ReportPropertyChanging("ExpandWR");
+                _ExpandWR = StructuralObject.SetValidValue(value, "ExpandWR");
+                ReportPropertyChanged("ExpandWR");
+                OnExpandWRChanged();
+            }
+        }
+        private global::System.Boolean _ExpandWR;
+        partial void OnExpandWRChanging(global::System.Boolean value);
+        partial void OnExpandWRChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean HideWR
+        {
+            get
+            {
+                return _HideWR;
+            }
+            set
+            {
+                OnHideWRChanging(value);
+                ReportPropertyChanging("HideWR");
+                _HideWR = StructuralObject.SetValidValue(value, "HideWR");
+                ReportPropertyChanged("HideWR");
+                OnHideWRChanged();
+            }
+        }
+        private global::System.Boolean _HideWR;
+        partial void OnHideWRChanging(global::System.Boolean value);
+        partial void OnHideWRChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean ExpandTE
+        {
+            get
+            {
+                return _ExpandTE;
+            }
+            set
+            {
+                OnExpandTEChanging(value);
+                ReportPropertyChanging("ExpandTE");
+                _ExpandTE = StructuralObject.SetValidValue(value, "ExpandTE");
+                ReportPropertyChanged("ExpandTE");
+                OnExpandTEChanged();
+            }
+        }
+        private global::System.Boolean _ExpandTE;
+        partial void OnExpandTEChanging(global::System.Boolean value);
+        partial void OnExpandTEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean HideTE
+        {
+            get
+            {
+                return _HideTE;
+            }
+            set
+            {
+                OnHideTEChanging(value);
+                ReportPropertyChanging("HideTE");
+                _HideTE = StructuralObject.SetValidValue(value, "HideTE");
+                ReportPropertyChanged("HideTE");
+                OnHideTEChanged();
+            }
+        }
+        private global::System.Boolean _HideTE;
+        partial void OnHideTEChanging(global::System.Boolean value);
+        partial void OnHideTEChanged();
 
         #endregion
 
@@ -10699,50 +10941,6 @@ namespace DodgeDynasty.Entities
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_Draft_RunnerUp", "Draft")]
-        public EntityCollection<Draft> Drafts
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Draft>("HomeModel.FK_Draft_RunnerUp", "Draft");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Draft>("HomeModel.FK_Draft_RunnerUp", "Draft", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_Draft_Winner", "Draft")]
-        public EntityCollection<Draft> Drafts1
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Draft>("HomeModel.FK_Draft_Winner", "Draft");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Draft>("HomeModel.FK_Draft_Winner", "Draft", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_PlayerAdjustment_User", "PlayerAdjustment")]
         public EntityCollection<PlayerAdjustment> PlayerAdjustments
         {
@@ -10859,6 +11057,50 @@ namespace DodgeDynasty.Entities
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<AudioUserCount>("HomeModel.FK_AudioUserCount_User", "AudioUserCount", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_Draft_RunnerUp", "Draft")]
+        public EntityCollection<Draft> Drafts
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Draft>("HomeModel.FK_Draft_RunnerUp", "Draft");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Draft>("HomeModel.FK_Draft_RunnerUp", "Draft", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_Draft_Winner", "Draft")]
+        public EntityCollection<Draft> Drafts1
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Draft>("HomeModel.FK_Draft_Winner", "Draft");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Draft>("HomeModel.FK_Draft_Winner", "Draft", value);
                 }
             }
         }
@@ -11467,44 +11709,6 @@ namespace DodgeDynasty.Entities
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_UserRole_League", "League")]
-        public League League
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<League>("HomeModel.FK_UserRole_League", "League").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<League>("HomeModel.FK_UserRole_League", "League").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<League> LeagueReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<League>("HomeModel.FK_UserRole_League", "League");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<League>("HomeModel.FK_UserRole_League", "League", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_UserRole_Role", "Role")]
         public Role Role
         {
@@ -11571,6 +11775,44 @@ namespace DodgeDynasty.Entities
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("HomeModel.FK_UserRole_User", "User", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_UserRole_League", "League")]
+        public League League
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<League>("HomeModel.FK_UserRole_League", "League").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<League>("HomeModel.FK_UserRole_League", "League").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<League> LeagueReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<League>("HomeModel.FK_UserRole_League", "League");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<League>("HomeModel.FK_UserRole_League", "League", value);
                 }
             }
         }

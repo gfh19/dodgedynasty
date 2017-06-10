@@ -18,6 +18,8 @@ namespace DodgeDynasty.Models
 		List<RankedPlayer> QBRankedPlayers { get; set; }
 		List<RankedPlayer> RBRankedPlayers { get; set; }
 		List<RankedPlayer> WRTERankedPlayers { get; set; }
+		List<RankedPlayer> WRRankedPlayers { get; set; }
+		List<RankedPlayer> TERankedPlayers { get; set; }
 		List<RankedPlayer> DEFRankedPlayers { get; set; }
 		List<RankedPlayer> KRankedPlayers { get; set; }
 		PlayerRankOptions Options { get; set; }

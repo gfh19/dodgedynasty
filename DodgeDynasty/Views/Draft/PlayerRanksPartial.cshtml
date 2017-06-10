@@ -67,7 +67,15 @@
 			@Html.Partial(Url.Content("../Draft/_PlayerRankCategory"), Model.SetCategory(DodgeDynasty.Models.ViewTypes.RankCategory.Overall))
             @Html.Partial(Url.Content("../Draft/_PlayerRankCategory"), Model.SetCategory(DodgeDynasty.Models.ViewTypes.RankCategory.QB))
 			@Html.Partial(Url.Content("../Draft/_PlayerRankCategory"), Model.SetCategory(DodgeDynasty.Models.ViewTypes.RankCategory.RB))
-			@Html.Partial(Url.Content("../Draft/_PlayerRankCategory"), Model.SetCategory(DodgeDynasty.Models.ViewTypes.RankCategory.WRTE))
+			@if (Model.CurrentDraft.CombineWRTE)
+			{
+				@Html.Partial(Url.Content("../Draft/_PlayerRankCategory"), Model.SetCategory(DodgeDynasty.Models.ViewTypes.RankCategory.WRTE))
+			}
+			else
+			{
+				@Html.Partial(Url.Content("../Draft/_PlayerRankCategory"), Model.SetCategory(DodgeDynasty.Models.ViewTypes.RankCategory.WR))
+				@Html.Partial(Url.Content("../Draft/_PlayerRankCategory"), Model.SetCategory(DodgeDynasty.Models.ViewTypes.RankCategory.TE))
+			}
 			@Html.Partial(Url.Content("../Draft/_PlayerRankCategory"), Model.SetCategory(DodgeDynasty.Models.ViewTypes.RankCategory.DEF))
 			@Html.Partial(Url.Content("../Draft/_PlayerRankCategory"), Model.SetCategory(DodgeDynasty.Models.ViewTypes.RankCategory.K))
 		</div>

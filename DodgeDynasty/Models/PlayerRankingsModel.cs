@@ -28,6 +28,8 @@ namespace DodgeDynasty.Models
 		public List<RankedPlayer> QBRankedPlayers { get; set; }
 		public List<RankedPlayer> RBRankedPlayers { get; set; }
 		public List<RankedPlayer> WRTERankedPlayers { get; set; }
+		public List<RankedPlayer> WRRankedPlayers { get; set; }
+		public List<RankedPlayer> TERankedPlayers { get; set; }
 		public List<RankedPlayer> DEFRankedPlayers { get; set; }
 		public List<RankedPlayer> KRankedPlayers { get; set; }
 		public PlayerRankOptions Options { get; set; }

@@ -32,10 +32,10 @@ namespace DodgeDynasty.Mappers.Admin
 			Model.DraftTime = draft.DraftDate.ToString("HH:mm");
 			Model.DraftYear = draft.DraftYear.Value;
 			Model.DraftLocation = draft.DraftLocation;
-			Model.NumOwners = draft.NumOwners.Value;
-			Model.NumRounds = draft.NumRounds.Value;
-			Model.NumKeepers = draft.NumKeepers.Value;
+			Model.NumRounds = draft.NumRounds;
+			Model.NumKeepers = draft.NumKeepers;
 			Model.Format = draft.Format;
+			Model.CombineWRTE = draft.CombineWRTE;
 			Model.PickTimeSeconds = draft.PickTimeSeconds;
 			Model.DraftOwnerUsers = (from dro in HomeEntity.DraftOwners.AsEnumerable()
 									 join u in users on dro.UserId equals u.UserId
@@ -57,10 +57,10 @@ namespace DodgeDynasty.Mappers.Admin
 				"yyyy-MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture);
 			draft.DraftLocation = model.DraftLocation;
 			draft.DraftYear = Convert.ToInt16(model.DraftYear);
-			draft.NumOwners = Convert.ToInt16(model.NumOwners);
 			draft.NumRounds = Convert.ToInt16(model.NumRounds);
 			draft.NumKeepers = Convert.ToInt16(model.NumKeepers);
 			draft.Format = model.Format;
+			draft.CombineWRTE = model.CombineWRTE;
 			draft.PickTimeSeconds = Convert.ToInt16(model.PickTimeSeconds);
 			draft.WinnerId = model.WinnerId;
 			draft.RunnerUpId = model.RunnerUpId;

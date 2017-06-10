@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using DodgeDynasty.Models.Types;
 using DraftFormats = DodgeDynasty.Shared.Constants.DraftFormats;
 using DodgeDynasty.Models.Admin;
+using DodgeDynasty.Models.Shared;
 
 namespace DodgeDynasty.Models
 {
@@ -30,12 +31,7 @@ namespace DodgeDynasty.Models
 		[Required]
 		[Range(0, 9999)]
 		public short DraftYear { get; set; }
-
-		[Display(Name = "Owners")]
-		[Required]
-		[Range(0, 99)]
-		public int NumOwners { get; set; }
-
+		
 		[Display(Name = "Rounds")]
 		[Required]
 		[Range(0, 99)]
@@ -50,9 +46,13 @@ namespace DodgeDynasty.Models
 		[Required]
 		public string Format { get; set; }
 
+		[Display(Name = "Combine WR/TE?")]
+		[Required]
+		public bool CombineWRTE { get; set; }
+
 		[Display(Name = "Seconds per Pick (0 for no timer)")]
 		[Required]
-		[Range(0, 999)]
+		[Range(0, 9999)]
 		public int PickTimeSeconds { get; set; }
 
 		[Display(Name = "Active?")]
@@ -81,11 +81,7 @@ namespace DodgeDynasty.Models
 
 		public List<SelectListItem> GetDraftFormatItems()
 		{
-			List<SelectListItem> items = new List<SelectListItem>();
-			Dictionary<string, string> draftFormats = Utilities.GetStringProperties(new DraftFormats());
-			draftFormats.Keys.ToList().ForEach(prop=>
-				items.Add(new SelectListItem() { Text=draftFormats[prop], Value=prop }));
-			return items;
+			return DraftHelper.GetDraftFormatItems();
 		}
 
 		public List<SelectListItem> GetLeagueOwnerUserItems(OwnerUser ownerUser=null)

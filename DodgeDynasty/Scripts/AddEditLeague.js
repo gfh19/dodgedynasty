@@ -32,7 +32,7 @@ function bindSubmitLeague() {
 }
 
 function getAddEditLeagueModel() {
-	var addEditLeagueModel = {};
+	var addEditLeagueModel = $("#leagueForm").serializeObject();
 	addEditLeagueModel.LeagueId = $(".league-id").val();
 	addEditLeagueModel.LeagueName = $(".league-name").val();
 	var leagueOwnerUsers = new Array();

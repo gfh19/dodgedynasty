@@ -8,7 +8,7 @@ using DodgeDynasty.Models;
 using DodgeDynasty.Models.Types;
 using DodgeDynasty.Shared;
 
-namespace DodgeDynasty.Mappers
+namespace DodgeDynasty.Mappers.Admin
 {
 	public class EditLeagueMapper<T> : MapperBase<T> where T : AddEditLeagueModel, new()
 	{
@@ -19,12 +19,18 @@ namespace DodgeDynasty.Mappers
 			Model.LeagueId = Int32.Parse(LeagueId);
 			var currentUserId = HomeEntity.Users.GetLoggedInUserId();
 			var users = HomeEntity.Users.ToList();
-			var allLeagueOwners = HomeEntity.LeagueOwners.ToList();
+			var league = HomeEntity.Leagues.First(o => o.LeagueId == Model.LeagueId);
+            var allLeagueOwners = HomeEntity.LeagueOwners.ToList();
 			var leagueOwners = allLeagueOwners.Where(o => o.LeagueId == Model.LeagueId).ToList();
 			var leagueUserIds = leagueOwners.Select(o => o.UserId);
 			Model.ActiveLeagueUsers = HomeEntity.Users.Where(o => o.IsActive || leagueUserIds.Contains(o.UserId)).ToList();
 			Model.LeagueOwnerUsers = OwnerUserMapper.GetOwnerUsers(leagueOwners, users, Model.LeagueId);
-			Model.LeagueName = HomeEntity.Leagues.Where(o => o.LeagueId == Model.LeagueId).FirstOrDefault().LeagueName;
+			Model.LeagueName = league.LeagueName;
+			Model.NumRounds = league.NumRounds;
+			Model.NumKeepers = league.NumKeepers;
+			Model.Format = league.Format;
+			Model.CombineWRTE = league.CombineWRTE;
+			Model.PickTimeSeconds = league.PickTimeSeconds;
 			Model.CssColors = HomeEntity.CssColors.ToList();
 			Model.CommishUserIds = HomeEntity.UserRoles
 				.Where(o => o.RoleId == Constants.Roles.Commish && o.LeagueId == Model.LeagueId)
@@ -36,6 +42,11 @@ namespace DodgeDynasty.Mappers
 		{
 			League league = HomeEntity.Leagues.Where(l=>l.LeagueId == model.LeagueId).FirstOrDefault();
 			league.LeagueName = model.LeagueName;
+			league.NumRounds = Convert.ToInt16(model.NumRounds);
+			league.NumKeepers = Convert.ToInt16(model.NumKeepers);
+			league.Format = model.Format;
+			league.CombineWRTE = model.CombineWRTE;
+			league.PickTimeSeconds = Convert.ToInt16(model.PickTimeSeconds);
 			league.LastUpdateTimestamp = DateTime.Now;
 			HomeEntity.SaveChanges();
 

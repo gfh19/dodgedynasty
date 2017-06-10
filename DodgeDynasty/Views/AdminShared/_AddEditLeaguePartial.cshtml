@@ -23,134 +23,152 @@
 				@Html.LabelFor(m => m.LeagueName): @Html.TextBoxFor(m => m.LeagueName, new { @class = "league-name", maxLength = "50", autofocus = "autofocus" })
 				<div>@Html.ValidationMessageFor(m => m.LeagueName)</div>
 			</div>
-			<div class="page-section-small">
-				<div class="copy-lo-entry hide-yo-wives">
-					<span class="league-owner">
-						@Html.DropDownList("UserId", Model.GetActiveLeagueUsers(), new { @class = "lo-select" })
-					</span>
-					<span class="lo-team-name">
-						@Html.TextBox("TeamName", "", new { @class = "lo-team-input" })
-					</span>
-					<span class="lo-color">
-						<span class="lo-outer outline">
-							<span class="lo-selected-color _none">
-								@Html.DropDownList("CssClass",
-												Model.GetLeagueColorOptions(""),
-												new
-												{
-													@class = "lo-color-select",
-													data_prev_color = DodgeDynasty.Shared.Constants.CssClass.None,
-													data_prev_text = DodgeDynasty.Shared.Constants.CssClass.NoneText
-												})
-							</span>
-						</span>
-					</span>
-					<span class="lo-active">
-						@Html.CheckBox("IsActive", new { @class = "lo-active-chkbx", @checked = "checked" })
-					</span>
-					<span class="lo-audio">
-						@Html.DropDownList("AnnounceAllPicks",
-										Model.GetAudioOptions(null),
-										new { @class = "lo-audio-select" })
-					</span>
-					<span class="owner-controls">
-						<a href="#" class="league-remove-owner" tabindex="-1"><img src="@Url.Content("~/Content/images/minus.png")" alt="Remove Owner" /></a>
-						<a href="#" class="league-add-owner" tabindex="-1"><img src="@Url.Content("~/Content/images/plus.png")" alt="Add Owner" /></a>
-					</span>
+			<div class="league-defaults">
+				<div>
+					@Html.LabelFor(m => m.NumRounds): @Html.TextBoxFor(m => m.NumRounds, new { @class = "ad-num-rounds", type = "number" })
+					@Html.LabelFor(m => m.NumKeepers): @Html.TextBoxFor(m => m.NumKeepers, new { @class = "ad-num-keepers", type = "number" })
 				</div>
-				<div class="mobile-touch-scroll mobile-sect-border">
-				<div class="league-owners">
-					<div class="lo-entry-header">
-						<label class="lo-owner-header">League Owners</label>
-						<label class="lo-teamname-header">Team Name</label>
-						<label class="lo-color-header">Color</label>
-						<label class="lo-active-header">Active?</label>
-						<label class="lo-audio-header">Audio?</label>
-						<label class="lo-controls-header"> </label>
-					</div>
-					@for (int i = 0; i < Model.LeagueOwnerUsers.Count; i++)
-					{
-						<div class="league-owner-entry">
-							<span class="league-owner">
-								@Html.DropDownListFor(o => Model.LeagueOwnerUsers[i].UserId, Model.GetActiveLeagueUsers(
-								Model.LeagueOwnerUsers[i].UserId == null ? null : Model.LeagueOwnerUsers[i].UserId.ToString()),
-								new { @class = "lo-select" })
-							</span>
-							<span class="lo-team-name">
-								@Html.TextBoxFor(o => Model.LeagueOwnerUsers[i].TeamName, new { @class = "lo-team-input" })
-							</span>
-							<span class="lo-color">
-								<span class="lo-outer outline">
-									@{ var cssClass = Model.LeagueOwnerUsers[i].CssClass; }
-									<span class="lo-selected-color @cssClass">
-										@Html.DropDownListFor(o => cssClass,
-											Model.GetLeagueColorOptions(cssClass),
+				<div>@Html.ValidationMessageFor(m => m.NumRounds)</div>
+				<div>@Html.ValidationMessageFor(m => m.NumKeepers)</div>
+				<div>
+					@Html.LabelFor(m => m.Format): @Html.DropDownListFor(m => m.Format, Model.GetDraftFormatItems(), new { @class = "add-draft-format" })
+					@Html.LabelFor(m => m.CombineWRTE):  @Html.CheckBoxFor(m => m.CombineWRTE, new { @class = "ad-combine-wrte" })
+				</div>
+				<div>
+					@Html.LabelFor(m => m.PickTimeSeconds): @Html.TextBoxFor(m => m.PickTimeSeconds, new { @class = "ad-pick-time", type = "number" })
+				</div>
+				<div>@Html.ValidationMessageFor(m => m.Format)</div>
+				<div>@Html.ValidationMessageFor(m => m.PickTimeSeconds)</div>
+				<div>@Html.ValidationMessageFor(m => m.CombineWRTE)</div>
+			</div>
+		}
+		<div class="page-section-small">
+			<div class="copy-lo-entry hide-yo-wives">
+				<span class="league-owner">
+					@Html.DropDownList("UserId", Model.GetActiveLeagueUsers(), new { @class = "lo-select" })
+				</span>
+				<span class="lo-team-name">
+					@Html.TextBox("TeamName", "", new { @class = "lo-team-input" })
+				</span>
+				<span class="lo-color">
+					<span class="lo-outer outline">
+						<span class="lo-selected-color _none">
+							@Html.DropDownList("CssClass",
+											Model.GetLeagueColorOptions(""),
 											new
 											{
 												@class = "lo-color-select",
-												data_prev_color = (cssClass ?? DodgeDynasty.Shared.Constants.CssClass.None),
-												data_prev_text = Model.GetColorText(cssClass)
+												data_prev_color = DodgeDynasty.Shared.Constants.CssClass.None,
+												data_prev_text = DodgeDynasty.Shared.Constants.CssClass.NoneText
 											})
-									</span>
+						</span>
+					</span>
+				</span>
+				<span class="lo-active">
+					@Html.CheckBox("IsActive", new { @class = "lo-active-chkbx", @checked = "checked" })
+				</span>
+				<span class="lo-audio">
+					@Html.DropDownList("AnnounceAllPicks",
+									Model.GetAudioOptions(null),
+									new { @class = "lo-audio-select" })
+				</span>
+				<span class="owner-controls">
+					<a href="#" class="league-remove-owner" tabindex="-1"><img src="@Url.Content("~/Content/images/minus.png")" alt="Remove Owner" /></a>
+					<a href="#" class="league-add-owner" tabindex="-1"><img src="@Url.Content("~/Content/images/plus.png")" alt="Add Owner" /></a>
+				</span>
+			</div>
+			<div class="mobile-touch-scroll mobile-sect-border">
+			<div class="league-owners">
+				<div class="lo-entry-header">
+					<label class="lo-owner-header">League Owners</label>
+					<label class="lo-teamname-header">Team Name</label>
+					<label class="lo-color-header">Color</label>
+					<label class="lo-active-header">Active?</label>
+					<label class="lo-audio-header">Audio?</label>
+					<label class="lo-controls-header"> </label>
+				</div>
+				@for (int i = 0; i < Model.LeagueOwnerUsers.Count; i++)
+				{
+					<div class="league-owner-entry">
+						<span class="league-owner">
+							@Html.DropDownListFor(o => Model.LeagueOwnerUsers[i].UserId, Model.GetActiveLeagueUsers(
+							Model.LeagueOwnerUsers[i].UserId == null ? null : Model.LeagueOwnerUsers[i].UserId.ToString()),
+							new { @class = "lo-select" })
+						</span>
+						<span class="lo-team-name">
+							@Html.TextBoxFor(o => Model.LeagueOwnerUsers[i].TeamName, new { @class = "lo-team-input" })
+						</span>
+						<span class="lo-color">
+							<span class="lo-outer outline">
+								@{ var cssClass = Model.LeagueOwnerUsers[i].CssClass; }
+								<span class="lo-selected-color @cssClass">
+									@Html.DropDownListFor(o => cssClass,
+										Model.GetLeagueColorOptions(cssClass),
+										new
+										{
+											@class = "lo-color-select",
+											data_prev_color = (cssClass ?? DodgeDynasty.Shared.Constants.CssClass.None),
+											data_prev_text = Model.GetColorText(cssClass)
+										})
 								</span>
 							</span>
-							<span class="lo-active">
-								@Html.CheckBoxFor(o => Model.LeagueOwnerUsers[i].IsActive, new { @class = "lo-active-chkbx", @checked = "checked" })
-							</span>
-							<span class="lo-audio">
-								@Html.DropDownListFor(o => Model.LeagueOwnerUsers[i].AnnounceAllPicks,
-										Model.GetAudioOptions(Model.LeagueOwnerUsers[i]),
-										new { @class = "lo-audio-select" })
-							</span>
-							<span class="owner-controls">
-								<a href="#" class="league-remove-owner" tabindex="-1"><img src="@Url.Content("~/Content/images/minus.png")" alt="Remove Owner" /></a>
-								<a href="#" class="league-add-owner" tabindex="-1"><img src="@Url.Content("~/Content/images/plus.png")" alt="Add Owner" /></a>
-							</span>
-						</div>
-					}
-				</div>
-				@Html.Partial(DodgeDynasty.Shared.Constants.Views.TestAudioPartial, false)
-				</div>
-				<div class="page-section">
-					<div class="copy-commish-entry hide-yo-wives">
-						<div class="league-commish">
-							@Html.DropDownList("CommishId", Model.GetActiveLeagueUsers(), new { @class = "commish-select" })
-						</div>
-						<div class="commish-owner-controls">
-							&lt;<a href="#" class="commish-remove-owner" tabindex="-1">Remove</a>&gt;
-						</div>
+						</span>
+						<span class="lo-active">
+							@Html.CheckBoxFor(o => Model.LeagueOwnerUsers[i].IsActive, new { @class = "lo-active-chkbx", @checked = "checked" })
+						</span>
+						<span class="lo-audio">
+							@Html.DropDownListFor(o => Model.LeagueOwnerUsers[i].AnnounceAllPicks,
+									Model.GetAudioOptions(Model.LeagueOwnerUsers[i]),
+									new { @class = "lo-audio-select" })
+						</span>
+						<span class="owner-controls">
+							<a href="#" class="league-remove-owner" tabindex="-1"><img src="@Url.Content("~/Content/images/minus.png")" alt="Remove Owner" /></a>
+							<a href="#" class="league-add-owner" tabindex="-1"><img src="@Url.Content("~/Content/images/plus.png")" alt="Add Owner" /></a>
+						</span>
 					</div>
-					<span class="page-header">Commish Access</span>
-					<span class="league-commish-entry hide-yo-wives"></span>
-					@for (int i = 0; i < Model.CommishUserIds.Count; i++)
-					{
-						var isCommishLoggedIn = Model.IsLoggedInUserId(Model.CommishUserIds[i]);
-						<div class="league-commish-entry">
-							<div class="league-commish">
-								@if (isCommishLoggedIn)
-								{
-									@Html.DropDownListFor(o => Model.CommishUserIds[i],
-									Model.GetActiveLeagueUsers(Model.CommishUserIds[i].ToString()),
-									new { @class = "commish-select", disabled = "disabled" })
-								}
-								else
-								{
-									@Html.DropDownListFor(o => Model.CommishUserIds[i],
-									Model.GetActiveLeagueUsers(Model.CommishUserIds[i].ToString()),
-									new { @class = "commish-select" })
-								}
-							</div>
-							@if (!isCommishLoggedIn) {
-								<div class="commish-owner-controls">
-									&lt;<a href="#" class="commish-remove-owner" tabindex="-1">Remove</a>&gt;
-								</div>
+				}
+			</div>
+			@Html.Partial(DodgeDynasty.Shared.Constants.Views.TestAudioPartial, false)
+			</div>
+			<div class="page-section">
+				<div class="copy-commish-entry hide-yo-wives">
+					<div class="league-commish">
+						@Html.DropDownList("CommishId", Model.GetActiveLeagueUsers(), new { @class = "commish-select" })
+					</div>
+					<div class="commish-owner-controls">
+						&lt;<a href="#" class="commish-remove-owner" tabindex="-1">Remove</a>&gt;
+					</div>
+				</div>
+				<span class="page-header">Commish Access</span>
+				<span class="league-commish-entry hide-yo-wives"></span>
+				@for (int i = 0; i < Model.CommishUserIds.Count; i++)
+				{
+					var isCommishLoggedIn = Model.IsLoggedInUserId(Model.CommishUserIds[i]);
+					<div class="league-commish-entry">
+						<div class="league-commish">
+							@if (isCommishLoggedIn)
+							{
+								@Html.DropDownListFor(o => Model.CommishUserIds[i],
+								Model.GetActiveLeagueUsers(Model.CommishUserIds[i].ToString()),
+								new { @class = "commish-select", disabled = "disabled" })
+							}
+							else
+							{
+								@Html.DropDownListFor(o => Model.CommishUserIds[i],
+								Model.GetActiveLeagueUsers(Model.CommishUserIds[i].ToString()),
+								new { @class = "commish-select" })
 							}
 						</div>
-					}
-					<div class="page-section-small">&lt;<a href="#" class="league-add-commish">Add Commissioner</a>&gt;</div>
-				</div>
-				<div class="page-section-large"><button class="submit-league" type="submit">Submit</button></div>
+						@if (!isCommishLoggedIn) {
+							<div class="commish-owner-controls">
+								&lt;<a href="#" class="commish-remove-owner" tabindex="-1">Remove</a>&gt;
+							</div>
+						}
+					</div>
+				}
+				<div class="page-section-small">&lt;<a href="#" class="league-add-commish">Add Commissioner</a>&gt;</div>
 			</div>
-		}
+			<div class="page-section-large"><button class="submit-league" type="submit">Submit</button></div>
+		</div>
 	</div>
 </div>

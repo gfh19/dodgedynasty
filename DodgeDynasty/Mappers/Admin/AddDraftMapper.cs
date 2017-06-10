@@ -27,12 +27,11 @@ namespace DodgeDynasty.Mappers.Admin
 			Model.DraftTime = defaultDraftDate.ToString("HH:mm");
 			Model.DraftYear = (short)defaultDraftDate.Year;
 			Model.DraftLocation = "Online";
-			Model.NumOwners = Model.LeagueOwnerUsers.Count;
-			Model.NumRounds = 15;
-			Model.NumKeepers = 0;
-			//TODO:  Add League setting & default here
-			Model.Format = Constants.DraftFormats.Snake;
-			Model.PickTimeSeconds = Constants.Defaults.PickTimeSeconds;
+			Model.NumRounds = league.NumRounds;
+			Model.NumKeepers = league.NumKeepers;
+			Model.CombineWRTE = league.CombineWRTE;
+			Model.Format = league.Format;
+			Model.PickTimeSeconds = league.PickTimeSeconds;
 			Model.DraftOwnerUsers = Model.LeagueOwnerUsers;
 		}
 
@@ -45,10 +44,10 @@ namespace DodgeDynasty.Mappers.Admin
 					"yyyy-MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture),
 				DraftLocation = model.DraftLocation,
 				DraftYear = Convert.ToInt16(model.DraftYear),
-				NumOwners = Convert.ToInt16(model.NumOwners),
 				NumRounds = Convert.ToInt16(model.NumRounds),
 				NumKeepers = Convert.ToInt16(model.NumKeepers),
 				Format = model.Format,
+				CombineWRTE = model.CombineWRTE,
 				PickTimeSeconds = Convert.ToInt16(model.PickTimeSeconds),
 				AddTimestamp = DateTime.Now,
 				LastUpdateTimestamp = DateTime.Now
