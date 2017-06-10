@@ -1,4 +1,5 @@
-﻿
+﻿/* Below run in Production on 6/10/17 */
+
 SET XACT_ABORT ON
 BEGIN TRANSACTION;
 
@@ -127,41 +128,3 @@ GO
 
 
 COMMIT TRANSACTION;
-
-
-
-
-
-
-/* Below run in Production on 8/13/16 */
-
-/* 8/13/16 */
-
-SET XACT_ABORT ON
-BEGIN TRANSACTION;
-
-
-ALTER TABLE [dbo].[User]
-ADD [LoginDomain] varchar(30);
-GO
-
-ALTER TABLE [dbo].[User]
-ADD [LoginUserAgent] varchar(512);
-GO
-
-
-UPDATE [dbo].[Highlight]
-SET HighlightValue = '#CCAB42'
-WHERE HighlightName = 'Gold'
-
-
-
-
-
-
-COMMIT TRANSACTION;
-
-
-
-
-

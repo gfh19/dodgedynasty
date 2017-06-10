@@ -92,7 +92,7 @@
 					}
 				}
 			}
-			else if (!Model.CurrentDraft.IsComplete)
+			else if (!Model.CurrentDraft.IsComplete && Model.DraftPicks.Count == 0)
 			{
 				<div class="start-time"
 					 data-draft-time="@Model.CurrentDraft.DraftDate.ToString("MM/dd/yyyy HH:mm:ss")"
