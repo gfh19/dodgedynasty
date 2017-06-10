@@ -38,7 +38,7 @@ namespace DodgeDynasty.Models
 
 		public bool IsSnakeDraft()
 		{
-			return CurrentDraft.Format == Constants.DraftFormats.Durant;
+			return CurrentDraft.Format == Constants.DraftFormats.Snake;
 		}
 	}
 }

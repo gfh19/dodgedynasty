@@ -60,7 +60,7 @@ namespace DodgeDynasty.Shared
 		public class DraftFormats
 		{
 			public const string Repeat = "repeat";
-			public const string Durant = "snake";
+			public const string Snake = "snake";
 		}
 
 		public class JS

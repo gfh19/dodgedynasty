@@ -16,7 +16,7 @@ namespace DodgeDynasty.Models
 
 		public bool IsSnakeRound(int roundNum)
 		{
-			return CurrentDraft.Format == Constants.DraftFormats.Durant && roundNum % 2 == 0;
+			return CurrentDraft.Format == Constants.DraftFormats.Snake && roundNum % 2 == 0;
 		}
 
 		public bool IsLastPickBeforeSnakeRound(DraftPick pick)

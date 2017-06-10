@@ -25,7 +25,7 @@ namespace DodgeDynasty.Mappers.Admin
 			Model.NumRounds = 15;
 			Model.NumKeepers = 0;
 			//TODO:  Add League setting & default here
-			Model.Format = Constants.DraftFormats.Durant;
+			Model.Format = Constants.DraftFormats.Snake;
 			Model.CombineWRTE = false;
 			Model.PickTimeSeconds = Constants.Defaults.PickTimeSeconds;
 			Model.CssColors = HomeEntity.CssColors.ToList();
