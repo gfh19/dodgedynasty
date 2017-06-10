@@ -23,7 +23,7 @@ namespace DodgeDynasty.Mappers.RankAdjustments
 			Model.Rank = new AdminRankModel { Year = Year };
 			Model.PublicRanks = (from r in HomeEntity.Ranks
 								 join dr in HomeEntity.DraftRanks on r.RankId equals dr.RankId
-								 where r.Year == Year && dr.UserId == null
+								 where r.Year >= Year-1 && dr.UserId == null
 								 select new AdminRankModel
 								 {
 									 RankId = r.RankId,

@@ -1,4 +1,47 @@
-﻿/* Below run in Production on 6/10/17 */
+﻿
+/* Below run in Production on 6/10/17 */
+
+SET XACT_ABORT ON
+BEGIN TRANSACTION;
+
+
+
+
+
+ALTER TABLE [dbo].[DraftRank]  WITH CHECK ADD  CONSTRAINT [FK_DraftRank_Rank] FOREIGN KEY([RankId])
+REFERENCES [dbo].[Rank] ([RankId])
+GO
+
+ALTER TABLE [dbo].[DraftRank] CHECK CONSTRAINT [FK_DraftRank_Rank]
+GO
+
+
+DELETE
+  FROM [dbo].[DraftRank]
+  WHERE RankId = 68
+
+DELETE
+FROM [dbo].[Rank]
+  WHERE RankId = 68
+
+
+DELETE
+  FROM [dbo].[DraftRank]
+  WHERE RankId = 69
+
+DELETE
+FROM [dbo].[Rank]
+  WHERE RankId = 69
+
+
+
+
+COMMIT TRANSACTION;
+
+
+
+
+/* Below run in Production on 6/10/17 */
 
 SET XACT_ABORT ON
 BEGIN TRANSACTION;

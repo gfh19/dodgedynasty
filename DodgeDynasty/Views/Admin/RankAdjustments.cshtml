@@ -20,6 +20,8 @@
 				<a class="ra-add-rank" href="#">Add Public Rank</a>
 			</div>
 		</div>
+		@{ var year = DodgeDynasty.Shared.Utilities.GetEasternTime().Year; }
+
 		<div class="page-section">
 			<div class="page-header">
 				Public Rankings
@@ -35,7 +37,7 @@
 						<th>Auto Import Ranks</th>
 					</tr>
 
-					@foreach (var rank in Model.PublicRanks)
+					@foreach (var rank in Model.PublicRanks.Where(o=>o.Year == year))
 					{
 						<tr data-rank-id="@rank.RankId">
 							<input type="hidden" class="ra-edit-rname" value="@rank.RankName" />
@@ -69,6 +71,60 @@
 				</tbody>
 			</table>
 		</div>
+
+		@if (Model.PublicRanks.Any(o => o.Year < year))
+		{
+			<div class="page-section">
+				<div class="page-header">
+					Archived Public Rankings (@(year - 1))
+				</div>
+				<table id="ra-public-ranks" class="disp-table">
+					<tbody>
+						<tr>
+							<th>Rank Name</th>
+							<th>Player Count</th>
+							<th>Last Updated</th>
+							<th>Edit Rank Details</th>
+							<th>Edit Player Ranks</th>
+							<th>Auto Import Ranks</th>
+						</tr>
+
+						@foreach (var rank in Model.PublicRanks.Where(o => o.Year < year))
+						{
+							<tr data-rank-id="@rank.RankId">
+								<input type="hidden" class="ra-edit-rname" value="@rank.RankName" />
+								<input type="hidden" class="ra-edit-year" value="@rank.Year" />
+								<input type="hidden" class="ra-edit-url" value="@rank.Url" />
+								<input type="hidden" class="ra-edit-draft-id" value="@rank.DraftId" />
+								<input type="hidden" class="ra-edit-primary" value="@(rank.PrimaryDraftRanking?"true":"")" />
+								<input type="hidden" class="ra-edit-import" value="@rank.AutoImportId" />
+								@if (!string.IsNullOrEmpty(rank.Url))
+								{
+									<td><a href="@rank.Url" target="_blank">@rank.Year @rank.RankName</a></td>
+								}
+								else
+								{
+									<td>@rank.Year @rank.RankName</td>
+								}
+								<td>@rank.PlayerCount</td>
+								<td>@rank.LastUpdateTimestamp</td>
+								<td>&lt;<a class="ra-edit-details" href="#">Edit Details</a>&gt;</td>
+								<td>&lt;<a class="ra-edit-plyr-ranks" href="@Url.Content("~/Rank/SetupRank?rankId=" + rank.RankId)">Edit</a>&gt;</td>
+								@if (rank.AutoImportId.HasValue)
+								{
+									<td>&lt;<a class="ra-auto-import" href="#">Auto Import</a>&gt;</td>
+								}
+								else
+								{
+									<td>N/A</td>
+								}
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+		}
+
 		<div class="page-section">
 			<div class="page-header">Rank Audit View</div>
 			@if (Model.InactiveRankedPlayers.Count == 0)
