@@ -279,7 +279,15 @@ namespace DodgeDynasty.Models
 			positions.Add(new KeyValuePair<string, string>("OVERALL", "Overall"));
 			positions.Add(new KeyValuePair<string, string>("QB", "QB"));
 			positions.Add(new KeyValuePair<string, string>("RB", "RB"));
-			positions.Add(new KeyValuePair<string, string>("WR/TE", "WR/TE"));
+			if (CurrentDraft.CombineWRTE)
+			{
+				positions.Add(new KeyValuePair<string, string>("WR/TE", "WR/TE"));
+			}
+			else
+			{
+				positions.Add(new KeyValuePair<string, string>("WR", "WR"));
+				positions.Add(new KeyValuePair<string, string>("TE", "TE"));
+			}
 			positions.Add(new KeyValuePair<string, string>("DEF", "DEF"));
 			positions.Add(new KeyValuePair<string, string>("K", "K"));
 
