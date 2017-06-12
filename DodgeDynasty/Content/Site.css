@@ -1130,6 +1130,7 @@ ul.menu li a.current-page
     border-radius: 6px;
 	max-width: 310px;
 	margin: 0 auto;
+	box-shadow: #dedede 0px 0px 3px 3px;
 }
 .draft-title {
 	font-weight: bold;
@@ -1521,8 +1522,8 @@ ul.menu li a.current-page
 	border: 2px solid darkblue;
 	border-radius: 6px;
 	-webkit-border-radius: 6px;
-	margin-right: 7px;
-	box-shadow: #898989 4px 4px
+	margin-right: 8px;
+	box-shadow: #898989 3px 3px 2px 2px;
 }
 .highlight-locked {
 	min-height: 362.5px !important;
@@ -1668,7 +1669,7 @@ ul.menu li a.current-page
     border: 2px solid navy;
     border-radius: 6px;
     padding: 3px 4px 8px 4px;
-    box-shadow: #898989 4px 4px;
+    box-shadow: #898989 3px 3px 2px 2px;
 }
 .rank-avail-section {
 	margin: 10px 30px 20px 30px;
@@ -2347,10 +2348,11 @@ span.player-select
 	width: 430px;
 	font-family: "Segoe UI", Arial, Sans-Serif;
 	font-size: 14px;
-	border: 1px solid darkgray;
+	border: 1px solid #898989;
 	background-color: #EEEEEE;
 	border-radius: 4px;
 	webkit-border-radius: 4px;
+	box-shadow: #dedede 0px 0px 3px 3px;
 	vertical-align: top;
 	z-index: 100;
 }
@@ -2361,7 +2363,7 @@ span.player-select
 .dchat-toggle, .dchat-close {
 	float: right;
 	display: inline-block;
-	border: 1px solid darkgray;
+	border: 1px solid #898989;
 	border-radius: 3px;
 	webkit-border-radius: 3px;
 }
@@ -2430,8 +2432,8 @@ span.player-select
 	height: 210px;
 	overflow-y: scroll;
 	-webkit-overflow-scrolling: touch;
-	border-top: 1px solid darkgray;
-	border-bottom: 1px solid darkgray;
+	border-top: 1px solid #898989;
+	border-bottom: 1px solid #898989;
 }
 .dchat-footer {
 	height: 27px;
@@ -2457,7 +2459,7 @@ span.player-select
 	padding: 1px;
 	margin: 1px -3px;
 	font-size: 13px;
-	border: 1px solid darkgray;
+	border: 1px solid #898989;
 	border-radius: 3px;
 	webkit-border-radius: 3px;
 }
@@ -2466,14 +2468,14 @@ span.player-select
 }
 
 .dchat-window-error .dchat-preview {
-	width: 276px;
-	height: 25px;
+	width: 345px;
+	height: 29px;
 	padding: 1px;
 	border-radius: 3px;
 	webkit-border-radius: 3px;
 }
 .dchat-window-error .dchat-body {
-	width: 356px;
+	width: 425px;
 	border-radius: 3px;
 	webkit-border-radius: 3px;
 }

@@ -101,6 +101,8 @@ namespace DodgeDynasty.Shared
 			public const string QB = "QB";
 			public const string RB = "RB";
 			public const string WRTE = "WR/TE";
+			public const string WR = "WR";
+			public const string TE = "TE";
 			public const string DEF = "DEF";
             public const string K = "K";
 		}
