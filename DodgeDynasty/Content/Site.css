@@ -1130,7 +1130,7 @@ ul.menu li a.current-page
     border-radius: 6px;
 	max-width: 310px;
 	margin: 0 auto;
-	box-shadow: #dedede 0px 0px 3px 3px;
+	box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08)
 }
 .draft-title {
 	font-weight: bold;
@@ -1523,7 +1523,7 @@ ul.menu li a.current-page
 	border-radius: 6px;
 	-webkit-border-radius: 6px;
 	margin-right: 8px;
-	box-shadow: #898989 3px 3px 2px 2px;
+	box-shadow: #898989 2px 2px 2px 2px;
 }
 .highlight-locked {
 	min-height: 362.5px !important;
@@ -1669,7 +1669,7 @@ ul.menu li a.current-page
     border: 2px solid navy;
     border-radius: 6px;
     padding: 3px 4px 8px 4px;
-    box-shadow: #898989 3px 3px 2px 2px;
+    box-shadow: #898989 2px 2px 2px 2px;
 }
 .rank-avail-section {
 	margin: 10px 30px 20px 30px;
