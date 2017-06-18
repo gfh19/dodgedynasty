@@ -1126,11 +1126,10 @@ ul.menu li a.current-page
 }
 .draft-status
 {
-	border: 1px solid #898989;
     border-radius: 6px;
 	max-width: 310px;
 	margin: 0 auto;
-	box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+	box-shadow: 0 2px 2px 0 #898989, 0 0 0 1px #898989;
 }
 .draft-title {
 	font-weight: bold;
@@ -1141,7 +1140,7 @@ ul.menu li a.current-page
 	border-radius: 6px 6px 0px 0px;
 }
 .drafter {
-	padding-bottom: 2px;
+	padding-bottom: 3px;
 }
 .current-turn, .prev-pick
 {
@@ -1308,6 +1307,7 @@ ul.menu li a.current-page
 	font-weight: bold;
 	text-align: left;
     margin-top: 2px;
+	margin-left: 2px;
 }
 
 /* Draft Team Display
@@ -1491,7 +1491,7 @@ ul.menu li a.current-page
 	background-color: #DFDFDF;
 }
 .pr-toggle-links, .pr-highlight-links {
-	margin-top: 4px;
+	margin-top: 5px;
 }
 .pr-toggle-links {
 	font-size: 10px;
@@ -2352,7 +2352,7 @@ span.player-select
 	background-color: #EEEEEE;
 	border-radius: 4px;
 	webkit-border-radius: 4px;
-	box-shadow: #dedede 0px 0px 3px 3px;
+	box-shadow: #898989 0px 2px 1px 0px;
 	vertical-align: top;
 	z-index: 100;
 }
@@ -2391,7 +2391,7 @@ span.player-select
 }
 .dchat-preview {
 	width: 350px;
-	min-height: 28px;
+	min-height: 29px;
 	font-size: 14px;
 	display: inline-block;
 	padding-top: 4px;
@@ -2444,6 +2444,9 @@ span.player-select
 .dchat-body, .dchat-footer {
 	width: 428px;
 }
+.dchat-msg-text {
+	line-height: 16px;
+}
 .dchat-input {
 	padding: 5px;
 	margin: 1px;
@@ -2469,7 +2472,7 @@ span.player-select
 
 .dchat-window-error .dchat-preview {
 	width: 345px;
-	height: 29px;
+	height: 28px;
 	padding: 1px;
 	border-radius: 3px;
 	webkit-border-radius: 3px;
@@ -2655,7 +2658,7 @@ span.player-select
 	.draft-pick
 	{
 		float: none;
-		width: 202px;
+		width: 216px;
 	}
 	.draft-pick.filled
 	{
@@ -2891,7 +2894,7 @@ span.player-select
 	.dchat-window, .dchat-window-error {
 		font-size: 12px;
 		height: 32px;
-		width: 285px;
+		width: 293px;
 	}
 	.dchat-ease-collapse {
 		height: 32px;
@@ -2901,28 +2904,28 @@ span.player-select
 	}
 	.dchat-preview {
 		font-size: 12px;
-		min-height: 28px;
-		width: 205px;
+		min-height: 27px;
+		width: 214px;
 	}
 	.dchat-body {
 		height: 163px;
-		width: 283px;
+		width: 291px;
 	}
 	.dchat-header {
 		height: 30px;
 	}
 	.dchat-footer {
-		width: 285px;
+		width: 293px;
 	}
 	.dchat-input {
-		width: 225px;
+		width: 233px;
 		margin-left: 1px;
 	}
 	.dchat-window-error .dchat-preview {
-		width: 196px;
+		width: 207px;
 	}
 	.dchat-window-error .dchat-body {
-		width: 276px;
+		width: 289px;
 	}
 	.dchat-prev-stamp, .draft-chat-stamp {
 		font-size: 10px;

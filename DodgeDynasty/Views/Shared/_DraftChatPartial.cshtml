@@ -39,7 +39,7 @@
 									<span class="dchat-prev-outline">
 										<span class="dchat-prev-stamp @lastChat.CssClass">@lastChat.NickName (@lastChat.AddTimestamp.ToString(DodgeDynasty.Shared.Constants.ChatTimeFormat)):</span>
 									</span>
-									@lastChat.MessageText
+									<span class="dchat-msg-text">@lastChat.MessageText</span>
 								}
 								else
 								{
@@ -59,7 +59,7 @@
 								<span class="dchat-prev-outline">
 									<span class="dchat-prev-stamp @chat.CssClass">@chat.NickName (@chat.AddTimestamp.ToString(DodgeDynasty.Shared.Constants.ChatTimeFormat)):</span>
 								</span>
-								@chat.MessageText
+								<span class="dchat-msg-text">@chat.MessageText</span>
 							</div>
 						}
 					</div>
