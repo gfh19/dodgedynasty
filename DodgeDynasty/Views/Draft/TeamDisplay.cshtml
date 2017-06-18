@@ -12,19 +12,19 @@
 		});
 	</script>
 	@Html.Partial("CurrentDraftPickPartial", Model)
+	<div class="team-pos-section center">
+		@if (DodgeDynasty.Shared.Utilities.ToBool(Request.QueryString[DodgeDynasty.Shared.Constants.QS.ByPositions]))
+		{
+			<input type="checkbox" id="team-by-pos" checked="checked"/>
+		}
+		else
+		{
+			<input type="checkbox" id="team-by-pos" />
+		}
+		<label class="team-pos-label" for="team-by-pos">By Position</label>
+	</div>
 	<div class="team-container">
 		<div class="clear-fix team-content">
-			<div class="team-pos-section">
-				@if (DodgeDynasty.Shared.Utilities.ToBool(Request.QueryString[DodgeDynasty.Shared.Constants.QS.ByPositions]))
-				{
-					<input type="checkbox" id="team-by-pos" checked="checked"/>
-				}
-				else
-				{
-					<input type="checkbox" id="team-by-pos" />
-				}
-				<label class="team-pos-label" for="team-by-pos">By Position</label>
-			</div>
 		@foreach (var owner in Model.GetTeamDraftOwners())
 		{
 			Model.SetCurrentGridOwnerUser(owner.UserId);

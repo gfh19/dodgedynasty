@@ -1317,10 +1317,14 @@ ul.menu li a.current-page
 	display: inline;
 }
 
+.team-pos-section {
+	margin-top: 16px;
+}
+
 .team-content
 {
 	text-align: center;
-	margin-top: 18px;
+	margin-top: 2px;
 	white-space: nowrap;
 }
 

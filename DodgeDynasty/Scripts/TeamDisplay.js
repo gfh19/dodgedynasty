@@ -28,14 +28,14 @@ function bindByPositionCheckbox() {
 		var teamDisplayUrl = getCurrentDraftPartialUrl(teamDisplayPartialUrl);
 		if ($("#team-by-pos").is(':checked')) {
 			addWaitCursor();
-			ajaxGetReplace(addQSValue(teamDisplayUrl, "byPositions=true"), '#teamDisplay', function () {
+			callRefreshPage(addQSValue(teamDisplayUrl, "byPositions=true"), '#teamDisplay', function () {
 				$("#team-by-pos").prop("checked", true);
 				removeWaitCursor();
 			});
 		}
 		else {
 			addWaitCursor();
-			ajaxGetReplace(addQSValue(teamDisplayUrl, "byPositions=false"), '#teamDisplay', function () {
+			callRefreshPage(addQSValue(teamDisplayUrl, "byPositions=false"), '#teamDisplay', function () {
 				$("#team-by-pos").prop("checked", false);
 				removeWaitCursor();
 			});

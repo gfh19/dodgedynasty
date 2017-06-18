@@ -816,6 +816,7 @@ function ajaxPost(model, url, successFn, errorFn, dataType, makeSync) {
 };
 
 function ajaxGetReplace(url, elementId, successFn, errorFn) {
+//For refreshed page functnlty use "callRefreshPage" instead
 	ajaxGet(url, function (response) {
 		replaceWith(elementId, response);
 		if (successFn) {

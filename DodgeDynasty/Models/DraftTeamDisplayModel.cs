@@ -13,7 +13,18 @@ namespace DodgeDynasty.Models
 		public List<Player> TeamPlayers { get; set; }
 		public bool ByPositions { get; set; }
 
-		public Dictionary<string, int> PositionOrder = new Dictionary<string, int>()
+		public Dictionary<string, int> StandardPositionOrder = new Dictionary<string, int>()
+		{
+			{ "QB", 1 },
+			{ "RB", 2 },
+			{ "WR", 3 },
+			{ "TE", 4 },
+			{ "DEF", 5 },
+			{ "K", 6 },
+			{ "", 7 }
+		};
+
+		public Dictionary<string, int> CombineWRTEPositionOrder = new Dictionary<string, int>()
 		{
 			{ "QB", 1 },
 			{ "RB", 2 },
@@ -31,6 +42,7 @@ namespace DodgeDynasty.Models
 
 		public List<DraftPickPlayer> GetTeamDraftPicks(int userId)
 		{
+			var posOrder = CurrentDraft.CombineWRTE ? CombineWRTEPositionOrder : StandardPositionOrder;
 			if (ByPositions)
 			{
 				TeamDraftPicks = DraftPicks.Where(dp => dp.UserId == userId).GroupJoin(DraftedPlayers, tdp => tdp.PlayerId, plyr => plyr.PlayerId,
@@ -46,7 +58,7 @@ namespace DodgeDynasty.Models
 						PickNum = tdp.PickNum,
 						PlayerId = null,
 						Position = ""
-					})).SelectMany(g => g).OrderBy(dp=>dp.Position).OrderBy(dp => PositionOrder[dp.Position]).ThenBy(dp => dp.PickNum).ToList();
+					})).SelectMany(g => g).OrderBy(dp=>dp.Position).OrderBy(dp => posOrder[dp.Position]).ThenBy(dp => dp.PickNum).ToList();
 			}
 			else
 			{
