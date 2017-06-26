@@ -7,9 +7,12 @@
 	@if (isStartDrafting)
 	{
 	<link href="@Url.Content("~/Content/favicon.ico")" rel="shortcut icon" type="image/x-icon" />
+	<link href="@Url.Content("~/SD-apple-touch-icon.png")" rel="apple-touch-icon" >
 	}
-	else {
+	else
+	{
 	<link href="@Url.Content("~/favicon.ico")" rel="shortcut icon" type="image/x-icon" />
+	<link href="@Url.Content("~/DD-apple-touch-icon.png")" rel="apple-touch-icon">
 	}
 	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.5, user-scalable=yes" />
 	@Styles.Render("~/Content/css")

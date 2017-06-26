@@ -14,89 +14,97 @@
 }
 
 <div id="pickInfo">
-	<div id="playerEntry">
-		<script type="text/javascript">
-			$(function () {
-				playerHints = @Html.Raw(@Model.GetPlayerHints(true));
-				hasModelErrors = @(!ViewData.ModelState.IsValid ?  "true" : "false");
-				initPick();
-			});
-		</script>
-		@Html.Partial("CurrentDraftPickPartial", Model)
-		@Html.ValidationSummary(true)
-		@if ((Model.CurrentClockOwnerUser == null || Model.CurrentClockOwnerUser.UserName != currentUserName))
-		{
-			if (nextTurnPickCount > 1)
+	@Html.Partial("CurrentDraftPickPartial", Model)
+	<div class="pick-content">
+		<div id="playerEntry">
+			<script type="text/javascript">
+				$(function () {
+					playerHints = @Html.Raw(@Model.GetPlayerHints(true));
+					hasModelErrors = @(!ViewData.ModelState.IsValid ?  "true" : "false");
+					initPick();
+				});
+			</script>
+			@Html.ValidationSummary(true)
+			@if ((Model.CurrentClockOwnerUser == null || Model.CurrentClockOwnerUser.UserName != currentUserName))
 			{
-				<div class="your-pick-status">You are up in @nextTurnPickCount picks.</div>
+				if (nextTurnPickCount > 1)
+				{
+					<div class="your-pick-status">Your next turn is in @nextTurnPickCount picks.</div>
+				}
+				else if (nextTurnPickCount == 1)
+				{
+					<div class="your-pick-status">You're NEXT!  Get ready...</div>
+				}
+				else
+				{
+					<div class="your-pick-status">You have no more draft picks.</div>
+				}
 			}
-			else if (nextTurnPickCount == 1)
+			else if (!Model.IsDraftActive())
 			{
-				<div class="your-pick-status">You're NEXT!  Get ready...</div>
+				<div class="your-pick-status">Please check back in when the draft is active.</div>
 			}
 			else
 			{
-				<div class="your-pick-status">You have no more draft picks.</div>
+				<div class="your-draft-pick">You're up! Please enter your draft pick:</div>
+				<text>
+					@using (Html.BeginForm("Pick", "Draft"))
+					{
+						@Html.LabelFor(m => m.Player.FirstName)
+						@Html.TextBoxFor(m => m.Player.FirstName, new { list = "playerHints", maxLength = "25", autofocus = "autofocus" });
+						@Html.ValidationMessageFor(m => m.Player.FirstName)
+						@Html.LabelFor(m => m.Player.LastName);
+						@Html.TextBoxFor(m => m.Player.LastName, new { maxLength = "25" });
+						@Html.ValidationMessageFor(m => m.Player.LastName)
+						@Html.LabelFor(m => m.Player.Position);
+						@Html.DropDownListFor(m => m.Player.Position, Model.GetPositionListItems());
+						@Html.ValidationMessageFor(m => m.Player.Position)
+						@Html.LabelFor(m => m.Player.NFLTeam);
+						@Html.DropDownListFor(m => m.Player.NFLTeam, Model.GetNFLListItems());
+						@Html.ValidationMessageFor(m => m.Player.NFLTeam)
+
+						@Html.HiddenFor(m => m.DraftId);
+						@Html.HiddenFor(m => m.Player.TeamName);
+						@Html.HiddenFor(m => m.Player.DraftPickId);
+						@Html.HiddenFor(m => m.Referrer, new { Value = (referrer != null) ? referrer.ToString() : "" });
+						<div class="pick-buttons"><button id="inputSubmit" type="submit">Submit</button></div>
+					}
+					@if (!string.IsNullOrEmpty(Model.Message))
+					{
+						<div>@Model.Message</div>
+					}
+				</text>
 			}
-		}
-		else if (!Model.IsDraftActive())
+		</div>
+		<div class="draft-glance">
+			@{var prevPick = Model.PreviousDraftPick; var currPick = Model.CurrentDraftPick; var nextPick = Model.NextDraftPick; }
+			@if (prevPick != null)
+			{
+				<div class="glance">
+					<div class="glance-entry"><span class="pick-glance">Previous pick (Round @prevPick.RoundNum, Pick #@prevPick.PickNum):</span> <span class="team-glance">@Model.GetTeamName(prevPick.UserId) - @Model.GetPlayer(prevPick.PlayerId).PlayerName</span></div>
+				</div>
+			}
+			@if (currPick != null)
+			{
+				<div class="glance current-pick">
+					<div class="glance-entry"><span class="pick-glance">Current pick (Round @currPick.RoundNum, Pick #@currPick.PickNum):</span> <span class="team-glance">@Model.GetTeamName(currPick.UserId)</span></div>
+				</div>
+			}
+			@if (nextPick != null)
+			{
+				<div class="glance">
+					<div class="glance-entry"><span class="pick-glance">Next pick (Round @nextPick.RoundNum, Pick #@nextPick.PickNum):</span> <span class="team-glance">@Model.GetTeamName(nextPick.UserId)</span></div>
+				</div>
+			}
+		</div>
+		@{var draftId = DodgeDynasty.Shared.Utilities.GetRouteDraftId(Url.RequestContext.RouteData);}
+		@if (draftId != null)
 		{
-			<div class="your-pick-status">Please check back in when the draft is active.</div>
+			<div class="view-draft"><a href="@Url.Content("~/Draft/Display/" + draftId + "?historyMode=true")">View Draft</a> for full details.</div>
 		}
 		else
 		{
-			<div class="your-draft-pick">You're up! Please enter your draft pick:</div>
-			<text>
-				@using (Html.BeginForm("Pick", "Draft"))
-				{
-					@Html.LabelFor(m => m.Player.FirstName)
-					@Html.TextBoxFor(m => m.Player.FirstName, new { list = "playerHints", maxLength = "25", autofocus = "autofocus" });
-					@Html.ValidationMessageFor(m => m.Player.FirstName)
-					@Html.LabelFor(m => m.Player.LastName);
-					@Html.TextBoxFor(m => m.Player.LastName, new { maxLength = "25" });
-					@Html.ValidationMessageFor(m => m.Player.LastName)
-					@Html.LabelFor(m => m.Player.Position);
-					@Html.DropDownListFor(m => m.Player.Position, Model.GetPositionListItems());
-					@Html.ValidationMessageFor(m => m.Player.Position)
-					@Html.LabelFor(m => m.Player.NFLTeam);
-					@Html.DropDownListFor(m => m.Player.NFLTeam, Model.GetNFLListItems());
-					@Html.ValidationMessageFor(m => m.Player.NFLTeam)
-
-					@Html.HiddenFor(m => m.DraftId);
-					@Html.HiddenFor(m => m.Player.TeamName);
-					@Html.HiddenFor(m => m.Player.DraftPickId);
-					@Html.HiddenFor(m => m.Referrer, new { Value = (referrer != null) ? referrer.ToString() : "" });
-					<div class="buttons"><button id="inputSubmit" type="submit">Submit</button></div>
-				}
-				@if (!string.IsNullOrEmpty(Model.Message))
-				{
-					<div>@Model.Message</div>
-				}
-			</text>
+			<div class="view-draft"><a href="@Url.Content("~/Draft/Display/")">View Draft</a> for full details.</div>
 		}
 	</div>
-	<div class="draft-glance">
-		@{var prevPick = Model.PreviousDraftPick; var currPick = Model.CurrentDraftPick; var nextPick = Model.NextDraftPick; }
-		@if (prevPick != null)
-		{
-			<div class="glance"><span class="pick-glance">Previous pick (Round @prevPick.RoundNum, Pick #@prevPick.PickNum):</span> <span class="team-glance">@Model.GetTeamName(prevPick.UserId) - @Model.GetPlayer(prevPick.PlayerId).PlayerName</span></div>
-		}
-		@if (currPick != null)
-		{
-			<div class="glance current-pick"><span class="pick-glance">Current pick (Round @currPick.RoundNum, Pick #@currPick.PickNum):</span> <span class="team-glance">@Model.GetTeamName(currPick.UserId)</span></div>
-		}
-		@if (nextPick != null)
-		{
-			<div class="glance"><span class="pick-glance">Next pick (Round @nextPick.RoundNum, Pick #@nextPick.PickNum):</span> <span class="team-glance">@Model.GetTeamName(nextPick.UserId)</span></div>
-		}
-	</div>
-	@{var draftId = DodgeDynasty.Shared.Utilities.GetRouteDraftId(Url.RequestContext.RouteData);}
-	@if (draftId != null)
-	{
-		<div class="view-draft"><a href="@Url.Content("~/Draft/Display/" + draftId + "?historyMode=true")">View Draft</a> for full details.</div>
-	}
-	else
-	{
-		<div class="view-draft"><a href="@Url.Content("~/Draft/Display/")">View Draft</a> for full details.</div>
-	}
 </div>

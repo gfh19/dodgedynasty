@@ -1,16 +1,16 @@
 ﻿@model DodgeDynasty.Models.DraftInputModel
 
 <div id="playerEntry">
-	<div>
-		@Model.GetCurrentDraftName()
-		<div class="draftGlance">
+	<div class="admin-draft-info draft-status">
+		<span class="draft-title">@Model.GetCurrentDraftName()</span>
+		<div class="drafter">
 			@if (Model.CurrentClockOwnerUser != null)
 			{
-				<text>Pick #@Model.CurrentDraftPick.PickNum, Current Team: @Model.CurrentDraftPickOwnerUser.TeamName</text>
+				<text>Pick #@Model.CurrentDraftPick.PickNum, Team: @Model.CurrentDraftPickOwnerUser.TeamName</text>
 			}
 			else if (!Model.CurrentDraft.IsComplete && Model.DraftPicks.Count == 0)
 			{
-	   			<text>The Draft Has Not Been Setup</text>
+				<text>The Draft Has Not Been Setup</text>
 			}
 			else
 			{
@@ -40,7 +40,7 @@
 		@Html.HiddenFor(m => m.DraftId);
 		@Html.HiddenFor(m => m.Player.TeamName);
 		@Html.HiddenFor(m => m.Player.DraftPickId);
-		<div class="buttons">
+		<div class="pick-buttons">
 			<button id="inputSubmit" type="submit">Submit</button>
 			@if (Model.CurrentDraftPick != null && Model.CurrentDraftPick.PlayerId.HasValue)
 			{

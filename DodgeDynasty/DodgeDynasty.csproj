@@ -363,6 +363,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="2017 SQL Changes.sql" />
+    <Content Include="apple-touch-icon.PNG" />
+    <Content Include="DD-apple-touch-icon.png" />
+    <Content Include="SD-apple-touch-icon.png" />
     <Content Include="SQL\OLD - 2016 SQL Changes.sql" />
     <Content Include="Content\favicon.ico" />
     <Content Include="Content\images\ajax-loader.gif" />
@@ -534,6 +537,10 @@
     <Content Include="Views\Shared\UserInfoPartial.cshtml" />
     <Content Include="Views\Admin\ManageUsers.cshtml" />
     <Content Include="Views\Admin\AddUser.cshtml" />
+    <Content Include="docs\2013 Dodge Dynasty Rundown.docx" />
+    <Content Include="docs\2015 Dodge Dynasty Champion - Jeremiah Yugulis.docx" />
+    <Content Include="docs\2016 Dodge Dynasty Champion - Matt Robson.docx" />
+    <Content Include="docs\2017 Draft Order - Adjusted Total Points.xlsx" />
     <None Include="Properties\PublishProfiles\WinHost 2013 Local Folder.pubxml" />
     <None Include="Properties\PublishProfiles\WinHost 2015 Local Folder.pubxml" />
     <None Include="Properties\PublishProfiles\WinHost FTP.pubxml" />

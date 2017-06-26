@@ -1365,24 +1365,43 @@ ul.menu li a.current-page
 
 /* Draft Pick
 ----------------------------------------------------------*/
-.buttons
+.pick-buttons
 {
-	margin-top: 5px;
+	margin-top: 9px;
+	text-align: center;
 }
 
-#playerEntry, #playerEntry .draft-info
+#playerEntry form
 {
-	margin-bottom: 19px;
+	width: 215px;
+	margin: 0 auto;
+	margin-bottom: 24px;
+	padding: 8px;
+	border: 2px solid darkblue;
+	box-shadow: #898989 2px 2px 2px 2px;
+	border-radius: 6px;
+	-webkit-border-radius: 6px;
+}
+
+.pick-content {
+	margin-top: 18px;
+}
+
+.your-pick-status
+{
+	text-align: center;
+	margin-bottom: 15px;
 }
 
 .your-draft-pick
 {
-	margin-bottom: 10px;
+	text-align: center;
+	margin-bottom: 18px;
 }
 
 .pick-glance
 {
-	width: 275px;
+	width: 260px;
 	display: inline-block;
 }
 
@@ -1397,8 +1416,33 @@ ul.menu li a.current-page
 }
 .draft-glance 
 {
-	margin-bottom: 19px;
+    display: table;
+    table-layout: fixed;
+	text-align: left;
+	margin: 0 auto;
+	margin-bottom: 18px;
 }
+
+.glance-entry
+{
+    display: table-cell;
+}
+
+.view-draft {
+	text-align: center;
+}
+
+/* Pick - Admin Draft Input  
+----------------------------------------------------------*/
+
+.admin-draft-info {
+	text-align: center;
+}
+
+#draftInputForm {
+	margin-top: 20px !important;
+}
+
 
 /* Best Available / Player Rankings
 ----------------------------------------------------------*/
