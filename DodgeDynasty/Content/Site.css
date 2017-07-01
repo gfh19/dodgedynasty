@@ -10,6 +10,7 @@ html
 	background-color: #efeeef;
 	margin: 0;
 	padding: 0;
+	-webkit-text-size-adjust: 100%;
 }
 
 body
@@ -1140,9 +1141,10 @@ ul.menu li a.current-page
 	border-radius: 6px 6px 0px 0px;
 }
 .drafter {
+	margin-top: 2px;
 	padding-bottom: 3px;
 }
-.current-turn, .prev-pick
+.prev-pick
 {
 	margin-top: 2px;
 }
