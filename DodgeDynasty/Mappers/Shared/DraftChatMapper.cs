@@ -94,7 +94,7 @@ namespace DodgeDynasty.Mappers.Shared
 				author = user.NickName,
 				css = leagueOwner.CssClass,
 				msg = chatMessage.MessageText,
-				time = chatMessage.AddTimestamp.ToString(Constants.ChatTimeFormat)
+				time = chatMessage.AddTimestamp.ToString(Constants.Times.ChatTimeFormat)
 			};
 		}
 

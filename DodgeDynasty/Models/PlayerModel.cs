@@ -11,18 +11,18 @@ namespace DodgeDynasty.Models
 	public class PlayerModel : ModelBase
 	{
 		[Display(Name = "Player First Name")]
-		[Required]
+		[Required(ErrorMessage = "First Name is required")]
 		[StringLength(25, ErrorMessage = Constants.Messages.StringLength, MinimumLength = 1)]
 		public string FirstName { get; set; }
 		[Display(Name = "Player Last Name")]
-		[Required]
+		[Required(ErrorMessage = "Last Name is required")]
 		[StringLength(25, ErrorMessage = Constants.Messages.StringLength, MinimumLength = 1)]
 		public string LastName { get; set; }
 		[Display(Name = "Position")]
-		[Required]
+		[Required(ErrorMessage = "Position is required")]
 		public string Position { get; set; }
 		[Display(Name = "NFL Team")]
-		[Required]
+		[Required(ErrorMessage = "Team is required")]
 		public string NFLTeam { get; set; }
 		[Display(Name = "User")]
 		public int UserId { get; set; }

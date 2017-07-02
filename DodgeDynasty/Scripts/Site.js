@@ -572,6 +572,10 @@ function showStaleDraftDialog() {
 			}, null, "Refresh", "Cancel");
 }
 
+function refreshCurrentDraftPickPartial() {
+	callRefreshPage("Draft/CurrentDraftPickPartial", ".draft-info");
+}
+
 
 /*		--- Draft Chat */
 
@@ -792,8 +796,8 @@ function toggleTestAudio() {
 
 /* Helper functions */
 
-function ajaxGetJson(url, successFn) {
-	$.get(baseURL + url, {}, successFn, "JSON");
+function ajaxGetJson(url, successFn, errorFn) {
+	$.get(baseURL + url, {}, successFn, "JSON").fail(errorFn);
 };
 
 function ajaxGet(url, successFn, errorFn) {
@@ -962,6 +966,12 @@ function changeViewport(minScale, maxScale, initScale, width) {
 		', minimum-scale=' + minScale +
 		', maximum-scale=' + maxScale + '">');
 }
+
+$.fn.permanentlyHide = function () {
+	$(this).addClass("hide-yo-wives");
+	return this;
+}
+
 
 /* Dialogs */
 

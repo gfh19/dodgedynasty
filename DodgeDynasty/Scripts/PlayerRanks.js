@@ -1,19 +1,24 @@
 ﻿var replaceElementId = "#allPlayerRanks";
+var prRefreshPartial = "Draft/PlayerRanksPartial";
 
 $(function () {
-	callRefreshPageWithPickTimer("Draft/PlayerRanksPartial" + getRankIdUrlPath(), replaceElementId,
-		restoreHighlighting, restoreHighlighting, suspendHighlighting);
-	setPickTimer(true);
-	touchScrollDiv = ".rank-container";
+	loadPlayerRanksShared();
 });
 
-function pageBroadcastDraftHandler() {
-	callRefreshPage("Draft/PlayerRanksPartial" + getRankIdUrlPath(), replaceElementId,
-		function () {
-			if (playerRanksBroadcastFn) { playerRanksBroadcastFn(); }
-			restoreHighlighting();
-		}, function () {
-			if (playerRanksBroadcastFn) { playerRanksBroadcastFn(); }
-			restoreHighlighting();
-		}, suspendHighlighting);
+function updateDraftPickRows(pickInfo) {
+	$.each($(".pr-table tr[data-player-id=" + pickInfo.pid + "]"), function (ix, row) {
+		$(row).addClass("ba-selected");
+		$(row).addClass(pickInfo.ocss);
+		if (pickInfo.yours) {
+			$(row).addClass("you");
+		}
+
+		var colspan = 1;
+		$(".pr-team", row).remove();
+		if ($(".pr-pos", row).length > 0) {
+			colspan = 2;
+			$(".pr-pos", row).remove();
+		}
+		$(".ba-player-name", row).after('<td colspan="' + colspan + '">(' + pickInfo.oname + ', #' + pickInfo.pnum + ')</td>');
+	});
 }

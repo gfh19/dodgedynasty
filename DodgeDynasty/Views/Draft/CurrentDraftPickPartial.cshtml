@@ -58,15 +58,12 @@
 				{
 					if (Model.PreviousDraftPick != null)
 					{
-						if (Model.PreviousDraftPick.RoundNum > Model.CurrentDraft.NumKeepers)
-						{
-							var prevPlayer = Model.PreviousDraftPick.Player.PlayerName;
-							var prevUser = Model.PreviousDraftPick.User.NickName;
-							<div class="prev-pick">
-								Last Pick:
-								<span>@prevPlayer - @prevUser</span>
-							</div>
-						}
+						var prevPlayer = Model.PreviousDraftPick.Player.PlayerName;
+						var prevUser = Model.PreviousDraftPick.User.NickName;
+						<div class="prev-pick">
+							Last Pick:
+							<span>@prevPlayer - @prevUser</span>
+						</div>
 					}
 					var nextTurnPickCount = Model.GetPickCountUntilNextTurn();
 					if (nextTurnPickCount > 0)

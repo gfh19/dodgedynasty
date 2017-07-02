@@ -60,7 +60,7 @@
 							@foreach (var chat in draftChats) {
 							<div class="draft-chat-entry">
 								<span class="draft-chat-outline">
-									<span class="draft-chat-stamp @chat.CssClass">@chat.NickName (@chat.AddTimestamp.ToString(DodgeDynasty.Shared.Constants.ChatDateTimeFormat)):</span>
+									<span class="draft-chat-stamp @chat.CssClass">@chat.NickName (@chat.AddTimestamp.ToString(DodgeDynasty.Shared.Constants.Times.ChatDateTimeFormat)):</span>
 								</span>
 								@chat.MessageText
 							</div>

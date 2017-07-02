@@ -235,6 +235,7 @@
     <Compile Include="Mappers\RankSetupMapper.cs" />
     <Compile Include="Mappers\Highlights\AddPlayerHighlightMapper.cs" />
     <Compile Include="Mappers\Ranks\CompareRanksMapper.cs" />
+    <Compile Include="Mappers\Ranks\LatestDraftPickMapper.cs" />
     <Compile Include="Mappers\Ranks\PlayerRankModelHelper.cs" />
     <Compile Include="Mappers\Ranks\PlayerRankOptionsMapper.cs" />
     <Compile Include="Mappers\Shared\ColorStylesMapper.cs" />
@@ -305,6 +306,7 @@
     <Compile Include="Models\Types\DraftPlayerHighlight.cs" />
     <Compile Include="Models\Types\DraftRankModel.cs" />
     <Compile Include="Models\Types\HubConnJson.cs" />
+    <Compile Include="Models\Types\LatestPickInfoJson.cs" />
     <Compile Include="Models\Types\PickInfoJson.cs" />
     <Compile Include="Models\Types\PlayerContext.cs" />
     <Compile Include="Models\Types\PlayerRankOptions.cs" />

@@ -198,6 +198,7 @@ namespace DodgeDynasty.Models
 			{
 				var draftPick = HomeEntity.DraftPicks.First(p => p.DraftPickId == draftPickId);
 				draftPick.PlayerId = null;
+				draftPick.PickEndDateTime = null;
 				HomeEntity.SaveChanges();
 			}
 		}
@@ -222,12 +223,15 @@ namespace DodgeDynasty.Models
 
 		public void PreloadPlayerModel(int playerId)
 		{
-			var player = ActivePlayers.First(p => p.PlayerId == playerId);
-			Player.FirstName = player.FirstName;
-			Player.LastName = player.LastName;
-			Player.Position = player.Position;
-			Player.NFLTeam = player.NFLTeam;
-			Player.PlayerId = player.PlayerId;
+			var player = ActivePlayers.FirstOrDefault(p => p.PlayerId == playerId);
+			if (player != null)
+			{
+				Player.FirstName = player.FirstName;
+				Player.LastName = player.LastName;
+				Player.Position = player.Position;
+				Player.NFLTeam = player.NFLTeam;
+				Player.PlayerId = player.PlayerId;
+			}
 		}
 	}
 }

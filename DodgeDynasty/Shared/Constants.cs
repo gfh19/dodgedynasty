@@ -8,8 +8,6 @@ namespace DodgeDynasty.Shared
 	public static class Constants
 	{
 		public const int NewPlayerId = -1;
-		public const string ChatDateTimeFormat = "M/d h:mmtt";
-		public const string ChatTimeFormat = "h:mmtt";
 
 		public static class AppSettings
 		{
@@ -128,6 +126,13 @@ namespace DodgeDynasty.Shared
 		{
 			public const int ExampleLeagueId = 7;
 		}
+
+		public static class Times
+		{
+			public const string ChatDateTimeFormat = "M/d h:mmtt";
+			public const string ChatTimeFormat = "h:mmtt";
+			public const string FullDateTimeFormat = "MM/dd/yyyy HH:mm:ss";
+        }
 
 		public static class Views
 		{

@@ -10,6 +10,7 @@ using DodgeDynasty.Mappers.Drafts;
 using DodgeDynasty.Mappers.Audio;
 using DodgeDynasty.Models.Audio;
 using System.Net;
+using DodgeDynasty.Mappers.Ranks;
 
 namespace DodgeDynasty.Controllers
 {
@@ -150,6 +151,15 @@ namespace DodgeDynasty.Controllers
 			helper.AddCompareRank(options, Response);
 			var playerRankModel = helper.GetPlayerRankPartial(null, null, isBestAvailable, Request, Response);
 			return PartialView(isBestAvailable ? Constants.Views.BestAvailable : Constants.Views.PlayerRanks, playerRankModel);
+		}
+
+		//For performant ranks page refresh
+		[HttpGet]
+		public JsonResult GetLatestDraftPick(string lastPickEndTime)
+		{
+			var mapper = new LatestDraftPickMapper(lastPickEndTime);
+			LatestPickInfoJson pickInfo = mapper.GetModel();
+            return Json(pickInfo, JsonRequestBehavior.AllowGet);
 		}
 
 		[HttpGet]

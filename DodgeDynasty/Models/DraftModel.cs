@@ -36,9 +36,11 @@ namespace DodgeDynasty.Models
 		public List<LeagueOwner> CurrentLeagueOwners { get; set; }
 		public DraftPick CurrentDraftPick { get; set; }
 		public DraftPick PreviousDraftPick { get; set; }
+		public DraftPick SecondPreviousDraftPick { get; set; }
 		public DraftPick NextDraftPick { get; set; }
 		public OwnerUser CurrentClockOwnerUser { get; set; }
 		public OwnerUser CurrentLoggedInOwnerUser { get; set; }
+		public int CurrentUserId { get; set; }
 
 		public PlayerContext CurrentGridPlayer { get; set; }
 		public OwnerUser CurrentGridOwnerUser { get; set; }
@@ -118,7 +120,7 @@ namespace DodgeDynasty.Models
 
 		private void SetCurrentDraftInfo(int? draftId = null)
 		{
-			var userId = Users.GetLoggedInUserId();
+			CurrentUserId = Users.GetLoggedInUserId();
             DraftId = SetCurrentDraft(draftId);
 
 			DraftPicks = HomeEntity.DraftPicks.Where(d => d.DraftId == DraftId).OrderBy(d => d.PickNum).ToList();
@@ -133,10 +135,11 @@ namespace DodgeDynasty.Models
 			CurrentDraftPick = DraftPicks.OrderBy(p => p.PickNum)
 				.FirstOrDefault(p => p.PlayerId == null);
 			CurrentPlayerHighlights = HomeEntity.PlayerHighlights
-				.Where(o => o.DraftId == DraftId && o.UserId == userId).OrderBy(o=>o.RankNum).ToList();
+				.Where(o => o.DraftId == DraftId && o.UserId == CurrentUserId).OrderBy(o=>o.RankNum).ToList();
 			if (CurrentDraftPick != null)
 			{
 				var currentPickNum = CurrentDraftPick.PickNum;
+				SecondPreviousDraftPick = DraftPicks.FirstOrDefault(p => p.PickNum == (currentPickNum - 2));
 				PreviousDraftPick = DraftPicks.FirstOrDefault(p => p.PickNum == (currentPickNum - 1));
 				NextDraftPick = DraftPicks.FirstOrDefault(p => p.PickNum == (currentPickNum + 1));
 				var currentClockUser = Users.FirstOrDefault(u => u.UserId == CurrentDraftPick.UserId);

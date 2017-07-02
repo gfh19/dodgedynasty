@@ -19,6 +19,7 @@ namespace DodgeDynasty.Shared
 	public static class Utilities
 	{
 		/* Helper methods */
+		#region String Methods
 
 		public static string FormatName(string dbName)
 		{
@@ -150,8 +151,19 @@ namespace DodgeDynasty.Shared
 			return input;
         }
 
+		public static string ToDateTimeString(this DateTime? dateTime)
+		{
+			if (dateTime.HasValue)
+			{
+				return dateTime.Value.ToString(Constants.Times.FullDateTimeFormat);
+            }
+			return string.Empty;
+		}
+
+		#endregion String Methods
 
 		/* Config access methods */
+		#region Config Access Methods
 
 		public static string GetConfigVal(string configKey)
 		{
@@ -179,10 +191,10 @@ namespace DodgeDynasty.Shared
 		}
 
 		/* End Config access methods */
-
-
+		#endregion Config Access Methods
 
 		/* Conversion methods */
+		#region Conversion Methods
 
 		public static int? ToNullInt(this string s)
 		{
@@ -212,8 +224,10 @@ namespace DodgeDynasty.Shared
 			return (str == null) ? "" : HttpContext.Current.Server.UrlEncode(str);
 		}
 
+		#endregion Conversion Methods
 
 		/* Data Access/Parsing Methods */
+		#region Data Access/Parsing Methods
 
 		public static Func<Entities.Player, bool> FindPlayerMatch(string firstName, string lastName,
 			string position, string nflTeam = null)
@@ -346,5 +360,6 @@ namespace DodgeDynasty.Shared
 
 
 		/* End Data Access/Parsing Methods */
+		#endregion Data Access/Parsing Methods
 	}
 }

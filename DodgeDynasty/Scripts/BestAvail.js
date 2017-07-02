@@ -1,18 +1,12 @@
 ﻿var replaceElementId = "#bestAvailable";
+var prRefreshPartial = "Draft/BestAvailablePartial";
+
 $(function () {
-	callRefreshPageWithPickTimer("Draft/BestAvailablePartial" + getRankIdUrlPath(), replaceElementId,
-		restoreHighlighting, restoreHighlighting, suspendHighlighting);
-	setPickTimer(true);
-	touchScrollDiv = ".rank-container";
+	loadPlayerRanksShared();
 });
 
-function pageBroadcastDraftHandler() {
-	callRefreshPage("Draft/BestAvailablePartial" + getRankIdUrlPath(), replaceElementId,
-		function () {
-			if (playerRanksBroadcastFn) { playerRanksBroadcastFn(); }
-			restoreHighlighting();
-		}, function () {
-			if (playerRanksBroadcastFn) { playerRanksBroadcastFn(); }
-			restoreHighlighting();
-		}, suspendHighlighting);
+function updateDraftPickRows(pickInfo) {
+	$.each($(".pr-table tr[data-player-id=" + pickInfo.pid + "]"), function (ix, row) {
+		$(row).remove();
+	});
 }

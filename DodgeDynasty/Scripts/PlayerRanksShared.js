@@ -3,6 +3,52 @@ var clientCookieOptions = null;
 var lastQueueUpdate = null;
 var playerRanksBroadcastFn = null;
 
+function loadPlayerRanksShared() {
+	callRefreshPageWithPickTimer(prRefreshPartial + getRankIdUrlPath(), replaceElementId,
+		restoreHighlighting, restoreHighlighting, suspendHighlighting);
+	setPickTimer(true);
+	touchScrollDiv = ".rank-container";
+}
+
+function pageBroadcastDraftHandler() {
+	updateRanksPageWithPick();
+}
+
+//For performant ranks page refresh
+function updateRanksPageWithPick() {
+	suspendHighlighting();
+	var lastPickEndTime = $(".rank-name").attr("data-last-pick-end-time");
+	ajaxGetJson("Draft/GetLatestDraftPick?lastPickEndTime=" + lastPickEndTime, function (pickInfo) {
+		if (pickInfo && pickInfo.status == "success") {
+			refreshHighlightQueue(null);
+			refreshCurrentDraftPickPartial();
+			updateDraftPickRows(pickInfo);
+			$(".rank-name").attr("data-last-pick-end-time", pickInfo.ptime);
+			toggleRanksWindows();
+			togglePlayerLinks(pickInfo.uturn);
+			restoreHighlighting();
+		}
+		else {
+			updateRanksErrorHandler();
+		}
+	}, updateRanksErrorHandler);
+}
+
+function updateRanksErrorHandler() {
+	fullRefreshRanksPage();
+}
+
+function fullRefreshRanksPage() {
+	callRefreshPage(prRefreshPartial + getRankIdUrlPath(), replaceElementId,
+		function () {
+			if (playerRanksBroadcastFn) { playerRanksBroadcastFn(); }
+			restoreHighlighting();
+		}, function () {
+			if (playerRanksBroadcastFn) { playerRanksBroadcastFn(); }
+			restoreHighlighting();
+		}, suspendHighlighting);
+}
+
 function initPlayerRanksShared() {
 	syncCookies();
 	toggleHighlighting();
@@ -55,8 +101,8 @@ function bindToggleAllLinks() {
 	});
 }
 
-function bindPlayerLinks() {
-	var playerLinks = $(".player-link");
+function bindPlayerLinks(links) {
+	var playerLinks = links || $(".player-link");
 	$.each(playerLinks, function (index, link) {
 		bindPlayerLink(link);
 	});
@@ -70,6 +116,22 @@ function bindPlayerLink(link) {
 		var playerId = $(playerCol).data('player-id');
 		location.href = baseURL + "Draft/Pick?playerId=" + playerId;
 	});
+}
+
+function togglePlayerLinks(showLinks) {
+	//.pr-table - Skip setting links on hqueue due to independent refresh
+	if (showLinks) {
+		var playerLinks = $(".pr-table tr:not(.ba-selected) .pr-name-span:not(.player-link)");
+		$(playerLinks).addClass("anchor");
+		$(playerLinks).addClass("player-link");
+		bindPlayerLinks(playerLinks);
+	}
+	else {
+		var playerLinks = $(".pr-table .player-link");
+		$(playerLinks).removeClass("anchor");
+		$(playerLinks).removeClass("player-link");
+		$(playerLinks).unbind("click");
+	}
 }
 
 function bindHideCategoryLinks() {
@@ -107,7 +169,7 @@ function toggleHideCategory(table, hideCategory) {
 }
 
 function toggleCategoryTables() {
-	$.each($(".ba-table:not(.queue-table)"), function (ix, table) {
+	$.each($(".pr-table"), function (ix, table) {
 		var hideId = $(".ba-hide-cat-link", table).attr("data-hide-id");
 		toggleHideCategory(table, clientCookieOptions[hideId]);
 	});
@@ -180,8 +242,8 @@ function getCompRankExpanded(rankId) {
 }
 
 function toggleExpandTableRows(table, expandRows, linkId) {
+	$("tr", table).show();
 	if (expandRows) {
-		$("tr", table).show();
 		$("#" + linkId).text("Less...");
 	}
 	else {
@@ -407,7 +469,7 @@ function addPlayerHighlighting(playerRow) {
 	ajaxPost(playerRankModel, "Rank/AddPlayerHighlight", function () {
 		refreshHighlightQueue(updateId);
 		clientAddPlayerHighlight(playerRankModel);
-	}, pageBroadcastDraftHandler);	//Refresh whole ranks partial only on error
+	}, fullRefreshRanksPage);	//Refresh whole ranks partial only on error
 }
 
 function removePlayerHighlighting(playerRow) {
@@ -415,19 +477,20 @@ function removePlayerHighlighting(playerRow) {
 	ajaxPost(playerRankModel, "Rank/DeletePlayerHighlight", function () {
 		refreshHighlightQueue(null);
 		clientRemovePlayerHighlight(playerRankModel);
-	}, pageBroadcastDraftHandler);	//Refresh whole ranks partial only on error
+	}, fullRefreshRanksPage);	//Refresh whole ranks partial only on error
 }
 
 function refreshHighlightQueue(updateId) {
 	var isBestAvailable = isBestAvailablePage();
 	ajaxGet("Draft/HighlightQueueInnerPartial?isBestAvailable=" + isBestAvailable, function (response) {
+		//updateId - For throttling multiple highlight clicks down to only last one
 		if (lastQueueUpdate == updateId || lastQueueUpdate == null) {
 			replaceWith("#highlightQueueInnerPartial", response);
 			toggleHighlighting(true);
 			lastQueueUpdate = null;
 		}
 	}, function () {
-		pageBroadcastDraftHandler();
+		fullRefreshRanksPage();
 		lastQueueUpdate = null;
 	});
 }
@@ -483,7 +546,7 @@ function bindDeleteAllHighlightingDialog() {
 							addWaitCursor();
 							ajaxPost({}, "Rank/DeleteAllHighlights", function () {
 								$("#ExpandQueue[data-expand=true]").click();	//Collapse if expanded
-								pageBroadcastDraftHandler();
+								fullRefreshRanksPage();
 								removeWaitCursor();
 							}, removeWaitCursor);
 							$(this).dialog("close");
@@ -519,7 +582,7 @@ function bindCopyLastDraftHighlights() {
 }
 
 function copyLastDraftHighlights() {
-	ajaxPost({}, "Rank/CopyLastDraftHighlights", pageBroadcastDraftHandler);
+	ajaxPost({}, "Rank/CopyLastDraftHighlights", fullRefreshRanksPage);
 }
 
 //jQuery UI Sortable for Drag & drop
@@ -555,7 +618,7 @@ function updatePlayerQueueOrder(playerQueueOrderModel) {
 	ajaxPost(playerQueueOrderModel, "Rank/UpdatePlayerQueueOrder", function () {
 		updateQueueRankNums(playerQueueOrderModel);
 		removeWaitCursor();
-	}, pageBroadcastDraftHandler);
+	}, fullRefreshRanksPage);
 }
 
 function updateQueueRankNums(playerQueueOrderModel) {
@@ -675,7 +738,7 @@ function bindCompRankPosition(select) {
 		$(".rank-name").attr("data-compare-pos", crPosition);
 		playerRanksBroadcastFn = tempPlayerRanksRefreshFn;
 		showPleaseWait();
-		pageBroadcastDraftHandler();
+		fullRefreshRanksPage();
 	});
 }
 

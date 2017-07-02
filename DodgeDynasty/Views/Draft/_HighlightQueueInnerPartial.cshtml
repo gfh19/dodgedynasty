@@ -52,11 +52,11 @@
 						<td class="ba-player-name" data-player-id="@player.PlayerId">
 							@if (Model.IsDraftActive() && Model.IsUserTurn() && player.PickNum == null)
 							{
-								<a href="#" class="player-link">@player.PlayerName</a>
+								<span class="pr-name-span anchor player-link">@player.PlayerName</span>
 							}
 							else
 							{
-								@player.PlayerName
+								<span class="pr-name-span">@player.PlayerName</span>
 							}
 						</td>
 						@if (player.PickNum != null)

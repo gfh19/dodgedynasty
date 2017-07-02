@@ -97,7 +97,11 @@ header {
 	cursor: progress;
 }
 
-a
+.anchor {
+	cursor: pointer;
+}
+
+a, .anchor
 {
 	color: #333;
 	outline: none;
@@ -105,12 +109,13 @@ a
 	padding: 0px 1px 0px 1px;
 }
 
-a:link, a:visited, a:active, a:hover
+a:link, a:visited, a:active, a:hover,
+.anchor:link, .anchor:visited, .anchor:active, .anchor:hover
 {
 	color: #333;
 }
 
-a:hover
+a:hover, .anchor:hover
 {
 	background-color: #c7d1d6;
 }
@@ -2779,7 +2784,6 @@ span.player-select
 		margin-right: 0px;
 	}
 	.pr-highlight-section td {
-		max-width: 120px;
 		padding-right: 3px;
 	}
 		/*    -------- Compare Ranks */
