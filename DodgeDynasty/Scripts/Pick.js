@@ -32,11 +32,13 @@ function refreshUserPickWithPickTimer() {
 };
 
 function getPickInfo() {
-	ajaxGet("Draft/PickPartial", function (response) {
-		replaceWith('#pickInfo', response);
-		setPlayerAutoComplete();
-		setPickTimer(false);
-	});
+	if (!isUserTurn) {
+		ajaxGet("Draft/PickPartial", function (response) {
+			replaceWith('#pickInfo', response);
+			setPlayerAutoComplete();
+			setPickTimer(false);
+		});
+	}
 };
 
 function callRefreshUserPickWithPickTimer() {
