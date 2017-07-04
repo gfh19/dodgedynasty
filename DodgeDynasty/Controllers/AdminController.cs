@@ -47,9 +47,9 @@ namespace DodgeDynasty.Controllers
 		[AdminAccess]
 		public ActionResult Input()
 		{
-			if (TempData.ContainsKey(Constants.TempData.NextDraftInputModel))
+			if (ViewData.ContainsKey(Constants.ViewData.NextDraftInputModel))
 			{
-				return View((DraftInputModel)TempData[Constants.TempData.NextDraftInputModel]);
+				return View((DraftInputModel)ViewData[Constants.ViewData.NextDraftInputModel]);
 			}
 			DraftInputModel draftInputModel = DraftFactory.GetCurrentDraftInputModel();
 			return View(draftInputModel);

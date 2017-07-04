@@ -116,12 +116,6 @@ namespace DodgeDynasty.Shared
 			public const string HubConnections = "HubConnections";
 		}
 
-		public static class TempData
-		{
-			public const string NextDraftInputModel = "NextDraftInputModel";
-			public const string RankStatus = "RankStatus";
-		}
-
 		public static class Test
 		{
 			public const int ExampleLeagueId = 7;
@@ -133,6 +127,12 @@ namespace DodgeDynasty.Shared
 			public const string ChatTimeFormat = "h:mmtt";
 			public const string FullDateTimeFormat = "MM/dd/yyyy HH:mm:ss";
         }
+
+		public static class ViewData
+		{
+			public const string NextDraftInputModel = "NextDraftInputModel";
+			public const string RankStatus = "RankStatus";
+		}
 
 		public static class Views
 		{

@@ -43,9 +43,9 @@ namespace DodgeDynasty.Controllers
 			model.GetRankedPlayersAll();
 			//Populate Compare Rank for Best Unranked Players
 			model.SetUnrankedCompareList();
-			if (TempData.ContainsKey(Constants.TempData.RankStatus))
+			if (ViewData.ContainsKey(Constants.ViewData.RankStatus))
 			{
-				model.RankStatus = (string)TempData[Constants.TempData.RankStatus];
+				model.RankStatus = (string)ViewData[Constants.ViewData.RankStatus];
 			}
 			return View(model);
 		}
@@ -64,7 +64,7 @@ namespace DodgeDynasty.Controllers
 				playerRankModel.Player = model.Player;
 				playerRankModel.RankStatus = (playerAdded) ? "player-added" : "player-existed";
 			}
-			TempData[Constants.TempData.RankStatus] = playerRankModel.RankStatus;
+			ViewData[Constants.ViewData.RankStatus] = playerRankModel.RankStatus;
 			return playerRankModel.RankStatus;
 		}
 

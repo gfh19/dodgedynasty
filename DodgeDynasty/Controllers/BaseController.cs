@@ -54,7 +54,7 @@ namespace DodgeDynasty.Controllers
 			nextDraftInputModel.Message = string.Format("{0} {1} has been drafted by {2}.",
 				playerModel.FirstName, playerModel.LastName, playerModel.TeamName);
 			nextDraftInputModel.PickMade = true;
-			TempData[Constants.TempData.NextDraftInputModel] = nextDraftInputModel;
+			ViewData[Constants.ViewData.NextDraftInputModel] = nextDraftInputModel;
 			if (!string.IsNullOrEmpty(draftInputModel.Referrer))
 			{
 				return Redirect(draftInputModel.Referrer);
