@@ -45,7 +45,7 @@
 				@{int hpCnt = 1;}
 				@foreach (var player in Model.HighlightedPlayers)
 				{
-					<tr class="highlighted @player.HighlightClass @(player.PickNum != null ? ("hq-selected " + player.CssClass + ((Model.IsLoggedInUser(player.UserId) ? " you " : " "))) : "")" 
+					<tr class="highlighted @player.HighlightClass @(player.PickNum != null ? ("ba-selected " + player.CssClass + ((Model.IsLoggedInUser(player.UserId) ? " you " : " "))) : "")" 
 						data-player-id="@player.PlayerId">
 						<td class="hq-rank-num" data-rank-num="@hpCnt">@(hpCnt++)</td>
 						<td>@(player.RankNum != null ? player.RankNum.ToString() : "---")</td>
@@ -70,18 +70,18 @@
 								var byeWeek = Model.GetNFLTeamByeWeek(player.NFLTeam);
 								if (byeWeek != null)
 								{
-									<td class="nowrap">@player.NFLTeamDisplay<span class="ba-bye-week"> (@byeWeek)</span></td>
+									<td class="pr-team nowrap">@player.NFLTeamDisplay<span class="ba-bye-week"> (@byeWeek)</span></td>
 								}
 								else
 								{
-									<td class="nowrap">@player.NFLTeamDisplay</td>
+									<td class="pr-team nowrap">@player.NFLTeamDisplay</td>
 								}
 							}
 							else
 							{
-								<td class="nowrap">@player.NFLTeamDisplay</td>
+								<td class="pr-team nowrap">@player.NFLTeamDisplay</td>
 							}
-							<td>@player.Position</td>
+							<td class="pr-pos">@player.Position</td>
 						}
 					</tr>
 				}

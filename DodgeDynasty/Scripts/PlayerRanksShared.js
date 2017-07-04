@@ -16,12 +16,11 @@ function pageBroadcastDraftHandler() {
 
 //For performant ranks page refresh
 function updateRanksPageWithPick() {
+	refreshCurrentDraftPickPartial();
 	suspendHighlighting();
 	var lastPickEndTime = $(".rank-name").attr("data-last-pick-end-time");
 	ajaxGetJson("Draft/GetLatestDraftPick?lastPickEndTime=" + lastPickEndTime, function (pickInfo) {
 		if (pickInfo && pickInfo.status == "success") {
-			refreshHighlightQueue(null);
-			refreshCurrentDraftPickPartial();
 			updateDraftPickRows(pickInfo);
 			$(".rank-name").attr("data-last-pick-end-time", pickInfo.ptime);
 			toggleRanksWindows();
@@ -119,15 +118,15 @@ function bindPlayerLink(link) {
 }
 
 function togglePlayerLinks(showLinks) {
-	//.pr-table - Skip setting links on hqueue due to independent refresh
+	//.ba-table - scratch that, update hq & cat tbls
 	if (showLinks) {
-		var playerLinks = $(".pr-table tr:not(.ba-selected) .pr-name-span:not(.player-link)");
+		var playerLinks = $(".ba-table tr:not(.ba-selected) .pr-name-span:not(.player-link)");
 		$(playerLinks).addClass("anchor");
 		$(playerLinks).addClass("player-link");
 		bindPlayerLinks(playerLinks);
 	}
 	else {
-		var playerLinks = $(".pr-table .player-link");
+		var playerLinks = $(".ba-table .player-link");
 		$(playerLinks).removeClass("anchor");
 		$(playerLinks).removeClass("player-link");
 		$(playerLinks).unbind("click");

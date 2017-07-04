@@ -1606,13 +1606,6 @@ ul.menu li a.current-page
 .hq-player-th {
 	min-width: 110px;
 }
-.hq-selected
-{
-	font-size: 0.8em;
-	text-decoration: line-through;
-	border-width: 2px;
-	border-style: solid;
-}
 .hq-delete-span {
 	display: inline-block;
 	font-size: 11px;

@@ -6,7 +6,7 @@ $(function () {
 });
 
 function updateDraftPickRows(pickInfo) {
-	$.each($(".pr-table tr[data-player-id=" + pickInfo.pid + "]"), function (ix, row) {
+	$.each($(".ba-table tr[data-player-id=" + pickInfo.pid + "]"), function (ix, row) {
 		$(row).addClass("ba-selected");
 		$(row).addClass(pickInfo.ocss);
 		if (pickInfo.yours) {
