@@ -189,7 +189,7 @@ namespace DodgeDynasty.UIHelpers
 			}
 			if (rankId == 0)
 			{
-				RankingsListModel rankingsListModel = DraftFactory.GetRankingsListModel(draftIdInt);
+				RankingsListModel rankingsListModel = DraftFactory.GetRankingsListModel(playerRankModel);
 				rankId = rankingsListModel.GetPrimaryRankId();
 			}
 			if (setCookie && (options.RankId != rankId.ToString() || options.DraftId != draftId))

@@ -51,9 +51,16 @@ namespace DodgeDynasty.Models
 			return mapper;
 		}
 
+		//TODO:  Delete?
 		public static RankingsListModel GetRankingsListModel(int? draftId = null)
 		{
 			RankingsListModel model = new RankingsListModel(draftId);
+			return model;
+		}
+
+		public static RankingsListModel GetRankingsListModel(IDraftModel draftModel)
+		{
+			RankingsListModel model = new RankingsListModel(draftModel);
 			return model;
 		}
 
@@ -73,6 +80,13 @@ namespace DodgeDynasty.Models
 		{
 			RankSetupMapper mapper = new RankSetupMapper();
 			return mapper;
+		}
+
+
+
+		public static IDraftModel GetDraftModel(int? draftId = null)
+		{
+			return new DraftModel(draftId);
 		}
 	}
 }

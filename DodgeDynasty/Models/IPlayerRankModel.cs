@@ -8,7 +8,7 @@ using DodgeDynasty.Models.Types;
 
 namespace DodgeDynasty.Models
 {
-	public interface IPlayerRankModel : IDraftModel
+	public interface IPlayerRankModel : IDraftDataModel
 	{
 		int RankId { get; set; }
 		Rank CurrentRank { get; set; }

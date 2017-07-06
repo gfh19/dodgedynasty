@@ -8,11 +8,13 @@ using DodgeDynasty.Shared;
 using System.Configuration;
 using System.Text;
 using System.Web.Mvc;
+using DodgeDynasty.Mappers.Ranks;
 
 namespace DodgeDynasty.Models
 {
 	public class DraftModel : ModelBase, IDraftModel
 	{
+		#region Properties
 		public int? DraftId { get; set; }
 		public int PickTimeSeconds { get; set; }
 
@@ -49,6 +51,9 @@ namespace DodgeDynasty.Models
 		public List<DraftRank> DraftRanks { get; set; }
 		public List<Rank> Ranks { get; set; }
 
+		#endregion Properties
+
+		#region Constructors
 		public DraftModel() : this(null)
 		{ }
 
@@ -57,6 +62,9 @@ namespace DodgeDynasty.Models
 			DraftId = draftId;
 		}
 
+		#endregion Constructors
+
+		#region Methods
 		public Draft GetCurrentDraft(int? draftId = null)
 		{
 			GetDraftInfo(draftId);
@@ -360,26 +368,10 @@ namespace DodgeDynasty.Models
 								 where ((dr.DraftId == null && r.Year == CurrentDraft.DraftYear) || dr.DraftId == DraftId)
 								   && (dr.UserId == null || dr.UserId == CurrentLoggedInOwnerUser.UserId)
 								 orderby dr.PrimaryDraftRanking descending, dr.UserId descending, dr.DraftId descending, r.RankName
-								 select GetDraftRankModel(dr, r);
+								 select PlayerRankModelHelper.GetDraftRankModel(dr, r);
 			return fullDraftRanks.ToList();
 		}
 
-		public static DraftRankModel GetDraftRankModel(DraftRank dr, Rank r)
-		{
-			return new DraftRankModel
-			{
-				DraftRankId = dr.DraftRankId,
-				RankId = r.RankId,
-				DraftId = dr.DraftId,
-				PrimaryDraftRanking = dr.PrimaryDraftRanking,
-				UserId = dr.UserId,
-				RankName = r.RankName,
-				Year = r.Year,
-				RankDate = r.RankDate,
-				Url = r.Url,
-				AddTimestamp = r.AddTimestamp,
-				LastUpdateTimestamp = r.LastUpdateTimestamp
-			};
-		}
+		#endregion Methods
 	}
 }

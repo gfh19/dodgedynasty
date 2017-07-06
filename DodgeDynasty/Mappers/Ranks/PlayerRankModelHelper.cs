@@ -216,5 +216,23 @@ namespace DodgeDynasty.Mappers.Ranks
 
 			return publicRankings;
 		}
+
+		public static DraftRankModel GetDraftRankModel(DraftRank dr, Rank r)
+		{
+			return new DraftRankModel
+			{
+				DraftRankId = dr.DraftRankId,
+				RankId = r.RankId,
+				DraftId = dr.DraftId,
+				PrimaryDraftRanking = dr.PrimaryDraftRanking,
+				UserId = dr.UserId,
+				RankName = r.RankName,
+				Year = r.Year,
+				RankDate = r.RankDate,
+				Url = r.Url,
+				AddTimestamp = r.AddTimestamp,
+				LastUpdateTimestamp = r.LastUpdateTimestamp
+			};
+		}
 	}
 }

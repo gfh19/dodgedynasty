@@ -8,13 +8,15 @@ using DodgeDynasty.Models.Types;
 
 namespace DodgeDynasty.Models
 {
-	public class RankingsListModel : DraftModel
+	public class RankingsListModel : DraftModelBase
 	{
-		public RankingsListModel(int? draftId = null)
-			: base(draftId)
+		public RankingsListModel(int? draftId = null) : base(draftId)
 		{
-			GetCurrentDraft(DraftId);
+			GetCurrentDraft(draftId);
 		}
+
+		public RankingsListModel(IDraftModel draftModel) : base(draftModel)
+		{}
 
 		public PlayerRankOptions Options { get; set; }
 
@@ -61,7 +63,7 @@ namespace DodgeDynasty.Models
 									join r in Ranks on dr.RankId equals r.RankId
 									where (dr.DraftId == null && dr.UserId == null)
 									orderby r.Year descending
-									select GetDraftRankModel(dr, r);
+									select PlayerRankModelHelper.GetDraftRankModel(dr, r);
 			return openPublicRanks.FirstOrDefault();
 		}
 

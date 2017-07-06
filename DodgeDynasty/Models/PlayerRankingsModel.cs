@@ -36,5 +36,31 @@ namespace DodgeDynasty.Models
 		public List<RankedPlayer> HighlightedPlayers { get; set; }
 		public string CategoryRankHeader { get; set; }
 		public string CompRankPosition { get; set; }
+
+		#region Misc IDraftDataModel properties
+		public int PickTimeSeconds { get; set; }
+		public List<Draft> Drafts { get; set; }
+		public List<DraftPick> DraftPicks { get; set; }
+		public List<User> DraftUsers { get; set; }
+		public List<OwnerUser> DraftOwnerUsers { get; set; }
+		public List<User> Users { get; set; }
+		public List<LeagueOwner> LeagueOwners { get; set; }
+		public List<DraftOwner> AllDraftOwners { get; set; }
+		public Draft CurrentDraft { get; set; }
+		public List<LeagueOwner> CurrentLeagueOwners { get; set; }
+		public DraftPick CurrentDraftPick { get; set; }
+		public DraftPick PreviousDraftPick { get; set; }
+		public DraftPick SecondPreviousDraftPick { get; set; }
+		public DraftPick NextDraftPick { get; set; }
+		public OwnerUser CurrentClockOwnerUser { get; set; }
+		public OwnerUser CurrentLoggedInOwnerUser { get; set; }
+		public int CurrentUserId { get; set; }
+		public PlayerContext CurrentGridPlayer { get; set; }
+		public OwnerUser CurrentGridOwnerUser { get; set; }
+		public int CurrentRoundNum { get; set; }
+		public List<DraftRank> DraftRanks { get; set; }
+		public List<Rank> Ranks { get; set; }
+
+		#endregion Misc IDraftDataModel properties
 	}
 }

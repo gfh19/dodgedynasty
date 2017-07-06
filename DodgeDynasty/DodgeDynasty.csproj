@@ -257,6 +257,7 @@
     <Compile Include="Models\Admin\ILeagueIdModel.cs" />
     <Compile Include="Models\Admin\ManageUsersModel.cs" />
     <Compile Include="Models\Admin\UserStatusModel.cs" />
+    <Compile Include="Models\DraftModelBase.cs" />
     <Compile Include="Models\Drafts\DraftViewModel.cs" />
     <Compile Include="Models\Drafts\SingleDraftModel.cs" />
     <Compile Include="Models\DraftHistoryModel.cs" />
@@ -271,6 +272,7 @@
     <Compile Include="Models\Highlights\HighlightModel.cs" />
     <Compile Include="Models\Highlights\HighlightsModel.cs" />
     <Compile Include="Models\Highlights\PlayerQueueOrderModel.cs" />
+    <Compile Include="Models\IDraftDataModel.cs" />
     <Compile Include="Models\IDraftModel.cs" />
     <Compile Include="Models\IManageLeaguesModel.cs" />
     <Compile Include="Models\ActivateDraftModel.cs" />
