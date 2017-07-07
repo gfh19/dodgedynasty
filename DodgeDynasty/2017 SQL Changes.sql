@@ -1,4 +1,32 @@
 ﻿
+/* Below run in Production on 7/6/17 */
+
+SET XACT_ABORT ON
+BEGIN TRANSACTION;
+
+
+
+
+
+CREATE NONCLUSTERED INDEX [IX_RankId] ON [dbo].[PlayerRank]
+(
+	[RankId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+
+
+
+
+
+
+COMMIT TRANSACTION;
+
+
+
+
+
+
+
 /* Below run in Production on 6/10/17 */
 
 SET XACT_ABORT ON
