@@ -43,6 +43,7 @@ namespace DodgeDynasty.Models
 		public OwnerUser CurrentClockOwnerUser { get; set; }
 		public OwnerUser CurrentLoggedInOwnerUser { get; set; }
 		public int CurrentUserId { get; set; }
+		public List<UserRole> CurrentUserRoles { get; set; }
 
 		public PlayerContext CurrentGridPlayer { get; set; }
 		public OwnerUser CurrentGridOwnerUser { get; set; }
@@ -119,16 +120,18 @@ namespace DodgeDynasty.Models
 
 		public int GetCurrentDraftId(User user, int? draftId=null)
 		{
-			if (draftId != null)
+			var currentUserLeagueIds = LeagueOwners.Where(o => o.UserId == CurrentUserId).Select(o => o.LeagueId).ToList();
+            if (Utilities.ValidateUserDraftId(draftId, user.UserId, Drafts, AllDraftOwners, currentUserLeagueIds, CurrentUserRoles))
 			{
 				return draftId.Value;
 			}
-			return Utilities.GetLatestUserDraftId(user, Drafts, AllDraftOwners);
+			return Utilities.GetLatestUserDraftId(user.UserId, Drafts, AllDraftOwners, CurrentUserRoles);
 		}
 
 		private void SetCurrentDraftInfo(int? draftId = null)
 		{
 			CurrentUserId = Users.GetLoggedInUserId();
+			CurrentUserRoles = HomeEntity.UserRoles.Where(o => o.UserId == CurrentUserId).ToList();
             DraftId = SetCurrentDraft(draftId);
 
 			DraftPicks = HomeEntity.DraftPicks.Where(d => d.DraftId == DraftId).OrderBy(d => d.PickNum).ToList();

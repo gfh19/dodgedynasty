@@ -15,26 +15,33 @@ namespace DodgeDynasty.Parsers
 		
 		public override string GetPlayerRankNum(List<HtmlNode> columns)
 		{
-			var rkNumAndPlayer = columns[0].InnerText;
-			var firstDot = rkNumAndPlayer.IndexOf(". ");
-			return rkNumAndPlayer.Substring(0, firstDot).Trim();
+			var rkNumPlayerPosTeam = columns[0].InnerText;
+			var firstDot = rkNumPlayerPosTeam.IndexOf(". ");
+			return rkNumPlayerPosTeam.Substring(0, firstDot).Trim();
 		}
 
 		public override string GetPlayerName(List<HtmlNode> columns)
 		{
-			var rkNumAndPlayer = columns[0].InnerText;
-			var firstDot = rkNumAndPlayer.IndexOf(".");
-			return rkNumAndPlayer.Substring(firstDot + 2, rkNumAndPlayer.Length - (firstDot + 2)).Trim();
+			var rkNumPlayerPosTeam = columns[0].InnerText;
+			var firstDot = rkNumPlayerPosTeam.IndexOf(".");
+			var firstComma = rkNumPlayerPosTeam.IndexOf(",");
+			return rkNumPlayerPosTeam.Substring(firstDot + 2, firstComma - (firstDot + 2)).Trim();
 		}
 
 		public override string GetPlayerPos(List<HtmlNode> columns)
 		{
-			return columns[1].InnerText;
+			var rkNumPlayerPosTeam = columns[0].InnerText;
+			var firstComma = rkNumPlayerPosTeam.IndexOf(",");
+			var secondComma = rkNumPlayerPosTeam.IndexOf(",", firstComma + 1);
+			return rkNumPlayerPosTeam.Substring(firstComma + 2, secondComma - (firstComma + 2)).Trim();
 		}
 
 		public override string GetPlayerNFLTeam(List<HtmlNode> columns)
 		{
-			return columns[2].InnerText;
+			var rkNumPlayerPosTeam = columns[0].InnerText;
+			var firstComma = rkNumPlayerPosTeam.IndexOf(",");
+			var secondComma = rkNumPlayerPosTeam.IndexOf(",", firstComma + 1);
+			return rkNumPlayerPosTeam.Substring(secondComma + 2, rkNumPlayerPosTeam.Length - (secondComma + 2)).Trim();
 		}
 	}
 }

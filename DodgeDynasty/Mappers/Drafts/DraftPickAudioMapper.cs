@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
@@ -44,9 +45,11 @@ namespace DodgeDynasty.Mappers.Drafts
 				string errorText = null;
 				var userId = HomeEntity.Users.GetLoggedInUserId();
 				var leagueOwner = HomeEntity.LeagueOwners.FirstOrDefault(o => o.LeagueId == currentDraft.LeagueId && o.UserId == userId);
-				if (leagueOwner != null)
+				var currentUserRoles = HomeEntity.UserRoles.Where(o => o.UserId == userId).ToList();
+				var isGuest = currentUserRoles.Select(o => o.RoleId).Contains(Constants.Roles.Guest);
+				if (isGuest || leagueOwner != null)
 				{
-					access = ShouldPlayPickAudio(currentDraftId, leagueOwner, out isFinalDraftPick);
+					access = ShouldPlayPickAudio(currentDraftId, isGuest, leagueOwner, currentUserRoles, out isFinalDraftPick);
 					if (access)
 					{
 						isAudioUserSuccessful = ThrottleOneAudioUser(userId, currentDraftId, lastDraftPick, out errorText);
@@ -73,17 +76,17 @@ namespace DodgeDynasty.Mappers.Drafts
 			}
 		}
 
-		private bool ShouldPlayPickAudio(int currentDraftId, LeagueOwner leagueOwner, out bool isFinalDraftPick)
+		private bool ShouldPlayPickAudio(int currentDraftId, bool isGuest, LeagueOwner leagueOwner, List<UserRole> currentUserRoles, out bool isFinalDraftPick)
 		{
 			isFinalDraftPick = false;
             bool access = false;
 
-			if (leagueOwner.AnnounceAllPicks || leagueOwner.AnnouncePrevPick)
+			if (isGuest || leagueOwner.AnnounceAllPicks || leagueOwner.AnnouncePrevPick)
 			{
 				var nextDraftPick = HomeEntity.DraftPicks.Where(o => o.DraftId == currentDraftId && o.PlayerId == null)
 					.OrderBy(p => p.PickNum).FirstOrDefault();
 				isFinalDraftPick = nextDraftPick == null;
-                if (leagueOwner.AnnounceAllPicks)
+                if (isGuest || leagueOwner.AnnounceAllPicks)
 				{
 					access = true;
 				}

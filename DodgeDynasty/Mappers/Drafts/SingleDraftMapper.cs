@@ -21,8 +21,9 @@ namespace DodgeDynasty.Mappers.Drafts
             }
 			else
 			{
-				draft = Utilities.GetLatestUserDraft(HomeEntity.Users.GetLoggedInUser(),
-					HomeEntity.Drafts.ToList(), HomeEntity.DraftOwners.ToList());
+				var userId = HomeEntity.Users.GetLoggedInUserId();
+                draft = Utilities.GetLatestUserDraft(userId, HomeEntity.Drafts.ToList(), 
+					HomeEntity.DraftOwners.ToList(), HomeEntity.UserRoles.Where(o => o.UserId == userId).ToList());
 			}
 			Model.DraftId = draft.DraftId;
 			Model.LeagueId = draft.LeagueId;

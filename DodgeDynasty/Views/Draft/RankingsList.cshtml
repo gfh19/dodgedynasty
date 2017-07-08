@@ -14,7 +14,7 @@
 			initRankingsList();
 		});
 	</script>
-	@Html.Partial("CurrentDraftPickPartial", Model)
+	@Html.Partial("CurrentDraftPickPartial", Model.DraftModel)
 	@{var draftId = DodgeDynasty.Shared.Utilities.GetRouteDraftId(Url.RequestContext.RouteData);}
 	<div class="rlist-header">
 		<div class="rankings-list">Other Player Rankings</div>

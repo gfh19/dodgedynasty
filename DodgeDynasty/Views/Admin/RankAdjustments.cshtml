@@ -110,14 +110,7 @@
 								<td>@rank.LastUpdateTimestamp</td>
 								<td>&lt;<a class="ra-edit-details" href="#">Edit Details</a>&gt;</td>
 								<td>&lt;<a class="ra-edit-plyr-ranks" href="@Url.Content("~/Rank/SetupRank?rankId=" + rank.RankId)">Edit</a>&gt;</td>
-								@if (rank.AutoImportId.HasValue)
-								{
-									<td>&lt;<a class="ra-auto-import" href="#">Auto Import</a>&gt;</td>
-								}
-								else
-								{
-									<td>N/A</td>
-								}
+								<td></td>
 							</tr>
 						}
 					</tbody>

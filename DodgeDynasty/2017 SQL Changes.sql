@@ -1,8 +1,122 @@
-﻿
+﻿/* Below run in Production on 7/8/17 */
+
+SET XACT_ABORT ON
+BEGIN TRANSACTION;
+
+
+
+
+
+INSERT INTO [dbo].[Role]
+           ([RoleDescription]
+           ,[AddTimestamp]
+           ,[LastUpdateTimestamp])
+     VALUES
+           ('Guest'
+           ,getdate()
+           ,getdate())
+GO
+
+
+
+INSERT INTO [dbo].[UserRole]
+           ([UserId]
+           ,[RoleId]
+           ,[LeagueId]
+           ,[AddTimestamp]
+           ,[LastUpdateTimestamp])
+     VALUES
+           (43
+           ,3
+           ,NULL
+           ,getdate()
+           ,getdate())
+GO
+
+
+
+
+
+INSERT INTO [dbo].[NFLTeam]
+           ([TeamAbbr],[AbbrDisplay],[LocationName],[TeamName],[Conference],[Division],[IsActive])
+     VALUES
+           ('LAR', 'LAR', 'Los Angeles', 'Rams', 'NFC', 'West', 1)
+GO
+
+
+UPDATE [dbo].[Player]
+SET [NFLTeam] = 'LAR'
+WHERE [NFLTeam] = 'LA'
+GO
+
+
+UPDATE [dbo].[ByeWeek]
+   SET [NFLTeam] = 'LAR'
+ WHERE [NFLTeam] = 'LA'
+GO
+
+
+DELETE FROM [dbo].[NFLTeam]
+WHERE TeamAbbr = 'LA'
+GO
+
+
+
+
+INSERT INTO [dbo].[NFLTeam]
+           ([TeamAbbr],[AbbrDisplay],[LocationName],[TeamName],[Conference],[Division],[IsActive])
+     VALUES
+           ('LAC', 'LAC', 'Los Angeles', 'Chargers', 'AFC', 'West', 1)
+GO
+
+
+UPDATE [dbo].[Player]
+SET [NFLTeam] = 'LAC'
+WHERE [NFLTeam] = 'SD'
+GO
+
+
+UPDATE [dbo].[NFLTeam]
+SET IsActive = 0
+WHERE TeamAbbr = 'SD'
+
+
+
+
+/* ESPN Top 200 */
+UPDATE [dbo].[AutoImport]
+SET RankName = 'ESPN Top 200',
+	ImportUrl = 'http://www.espn.com/fantasy/football/story/_/page/17RanksPreseason200nonPPR/2017-fantasy-football-standard-rankings-non-ppr-top-200',
+	LastUpdateTimestamp = getdate()
+WHERE AutoImportId = 1
+
+/* Yahoo */
+UPDATE [dbo].[AutoImport]
+SET ImportUrl = 'https://partners.fantasypros.com/external/widget/nfl-staff-rankings.php?source=2&year=2017&week=0&position=ALL&scoring=STD&ajax=true&width=640',
+	LastUpdateTimestamp = getdate()
+WHERE AutoImportId = 5
+
+
+/* ADD LOS ANGELES CHARGERS DEFENSE, TPID 331 !!! - Done */
+/* ADD MIKE WILLIAMS (LAC), NOT TPID 201 !!! - Done */
+
+
+
+
+
+COMMIT TRANSACTION;
+
+
+
+
+
+
+
 /* Below run in Production on 7/6/17 */
 
 SET XACT_ABORT ON
 BEGIN TRANSACTION;
+
 
 
 

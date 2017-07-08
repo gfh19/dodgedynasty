@@ -1,6 +1,4 @@
 ﻿/****** Object:  StoredProcedure [dbo].[usp_LoadPlayerRanks_V2]    Script Date: 7/12/2015 4:17:09 PM ******/
-USE [Home]
-
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -86,6 +84,7 @@ BEGIN
 		WHEN 'CHRISTOPHER IVORY' THEN 'Chris'
 		WHEN 'TIMOTHY WRIGHT' THEN 'Tim'
 		WHEN 'STEVIE JOHNSON' THEN 'Steve'
+		WHEN 'WILL LUTZ' THEN 'Wil'
 		ELSE LTRIM(RTRIM(@FirstName))
 		END
 
@@ -94,6 +93,8 @@ BEGIN
 		WHEN 'ROBERT GRIFFIN' THEN 'Griffin III'
 		WHEN 'ODELL BECKHAM JR' THEN 'Beckham'
 		WHEN 'STEVE SMITH SR' THEN 'Smith'
+		WHEN 'TED GINN JR' THEN 'Ginn'
+		WHEN 'DUKE JOHNSON JR' THEN 'Johnson'
 		ELSE LTRIM(RTRIM(@LastName))
 		END
 

@@ -16,8 +16,10 @@ namespace DodgeDynasty.Mappers.Commish
 			{
 				commishDrafts.AddRange(HomeEntity.Drafts.Where(o => o.LeagueId == leagueId));
 			}
+			var userId = HomeEntity.Users.GetLoggedInUserId();
 			Model.DraftId = Utilities.GetLatestUserDraftId(
-				HomeEntity.Users.GetLoggedInUser(), commishDrafts, HomeEntity.DraftOwners.ToList());
+				userId, commishDrafts, HomeEntity.DraftOwners.ToList(),
+				HomeEntity.UserRoles.Where(o => o.UserId == userId).ToList());
 		}
 	}
 }

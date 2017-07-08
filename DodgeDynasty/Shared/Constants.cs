@@ -109,6 +109,7 @@ namespace DodgeDynasty.Shared
 		{
 			public const int Admin = 1;
 			public const int Commish = 2;
+			public const int Guest = 3;
 		}
 
 		public static class Session

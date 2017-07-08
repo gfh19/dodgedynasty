@@ -105,10 +105,9 @@ namespace DodgeDynasty.Mappers.Admin
 			string lastName = "";
 			var playerName = rankedPlayer.PlayerName;
 			var players = HomeEntity.Players.ToList();
+			var rankedPlayerFormatted = Utilities.FormatNamePunctuation(rankedPlayer.PlayerName);
 			var playerNameMatch = players.FirstOrDefault(o => 
-				Utilities.FormatNamePunctuation(o.PlayerName).Equals(
-					Utilities.FormatNamePunctuation(rankedPlayer.PlayerName), 
-					StringComparison.InvariantCultureIgnoreCase));
+				Utilities.FormatNamePunctuation(o.PlayerName).Equals(rankedPlayerFormatted, StringComparison.InvariantCultureIgnoreCase));
 
 			if (playerNameMatch != null)
 			{
@@ -117,14 +116,27 @@ namespace DodgeDynasty.Mappers.Admin
 			}
 			else
 			{
-				var firstSpace = playerName.Trim().IndexOf(" ");
-				if (firstSpace < 0)
+				var rankedPlayerNoSuffix = Utilities.TrimSuffix(rankedPlayer.PlayerName);
+                var playerNameSuffixMatch = players.FirstOrDefault(o =>
+					Utilities.TrimSuffix(o.PlayerName).Equals(rankedPlayerNoSuffix, StringComparison.InvariantCultureIgnoreCase) &&
+						o.Position == rankedPlayer.Position && o.NFLTeam == rankedPlayer.NFLTeam);
+
+				if (playerNameSuffixMatch != null && playerNameSuffixMatch.IsActive)
 				{
-					Model.ErrorMessage = "Error - No space found in: " + playerName;
-					return;
+					firstName = playerNameSuffixMatch.FirstName;
+					lastName = playerNameSuffixMatch.LastName;
 				}
-				firstName = playerName.Substring(0, firstSpace);
-				lastName = playerName.Substring(firstSpace+1, playerName.Length-firstSpace-1);
+				else
+				{
+					var firstSpace = playerName.Trim().IndexOf(" ");
+					if (firstSpace < 0)
+					{
+						Model.ErrorMessage = "Error - No space found in: " + playerName;
+						return;
+					}
+					firstName = playerName.Substring(0, firstSpace);
+					lastName = playerName.Substring(firstSpace + 1, playerName.Length - firstSpace - 1);
+				}
 			}
 			AddPlayerRank(rankedPlayer, firstName, lastName);
 		}
