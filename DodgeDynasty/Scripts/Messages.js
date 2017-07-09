@@ -56,6 +56,7 @@ function showAddMessageDialog() {
 }
 
 function bindDraftChatDisplayLinks() {
+	formatDraftChatText($("#messages-tab .message-text, #draft-chat-tab .dchat-msg-text"));
 	$.each($(".draft-chat-link"), function (ix, link) {
 		$(link).click(function (e) {
 			e.preventDefault();

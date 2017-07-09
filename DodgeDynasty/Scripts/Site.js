@@ -616,8 +616,9 @@ function bindDraftChatWindow() {
 	});
 }
 
-function formatDraftChatText() {
-	$.each($(".dchat-msg-text", $(".dchat-window")), function (ix, msg) {
+function formatDraftChatText(chatText) {
+	chatText = chatText || $(".dchat-window .dchat-msg-text");
+	$.each($(chatText), function (ix, msg) {
 		$(msg).html($(msg).html().autoLink());
 	});
 }
