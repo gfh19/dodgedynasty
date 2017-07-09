@@ -174,6 +174,22 @@ namespace DodgeDynasty.Shared
 			return string.Empty;
 		}
 
+		public static List<int> AllIndexesOf(this string str, string value)
+		{
+			List<int> indexes = new List<int>();
+			if (!string.IsNullOrEmpty(str) && !string.IsNullOrEmpty(value))
+			{
+				for (int i = 0; i < str.Length; i += value.Length)
+				{
+					i = str.IndexOf(value, i);
+					if (i == -1)
+						return indexes;
+					indexes.Add(i);
+				}
+			}
+			return indexes;
+		}
+
 		#endregion String Methods
 
 		/* Config access methods */

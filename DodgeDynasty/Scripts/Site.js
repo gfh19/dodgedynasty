@@ -176,11 +176,12 @@ function broadcastChat(chat) {
 	var copy = $(".dchat-template .dchat-entry", dchatWindow).clone();
 	$(".dchat-prev-stamp", copy).addClass(chat.css);
 	$(".dchat-prev-stamp", copy).text(chat.author + " (" + chat.time + "):");
-	$(".dchat-prev-outline", copy).after(" " + chat.msg);
+	$(".dchat-prev-outline", copy).after(" <span class='dchat-msg-text'>" + chat.msg + "</span>");
 
 	$(".dchat-body .dchat-entry", dchatWindow).last().append($(copy));
 	$(".dchat-prev-content", dchatWindow).html($(copy).html())
 
+	formatDraftChatText();
 	scrollDraftChatBottom();
 }
 
@@ -580,6 +581,7 @@ function refreshCurrentDraftPickPartial() {
 /*		--- Draft Chat */
 
 function bindDraftChatWindow() {
+	formatDraftChatText();
 	$(".dchat-close-link").click(function (e) {
 		e.preventDefault();
 		var dchatWindow = getActiveDchatWindow();
@@ -613,6 +615,48 @@ function bindDraftChatWindow() {
 		toggleChatWindowError(false);
 	});
 }
+
+function formatDraftChatText() {
+	$.each($(".dchat-msg-text", $(".dchat-window")), function (ix, msg) {
+		$(msg).html($(msg).html().autoLink());
+	});
+}
+
+(function () {
+	var autoLink,
+	  slice = [].slice;
+
+	autoLink = function () {
+		var callback, k, linkAttributes, option, options, pattern, v;
+		options = 1 <= arguments.length ? slice.call(arguments, 0) : [];
+		pattern = /(^|[\s\n]|<[A-Za-z]*\/?>)((?:https?):\/\/[\-A-Z0-9+\u0026\u2019@#\/%?=()~_|!:,.;]*[\-A-Z0-9+\u0026@#\/%=~()_|])/gi;
+		if (!(options.length > 0)) {
+			return this.replace(pattern, "$1<a target='_blank' href='$2'>$2</a>");
+		}
+		option = options[0];
+		callback = option["callback"];
+		linkAttributes = ((function () {
+			var results;
+			results = [];
+			for (k in option) {
+				v = option[k];
+				if (k !== 'callback') {
+					results.push(" " + k + "='" + v + "'");
+				}
+			}
+			return results;
+		})()).join('');
+		return this.replace(pattern, function (match, space, url) {
+			var link;
+			link = (typeof callback === "function" ? callback(url) : void 0) || ("<a href='" + url + "'" + linkAttributes + ">" + url + "</a>");
+			return "" + space + link;
+		});
+	};
+
+	String.prototype['autoLink'] = autoLink;
+
+}).call(this);
+
 
 function getActiveDchatWindow() {
 	return $(".dchat-window").hasClass("hide-yo-wives") ? $(".dchat-window-error") : $(".dchat-window");

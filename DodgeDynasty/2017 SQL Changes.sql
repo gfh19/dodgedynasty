@@ -6,6 +6,86 @@ BEGIN TRANSACTION;
 
 
 
+USE [Home]
+GO
+
+/****** Object:  Table [dbo].[_ArchivePlayerHighlight]    Script Date: 7/8/2017 2:05:14 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[_ArchivePlayerHighlight](
+	[ArchivePlayerHighlightId] [int] IDENTITY(1,1) NOT NULL,
+	[PlayerHighlightId] [int] NOT NULL,
+	[DraftId] [int] NOT NULL,
+	[UserId] [int] NOT NULL,
+	[PlayerId] [int] NOT NULL,
+	[HighlightId] [int] NOT NULL,
+	[RankNum] [int] NOT NULL,
+	[AddTimestamp] [datetime] NOT NULL,
+	[LastUpdateTimestamp] [datetime] NOT NULL,
+	[ArchiveAddTimestamp] [datetime] NULL
+) ON [PRIMARY]
+
+GO
+
+
+
+
+/* Archive Player Highlights ! */
+
+INSERT INTO [dbo].[_ArchivePlayerHighlight]
+           ([PlayerHighlightId]
+           ,[DraftId]
+           ,[UserId]
+           ,[PlayerId]
+           ,[HighlightId]
+           ,[RankNum]
+           ,[AddTimestamp]
+           ,[LastUpdateTimestamp]
+           ,[ArchiveAddTimestamp])
+     SELECT [PlayerHighlightId]
+           ,[DraftId]
+           ,[UserId]
+           ,[PlayerId]
+           ,[HighlightId]
+           ,[RankNum]
+           ,[AddTimestamp]
+           ,[LastUpdateTimestamp]
+           ,getdate()
+		FROM dbo.PlayerHighlight
+GO
+
+
+
+DELETE FROM dbo.PlayerHighlight
+
+
+
+
+
+
+
+COMMIT TRANSACTION;
+
+
+
+
+
+
+
+
+
+/* Below run in Production on 7/8/17 */
+
+SET XACT_ABORT ON
+BEGIN TRANSACTION;
+
+
+
+
 
 INSERT INTO [dbo].[Role]
            ([RoleDescription]
@@ -70,10 +150,12 @@ INSERT INTO [dbo].[NFLTeam]
 GO
 
 
-UPDATE [dbo].[Player]
+/* No do not update all old SD -> LAC, this was a mistake */
+/*
+DO NOT UPDATE [dbo].[Player]
 SET [NFLTeam] = 'LAC'
 WHERE [NFLTeam] = 'SD'
-GO
+*/
 
 
 UPDATE [dbo].[NFLTeam]
