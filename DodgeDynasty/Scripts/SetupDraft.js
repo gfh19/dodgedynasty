@@ -368,13 +368,25 @@ function bindPlayerKeyPress(playerName) {
 				evt.preventDefault();
 				var rdPicks = $(playerName).closest(".round-picks");
 				var prPick = $(playerName).closest(".pick");
+				var prevRdPicks = $(rdPicks).prev(".round-picks");
 				var nextRdPicks = $(rdPicks).next(".round-picks");
 				if (key == enterKey) {
 					var pickIx = $(prPick).index();
-					if (pickIx >= 0 && nextRdPicks.length > 0) {
-						var nextRowPlayer = $(".pick:eq(" + (pickIx - 1) + ") .picked-player-name", nextRdPicks);
-						if (nextRowPlayer.length > 0) {
-							$(nextRowPlayer).focus();
+					if (event.shiftKey) {
+						//Shift enter
+						if (pickIx >= 0 && prevRdPicks.length > 0) {
+							var prevRowPlayer = $(".pick:eq(" + (pickIx - 1) + ") .picked-player-name", prevRdPicks);
+							if (prevRowPlayer.length > 0) {
+								$(prevRowPlayer).focus();
+							}
+						}
+					}
+					else {
+						if (pickIx >= 0 && nextRdPicks.length > 0) {
+							var nextRowPlayer = $(".pick:eq(" + (pickIx - 1) + ") .picked-player-name", nextRdPicks);
+							if (nextRowPlayer.length > 0) {
+								$(nextRowPlayer).focus();
+							}
 						}
 					}
 				}
@@ -386,7 +398,6 @@ function bindPlayerKeyPress(playerName) {
 							$(".picked-player-name", prevPick).focus();
 						}
 						else {
-							var prevRdPicks = $(rdPicks).prev(".round-picks");
 							var prevRowPlayer = $(".pick .picked-player-name", prevRdPicks).last();
 							if (prevRowPlayer) {
 								$(prevRowPlayer).focus();
