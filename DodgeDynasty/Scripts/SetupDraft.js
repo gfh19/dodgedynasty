@@ -22,6 +22,7 @@ function bindActionLinks() {
 	bindDeletePickLinks();
 	bindSubmitDraftPicks();
 	bindDeletePlayers();
+	bindPlayerAutoCompletes();
 };
 
 function bindAddRoundLinks() {
@@ -70,6 +71,7 @@ function addNewRoundPicksAfter(newRoundPicks, roundPicks, roundPickCount, roundN
 	$.each(newDeletePickLinks, function (index, link) {
 		bindDeletePickLink(link);
 	});
+	bindPlayerFunctions(newRoundPicks);
 }
 
 function bindDeleteRoundLinks() {
@@ -116,6 +118,8 @@ function bindReverseRoundLink(link) {
 			$(".sd-pick-num", newPick).text($(".sd-pick-num", origPick).text());
 			bindAddPickLink($(".add-pick-right", newPick));
 			bindDeletePickLink($(".delete-pick-right", newPick));
+			bindPlayerFunctions(newPick)
+			$(roundPicks).append(" ");
 			$(roundPicks).append(newPick);
 		}
 		$(picks).remove();
@@ -137,6 +141,7 @@ function bindAddPickLink(link) {
 		var newPick = $(pick).clone();
 		changeAllPickNums(pickNum, 1);
 		$(newPick).insertAfter(pick);
+		$(pick).after(" ");
 		setNewPickNum(newPick, pickNum + 1);
 		clearNewPickAttributes(newPick);
 		if ($(".delete-pick-right", newPick).hasClass("hide-yo-husbands-too")) {
@@ -147,6 +152,7 @@ function bindAddPickLink(link) {
 		}
 		bindAddPickLink($(".add-pick-right", newPick));
 		bindDeletePickLink($(".delete-pick-right", newPick));
+		bindPlayerFunctions(newPick);
 	});
 };
 
@@ -197,7 +203,7 @@ function clearNewPickAttributes(pick) {
 	//IE
 	$("option", pickSelect).removeProp("selected");
 
-	$(".picked-player", pick).remove();
+	clearPlayer($(".picked-player", pick));
 };
 
 function changeRoundNums(roundNum, offset) {
@@ -229,7 +235,7 @@ function clearNewRoundPickAttributes(newRoundPicks) {
 	$.each(picks, function (index, pick) {
 		$(pick).attr("data-pick-id", 0);
 		$(".delete-pick-right", newRoundPicks).removeClass("hide-yo-husbands-too");
-		$(".picked-player", pick).remove();
+		clearPlayer($(".picked-player", pick));
 	});
 	$(".delete-round-right", newRoundPicks).removeClass("hide-yo-wives");
 }
@@ -241,6 +247,7 @@ function bindSubmitDraftPicks() {
 		draftPicksModel.DraftId = $("#setupDraft").attr("data-draft-id");
 		var draftPicks = new Array();
 		var userIds = new Array();
+		var playerIds = new Array();
 		$.each($(".round-picks"), function (index, roundPicks) {
 			var roundNum = parseInt($(".round", roundPicks).attr("data-round-num"));
 			$.each($(".pick", roundPicks), function (index, pick) {
@@ -249,7 +256,7 @@ function bindSubmitDraftPicks() {
 				var userId = $("select option:selected", pick).val();
 				var playerId = null;
 				var pickedPlayer = $(".picked-player", pick);
-				if (pickedPlayer.length > 0) {
+				if (pickedPlayer.length > 0 && $(pickedPlayer).attr("data-player-id")) {
 					playerId = $(pickedPlayer).attr("data-player-id");
 				}
 				draftPicks.push({
@@ -261,15 +268,25 @@ function bindSubmitDraftPicks() {
 					PlayerId: playerId
 				});
 				userIds.push(userId);
+				playerIds.push(playerId);
 			});
 		});
 		draftPicksModel.DraftPicks = draftPicks;
-		if (validateDraftPicksModel(userIds)) {
+		if (validateDraftPicksModel(userIds, playerIds)) {
 			addWaitCursor();
 			isPageSubmitted = true;
 			ajaxPost(draftPicksModel, adminMode + "/SetupDraft", function (response) {
-				$("#setupDraftForm").submit();
+				removeWaitCursor();
+				$(".sd-update-status").removeClass("hide-yo-husbands-too");
+				$(".sd-update-status").fadeTo(2000, 0.5, function () {
+					$(".sd-update-status").addClass("hide-yo-husbands-too");
+					$(".sd-update-status").css("opacity", 1);
+				});
+				window.scrollTo(0, 0);
 			}, removeWaitCursor);
+		}
+		else {
+			window.scrollTo(0, 0);
 		}
 	});
 };
@@ -282,16 +299,21 @@ function bindDeletePlayers() {
 }
 
 function bindDeletePlayer(link) {
+	$(link).unbind('click');
 	$(link).click(function (e) {
 		e.preventDefault();
 		var player = $(link).closest('.picked-player');
 		var playerId = parseInt(player.attr("data-player-id"));
-		//popup confirmation?
-		$(player).remove();
+		clearPlayer(player);
 	});
 };
 
-function validateDraftPicksModel(userIds) {
+function clearPlayer(player) {
+	$("input", player).val("");
+	$(player).attr("data-player-id", "");
+}
+
+function validateDraftPicksModel(userIds, playerIds) {
 	var isValid = true;
 	var blankOwner = $.inArray("", userIds);
 	if (blankOwner > -1) {
@@ -299,10 +321,117 @@ function validateDraftPicksModel(userIds) {
 		markInvalidId("");
 		isValid = false;
 	}
+	playerIds.sort();
+	for (var i = 0; i < (playerIds.length - 1) ; i++) {
+		if (playerIds[i] != undefined && playerIds[i] == playerIds[i + 1]) {
+			$(".dup-player-msg").removeClass("hide-yo-wives");
+			markInvalidPlayer(playerIds[i]);
+			isValid = false;
+		}
+	}
 	return isValid;
+}
+
+function markInvalidPlayer(id) {
+	var invalidEntries = $(".picked-player[data-player-id=" + id + "] .picked-player-name");
+	$(invalidEntries).addClass("invalid-border");
 }
 
 function resetValidations() {
 	$(".blank-owner-msg").addClass("hide-yo-wives");
+	$(".dup-player-msg").addClass("hide-yo-wives");
 	$(".invalid-border").removeClass("invalid-border");
 }
+
+function bindPlayerFunctions(picks) {
+	bindPlayerAutoCompletes($(".picked-player-name", picks));
+	bindDeletePlayer($(".delete-picked-player", picks));
+}
+
+function bindPlayerAutoCompletes(playerNames) {
+	playerNames = playerNames || $(".picked-player-name");
+	$.each(playerNames, function (ix, playerName) {
+		setPickedPlayerAutoComplete(playerName);
+		bindPlayerKeyPress(playerName);
+	});
+}
+
+function bindPlayerKeyPress(playerName) {
+	var enterKey = 13;
+	var tabKey = 9;
+	$(playerName).keydown(function (e) {
+		var evt = e || window.event;
+		var key = evt.charCode || evt.keyCode;
+
+		if ((evt.type == "keydown" || evt.type == "keypress")) {
+			if (key == enterKey || key == tabKey) {
+				evt.preventDefault();
+				var rdPicks = $(playerName).closest(".round-picks");
+				var prPick = $(playerName).closest(".pick");
+				var nextRdPicks = $(rdPicks).next(".round-picks");
+				if (key == enterKey) {
+					var pickIx = $(prPick).index();
+					if (pickIx >= 0 && nextRdPicks.length > 0) {
+						var nextRowPlayer = $(".pick:eq(" + (pickIx - 1) + ") .picked-player-name", nextRdPicks);
+						if (nextRowPlayer.length > 0) {
+							$(nextRowPlayer).focus();
+						}
+					}
+				}
+				else if (key == tabKey) {
+					if (event.shiftKey) {
+						//Shift tab
+						var prevPick = $(prPick).prev(".pick");
+						if (prevPick.length > 0) {
+							$(".picked-player-name", prevPick).focus();
+						}
+						else {
+							var prevRdPicks = $(rdPicks).prev(".round-picks");
+							var prevRowPlayer = $(".pick .picked-player-name", prevRdPicks).last();
+							if (prevRowPlayer) {
+								$(prevRowPlayer).focus();
+							}
+						}
+					}
+					else {
+						var nextPick = $(prPick).next(".pick");
+						if (nextPick.length > 0) {
+							$(".picked-player-name", nextPick).focus();
+						}
+						else if (nextRdPicks.length > 0) {
+							var nextRowPlayer = $(".pick:eq(0) .picked-player-name", nextRdPicks);
+							if (nextRowPlayer.length > 0) {
+								$(nextRowPlayer).focus();
+							}
+						}
+					}
+				}
+			}
+		}
+	});
+}
+
+function setPickedPlayerAutoComplete(playerName) {
+	$(playerName).autocomplete({
+		source: function (request, response) {
+			var filteredArray = $.map(playerHints, function (item) {
+				var response = null;
+				var nameParts = [item.firstName, item.lastName, item.firstName + ' ' + item.lastName];
+				$.each(nameParts, function (index, elem) {
+					if (formatAutoCompName(elem).match("^" + formatAutoCompName(request.term))) {
+						response = item;
+					}
+				});
+				return response;
+			});
+			response(filteredArray);
+		},
+		select: function (event, ui) {
+			var pickedPlayer = $(playerName).closest(".picked-player");
+			$(pickedPlayer).attr("data-player-id", ui.item.id);
+			$(playerName).val(ui.item.firstName + " " + ui.item.lastName + " (" + ui.item.nflTeamDisplay + "-" + ui.item.pos + ")");
+			setTimeout(function () { $(playerName).focus(); }, 0);
+			return false;
+		}
+	});
+};

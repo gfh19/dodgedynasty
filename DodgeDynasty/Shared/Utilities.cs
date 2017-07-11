@@ -407,9 +407,9 @@ namespace DodgeDynasty.Shared
 				{
 					var nflTeam = nflTeams.First(t => t.TeamAbbr == player.NFLTeam.ToUpper());
                     playerHints.Append(string.Format(
-						"{{value:\"{0} {1} {3}-{4}\",firstName:\"{0}\",lastName:\"{1}\",nflTeam:\"{2}\",nflTeamDisplay:\"{3}\",pos:\"{4}\"}},",
+						"{{value:\"{0} {1} {3}-{4}\",firstName:\"{0}\",lastName:\"{1}\",nflTeam:\"{2}\",nflTeamDisplay:\"{3}\",pos:\"{4}\",id:\"{5}\"}},",
 						Utilities.JsonEncode(player.FirstName), Utilities.JsonEncode(player.LastName), Utilities.JsonEncode(nflTeam.TeamAbbr),
-							Utilities.JsonEncode(nflTeam.AbbrDisplay), Utilities.JsonEncode(player.Position)));
+							Utilities.JsonEncode(nflTeam.AbbrDisplay), Utilities.JsonEncode(player.Position), player.PlayerId));
 				}
 			}
 			playerHints.Append("]");

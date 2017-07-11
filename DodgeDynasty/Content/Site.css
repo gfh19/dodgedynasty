@@ -1869,7 +1869,7 @@ span.player-select
 
 #setupDraft .draft
 {
-	margin-top: 12px;
+	margin-top: 4px;
 }
 #setupDraft select 
 {
@@ -1888,6 +1888,10 @@ span.player-select
 {
 	vertical-align: bottom;
 }
+#setupDraft .pick
+{
+	display: inline-block;
+}
 
 #setupDraft .setup-pick-outline
 {
@@ -1896,8 +1900,9 @@ span.player-select
 	float: none;
 	margin-right: 2px;
 	vertical-align: middle;
-	width: 113px;
-	height: 35px;
+	width: 127px;
+	height: 45px;
+	box-shadow: 0 1px 2px 0 #898989;
 }
 #setupDraft .setup-pick-outline img
 {
@@ -1911,10 +1916,15 @@ span.player-select
 	font-size: 10px;
 	width: 18px;
 	text-align: right;
+	margin-right: 1px;
 }
 #setupDraft .buttons 
 {
 	margin-top: 10px;
+}
+#setupDraft button
+{
+	box-shadow: 0px 1px 1px 0px;
 }
 .hide-yo-kids
 {
@@ -1939,13 +1949,26 @@ span.player-select
 	float: left;
 	display: inline-block;
 	font-size: 10px;
-	margin-left: 1px;
-	width: 100px;
+	margin: -2px 0px 0px 1px;
+	padding: 3px;
+	width: 105px;
 	overflow: hidden;
 }
 .delete-picked-player {
 	font-size: 11px;
 	margin-left: 2px;
+}
+.delete-pick-right {
+	float: right;
+	margin-right: 2px;
+}
+.delete-pick-right img {
+	vertical-align: -webkit-baseline-middle;
+}
+.sd-update-status {
+	font-size: 17px;
+	font-weight: bold;
+	color: red;
 }
 
 

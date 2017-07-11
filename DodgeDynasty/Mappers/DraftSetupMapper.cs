@@ -22,6 +22,7 @@ namespace DodgeDynasty.Mappers
 				var updatedDraftPickIds = updatedDraftPicks.Select(p => p.DraftPickId).ToList();
 				var deletedDraftPickIds = currentModel.DraftPicks
 					.Where(p => !updatedDraftPickIds.Contains(p.DraftPickId)).Select(p => p.DraftPickId).ToList();
+				var now = Utilities.GetEasternTime();
 				foreach (var pick in newDraftPicks)
 				{
 					var newDraftPick = new DraftPick
@@ -30,8 +31,9 @@ namespace DodgeDynasty.Mappers
 						PickNum = pick.PickNum,
 						RoundNum = pick.RoundNum,
 						UserId = pick.UserId,
-						AddTimestamp = DateTime.Now,
-						LastUpdateTimestamp = DateTime.Now
+						PlayerId = pick.PlayerId,
+						AddTimestamp = now,
+						LastUpdateTimestamp = now
 					};
 					HomeEntity.DraftPicks.AddObject(newDraftPick);
 				}
@@ -43,7 +45,7 @@ namespace DodgeDynasty.Mappers
 					draftPick.RoundNum = pick.RoundNum;
 					draftPick.UserId = pick.UserId;
 					draftPick.PlayerId = pick.PlayerId;
-					draftPick.LastUpdateTimestamp = DateTime.Now;
+					draftPick.LastUpdateTimestamp = now;
 				}
 				HomeEntity.SaveChanges();
 				foreach (var pickId in deletedDraftPickIds)
