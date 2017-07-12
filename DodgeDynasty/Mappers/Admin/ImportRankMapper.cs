@@ -67,6 +67,7 @@ namespace DodgeDynasty.Mappers.Admin
 					AddPlayerRank(rankedPlayer);
 				}
 				SetRankLastUpdate(rank);
+				HideReportingForRedundantEntries();
 				UpdateSucceeded = true;
 			}
 			else
@@ -83,6 +84,51 @@ namespace DodgeDynasty.Mappers.Admin
 					Model.MaxPlayerCount = parser.MaxPlayerCount;
 				}
 			}
+		}
+
+		private void HideReportingForRedundantEntries()
+		{
+			var redundantEntries = HomeEntity.PlayerAdjustments.GroupBy(o => new PlayerAdjType
+			{
+				OldPlayerId = o.OldPlayerId,
+				NewPlayerId = o.NewPlayerId,
+				TruePlayerId = o.TruePlayerId,
+				NewFirstName = o.NewFirstName,
+				NewLastName = o.NewLastName,
+				NewPlayerName = o.NewPlayerName,
+				NewPosition = o.NewPosition,
+				NewNFLTeam = o.NewNFLTeam,
+				Action = o.Action,
+				UserId = o.UserId,
+				LastUpdateYear = o.LastUpdateTimestamp.Year
+			})
+			.Where(grp => grp.Count() > 2 && grp.Key.LastUpdateYear == DateTime.Now.Year)
+			.Select(grp=>grp.Key).ToList();
+
+			foreach (var re in redundantEntries)
+			{
+				var entries = HomeEntity.PlayerAdjustments.Where(o =>
+				(o.OldPlayerId == re.OldPlayerId || (o.OldPlayerId == null && re.OldPlayerId == null)) &&
+				(o.NewPlayerId == re.NewPlayerId || (o.NewPlayerId == null && re.NewPlayerId == null)) &&
+				(o.TruePlayerId == re.TruePlayerId || (o.TruePlayerId == null && re.TruePlayerId == null)) &&
+				o.NewFirstName == re.NewFirstName &&
+				o.NewLastName == re.NewLastName &&
+				o.NewPlayerName == re.NewPlayerName &&
+				o.NewPosition == re.NewPosition &&
+				o.NewNFLTeam == re.NewNFLTeam &&
+				o.Action == re.Action &&
+				(o.UserId == re.UserId || (o.UserId == null && re.UserId == null)) &&
+				o.LastUpdateTimestamp.Year >= re.LastUpdateYear).OrderBy(o=>o.LastUpdateTimestamp);
+				var entryCount = 0;
+				foreach (var e in entries)
+				{
+					if (entryCount++ >= 2)
+					{
+						e.HideReporting = true;
+					}
+				}
+			}
+			HomeEntity.SaveChanges();
 		}
 
 		private HtmlNode LoadRankHtmlDoc(AutoImport autoImport)

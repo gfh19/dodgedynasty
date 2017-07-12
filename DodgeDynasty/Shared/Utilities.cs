@@ -39,9 +39,10 @@ namespace DodgeDynasty.Shared
 			return name;
 		}
 
+		//May want to delete this in future if two truly different Jr/non-Jr players collide
 		public static string TrimSuffix(string playerName)
 		{
-			var suffixes = new string[] { "Sr.", "Sr", "Jr.", "Jr", "II", "III" };
+			var suffixes = new string[] { "Sr.", "Sr", "Jr.", "Jr", "II", "III", "IV", "V" };
 			foreach (var suffix in suffixes)
 			{
 				if (playerName.EndsWith(" " + suffix))

@@ -61,11 +61,11 @@ namespace DodgeDynasty.Mappers.PlayerAdjustments
 
 		private List<AdjustedPlayer> GetOtherAdjPlayers(List<PlayerAdjustment> adjustments, int mostRecentYear)
 		{
-			var otherPlayerAdjs = adjustments.Where(o => !o.Action.Contains(_addPlayerActionText) && o.AddTimestamp.Year == mostRecentYear)
+			var otherPlayerAdjs = adjustments.Where(o => !o.Action.Contains(_addPlayerActionText) && o.AddTimestamp.Year == mostRecentYear && !o.HideReporting)
 				.OrderByDescending(o => o.AddTimestamp).ToList();
 			if (otherPlayerAdjs.Count < _playerAdjWindow)
 			{
-				otherPlayerAdjs = adjustments.Where(o => !o.Action.Contains(_addPlayerActionText) && o.AddTimestamp.Year >= mostRecentYear - 1)
+				otherPlayerAdjs = adjustments.Where(o => !o.Action.Contains(_addPlayerActionText) && o.AddTimestamp.Year >= mostRecentYear - 1 && !o.HideReporting)
 					.OrderByDescending(o => o.AddTimestamp).ToList();
 			}
 			return GetAdjustedPlayers(otherPlayerAdjs);

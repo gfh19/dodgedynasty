@@ -1,4 +1,85 @@
-﻿/* Below run in Production on 7/8/17 */
+﻿/* Below run in Production on 7/11/17 */
+
+SET XACT_ABORT ON
+BEGIN TRANSACTION;
+
+
+
+
+
+ALTER TABLE [dbo].[League]
+ADD [NumRounds] bit NOT NULL DEFAULT(0);
+GO
+
+
+
+
+
+
+COMMIT TRANSACTION;
+
+
+
+
+
+
+
+/* Below run in Production on 7/10/17 */
+
+SET XACT_ABORT ON
+BEGIN TRANSACTION;
+
+
+
+
+INSERT INTO dbo.ByeWeek VALUES (2017, 'ARI', '8', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2017, 'ATL', '5', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2017, 'BAL', '10', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2017, 'BUF', '6', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2017, 'CAR', '11', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2017, 'CHI', '9', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2017, 'CIN', '6', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2017, 'CLE', '9', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2017, 'DAL', '6', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2017, 'DEN', '5', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2017, 'DET', '7', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2017, 'GB', '8', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2017, 'HOU', '7', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2017, 'IND', '11', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2017, 'JAX', '8', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2017, 'KC', '10', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2017, 'LAC', '9', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2017, 'LAR', '8', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2017, 'MIA', '11', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2017, 'MIN', '9', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2017, 'NE', '9', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2017, 'NO', '5', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2017, 'NYG', '8', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2017, 'NYJ', '11', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2017, 'OAK', '10', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2017, 'PHI', '10', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2017, 'PIT', '9', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2017, 'SF', '11', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2017, 'SEA', '6', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2017, 'TB', '11', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2017, 'TEN', '8', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES (2017, 'WAS', '5', getdate(), getdate());
+
+
+
+
+
+
+COMMIT TRANSACTION;
+
+
+
+
+
+
+
+
+/* Below run in Production on 7/8/17 */
 
 SET XACT_ABORT ON
 BEGIN TRANSACTION;

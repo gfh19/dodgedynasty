@@ -26,11 +26,8 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_DraftPick_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.User), "DraftPick", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.DraftPick), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_DraftRank_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.User), "DraftRank", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.DraftRank), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_LeagueOwner_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.User), "LeagueOwner", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.LeagueOwner), true)]
-[assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerAdjustment_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.User), "PlayerAdjustment", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerAdjustment), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_DraftPick_Player", "Player", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.Player), "DraftPick", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.DraftPick), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_Player_Player", "Player", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Player), "Player1", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.Player), true)]
-[assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerAdjustment_PlayerNew", "Player", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.Player), "PlayerAdjustment", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerAdjustment), true)]
-[assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerAdjustment_PlayerOld", "Player", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.Player), "PlayerAdjustment", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerAdjustment), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerRank_Player", "Player", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Player), "PlayerRank", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerRank), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerHighlight_Highlight", "Highlight", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Highlight), "PlayerHighlight", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerHighlight), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerHighlight_Player", "Player", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Player), "PlayerHighlight", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerHighlight), true)]
@@ -59,6 +56,10 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_LeagueOwner_League", "League", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.League), "LeagueOwner", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.LeagueOwner), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_Message_League", "League", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.League), "Message", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.Message), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_UserRole_League", "League", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.League), "UserRole", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.UserRole), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_DraftRank_Rank", "Rank", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Rank), "DraftRank", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.DraftRank), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerAdjustment_PlayerNew", "Player", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.Player), "PlayerAdjustment", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerAdjustment), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerAdjustment_PlayerOld", "Player", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.Player), "PlayerAdjustment", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerAdjustment), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerAdjustment_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.User), "PlayerAdjustment", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerAdjustment), true)]
 
 #endregion
 
@@ -317,22 +318,6 @@ namespace DodgeDynasty.Entities
             }
         }
         private ObjectSet<DraftChat> _DraftChats;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<PlayerAdjustment> PlayerAdjustments
-        {
-            get
-            {
-                if ((_PlayerAdjustments == null))
-                {
-                    _PlayerAdjustments = base.CreateObjectSet<PlayerAdjustment>("PlayerAdjustments");
-                }
-                return _PlayerAdjustments;
-            }
-        }
-        private ObjectSet<PlayerAdjustment> _PlayerAdjustments;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -621,6 +606,70 @@ namespace DodgeDynasty.Entities
             }
         }
         private ObjectSet<PlayerRankOption> _PlayerRankOptions;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<C_HistoryDraftPick> C_HistoryDraftPick
+        {
+            get
+            {
+                if ((_C_HistoryDraftPick == null))
+                {
+                    _C_HistoryDraftPick = base.CreateObjectSet<C_HistoryDraftPick>("C_HistoryDraftPick");
+                }
+                return _C_HistoryDraftPick;
+            }
+        }
+        private ObjectSet<C_HistoryDraftPick> _C_HistoryDraftPick;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<C_HistoryPlayer> C_HistoryPlayer
+        {
+            get
+            {
+                if ((_C_HistoryPlayer == null))
+                {
+                    _C_HistoryPlayer = base.CreateObjectSet<C_HistoryPlayer>("C_HistoryPlayer");
+                }
+                return _C_HistoryPlayer;
+            }
+        }
+        private ObjectSet<C_HistoryPlayer> _C_HistoryPlayer;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<C_ArchivePlayerHighlight> C_ArchivePlayerHighlight
+        {
+            get
+            {
+                if ((_C_ArchivePlayerHighlight == null))
+                {
+                    _C_ArchivePlayerHighlight = base.CreateObjectSet<C_ArchivePlayerHighlight>("C_ArchivePlayerHighlight");
+                }
+                return _C_ArchivePlayerHighlight;
+            }
+        }
+        private ObjectSet<C_ArchivePlayerHighlight> _C_ArchivePlayerHighlight;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<PlayerAdjustment> PlayerAdjustments
+        {
+            get
+            {
+                if ((_PlayerAdjustments == null))
+                {
+                    _PlayerAdjustments = base.CreateObjectSet<PlayerAdjustment>("PlayerAdjustments");
+                }
+                return _PlayerAdjustments;
+            }
+        }
+        private ObjectSet<PlayerAdjustment> _PlayerAdjustments;
 
         #endregion
 
@@ -728,14 +777,6 @@ namespace DodgeDynasty.Entities
         public void AddToDraftChats(DraftChat draftChat)
         {
             base.AddObject("DraftChats", draftChat);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the PlayerAdjustments EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToPlayerAdjustments(PlayerAdjustment playerAdjustment)
-        {
-            base.AddObject("PlayerAdjustments", playerAdjustment);
         }
     
         /// <summary>
@@ -880,6 +921,38 @@ namespace DodgeDynasty.Entities
         public void AddToPlayerRankOptions(PlayerRankOption playerRankOption)
         {
             base.AddObject("PlayerRankOptions", playerRankOption);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the C_HistoryDraftPick EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToC_HistoryDraftPick(C_HistoryDraftPick c_HistoryDraftPick)
+        {
+            base.AddObject("C_HistoryDraftPick", c_HistoryDraftPick);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the C_HistoryPlayer EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToC_HistoryPlayer(C_HistoryPlayer c_HistoryPlayer)
+        {
+            base.AddObject("C_HistoryPlayer", c_HistoryPlayer);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the C_ArchivePlayerHighlight EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToC_ArchivePlayerHighlight(C_ArchivePlayerHighlight c_ArchivePlayerHighlight)
+        {
+            base.AddObject("C_ArchivePlayerHighlight", c_ArchivePlayerHighlight);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the PlayerAdjustments EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToPlayerAdjustments(PlayerAdjustment playerAdjustment)
+        {
+            base.AddObject("PlayerAdjustments", playerAdjustment);
         }
 
         #endregion
@@ -2372,6 +2445,876 @@ namespace DodgeDynasty.Entities
                 }
             }
         }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="HomeModel", Name="C_ArchivePlayerHighlight")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class C_ArchivePlayerHighlight : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new C_ArchivePlayerHighlight object.
+        /// </summary>
+        /// <param name="archivePlayerHighlightId">Initial value of the ArchivePlayerHighlightId property.</param>
+        /// <param name="playerHighlightId">Initial value of the PlayerHighlightId property.</param>
+        /// <param name="draftId">Initial value of the DraftId property.</param>
+        /// <param name="userId">Initial value of the UserId property.</param>
+        /// <param name="playerId">Initial value of the PlayerId property.</param>
+        /// <param name="highlightId">Initial value of the HighlightId property.</param>
+        /// <param name="rankNum">Initial value of the RankNum property.</param>
+        /// <param name="addTimestamp">Initial value of the AddTimestamp property.</param>
+        /// <param name="lastUpdateTimestamp">Initial value of the LastUpdateTimestamp property.</param>
+        public static C_ArchivePlayerHighlight CreateC_ArchivePlayerHighlight(global::System.Int32 archivePlayerHighlightId, global::System.Int32 playerHighlightId, global::System.Int32 draftId, global::System.Int32 userId, global::System.Int32 playerId, global::System.Int32 highlightId, global::System.Int32 rankNum, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp)
+        {
+            C_ArchivePlayerHighlight c_ArchivePlayerHighlight = new C_ArchivePlayerHighlight();
+            c_ArchivePlayerHighlight.ArchivePlayerHighlightId = archivePlayerHighlightId;
+            c_ArchivePlayerHighlight.PlayerHighlightId = playerHighlightId;
+            c_ArchivePlayerHighlight.DraftId = draftId;
+            c_ArchivePlayerHighlight.UserId = userId;
+            c_ArchivePlayerHighlight.PlayerId = playerId;
+            c_ArchivePlayerHighlight.HighlightId = highlightId;
+            c_ArchivePlayerHighlight.RankNum = rankNum;
+            c_ArchivePlayerHighlight.AddTimestamp = addTimestamp;
+            c_ArchivePlayerHighlight.LastUpdateTimestamp = lastUpdateTimestamp;
+            return c_ArchivePlayerHighlight;
+        }
+
+        #endregion
+
+        #region Simple Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ArchivePlayerHighlightId
+        {
+            get
+            {
+                return _ArchivePlayerHighlightId;
+            }
+            set
+            {
+                if (_ArchivePlayerHighlightId != value)
+                {
+                    OnArchivePlayerHighlightIdChanging(value);
+                    ReportPropertyChanging("ArchivePlayerHighlightId");
+                    _ArchivePlayerHighlightId = StructuralObject.SetValidValue(value, "ArchivePlayerHighlightId");
+                    ReportPropertyChanged("ArchivePlayerHighlightId");
+                    OnArchivePlayerHighlightIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _ArchivePlayerHighlightId;
+        partial void OnArchivePlayerHighlightIdChanging(global::System.Int32 value);
+        partial void OnArchivePlayerHighlightIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 PlayerHighlightId
+        {
+            get
+            {
+                return _PlayerHighlightId;
+            }
+            set
+            {
+                if (_PlayerHighlightId != value)
+                {
+                    OnPlayerHighlightIdChanging(value);
+                    ReportPropertyChanging("PlayerHighlightId");
+                    _PlayerHighlightId = StructuralObject.SetValidValue(value, "PlayerHighlightId");
+                    ReportPropertyChanged("PlayerHighlightId");
+                    OnPlayerHighlightIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _PlayerHighlightId;
+        partial void OnPlayerHighlightIdChanging(global::System.Int32 value);
+        partial void OnPlayerHighlightIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 DraftId
+        {
+            get
+            {
+                return _DraftId;
+            }
+            set
+            {
+                if (_DraftId != value)
+                {
+                    OnDraftIdChanging(value);
+                    ReportPropertyChanging("DraftId");
+                    _DraftId = StructuralObject.SetValidValue(value, "DraftId");
+                    ReportPropertyChanged("DraftId");
+                    OnDraftIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _DraftId;
+        partial void OnDraftIdChanging(global::System.Int32 value);
+        partial void OnDraftIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 UserId
+        {
+            get
+            {
+                return _UserId;
+            }
+            set
+            {
+                if (_UserId != value)
+                {
+                    OnUserIdChanging(value);
+                    ReportPropertyChanging("UserId");
+                    _UserId = StructuralObject.SetValidValue(value, "UserId");
+                    ReportPropertyChanged("UserId");
+                    OnUserIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _UserId;
+        partial void OnUserIdChanging(global::System.Int32 value);
+        partial void OnUserIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 PlayerId
+        {
+            get
+            {
+                return _PlayerId;
+            }
+            set
+            {
+                if (_PlayerId != value)
+                {
+                    OnPlayerIdChanging(value);
+                    ReportPropertyChanging("PlayerId");
+                    _PlayerId = StructuralObject.SetValidValue(value, "PlayerId");
+                    ReportPropertyChanged("PlayerId");
+                    OnPlayerIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _PlayerId;
+        partial void OnPlayerIdChanging(global::System.Int32 value);
+        partial void OnPlayerIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 HighlightId
+        {
+            get
+            {
+                return _HighlightId;
+            }
+            set
+            {
+                if (_HighlightId != value)
+                {
+                    OnHighlightIdChanging(value);
+                    ReportPropertyChanging("HighlightId");
+                    _HighlightId = StructuralObject.SetValidValue(value, "HighlightId");
+                    ReportPropertyChanged("HighlightId");
+                    OnHighlightIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _HighlightId;
+        partial void OnHighlightIdChanging(global::System.Int32 value);
+        partial void OnHighlightIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 RankNum
+        {
+            get
+            {
+                return _RankNum;
+            }
+            set
+            {
+                if (_RankNum != value)
+                {
+                    OnRankNumChanging(value);
+                    ReportPropertyChanging("RankNum");
+                    _RankNum = StructuralObject.SetValidValue(value, "RankNum");
+                    ReportPropertyChanged("RankNum");
+                    OnRankNumChanged();
+                }
+            }
+        }
+        private global::System.Int32 _RankNum;
+        partial void OnRankNumChanging(global::System.Int32 value);
+        partial void OnRankNumChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime AddTimestamp
+        {
+            get
+            {
+                return _AddTimestamp;
+            }
+            set
+            {
+                if (_AddTimestamp != value)
+                {
+                    OnAddTimestampChanging(value);
+                    ReportPropertyChanging("AddTimestamp");
+                    _AddTimestamp = StructuralObject.SetValidValue(value, "AddTimestamp");
+                    ReportPropertyChanged("AddTimestamp");
+                    OnAddTimestampChanged();
+                }
+            }
+        }
+        private global::System.DateTime _AddTimestamp;
+        partial void OnAddTimestampChanging(global::System.DateTime value);
+        partial void OnAddTimestampChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime LastUpdateTimestamp
+        {
+            get
+            {
+                return _LastUpdateTimestamp;
+            }
+            set
+            {
+                if (_LastUpdateTimestamp != value)
+                {
+                    OnLastUpdateTimestampChanging(value);
+                    ReportPropertyChanging("LastUpdateTimestamp");
+                    _LastUpdateTimestamp = StructuralObject.SetValidValue(value, "LastUpdateTimestamp");
+                    ReportPropertyChanged("LastUpdateTimestamp");
+                    OnLastUpdateTimestampChanged();
+                }
+            }
+        }
+        private global::System.DateTime _LastUpdateTimestamp;
+        partial void OnLastUpdateTimestampChanging(global::System.DateTime value);
+        partial void OnLastUpdateTimestampChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> ArchiveAddTimestamp
+        {
+            get
+            {
+                return _ArchiveAddTimestamp;
+            }
+            set
+            {
+                OnArchiveAddTimestampChanging(value);
+                ReportPropertyChanging("ArchiveAddTimestamp");
+                _ArchiveAddTimestamp = StructuralObject.SetValidValue(value, "ArchiveAddTimestamp");
+                ReportPropertyChanged("ArchiveAddTimestamp");
+                OnArchiveAddTimestampChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _ArchiveAddTimestamp;
+        partial void OnArchiveAddTimestampChanging(Nullable<global::System.DateTime> value);
+        partial void OnArchiveAddTimestampChanged();
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="HomeModel", Name="C_HistoryDraftPick")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class C_HistoryDraftPick : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new C_HistoryDraftPick object.
+        /// </summary>
+        /// <param name="historyDraftPickId">Initial value of the HistoryDraftPickId property.</param>
+        /// <param name="draftId">Initial value of the DraftId property.</param>
+        /// <param name="pickNum">Initial value of the PickNum property.</param>
+        /// <param name="roundNum">Initial value of the RoundNum property.</param>
+        /// <param name="userId">Initial value of the UserId property.</param>
+        /// <param name="historyPlayerId">Initial value of the HistoryPlayerId property.</param>
+        public static C_HistoryDraftPick CreateC_HistoryDraftPick(global::System.Int32 historyDraftPickId, global::System.Int32 draftId, global::System.Int32 pickNum, global::System.Int32 roundNum, global::System.Int32 userId, global::System.Int32 historyPlayerId)
+        {
+            C_HistoryDraftPick c_HistoryDraftPick = new C_HistoryDraftPick();
+            c_HistoryDraftPick.HistoryDraftPickId = historyDraftPickId;
+            c_HistoryDraftPick.DraftId = draftId;
+            c_HistoryDraftPick.PickNum = pickNum;
+            c_HistoryDraftPick.RoundNum = roundNum;
+            c_HistoryDraftPick.UserId = userId;
+            c_HistoryDraftPick.HistoryPlayerId = historyPlayerId;
+            return c_HistoryDraftPick;
+        }
+
+        #endregion
+
+        #region Simple Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 HistoryDraftPickId
+        {
+            get
+            {
+                return _HistoryDraftPickId;
+            }
+            set
+            {
+                if (_HistoryDraftPickId != value)
+                {
+                    OnHistoryDraftPickIdChanging(value);
+                    ReportPropertyChanging("HistoryDraftPickId");
+                    _HistoryDraftPickId = StructuralObject.SetValidValue(value, "HistoryDraftPickId");
+                    ReportPropertyChanged("HistoryDraftPickId");
+                    OnHistoryDraftPickIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _HistoryDraftPickId;
+        partial void OnHistoryDraftPickIdChanging(global::System.Int32 value);
+        partial void OnHistoryDraftPickIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 DraftId
+        {
+            get
+            {
+                return _DraftId;
+            }
+            set
+            {
+                OnDraftIdChanging(value);
+                ReportPropertyChanging("DraftId");
+                _DraftId = StructuralObject.SetValidValue(value, "DraftId");
+                ReportPropertyChanged("DraftId");
+                OnDraftIdChanged();
+            }
+        }
+        private global::System.Int32 _DraftId;
+        partial void OnDraftIdChanging(global::System.Int32 value);
+        partial void OnDraftIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 PickNum
+        {
+            get
+            {
+                return _PickNum;
+            }
+            set
+            {
+                OnPickNumChanging(value);
+                ReportPropertyChanging("PickNum");
+                _PickNum = StructuralObject.SetValidValue(value, "PickNum");
+                ReportPropertyChanged("PickNum");
+                OnPickNumChanged();
+            }
+        }
+        private global::System.Int32 _PickNum;
+        partial void OnPickNumChanging(global::System.Int32 value);
+        partial void OnPickNumChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 RoundNum
+        {
+            get
+            {
+                return _RoundNum;
+            }
+            set
+            {
+                OnRoundNumChanging(value);
+                ReportPropertyChanging("RoundNum");
+                _RoundNum = StructuralObject.SetValidValue(value, "RoundNum");
+                ReportPropertyChanged("RoundNum");
+                OnRoundNumChanged();
+            }
+        }
+        private global::System.Int32 _RoundNum;
+        partial void OnRoundNumChanging(global::System.Int32 value);
+        partial void OnRoundNumChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 UserId
+        {
+            get
+            {
+                return _UserId;
+            }
+            set
+            {
+                OnUserIdChanging(value);
+                ReportPropertyChanging("UserId");
+                _UserId = StructuralObject.SetValidValue(value, "UserId");
+                ReportPropertyChanged("UserId");
+                OnUserIdChanged();
+            }
+        }
+        private global::System.Int32 _UserId;
+        partial void OnUserIdChanging(global::System.Int32 value);
+        partial void OnUserIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 HistoryPlayerId
+        {
+            get
+            {
+                return _HistoryPlayerId;
+            }
+            set
+            {
+                OnHistoryPlayerIdChanging(value);
+                ReportPropertyChanging("HistoryPlayerId");
+                _HistoryPlayerId = StructuralObject.SetValidValue(value, "HistoryPlayerId");
+                ReportPropertyChanged("HistoryPlayerId");
+                OnHistoryPlayerIdChanged();
+            }
+        }
+        private global::System.Int32 _HistoryPlayerId;
+        partial void OnHistoryPlayerIdChanging(global::System.Int32 value);
+        partial void OnHistoryPlayerIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> PlayerId
+        {
+            get
+            {
+                return _PlayerId;
+            }
+            set
+            {
+                OnPlayerIdChanging(value);
+                ReportPropertyChanging("PlayerId");
+                _PlayerId = StructuralObject.SetValidValue(value, "PlayerId");
+                ReportPropertyChanged("PlayerId");
+                OnPlayerIdChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _PlayerId;
+        partial void OnPlayerIdChanging(Nullable<global::System.Int32> value);
+        partial void OnPlayerIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> TruePlayerId
+        {
+            get
+            {
+                return _TruePlayerId;
+            }
+            set
+            {
+                OnTruePlayerIdChanging(value);
+                ReportPropertyChanging("TruePlayerId");
+                _TruePlayerId = StructuralObject.SetValidValue(value, "TruePlayerId");
+                ReportPropertyChanged("TruePlayerId");
+                OnTruePlayerIdChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _TruePlayerId;
+        partial void OnTruePlayerIdChanging(Nullable<global::System.Int32> value);
+        partial void OnTruePlayerIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> AddTimestamp
+        {
+            get
+            {
+                return _AddTimestamp;
+            }
+            set
+            {
+                OnAddTimestampChanging(value);
+                ReportPropertyChanging("AddTimestamp");
+                _AddTimestamp = StructuralObject.SetValidValue(value, "AddTimestamp");
+                ReportPropertyChanged("AddTimestamp");
+                OnAddTimestampChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _AddTimestamp;
+        partial void OnAddTimestampChanging(Nullable<global::System.DateTime> value);
+        partial void OnAddTimestampChanged();
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="HomeModel", Name="C_HistoryPlayer")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class C_HistoryPlayer : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new C_HistoryPlayer object.
+        /// </summary>
+        /// <param name="historyPlayerId">Initial value of the HistoryPlayerId property.</param>
+        /// <param name="firstName">Initial value of the FirstName property.</param>
+        /// <param name="lastName">Initial value of the LastName property.</param>
+        public static C_HistoryPlayer CreateC_HistoryPlayer(global::System.Int32 historyPlayerId, global::System.String firstName, global::System.String lastName)
+        {
+            C_HistoryPlayer c_HistoryPlayer = new C_HistoryPlayer();
+            c_HistoryPlayer.HistoryPlayerId = historyPlayerId;
+            c_HistoryPlayer.FirstName = firstName;
+            c_HistoryPlayer.LastName = lastName;
+            return c_HistoryPlayer;
+        }
+
+        #endregion
+
+        #region Simple Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 HistoryPlayerId
+        {
+            get
+            {
+                return _HistoryPlayerId;
+            }
+            set
+            {
+                if (_HistoryPlayerId != value)
+                {
+                    OnHistoryPlayerIdChanging(value);
+                    ReportPropertyChanging("HistoryPlayerId");
+                    _HistoryPlayerId = StructuralObject.SetValidValue(value, "HistoryPlayerId");
+                    ReportPropertyChanged("HistoryPlayerId");
+                    OnHistoryPlayerIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _HistoryPlayerId;
+        partial void OnHistoryPlayerIdChanging(global::System.Int32 value);
+        partial void OnHistoryPlayerIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> DraftId
+        {
+            get
+            {
+                return _DraftId;
+            }
+            set
+            {
+                OnDraftIdChanging(value);
+                ReportPropertyChanging("DraftId");
+                _DraftId = StructuralObject.SetValidValue(value, "DraftId");
+                ReportPropertyChanged("DraftId");
+                OnDraftIdChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _DraftId;
+        partial void OnDraftIdChanging(Nullable<global::System.Int32> value);
+        partial void OnDraftIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int16> Year
+        {
+            get
+            {
+                return _Year;
+            }
+            set
+            {
+                OnYearChanging(value);
+                ReportPropertyChanging("Year");
+                _Year = StructuralObject.SetValidValue(value, "Year");
+                ReportPropertyChanged("Year");
+                OnYearChanged();
+            }
+        }
+        private Nullable<global::System.Int16> _Year;
+        partial void OnYearChanging(Nullable<global::System.Int16> value);
+        partial void OnYearChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> PlayerId
+        {
+            get
+            {
+                return _PlayerId;
+            }
+            set
+            {
+                OnPlayerIdChanging(value);
+                ReportPropertyChanging("PlayerId");
+                _PlayerId = StructuralObject.SetValidValue(value, "PlayerId");
+                ReportPropertyChanged("PlayerId");
+                OnPlayerIdChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _PlayerId;
+        partial void OnPlayerIdChanging(Nullable<global::System.Int32> value);
+        partial void OnPlayerIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> TruePlayerId
+        {
+            get
+            {
+                return _TruePlayerId;
+            }
+            set
+            {
+                OnTruePlayerIdChanging(value);
+                ReportPropertyChanging("TruePlayerId");
+                _TruePlayerId = StructuralObject.SetValidValue(value, "TruePlayerId");
+                ReportPropertyChanged("TruePlayerId");
+                OnTruePlayerIdChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _TruePlayerId;
+        partial void OnTruePlayerIdChanging(Nullable<global::System.Int32> value);
+        partial void OnTruePlayerIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String FirstName
+        {
+            get
+            {
+                return _FirstName;
+            }
+            set
+            {
+                OnFirstNameChanging(value);
+                ReportPropertyChanging("FirstName");
+                _FirstName = StructuralObject.SetValidValue(value, false, "FirstName");
+                ReportPropertyChanged("FirstName");
+                OnFirstNameChanged();
+            }
+        }
+        private global::System.String _FirstName;
+        partial void OnFirstNameChanging(global::System.String value);
+        partial void OnFirstNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String LastName
+        {
+            get
+            {
+                return _LastName;
+            }
+            set
+            {
+                OnLastNameChanging(value);
+                ReportPropertyChanging("LastName");
+                _LastName = StructuralObject.SetValidValue(value, false, "LastName");
+                ReportPropertyChanged("LastName");
+                OnLastNameChanged();
+            }
+        }
+        private global::System.String _LastName;
+        partial void OnLastNameChanging(global::System.String value);
+        partial void OnLastNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Position
+        {
+            get
+            {
+                return _Position;
+            }
+            set
+            {
+                OnPositionChanging(value);
+                ReportPropertyChanging("Position");
+                _Position = StructuralObject.SetValidValue(value, true, "Position");
+                ReportPropertyChanged("Position");
+                OnPositionChanged();
+            }
+        }
+        private global::System.String _Position;
+        partial void OnPositionChanging(global::System.String value);
+        partial void OnPositionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String NFLTeam
+        {
+            get
+            {
+                return _NFLTeam;
+            }
+            set
+            {
+                OnNFLTeamChanging(value);
+                ReportPropertyChanging("NFLTeam");
+                _NFLTeam = StructuralObject.SetValidValue(value, true, "NFLTeam");
+                ReportPropertyChanged("NFLTeam");
+                OnNFLTeamChanged();
+            }
+        }
+        private global::System.String _NFLTeam;
+        partial void OnNFLTeamChanging(global::System.String value);
+        partial void OnNFLTeamChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Action
+        {
+            get
+            {
+                return _Action;
+            }
+            set
+            {
+                OnActionChanging(value);
+                ReportPropertyChanging("Action");
+                _Action = StructuralObject.SetValidValue(value, true, "Action");
+                ReportPropertyChanged("Action");
+                OnActionChanged();
+            }
+        }
+        private global::System.String _Action;
+        partial void OnActionChanging(global::System.String value);
+        partial void OnActionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> AddTimestamp
+        {
+            get
+            {
+                return _AddTimestamp;
+            }
+            set
+            {
+                OnAddTimestampChanging(value);
+                ReportPropertyChanging("AddTimestamp");
+                _AddTimestamp = StructuralObject.SetValidValue(value, "AddTimestamp");
+                ReportPropertyChanged("AddTimestamp");
+                OnAddTimestampChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _AddTimestamp;
+        partial void OnAddTimestampChanging(Nullable<global::System.DateTime> value);
+        partial void OnAddTimestampChanged();
 
         #endregion
 
@@ -4878,6 +5821,44 @@ namespace DodgeDynasty.Entities
                 }
             }
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_DraftRank_Rank", "Rank")]
+        public Rank Rank
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Rank>("HomeModel.FK_DraftRank_Rank", "Rank").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Rank>("HomeModel.FK_DraftRank_Rank", "Rank").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Rank> RankReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Rank>("HomeModel.FK_DraftRank_Rank", "Rank");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Rank>("HomeModel.FK_DraftRank_Rank", "Rank", value);
+                }
+            }
+        }
 
         #endregion
 
@@ -7263,50 +8244,6 @@ namespace DodgeDynasty.Entities
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_PlayerAdjustment_PlayerNew", "PlayerAdjustment")]
-        public EntityCollection<PlayerAdjustment> PlayerAdjustments
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<PlayerAdjustment>("HomeModel.FK_PlayerAdjustment_PlayerNew", "PlayerAdjustment");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PlayerAdjustment>("HomeModel.FK_PlayerAdjustment_PlayerNew", "PlayerAdjustment", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_PlayerAdjustment_PlayerOld", "PlayerAdjustment")]
-        public EntityCollection<PlayerAdjustment> PlayerAdjustments1
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<PlayerAdjustment>("HomeModel.FK_PlayerAdjustment_PlayerOld", "PlayerAdjustment");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PlayerAdjustment>("HomeModel.FK_PlayerAdjustment_PlayerOld", "PlayerAdjustment", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_PlayerRank_Player", "PlayerRank")]
         public EntityCollection<PlayerRank> PlayerRanks
         {
@@ -7404,6 +8341,50 @@ namespace DodgeDynasty.Entities
                 }
             }
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_PlayerAdjustment_PlayerNew", "PlayerAdjustment")]
+        public EntityCollection<PlayerAdjustment> PlayerAdjustments
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<PlayerAdjustment>("HomeModel.FK_PlayerAdjustment_PlayerNew", "PlayerAdjustment");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PlayerAdjustment>("HomeModel.FK_PlayerAdjustment_PlayerNew", "PlayerAdjustment", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_PlayerAdjustment_PlayerOld", "PlayerAdjustment")]
+        public EntityCollection<PlayerAdjustment> PlayerAdjustments1
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<PlayerAdjustment>("HomeModel.FK_PlayerAdjustment_PlayerOld", "PlayerAdjustment");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PlayerAdjustment>("HomeModel.FK_PlayerAdjustment_PlayerOld", "PlayerAdjustment", value);
+                }
+            }
+        }
 
         #endregion
 
@@ -7425,12 +8406,14 @@ namespace DodgeDynasty.Entities
         /// <param name="adjustmentId">Initial value of the AdjustmentId property.</param>
         /// <param name="addTimestamp">Initial value of the AddTimestamp property.</param>
         /// <param name="lastUpdateTimestamp">Initial value of the LastUpdateTimestamp property.</param>
-        public static PlayerAdjustment CreatePlayerAdjustment(global::System.Int32 adjustmentId, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp)
+        /// <param name="hideReporting">Initial value of the HideReporting property.</param>
+        public static PlayerAdjustment CreatePlayerAdjustment(global::System.Int32 adjustmentId, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp, global::System.Boolean hideReporting)
         {
             PlayerAdjustment playerAdjustment = new PlayerAdjustment();
             playerAdjustment.AdjustmentId = adjustmentId;
             playerAdjustment.AddTimestamp = addTimestamp;
             playerAdjustment.LastUpdateTimestamp = lastUpdateTimestamp;
+            playerAdjustment.HideReporting = hideReporting;
             return playerAdjustment;
         }
 
@@ -7518,30 +8501,6 @@ namespace DodgeDynasty.Entities
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int32> TruePlayerId
-        {
-            get
-            {
-                return _TruePlayerId;
-            }
-            set
-            {
-                OnTruePlayerIdChanging(value);
-                ReportPropertyChanging("TruePlayerId");
-                _TruePlayerId = StructuralObject.SetValidValue(value, "TruePlayerId");
-                ReportPropertyChanged("TruePlayerId");
-                OnTruePlayerIdChanged();
-            }
-        }
-        private Nullable<global::System.Int32> _TruePlayerId;
-        partial void OnTruePlayerIdChanging(Nullable<global::System.Int32> value);
-        partial void OnTruePlayerIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
         public global::System.String NewFirstName
         {
             get
@@ -7584,6 +8543,30 @@ namespace DodgeDynasty.Entities
         private global::System.String _NewLastName;
         partial void OnNewLastNameChanging(global::System.String value);
         partial void OnNewLastNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String NewPlayerName
+        {
+            get
+            {
+                return _NewPlayerName;
+            }
+            set
+            {
+                OnNewPlayerNameChanging(value);
+                ReportPropertyChanging("NewPlayerName");
+                _NewPlayerName = StructuralObject.SetValidValue(value, true, "NewPlayerName");
+                ReportPropertyChanged("NewPlayerName");
+                OnNewPlayerNameChanged();
+            }
+        }
+        private global::System.String _NewPlayerName;
+        partial void OnNewPlayerNameChanging(global::System.String value);
+        partial void OnNewPlayerNameChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -7734,66 +8717,52 @@ namespace DodgeDynasty.Entities
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String NewPlayerName
+        public Nullable<global::System.Int32> TruePlayerId
         {
             get
             {
-                return _NewPlayerName;
+                return _TruePlayerId;
             }
             set
             {
-                OnNewPlayerNameChanging(value);
-                ReportPropertyChanging("NewPlayerName");
-                _NewPlayerName = StructuralObject.SetValidValue(value, true, "NewPlayerName");
-                ReportPropertyChanged("NewPlayerName");
-                OnNewPlayerNameChanged();
+                OnTruePlayerIdChanging(value);
+                ReportPropertyChanging("TruePlayerId");
+                _TruePlayerId = StructuralObject.SetValidValue(value, "TruePlayerId");
+                ReportPropertyChanged("TruePlayerId");
+                OnTruePlayerIdChanged();
             }
         }
-        private global::System.String _NewPlayerName;
-        partial void OnNewPlayerNameChanging(global::System.String value);
-        partial void OnNewPlayerNameChanged();
-
-        #endregion
-
-        #region Navigation Properties
+        private Nullable<global::System.Int32> _TruePlayerId;
+        partial void OnTruePlayerIdChanging(Nullable<global::System.Int32> value);
+        partial void OnTruePlayerIdChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_PlayerAdjustment_User", "User")]
-        public User User
+        public global::System.Boolean HideReporting
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_PlayerAdjustment_User", "User").Value;
+                return _HideReporting;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_PlayerAdjustment_User", "User").Value = value;
+                OnHideReportingChanging(value);
+                ReportPropertyChanging("HideReporting");
+                _HideReporting = StructuralObject.SetValidValue(value, "HideReporting");
+                ReportPropertyChanged("HideReporting");
+                OnHideReportingChanged();
             }
         }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<User> UserReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_PlayerAdjustment_User", "User");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("HomeModel.FK_PlayerAdjustment_User", "User", value);
-                }
-            }
-        }
+        private global::System.Boolean _HideReporting;
+        partial void OnHideReportingChanging(global::System.Boolean value);
+        partial void OnHideReportingChanged();
+
+        #endregion
+
+        #region Navigation Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -7867,6 +8836,44 @@ namespace DodgeDynasty.Entities
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Player>("HomeModel.FK_PlayerAdjustment_PlayerOld", "Player", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_PlayerAdjustment_User", "User")]
+        public User User
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_PlayerAdjustment_User", "User").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_PlayerAdjustment_User", "User").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<User> UserReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_PlayerAdjustment_User", "User");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("HomeModel.FK_PlayerAdjustment_User", "User", value);
                 }
             }
         }
@@ -10238,6 +11245,28 @@ namespace DodgeDynasty.Entities
                 }
             }
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_DraftRank_Rank", "DraftRank")]
+        public EntityCollection<DraftRank> DraftRanks
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<DraftRank>("HomeModel.FK_DraftRank_Rank", "DraftRank");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DraftRank>("HomeModel.FK_DraftRank_Rank", "DraftRank", value);
+                }
+            }
+        }
 
         #endregion
 
@@ -10941,28 +11970,6 @@ namespace DodgeDynasty.Entities
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_PlayerAdjustment_User", "PlayerAdjustment")]
-        public EntityCollection<PlayerAdjustment> PlayerAdjustments
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<PlayerAdjustment>("HomeModel.FK_PlayerAdjustment_User", "PlayerAdjustment");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PlayerAdjustment>("HomeModel.FK_PlayerAdjustment_User", "PlayerAdjustment", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_PlayerHighlight_User", "PlayerHighlight")]
         public EntityCollection<PlayerHighlight> PlayerHighlights
         {
@@ -11101,6 +12108,28 @@ namespace DodgeDynasty.Entities
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Draft>("HomeModel.FK_Draft_Winner", "Draft", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_PlayerAdjustment_User", "PlayerAdjustment")]
+        public EntityCollection<PlayerAdjustment> PlayerAdjustments
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<PlayerAdjustment>("HomeModel.FK_PlayerAdjustment_User", "PlayerAdjustment");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PlayerAdjustment>("HomeModel.FK_PlayerAdjustment_User", "PlayerAdjustment", value);
                 }
             }
         }

@@ -310,6 +310,7 @@
     <Compile Include="Models\Types\HubConnJson.cs" />
     <Compile Include="Models\Types\LatestPickInfoJson.cs" />
     <Compile Include="Models\Types\PickInfoJson.cs" />
+    <Compile Include="Models\Types\PlayerAdjType.cs" />
     <Compile Include="Models\Types\PlayerContext.cs" />
     <Compile Include="Models\Types\PlayerRankOptions.cs" />
     <Compile Include="Controllers\SharedController.cs" />

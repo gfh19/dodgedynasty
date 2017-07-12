@@ -34,7 +34,7 @@ namespace DodgeDynasty.Mappers.Account
 				{
 					Model.LastPlayerAdjView = DateTime.MinValue;
 				}
-				var latestPlayerAdjDT = HomeEntity.PlayerAdjustments.OrderByDescending(o => o.AddTimestamp)
+				var latestPlayerAdjDT = HomeEntity.PlayerAdjustments.Where(o=>!o.HideReporting).OrderByDescending(o => o.AddTimestamp)
 					.Select(o=>o.AddTimestamp).FirstOrDefault();
 				if (latestPlayerAdjDT != null)
 				{
