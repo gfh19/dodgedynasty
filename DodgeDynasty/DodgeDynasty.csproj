@@ -374,8 +374,6 @@
     <Content Include="Content\images\SD-favicon.ico" />
     <Content Include="Content\images\SD-touch.png" />
     <Content Include="Content\images\StartDrafting.png" />
-    <Content Include="DD-apple-touch-icon.png" />
-    <Content Include="SD-apple-touch-icon.png" />
     <Content Include="SQL\OLD - 2016 SQL Changes.sql" />
     <Content Include="Content\images\ajax-loader.gif" />
     <Content Include="Content\images\SD.png" />
