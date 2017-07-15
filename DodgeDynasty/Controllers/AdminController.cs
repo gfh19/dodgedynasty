@@ -36,11 +36,13 @@ namespace DodgeDynasty.Controllers
 
 		[HttpPost]
 		[AdminAccess]
-		public HttpStatusCode SetupDraft(DraftPicksModel draftPicksModel)
+		public ActionResult SetupDraft(DraftPicksModel draftPicksModel)
 		{
 			DraftSetupMapper mapper = DraftFactory.GetDraftSetupMapper();
 			mapper.UpdateDraftPicks(draftPicksModel);
-			return HttpStatusCode.OK;
+			DraftSetupModel model = new DraftSetupModel();
+			model.GetDraftInfo(draftPicksModel.DraftId);
+			return PartialView(Constants.Views.SetupDraftPartial, model);
 		}
 
 		[HttpGet]

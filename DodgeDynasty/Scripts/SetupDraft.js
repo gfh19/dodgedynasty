@@ -275,13 +275,14 @@ function bindSubmitDraftPicks() {
 		if (validateDraftPicksModel(userIds, playerIds)) {
 			addWaitCursor();
 			isPageSubmitted = true;
-			ajaxPost(draftPicksModel, adminMode + "/SetupDraft", function (response) {
+			ajaxPostReplace(draftPicksModel, adminMode + "/SetupDraft", "#setupDraft", function (response) {
 				removeWaitCursor();
 				$(".sd-update-status").removeClass("hide-yo-husbands-too");
 				$(".sd-update-status").fadeTo(2000, 0.5, function () {
 					$(".sd-update-status").addClass("hide-yo-husbands-too");
 					$(".sd-update-status").css("opacity", 1);
 				});
+				bindActionLinks();
 				window.scrollTo(0, 0);
 			}, removeWaitCursor);
 		}

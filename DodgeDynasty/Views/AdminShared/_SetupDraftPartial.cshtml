@@ -14,8 +14,8 @@
 	</div>
 	<div class="draft clear-fix">
 		<div class="sd-update-status hide-yo-husbands-too">Update Successful...</div>
-		<div class="buttons"><button id="submitDraftPicks1" class="submitDraftPicks" type="button">Update Draft</button></div>
-		<div class="round-picks">
+		<div class="buttons page-section"><button id="submitDraftPicks1" class="submitDraftPicks" type="button">Update Draft</button></div>
+		<div class="round-picks page-section">
 		@foreach (var pick in Model.GetDraftSetupPicks())
 		{
 			var isNewRound = Model.IsNewRound(pick.RoundNum);
@@ -61,6 +61,6 @@
 				</span>
 		}
 		</div>
-		<div class="buttons"><button id="submitDraftPicks2" class="submitDraftPicks" type="submit">Update Draft</button></div>
+		<div class="buttons page-section-large"><button id="submitDraftPicks2" class="submitDraftPicks" type="submit">Update Draft</button></div>
 	</div>
 </div>

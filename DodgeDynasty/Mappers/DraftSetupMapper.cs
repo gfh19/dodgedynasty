@@ -32,6 +32,8 @@ namespace DodgeDynasty.Mappers
 						RoundNum = pick.RoundNum,
 						UserId = pick.UserId,
 						PlayerId = pick.PlayerId,
+						PickStartDateTime = (pick.PlayerId != null) ? (DateTime?)now : null,
+						PickEndDateTime = (pick.PlayerId != null) ? (DateTime?)now : null,
 						AddTimestamp = now,
 						LastUpdateTimestamp = now
 					};
@@ -45,6 +47,8 @@ namespace DodgeDynasty.Mappers
 					draftPick.RoundNum = pick.RoundNum;
 					draftPick.UserId = pick.UserId;
 					draftPick.PlayerId = pick.PlayerId;
+					draftPick.PickStartDateTime = (draftPick.PickStartDateTime != null) ? draftPick.PickStartDateTime : ((pick.PlayerId != null) ? (DateTime?)now : null);
+					draftPick.PickEndDateTime = (draftPick.PickEndDateTime != null) ? draftPick.PickEndDateTime : ((pick.PlayerId != null) ? (DateTime?)now : null);
 					draftPick.LastUpdateTimestamp = now;
 				}
 				HomeEntity.SaveChanges();

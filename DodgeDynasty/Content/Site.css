@@ -1918,10 +1918,6 @@ span.player-select
 	text-align: right;
 	margin-right: 1px;
 }
-#setupDraft .buttons 
-{
-	margin-top: 10px;
-}
 #setupDraft button
 {
 	box-shadow: 0px 1px 1px 0px;
