@@ -7,8 +7,8 @@ BEGIN TRANSACTION;
 
 
 
-ALTER TABLE [dbo].[League]
-ADD [NumRounds] bit NOT NULL DEFAULT(0);
+ALTER TABLE [dbo].[PlayerAdjustment]
+ADD [HideReporting] bit NOT NULL DEFAULT(0);
 GO
 
 

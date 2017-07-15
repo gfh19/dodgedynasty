@@ -369,13 +369,16 @@
   <ItemGroup>
     <Content Include="2017 SQL Changes.sql" />
     <Content Include="apple-touch-icon.PNG" />
+    <Content Include="Content\images\DD-favicon.ico" />
+    <Content Include="Content\images\DD-touch.png" />
+    <Content Include="Content\images\SD-favicon.ico" />
+    <Content Include="Content\images\SD-touch.png" />
+    <Content Include="Content\images\StartDrafting.png" />
     <Content Include="DD-apple-touch-icon.png" />
     <Content Include="SD-apple-touch-icon.png" />
     <Content Include="SQL\OLD - 2016 SQL Changes.sql" />
-    <Content Include="Content\favicon.ico" />
     <Content Include="Content\images\ajax-loader.gif" />
     <Content Include="Content\images\SD.png" />
-    <Content Include="Content\images\StartDrafting.png" />
     <Content Include="Media\NFL Draft Tone.mp3" />
     <Content Include="Media\NFL_Draft_Tone.wav" />
     <Content Include="Scripts\AdjustmentsShared.js" />
