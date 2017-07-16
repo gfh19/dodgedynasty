@@ -371,12 +371,13 @@
     <Content Include="apple-touch-icon.PNG" />
     <Content Include="Content\images\DD-favicon.ico" />
     <Content Include="Content\images\DD-touch.png" />
+    <Content Include="Content\images\DD.png" />
     <Content Include="Content\images\SD-favicon.ico" />
     <Content Include="Content\images\SD-touch.png" />
+    <Content Include="Content\images\SD.png" />
     <Content Include="Content\images\StartDrafting.png" />
     <Content Include="SQL\OLD - 2016 SQL Changes.sql" />
     <Content Include="Content\images\ajax-loader.gif" />
-    <Content Include="Content\images\SD.png" />
     <Content Include="Media\NFL Draft Tone.mp3" />
     <Content Include="Media\NFL_Draft_Tone.wav" />
     <Content Include="Scripts\AdjustmentsShared.js" />
@@ -390,7 +391,6 @@
     <Content Include="Content\bootstrap\css\bootstrap.min.css" />
     <Content Include="Content\images\close.png" />
     <Content Include="Content\images\collapse.png" />
-    <Content Include="Content\images\DD.png" />
     <Content Include="Content\images\DodgeDynasty.png" />
     <Content Include="Content\images\expand.png" />
     <Content Include="Content\Site.css" />

@@ -2196,6 +2196,9 @@ span.player-select
 	font-size: 14px;
 	font-weight: normal;
 }
+.mi-user-entry-header label {
+	margin-right: 6px;
+}
 .mi-user-header, .mi-user-name {
 	width: 110px;
 }
@@ -2246,6 +2249,7 @@ span.player-select
 	margin:0 auto;
 }
 
+
 		/* --------- Audio ----------*/
 
 .test-audio {
@@ -2269,8 +2273,6 @@ span.player-select
 	margin: 0px;
 	vertical-align: bottom;
 }
-
-
 
 
 /* Messages (menu & tab)
@@ -2919,10 +2921,6 @@ span.player-select
 	.mi-league-entry-header, .mi-league-entry {
 		min-width: 500px;
 	}
-	.mi-league-name {
-		overflow: hidden;
-		white-space: nowrap;
-	}
 	.mi-team-input {
 		width: 150px;
 	}
@@ -2937,6 +2935,20 @@ span.player-select
 	}
 	.mi-active-header, .mi-active {
 		width: 58px;
+	}
+
+	.mi-uname-section {
+		height: 28px;
+		margin-bottom: 5px;
+	}
+	.mi-uname-section .mi-user-name {
+		vertical-align: middle;
+	}
+	.adminUserInfo .mi-league-entry-header, .adminUserInfo .mi-league-entry {
+		min-width: 565px;
+	}
+	.adminUserInfo .test-audio {
+		min-width: 551px;
 	}
 
 

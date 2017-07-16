@@ -623,16 +623,24 @@ function formatDraftChatText(chatText) {
 	});
 }
 
+var siteLinkPattern = /(^|[\s\n]|<[A-Za-z]*\/?>)((((?:https?):\/\/)|(www.))[\-A-Z0-9+\u0026\u2019@#\/%?=()~_|!:,.;]*\.[\-A-Z0-9+\u0026@#\/%=~()_|]{2,})/gi;
+
 (function () {
 	var autoLink,
 	  slice = [].slice;
 
 	autoLink = function () {
-		var callback, k, linkAttributes, option, options, pattern, v;
+		var callback, k, linkAttributes, option, options, v;
 		options = 1 <= arguments.length ? slice.call(arguments, 0) : [];
-		pattern = /(^|[\s\n]|<[A-Za-z]*\/?>)((?:https?):\/\/[\-A-Z0-9+\u0026\u2019@#\/%?=()~_|!:,.;]*[\-A-Z0-9+\u0026@#\/%=~()_|])/gi;
 		if (!(options.length > 0)) {
-			return this.replace(pattern, "$1<a target='_blank' href='$2'>$2</a>");
+			return this.replace(siteLinkPattern, function (a, b, c, d, e) {
+				if (c.indexOf("http:") >= 0 || c.indexOf("https:") >= 0) {
+					return " <a target='_blank' href='" + c + "'>" + c + "</a>";
+				}
+				else {
+					return " <a target='_blank' href='http://" + c + "'>" + c + "</a>";
+				}
+			});
 		}
 		option = options[0];
 		callback = option["callback"];

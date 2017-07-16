@@ -1,6 +1,6 @@
 ﻿@model DodgeDynasty.Models.Account.UserInfoModel
 
-<div id="userInfo">
+<div id="userInfo"  class="@(Model.AdminMode ? "adminUserInfo" : "")">
 	<script type="text/javascript">
 		$(function () {
 			initUserInfo();
@@ -31,7 +31,9 @@
 				<div class="mi-user-entry-name block-error">
 					@if (Model.AdminMode)
 					{
-						@Html.DropDownListFor(u => u.UserName, Model.GetUserListItems(Model.UserName), new { @class = "mi-user-name" })
+						<span class="mi-uname-section">
+							@Html.DropDownListFor(u => u.UserName, Model.GetUserListItems(Model.UserName), new { @class = "mi-user-name" })
+						</span>
 					}
 					@Html.TextBoxFor(m => m.FirstName, new { @class = "mi-first-name", maxLength = "15", autofocus = "autofocus" })
 					@Html.TextBoxFor(m => m.LastName, new { @class = "mi-last-name", maxLength = "25" })
