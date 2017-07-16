@@ -28,6 +28,7 @@ function bindToggleWindowLinks() {
 function bindAddNewPlayerLink() {
 	$(".pa-add-player").click(function (e) {
 		e.preventDefault();
+		clearAddPlayer();
 		showAddNewPlayerDialog();
 		setTruePlayerAutoComplete(null, "#add-plyr-tpid", "#add-plyr-fname", "#add-plyr-lname",
 			"#add-plyr-pos", "#add-plyr-nfl", "#add-plyr-active", "#add-plyr-drafted");
