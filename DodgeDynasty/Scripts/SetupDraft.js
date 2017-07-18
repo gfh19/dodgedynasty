@@ -256,7 +256,8 @@ function bindSubmitDraftPicks() {
 				var userId = $("select option:selected", pick).val();
 				var playerId = null;
 				var pickedPlayer = $(".picked-player", pick);
-				if (pickedPlayer.length > 0 && $(pickedPlayer).attr("data-player-id")) {
+				if (pickedPlayer.length > 0 && $(pickedPlayer).attr("data-player-id") &&
+					!isNullOrWhitespace($(".picked-player-name", pickedPlayer).val())) {
 					playerId = $(pickedPlayer).attr("data-player-id");
 				}
 				draftPicks.push({

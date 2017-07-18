@@ -2414,7 +2414,7 @@ span.player-select
     bottom:5px;
     right:15px;
 	height: 35px;
-	width: 430px;
+	width: 440px;
 	font-family: "Segoe UI", Arial, Sans-Serif;
 	font-size: 14px;
 	border: 1px solid #898989;
@@ -2444,12 +2444,18 @@ span.player-select
 	display: inline-block;
 	padding: 6px 20px;
 }
+.dchat-expand {
+	height: 310px;
+}
 .dchat-ease-expand {
-	height: 275px;
+	height: 310px;
     -webkit-transition: height 0.10s linear;
     -moz-transition: height 0.10s linear;
     -o-transition: height 0.10s linear;
     transition: height 0.10s linear;
+}
+.dchat-collapse {
+	height: 35px;
 }
 .dchat-ease-collapse {
 	height: 35px;
@@ -2498,7 +2504,7 @@ span.player-select
 }
 .dchat-body {
 	padding: 1px;
-	height: 210px;
+	height: 245px;
 	overflow-y: scroll;
 	-webkit-overflow-scrolling: touch;
 	border-top: 1px solid #898989;
@@ -2511,7 +2517,7 @@ span.player-select
 	vertical-align: top;
 }
 .dchat-body, .dchat-footer {
-	width: 428px;
+	width: 438px;
 }
 .dchat-msg-text {
 	line-height: 16px;
@@ -2520,7 +2526,7 @@ span.player-select
 	padding: 5px;
 	margin: 1px;
 	height: 12px;
-	width: 369px;
+	width: 379px;
 	border: 1px solid lightgray;
 	border-radius: 3px;
 	webkit-border-radius: 3px;
@@ -2540,14 +2546,14 @@ span.player-select
 }
 
 .dchat-window-error .dchat-preview {
-	width: 345px;
-	height: 28px;
+	width: 355px;
+	height: 27px;
 	padding: 1px;
 	border-radius: 3px;
 	webkit-border-radius: 3px;
 }
 .dchat-window-error .dchat-body {
-	width: 425px;
+	width: 435px;
 	border-radius: 3px;
 	webkit-border-radius: 3px;
 }
@@ -2656,7 +2662,7 @@ span.player-select
 
 
 /* RESPONSIVE STYLES
-   Display
+   Draft Display
 ----------------------------------------------------------*/
 
 @media screen and (max-width: 600px)
@@ -2772,6 +2778,9 @@ span.player-select
 	#gotoPickNum
 	{
 		text-decoration: underline;
+	}
+	#draftDisplay .player-name {
+		font-size: 16px;
 	}
 
 	/* Best Available
@@ -2974,8 +2983,14 @@ span.player-select
 		height: 32px;
 		width: 293px;
 	}
+	.dchat-collapse {
+		height: 32px;
+	}
 	.dchat-ease-collapse {
 		height: 32px;
+	}
+	.dchat-expand {
+		height: 226px;
 	}
 	.dchat-ease-expand {
 		height: 226px;

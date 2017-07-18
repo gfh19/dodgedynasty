@@ -12,6 +12,7 @@ namespace DodgeDynasty.Models.Shared
 		//Display
 		public bool IsDraftActive { get; set; }
 		public List<UserChatMessage> ChatMessages { get; set; }
+		public bool ChatExpanded { get; set; }
 
 		//Add
 		public int DraftId { get; set; }

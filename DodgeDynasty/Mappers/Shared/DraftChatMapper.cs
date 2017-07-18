@@ -9,6 +9,7 @@ using DodgeDynasty.Mappers.Site;
 using DodgeDynasty.Models.Shared;
 using DodgeDynasty.Models.Types;
 using DodgeDynasty.Shared;
+using Newtonsoft.Json;
 
 namespace DodgeDynasty.Mappers.Shared
 {
@@ -17,8 +18,11 @@ namespace DodgeDynasty.Mappers.Shared
 		public string UserName { get; set; }
 		public string MessageText { get; set; }
 		public ChatJson ChatJsonResult { get; set; }
+		public HttpRequestBase HttpRequest { get; set; }
 
-		public DraftChatMapper() { }
+		public DraftChatMapper(HttpRequestBase httpRequest) {
+			HttpRequest = httpRequest;
+		}
 		public DraftChatMapper(string userName, string text)
 		{
 			UserName = userName;
@@ -36,11 +40,26 @@ namespace DodgeDynasty.Mappers.Shared
 				var leagueOwners = HomeEntity.LeagueOwners.Where(lo => lo.LeagueId == currentLeagueId).ToList();
 				var draftChats = HomeEntity.DraftChats.Where(o => o.DraftId == currentDraft.DraftId).ToList();
 				Model.ChatMessages = MessagesHelper.GetChatMessages(leagueOwners, draftChats);
+				Model.ChatExpanded = GetSiteCookieChatExpanded();
 			}
 			else
 			{
 				Model.ChatMessages = new List<UserChatMessage>();
 			}
+		}
+
+		private bool GetSiteCookieChatExpanded()
+		{
+			if (HttpRequest.Cookies[Constants.Cookies.DodgeDynasty] != null)
+			{
+				var decodedCookie = HttpUtility.UrlDecode(HttpRequest.Cookies[Constants.Cookies.DodgeDynasty].Value);
+				var dodgeDynastyContent = JsonConvert.DeserializeObject<DodgeDynastyContent>(decodedCookie);
+				if (dodgeDynastyContent.ChatExpanded.HasValue)
+				{
+					return dodgeDynastyContent.ChatExpanded.Value;
+				}
+			}
+			return false;
 		}
 
 		protected override DraftChatModel CreateModelForUpdate()

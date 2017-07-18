@@ -8,5 +8,6 @@ namespace DodgeDynasty.Models.Types
 	public class DodgeDynastyContent
 	{
 		public string SessionId { get; set; }
+		public bool? ChatExpanded { get; set; }
 	}
 }

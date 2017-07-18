@@ -127,11 +127,13 @@ namespace DodgeDynasty.Controllers
 
 		[HttpPost]
 		[CommishDraftAccess]
-		public HttpStatusCode SetupDraft(DraftPicksModel model)
+		public ActionResult SetupDraft(DraftPicksModel draftPicksModel)
 		{
 			DraftSetupMapper mapper = DraftFactory.GetDraftSetupMapper();
-			mapper.UpdateDraftPicks(model);
-			return HttpStatusCode.OK;
+			mapper.UpdateDraftPicks(draftPicksModel);
+			DraftSetupModel model = new DraftSetupModel();
+			model.GetDraftInfo(draftPicksModel.DraftId);
+			return PartialView(Constants.Views.SetupDraftPartial, model);
 		}
 
 		#endregion

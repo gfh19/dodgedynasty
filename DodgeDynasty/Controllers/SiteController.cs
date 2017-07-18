@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using DodgeDynasty.Mappers.Site;
@@ -64,7 +65,7 @@ namespace DodgeDynasty.Controllers
 				{
 					DraftHub.OpenHubConnections.TryRemove(key, out val);
 				}
-				cookieContent = SetNewDodgeDynastyCookie();
+				cookieContent = SetNewDodgeDynastyCookie(cookieContent.ChatExpanded);
 				DraftHub.OpenHubConnections[connectionId] = cookieContent.SessionId;
 			}
 			else if (openTabConns > maxTabConns)
@@ -73,5 +74,12 @@ namespace DodgeDynasty.Controllers
 			}
 			return Json(response);
 		}
+
+		[HttpPost]
+		public HttpStatusCode PostSiteCookieChatEnabled(string chatEnabled)
+		{
+			SetNewDodgeDynastyCookie(Utilities.ToBool(chatEnabled));
+            return HttpStatusCode.OK;
+        }
 	}
 }

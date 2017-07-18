@@ -614,6 +614,7 @@ function bindDraftChatWindow() {
 		startHubConnection(refreshDraftChat, true);
 		toggleChatWindowError(false);
 	});
+	initToggleDraftChatView();
 }
 
 function formatDraftChatText(chatText) {
@@ -671,36 +672,70 @@ function getActiveDchatWindow() {
 	return $(".dchat-window").hasClass("hide-yo-wives") ? $(".dchat-window-error") : $(".dchat-window");
 }
 
-function toggleDraftChatView() {
+function initToggleDraftChatView() {
+	var dchatWindow = $(".dchat-window");
+	var initExpand = toBool($(".dchat-toggle-link", dchatWindow).attr("data-expand"));
+	if (initExpand) {
+		expandChatWindow(dchatWindow, false, true);
+	}
+	else {
+		collapseChatWindow(dchatWindow, false, true);
+	}
+}
+
+function toggleDraftChatView(isInit) {
 	var isErrorWindow = $(".dchat-window").hasClass("hide-yo-wives");
 	var dchatWindow = isErrorWindow ? $(".dchat-window-error") : $(".dchat-window");
 	var expanded = toBool($(".dchat-toggle-link", dchatWindow).attr("data-expand"));
-	var toggleImg = expanded ? "expand.png" : "collapse.png";
-	$(".dchat-toggle-img", dchatWindow).attr("src", contentImagesPath + toggleImg);
 
 	if (expanded) {
-		$(dchatWindow).removeClass("dchat-ease-expand");
-		$(dchatWindow).addClass("dchat-ease-collapse");
-		$(".dchat-prev-content", dchatWindow).removeClass("hide-yo-wives");
-		if (isErrorWindow) {
-			$(".dchat-preview", dchatWindow).addClass("invalid-border-small");
-		}
-		$(".dchat-body", dchatWindow).addClass("hide-yo-wives");
-		$(".dchat-footer", dchatWindow).addClass("hide-yo-wives");
-		$(".dchat-input", dchatWindow).removeClass("invalid-border-small");
+		collapseChatWindow(dchatWindow, isErrorWindow, false);
 	}
 	else {
-		$(dchatWindow).removeClass("dchat-ease-collapse");
-		$(dchatWindow).addClass("dchat-ease-expand");
-		$(".dchat-prev-content", dchatWindow).addClass("hide-yo-wives");
-		if (isErrorWindow) {
-			$(".dchat-preview", dchatWindow).removeClass("invalid-border-small");
-		}
-		$(".dchat-body", dchatWindow).removeClass("hide-yo-wives");
-		$(".dchat-footer", dchatWindow).removeClass("hide-yo-wives");
-		scrollDraftChatBottom();
+		expandChatWindow(dchatWindow, isErrorWindow, false);
 	}
-	$(".dchat-toggle-link", dchatWindow).attr("data-expand", !expanded);
+	if (!isInit) {
+		$(".dchat-toggle-link", dchatWindow).attr("data-expand", !expanded);
+		setSiteCookieChatExpanded(!expanded);
+	}
+}
+
+function expandChatWindow(dchatWindow, isErrorWindow, isInit) {
+	$(".dchat-toggle-img", dchatWindow).attr("src", contentImagesPath + "collapse.png");
+	$(dchatWindow).removeClass("dchat-collapse");
+	$(dchatWindow).removeClass("dchat-ease-collapse");
+	if (isInit) {
+		$(dchatWindow).addClass("dchat-expand");
+	}
+	else {
+		$(dchatWindow).addClass("dchat-ease-expand");
+	}
+	$(".dchat-prev-content", dchatWindow).addClass("hide-yo-wives");
+	if (isErrorWindow) {
+		$(".dchat-preview", dchatWindow).removeClass("invalid-border-small");
+	}
+	$(".dchat-body", dchatWindow).removeClass("hide-yo-wives");
+	$(".dchat-footer", dchatWindow).removeClass("hide-yo-wives");
+	scrollDraftChatBottom();
+}
+
+function collapseChatWindow(dchatWindow, isErrorWindow, isInit) {
+	$(".dchat-toggle-img", dchatWindow).attr("src", contentImagesPath + "expand.png");
+	$(dchatWindow).removeClass("dchat-expand");
+	$(dchatWindow).removeClass("dchat-ease-expand");
+	if (isInit) {
+		$(dchatWindow).addClass("dchat-collapse");
+	}
+	else {
+		$(dchatWindow).addClass("dchat-ease-collapse");
+	}
+	$(".dchat-prev-content", dchatWindow).removeClass("hide-yo-wives");
+	if (isErrorWindow) {
+		$(".dchat-preview", dchatWindow).addClass("invalid-border-small");
+	}
+	$(".dchat-body", dchatWindow).addClass("hide-yo-wives");
+	$(".dchat-footer", dchatWindow).addClass("hide-yo-wives");
+	$(".dchat-input", dchatWindow).removeClass("invalid-border-small");
 }
 
 function toggleChatWindowError(hasError) {
@@ -730,6 +765,10 @@ function scrollDraftChatBottom() {
 	var dchatWindow = getActiveDchatWindow();
 	var d = $('.dchat-body', dchatWindow);
 	d.scrollTop(d.prop("scrollHeight"));
+}
+
+function setSiteCookieChatExpanded(chatEnabled) {
+	ajaxPost({ ChatEnabled: chatEnabled }, "Site/PostSiteCookieChatEnabled");
 }
 
 /*	End Draft Chat */
@@ -939,7 +978,7 @@ function htmlDecode(val) {
 }
 
 function formatAutoCompName(name) {
-	return name.replace(/\.|'|-/g,'').trim().toLowerCase();
+	return name.replace(/\.|'|-/g, '').escapeRegEx().trim().toLowerCase();
 }
 
 function formatName(name) {
@@ -1023,6 +1062,10 @@ function changeViewport(minScale, maxScale, initScale, width) {
 $.fn.permanentlyHide = function () {
 	$(this).addClass("hide-yo-wives");
 	return this;
+}
+
+function isNullOrWhitespace(str) {
+	return !(typeof str != undefined && str != null && str.trim().length > 0);
 }
 
 
@@ -1192,5 +1235,9 @@ String.prototype.replaceAll = function (substr, newstr) {
 	var rx = new RegExp(substr, "g");
 	return this.replace(rx, newstr);
 }
+
+String.prototype.escapeRegEx = function () {
+	return this.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+};
 
 /* End Plugins */

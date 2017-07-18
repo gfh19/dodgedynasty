@@ -145,9 +145,9 @@ namespace DodgeDynasty.Shared
 			return messagesCountMapper.GetModel();
 		}
 
-		public static DraftChatModel GetCurrentDraftChatModel()
+		public static DraftChatModel GetCurrentDraftChatModel(HttpRequestBase httpRequest)
 		{
-			var draftChatMapper = new DraftChatMapper();
+			var draftChatMapper = new DraftChatMapper(httpRequest);
 			return draftChatMapper.GetModel();
 		}
 
