@@ -12,10 +12,10 @@ namespace DodgeDynasty.Models.Types
 		public int? pid { get; set; }
 		//Pick number
 		public int pnum { get; set; }
-		//Is latest pick by user
-		public bool yours { get; set; }
-		//Is current user turn
-		public bool uturn { get; set; }
+		//Latest pick user id
+		public int? puid { get; set; }
+		//Current turn user id
+		public int? uturnid { get; set; }
 		//Owner name
 		public string oname { get; set; }
 		//Owner css class

@@ -5,11 +5,11 @@ $(function () {
 	loadPlayerRanksShared();
 });
 
-function updateDraftPickRows(pickInfo) {
+function updateDraftPickRows(pickInfo, yours) {
 	$.each($(".ba-table tr[data-player-id=" + pickInfo.pid + "]"), function (ix, row) {
 		$(row).addClass("ba-selected");
 		$(row).addClass(pickInfo.ocss);
-		if (pickInfo.yours) {
+		if (yours) {
 			$(row).addClass("you");
 		}
 

@@ -5,7 +5,7 @@ $(function () {
 	loadPlayerRanksShared();
 });
 
-function updateDraftPickRows(pickInfo) {
+function updateDraftPickRows(pickInfo, yours) {
 	var hqRows = $(".queue-table tr[data-player-id=" + pickInfo.pid + "]");
 	if (hqRows.length > 0) {
 		var hqRankNum = $("td[data-rank-num]", hqRows[0]).attr("data-rank-num");

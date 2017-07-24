@@ -29,9 +29,9 @@ namespace DodgeDynasty.Mappers.Ranks
 
 				Model.pid = latestDraftPick.PlayerId;
 				Model.pnum = latestDraftPick.PickNum;
-				Model.yours = (model.CurrentUserId == latestDraftPick.UserId);
-				Model.uturn = model.IsUserTurn();
-				Model.oname = pickUser.NickName;
+				Model.puid = latestDraftPick.UserId;
+				Model.uturnid = model.CurrentClockOwnerUser != null ? (int?)model.CurrentClockOwnerUser.UserId : null;
+                Model.oname = pickUser.NickName;
 				Model.ocss = currentLgOwner.CssClass;
 				Model.ptime = latestDraftPick.PickEndDateTime.ToDateTimeString();
 				Model.prevtm = prevDraftPick.PickEndDateTime.ToDateTimeString();

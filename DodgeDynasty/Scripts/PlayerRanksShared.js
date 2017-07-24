@@ -19,10 +19,13 @@ function updateRanksPageWithPick(pickInfo) {
 	refreshCurrentDraftPickPartial();
 	suspendHighlighting();
 	if (pickInfo && pickInfo.status == "success" && isPickUpToDate(pickInfo)) {
-		updateDraftPickRows(pickInfo);
 		$(".rank-name").attr("data-last-pick-end-time", pickInfo.ptime);
+		var currUserId = $(".rank-name").attr("data-user-id");
+		var yours = currUserId == pickInfo.puid;
+		updateDraftPickRows(pickInfo, yours);
 		toggleRanksWindows();
-		togglePlayerLinks(pickInfo.uturn);
+		var uturn = currUserId == pickInfo.uturnid;
+		togglePlayerLinks(uturn);
 		restoreHighlighting();
 	}
 	else {
