@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using DodgeDynasty.Models;
 using DodgeDynasty.Models.Types;
 using DodgeDynasty.Shared;
@@ -7,23 +8,20 @@ namespace DodgeDynasty.Mappers.Ranks
 {
 	public class LatestDraftPickMapper : MapperBase<LatestPickInfoJson>
 	{
-		public string LastPickEndTime { get; set; }
-
-		public LatestDraftPickMapper(string lastPickEndTime)
-		{
-			LastPickEndTime = lastPickEndTime;
-        }
+		public LatestDraftPickMapper() {}
 
 		protected override void PopulateModel()
 		{
 			DraftDisplayModel model = DraftFactory.GetDraftDisplayModel();
 			Model = new LatestPickInfoJson { status = LatestPickStatusCodes.Empty };
 
-			if (model.SecondPreviousDraftPick == null || model.SecondPreviousDraftPick.PickEndDateTime.ToDateTimeString() != LastPickEndTime)
+			//Since current pick playerid is always null, to client the secondPrev = prev, and prev = latest
+			var prevDraftPick = model.SecondPreviousDraftPick;
+			if (prevDraftPick == null)
 			{
-				Model.status = LatestPickStatusCodes.Mismatch;
-			}
-			else if (model.PreviousDraftPick != null)
+				prevDraftPick = new Entities.DraftPick { PickEndDateTime = DateTime.MinValue };
+            }
+			if (model.PreviousDraftPick != null)
 			{
 				var latestDraftPick = model.PreviousDraftPick;
 				var pickUser = model.Users.First(u => u.UserId == latestDraftPick.UserId);
@@ -36,7 +34,8 @@ namespace DodgeDynasty.Mappers.Ranks
 				Model.oname = pickUser.NickName;
 				Model.ocss = currentLgOwner.CssClass;
 				Model.ptime = latestDraftPick.PickEndDateTime.ToDateTimeString();
-				Model.status = LatestPickStatusCodes.Success;
+				Model.prevtm = prevDraftPick.PickEndDateTime.ToDateTimeString();
+                Model.status = LatestPickStatusCodes.Success;
 			}
 		}
 	}

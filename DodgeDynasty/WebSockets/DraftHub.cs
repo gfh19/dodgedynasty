@@ -8,6 +8,7 @@ using Microsoft.AspNet.SignalR;
 
 namespace DodgeDynasty.WebSockets
 {
+	//Methods in this class called from the client
 	public class DraftHub : Hub
 	{
 		public static ConcurrentDictionary<string, string> OpenHubConnections = new ConcurrentDictionary<string, string>();

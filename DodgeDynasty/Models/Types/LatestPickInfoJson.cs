@@ -22,6 +22,8 @@ namespace DodgeDynasty.Models.Types
 		public string ocss { get; set; }
 		//Pick end time string
 		public string ptime { get; set; }
+		//Prev pick end time string
+		public string prevtm { get; set; }
 		//Latest pick get status
 		public string status { get; set; }
 	}

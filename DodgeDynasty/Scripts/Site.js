@@ -152,10 +152,10 @@ function broadcastChatMessage(msg) {
 };
 
 //Server to client:  Draft Pick broadcast-received.  Bound to server-side (C#) hub client handle
-function broadcastDraft() {
+function broadcastDraft(pickInfo) {
 	getLastPickAndPlayAudio(isUserTurn);
 	if (typeof pageBroadcastDraftHandler !== "undefined" && !isHistoryMode()) {
-		pageBroadcastDraftHandler();
+		pageBroadcastDraftHandler(pickInfo);
 	}
 	checkUserTurnDialog();
 }

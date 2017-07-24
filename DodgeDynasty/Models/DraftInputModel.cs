@@ -13,6 +13,7 @@ using DodgeDynasty.Shared.Exceptions;
 using DodgeDynasty.Models.Types;
 using DodgeDynasty.WebSockets;
 using DodgeDynasty.Mappers.Shared;
+using DodgeDynasty.Mappers.Ranks;
 
 namespace DodgeDynasty.Models
 {
@@ -143,7 +144,9 @@ namespace DodgeDynasty.Models
 					HomeEntity.SaveChanges();
 				}
 			}
-			DraftHubHelper.BroadcastDraftToClients();
+			var mapper = new LatestDraftPickMapper();
+			LatestPickInfoJson pickInfo = mapper.GetModel();
+			DraftHubHelper.BroadcastDraftToClients(pickInfo);
 		}
 
 		public string GetTeamName(int userId)

@@ -10,27 +10,24 @@ function loadPlayerRanksShared() {
 	touchScrollDiv = ".rank-container";
 }
 
-function pageBroadcastDraftHandler() {
-	updateRanksPageWithPick();
+function pageBroadcastDraftHandler(pickInfo) {
+	updateRanksPageWithPick(pickInfo);
 }
 
 //For performant ranks page refresh
-function updateRanksPageWithPick() {
+function updateRanksPageWithPick(pickInfo) {
 	refreshCurrentDraftPickPartial();
 	suspendHighlighting();
-	var lastPickEndTime = $(".rank-name").attr("data-last-pick-end-time");
-	ajaxGetJson("Draft/GetLatestDraftPick?lastPickEndTime=" + lastPickEndTime, function (pickInfo) {
-		if (pickInfo && pickInfo.status == "success") {
-			updateDraftPickRows(pickInfo);
-			$(".rank-name").attr("data-last-pick-end-time", pickInfo.ptime);
-			toggleRanksWindows();
-			togglePlayerLinks(pickInfo.uturn);
-			restoreHighlighting();
-		}
-		else {
-			updateRanksErrorHandler();
-		}
-	}, updateRanksErrorHandler);
+	if (pickInfo && pickInfo.status == "success" && isPickUpToDate(pickInfo)) {
+		updateDraftPickRows(pickInfo);
+		$(".rank-name").attr("data-last-pick-end-time", pickInfo.ptime);
+		toggleRanksWindows();
+		togglePlayerLinks(pickInfo.uturn);
+		restoreHighlighting();
+	}
+	else {
+		updateRanksErrorHandler();
+	}
 }
 
 function updateRanksErrorHandler() {
@@ -46,6 +43,16 @@ function fullRefreshRanksPage() {
 			if (playerRanksBroadcastFn) { playerRanksBroadcastFn(); }
 			restoreHighlighting();
 		}, suspendHighlighting);
+}
+
+function isPickUpToDate(pickInfo) {
+	var lastPickEndTime = $(".rank-name").attr("data-last-pick-end-time");
+	if (lastPickEndTime && !isNullOrWhitespace(lastPickEndTime)) {
+		return pickInfo.prevtm == lastPickEndTime;
+	}
+	else {
+		return pickInfo.prevtm == "01/01/0001 00:00:00";
+	}
 }
 
 function initPlayerRanksShared() {

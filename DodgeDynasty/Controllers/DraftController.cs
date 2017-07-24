@@ -153,15 +153,6 @@ namespace DodgeDynasty.Controllers
 			return PartialView(isBestAvailable ? Constants.Views.BestAvailable : Constants.Views.PlayerRanks, playerRankModel);
 		}
 
-		//For performant ranks page refresh
-		[HttpGet]
-		public JsonResult GetLatestDraftPick(string lastPickEndTime)
-		{
-			var mapper = new LatestDraftPickMapper(lastPickEndTime);
-			LatestPickInfoJson pickInfo = mapper.GetModel();
-            return Json(pickInfo, JsonRequestBehavior.AllowGet);
-		}
-
 		[HttpGet]
 		public ActionResult RankingsList(string id)
 		{
