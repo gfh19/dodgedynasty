@@ -48,7 +48,7 @@
 			{
 				<div class="your-draft-pick">You're up! Please enter your draft pick:</div>
 				<text>
-					@using (Html.BeginForm("Pick", "Draft"))
+					@using (Html.BeginForm("Pick", "Draft", FormMethod.Post, new { id = "draftPickForm" }))
 					{
 						@Html.LabelFor(m => m.Player.FirstName)
 						@Html.TextBoxFor(m => m.Player.FirstName, new { list = "playerHints", maxLength = "25", autofocus = "autofocus" });

@@ -17,6 +17,7 @@ function initPick() {
 			initTimer);
 			setNewPickUserTurnCookie();
 		}
+		bindPickFormSubmit();
 	}
 };
 
@@ -53,4 +54,16 @@ function callRefreshUserPickWithPickTimer() {
 function setNewPickUserTurnCookie() {
 	var settings = getUserTurnCookie();
 	setUserTurnCookie(false, settings.neverShowAgain);
+}
+
+function bindPickFormSubmit() {
+	$("#pickInfo #inputSubmit").click(function (evt) {
+		evt.preventDefault();
+		if ($("#draftPickForm").valid()) {
+			showLoadingDialog('Saving');
+			setTimeout(function () {
+				$('#draftPickForm').submit();
+			}, 2);
+		}
+	});
 }

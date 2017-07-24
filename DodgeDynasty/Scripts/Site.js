@@ -1071,12 +1071,12 @@ function isNullOrWhitespace(str) {
 
 /* Dialogs */
 
-function showPleaseWait() {
+function showPleaseWait(title) {
 	addWaitCursor();
 	pleaseWaitNeeded = true;
 	setTimeout(function () {
 		if (pleaseWaitNeeded) {
-			showLoadingDialog();
+			showLoadingDialog(title);
 		}
 	}, pleaseWaitTimer);
 }
@@ -1135,8 +1135,8 @@ function showMessageDialog(dialogText, title) {
 	});
 }
 
-function showLoadingDialog() {
-	title = "Loading";
+function showLoadingDialog(title) {
+	title = title || "Loading";
 	var dialog = '<div class="center hide-yo-kids" title="' + title +
 		'"><p>Please Wait... <img style="vertical-align: top;" src="' + baseURL + 'Content/images/ajax-loader.gif"/></p></div>';
 

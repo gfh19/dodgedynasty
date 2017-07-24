@@ -1439,6 +1439,16 @@ ul.menu li a.current-page
 	text-align: center;
 }
 
+#pickInfo .validation-summary-errors ul {
+	padding: 0px;
+	text-align: center;
+	list-style-type: none;
+}
+
+#pickInfo .field-validation-error {
+	display: block;
+}
+
 /* Pick - Admin Draft Input  
 ----------------------------------------------------------*/
 
