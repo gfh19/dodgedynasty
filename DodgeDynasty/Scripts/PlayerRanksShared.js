@@ -18,19 +18,21 @@ function pageBroadcastDraftHandler(pickInfo) {
 function updateRanksPageWithPick(pickInfo) {
 	refreshCurrentDraftPickPartial();
 	suspendHighlighting();
-	if (pickInfo && pickInfo.status == "success" && isPickUpToDate(pickInfo)) {
-		$(".rank-name").attr("data-last-pick-end-time", pickInfo.ptime);
-		var currUserId = $(".rank-name").attr("data-user-id");
-		var yours = currUserId == pickInfo.puid;
-		updateDraftPickRows(pickInfo, yours);
-		toggleRanksWindows();
-		var uturn = currUserId == pickInfo.uturnid;
-		togglePlayerLinks(uturn);
-		restoreHighlighting();
-	}
-	else {
-		updateRanksErrorHandler();
-	}
+	setTimeout(function () {
+		if (pickInfo && pickInfo.status == "success" && isPickUpToDate(pickInfo)) {
+			$(".rank-name").attr("data-last-pick-end-time", pickInfo.ptime);
+			var currUserId = $(".rank-name").attr("data-user-id");
+			var yours = currUserId == pickInfo.puid;
+			updateDraftPickRows(pickInfo, yours);
+			toggleRanksWindows();
+			var uturn = currUserId == pickInfo.uturnid;
+			togglePlayerLinks(uturn);
+			restoreHighlighting();
+		}
+		else {
+			updateRanksErrorHandler();
+		}
+	}, 250);
 }
 
 function updateRanksErrorHandler() {
@@ -59,6 +61,7 @@ function isPickUpToDate(pickInfo) {
 }
 
 function initPlayerRanksShared() {
+	siteBroadcastDraftDelay = 50;
 	syncCookies();
 	toggleHighlighting();
 	bindToggleAllLinks();

@@ -17,6 +17,7 @@ var pickAudioBed = null;
 var adminLastPickTime = null;
 var pleaseWaitTimer = 1200;
 var pleaseWaitNeeded = false;
+var siteBroadcastDraftDelay = 200;
 
 
 /* Init functions */
@@ -153,11 +154,13 @@ function broadcastChatMessage(msg) {
 
 //Server to client:  Draft Pick broadcast-received.  Bound to server-side (C#) hub client handle
 function broadcastDraft(pickInfo) {
-	getLastPickAndPlayAudio(isUserTurn);
-	if (typeof pageBroadcastDraftHandler !== "undefined" && !isHistoryMode()) {
-		pageBroadcastDraftHandler(pickInfo);
-	}
-	checkUserTurnDialog();
+	setTimeout(function () {
+		getLastPickAndPlayAudio(isUserTurn);
+		if (typeof pageBroadcastDraftHandler !== "undefined" && !isHistoryMode()) {
+			pageBroadcastDraftHandler(pickInfo);
+		}
+		checkUserTurnDialog();
+	}, siteBroadcastDraftDelay);
 }
 
 //Server to client:  Broadcast to shutdown all open connections. And close draft.
@@ -783,7 +786,7 @@ function initLastPickAudio() {
 		ajaxGetJson("Draft/GetLastDraftPickAudio", function (pickAudio) {
 			lastPickAudio = pickAudio;
 		});
-		pickAudioBed = new Audio(baseURL + "Media/NFL Draft Tone.mp3");
+	pickAudioBed = new Audio(baseURL + "Media/NFL Draft Tone.mp3");
 	}
 }
 
