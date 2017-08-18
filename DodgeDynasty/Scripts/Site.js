@@ -570,8 +570,8 @@ function setLatestUserTurnPickInfo(showFn) {
 				$("#userTurnDialog").attr("title", "Your Turn - Pick #" + pickInfo.num);
 				if (pickInfo.hasPrev) {
 					$(".ut-last-pick").text("(Last Pick: " + pickInfo.prevName + ")");
-					if (showFn) showFn();
 				}
+				if (showFn) showFn();
 			}
 			//else if open and not user turn, close it
 			else if (isUserTurnDialogOpen()) {
@@ -579,8 +579,13 @@ function setLatestUserTurnPickInfo(showFn) {
 			}
 		});
 	}
-	else if (isUserTurnDialogOpen()) {
-		closeUserTurnDialog();
+	else {
+		if (isUserTurn) {
+			setUserTurnCookie(true, false);
+		}
+		else if (isUserTurnDialogOpen()) {
+			closeUserTurnDialog();
+		}
 	}
 }
 
@@ -897,7 +902,7 @@ function getLastPickAndPlayAudio(pickInfo, origIsUserTurn) {
 		&& !getDynastySettingsCookie().disableBrowserAudio) {
 		//Only make audio call if userid is audio eligible
 		var currUserId = $("*[data-user-id]").attr("data-user-id");
-		if (!isValidPickInfo(pickInfo) || pickInfo.auduids.includes(parseInt(currUserId))) {
+		if (!isValidPickInfo(pickInfo) || pickInfo.auduids.indexOf(parseInt(currUserId)) >= 0) {
 			ajaxGetJson("Draft/GetLastDraftPickAudio", function (pickAudio) {
 				if (pickAudio && pickAudio.playerId) {
 					if (!lastPickAudio || lastPickAudio.playerId != pickAudio.playerId) {
