@@ -140,8 +140,9 @@ namespace DodgeDynasty.Models
 					.OrderBy(p => p.PickNum).FirstOrDefault(p => p.PlayerId == null);
 				if (nextDraftPick != null)
 				{
-					nextDraftPick.PickStartDateTime = Utilities.GetEasternTime().AddSeconds(1);
-					HomeEntity.SaveChanges();
+					//Removed Utilities.GetEasternTime().AddSeconds(1); due to WS changes improving performance
+					nextDraftPick.PickStartDateTime = Utilities.GetEasternTime();
+                    HomeEntity.SaveChanges();
 				}
 			}
 			var mapper = new BroadcastLatestDraftPickMapper();
