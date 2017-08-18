@@ -26,7 +26,7 @@ namespace DodgeDynasty.Models
 		void SetCurrentGridOwnerUser(int userId);
 		string ShowCurrentGridPlayerInfo();
 		int GetPickCountUntilNextTurn();
-		int GetPickCountUntilNextTurn(string userName);
+		int GetPickCountUntilNextTurn(int userId);
 		string GetCurrentDraftName();
 		League GetCurrentLeague();
 		string GetNFLTeamDisplay(string nflTeamAbbr);

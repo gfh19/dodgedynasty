@@ -62,6 +62,7 @@ function bindPickFormSubmit() {
 		if ($("#draftPickForm").valid()) {
 			showLoadingDialog('Saving');
 			setTimeout(function () {
+				setNewPickUserTurnCookie();
 				$('#draftPickForm').submit();
 			}, 2);
 		}

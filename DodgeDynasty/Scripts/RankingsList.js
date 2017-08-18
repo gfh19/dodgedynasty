@@ -5,8 +5,10 @@ $(function () {
 	callRefreshPageWithPickTimer("Draft/RankingsListPartial", "#rankingsList");
 });
 
-function pageBroadcastDraftHandler() {
-	callRefreshPage("Draft/RankingsListPartial", "#rankingsList");
+function pageBroadcastDraftHandler(pickInfo) {
+	updatePageWithDraftPickInfo(pickInfo, null, function () {
+		callRefreshPage("Draft/RankingsListPartial", "#rankingsList");
+	});
 }
 
 function initRankingsList() {

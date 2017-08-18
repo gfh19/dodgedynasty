@@ -170,9 +170,14 @@ namespace DodgeDynasty.Shared
 		{
 			if (dateTime.HasValue)
 			{
-				return dateTime.Value.ToString(Constants.Times.FullDateTimeFormat);
-            }
+				return ToDateTimeString(dateTime.Value);
+			}
 			return string.Empty;
+		}
+
+		public static string ToDateTimeString(this DateTime dateTime)
+		{
+			return dateTime.ToString(Constants.Times.FullDateTimeFormat);
 		}
 
 		public static List<int> AllIndexesOf(this string str, string value)

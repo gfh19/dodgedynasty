@@ -34,7 +34,7 @@
 				{
 				Model.SetCurrentGridPlayer(pick.PlayerId);
 				<div class="draft-pick-outline outline">
-				<div class="team-draft-pick @Model.CurrentGridOwnerUser.CssClass @(!string.IsNullOrEmpty(Model.CurrentGridPlayer.PlayerName) ? "filled" : "")">
+				<div class="team-draft-pick @Model.CurrentGridOwnerUser.CssClass @(!string.IsNullOrEmpty(Model.CurrentGridPlayer.PlayerName) ? "filled" : "")" data-pick-num="@pick.PickNum">
 					<div class="clear-fix draft-pick-meta">
 						<span class="pick-info"><span class="pick-num">@pick.PickNum</span>
 						@if (Model.CurrentGridPlayer.ByeWeek != null)
@@ -45,7 +45,11 @@
 						<span class="player-info">
 						@if (!string.IsNullOrEmpty(Model.CurrentGridPlayer.Position))
 						{
-							<span>@Model.GetNFLTeamDisplay(Model.CurrentGridPlayer.NFLTeam)-<span class="pos">@Model.CurrentGridPlayer.Position</span></span>
+							<span><span class="player-nflteam">@Model.GetNFLTeamDisplay(Model.CurrentGridPlayer.NFLTeam)-</span><span class="player-pos">@Model.CurrentGridPlayer.Position</span></span>
+						}
+						else
+						{
+							<span><span class="player-nflteam"></span><span class="player-pos"></span></span>
 						}
 						</span>
 					</div>

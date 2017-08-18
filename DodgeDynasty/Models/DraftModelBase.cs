@@ -293,9 +293,9 @@ namespace DodgeDynasty.Models
 			return DraftModel.GetPickCountUntilNextTurn();
 		}
 
-		public int GetPickCountUntilNextTurn(string userName)
+		public int GetPickCountUntilNextTurn(int userId)
 		{
-			return DraftModel.GetPickCountUntilNextTurn(userName);
+			return DraftModel.GetPickCountUntilNextTurn(userId);
 		}
 
 		public Player GetPlayer(int? playerId)

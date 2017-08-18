@@ -43,6 +43,7 @@ namespace DodgeDynasty.Models
 		public OwnerUser CurrentClockOwnerUser { get; set; }
 		public OwnerUser CurrentLoggedInOwnerUser { get; set; }
 		public int CurrentUserId { get; set; }
+		public List<UserRole> UserRoles { get; set; }
 		public List<UserRole> CurrentUserRoles { get; set; }
 
 		public PlayerContext CurrentGridPlayer { get; set; }
@@ -131,7 +132,8 @@ namespace DodgeDynasty.Models
 		private void SetCurrentDraftInfo(int? draftId = null)
 		{
 			CurrentUserId = Users.GetLoggedInUserId();
-			CurrentUserRoles = HomeEntity.UserRoles.Where(o => o.UserId == CurrentUserId).ToList();
+			UserRoles = HomeEntity.UserRoles.ToList();
+			CurrentUserRoles = UserRoles.Where(o => o.UserId == CurrentUserId).ToList();
             DraftId = SetCurrentDraft(draftId);
 
 			DraftPicks = HomeEntity.DraftPicks.Where(d => d.DraftId == DraftId).OrderBy(d => d.PickNum).ToList();
@@ -147,15 +149,20 @@ namespace DodgeDynasty.Models
 				.FirstOrDefault(p => p.PlayerId == null);
 			CurrentPlayerHighlights = HomeEntity.PlayerHighlights
 				.Where(o => o.DraftId == DraftId && o.UserId == CurrentUserId).OrderBy(o=>o.RankNum).ToList();
-			if (CurrentDraftPick != null)
+
+			if (DraftPicks.Count > 0)
 			{
-				var currentPickNum = CurrentDraftPick.PickNum;
+				var currentPickNum = CurrentDraftPick != null ? CurrentDraftPick.PickNum :
+					(DraftPicks.OrderBy(p => p.PickNum).Select(p => p.PickNum).LastOrDefault() + 1);
 				SecondPreviousDraftPick = DraftPicks.FirstOrDefault(p => p.PickNum == (currentPickNum - 2));
 				PreviousDraftPick = DraftPicks.FirstOrDefault(p => p.PickNum == (currentPickNum - 1));
-				NextDraftPick = DraftPicks.FirstOrDefault(p => p.PickNum == (currentPickNum + 1));
-				var currentClockUser = Users.FirstOrDefault(u => u.UserId == CurrentDraftPick.UserId);
-				var currentClockLeagueOwner = CurrentLeagueOwners.FirstOrDefault(lo => lo.UserId == CurrentDraftPick.UserId);
-				CurrentClockOwnerUser = OwnerUserMapper.GetOwnerUser(currentClockUser, currentClockLeagueOwner);
+				if (CurrentDraftPick != null)
+				{
+					NextDraftPick = DraftPicks.FirstOrDefault(p => p.PickNum == (currentPickNum + 1));
+					var currentClockUser = Users.FirstOrDefault(u => u.UserId == CurrentDraftPick.UserId);
+					var currentClockLeagueOwner = CurrentLeagueOwners.FirstOrDefault(lo => lo.UserId == CurrentDraftPick.UserId);
+					CurrentClockOwnerUser = OwnerUserMapper.GetOwnerUser(currentClockUser, currentClockLeagueOwner);
+				}
 			}
 		}
 
@@ -244,26 +251,22 @@ namespace DodgeDynasty.Models
 
 		public int GetPickCountUntilNextTurn()
 		{
-			return GetPickCountUntilNextTurn(Utilities.GetLoggedInUserName());
+			return GetPickCountUntilNextTurn(Users.GetLoggedInUserId());
 		}
 
-		public int GetPickCountUntilNextTurn(string userName)
+		public int GetPickCountUntilNextTurn(int userId)
 		{
 			if (CurrentDraftPick != null)
 			{
-				if (CurrentClockOwnerUser.UserName == userName)
+				if (CurrentClockOwnerUser.UserId == userId)
 				{
 					return 0;
 				}
-				var ownerUser = DraftOwnerUsers.FirstOrDefault(ou => ou.UserName == userName);
-				if (ownerUser != null)
+				var nextUserPick =
+					DraftPicks.FirstOrDefault(p => p.PickNum > CurrentDraftPick.PickNum && p.UserId == userId);
+				if (nextUserPick != null)
 				{
-					var nextUserPick =
-						DraftPicks.FirstOrDefault(p => p.PickNum > CurrentDraftPick.PickNum && p.UserId == ownerUser.UserId);
-					if (nextUserPick != null)
-					{
-						return nextUserPick.PickNum - CurrentDraftPick.PickNum;
-					}
+					return nextUserPick.PickNum - CurrentDraftPick.PickNum;
 				}
 			}
 			return -1;

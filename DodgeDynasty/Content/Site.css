@@ -1293,7 +1293,7 @@ ul.menu li a.current-page
 	max-width: 56px;
 }
 
-.pos
+.player-pos
 {
 	float: right;
 	font-size: 11px;
@@ -2757,7 +2757,7 @@ span.player-select
 	.player-nickname {
 		max-width: 100px;
 	}
-	.pos
+	.player-pos
 	{
 		font-size: 12px;
 	}

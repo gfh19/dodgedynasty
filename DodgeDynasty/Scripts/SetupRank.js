@@ -17,8 +17,8 @@ var changeUnrankedListTimeout = null;
 	callRefreshPageWithPickTimer("Draft/CurrentDraftPickPartial", ".draft-info");
  });
 
-function pageBroadcastDraftHandler() {
-	refreshCurrentDraftPickPartial();
+ function pageBroadcastDraftHandler(pickInfo) {
+ 	updatePageWithDraftPickInfo(pickInfo, null, refreshCurrentDraftPickPartial);
 }
 
  function initSetupRank() {

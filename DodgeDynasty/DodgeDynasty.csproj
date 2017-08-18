@@ -235,7 +235,7 @@
     <Compile Include="Mappers\RankSetupMapper.cs" />
     <Compile Include="Mappers\Highlights\AddPlayerHighlightMapper.cs" />
     <Compile Include="Mappers\Ranks\CompareRanksMapper.cs" />
-    <Compile Include="Mappers\Ranks\LatestDraftPickMapper.cs" />
+    <Compile Include="Mappers\Ranks\BroadcastLatestDraftPickMapper.cs" />
     <Compile Include="Mappers\Ranks\PlayerRankModelHelper.cs" />
     <Compile Include="Mappers\Ranks\PlayerRankOptionsMapper.cs" />
     <Compile Include="Mappers\Shared\ColorStylesMapper.cs" />

@@ -17,7 +17,6 @@ var pickAudioBed = null;
 var adminLastPickTime = null;
 var pleaseWaitTimer = 1200;
 var pleaseWaitNeeded = false;
-var siteBroadcastDraftDelay = 200;
 
 
 /* Init functions */
@@ -154,13 +153,12 @@ function broadcastChatMessage(msg) {
 
 //Server to client:  Draft Pick broadcast-received.  Bound to server-side (C#) hub client handle
 function broadcastDraft(pickInfo) {
-	setTimeout(function () {
-		getLastPickAndPlayAudio(isUserTurn);
-		if (typeof pageBroadcastDraftHandler !== "undefined" && !isHistoryMode()) {
-			pageBroadcastDraftHandler(pickInfo);
-		}
-		checkUserTurnDialog();
-	}, siteBroadcastDraftDelay);
+	getLastPickAndPlayAudio(pickInfo, isUserTurn);
+	setIsUserTurn(pickInfo);
+	if (typeof pageBroadcastDraftHandler !== "undefined" && !isHistoryMode()) {
+		pageBroadcastDraftHandler(pickInfo);
+	}
+	checkUserTurnDialog();
 }
 
 //Server to client:  Broadcast to shutdown all open connections. And close draft.
@@ -217,7 +215,101 @@ function refreshDraftChat() {
 	}
 }
 
+/* Broadcast draft perf opt helper functions */
+
+function updatePageWithDraftPickInfo(pickInfo, updateFn, refreshFn) {
+	if (isValidPickInfo(pickInfo)) {
+		updateCurrentDraftPickPartial(pickInfo);
+		updateNewLastPickEndTime(pickInfo);
+		if (updateFn) {
+			updateFn(pickInfo);
+		}
+	}
+	else if (refreshFn) {
+		refreshFn();
+	}
+}
+
+function isValidPickInfo(pickInfo) {
+	return pickInfo && (pickInfo.status == "success" || pickInfo.status == "completed") && isPickUpToDate(pickInfo);
+}
+
+function isPickUpToDate(pickInfo) {
+	var lastPickEndTime = $("*[data-last-pick-end-time]").attr("data-last-pick-end-time");
+	if (lastPickEndTime && !isNullOrWhitespace(lastPickEndTime)) {
+		return pickInfo.prevtm == lastPickEndTime;
+	}
+	else {
+		return pickInfo.prevtm == "01/01/0001 00:00:00";
+	}
+}
+
+function updateNewLastPickEndTime(pickInfo) {
+	$("*[data-last-pick-end-time]").attr("data-last-pick-end-time", pickInfo.petime);
+}
+
+function updateCurrentDraftPickPartial(pickInfo) {
+	//Assumes pickInfo validated
+	if (pickInfo.status == "completed") {
+		$(".current-turn").addClass("hide-yo-wives");
+		$(".start-time").addClass("hide-yo-wives");
+		$(".prev-pick").addClass("hide-yo-wives");
+		$(".next-pick-count").addClass("hide-yo-wives");
+		$(".cdp-enter-pick").addClass("hide-yo-wives");
+		$(".cdp-draft-complete").removeClass("hide-yo-wives");
+	}
+	else {
+		$(".current-turn").removeClass("hide-yo-wives");
+		$(".start-time").removeClass("hide-yo-wives");
+		$(".prev-pick").removeClass("hide-yo-wives");
+		$(".cdp-draft-complete").addClass("hide-yo-wives");
+		var currUserId = $("*[data-user-id]").attr("data-user-id");
+		if (currUserId == pickInfo.uturnid) {
+			$(".cdp-clock-owner").text("YOU!");
+		}
+		else {
+			$(".cdp-clock-owner").text(pickInfo.curoname);
+		}
+		if ($("#gotoPickNum") && $("#gotoPickNum").length > 0) {
+			$("#gotoPickNum").text(pickInfo.curpnum);
+		}
+		else {
+			$(".cdp-picknum").text(pickInfo.curpnum);
+		}
+		$(".start-time[data-current-pick]").attr("data-current-pick", pickInfo.curpnum);
+		$(".start-time[data-current-time]").attr("data-current-time", pickInfo.curtm);
+		$(".start-time[data-pick-start-time]").attr("data-pick-start-time", pickInfo.curpstime);
+		$(".cdp-prev-player").text(pickInfo.pname);
+		$(".cdp-prev-owner").text(pickInfo.oname);
+		if (pickInfo.pctr) {
+			var currUserPctr = pickInfo.pctr[currUserId];
+			if (currUserPctr === 0) {
+				$(".next-pick-count").addClass("hide-yo-wives");
+				$(".cdp-enter-pick").removeClass("hide-yo-wives");
+			}
+			else if (currUserPctr > 0) {
+				$(".cdp-enter-pick").addClass("hide-yo-wives");
+				$(".next-pick-count").removeClass("hide-yo-wives");
+				if (currUserPctr === 1) {
+					$(".cdp-pickctr-text").text("(You're up next...)");
+				}
+				else {
+					$(".cdp-pickctr-text").text("(You're up after " + currUserPctr + " picks)");
+				}
+			}
+			else {
+				//else no more picks for this particular user
+				$(".next-pick-count").addClass("hide-yo-wives");
+				$(".cdp-enter-pick").addClass("hide-yo-wives");
+			}
+		}
+	}
+}
+
+/* End Broadcast draft perf opt helper functions */
+
 /*		--- End WebSockets */
+
 
 function isHistoryMode() {
 	return window.location.search.indexOf("historyMode=true") > 0;
@@ -393,6 +485,13 @@ function setPlayerAutoComplete(fname, lname, pos, nfl) {
 	});
 };
 
+function setIsUserTurn(pickInfo) {
+	if (isValidPickInfo(pickInfo)) {
+		var currUserId = $("*[data-user-id]").attr("data-user-id");
+		isUserTurn = pickInfo.uturnid == currUserId;
+	}
+}
+
 function checkUserTurnDialog() {
 	if (draftActive)
 	{
@@ -464,22 +563,25 @@ function showUserTurnDialog() {
 }
 
 function setLatestUserTurnPickInfo(showFn) {
-	ajaxGetJson("Draft/GetUserTurnPickInfo", function (pickInfo) {
-		if (pickInfo && pickInfo.turn) {
-			setUserTurnCookie(true, false);
-			if (!isElementInView($(".current-turn")) || isHistoryMode()) {
+	if (!isElementInView($(".current-turn")) || isHistoryMode()) {
+		ajaxGetJson("Draft/GetUserTurnPickInfo", function (pickInfo) {
+			if (pickInfo && pickInfo.turn) {
+				setUserTurnCookie(true, false);
 				$("#userTurnDialog").attr("title", "Your Turn - Pick #" + pickInfo.num);
 				if (pickInfo.hasPrev) {
 					$(".ut-last-pick").text("(Last Pick: " + pickInfo.prevName + ")");
+					if (showFn) showFn();
 				}
-				if (showFn) showFn();
 			}
-		}
-		//else if open and not user turn, close it
-		else if (isUserTurnDialogOpen()) {
-			closeUserTurnDialog();
-		}
-	});
+			//else if open and not user turn, close it
+			else if (isUserTurnDialogOpen()) {
+				closeUserTurnDialog();
+			}
+		});
+	}
+	else if (isUserTurnDialogOpen()) {
+		closeUserTurnDialog();
+	}
 }
 
 function getUserTurnCookie() {
@@ -579,7 +681,6 @@ function showStaleDraftDialog() {
 function refreshCurrentDraftPickPartial() {
 	callRefreshPage("Draft/CurrentDraftPickPartial", ".draft-info");
 }
-
 
 /*		--- Draft Chat */
 
@@ -790,22 +891,22 @@ function initLastPickAudio() {
 	}
 }
 
-function getLastPickAndPlayAudio(origIsUserTurn) {
+function getLastPickAndPlayAudio(pickInfo, origIsUserTurn) {
 	if (!audioKillSwitch && draftActive && !isMobileBrowser() && !(window.location.href.indexOf("/Admin/Input") > 0)
 		&& (!(window.location.href.indexOf("/Draft/Pick") > 0) || !origIsUserTurn)
 		&& !getDynastySettingsCookie().disableBrowserAudio) {
-		ajaxGetJson("Draft/GetLastDraftPickAudio", function (pickAudio) {
-			if (lastPickAudio && pickAudio && pickAudio.playerId) {
-				if (lastPickAudio.playerId != pickAudio.playerId) {
-					lastPickAudio = pickAudio;
-					playPickAudio();
+		//Only make audio call if userid is audio eligible
+		var currUserId = $("*[data-user-id]").attr("data-user-id");
+		if (!isValidPickInfo(pickInfo) || pickInfo.auduids.includes(parseInt(currUserId))) {
+			ajaxGetJson("Draft/GetLastDraftPickAudio", function (pickAudio) {
+				if (pickAudio && pickAudio.playerId) {
+					if (!lastPickAudio || lastPickAudio.playerId != pickAudio.playerId) {
+						lastPickAudio = pickAudio;
+						playPickAudio();
+					}
 				}
-			}
-			else if (pickAudio && pickAudio.playerId) {
-				lastPickAudio = pickAudio;
-				playPickAudio();
-			}
-		});
+			});
+		}
 	}
 }
 
@@ -858,7 +959,7 @@ function checkFinalDraftPick() {
 		var pickPlayerAudio = new Audio(audioUrl);
 		setTimeout(function () {
 			pickPlayerAudio.play();
-		}, 750);
+		}, 600);
 	}
 }
 

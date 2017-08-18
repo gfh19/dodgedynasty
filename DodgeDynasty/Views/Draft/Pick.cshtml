@@ -1,11 +1,12 @@
 ﻿@model DodgeDynasty.Models.DraftInputModel
+@using DodgeDynasty.Shared;
 @{
 	ViewBag.Title = "Draft Pick";
 }
 
 @{
-	var currentUserName = DodgeDynasty.Shared.Utilities.GetLoggedInUserName();
-	var nextTurnPickCount = Model.GetPickCountUntilNextTurn(currentUserName);
+	var currentUserId = Model.Users.GetLoggedInUserId();
+	var nextTurnPickCount = Model.GetPickCountUntilNextTurn(currentUserId);
 	var referrer = Request.UrlReferrer;
 }
 
@@ -25,7 +26,7 @@
 				});
 			</script>
 			@Html.ValidationSummary(true)
-			@if ((Model.CurrentClockOwnerUser == null || Model.CurrentClockOwnerUser.UserName != currentUserName))
+			@if ((Model.CurrentClockOwnerUser == null || Model.CurrentClockOwnerUser.UserId != currentUserId))
 			{
 				if (nextTurnPickCount > 1)
 				{

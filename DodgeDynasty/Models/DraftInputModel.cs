@@ -144,7 +144,7 @@ namespace DodgeDynasty.Models
 					HomeEntity.SaveChanges();
 				}
 			}
-			var mapper = new LatestDraftPickMapper();
+			var mapper = new BroadcastLatestDraftPickMapper();
 			LatestPickInfoJson pickInfo = mapper.GetModel();
 			DraftHubHelper.BroadcastDraftToClients(pickInfo);
 		}
