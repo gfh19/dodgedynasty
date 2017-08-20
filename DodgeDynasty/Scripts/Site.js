@@ -902,7 +902,7 @@ function getLastPickAndPlayAudio(pickInfo, origIsUserTurn) {
 		&& !getDynastySettingsCookie().disableBrowserAudio) {
 		//Only make audio call if userid is audio eligible
 		var currUserId = $("*[data-user-id]").attr("data-user-id");
-		if (!isValidPickInfo(pickInfo) || pickInfo.auduids.indexOf(parseInt(currUserId)) >= 0) {
+		if (!pickInfo || !pickInfo.auduids || pickInfo.auduids.indexOf(parseInt(currUserId)) >= 0) {
 			ajaxGetJson("Draft/GetLastDraftPickAudio", function (pickAudio) {
 				if (pickAudio && pickAudio.playerId) {
 					if (!lastPickAudio || lastPickAudio.playerId != pickAudio.playerId) {

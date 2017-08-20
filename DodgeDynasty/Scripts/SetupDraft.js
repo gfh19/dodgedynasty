@@ -23,6 +23,7 @@ function bindActionLinks() {
 	bindSubmitDraftPicks();
 	bindDeletePlayers();
 	bindPlayerAutoCompletes();
+	bindBroadcastDraftPickLink();
 };
 
 function bindAddRoundLinks() {
@@ -283,6 +284,8 @@ function bindSubmitDraftPicks() {
 					$(".sd-update-status").addClass("hide-yo-husbands-too");
 					$(".sd-update-status").css("opacity", 1);
 				});
+				$(".sd-broadcast-sent").addClass("hide-yo-wives");
+				$(".sd-broadcast-draft").removeClass("hide-yo-wives");
 				bindActionLinks();
 				window.scrollTo(0, 0);
 			}, removeWaitCursor);
@@ -292,6 +295,15 @@ function bindSubmitDraftPicks() {
 		}
 	});
 };
+
+function bindBroadcastDraftPickLink() {
+	$(".sd-broadcast-draft").click(function (e) {
+		e.preventDefault();
+		broadcastPickMade();
+		$(".sd-broadcast-draft").addClass("hide-yo-wives");
+		$(".sd-broadcast-sent").removeClass("hide-yo-wives");
+	});
+}
 
 function bindDeletePlayers() {
 	var links = $(".delete-picked-player");

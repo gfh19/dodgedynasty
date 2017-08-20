@@ -177,9 +177,6 @@ namespace DodgeDynasty.Mappers.Drafts
 			string audio = position.PosDesc;
 			switch (position.PosCode)
 			{
-				case "RB":
-					audio = "Runningback";
-					break;
 				case "WR":
 					audio = "Receiver";
 					break;

@@ -14,7 +14,13 @@
 	</div>
 	<div class="draft clear-fix">
 		<div class="sd-update-status hide-yo-husbands-too">Update Successful...</div>
-		<div class="buttons page-section"><button id="submitDraftPicks1" class="submitDraftPicks" type="button">Update Draft</button></div>
+		<div class="buttons page-section">
+			<button id="submitDraftPicks1" class="submitDraftPicks" type="button">Update Draft</button>
+			<span class="header-subtext">
+				<a href="#" class="sd-broadcast-draft hide-yo-wives">Broadcast Draft Updates</a>
+				<span class="sd-broadcast-sent hide-yo-wives">Broadcast sent.</span>
+			</span>
+		</div>
 		<div class="round-picks page-section">
 		@foreach (var pick in Model.GetDraftSetupPicks())
 		{

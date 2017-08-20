@@ -53,7 +53,7 @@ header {
 	font-size: 24px;
 }
 
-.page-header .header-subtext, .large-page-header .header-subtext {
+.header-subtext {
 	font-size: 16px;
 	font-weight: normal;
 }
