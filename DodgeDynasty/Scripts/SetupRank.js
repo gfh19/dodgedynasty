@@ -135,7 +135,9 @@ function bindAddUnrankedPlayers() {
 			$(lastAddPlayer).click();
 			var newPlayer = $(lastAddPlayer).parents(".player-rank-entry").next();
 			var unrankedPlayerRow = $(link).parents(".bup-player-row");
-			$(".player-select", newPlayer).val($(unrankedPlayerRow).attr("data-player-id"));
+			var playerId = $(unrankedPlayerRow).attr("data-player-id")
+			$(".player-select", newPlayer).val(playerId);
+			$(".player-select", newPlayer).blur();
 			toggleUnrankedPlayerRow(unrankedPlayerRow, false);
 			toggleExpandUnrankedRows(toBool($(".bup-expand-link").attr("data-expand")));
 			toggleUnrankedTableEmpty();
