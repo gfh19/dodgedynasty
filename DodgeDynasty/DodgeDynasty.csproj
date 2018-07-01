@@ -511,7 +511,13 @@
     <Content Include="Scripts\Site.js" />
     <Content Include="Scripts\TeamDisplay.js" />
     <Content Include="Scripts\UserInfo.js" />
-    <Content Include="SQL\OLD - 2015 SQL Changes.sql" />
+    <Content Include="SQL Server\OLD - 2015 SQL Changes.sql" />
+    <Content Include="SQL Server\OLD - 2016 SQL Changes.sql" />
+    <Content Include="SQL Server\OLD - 2017 SQL Changes.sql" />
+    <Content Include="SQL Server\usp_LoadPastDraftRosters.sql" />
+    <Content Include="SQL Server\usp_LoadPastDrafts.sql" />
+    <Content Include="SQL Server\usp_LoadPlayerRanks_V2.sql" />
+    <Content Include="SQL\2015 SQL Changes - OLD.sql" />
     <Content Include="SQL\OLD - 2016 SQL Changes.sql" />
     <Content Include="SQL\OLD - 2017 SQL Changes.sql" />
     <Content Include="SQL\usp_LoadPastDraftRosters.sql" />
@@ -675,6 +681,11 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.Sql.UnitTesting.targets" Condition="'$(SQLDBExtensionsRefPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.Sql.UnitTesting.targets" Condition="'$(SQLDBExtensionsRefPath)' == ''" />
+  <PropertyGroup>
+    <SsdtUnitTestVersion>2.0</SsdtUnitTestVersion>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
