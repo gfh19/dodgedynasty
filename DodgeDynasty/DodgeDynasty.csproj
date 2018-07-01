@@ -517,12 +517,6 @@
     <Content Include="SQL Server\usp_LoadPastDraftRosters.sql" />
     <Content Include="SQL Server\usp_LoadPastDrafts.sql" />
     <Content Include="SQL Server\usp_LoadPlayerRanks_V2.sql" />
-    <Content Include="SQL\2015 SQL Changes - OLD.sql" />
-    <Content Include="SQL\OLD - 2016 SQL Changes.sql" />
-    <Content Include="SQL\OLD - 2017 SQL Changes.sql" />
-    <Content Include="SQL\usp_LoadPastDraftRosters.sql" />
-    <Content Include="SQL\usp_LoadPastDrafts.sql" />
-    <Content Include="SQL\usp_LoadPlayerRanks_V2.sql" />
     <Content Include="Views\Admin\Input.cshtml" />
     <Content Include="Views\Admin\ManageDrafts.cshtml" />
     <Content Include="Views\Admin\ManageLeagues.cshtml" />
