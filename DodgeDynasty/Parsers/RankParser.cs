@@ -31,7 +31,7 @@ namespace DodgeDynasty.Parsers
 				if (rows != null)
 				{
 					origPlayerCount = rows.Count;
-					if (RowsExceedMaxCount(rows, confirmed, userMaxCount))
+					if (RowsExceedMaxCount(rows.Count, confirmed, userMaxCount))
 					{
 						var max = userMaxCount ?? MaxPlayerCount;
 						rows = rows.Take(max).ToList();
@@ -57,6 +57,32 @@ namespace DodgeDynasty.Parsers
 				PlayerCount = origPlayerCount;
 			}
             return rankedPlayers;
+		}
+
+		public virtual List<RankedPlayer> ParseRankJson(string rankJson, bool confirmed, int? userMaxCount)
+		{
+			List<RankedPlayer> rankedPlayers = ConvertJsonRankRows(rankJson);
+			int origPlayerCount = 0;
+			if (rankedPlayers != null)
+			{
+				origPlayerCount = rankedPlayers.Count;
+				if (RowsExceedMaxCount(rankedPlayers.Count, confirmed, userMaxCount))
+				{
+					var max = userMaxCount ?? MaxPlayerCount;
+					rankedPlayers = rankedPlayers.Take(max).ToList();
+				}
+			}
+			PlayerCount = rankedPlayers.Count;
+			if (!confirmed && origPlayerCount > rankedPlayers.Count && rankedPlayers.Count == MaxPlayerCount)
+			{
+				PlayerCount = origPlayerCount;
+			}
+			return rankedPlayers;
+		}
+
+		public virtual List<RankedPlayer> ConvertJsonRankRows(string rankJson)
+		{
+			return new List<RankedPlayer>();
 		}
 
 		public virtual HtmlNode GetRankTable(HtmlNode rankHtml)
@@ -126,13 +152,13 @@ namespace DodgeDynasty.Parsers
 			});
 		}
 
-		public virtual bool RowsExceedMaxCount(List<HtmlNode> rows, bool confirmed, int? userMaxCount)
+		public virtual bool RowsExceedMaxCount(int rowCount, bool confirmed, int? userMaxCount)
 		{
-			if (confirmed && userMaxCount.HasValue && rows.Count > userMaxCount)
+			if (confirmed && userMaxCount.HasValue && rowCount > userMaxCount)
 			{
 				return true;
 			}
-			else if (!confirmed && rows.Count > MaxPlayerCount)
+			else if (!confirmed && rowCount > MaxPlayerCount)
 			{
 				return true;
 			}

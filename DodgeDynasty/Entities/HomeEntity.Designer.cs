@@ -38,7 +38,6 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerRank_Rank", "Rank", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Rank), "PlayerRank", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerRank), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_ByeWeek_NFLTeam", "NFLTeam", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.NFLTeam), "ByeWeek", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.ByeWeek), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_Player_NFLTeam", "NFLTeam", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.NFLTeam), "Player", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.Player), true)]
-[assembly: EdmRelationshipAttribute("HomeModel", "FK_Rank_AutoImport", "AutoImport", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.AutoImport), "Rank", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.Rank), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_AudioCount_AudioApi", "AudioApi", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.AudioApi), "AudioCount", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.AudioCount), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_AudioUserCount_AudioUserCount", "AudioUserCount", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.AudioUserCount), "AudioUserCount1", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.AudioUserCount), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_AudioUserCount_Player", "Player", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Player), "AudioUserCount", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.AudioUserCount), true)]
@@ -60,6 +59,7 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerAdjustment_PlayerNew", "Player", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.Player), "PlayerAdjustment", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerAdjustment), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerAdjustment_PlayerOld", "Player", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.Player), "PlayerAdjustment", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerAdjustment), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerAdjustment_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.User), "PlayerAdjustment", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerAdjustment), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_Rank_AutoImport", "AutoImport", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.AutoImport), "Rank", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.Rank), true)]
 
 #endregion
 
@@ -482,22 +482,6 @@ namespace DodgeDynasty.Entities
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<AutoImport> AutoImports
-        {
-            get
-            {
-                if ((_AutoImports == null))
-                {
-                    _AutoImports = base.CreateObjectSet<AutoImport>("AutoImports");
-                }
-                return _AutoImports;
-            }
-        }
-        private ObjectSet<AutoImport> _AutoImports;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<AudioApi> AudioApis
         {
             get
@@ -670,6 +654,22 @@ namespace DodgeDynasty.Entities
             }
         }
         private ObjectSet<PlayerAdjustment> _PlayerAdjustments;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<AutoImport> AutoImports
+        {
+            get
+            {
+                if ((_AutoImports == null))
+                {
+                    _AutoImports = base.CreateObjectSet<AutoImport>("AutoImports");
+                }
+                return _AutoImports;
+            }
+        }
+        private ObjectSet<AutoImport> _AutoImports;
 
         #endregion
 
@@ -860,14 +860,6 @@ namespace DodgeDynasty.Entities
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the AutoImports EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToAutoImports(AutoImport autoImport)
-        {
-            base.AddObject("AutoImports", autoImport);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the AudioApis EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToAudioApis(AudioApi audioApi)
@@ -953,6 +945,14 @@ namespace DodgeDynasty.Entities
         public void AddToPlayerAdjustments(PlayerAdjustment playerAdjustment)
         {
             base.AddObject("PlayerAdjustments", playerAdjustment);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the AutoImports EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToAutoImports(AutoImport autoImport)
+        {
+            base.AddObject("AutoImports", autoImport);
         }
 
         #endregion
@@ -2054,7 +2054,8 @@ namespace DodgeDynasty.Entities
         /// <param name="importUrl">Initial value of the ImportUrl property.</param>
         /// <param name="addTimestamp">Initial value of the AddTimestamp property.</param>
         /// <param name="lastUpdateTimestamp">Initial value of the LastUpdateTimestamp property.</param>
-        public static AutoImport CreateAutoImport(global::System.Int32 autoImportId, global::System.String rankName, global::System.String importUrl, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp)
+        /// <param name="isApi">Initial value of the IsApi property.</param>
+        public static AutoImport CreateAutoImport(global::System.Int32 autoImportId, global::System.String rankName, global::System.String importUrl, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp, global::System.Boolean isApi)
         {
             AutoImport autoImport = new AutoImport();
             autoImport.AutoImportId = autoImportId;
@@ -2062,6 +2063,7 @@ namespace DodgeDynasty.Entities
             autoImport.ImportUrl = importUrl;
             autoImport.AddTimestamp = addTimestamp;
             autoImport.LastUpdateTimestamp = lastUpdateTimestamp;
+            autoImport.IsApi = isApi;
             return autoImport;
         }
 
@@ -2191,6 +2193,30 @@ namespace DodgeDynasty.Entities
         private global::System.DateTime _LastUpdateTimestamp;
         partial void OnLastUpdateTimestampChanging(global::System.DateTime value);
         partial void OnLastUpdateTimestampChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean IsApi
+        {
+            get
+            {
+                return _IsApi;
+            }
+            set
+            {
+                OnIsApiChanging(value);
+                ReportPropertyChanging("IsApi");
+                _IsApi = StructuralObject.SetValidValue(value, "IsApi");
+                ReportPropertyChanged("IsApi");
+                OnIsApiChanged();
+            }
+        }
+        private global::System.Boolean _IsApi;
+        partial void OnIsApiChanging(global::System.Boolean value);
+        partial void OnIsApiChanged();
 
         #endregion
 
@@ -11214,6 +11240,28 @@ namespace DodgeDynasty.Entities
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_DraftRank_Rank", "DraftRank")]
+        public EntityCollection<DraftRank> DraftRanks
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<DraftRank>("HomeModel.FK_DraftRank_Rank", "DraftRank");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DraftRank>("HomeModel.FK_DraftRank_Rank", "DraftRank", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_Rank_AutoImport", "AutoImport")]
         public AutoImport AutoImport
         {
@@ -11242,28 +11290,6 @@ namespace DodgeDynasty.Entities
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<AutoImport>("HomeModel.FK_Rank_AutoImport", "AutoImport", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_DraftRank_Rank", "DraftRank")]
-        public EntityCollection<DraftRank> DraftRanks
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<DraftRank>("HomeModel.FK_DraftRank_Rank", "DraftRank");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DraftRank>("HomeModel.FK_DraftRank_Rank", "DraftRank", value);
                 }
             }
         }

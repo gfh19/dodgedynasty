@@ -34,18 +34,25 @@ namespace DodgeDynasty.Mappers.Admin
 			var rankId = Convert.ToInt32(RankId);
             var rank = HomeEntity.Ranks.FirstOrDefault(o => o.RankId == rankId);
             var autoImport = HomeEntity.AutoImports.FirstOrDefault(o => o.AutoImportId == rank.AutoImportId);
-			HtmlNode rankDoc = null;
 			List<RankedPlayer> rankedPlayers = null;
 			IRankParser parser = null;
 			try
 			{
-				rankDoc = LoadRankHtmlDoc(autoImport);
 				parser = ParserFactory.Create(rank.AutoImportId);
-                if (parser.CheckPositions)
+				if (autoImport.IsApi)
 				{
-					parser.Positions = HomeEntity.Positions.ToList();
+					string rankJson = GetRankData(autoImport);
+					rankedPlayers = parser.ParseRankJson(rankJson, Confirmed, MaxCount);
 				}
-				rankedPlayers = parser.ParseRankHtml(rankDoc, Confirmed, MaxCount);
+				else
+				{
+					HtmlNode rankDoc = LoadRankHtmlDoc(autoImport);
+					if (parser.CheckPositions)
+					{
+						parser.Positions = HomeEntity.Positions.ToList();
+					}
+					rankedPlayers = parser.ParseRankHtml(rankDoc, Confirmed, MaxCount);
+				}
 			}
 			catch (Exception ex)
 			{
@@ -133,16 +140,20 @@ namespace DodgeDynasty.Mappers.Admin
 
 		private HtmlNode LoadRankHtmlDoc(AutoImport autoImport)
 		{
+			string source = GetRankData(autoImport);
+			source = WebUtility.HtmlDecode(source);
+			HtmlDocument rankHtml = new HtmlDocument();
+			rankHtml.LoadHtml(source);
+			return rankHtml.DocumentNode;
+		}
+
+		private static string GetRankData(AutoImport autoImport)
+		{
 			HttpClient http = new HttpClient();
 			var task = http.GetByteArrayAsync(autoImport.ImportUrl);
 			task.Wait();
 			var response = task.Result;
-			var source = Encoding.GetEncoding("utf-8").GetString(response, 0, response.Length - 1);
-			source = WebUtility.HtmlDecode(source);
-			HtmlDocument rankHtml = new HtmlDocument();
-			rankHtml.LoadHtml(source);
-			var rankDoc = rankHtml.DocumentNode;
-			return rankDoc;
+			return Encoding.GetEncoding("utf-8").GetString(response, 0, response.Length - 1);
 		}
 
 		private void AddPlayerRank(RankedPlayer rankedPlayer)

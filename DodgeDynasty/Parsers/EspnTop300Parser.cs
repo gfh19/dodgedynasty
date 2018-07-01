@@ -24,24 +24,20 @@ namespace DodgeDynasty.Parsers
 		{
 			var rkNumPlayerPosTeam = columns[0].InnerText;
 			var firstDot = rkNumPlayerPosTeam.IndexOf(".");
-			var firstComma = rkNumPlayerPosTeam.IndexOf(",");
+			var firstComma = rkNumPlayerPosTeam.Contains(",") ? rkNumPlayerPosTeam.IndexOf(",") : rkNumPlayerPosTeam.Length;
 			return rkNumPlayerPosTeam.Substring(firstDot + 2, firstComma - (firstDot + 2)).Trim();
 		}
 
 		public override string GetPlayerPos(List<HtmlNode> columns)
 		{
-			var rkNumPlayerPosTeam = columns[0].InnerText;
-			var firstComma = rkNumPlayerPosTeam.IndexOf(",");
-			var secondComma = rkNumPlayerPosTeam.IndexOf(",", firstComma + 1);
-			return rkNumPlayerPosTeam.Substring(firstComma + 2, secondComma - (firstComma + 2)).Trim();
+			var rkNumPlayerPosTeam = columns[1].InnerText;
+			return rkNumPlayerPosTeam.Trim();
 		}
 
 		public override string GetPlayerNFLTeam(List<HtmlNode> columns)
 		{
-			var rkNumPlayerPosTeam = columns[0].InnerText;
-			var firstComma = rkNumPlayerPosTeam.IndexOf(",");
-			var secondComma = rkNumPlayerPosTeam.IndexOf(",", firstComma + 1);
-			return rkNumPlayerPosTeam.Substring(secondComma + 2, rkNumPlayerPosTeam.Length - (secondComma + 2)).Trim();
+			var rkNumPlayerPosTeam = columns[2].InnerText;
+			return rkNumPlayerPosTeam.Trim();
 		}
 	}
 }

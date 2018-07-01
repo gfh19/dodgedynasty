@@ -367,7 +367,7 @@
     <Compile Include="WebSockets\DD_SignalR.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="2017 SQL Changes.sql" />
+    <Content Include="2018 SQL Changes.sql" />
     <Content Include="apple-touch-icon.PNG" />
     <Content Include="Content\images\DD-favicon.ico" />
     <Content Include="Content\images\DD-touch.png" />
@@ -376,7 +376,6 @@
     <Content Include="Content\images\SD-touch.png" />
     <Content Include="Content\images\SD.png" />
     <Content Include="Content\images\StartDrafting.png" />
-    <Content Include="SQL\OLD - 2016 SQL Changes.sql" />
     <Content Include="Content\images\ajax-loader.gif" />
     <Content Include="Media\NFL Draft Tone.mp3" />
     <Content Include="Media\NFL_Draft_Tone.wav" />
@@ -384,7 +383,6 @@
     <Content Include="Scripts\lib\jQuery-addTouch.js" />
     <Content Include="Scripts\PlayerAdjustments.js" />
     <Content Include="Scripts\RankAdjustments.js" />
-    <Content Include="SQL\OLD - 2015 SQL Changes.sql" />
     <Content Include="Content\bootstrap\css\bootstrap-theme.css" />
     <Content Include="Content\bootstrap\css\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap\css\bootstrap.css" />
@@ -513,6 +511,9 @@
     <Content Include="Scripts\Site.js" />
     <Content Include="Scripts\TeamDisplay.js" />
     <Content Include="Scripts\UserInfo.js" />
+    <Content Include="SQL\OLD - 2015 SQL Changes.sql" />
+    <Content Include="SQL\OLD - 2016 SQL Changes.sql" />
+    <Content Include="OLD - 2017 SQL Changes.sql" />
     <Content Include="SQL\usp_LoadPastDraftRosters.sql" />
     <Content Include="SQL\usp_LoadPastDrafts.sql" />
     <Content Include="SQL\usp_LoadPlayerRanks_V2.sql" />

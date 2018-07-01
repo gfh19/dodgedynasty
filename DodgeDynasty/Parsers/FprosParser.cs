@@ -17,15 +17,15 @@ namespace DodgeDynasty.Parsers
 
 		public override string GetPlayerName(List<HtmlNode> columns)
 		{
-			var playerTeamNode = columns[1];
-			var anch = "./a";
+			var playerTeamNode = columns[2];
+			var anch = "./a//span[contains(@class, 'full-name')]";
 			var player = playerTeamNode.SelectNodes(anch)[0].InnerText;
 			return player;
 		}
 
 		public override string GetPlayerNFLTeam(List<HtmlNode> columns)
 		{
-			var playerTeamNode = columns[1];
+			var playerTeamNode = columns[2];
 			var small = "./small";
 			var nflTeam = "";
 			var nflTeamNodes = playerTeamNode.SelectNodes(small);
@@ -39,7 +39,7 @@ namespace DodgeDynasty.Parsers
 
 		public override string GetPlayerPos(List<HtmlNode> columns)
 		{
-			var posAndRank = columns[2].InnerText;
+			var posAndRank = columns[3].InnerText;
 			return Regex.Replace(posAndRank, @"[\d-]", string.Empty);
 		}
 	}

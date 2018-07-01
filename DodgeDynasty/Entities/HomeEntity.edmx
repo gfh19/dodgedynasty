@@ -109,6 +109,7 @@ warning 6002: The table/view 'Home.dbo._ArchivePlayerHighlight' does not have a 
           <Property Name="ImportUrl" Type="varchar" MaxLength="1000" Nullable="false" />
           <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
           <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
+          <Property Name="IsApi" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="ByeWeek">
           <Key>
@@ -252,13 +253,13 @@ warning 6002: The table/view 'Home.dbo._ArchivePlayerHighlight' does not have a 
           </Key>
           <Property Name="LeagueId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="LeagueName" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="LastUpdateTimestamp" Type="datetime" />
-          <Property Name="AddTimestamp" Type="datetime" />
           <Property Name="NumRounds" Type="smallint" Nullable="false" />
           <Property Name="NumKeepers" Type="smallint" Nullable="false" />
           <Property Name="Format" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="PickTimeSeconds" Type="smallint" Nullable="false" />
           <Property Name="CombineWRTE" Type="bit" Nullable="false" />
+          <Property Name="PickTimeSeconds" Type="smallint" Nullable="false" />
+          <Property Name="AddTimestamp" Type="datetime" />
+          <Property Name="LastUpdateTimestamp" Type="datetime" />
         </EntityType>
         <EntityType Name="LeagueOwner">
           <Key>
@@ -328,6 +329,7 @@ warning 6002: The table/view 'Home.dbo._ArchivePlayerHighlight' does not have a 
           <Property Name="AdjustmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="OldPlayerId" Type="int" />
           <Property Name="NewPlayerId" Type="int" />
+          <Property Name="TruePlayerId" Type="int" />
           <Property Name="NewFirstName" Type="varchar" MaxLength="25" />
           <Property Name="NewLastName" Type="varchar" MaxLength="25" />
           <Property Name="NewPlayerName" Type="varchar" MaxLength="51" StoreGeneratedPattern="Computed" />
@@ -335,10 +337,9 @@ warning 6002: The table/view 'Home.dbo._ArchivePlayerHighlight' does not have a 
           <Property Name="NewNFLTeam" Type="varchar" MaxLength="3" />
           <Property Name="Action" Type="varchar" MaxLength="50" />
           <Property Name="UserId" Type="int" />
+          <Property Name="HideReporting" Type="bit" Nullable="false" />
           <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
           <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
-          <Property Name="TruePlayerId" Type="int" />
-          <Property Name="HideReporting" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="PlayerHighlight">
           <Key>
@@ -413,8 +414,6 @@ warning 6002: The table/view 'Home.dbo._ArchivePlayerHighlight' does not have a 
           <Property Name="CompRankExpandIds" Type="varchar" MaxLength="500" />
           <Property Name="CompRanksExpandAll" Type="bit" Nullable="false" />
           <Property Name="ShowAvgCompRanks" Type="bit" Nullable="false" />
-          <Property Name="AddTimestamp" Type="datetime" />
-          <Property Name="LastUpdateTimestamp" Type="datetime" />
           <Property Name="ExpandBUP" Type="bit" Nullable="false" />
           <Property Name="HideBUP" Type="bit" Nullable="false" />
           <Property Name="BUPId" Type="int" />
@@ -422,6 +421,8 @@ warning 6002: The table/view 'Home.dbo._ArchivePlayerHighlight' does not have a 
           <Property Name="HideWR" Type="bit" Nullable="false" />
           <Property Name="ExpandTE" Type="bit" Nullable="false" />
           <Property Name="HideTE" Type="bit" Nullable="false" />
+          <Property Name="AddTimestamp" Type="datetime" />
+          <Property Name="LastUpdateTimestamp" Type="datetime" />
         </EntityType>
         <EntityType Name="Position">
           <Key>
@@ -1328,11 +1329,6 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
             <End Role="NFLTeam" EntitySet="NFLTeams" />
             <End Role="Player" EntitySet="Players" />
           </AssociationSet>
-          <EntitySet Name="AutoImports" EntityType="HomeModel.AutoImport" />
-          <AssociationSet Name="FK_Rank_AutoImport" Association="HomeModel.FK_Rank_AutoImport">
-            <End Role="AutoImport" EntitySet="AutoImports" />
-            <End Role="Rank" EntitySet="Ranks" />
-          </AssociationSet>
           <EntitySet Name="AudioApis" EntityType="HomeModel.AudioApi" />
           <EntitySet Name="AudioCounts" EntityType="HomeModel.AudioCount" />
           <AssociationSet Name="FK_AudioCount_AudioApi" Association="HomeModel.FK_AudioCount_AudioApi">
@@ -1427,6 +1423,11 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
           <AssociationSet Name="FK_PlayerAdjustment_User" Association="HomeModel.FK_PlayerAdjustment_User">
             <End Role="User" EntitySet="Users" />
             <End Role="PlayerAdjustment" EntitySet="PlayerAdjustments" />
+          </AssociationSet>
+          <EntitySet Name="AutoImports" EntityType="HomeModel.AutoImport" />
+          <AssociationSet Name="FK_Rank_AutoImport" Association="HomeModel.FK_Rank_AutoImport">
+            <End Role="AutoImport" EntitySet="AutoImports" />
+            <End Role="Rank" EntitySet="Ranks" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="PlayerRank">
@@ -1953,8 +1954,8 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
           <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="PlayerRanks" Relationship="HomeModel.FK_PlayerRank_Rank" FromRole="Rank" ToRole="PlayerRank" />
-          <NavigationProperty Name="AutoImport" Relationship="HomeModel.FK_Rank_AutoImport" FromRole="Rank" ToRole="AutoImport" />
           <NavigationProperty Name="DraftRanks" Relationship="HomeModel.FK_DraftRank_Rank" FromRole="Rank" ToRole="DraftRank" />
+          <NavigationProperty Name="AutoImport" Relationship="HomeModel.FK_Rank_AutoImport" FromRole="Rank" ToRole="AutoImport" />
         </EntityType>
         <Association Name="FK_PlayerRank_Rank">
           <End Type="HomeModel.Rank" Role="Rank" Multiplicity="1" />
@@ -2004,29 +2005,6 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
             </Principal>
             <Dependent Role="Player">
               <PropertyRef Name="NFLTeam" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="AutoImport">
-          <Key>
-            <PropertyRef Name="AutoImportId" />
-          </Key>
-          <Property Name="AutoImportId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RankName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="ImportUrl" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Ranks" Relationship="HomeModel.FK_Rank_AutoImport" FromRole="AutoImport" ToRole="Rank" />
-        </EntityType>
-        <Association Name="FK_Rank_AutoImport">
-          <End Type="HomeModel.AutoImport" Role="AutoImport" Multiplicity="0..1" />
-          <End Type="HomeModel.Rank" Role="Rank" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AutoImport">
-              <PropertyRef Name="AutoImportId" />
-            </Principal>
-            <Dependent Role="Rank">
-              <PropertyRef Name="AutoImportId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2504,6 +2482,30 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="AutoImport">
+          <Key>
+            <PropertyRef Name="AutoImportId" />
+          </Key>
+          <Property Name="AutoImportId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RankName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ImportUrl" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsApi" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Ranks" Relationship="HomeModel.FK_Rank_AutoImport" FromRole="AutoImport" ToRole="Rank" />
+        </EntityType>
+        <Association Name="FK_Rank_AutoImport">
+          <End Type="HomeModel.AutoImport" Role="AutoImport" Multiplicity="0..1" />
+          <End Type="HomeModel.Rank" Role="Rank" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AutoImport">
+              <PropertyRef Name="AutoImportId" />
+            </Principal>
+            <Dependent Role="Rank">
+              <PropertyRef Name="AutoImportId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2827,17 +2829,6 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="AutoImports">
-            <EntityTypeMapping TypeName="HomeModel.AutoImport">
-              <MappingFragment StoreEntitySet="AutoImport">
-                <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
-                <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
-                <ScalarProperty Name="ImportUrl" ColumnName="ImportUrl" />
-                <ScalarProperty Name="RankName" ColumnName="RankName" />
-                <ScalarProperty Name="AutoImportId" ColumnName="AutoImportId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="AudioApis">
             <EntityTypeMapping TypeName="HomeModel.AudioApi">
               <MappingFragment StoreEntitySet="AudioApi">
@@ -3039,6 +3030,18 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="AutoImports">
+            <EntityTypeMapping TypeName="HomeModel.AutoImport">
+              <MappingFragment StoreEntitySet="AutoImport">
+                <ScalarProperty Name="IsApi" ColumnName="IsApi" />
+                <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
+                <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
+                <ScalarProperty Name="ImportUrl" ColumnName="ImportUrl" />
+                <ScalarProperty Name="RankName" ColumnName="RankName" />
+                <ScalarProperty Name="AutoImportId" ColumnName="AutoImportId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -3104,8 +3107,6 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
         <edmx:EntityTypeShape EntityType="HomeModel.NFLTeam" Width="1.5" PointX="0.75" PointY="13.875" />
         <edmx:AssociationConnector Association="HomeModel.FK_ByeWeek_NFLTeam" />
         <edmx:AssociationConnector Association="HomeModel.FK_Player_NFLTeam" />
-        <edmx:EntityTypeShape EntityType="HomeModel.AutoImport" Width="1.5" PointX="3.75" PointY="28.75" />
-        <edmx:AssociationConnector Association="HomeModel.FK_Rank_AutoImport" />
         <edmx:EntityTypeShape EntityType="HomeModel.AudioApi" Width="1.5" PointX="18.375" PointY="9" />
         <edmx:EntityTypeShape EntityType="HomeModel.AudioCount" Width="1.5" PointX="20.625" PointY="9" />
         <edmx:AssociationConnector Association="HomeModel.FK_AudioCount_AudioApi" />
@@ -3138,6 +3139,8 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
         <edmx:AssociationConnector Association="HomeModel.FK_PlayerAdjustment_PlayerNew" />
         <edmx:AssociationConnector Association="HomeModel.FK_PlayerAdjustment_PlayerOld" />
         <edmx:AssociationConnector Association="HomeModel.FK_PlayerAdjustment_User" />
+        <edmx:EntityTypeShape EntityType="HomeModel.AutoImport" Width="1.5" PointX="4" PointY="28.75" />
+        <edmx:AssociationConnector Association="HomeModel.FK_Rank_AutoImport" />
         </edmx:Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
