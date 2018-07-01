@@ -513,7 +513,7 @@
     <Content Include="Scripts\UserInfo.js" />
     <Content Include="SQL\OLD - 2015 SQL Changes.sql" />
     <Content Include="SQL\OLD - 2016 SQL Changes.sql" />
-    <Content Include="OLD - 2017 SQL Changes.sql" />
+    <Content Include="SQL\OLD - 2017 SQL Changes.sql" />
     <Content Include="SQL\usp_LoadPastDraftRosters.sql" />
     <Content Include="SQL\usp_LoadPastDrafts.sql" />
     <Content Include="SQL\usp_LoadPlayerRanks_V2.sql" />
