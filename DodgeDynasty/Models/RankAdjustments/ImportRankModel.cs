@@ -14,6 +14,13 @@ namespace DodgeDynasty.Models.RankAdjustments
 		public int MaxPlayerCount { get; set; }
 		public string ErrorMessage { get; set; }
 		public string StackTrace { get; set; }
-		public bool MyProperty { get; set; }
+		public List<string> BlacklistPosFound { get; set; }
+		public List<string> UnknownPosFound { get; set; }
+
+		public ImportRankModel()
+		{
+			BlacklistPosFound = new List<string>();
+			UnknownPosFound = new List<string>();
+		}
 	}
 }

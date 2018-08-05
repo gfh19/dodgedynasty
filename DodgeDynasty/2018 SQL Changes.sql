@@ -1,4 +1,37 @@
-﻿/* Below run in Production on 6/30/18 */
+﻿/* Below run in Production on 7/26/18 */
+
+
+
+
+SET XACT_ABORT ON
+BEGIN TRANSACTION;
+
+UPDATE [dbo].[AutoImport]
+SET RankName = 'ESPN Top 300',
+	ImportUrl = 'http://www.espn.com/fantasy/football/story/_/page/18RanksPreseason300nonPPR/2018-fantasy-football-non-ppr-rankings-top-300',
+	LastUpdateTimestamp = getdate()
+WHERE AutoImportId = 1
+
+
+
+UPDATE [dbo].[Rank]
+SET RankName = 'ESPN Top 300',
+	Url = 'http://www.espn.com/fantasy/football/story/_/page/18RanksPreseason300nonPPR/2018-fantasy-football-non-ppr-rankings-top-300',
+	LastUpdateTimestamp = getdate()
+WHERE RankId = 82
+
+
+
+COMMIT TRANSACTION;
+
+
+
+
+
+
+
+/* Below run in Production on 6/30/18 */
+
 
 SET XACT_ABORT ON
 BEGIN TRANSACTION;

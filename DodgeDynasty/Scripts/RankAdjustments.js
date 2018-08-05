@@ -105,6 +105,7 @@ function confirmAutoImportRank(rankId, rankName) {
 					+ "Last Player:<br/>" + response.last + "<br/><br/>"
 					+ "Player Count: " + response.count + "<br/><br/>"
 					+ getMaxPlayerCountExceededText(response)
+					+ getUnknownPositionFoundText(response)
 					+ "Do you want to import <br/>'" + rankName + "' now?";
 			showConfirmDialog(text, null, function () { autoImportRank(rankId); });
 		}
@@ -117,6 +118,22 @@ function getMaxPlayerCountExceededText(response) {
 		text = "(NOTE: Exceeded " + response.max + " Player Max)<br/>"
 			+ 'Import top:  <input type="text" id="importMaxRowCount" name="importMaxRowCount" value="'+response.max+'" maxlength="4" />'
 			+ "<br/><br/>"
+	}
+	return text;
+}
+
+function getUnknownPositionFoundText(response) {
+	var text = "";
+	if (response.blklstpos || response.unkpos) {
+		if (response.blklstpos) {
+			text += "Blacklist Pos Found: " + response.blklstpos + "<br/>"
+				+ "(" + response.blklstposcnt + " players found)<br/>"
+		}
+		if (response.unkpos) {
+			text += "Unknown Pos Found: " + response.unkpos + "<br/>"
+				+ "(" + response.unkposcnt + " players found)<br/>"
+		}
+		text += "<br/>";
 	}
 	return text;
 }

@@ -196,6 +196,14 @@ namespace DodgeDynasty.Shared
 			return indexes;
 		}
 
+		public static void UniqueAdd(this List<string> strList, string value)
+		{
+			if (!strList.Contains(value))
+			{
+				strList.Add(value);
+			}
+		}
+
 		#endregion String Methods
 
 		/* Config access methods */

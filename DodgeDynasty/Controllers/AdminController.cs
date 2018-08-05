@@ -422,7 +422,11 @@ namespace DodgeDynasty.Controllers
 				first = model.FirstPlayerText,
 				last = model.LastPlayerText,
 				count = model.PlayerCount,
-				max = model.MaxPlayerCount
+				max = model.MaxPlayerCount,
+				blklstpos = string.Join(",", model.BlacklistPosFound.Distinct()),
+				unkpos = string.Join(",", model.UnknownPosFound.Distinct()),
+				blklstposcnt = string.Join(",", model.BlacklistPosFound.Count()),
+				unkposcnt = string.Join(",", model.UnknownPosFound.Count()),
 			});
 		}
 	}

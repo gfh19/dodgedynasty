@@ -11,7 +11,7 @@ namespace DodgeDynasty.Parsers
 {
 	public abstract class RankParser : IRankParser
 	{
-		public int MaxPlayerCount { get { return 400; } }
+		public int MaxPlayerCount { get { return 500; } }
 		public virtual bool CheckPositions { get { return false; } }
 		public List<Position> Positions { get; set; }
 		public int PlayerCount { get; set; }

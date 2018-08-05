@@ -19,6 +19,10 @@ namespace DodgeDynasty.Mappers.Admin
 		public bool Confirmed { get; set; }
 		public int? MaxCount { get; set; }
 		public short Year { get; set; }
+		public List<Position> Positions { get; set; }
+		//TODO:  Move blacklisted & whitelisted positions to database? (maybe not)
+		public List<string> BlacklistPositions { get { return new List<string> { "CB", "DE", "DT", "LB" }; } }
+		public List<string> WhitelistPositions { get; set; }
 
 		public ImportRankMapper(string rankId, bool confirmed, int? maxCount)
 		{
@@ -39,7 +43,10 @@ namespace DodgeDynasty.Mappers.Admin
 			try
 			{
 				parser = ParserFactory.Create(rank.AutoImportId);
-				if (autoImport.IsApi)
+				Positions = HomeEntity.Positions.ToList();
+				WhitelistPositions = new List<string>(Positions.Select(o=>o.PosCode));
+				WhitelistPositions.AddRange(new string[] { "DST", "D/ST", "D" });
+                if (autoImport.IsApi)
 				{
 					string rankJson = GetRankData(autoImport);
 					rankedPlayers = parser.ParseRankJson(rankJson, Confirmed, MaxCount);
@@ -49,8 +56,8 @@ namespace DodgeDynasty.Mappers.Admin
 					HtmlNode rankDoc = LoadRankHtmlDoc(autoImport);
 					if (parser.CheckPositions)
 					{
-						parser.Positions = HomeEntity.Positions.ToList();
-					}
+						parser.Positions = Positions; //Not really used anymore (was for pos embedded in text)
+                    }
 					rankedPlayers = parser.ParseRankHtml(rankDoc, Confirmed, MaxCount);
 				}
 			}
@@ -69,6 +76,8 @@ namespace DodgeDynasty.Mappers.Admin
 			if (Confirmed)
 			{
 				DeleteExistingPlayerRanks();
+				//TODO:  Make blacklisted/unk position removal optional?
+				RemoveUnknownPositionRanks(rankedPlayers);
 				foreach (var rankedPlayer in rankedPlayers)
 				{
 					AddPlayerRank(rankedPlayer);
@@ -89,6 +98,51 @@ namespace DodgeDynasty.Mappers.Admin
 						lastPlayer.Position);
 					Model.PlayerCount = parser.PlayerCount;
 					Model.MaxPlayerCount = parser.MaxPlayerCount;
+					IdentifyUnknownPositionRanks(rankedPlayers);
+                }
+				else
+				{
+					Model.FirstPlayerText = "(None Found)";
+				}
+			}
+		}
+
+		private void IdentifyUnknownPositionRanks(List<RankedPlayer> rankedPlayers)
+		{
+			//TODO:  Make blacklisted/unk position removal optional?
+			foreach (var player in rankedPlayers)
+			{
+				if (!WhitelistPositions.Contains(player.Position))
+				{
+					if (BlacklistPositions.Contains(player.Position))
+					{
+						Model.BlacklistPosFound.Add(player.Position);
+					}
+					else
+					{
+						Model.UnknownPosFound.Add(player.Position);
+					}
+				}
+			}
+		}
+
+		private void RemoveUnknownPositionRanks(List<RankedPlayer> rankedPlayers)
+		{
+			//TODO:  Make blacklisted/unk position removal optional?
+			var clonedPlayers = new RankedPlayer[rankedPlayers.Count];
+			rankedPlayers.CopyTo(clonedPlayers);
+			for (int i=0; i < clonedPlayers.Length; i++)
+			{
+				var player = clonedPlayers[i];
+				if (!WhitelistPositions.Contains(player.Position))
+				{
+					var removedPlayerRank = player.RankNum;
+					foreach (var plr in rankedPlayers.Where(o=>o.RankNum > removedPlayerRank))
+					{
+						//Works because same plr obj ref in clone & list has rank decremented
+						plr.RankNum = plr.RankNum - 1;
+					}
+					rankedPlayers.Remove(player);
 				}
 			}
 		}
