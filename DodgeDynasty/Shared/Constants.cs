@@ -8,6 +8,7 @@ namespace DodgeDynasty.Shared
 	public static class Constants
 	{
 		public const int NewPlayerId = -1;
+		public static string[] DefenseAbbrs { get { return new string[] { "DEF", "DST", "D/ST", "D" }; } }
 
 		public static class AppSettings
 		{
@@ -116,6 +117,26 @@ namespace DodgeDynasty.Shared
 		{
 			public const string HubConnections = "HubConnections";
 		}
+
+		public static class NFLTeamAliases
+		{
+			public static Dictionary<string, string> Dict = new Dictionary<string, string>{
+				{"AZ", "ARI"},
+				{"GBP", "GB"},
+				{"GNB", "GB"},
+				{"JAC", "JAX"},
+				{"KAN", "KC"},
+				{"KCC", "KC"},
+				{"NEP", "NE"},
+				{"NWE", "NE"},
+				{"NOR", "NO"},
+				{"NOS", "NO"},
+				{"SFO", "SF"},
+				{"TAM", "TB"},
+				{"TBB", "TB"},
+				{"WSH", "WAS"},
+			};
+        }
 
 		public static class Test
 		{

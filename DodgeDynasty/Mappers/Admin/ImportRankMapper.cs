@@ -45,7 +45,7 @@ namespace DodgeDynasty.Mappers.Admin
 				parser = ParserFactory.Create(rank.AutoImportId);
 				Positions = HomeEntity.Positions.ToList();
 				WhitelistPositions = new List<string>(Positions.Select(o=>o.PosCode));
-				WhitelistPositions.AddRange(new string[] { "DST", "D/ST", "D" });
+				WhitelistPositions.AddRange(Constants.DefenseAbbrs);
                 if (autoImport.IsApi)
 				{
 					string rankJson = GetRankData(autoImport);
@@ -217,7 +217,7 @@ namespace DodgeDynasty.Mappers.Admin
 			var playerName = rankedPlayer.PlayerName;
 			var players = HomeEntity.Players.ToList();
 			var rankedPlayerFormatted = Utilities.FormatNamePunctuation(rankedPlayer.PlayerName);
-			var playerNameMatch = players.FirstOrDefault(o => 
+			var playerNameMatch = players.FirstOrDefault(o =>
 				Utilities.FormatNamePunctuation(o.PlayerName).Equals(rankedPlayerFormatted, StringComparison.InvariantCultureIgnoreCase));
 
 			if (playerNameMatch != null)
@@ -228,28 +228,46 @@ namespace DodgeDynasty.Mappers.Admin
 			else
 			{
 				var rankedPlayerNoSuffix = Utilities.TrimSuffix(rankedPlayer.PlayerName);
-                var playerNameSuffixMatch = players.FirstOrDefault(o =>
+				var playerNameSuffixMatch = players.FirstOrDefault(o =>
 					Utilities.TrimSuffix(o.PlayerName).Equals(rankedPlayerNoSuffix, StringComparison.InvariantCultureIgnoreCase) &&
 						o.Position == rankedPlayer.Position && o.NFLTeam == rankedPlayer.NFLTeam);
 
-				if (playerNameSuffixMatch != null && playerNameSuffixMatch.IsActive)
+				//Removed playerNameSuffixMatch.IsActive check for trimming suffix... may revisit
+				if (playerNameSuffixMatch != null)
 				{
 					firstName = playerNameSuffixMatch.FirstName;
 					lastName = playerNameSuffixMatch.LastName;
 				}
-				else
+				//Fantasypros:  If valid NFL team defense (with only location name), lookup full name
+				else if (IsDefense(rankedPlayer.Position) && !string.IsNullOrEmpty(rankedPlayer.NFLTeam) && rankedPlayer.NFLTeam != "FA")
 				{
-					var firstSpace = playerName.Trim().IndexOf(" ");
-					if (firstSpace < 0)
-					{
-						Model.ErrorMessage = "Error - No space found in: " + playerName;
-						return;
-					}
-					firstName = playerName.Substring(0, firstSpace);
-					lastName = playerName.Substring(firstSpace + 1, playerName.Length - firstSpace - 1);
+					var nflTeam = Constants.NFLTeamAliases.Dict.ContainsKey(rankedPlayer.NFLTeam) ?
+						Constants.NFLTeamAliases.Dict[rankedPlayer.NFLTeam] : rankedPlayer.NFLTeam;
+                    var nflDefensePlayerName = players.FirstOrDefault(o =>
+						o.Position == "DEF" && o.NFLTeam == nflTeam && o.IsActive);
+					firstName = nflDefensePlayerName?.FirstName;
+					lastName = nflDefensePlayerName?.LastName;
 				}
 			}
+
+			if (firstName == "" || lastName == "")
+			{
+				var firstSpace = playerName.Trim().IndexOf(" ");
+				if (firstSpace < 0)
+				{
+					Model.ErrorMessage = "Error - No space found in: " + playerName;
+					return;
+				}
+				firstName = playerName.Substring(0, firstSpace);
+				lastName = playerName.Substring(firstSpace + 1, playerName.Length - firstSpace - 1);
+			}
+
 			AddPlayerRank(rankedPlayer, firstName, lastName);
+		}
+
+		private bool IsDefense(string position)
+		{
+			return Constants.DefenseAbbrs.Contains(position?.Trim());
 		}
 
 		private void AddPlayerRank(RankedPlayer rankedPlayer, string firstName, string lastName)

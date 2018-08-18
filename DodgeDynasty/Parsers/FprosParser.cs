@@ -20,6 +20,10 @@ namespace DodgeDynasty.Parsers
 			var playerTeamNode = columns[2];
 			var anch = "./a//span[contains(@class, 'full-name')]";
 			var player = playerTeamNode.SelectNodes(anch)[0].InnerText;
+			if (PlayerNameContainsTeam(player))
+			{
+				player = player.Split('(')[0];
+			}
 			return player;
 		}
 
@@ -33,6 +37,15 @@ namespace DodgeDynasty.Parsers
 			{
 				nflTeam = nflTeamNodes[0].InnerText;
 			}
+			if (string.IsNullOrEmpty(nflTeam))
+			{
+				var anch = "./a//span[contains(@class, 'full-name')]";
+				var player = playerTeamNode.SelectNodes(anch)[0].InnerText;
+				if (PlayerNameContainsTeam(player))
+				{
+					nflTeam = player.Split('(')[1].Replace(")", "");
+				}
+			}
 
 			return nflTeam;
 		}
@@ -42,5 +55,10 @@ namespace DodgeDynasty.Parsers
 			var posAndRank = columns[3].InnerText;
 			return Regex.Replace(posAndRank, @"[\d-]", string.Empty);
 		}
+
+		private bool PlayerNameContainsTeam(string player)
+		{
+			return !string.IsNullOrEmpty(player) && player.Length > 1 && player.Contains("(");
+        }
 	}
 }

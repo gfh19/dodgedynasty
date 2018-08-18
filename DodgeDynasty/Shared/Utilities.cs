@@ -203,7 +203,7 @@ namespace DodgeDynasty.Shared
 				strList.Add(value);
 			}
 		}
-
+		
 		#endregion String Methods
 
 		/* Config access methods */
