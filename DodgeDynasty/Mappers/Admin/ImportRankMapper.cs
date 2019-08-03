@@ -207,7 +207,7 @@ namespace DodgeDynasty.Mappers.Admin
 			var task = http.GetByteArrayAsync(autoImport.ImportUrl);
 			task.Wait();
 			var response = task.Result;
-			return Encoding.GetEncoding("utf-8").GetString(response, 0, response.Length - 1);
+			return Encoding.GetEncoding("utf-8").GetString(response, 0, response.Length);
 		}
 
 		private void AddPlayerRank(RankedPlayer rankedPlayer)

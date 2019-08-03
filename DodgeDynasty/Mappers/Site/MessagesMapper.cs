@@ -26,7 +26,10 @@ namespace DodgeDynasty.Mappers.Site
 
 			//Get User DraftChats Display
 			var isUserAdmin = DBUtilities.IsUserAdmin();
-			var userDraftIds = HomeEntity.DraftOwners.Where(o => o.UserId == user.UserId).Select(o => o.DraftId).ToList();
+			var userActiveLeagueIds = HomeEntity.LeagueOwners.Where(o => o.UserId == user.UserId && o.IsActive).Select(o=>o.LeagueId).ToList();
+			var userActiveDraftIds = HomeEntity.Drafts.Where(o => userActiveLeagueIds.Contains(o.LeagueId)).Select(o => o.DraftId).ToList();
+			var userDraftIds = HomeEntity.DraftOwners.Where(o => o.UserId == user.UserId && userActiveDraftIds.Contains(o.DraftId)).Select(o => o.DraftId).ToList();
+
 			var userChatMessages = HomeEntity.DraftChats.Where(dc => userDraftIds.Contains(dc.DraftId) || isUserAdmin)
 									.OrderBy(dc=>dc.AddTimestamp).ToList();
 			var userChatDraftIds = userChatMessages.Select(dc => dc.DraftId).Distinct().ToList();
@@ -40,8 +43,6 @@ namespace DodgeDynasty.Mappers.Site
 				var draftMessages = userChatMessages.Where(dc => dc.DraftId == userDraft.DraftId).ToList();
 				Model.DraftChatMessages.AddRange(MessagesHelper.GetChatMessages(leagueOwners, draftMessages));
 			}
-
-			//Model.DraftChatMessages = HomeEntity.DraftChats.Where(dc => userChatDraftIds.Contains(dc.DraftId)).ToList();
 		}
 
 		protected override void DoUpdate(MessagesModel model)

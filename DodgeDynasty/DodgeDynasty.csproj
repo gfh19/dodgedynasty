@@ -367,7 +367,7 @@
     <Compile Include="WebSockets\DD_SignalR.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="2018 SQL Changes.sql" />
+    <Content Include="2019 SQL Changes.sql" />
     <Content Include="apple-touch-icon.PNG" />
     <Content Include="Content\images\DD-favicon.ico" />
     <Content Include="Content\images\DD-touch.png" />
@@ -511,6 +511,7 @@
     <Content Include="Scripts\Site.js" />
     <Content Include="Scripts\TeamDisplay.js" />
     <Content Include="Scripts\UserInfo.js" />
+    <Content Include="SQL Server\OLD - 2018 SQL Changes.sql" />
     <Content Include="SQL Server\OLD - 2015 SQL Changes.sql" />
     <Content Include="SQL Server\OLD - 2016 SQL Changes.sql" />
     <Content Include="SQL Server\OLD - 2017 SQL Changes.sql" />

@@ -26,7 +26,8 @@ namespace DodgeDynasty.Parsers
 	{
 		public override List<RankedPlayer> ConvertJsonRankRows(string rankJson)
         {
-			var fproRank = Newtonsoft.Json.JsonConvert.DeserializeObject<FproRank>(rankJson.Substring(15, rankJson.Length - 16));
+			var innerRankJson = (rankJson[0] == '{') ? rankJson : rankJson.Substring(15, rankJson.Length - 16);
+            var fproRank = Newtonsoft.Json.JsonConvert.DeserializeObject<FproRank>(innerRankJson);
 			return GetRankedPlayers(fproRank.players).ToList();
 		}
 

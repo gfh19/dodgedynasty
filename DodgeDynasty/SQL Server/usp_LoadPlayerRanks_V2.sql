@@ -91,7 +91,7 @@ BEGIN
 	SELECT @ScrubbedLastName = 
 		CASE (LTRIM(RTRIM(UPPER(REPLACE(@FirstName, '.', '')))) + ' ' + LTRIM(RTRIM(UPPER(REPLACE(@LastName, '.', '')))))
 		WHEN 'ROBERT GRIFFIN' THEN 'Griffin III'
-		WHEN 'ODELL BECKHAM JR' THEN 'Beckham'
+		WHEN 'ODELL BECKHAM' THEN 'Beckham Jr.'
 		WHEN 'STEVE SMITH SR' THEN 'Smith'
 		WHEN 'TED GINN JR' THEN 'Ginn'
 		WHEN 'DUKE JOHNSON JR' THEN 'Johnson'
