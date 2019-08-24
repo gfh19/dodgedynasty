@@ -165,7 +165,10 @@ namespace DodgeDynasty.Mappers.Drafts
 				case "Ben Roethlisberger":
 					audio = "Alleged Sex Offender Ben Rawthlisberger";
 					break;
-				case "San Francisco 49ers":
+				case "Los Angeles Chargers":
+					audio = "San Diego I Mean Los Angeles Chargers";
+					break;
+                case "San Francisco 49ers":
 					audio = "San Francisco Forty-Niners";
 					break;
 			}

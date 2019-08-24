@@ -1,4 +1,32 @@
-﻿/* Below run in Production on  */
+﻿/* Below run in Production on 8/24/2019 */
+
+
+SET XACT_ABORT ON
+BEGIN TRANSACTION;
+
+
+UPDATE [DB_70949_home].[dbo].[AudioApi]
+SET [AudioApiKey]='853de4c40322457fb745a0a1d5ec7dd9',
+  [AudioApiUrl]='http://api.voicerss.org/?key=853de4c40322457fb745a0a1d5ec7dd9&src=<<audiotext>>&hl=en-us&f=16khz_16bit_stereo&c=mp3'
+WHERE [AudioApiCode]='first'
+
+
+UPDATE [DB_70949_home].[dbo].[AudioApi]
+SET [AudioApiKey]='3862e869b067430e9422d26904697876',
+  [AudioApiUrl]='http://api.voicerss.org/?key=3862e869b067430e9422d26904697876&src=<<audiotext>>&hl=en-us&f=16khz_16bit_stereo&c=mp3'
+WHERE [AudioApiCode]='second'
+
+
+
+COMMIT TRANSACTION;
+
+
+
+
+
+
+
+/* Below run in Production on 8/3/2019 */
 
 
 
@@ -37,4 +65,3 @@ COMMIT TRANSACTION;
 */
 
 
-COMMIT TRANSACTION;
