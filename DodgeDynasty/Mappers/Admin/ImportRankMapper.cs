@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -9,6 +10,7 @@ using DodgeDynasty.Models.RankAdjustments;
 using DodgeDynasty.Models.Types;
 using DodgeDynasty.Parsers;
 using DodgeDynasty.Shared;
+using DodgeDynasty.Shared.Log;
 using HtmlAgilityPack;
 
 namespace DodgeDynasty.Mappers.Admin
@@ -23,6 +25,7 @@ namespace DodgeDynasty.Mappers.Admin
 		//TODO:  Move blacklisted & whitelisted positions to database? (maybe not)
 		public List<string> BlacklistPositions { get { return new List<string> { "CB", "DE", "DT", "LB" }; } }
 		public List<string> WhitelistPositions { get; set; }
+		public AutoImport AutoImport { get; set; }
 
 		public ImportRankMapper(string rankId, bool confirmed, int? maxCount)
 		{
@@ -37,7 +40,7 @@ namespace DodgeDynasty.Mappers.Admin
 			Year = Convert.ToInt16(Utilities.GetEasternTime().Year);
 			var rankId = Convert.ToInt32(RankId);
             var rank = HomeEntity.Ranks.FirstOrDefault(o => o.RankId == rankId);
-            var autoImport = HomeEntity.AutoImports.FirstOrDefault(o => o.AutoImportId == rank.AutoImportId);
+            AutoImport = HomeEntity.AutoImports.FirstOrDefault(o => o.AutoImportId == rank.AutoImportId);
 			List<RankedPlayer> rankedPlayers = null;
 			IRankParser parser = null;
 			try
@@ -46,14 +49,14 @@ namespace DodgeDynasty.Mappers.Admin
 				Positions = HomeEntity.Positions.ToList();
 				WhitelistPositions = new List<string>(Positions.Select(o=>o.PosCode));
 				WhitelistPositions.AddRange(Constants.DefenseAbbrs);
-                if (autoImport.IsApi)
+                if (AutoImport.IsApi)
 				{
-					string rankJson = GetRankData(autoImport);
+					string rankJson = GetRankData(AutoImport);
 					rankedPlayers = parser.ParseRankJson(rankJson, Confirmed, MaxCount);
 				}
 				else
 				{
-					HtmlNode rankDoc = LoadRankHtmlDoc(autoImport);
+					HtmlNode rankDoc = LoadRankHtmlDoc(AutoImport);
 					if (parser.CheckPositions)
 					{
 						parser.Positions = Positions; //Not really used anymore (was for pos embedded in text)
@@ -272,9 +275,17 @@ namespace DodgeDynasty.Mappers.Admin
 
 		private void AddPlayerRank(RankedPlayer rankedPlayer, string firstName, string lastName)
 		{
-			var now = Utilities.GetEasternTime();
-			HomeEntity.usp_LoadPlayerRanks_V2(firstName.Replace("*", ""), lastName.Replace("*", ""), rankedPlayer.Position, 
-				rankedPlayer.NFLTeam, null, Utilities.ToNullInt(RankId), rankedPlayer.RankNum, null, null, Year, now);
+			try {
+				var now = Utilities.GetEasternTime();
+				HomeEntity.usp_LoadPlayerRanks_V2(firstName.Replace("*", ""), lastName.Replace("*", ""), rankedPlayer.Position,
+					rankedPlayer.NFLTeam, null, Utilities.ToNullInt(RankId), rankedPlayer.RankNum, null, null, Year, now);
+			}
+			catch (Exception ex)
+			{
+				Logger.LogInfo(
+					$"AddPlayerRank Error (Rank {RankId}, {firstName.Replace("*", "")} {lastName.Replace("*", "")}, {rankedPlayer.NFLTeam}-{rankedPlayer.Position}): {Logger.GetMessage(ex)}",
+					ex.StackTrace, AutoImport.ImportUrl, Utilities.GetLoggedInUserName());
+            }
 		}
 
 		private void DeleteExistingPlayerRanks()
