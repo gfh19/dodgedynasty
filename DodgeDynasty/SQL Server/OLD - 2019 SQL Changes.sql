@@ -62,6 +62,9 @@ COMMIT TRANSACTION;
   (Or take trophy to local shop & ask to reproduce cheaper)
   Check font
 
+  - Deactivate All But 32 DEFs
+  - BYE WEEKS!
+  - Also, when AutoImporting ranks, start with a Fantasypros one for better player names
 */
 
 
