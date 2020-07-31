@@ -212,6 +212,7 @@ COMMIT TRANSACTION;
   (Or take trophy to local shop & ask to reproduce cheaper)
   Check font
 
+  - DELETE extra Washington Redskins "WAS" Defense players (if necessary)! 
   - Deactivate All But 32 DEFs
   - BYE WEEKS!
   - Also, when AutoImporting ranks, start with a Fantasypros one for better player names

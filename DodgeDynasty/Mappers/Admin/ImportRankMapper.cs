@@ -232,7 +232,12 @@ namespace DodgeDynasty.Mappers.Admin
 			{
 				firstName = playerNameMatch.FirstName;
 				lastName = playerNameMatch.LastName;
-			}
+				if (IsDefense(rankedPlayer.Position))
+				{
+					//Redskins condition 1:  "Washington Redskins DST" i.e. FA... friggin Fantasypros ADP
+					rankedPlayer.NFLTeam = playerNameMatch.NFLTeam;
+                }
+            }
 			else
 			{
 				var rankedPlayerNoSuffix = Utilities.TrimSuffix(rankedPlayerFormatted);
@@ -249,10 +254,28 @@ namespace DodgeDynasty.Mappers.Admin
 				//Fantasypros:  If valid NFL team defense (with only location name), lookup full name
 				else if (IsDefense(rankedPlayer.Position) && !string.IsNullOrEmpty(rankedPlayer.NFLTeam) && rankedPlayer.NFLTeam != "FA")
 				{
-                    var nflDefensePlayerName = players.FirstOrDefault(o =>
-						o.Position == "DEF" && o.NFLTeam == rankedPlayer.NFLTeam && o.IsActive);
-					firstName = nflDefensePlayerName?.FirstName;
-					lastName = nflDefensePlayerName?.LastName;
+					var nflDefensePlayerName = players.FirstOrDefault(o =>
+							o.Position == "DEF" && o.NFLTeam == rankedPlayer.NFLTeam && o.IsActive);
+					if (nflDefensePlayerName != null)
+					{
+						firstName = nflDefensePlayerName.FirstName;
+						lastName = nflDefensePlayerName.LastName;
+					}
+					else
+					{
+						//Redskins condition 2:  Inactive ranked team defense with a new Active name
+						nflDefensePlayerName = players.FirstOrDefault(o =>
+							o.Position == "DEF" && o.NFLTeam == rankedPlayer.NFLTeam);
+						if (nflDefensePlayerName != null)
+						{
+							//Lookup Active TPID match (if exists, else only inactive exists...)
+							nflDefensePlayerName = players.FirstOrDefault(o =>
+								o.TruePlayerId == nflDefensePlayerName.TruePlayerId && o.IsActive)
+								?? nflDefensePlayerName;
+						}
+						firstName = nflDefensePlayerName?.FirstName;
+						lastName = nflDefensePlayerName?.LastName;
+					}
 				}
 			}
 
