@@ -127,6 +127,7 @@ namespace DodgeDynasty.Shared
 				{"JAC", "JAX"},
 				{"KAN", "KC"},
 				{"KCC", "KC"},
+				{"LVR", "LV"},
 				{"NEP", "NE"},
 				{"NWE", "NE"},
 				{"NOR", "NO"},

@@ -217,11 +217,16 @@ namespace DodgeDynasty.Mappers.Admin
 		{
 			string firstName = "";
 			string lastName = "";
+			rankedPlayer.NFLTeam = Constants.NFLTeamAliases.Dict.ContainsKey(rankedPlayer.NFLTeam) ?
+				Constants.NFLTeamAliases.Dict[rankedPlayer.NFLTeam] : rankedPlayer.NFLTeam;
+			rankedPlayer.Position = Constants.DefenseAbbrs.Contains(rankedPlayer.Position) ? "DEF" : rankedPlayer.Position;
+
 			var playerName = rankedPlayer.PlayerName;
 			var players = HomeEntity.Players.ToList();
 			var rankedPlayerFormatted = Utilities.FormatNamePunctuation(rankedPlayer.PlayerName);
 			var playerNameMatch = players.FirstOrDefault(o =>
-				Utilities.FormatNamePunctuation(o.PlayerName).Equals(rankedPlayerFormatted, StringComparison.InvariantCultureIgnoreCase));
+				Utilities.FormatNamePunctuation(o.PlayerName).Equals(rankedPlayerFormatted, StringComparison.InvariantCultureIgnoreCase)
+				&& o.Position == rankedPlayer.Position);
 
 			if (playerNameMatch != null)
 			{
@@ -230,10 +235,10 @@ namespace DodgeDynasty.Mappers.Admin
 			}
 			else
 			{
-				var rankedPlayerNoSuffix = Utilities.TrimSuffix(rankedPlayer.PlayerName);
+				var rankedPlayerNoSuffix = Utilities.TrimSuffix(rankedPlayerFormatted);
 				var playerNameSuffixMatch = players.FirstOrDefault(o =>
-					Utilities.TrimSuffix(o.PlayerName).Equals(rankedPlayerNoSuffix, StringComparison.InvariantCultureIgnoreCase) &&
-						o.Position == rankedPlayer.Position && o.NFLTeam == rankedPlayer.NFLTeam);
+					Utilities.TrimSuffix(Utilities.FormatNamePunctuation(o.PlayerName)).Equals(rankedPlayerNoSuffix, StringComparison.InvariantCultureIgnoreCase)
+						&& o.Position == rankedPlayer.Position && o.NFLTeam == rankedPlayer.NFLTeam);
 
 				//Removed playerNameSuffixMatch.IsActive check for trimming suffix... may revisit
 				if (playerNameSuffixMatch != null)
@@ -244,10 +249,8 @@ namespace DodgeDynasty.Mappers.Admin
 				//Fantasypros:  If valid NFL team defense (with only location name), lookup full name
 				else if (IsDefense(rankedPlayer.Position) && !string.IsNullOrEmpty(rankedPlayer.NFLTeam) && rankedPlayer.NFLTeam != "FA")
 				{
-					var nflTeam = Constants.NFLTeamAliases.Dict.ContainsKey(rankedPlayer.NFLTeam) ?
-						Constants.NFLTeamAliases.Dict[rankedPlayer.NFLTeam] : rankedPlayer.NFLTeam;
                     var nflDefensePlayerName = players.FirstOrDefault(o =>
-						o.Position == "DEF" && o.NFLTeam == nflTeam && o.IsActive);
+						o.Position == "DEF" && o.NFLTeam == rankedPlayer.NFLTeam && o.IsActive);
 					firstName = nflDefensePlayerName?.FirstName;
 					lastName = nflDefensePlayerName?.LastName;
 				}
