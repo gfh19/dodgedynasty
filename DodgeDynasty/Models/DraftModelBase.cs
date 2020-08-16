@@ -273,9 +273,9 @@ namespace DodgeDynasty.Models
 			return DraftModel.GetDraftPicks();
 		}
 
-		public List<SelectListItem> GetNFLListItems()
+		public List<SelectListItem> GetNFLListItems(bool showInactive = false)
 		{
-			return DraftModel.GetNFLListItems();
+			return DraftModel.GetNFLListItems(showInactive);
 		}
 
 		public int? GetNFLTeamByeWeek(string nflTeam)

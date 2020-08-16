@@ -1380,7 +1380,7 @@ ul.menu li a.current-page
 
 #playerEntry form
 {
-	width: 215px;
+	width: 220px;
 	margin: 0 auto;
 	margin-bottom: 24px;
 	padding: 8px;
@@ -1447,6 +1447,10 @@ ul.menu li a.current-page
 
 #pickInfo .field-validation-error {
 	display: block;
+}
+
+.dp-first-name, .dp-last-name {
+	width: 205px;
 }
 
 /* Pick - Admin Draft Input  

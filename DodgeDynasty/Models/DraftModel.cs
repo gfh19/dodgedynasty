@@ -334,9 +334,9 @@ namespace DodgeDynasty.Models
 				p => (string.Format("{0} ({1})", p.PosCode, p.PosDesc)), p => p.PosCode);
 		}
 
-		public List<SelectListItem> GetNFLListItems()
+		public List<SelectListItem> GetNFLListItems(bool showInactive = false)
 		{
-			return Utilities.GetListItems<NFLTeam>(NFLTeams,
+			return Utilities.GetListItems<NFLTeam>(showInactive ? NFLTeams : NFLTeams.Where(t => t.IsActive).ToList(),
 				t => (string.Format("{0} ({1} {2})", t.AbbrDisplay, t.LocationName, t.TeamName)), t => t.AbbrDisplay);
 		}
 

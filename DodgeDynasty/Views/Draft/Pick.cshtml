@@ -52,10 +52,10 @@
 					@using (Html.BeginForm("Pick", "Draft", FormMethod.Post, new { id = "draftPickForm" }))
 					{
 						@Html.LabelFor(m => m.Player.FirstName)
-						@Html.TextBoxFor(m => m.Player.FirstName, new { list = "playerHints", maxLength = "25", autofocus = "autofocus" });
+						@Html.TextBoxFor(m => m.Player.FirstName, new { @class = "dp-first-name", list = "playerHints", maxLength = "25", autofocus = "autofocus" });
 						@Html.ValidationMessageFor(m => m.Player.FirstName)
 						@Html.LabelFor(m => m.Player.LastName);
-						@Html.TextBoxFor(m => m.Player.LastName, new { maxLength = "25" });
+						@Html.TextBoxFor(m => m.Player.LastName, new { @class = "dp-last-name", maxLength = "25" });
 						@Html.ValidationMessageFor(m => m.Player.LastName)
 						@Html.LabelFor(m => m.Player.Position);
 						@Html.DropDownListFor(m => m.Player.Position, Model.GetPositionListItems());

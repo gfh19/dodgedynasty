@@ -36,8 +36,8 @@ namespace DodgeDynasty.Models
 		string UseTimeZone();
 		DateTime GetCurrentTimeEastern(DateTime utcTime);
 		List<SelectListItem> GetPositionListItems();
-		List<SelectListItem> GetNFLListItems();
-		string GetPlayerHints(bool excludeDrafted);
+		List<SelectListItem> GetNFLListItems(bool showInactive = false);
+        string GetPlayerHints(bool excludeDrafted);
 		List<DraftRankModel> GetCurrentAvailableDraftRanks();
 
 		#endregion Methods
