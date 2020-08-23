@@ -11,7 +11,7 @@ namespace DodgeDynasty.Parsers
 {
 	public abstract class RankParser : IRankParser
 	{
-		public int MaxPlayerCount { get { return 500; } }
+		public int MaxPlayerCount { get { return 600; } }
 		public virtual bool CheckPositions { get { return false; } }
 		public List<Position> Positions { get; set; }
 		public int PlayerCount { get; set; }
@@ -22,6 +22,7 @@ namespace DodgeDynasty.Parsers
 
 		public virtual List<RankedPlayer> ParseRankHtml(HtmlNode rankHtml, bool confirmed, int? userMaxCount)
 		{
+			PreRankParse(rankHtml);
 			List<RankedPlayer> rankedPlayers = new List<RankedPlayer>();
 			HtmlNode rankTable = GetRankTable(rankHtml);
 			int origPlayerCount = 0;
@@ -56,8 +57,15 @@ namespace DodgeDynasty.Parsers
 			{
 				PlayerCount = origPlayerCount;
 			}
-            return rankedPlayers;
+			PostRankParse(rankHtml);
+			return rankedPlayers;
 		}
+
+		public virtual void PreRankParse(HtmlNode rankHtml)
+		{ }
+
+		public virtual void PostRankParse(HtmlNode rankHtml)
+		{ }
 
 		public virtual List<RankedPlayer> ParseRankJson(string rankJson, bool confirmed, int? userMaxCount)
 		{
