@@ -9,9 +9,9 @@ namespace DodgeDynasty.Parsers
 {
 	public class EspnAdpParser : RankParser
 	{
-		public override string RankTableSelect() { return "//div[contains(@class, 'gamesmain')]//table"; }
-		public override string RankRowSelect() { return ".//tr[not(contains(@class, 'tableHead')) and not(contains(@class, 'tableSubHead'))]"; }
-		public override string RankColSelect() { return "./td"; }
+		public override string RankTableSelect => "//div[contains(@class, 'gamesmain')]//table";
+		public override string RankRowSelect => ".//tr[not(contains(@class, 'tableHead')) and not(contains(@class, 'tableSubHead'))]";
+		public override string RankColSelect => "./td";
 
 		public override string GetPlayerRankNum(List<HtmlNode> columns)
 		{

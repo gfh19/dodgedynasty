@@ -16,9 +16,9 @@ namespace DodgeDynasty.Parsers
 		public List<Position> Positions { get; set; }
 		public int PlayerCount { get; set; }
 
-		public virtual string RankTableSelect() { return "//div[contains(@class, 'mobile-table')]//table"; }
-		public virtual string RankRowSelect() { return "//div[contains(@class, 'mobile-table')]//table//tr[contains(@class, 'mpb-player')]"; }
-		public virtual string RankColSelect() { return "./td"; }
+		public virtual string RankTableSelect => "//div[contains(@class, 'mobile-table')]//table";
+		public virtual string RankRowSelect => "//div[contains(@class, 'mobile-table')]//table//tr[contains(@class, 'mpb-player')]";
+		public virtual string RankColSelect => "./td";
 
 		public virtual List<RankedPlayer> ParseRankHtml(HtmlNode rankHtml, bool confirmed, int? userMaxCount)
 		{
@@ -95,7 +95,8 @@ namespace DodgeDynasty.Parsers
 
 		public virtual HtmlNode GetRankTable(HtmlNode rankHtml)
 		{
-			var tables = rankHtml.SelectNodes(RankTableSelect());
+			string xpath = RankTableSelect;
+			var tables = rankHtml.SelectNodes(xpath);
 			if (tables != null && tables.Count > 0)
 			{
 				return tables[0];
@@ -105,12 +106,13 @@ namespace DodgeDynasty.Parsers
 
 		public virtual List<HtmlNode> GetRankRows(HtmlNode rankTable)
 		{
-			return rankTable.SelectNodes(RankRowSelect()).Where(o=>!string.IsNullOrWhiteSpace(o.InnerText)).ToList();
+			var select = RankRowSelect;
+			return rankTable.SelectNodes(select).Where(o=>!string.IsNullOrWhiteSpace(o.InnerText)).ToList();
 		}
 
 		public virtual List<HtmlNode> GetRankColumns(HtmlNode rankRow)
 		{
-			return rankRow.SelectNodes(RankColSelect()).ToList();
+			return rankRow.SelectNodes(RankColSelect).ToList();
 		}
 
 		public virtual void StartParsingPlayer(List<HtmlNode> columns)

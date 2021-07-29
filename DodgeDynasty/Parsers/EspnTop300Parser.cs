@@ -15,9 +15,9 @@ namespace DodgeDynasty.Parsers
 		private string _htmlTablePath = "(//div[contains(@class, 'article-body')]//table)[2]";
 		private string _htmlListPath = "(//div[contains(@class, 'article-body')]//p)[3]";
 
-		public override string RankTableSelect() { return _isHtmlTable ? _htmlTablePath : _htmlListPath; }
-		public override string RankRowSelect() { return _isHtmlTable ? $"{_htmlTablePath}//tbody//tr" : $"{_htmlListPath}//br"; }
-		public override string RankColSelect() { return _isHtmlTable ? "./td" : "span"; }
+		public override string RankTableSelect => _isHtmlTable ? _htmlTablePath : _htmlListPath;
+		public override string RankRowSelect => _isHtmlTable ? $"{_htmlTablePath}//tbody//tr" : $"{_htmlListPath}//br";
+		public override string RankColSelect => _isHtmlTable ? "./td" : "span";
 
 		public override void PreRankParse(HtmlNode rankHtml)
 		{

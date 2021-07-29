@@ -38,7 +38,7 @@ namespace DodgeDynasty.Parsers
 				yield return new RankedPlayer
 				{
 					RankNum = player.rank_ecr,
-					PlayerName = player.player_name,
+					PlayerName = player.player_name?.Trim(),
 					NFLTeam = player.player_team_id,
 					Position = player.player_position_id
 				};

@@ -45,9 +45,9 @@ namespace DodgeDynasty.Shared
 			var suffixes = new string[] { "Sr.", "Sr", "Jr.", "Jr", "II", "III", "IV", "V" };
 			foreach (var suffix in suffixes)
 			{
-				if (playerName.EndsWith(" " + suffix))
+				if (playerName.Trim().EndsWith(" " + suffix))
 				{
-					playerName = playerName.Substring(0, playerName.Length - (suffix.Length + 1));
+					playerName = playerName.Trim().Substring(0, playerName.Length - (suffix.Length + 1));
 					break;
 				}
 			}

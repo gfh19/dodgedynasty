@@ -9,9 +9,9 @@ namespace DodgeDynasty.Parsers
 {
 	public class FprosAdpParser : RankParser
 	{
-		public override string RankTableSelect() { return "//div[contains(@class, 'mobile-table')]//table"; }
-		public override string RankRowSelect() { return ".//tbody//tr"; }
-		public override string RankColSelect() { return "./td"; }
+		public override string RankTableSelect => "//div[contains(@class, 'mobile-table')]//table";
+		public override string RankRowSelect => ".//tbody//tr";
+		public override string RankColSelect => "./td";
 
 		public override string GetPlayerRankNum(List<HtmlNode> columns)
 		{
@@ -25,7 +25,7 @@ namespace DodgeDynasty.Parsers
 			var player = playerTeamNode.SelectNodes(anch)[0].InnerText;
 			player = player.TrimString(" Defense");
 			player = player.TrimString(" DST");
-			return player;
+			return player?.Trim();
 		}
 
 		public override string GetPlayerNFLTeam(List<HtmlNode> columns)

@@ -437,11 +437,16 @@ function pastePlayerHandler(clipboardData, e, skipPasteTextbox) {
 			showLoadingDialog();
 			setTimeout(function () {
 				if (onPasteTextbox) {
-					$(".rank-add-player").eq(1).click();
-					var newMoveUpLink = $(".rank-move-up").eq(2);
-					var playerRankEntry = moveUpPlayer(newMoveUpLink);
-					$(playerRankEntry).show();
-					destSelect = $(".player-select", playerRankEntry);
+					if ($(".player-select").eq(1).val() === "") {
+						destSelect = $(".player-select").eq(1);
+					}
+					else {
+						$(".rank-add-player").eq(1).click();
+						var newMoveUpLink = $(".rank-move-up").eq(2);
+						var playerRankEntry = moveUpPlayer(newMoveUpLink);
+						$(playerRankEntry).show();
+						destSelect = $(".player-select", playerRankEntry);
+					}
 				}
 				var pastedArray;
 				if (pastedText.indexOf("\r\n") > 0) {

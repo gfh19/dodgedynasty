@@ -28,6 +28,7 @@
     </UpgradeBackupLocation>
     <OldToolsVersion>4.0</OldToolsVersion>
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -367,7 +368,8 @@
     <Compile Include="WebSockets\DD_SignalR.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="2020 SQL Changes.sql" />
+    <Content Include="2021 SQL Changes.sql" />
+    <Content Include="SQL Server\OLD - 2020 SQL Changes.sql" />
     <Content Include="apple-touch-icon.PNG" />
     <Content Include="Content\images\DD-favicon.ico" />
     <Content Include="Content\images\DD-touch.png" />
@@ -552,6 +554,7 @@
     <Content Include="docs\2017 Draft Order - Adjusted Total Points.xlsx" />
     <None Include="Properties\PublishProfiles\WinHost 2013 Local Folder.pubxml" />
     <None Include="Properties\PublishProfiles\WinHost 2015 Local Folder.pubxml" />
+    <None Include="Properties\PublishProfiles\WinHost 2019 Local Folder.pubxml" />
     <None Include="Properties\PublishProfiles\WinHost FTP.pubxml" />
     <None Include="Properties\PublishProfiles\WinHost Local Folder.pubxml" />
     <Content Include="Views\Site\Messages.cshtml" />

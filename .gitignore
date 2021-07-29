@@ -187,3 +187,5 @@ FakesAssemblies/
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
+/.vs/dodgedynasty/config/applicationhost.config
+/DodgeDynasty/Properties/PublishProfiles/WinHost 2019 Local Folder.pubxml

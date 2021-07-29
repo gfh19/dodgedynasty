@@ -71,14 +71,14 @@
 							userRoleAccessModel = DodgeDynasty.Shared.DBUtilities.GetCurrentUserRoleAccess();
 							if (draftId != null && DodgeDynasty.Shared.Utilities.ToBool(historyMode))
 							{
-								<li>@Html.ActionLink("Pick", "Pick/" + draftId, "Draft", new { historyMode = "true" }, null)</li>
+								<li id="nav-opt-pick">@Html.ActionLink("Pick", "Pick/" + draftId, "Draft", new { historyMode = "true" }, null)</li>
 								<li>@Html.ActionLink("Draft", "Display/" + draftId, "Draft", new { historyMode = "true" }, null)</li>
 								<li>@Html.ActionLink("Teams", "TeamDisplay/" + draftId, "Draft", new { historyMode = "true" }, null)</li>
 								<li>@Html.ActionLink("Ranks", "BestAvailable/" + draftId, "Draft", new { historyMode = "true" }, null)</li>
 							}
 							else
 							{
-								<li>@Html.ActionLink("Pick", "Pick", "Draft")</li>
+								<li id="nav-opt-pick">@Html.ActionLink("Pick", "Pick", "Draft")</li>
 								<li>@Html.ActionLink("Draft", "Display", "Draft")</li>
 								<li>@Html.ActionLink("Teams", "TeamDisplay", "Draft")</li>
 								<li>@Html.ActionLink("Ranks", "BestAvailable", "Draft")</li>

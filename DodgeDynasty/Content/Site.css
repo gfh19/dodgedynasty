@@ -256,14 +256,14 @@ footer
 	/*color: #B0E0E6;
 	font-family: 'Brush Script MT', 'Brush Script MT Italic', Arial, sans-serif;
 	font-size: 27px;*/	
-	height: 29px;
+	height: 32px;
 	margin: -2px 0px 0px 0px;
 	padding-left: 10px;
 }
 .site-logo-img {
 	display: inline;
-	height: 29px;
-	width: 133px;
+	height: 35px;
+	width: 158px;
 }
 .site-logo-img-mobile {
 	display: none;
@@ -313,12 +313,12 @@ footer
 ----------------------------------------------------------*/
 .top-nav{
 	min-width: 297px;
-	height: 23px;
+	height: 28px;
 }
 ul.menu
 {
 	font-family: "Segoe UI", Arial, Sans-Serif;
-	font-size: 17px;
+	font-size: 20px;
 	font-weight: 600;
 	margin: 0px;
 	padding-left: 5px;
@@ -388,14 +388,14 @@ ul.menu li.mobileNav a {
 }
 .navbar-toggle .icon-bar {
   display: block;
-  width: 17px;
-  height: 3px;
+  width: 25px;
+  height: 4px;
   border-radius: 1px;
   -webkit-border-radius: 1px;
   background-color: #999;
 }
 .navbar-toggle .icon-bar + .icon-bar {
-  margin-top: 3px;
+  margin-top: 4px;
 }
 .navbar-toggle:hover,
 .navbar-toggle:focus {
@@ -415,7 +415,7 @@ tbody.collapse.in {
 }
 
 .navbar-collapse {
-  padding-right: 44px;
+  padding-right: 52px;
   overflow-x: visible;
   border-top: 1px solid transparent;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
@@ -1480,14 +1480,14 @@ ul.menu li a.current-page
 .rank-header, .rlist-header
 {
 	text-align: center;
-	margin-top: 18px;
+	margin-top: 22px;
 	margin-bottom: 12px;
 }
 .rank-name, .rankings-list
 {
-	font-size: 1.1em;
+	font-size: 1.2em;
 	font-weight: bold;
-	margin-bottom: 8px;
+	margin-bottom: 12px;
 }
 .more-rank-opts 
 {
@@ -1560,7 +1560,7 @@ ul.menu li a.current-page
 	background-color: #DFDFDF;
 }
 .pr-toggle-links, .pr-highlight-links {
-	margin-top: 5px;
+	margin-top: 10px;
 }
 .pr-toggle-links {
 	font-size: 10px;
@@ -2694,8 +2694,8 @@ span.player-select
 	}
 	.site-logo-img-mobile {
 		display: inline;
-		height: 22px;
-		width: 36px;
+		height: 26px;
+		width: 42px;
 	}
 	
 	.header-freeze header {
@@ -3059,6 +3059,13 @@ span.player-select
 	}
 }
 
+/* Legacy small width phone (i.e. iPhone 5 and lower) */
+@media screen and (max-width: 350px) {
+	#nav-opt-pick {
+		display: none;
+	}
+}
+
 /* Tablets/Phablets */
 @media screen and (min-width: 601px)
 {
@@ -3181,7 +3188,7 @@ span.player-select
 	padding-bottom: 8px;
   }
   .nav > li > a {
-	padding-right: 44px;
+	padding-right: 52px;
   }
   .navbar-toggle {
 	  margin-right: 3px;
