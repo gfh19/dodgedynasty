@@ -13,5 +13,6 @@ namespace DodgeDynasty.Parsers
 		List<Position> Positions { get; set; }
 		List<RankedPlayer> ParseRankHtml(HtmlNode rankHtml, bool confirmed, int? maxCount);
 		List<RankedPlayer> ParseRankJson(string rankJson, bool confirmed, int? maxCount);
+		List<RankedPlayer> ParseRankPdf(byte[] pdfByteArray, bool confirmed, int? maxCount);
 	}
 }

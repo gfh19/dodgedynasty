@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using DodgeDynasty.Entities;
 using DodgeDynasty.Models.Types;
 using DodgeDynasty.Shared;
 using HtmlAgilityPack;
+using iText.Kernel.Pdf;
+using iText.Kernel.Pdf.Canvas.Parser;
+using iText.Kernel.Pdf.Canvas.Parser.Listener;
 
 namespace DodgeDynasty.Parsers
 {
@@ -91,6 +96,50 @@ namespace DodgeDynasty.Parsers
 		public virtual List<RankedPlayer> ConvertJsonRankRows(string rankJson)
 		{
 			return new List<RankedPlayer>();
+		}
+
+		public List<RankedPlayer> ParseRankPdf(byte[] pdfByteArray, bool confirmed, int? maxCount)
+		{
+			List<RankedPlayer> rankedPlayers = new List<RankedPlayer>();
+			if (pdfByteArray != null)
+			{
+				StringBuilder text = new StringBuilder();
+				MemoryStream stream = new MemoryStream(pdfByteArray);
+				using (var pdfDocument = new PdfDocument(new PdfReader(stream)))
+				{
+					for (int i = 1; i <= pdfDocument.GetNumberOfPages(); i++)
+					{
+						ITextExtractionStrategy strategy = new SimpleTextExtractionStrategy();
+						var page = pdfDocument.GetPage(i);
+						string currentText = PdfTextExtractor.GetTextFromPage(page, strategy);
+
+						currentText = Encoding.UTF8.GetString(ASCIIEncoding.Convert(Encoding.Default, Encoding.UTF8, Encoding.Default.GetBytes(currentText)));
+						text.Append(currentText);
+					}
+				}
+				rankedPlayers = new List<RankedPlayer>();
+				var numsAndPlayers = Regex.Split(text.ToString(), @"(\d+\.{1})").Where(s => !string.IsNullOrWhiteSpace(s)).ToArray();
+				for (int i = 0; i < numsAndPlayers.Count() - 2; i += 2)
+				{
+					var rankNum = numsAndPlayers[i].Replace(".", "").Trim();
+					var pnamePieces = numsAndPlayers[i + 1].Split(')');
+					var pos = Regex.Replace(pnamePieces[0], @"[\d-]", string.Empty).Replace("(", "").Trim();
+					pnamePieces = pnamePieces[1].Split(',');
+					var playerName = pnamePieces[0].Trim();
+					var team = pnamePieces[1].Substring(0, pnamePieces[1].LastIndexOf("$")).Trim();
+
+					rankedPlayers.Add(new RankedPlayer
+					{
+						RankNum = Utilities.ToNullInt(rankNum),
+						PlayerName = playerName,
+						NFLTeam = team,
+						Position = pos
+					});
+				}
+				rankedPlayers = rankedPlayers.OrderBy(r => r.RankNum).ToList();
+				PlayerCount = rankedPlayers.Count;
+			}
+			return rankedPlayers;
 		}
 
 		public virtual HtmlNode GetRankTable(HtmlNode rankHtml)

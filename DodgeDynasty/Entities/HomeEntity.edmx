@@ -107,9 +107,10 @@ warning 6002: The table/view 'Home.dbo._ArchivePlayerHighlight' does not have a 
           <Property Name="AutoImportId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RankName" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="ImportUrl" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="IsApi" Type="bit" Nullable="false" />
           <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
           <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
-          <Property Name="IsApi" Type="bit" Nullable="false" />
+          <Property Name="IsPdf" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="ByeWeek">
           <Key>
@@ -394,6 +395,8 @@ warning 6002: The table/view 'Home.dbo._ArchivePlayerHighlight' does not have a 
           <Property Name="ExpandQB" Type="bit" Nullable="false" />
           <Property Name="ExpandRB" Type="bit" Nullable="false" />
           <Property Name="ExpandWRTE" Type="bit" Nullable="false" />
+          <Property Name="ExpandWR" Type="bit" Nullable="false" />
+          <Property Name="ExpandTE" Type="bit" Nullable="false" />
           <Property Name="ExpandDEF" Type="bit" Nullable="false" />
           <Property Name="ExpandK" Type="bit" Nullable="false" />
           <Property Name="ExpandQueue" Type="bit" Nullable="false" />
@@ -401,6 +404,8 @@ warning 6002: The table/view 'Home.dbo._ArchivePlayerHighlight' does not have a 
           <Property Name="HideQB" Type="bit" Nullable="false" />
           <Property Name="HideRB" Type="bit" Nullable="false" />
           <Property Name="HideWRTE" Type="bit" Nullable="false" />
+          <Property Name="HideWR" Type="bit" Nullable="false" />
+          <Property Name="HideTE" Type="bit" Nullable="false" />
           <Property Name="HideDEF" Type="bit" Nullable="false" />
           <Property Name="HideK" Type="bit" Nullable="false" />
           <Property Name="HideQueue" Type="bit" Nullable="false" />
@@ -417,10 +422,6 @@ warning 6002: The table/view 'Home.dbo._ArchivePlayerHighlight' does not have a 
           <Property Name="ExpandBUP" Type="bit" Nullable="false" />
           <Property Name="HideBUP" Type="bit" Nullable="false" />
           <Property Name="BUPId" Type="int" />
-          <Property Name="ExpandWR" Type="bit" Nullable="false" />
-          <Property Name="HideWR" Type="bit" Nullable="false" />
-          <Property Name="ExpandTE" Type="bit" Nullable="false" />
-          <Property Name="HideTE" Type="bit" Nullable="false" />
           <Property Name="AddTimestamp" Type="datetime" />
           <Property Name="LastUpdateTimestamp" Type="datetime" />
         </EntityType>
@@ -2493,6 +2494,7 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
           <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IsApi" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Ranks" Relationship="HomeModel.FK_Rank_AutoImport" FromRole="AutoImport" ToRole="Rank" />
+          <Property Name="IsPdf" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_Rank_AutoImport">
           <End Type="HomeModel.AutoImport" Role="AutoImport" Multiplicity="0..1" />
@@ -3033,6 +3035,7 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
           <EntitySetMapping Name="AutoImports">
             <EntityTypeMapping TypeName="HomeModel.AutoImport">
               <MappingFragment StoreEntitySet="AutoImport">
+                <ScalarProperty Name="IsPdf" ColumnName="IsPdf" />
                 <ScalarProperty Name="IsApi" ColumnName="IsApi" />
                 <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
                 <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />

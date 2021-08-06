@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -47,9 +46,15 @@ namespace DodgeDynasty.Mappers.Admin
 			{
 				parser = ParserFactory.Create(rank.AutoImportId);
 				Positions = HomeEntity.Positions.ToList();
-				WhitelistPositions = new List<string>(Positions.Select(o=>o.PosCode));
+				WhitelistPositions = new List<string>(Positions.Select(o => o.PosCode));
 				WhitelistPositions.AddRange(Constants.DefenseAbbrs);
-                if (AutoImport.IsApi)
+
+				if (AutoImport.IsPdf)
+				{
+					var pdfByteArray = GetPdfByteArray();
+					rankedPlayers = parser.ParseRankPdf(pdfByteArray, Confirmed, MaxCount);
+				}
+				else if (AutoImport.IsApi)
 				{
 					string rankJson = GetRankData(AutoImport);
 					rankedPlayers = parser.ParseRankJson(rankJson, Confirmed, MaxCount);
@@ -60,7 +65,7 @@ namespace DodgeDynasty.Mappers.Admin
 					if (parser.CheckPositions)
 					{
 						parser.Positions = Positions; //Not really used anymore (was for pos embedded in text)
-                    }
+					}
 					rankedPlayers = parser.ParseRankHtml(rankDoc, Confirmed, MaxCount);
 				}
 			}
@@ -107,6 +112,23 @@ namespace DodgeDynasty.Mappers.Admin
 				{
 					Model.FirstPlayerText = "(None Found)";
 				}
+			}
+		}
+
+		private byte[] GetPdfByteArray()
+		{
+			var origProtocol = ServicePointManager.SecurityProtocol;
+			ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+			try
+			{
+				HttpClient http = new HttpClient();
+				var task = http.GetByteArrayAsync(AutoImport.ImportUrl);
+				task.Wait();
+				return task.Result;
+			}
+			finally
+			{
+				ServicePointManager.SecurityProtocol = origProtocol;
 			}
 		}
 

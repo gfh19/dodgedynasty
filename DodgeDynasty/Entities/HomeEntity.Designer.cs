@@ -2055,7 +2055,8 @@ namespace DodgeDynasty.Entities
         /// <param name="addTimestamp">Initial value of the AddTimestamp property.</param>
         /// <param name="lastUpdateTimestamp">Initial value of the LastUpdateTimestamp property.</param>
         /// <param name="isApi">Initial value of the IsApi property.</param>
-        public static AutoImport CreateAutoImport(global::System.Int32 autoImportId, global::System.String rankName, global::System.String importUrl, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp, global::System.Boolean isApi)
+        /// <param name="isPdf">Initial value of the IsPdf property.</param>
+        public static AutoImport CreateAutoImport(global::System.Int32 autoImportId, global::System.String rankName, global::System.String importUrl, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp, global::System.Boolean isApi, global::System.Boolean isPdf)
         {
             AutoImport autoImport = new AutoImport();
             autoImport.AutoImportId = autoImportId;
@@ -2064,6 +2065,7 @@ namespace DodgeDynasty.Entities
             autoImport.AddTimestamp = addTimestamp;
             autoImport.LastUpdateTimestamp = lastUpdateTimestamp;
             autoImport.IsApi = isApi;
+            autoImport.IsPdf = isPdf;
             return autoImport;
         }
 
@@ -2217,6 +2219,30 @@ namespace DodgeDynasty.Entities
         private global::System.Boolean _IsApi;
         partial void OnIsApiChanging(global::System.Boolean value);
         partial void OnIsApiChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean IsPdf
+        {
+            get
+            {
+                return _IsPdf;
+            }
+            set
+            {
+                OnIsPdfChanging(value);
+                ReportPropertyChanging("IsPdf");
+                _IsPdf = StructuralObject.SetValidValue(value, "IsPdf");
+                ReportPropertyChanged("IsPdf");
+                OnIsPdfChanged();
+            }
+        }
+        private global::System.Boolean _IsPdf;
+        partial void OnIsPdfChanging(global::System.Boolean value);
+        partial void OnIsPdfChanged();
 
         #endregion
 

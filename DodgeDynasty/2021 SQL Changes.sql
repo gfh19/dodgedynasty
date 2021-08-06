@@ -1,6 +1,93 @@
-﻿/* Below run in Production on 7/28/2021 */
+﻿/* Below run in Production on 8/5/2021 */
 
 
+
+SET XACT_ABORT ON
+BEGIN TRANSACTION;
+
+
+ALTER TABLE [dbo].[AutoImport]
+ADD [IsPdf] bit NOT NULL DEFAULT(0);
+GO
+
+
+COMMIT TRANSACTION;
+
+
+
+SET XACT_ABORT ON
+BEGIN TRANSACTION;
+
+
+UPDATE [dbo].[AutoImport]
+SET RankName = 'ESPN Top 300',
+    IsApi = 0,
+	IsPdf = 1
+WHERE AutoImportId = 1
+
+
+COMMIT TRANSACTION;
+
+
+
+
+
+
+
+
+
+/* Below run in Production on 7/31/2021 */
+
+
+
+SET XACT_ABORT ON
+BEGIN TRANSACTION;
+
+
+
+INSERT INTO dbo.ByeWeek VALUES ('2021', 'ARI', '12', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2021', 'ATL', '6', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2021', 'BAL', '8', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2021', 'BUF', '7', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2021', 'CAR', '13', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2021', 'CHI', '10', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2021', 'CIN', '10', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2021', 'CLE', '13', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2021', 'DAL', '7', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2021', 'DEN', '11', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2021', 'DET', '9', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2021', 'GB', '13', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2021', 'HOU', '10', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2021', 'IND', '14', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2021', 'JAX', '7', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2021', 'KC', '12', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2021', 'LV', '8', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2021', 'LAC', '7', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2021', 'LAR', '11', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2021', 'MIA', '14', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2021', 'MIN', '7', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2021', 'NE', '14', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2021', 'NO', '6', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2021', 'NYG', '10', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2021', 'NYJ', '6', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2021', 'PHI', '14', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2021', 'PIT', '7', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2021', 'SF', '6', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2021', 'SEA', '9', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2021', 'TB', '9', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2021', 'TEN', '13', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2021', 'WAS', '9', getdate(), getdate());
+
+
+
+
+COMMIT TRANSACTION;
+
+
+
+
+
+/* Below run in Production on 7/28/2021 */
 
 
 --1
@@ -10,7 +97,7 @@ BEGIN TRANSACTION;
 
 UPDATE [dbo].[AutoImport]
 SET RankName = 'ESPN Top 300',
-	ImportUrl = 'https://g.espncdn.com/s/ffldraftkit/21/NFLDK2021_CS_PPR300.pdf',  --Sad Day
+	ImportUrl = 'https://g.espncdn.com/s/ffldraftkit/21/NFLDK2021_CS_NonPPR300.pdf',  --Sad Day
 	LastUpdateTimestamp = getdate()
 WHERE AutoImportId = 1
 
