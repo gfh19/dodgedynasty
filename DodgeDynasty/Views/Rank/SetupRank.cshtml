@@ -56,64 +56,25 @@
 
 	<div class="buttons"><button type="submit" class="submit-rankings">Save Rankings</button></div>
 	<div class="sr-outer-section">
-		<div class="rank-setup-section clear-fix">
-			<div class="rank-paste-section">
-				<div class="sr-ranking-hdr">Rankings</div>
-				<div class="note-text sr-new-player">Player not available?  <a href="#" class="add-new-player">Add New Player</a></div>
-				<div><a href="#" class="rank-paste-new">(Open the Paste Rankings textbox)</a></div>
-				<div class="rank-paste-ctrls hide-yo-wives">
-					<input class="rank-paste-txt" placeholder="Paste Rankings Here" />
-					<a href="#" class="rank-paste-cancel note-text">Close</a>
-				</div>
-			</div>
-			<div class="copy-pr-entry clear-fix hide-yo-kids">
-				<span class="rank-vertical-controls">
-					<a href="#" class="rank-move-up" tabindex="-1"><img src="@Url.FullPath("~/Content/images/up.png")" alt="" /></a>
-					<a href="#" class="rank-move-down" tabindex="-1"><img src="@Url.FullPath("~/Content/images/down.png")" alt="" /></a>
-				</span>
-
-				<span class="ranked-player">
-					<span class="player-rank-num"></span>
-					<span class="sr-plyr-select-col">
-						@Html.DropDownList("PlayerId", Model.GetRankPlayersListItem("0"), new { @class = "player-select" })
-					</span>
-				</span>
-				<span class="rank-change-controls">
-					<a href="#" class="rank-remove-player" tabindex="-1"><img src="@Url.FullPath("~/Content/images/minus.png")" alt="Remove Player" /></a>
-					<a href="#" class="rank-add-player" tabindex="-1"><img src="@Url.FullPath("~/Content/images/plus.png")" alt="Add Player" /></a>
-				</span>
-			</div>
-			@if (Model.RankedPlayers.Count > 0)
-			{
-				foreach (var player in Model.RankedPlayers)
-				{
-					<div class="player-rank-entry clear-fix">
-						<span class="rank-vertical-controls">
-							<a href="#" class="rank-move-up" tabindex="-1"><img src="@Url.FullPath("~/Content/images/up.png")" alt="" /></a>
-							<a href="#" class="rank-move-down" tabindex="-1"><img src="@Url.FullPath("~/Content/images/down.png")" alt="" /></a>
-						</span>
-
-						<span class="ranked-player">
-							<span class="player-rank-num">@player.RankNum</span>
-							<span class="player-select" data-player-id="@player.PlayerId">@Model.GetPlayerDetails(player.PlayerName, player.NFLTeam, player.Position)</span>
-						</span>
-						<span class="rank-change-controls">
-							<a href="#" class="rank-remove-player" tabindex="-1"><img src="@Url.FullPath("~/Content/images/minus.png")" alt="Remove Player" /></a>
-							<a href="#" class="rank-add-player" tabindex="-1"><img src="@Url.FullPath("~/Content/images/plus.png")" alt="Add Player" /></a>
-						</span>
+		<div class="inline-block">
+			<div class="rank-setup-section">
+				<div class="rank-paste-section">
+					<div class="sr-ranking-hdr">Rankings</div>
+					<div class="note-text sr-new-player">Player not available?  <a href="#" class="add-new-player">Add New Player</a></div>
+					<div><a href="#" class="rank-paste-new">(Open the Paste Rankings textbox)</a></div>
+					<div class="rank-paste-ctrls hide-yo-wives">
+						<input class="rank-paste-txt" placeholder="Paste Rankings Here" />
+						<a href="#" class="rank-paste-cancel note-text">Close</a>
 					</div>
-				}
-			}
-			else
-			{
-				<div class="player-rank-entry clear-fix">
+				</div>
+				<div class="copy-pr-entry clear-fix hide-yo-kids">
 					<span class="rank-vertical-controls">
 						<a href="#" class="rank-move-up" tabindex="-1"><img src="@Url.FullPath("~/Content/images/up.png")" alt="" /></a>
 						<a href="#" class="rank-move-down" tabindex="-1"><img src="@Url.FullPath("~/Content/images/down.png")" alt="" /></a>
 					</span>
 
 					<span class="ranked-player">
-						<span class="player-rank-num">1</span>
+						<span class="player-rank-num"></span>
 						<span class="sr-plyr-select-col">
 							@Html.DropDownList("PlayerId", Model.GetRankPlayersListItem("0"), new { @class = "player-select" })
 						</span>
@@ -123,15 +84,64 @@
 						<a href="#" class="rank-add-player" tabindex="-1"><img src="@Url.FullPath("~/Content/images/plus.png")" alt="Add Player" /></a>
 					</span>
 				</div>
+				@if (Model.RankedPlayers.Count > 0)
+				{
+					foreach (var player in Model.RankedPlayers)
+					{
+						<div class="player-rank-entry clear-fix">
+							<span class="rank-vertical-controls">
+								<a href="#" class="rank-move-up" tabindex="-1"><img src="@Url.FullPath("~/Content/images/up.png")" alt="" /></a>
+								<a href="#" class="rank-move-down" tabindex="-1"><img src="@Url.FullPath("~/Content/images/down.png")" alt="" /></a>
+							</span>
+
+							<span class="ranked-player">
+								<span class="player-rank-num">@player.RankNum</span>
+								<span class="player-select" data-player-id="@player.PlayerId">@Model.GetPlayerDetails(player.PlayerName, player.NFLTeam, player.Position)</span>
+							</span>
+							<span class="rank-change-controls">
+								<a href="#" class="rank-remove-player" tabindex="-1"><img src="@Url.FullPath("~/Content/images/minus.png")" alt="Remove Player" /></a>
+								<a href="#" class="rank-add-player" tabindex="-1"><img src="@Url.FullPath("~/Content/images/plus.png")" alt="Add Player" /></a>
+							</span>
+						</div>
+					}
+				}
+				else
+				{
+					<div class="player-rank-entry clear-fix">
+						<span class="rank-vertical-controls">
+							<a href="#" class="rank-move-up" tabindex="-1"><img src="@Url.FullPath("~/Content/images/up.png")" alt="" /></a>
+							<a href="#" class="rank-move-down" tabindex="-1"><img src="@Url.FullPath("~/Content/images/down.png")" alt="" /></a>
+						</span>
+
+						<span class="ranked-player">
+							<span class="player-rank-num">1</span>
+							<span class="sr-plyr-select-col">
+								@Html.DropDownList("PlayerId", Model.GetRankPlayersListItem("0"), new { @class = "player-select" })
+							</span>
+						</span>
+						<span class="rank-change-controls">
+							<a href="#" class="rank-remove-player" tabindex="-1"><img src="@Url.FullPath("~/Content/images/minus.png")" alt="Remove Player" /></a>
+							<a href="#" class="rank-add-player" tabindex="-1"><img src="@Url.FullPath("~/Content/images/plus.png")" alt="Add Player" /></a>
+						</span>
+					</div>
+				}
+				<div><a href="#" class="clear-ranks">(Clear Rankings)</a></div>
+			</div>
+			@if (Model.HighlightedPlayers.Count > 0)
+			{
+				<div class="rank-highlight-section">
+					<div> - OR - </div>
+					<br />
+					<a href="#" id="replace-queue">Replace with Highlighted Queue</a>
+				</div>
 			}
-			<div><a href="#" class="clear-ranks">(Clear Rankings)</a></div>
 		</div>
 		@if (Model.CompareRank != null)
 		{
-		<div class="rank-avail-section clear-fix hide-yo-husbands-too">
-			<div class="bold center">Best Unranked Players <span class="bup-hide-text">(<a class="bup-hide-link" data-hide-val="@Model.Options.HideBUP">Hide</a>)</span></div>
-			@Html.Partial(DodgeDynasty.Shared.Constants.Views.BupSectionPartial, Model)
-		</div>
+			<div class="rank-avail-section hide-yo-husbands-too">
+				<div class="bold center">Best Unranked Players <span class="bup-hide-text">(<a class="bup-hide-link" data-hide-val="@Model.Options.HideBUP">Hide</a>)</span></div>
+				@Html.Partial(DodgeDynasty.Shared.Constants.Views.BupSectionPartial, Model)
+			</div>
 		}
 	</div>
 	@using (Html.BeginForm("SetupRank", "Rank", new { rankId = Model.RankId }, FormMethod.Post, new { id = "setupRankForm" }))
@@ -141,6 +151,9 @@
 	<div class="buttons"><button type="submit" class="submit-rankings">Save Rankings</button></div>
 	<div id="clearRanksDialog" class="center hide-yo-kids" title="Confirm Delete">
 		<p>Are you sure you want to remove all ranked players?</p>
+	</div>
+	<div id="replaceHighlightedDialog" class="center hide-yo-kids" title="Confirm Replace">
+		<p>Are you sure you want to replace all rankings with highlighted queue players?</p>
 	</div>
 	<div id="saveRanksDialog" class="center hide-yo-kids" title="Saving Update">
 		<p>Saving...</p>

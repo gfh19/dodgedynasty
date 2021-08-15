@@ -9,6 +9,7 @@ using DodgeDynasty.Models.Highlights;
 using System.Net;
 using DodgeDynasty.UIHelpers;
 using DodgeDynasty.Models.Types;
+using System.Linq;
 
 namespace DodgeDynasty.Controllers
 {
@@ -43,6 +44,7 @@ namespace DodgeDynasty.Controllers
 			model.GetRankedPlayersAll();
 			//Populate Compare Rank for Best Unranked Players
 			model.SetUnrankedCompareList();
+			model.SetAllHighlightedPlayers();
 			if (ViewData.ContainsKey(Constants.ViewData.RankStatus))
 			{
 				model.RankStatus = (string)ViewData[Constants.ViewData.RankStatus];
@@ -144,5 +146,14 @@ namespace DodgeDynasty.Controllers
 			model.SetUnrankedCompareList();
 			return PartialView(Constants.Views.BupSectionPartial, model);
 		}
-    }
+
+		[HttpGet]
+		[OwnerRankAccess]
+		public JsonResult GetHighlightedPlayers()
+		{
+			var playerRankModel = PlayerRankUIHelper.Instance.GetPlayerRankPartial(null, null, false, Request, Response);
+			var players = playerRankModel.GetAllHighlightedPlayers();
+			return Json(players.Select(p => new { id = p.PlayerId, name = p.PlayerName }).ToArray(), JsonRequestBehavior.AllowGet);
+		}
+	}
 }

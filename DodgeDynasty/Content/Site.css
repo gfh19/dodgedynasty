@@ -62,6 +62,10 @@ header {
 	text-align: center;
 }
 
+.page-entry {
+	margin-bottom: 8px;
+}
+
 .page-section-large {
 	margin-top: 20px;
 }
@@ -379,6 +383,7 @@ ul.menu li.mobileNav a {
   -webkit-border-radius: 2px;
   margin-right: 5px;
   margin-bottom: -4px;
+  box-shadow: none;
 }
 .navbar-toggle:focus {
   outline: 0;
@@ -895,8 +900,7 @@ input[type="checkbox"]
 	width: auto;
 }
 
-input[type="submit"], input[type="button"], button
-{
+input[type="submit"], input[type="button"], button {
 	background-color: #d3dce0;
 	border: 1px solid #787878;
 	cursor: pointer;
@@ -905,6 +909,8 @@ input[type="submit"], input[type="button"], button
 	padding: 7px;
 	margin-right: 4px;
 	width: auto;
+	border-radius: 2px;
+	box-shadow: #898989 0px 1px 1px 0px;
 }
 
 td input[type="submit"], td input[type="button"], td button
@@ -1727,7 +1733,7 @@ ul.menu li a.current-page
 }
 .rank-setup-section
 {
-	margin: 0px 1px 20px 1px;
+	margin: 10px 1px 20px 1px;
     border: 2px solid navy;
     border-radius: 6px;
     padding: 3px 4px 8px 4px;
@@ -1735,6 +1741,9 @@ ul.menu li a.current-page
 }
 .rank-avail-section {
 	margin: 10px 30px 20px 30px;
+}
+.rank-highlight-section {
+	margin-bottom: 25px;
 }
 /*
 .player-rank-entry {
@@ -1744,8 +1753,7 @@ ul.menu li a.current-page
 	border-bottom: none;
 }
 */
-.rank-vertical-controls, .ranked-player, .rank-change-controls, .rank-move-to
-{
+.rank-vertical-controls, .ranked-player, .rank-change-controls, .rank-move-to {
 	float: left;
 }
 .rank-vertical-controls 
@@ -1876,6 +1884,12 @@ span.player-select
 }
 #bup-add-all {
 	font-size: 15px;
+}
+.rank-list-entry {
+	margin-bottom: 8px;
+}
+.add-rank {
+	display: block;
 }
 
 /* Setup Draft
@@ -2194,10 +2208,12 @@ span.player-select
 .latest-draft-link {
 	font-weight: bold;
 }
+.dh-league-section {
+	margin-bottom: 24px;
+}
 
 /* User Info
 ----------------------------------------------------------*/
-
 #userInfo {
 	min-width: 592px;
 }
@@ -2873,9 +2889,6 @@ span.player-select
 	.sr-outer-section
 	{
 		display: block;
-	}
-	.rank-avail-section {
-		margin: 10px;
 	}
 	.bup-player-name {
 		max-width: 175px !important;

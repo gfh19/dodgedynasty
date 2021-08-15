@@ -7,7 +7,8 @@ var _playerNameSubs = {
 	"buck allen": "Javorius Allen",
 	"christopher ivory": "Chris Ivory",
 	"philly brown": "Corey Brown",
-	"stevie johnson": "Steve Johnson"
+	"stevie johnson": "Steve Johnson",
+	"wft": "Washington Football Team"
 }
 var toggleUnrankedTimeout = null;
 var changeUnrankedListTimeout = null;
@@ -33,6 +34,7 @@ var changeUnrankedListTimeout = null;
 	bindSubmitRankings();
 	bindAddNewPlayerLink();
 	bindClearRankingsLink();
+	bindReplaceWithHighlightedLink();
 	saveCookieRankId();
 	bindPlayerSelectChange($("select.player-select"));
 	$('html').keydown(preventBackspaceNav);
@@ -70,9 +72,6 @@ function displayBestUnrankedPlayers() {
 }
 
 function toggleUnrankedPlayers() {
-	//var rankedPlayerIds = $(".bup-player-row").not(".unranked").map(function () { return $(this).attr("data-player-id") });
-	//var unrankedPlayerIds = $(".bup-player-row.unranked").map(function () { return $(this).attr("data-player-id") });
-
 	var rankedPlayerIds = $(".player-select").map(function () {
 		if ($(this).is(":visible")) {
 			return getPlayerSelectId($(this));
@@ -437,7 +436,7 @@ function pastePlayerHandler(clipboardData, e, skipPasteTextbox) {
 			showLoadingDialog();
 			setTimeout(function () {
 				if (onPasteTextbox) {
-					if ($(".player-select").eq(1).val() === "") {
+					if ($(".player-select").length <= 2 && $(".player-select").eq(1).val() === "") {
 						destSelect = $(".player-select").eq(1);
 					}
 					else {
@@ -747,6 +746,13 @@ function bindClearRankingsLink() {
 	});
 }
 
+function bindReplaceWithHighlightedLink() {
+	$("#replace-queue").click(function (e) {
+		e.preventDefault();
+		showReplaceHighlightedDialog();
+	});
+}
+
 function getNewPlayer() {
 	var player = {};
 	player.FirstName = $("#add-plyr-fname").val();
@@ -754,6 +760,28 @@ function getNewPlayer() {
 	player.Position = $("#add-plyr-pos").val();
 	player.NFLTeam = $("#add-plyr-nfl").val();
 	return player;
+}
+
+function clearRanks() {
+	$(".rank-add-player").last().click();
+	$(".rank-remove-player").not(":last").click();
+}
+
+function replaceWithHighlightedPlayers(highlightedPlayers) {
+	var tempScrollTop = $(window).scrollTop();
+
+	clearRanks();
+	var newPlayer = $(".player-select").eq(1);
+	$.each(highlightedPlayers, function (index, highlightedPlayer) {
+		$(newPlayer).val(highlightedPlayer.id);
+		$(newPlayer).blur();
+		if (index < (highlightedPlayers.length - 1)) {
+			$(".rank-add-player", $(newPlayer).parents(".player-rank-entry")).click();
+			newPlayer = $(".player-select", $(newPlayer).parents(".player-rank-entry").next());
+		}
+	});
+	toggleUnrankedPlayers();
+	$(window).scrollTop(tempScrollTop);
 }
 
 function showAddNewPlayerDialog() {
@@ -800,8 +828,7 @@ function showClearRanksDialog() {
 							addWaitCursor();
 							showLoadingDialog();
 							setTimeout(function() {
-								$(".rank-add-player").last().click();
-								$(".rank-remove-player").not(":last").click();
+								clearRanks();
 								closePleaseWait();
 							}, 1);
 						}
@@ -811,6 +838,37 @@ function showClearRanksDialog() {
 							$(this).dialog("close");
 						}
 					},
+		]
+	});
+}
+
+function showReplaceHighlightedDialog() {
+	$("#replaceHighlightedDialog").dialog({
+		resizable: false,
+		height: 'auto',
+		width: '230px',
+		modal: true,
+		buttons: [
+			{
+				text: "OK", click: function () {
+					$(this).dialog("close");
+					addWaitCursor();
+					showLoadingDialog();
+					setTimeout(function () {
+						ajaxGetJson("Rank/GetHighlightedPlayers", function (highlightedPlayers) {
+							if (highlightedPlayers) {
+								replaceWithHighlightedPlayers(highlightedPlayers);
+								closePleaseWait();
+							}
+						});
+					}, 1);
+				}
+			},
+			{
+				text: "Cancel", click: function () {
+					$(this).dialog("close");
+				}
+			},
 		]
 	});
 }

@@ -34,6 +34,7 @@ namespace DodgeDynasty.Models
 		public List<Player> SortedPlayers { get; set; }
 		public string RankStatus { get; set; }
 		public PlayerModel Player { get; set; }
+
 		public RankCategoryModel CurrentRankCategory { get; set; }
 		public List<RankedPlayer> HighlightedPlayers { get; set; }
 
@@ -95,6 +96,11 @@ namespace DodgeDynasty.Models
 			TERankedPlayers = OverallRankedPlayers.Where(p => p.Position == "TE").ToList();
 			DEFRankedPlayers = OverallRankedPlayers.Where(p => p.Position == "DEF").ToList();
 			KRankedPlayers = OverallRankedPlayers.Where(p => p.Position == "K").ToList();
+		}
+		public void SetAllHighlightedPlayers()
+		{
+			//Such bad code.  Someday tear all down and start over if ever motivated.
+			HighlightedPlayers = GetAllHighlightedPlayers();
 		}
 
 		public List<RankedPlayer> GetRankedPlayersAll()
