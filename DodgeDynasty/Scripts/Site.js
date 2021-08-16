@@ -460,29 +460,31 @@ function setPlayerAutoComplete(fname, lname, pos, nfl) {
 	lname = lname || "#Player_LastName";
 	pos = pos || "#Player_Position";
 	nfl = nfl || "#Player_NFLTeam";
-	$(fname).autocomplete({
-		source: function (request, response) {
-			var filteredArray = $.map(playerHints, function (item) {
-				var response = null;
-				var nameParts = [item.firstName, item.lastName, item.firstName + ' ' + item.lastName];
-				$.each(nameParts, function (index, elem) {
-					if (formatAutoCompName(elem).match("^" + formatAutoCompName(request.term))) {
-						response = item;
-					}
+	$.each([fname, lname], function (ix, elem) {
+		$(elem).autocomplete({
+			source: function (request, response) {
+				var filteredArray = $.map(playerHints, function (item) {
+					var response = null;
+					var nameParts = [item.firstName, item.lastName, item.firstName + ' ' + item.lastName];
+					$.each(nameParts, function (index, elem) {
+						if (formatAutoCompName(elem).match("^" + formatAutoCompName(request.term))) {
+							response = item;
+						}
+					});
+					return response;
 				});
-				return response;
-			});
-			response(filteredArray);
-		},
-		select: function (event, ui) {
-			$(nfl).val(ui.item.nflTeamDisplay);
-			$(pos).val(ui.item.pos);
-			$(lname).val(ui.item.lastName);
-			$(fname).val(ui.item.firstName);
-			setTimeout(function () { $("#inputSubmit").focus(); }, 0);
-			return false;
-		}
-	});
+				response(filteredArray);
+			},
+			select: function (event, ui) {
+				$(nfl).val(ui.item.nflTeamDisplay);
+				$(pos).val(ui.item.pos);
+				$(lname).val(ui.item.lastName);
+				$(fname).val(ui.item.firstName);
+				setTimeout(function () { $("#inputSubmit").focus(); }, 0);
+				return false;
+			}
+		});
+	})
 };
 
 function setIsUserTurn(pickInfo) {
