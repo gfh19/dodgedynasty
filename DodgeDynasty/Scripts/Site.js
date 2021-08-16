@@ -460,8 +460,8 @@ function setPlayerAutoComplete(fname, lname, pos, nfl) {
 	lname = lname || "#Player_LastName";
 	pos = pos || "#Player_Position";
 	nfl = nfl || "#Player_NFLTeam";
-	$.each([fname, lname], function (ix, elem) {
-		$(elem).autocomplete({
+	$.each([fname, lname], function (ix, nameElem) {
+		$(nameElem).autocomplete({
 			source: function (request, response) {
 				var filteredArray = $.map(playerHints, function (item) {
 					var response = null;
