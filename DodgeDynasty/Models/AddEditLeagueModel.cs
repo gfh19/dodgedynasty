@@ -41,6 +41,10 @@ namespace DodgeDynasty.Models
 		[Required]
 		public bool CombineWRTE { get; set; }
 
+		[Display(Name = "Show Positional Coloring?")]
+		[Required]
+		public bool ShowPositionColors { get; set; }
+
 		public List<OwnerUser> LeagueOwnerUsers { get; set; }
 		public int LeagueId { get; set; }
 		public List<OwnerUser> OwnerUsers { get; set; }

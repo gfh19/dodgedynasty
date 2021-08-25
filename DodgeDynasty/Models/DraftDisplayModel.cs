@@ -31,5 +31,22 @@ namespace DodgeDynasty.Models
 			}
 			return false;
 		}
+
+		public string GetCurrentGridPlayerClasses()
+		{
+			string cssClasses = "";
+			if (!string.IsNullOrEmpty(CurrentGridPlayer?.PlayerName))
+			{
+				cssClasses += "filled ";
+				if (GetCurrentLeague().ShowPositionColors)
+				{
+					cssClasses += "show-pos-colors ";
+				}
+				cssClasses += (CurrentDraft.CombineWRTE && CurrentGridPlayer.Position == "TE") 
+					? $"dp-wrte " 
+					: $"dp-{CurrentGridPlayer.Position.ToLower()} ";
+			}
+			return cssClasses;
+		}
 	}
 }

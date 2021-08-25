@@ -6426,7 +6426,8 @@ namespace DodgeDynasty.Entities
         /// <param name="format">Initial value of the Format property.</param>
         /// <param name="pickTimeSeconds">Initial value of the PickTimeSeconds property.</param>
         /// <param name="combineWRTE">Initial value of the CombineWRTE property.</param>
-        public static League CreateLeague(global::System.Int32 leagueId, global::System.String leagueName, global::System.Int16 numRounds, global::System.Int16 numKeepers, global::System.String format, global::System.Int16 pickTimeSeconds, global::System.Boolean combineWRTE)
+        /// <param name="showPositionColors">Initial value of the ShowPositionColors property.</param>
+        public static League CreateLeague(global::System.Int32 leagueId, global::System.String leagueName, global::System.Int16 numRounds, global::System.Int16 numKeepers, global::System.String format, global::System.Int16 pickTimeSeconds, global::System.Boolean combineWRTE, global::System.Boolean showPositionColors)
         {
             League league = new League();
             league.LeagueId = leagueId;
@@ -6436,6 +6437,7 @@ namespace DodgeDynasty.Entities
             league.Format = format;
             league.PickTimeSeconds = pickTimeSeconds;
             league.CombineWRTE = combineWRTE;
+            league.ShowPositionColors = showPositionColors;
             return league;
         }
 
@@ -6661,6 +6663,30 @@ namespace DodgeDynasty.Entities
         private global::System.Boolean _CombineWRTE;
         partial void OnCombineWRTEChanging(global::System.Boolean value);
         partial void OnCombineWRTEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean ShowPositionColors
+        {
+            get
+            {
+                return _ShowPositionColors;
+            }
+            set
+            {
+                OnShowPositionColorsChanging(value);
+                ReportPropertyChanging("ShowPositionColors");
+                _ShowPositionColors = StructuralObject.SetValidValue(value, "ShowPositionColors");
+                ReportPropertyChanged("ShowPositionColors");
+                OnShowPositionColorsChanged();
+            }
+        }
+        private global::System.Boolean _ShowPositionColors;
+        partial void OnShowPositionColorsChanging(global::System.Boolean value);
+        partial void OnShowPositionColorsChanged();
 
         #endregion
 

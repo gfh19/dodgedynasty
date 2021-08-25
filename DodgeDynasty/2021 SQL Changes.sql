@@ -1,4 +1,28 @@
-﻿/* Below run in Production on 8/5/2021 */
+﻿/* Below run in Production on 8/24/2021 */
+
+
+
+SET XACT_ABORT ON
+BEGIN TRANSACTION;
+
+
+ALTER TABLE [dbo].[League]
+ADD [ShowPositionColors] bit NOT NULL DEFAULT(0);
+GO
+
+
+COMMIT TRANSACTION;
+
+
+
+
+
+
+
+
+
+
+/* Below run in Production on 8/5/2021 */
 
 
 
@@ -27,10 +51,6 @@ WHERE AutoImportId = 1
 
 
 COMMIT TRANSACTION;
-
-
-
-
 
 
 

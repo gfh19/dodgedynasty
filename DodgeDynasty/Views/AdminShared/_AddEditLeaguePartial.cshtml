@@ -37,6 +37,9 @@
 				<div>
 					@Html.LabelFor(m => m.PickTimeSeconds): @Html.TextBoxFor(m => m.PickTimeSeconds, new { @class = "ad-pick-time", type = "number" })
 				</div>
+				<div>
+					@Html.LabelFor(m => m.ShowPositionColors):  @Html.CheckBoxFor(m => m.ShowPositionColors, new { @class = "ad-show-pos-colors" })
+				</div>
 				<div>@Html.ValidationMessageFor(m => m.Format)</div>
 				<div>@Html.ValidationMessageFor(m => m.PickTimeSeconds)</div>
 				<div>@Html.ValidationMessageFor(m => m.CombineWRTE)</div>

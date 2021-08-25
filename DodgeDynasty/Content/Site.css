@@ -1268,6 +1268,30 @@ ul.menu li a.current-page
 	height: 49px;
 }
 
+.show-pos-colors.filled.dp-qb {
+	background-color: #FFABAB;
+}
+
+.show-pos-colors.filled.dp-rb {
+	background-color: #C7D9FB;
+}
+
+.show-pos-colors.filled.dp-wr, .show-pos-colors.filled.dp-wrte {
+	background-color: #AAFFB4;
+}
+
+.show-pos-colors.filled.dp-te {
+	background-color: #FFF1A9;
+}
+
+.show-pos-colors.filled.dp-def {
+	background-color: #EAD9BD;
+}
+
+.show-pos-colors.filled.dp-k {
+	background-color: #FCB0FC;
+}
+
 .draft-pick-meta
 {
 	font-size: 10px;

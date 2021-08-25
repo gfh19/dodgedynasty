@@ -31,6 +31,7 @@ namespace DodgeDynasty.Mappers.Admin
 			Model.Format = league.Format;
 			Model.CombineWRTE = league.CombineWRTE;
 			Model.PickTimeSeconds = league.PickTimeSeconds;
+			Model.ShowPositionColors = league.ShowPositionColors;
 			Model.CssColors = HomeEntity.CssColors.ToList();
 			Model.CommishUserIds = HomeEntity.UserRoles
 				.Where(o => o.RoleId == Constants.Roles.Commish && o.LeagueId == Model.LeagueId)
@@ -47,6 +48,7 @@ namespace DodgeDynasty.Mappers.Admin
 			league.Format = model.Format;
 			league.CombineWRTE = model.CombineWRTE;
 			league.PickTimeSeconds = Convert.ToInt16(model.PickTimeSeconds);
+			league.ShowPositionColors = model.ShowPositionColors;
 			league.LastUpdateTimestamp = DateTime.Now;
 			HomeEntity.SaveChanges();
 

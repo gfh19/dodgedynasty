@@ -261,6 +261,7 @@ warning 6002: The table/view 'Home.dbo._ArchivePlayerHighlight' does not have a 
           <Property Name="PickTimeSeconds" Type="smallint" Nullable="false" />
           <Property Name="AddTimestamp" Type="datetime" />
           <Property Name="LastUpdateTimestamp" Type="datetime" />
+          <Property Name="ShowPositionColors" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="LeagueOwner">
           <Key>
@@ -2257,6 +2258,7 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
           <NavigationProperty Name="LeagueOwners" Relationship="HomeModel.FK_LeagueOwner_League" FromRole="League" ToRole="LeagueOwner" />
           <NavigationProperty Name="Messages" Relationship="HomeModel.FK_Message_League" FromRole="League" ToRole="Message" />
           <NavigationProperty Name="UserRoles" Relationship="HomeModel.FK_UserRole_League" FromRole="League" ToRole="UserRole" />
+          <Property Name="ShowPositionColors" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_Draft_League">
           <End Type="HomeModel.League" Role="League" Multiplicity="1" />
@@ -2909,6 +2911,7 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
           <EntitySetMapping Name="Leagues">
             <EntityTypeMapping TypeName="HomeModel.League">
               <MappingFragment StoreEntitySet="League">
+                <ScalarProperty Name="ShowPositionColors" ColumnName="ShowPositionColors" />
                 <ScalarProperty Name="CombineWRTE" ColumnName="CombineWRTE" />
                 <ScalarProperty Name="PickTimeSeconds" ColumnName="PickTimeSeconds" />
                 <ScalarProperty Name="Format" ColumnName="Format" />

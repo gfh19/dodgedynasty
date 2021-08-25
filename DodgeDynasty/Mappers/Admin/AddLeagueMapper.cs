@@ -30,6 +30,7 @@ namespace DodgeDynasty.Mappers.Admin
 			Model.PickTimeSeconds = Constants.Defaults.PickTimeSeconds;
 			Model.CssColors = HomeEntity.CssColors.ToList();
 			Model.CommishUserIds = new List<int>();
+			Model.ShowPositionColors = false;
 		}
 
 		protected override void DoUpdate(T model)
@@ -42,6 +43,7 @@ namespace DodgeDynasty.Mappers.Admin
 				Format = model.Format,
 				CombineWRTE = model.CombineWRTE,
                 PickTimeSeconds = Convert.ToInt16(model.PickTimeSeconds),
+				ShowPositionColors = model.ShowPositionColors,
 				AddTimestamp = DateTime.Now,
 				LastUpdateTimestamp = DateTime.Now
 			};
