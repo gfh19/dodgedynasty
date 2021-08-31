@@ -21,8 +21,9 @@
 	@Html.Partial(Url.Content("../Draft/CurrentDraftPickPartial"), Model)
 	<div class="dd-sub-title">Update Personal Rankings</div>
 	<div class="note-text">(*Note:  This list is only visible to you)</div>
-
-	<!-- TODO:  Only refresh current draft partial -->
+	<div class="more-rank-opts page-section-small">
+		<a href="@Url.Content("~/Draft/RankingsList")" id="otherRanksLink">Rankings List</a>
+	</div>
 	<div class="messages-ph">
 		<div class="rank-saved @((Model.RankStatus == "saved") ? "" : "hide-yo-kids")">Your rankings have been saved.</div>
 		<div class="rank-saved @((Model.RankStatus == "player-added") ? "" : "hide-yo-kids")">

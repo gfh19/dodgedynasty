@@ -1119,9 +1119,9 @@ ul.menu li a.current-page
 }
 .dd-sub-title
 {
-	font-size: 1.1em;
+	font-size: 1.2em;
 	font-weight: bold;
-	margin-top: 12px;
+	margin-top: 22px;
 }
 .ui-button-text 
 {
@@ -1911,9 +1911,6 @@ span.player-select
 }
 .rank-list-entry {
 	margin-bottom: 8px;
-}
-.add-rank {
-	display: block;
 }
 
 /* Setup Draft
