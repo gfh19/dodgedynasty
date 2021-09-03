@@ -4,6 +4,11 @@
 }
 @section scripts {
 	<script type="text/javascript" src="@Url.Script("~/Scripts/TeamDisplay.js")"></script>
+	<script type="text/javascript">
+		$(function () {
+			shouldShowPosColors = @(Model.GetCurrentLeague().ShowPositionColors ? "true" : "false");
+		});
+	</script>
 }
 <div id="teamDisplay">
 	<script type="text/javascript">
@@ -15,7 +20,7 @@
 	<div class="team-pos-section center">
 		@if (DodgeDynasty.Shared.Utilities.ToBool(Request.QueryString[DodgeDynasty.Shared.Constants.QS.ByPositions]))
 		{
-			<input type="checkbox" id="team-by-pos" checked="checked"/>
+			<input type="checkbox" id="team-by-pos" checked="checked" />
 		}
 		else
 		{
@@ -25,40 +30,41 @@
 	</div>
 	<div class="team-container">
 		<div class="clear-fix team-content">
-		@foreach (var owner in Model.GetTeamDraftOwners())
-		{
-			Model.SetCurrentGridOwnerUser(owner.UserId);
-			<div class="clear-fix team">
-				<div class="team-name-outline outline"><div class="team-name @Model.CurrentGridOwnerUser.CssClass">@Model.CurrentGridOwnerUser.NickName</div></div>
-				@foreach (var pick in Model.GetTeamDraftPicks(owner.UserId))
-				{
-				Model.SetCurrentGridPlayer(pick.PlayerId);
-				<div class="draft-pick-outline outline">
-				<div class="team-draft-pick @Model.CurrentGridOwnerUser.CssClass  @Model.GetCurrentGridPlayerClasses()" data-pick-num="@pick.PickNum">
-					<div class="clear-fix draft-pick-meta">
-						<span class="pick-info"><span class="pick-num">@pick.PickNum</span>
-						@if (Model.CurrentGridPlayer.ByeWeek != null)
-						{
-							<span>(Bye-@Model.CurrentGridPlayer.ByeWeek)</span>
-						}
-						</span>
-						<span class="player-info">
-						@if (!string.IsNullOrEmpty(Model.CurrentGridPlayer.Position))
-						{
-							<span><span class="player-nflteam">@Model.GetNFLTeamDisplay(Model.CurrentGridPlayer.NFLTeam)-</span><span class="player-pos">@Model.CurrentGridPlayer.Position</span></span>
-						}
-						else
-						{
-							<span><span class="player-nflteam"></span><span class="player-pos"></span></span>
-						}
-						</span>
-					</div>
-					<span class="player-name">@Model.CurrentGridPlayer.PlayerName</span>
+			@foreach (var owner in Model.GetTeamDraftOwners())
+			{
+				Model.SetCurrentGridOwnerUser(owner.UserId);
+				<div class="clear-fix team">
+					<div class="team-name-outline outline"><div class="team-name @Model.CurrentGridOwnerUser.CssClass">@Model.CurrentGridOwnerUser.NickName</div></div>
+					@foreach (var pick in Model.GetTeamDraftPicks(owner.UserId))
+					{
+						Model.SetCurrentGridPlayer(pick.PlayerId);
+						<div class="draft-pick-outline outline">
+							<div class="team-draft-pick @Model.CurrentGridOwnerUser.CssClass  @Model.GetCurrentGridPlayerClasses()" data-pick-num="@pick.PickNum">
+								<div class="clear-fix draft-pick-meta">
+									<span class="pick-info">
+										<span class="pick-num">@pick.PickNum</span>
+										@if (Model.CurrentGridPlayer.ByeWeek != null)
+										{
+											<span>(Bye-@Model.CurrentGridPlayer.ByeWeek)</span>
+										}
+									</span>
+									<span class="player-info">
+										@if (!string.IsNullOrEmpty(Model.CurrentGridPlayer.Position))
+										{
+											<span><span class="player-nflteam">@Model.GetNFLTeamDisplay(Model.CurrentGridPlayer.NFLTeam)-</span><span class="player-pos">@Model.CurrentGridPlayer.Position</span></span>
+										}
+										else
+										{
+											<span><span class="player-nflteam"></span><span class="player-pos"></span></span>
+										}
+									</span>
+								</div>
+								<span class="player-name">@Model.CurrentGridPlayer.PlayerName</span>
+							</div>
+						</div>
+					}
 				</div>
-				</div>
-				}
-			</div>
-		}
+			}
 		</div>
 	</div>
 </div>

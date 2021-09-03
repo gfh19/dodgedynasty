@@ -4,6 +4,11 @@
 }
 @section scripts {
 	<script type="text/javascript" src="@Url.Script("~/Scripts/Display.js")"></script>
+	<script type="text/javascript">
+		$(function () {
+			shouldShowPosColors = @(Model.GetCurrentLeague().ShowPositionColors ? "true" : "false");
+		});
+	</script>
 }
 <div id="draftDisplay">
 	@Html.Partial("CurrentDraftPickPartial", Model)
@@ -11,43 +16,47 @@
 		<div class="draft">
 			<div class="round-picks">
 				<span class="draft-round-row">
-				@foreach (var pick in Model.DraftPicks)
-				{
-					if (Model.CurrentRoundNum != pick.RoundNum)
+					@foreach (var pick in Model.DraftPicks)
 					{
-						@Html.Raw(" </span> ");
-						@Html.Raw(" </div> ");
-						@Html.Raw(" <div class=\"round-picks\"> ");
-						@Html.Raw(" <span class=\"draft-round-row\"> ");
-						Model.CurrentRoundNum = pick.RoundNum;
-						<div class="clear-fix round">Round <span class="round-num">@Model.CurrentRoundNum</span>
-							@if(Model.CurrentDraft.NumKeepers >= pick.RoundNum) {
-								<text>(Keeper)</text>
-							}
+						if (Model.CurrentRoundNum != pick.RoundNum)
+						{
+							@Html.Raw(" </span> ");
+							@Html.Raw(" </div> ");
+							@Html.Raw(" <div class=\"round-picks\"> ");
+							@Html.Raw(" <span class=\"draft-round-row\"> ");
+							Model.CurrentRoundNum = pick.RoundNum;
+							<div class="clear-fix round">
+								Round <span class="round-num">@Model.CurrentRoundNum</span>
+								@if (Model.CurrentDraft.NumKeepers >= pick.RoundNum)
+								{
+									<text>(Keeper)</text>
+								}
+							</div>
+						}
+						Model.SetCurrentGridOwnerUser(pick.UserId);
+						Model.SetCurrentGridPlayer(pick.PlayerId);
+						<div class="draft-pick-outline @(Model.IsSnakeRound(pick.RoundNum) ? "snake-pick" : (Model.IsLastPickBeforeSnakeRound(pick) ? "pre-snake-pick" : "")) outline">
+							<div class="draft-pick @Model.CurrentGridOwnerUser.CssClass @Model.GetCurrentGridPlayerClasses()" data-pick-num="@pick.PickNum">
+								<div class="clear-fix draft-pick-meta">
+									<span class="pick-info">
+										<span class="pick-num">@pick.PickNum</span>
+										<span class="player-nickname">@Model.CurrentGridOwnerUser.NickName</span>
+									</span>
+									<span class="player-info">
+										@if (!string.IsNullOrEmpty(Model.CurrentGridPlayer.Position))
+										{
+											<span><span class="player-nflteam">@Model.GetNFLTeamDisplay(Model.CurrentGridPlayer.NFLTeam)-</span><span class="player-pos">@Model.CurrentGridPlayer.Position</span></span>
+										}
+										else
+										{
+											<span><span class="player-nflteam"></span><span class="player-pos"></span></span>
+										}
+									</span>
+								</div>
+								<span class="player-name">@Model.CurrentGridPlayer.PlayerName</span>
+							</div>
 						</div>
 					}
-					Model.SetCurrentGridOwnerUser(pick.UserId);
-					Model.SetCurrentGridPlayer(pick.PlayerId);
-					<div class="draft-pick-outline @(Model.IsSnakeRound(pick.RoundNum) ? "snake-pick" : (Model.IsLastPickBeforeSnakeRound(pick) ? "pre-snake-pick" : "")) outline">
-					<div class="draft-pick @Model.CurrentGridOwnerUser.CssClass @Model.GetCurrentGridPlayerClasses()" data-pick-num="@pick.PickNum">
-						<div class="clear-fix draft-pick-meta">
-							<span class="pick-info"><span class="pick-num">@pick.PickNum</span>
-							<span class="player-nickname">@Model.CurrentGridOwnerUser.NickName</span></span>
-							<span class="player-info">
-							@if (!string.IsNullOrEmpty(Model.CurrentGridPlayer.Position))
-							{
-								<span><span class="player-nflteam">@Model.GetNFLTeamDisplay(Model.CurrentGridPlayer.NFLTeam)-</span><span class="player-pos">@Model.CurrentGridPlayer.Position</span></span>
-							}
-							else
-							{
-								<span><span class="player-nflteam"></span><span class="player-pos"></span></span>
-							}
-							</span>
-						</div>
-						<span class="player-name">@Model.CurrentGridPlayer.PlayerName</span>
-					</div>
-					</div>
-				}
 				</span>
 			</div>
 		</div>

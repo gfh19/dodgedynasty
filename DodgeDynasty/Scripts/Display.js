@@ -12,6 +12,11 @@ function pageBroadcastDraftHandler(pickInfo) {
 			$(".player-pos", draftPick).text(pickInfo.pos);
 			$(".player-name", draftPick).text(pickInfo.pname);
 			$(draftPick).addClass("filled");
+			var posSfx = (pickInfo.pos.toLowerCase() === "te") ? "wrte" : pickInfo.pos.toLowerCase();
+			var posColorCss = (shouldShowPosColors)
+				? "show-pos-colors dp-" + posSfx
+				: "dp-" + posSfx;
+			$(draftPick).addClass(posColorCss);
 		}
 	}, function () {
 		callRefreshPage("Draft/DisplayPartial", '#draftDisplay');

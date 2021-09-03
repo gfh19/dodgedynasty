@@ -17,6 +17,7 @@ var pickAudioBed = null;
 var adminLastPickTime = null;
 var pleaseWaitTimer = 1200;
 var pleaseWaitNeeded = false;
+var shouldShowPosColors = false;
 
 
 /* Init functions */
