@@ -13,7 +13,8 @@ function pageBroadcastDraftHandler(pickInfo) {
 			$(".player-name", draftPick).text(pickInfo.pname);
 			$(draftPick).addClass("filled");
 			var posSfx = (pickInfo.pos.toLowerCase() === "te") ? "wrte" : pickInfo.pos.toLowerCase();
-			var posColorCss = (shouldShowPosColors)
+			shouldShowPosColors = $(".draft-container").attr("data-show-pos-color");
+			var posColorCss = (shouldShowPosColors === 'true')
 				? "show-pos-colors dp-" + posSfx
 				: "dp-" + posSfx;
 			$(draftPick).addClass(posColorCss);

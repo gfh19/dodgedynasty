@@ -4,11 +4,6 @@
 }
 @section scripts {
 	<script type="text/javascript" src="@Url.Script("~/Scripts/TeamDisplay.js")"></script>
-	<script type="text/javascript">
-		$(function () {
-			shouldShowPosColors = @(Model.GetCurrentLeague().ShowPositionColors ? "true" : "false");
-		});
-	</script>
 }
 <div id="teamDisplay">
 	<script type="text/javascript">
@@ -28,7 +23,7 @@
 		}
 		<label class="team-pos-label" for="team-by-pos">By Position</label>
 	</div>
-	<div class="team-container">
+	<div class="team-container" data-show-pos-color="@(Model.GetCurrentLeague().ShowPositionColors.ToString().ToLower())">
 		<div class="clear-fix team-content">
 			@foreach (var owner in Model.GetTeamDraftOwners())
 			{

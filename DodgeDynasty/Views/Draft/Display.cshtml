@@ -4,15 +4,10 @@
 }
 @section scripts {
 	<script type="text/javascript" src="@Url.Script("~/Scripts/Display.js")"></script>
-	<script type="text/javascript">
-		$(function () {
-			shouldShowPosColors = @(Model.GetCurrentLeague().ShowPositionColors ? "true" : "false");
-		});
-	</script>
 }
 <div id="draftDisplay">
 	@Html.Partial("CurrentDraftPickPartial", Model)
-	<div class="draft-container">
+	<div class="draft-container" data-show-pos-color="@(Model.GetCurrentLeague().ShowPositionColors.ToString().ToLower())">
 		<div class="draft">
 			<div class="round-picks">
 				<span class="draft-round-row">
