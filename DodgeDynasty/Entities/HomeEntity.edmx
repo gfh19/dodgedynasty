@@ -6,7 +6,7 @@
     <edmx:StorageModels>
     <Schema Namespace="HomeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <!--Errors Found During Generation:
-warning 6002: The table/view 'Home.dbo._ArchivePlayerHighlight' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'DB_70949_home.dbo._ArchivePlayerHighlight' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="_ArchivePlayerHighlight">
           <Key>
             <PropertyRef Name="ArchivePlayerHighlightId" />
@@ -340,6 +340,17 @@ warning 6002: The table/view 'Home.dbo._ArchivePlayerHighlight' does not have a 
           <Property Name="Action" Type="varchar" MaxLength="50" />
           <Property Name="UserId" Type="int" />
           <Property Name="HideReporting" Type="bit" Nullable="false" />
+          <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
+          <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PlayerAudio">
+          <Key>
+            <PropertyRef Name="PlayerAudioId" />
+          </Key>
+          <Property Name="PlayerAudioId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TruePlayerId" Type="int" />
+          <Property Name="PlayerName" Type="varchar" MaxLength="51" />
+          <Property Name="PlayerNameAudio" Type="varchar" MaxLength="100" />
           <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
           <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
         </EntityType>
@@ -1028,6 +1039,7 @@ warning 6002: The table/view 'Home.dbo._ArchivePlayerHighlight' does not have a 
           <EntitySet Name="NFLTeam" EntityType="Self.NFLTeam" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Player" EntityType="Self.Player" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PlayerAdjustment" EntityType="Self.PlayerAdjustment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PlayerAudio" EntityType="Self.PlayerAudio" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PlayerHighlight" EntityType="Self.PlayerHighlight" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PlayerRank" EntityType="Self.PlayerRank" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PlayerRankHistory" EntityType="Self.PlayerRankHistory" Schema="dbo" store:Type="Tables" />
@@ -1431,6 +1443,7 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
             <End Role="AutoImport" EntitySet="AutoImports" />
             <End Role="Rank" EntitySet="Ranks" />
           </AssociationSet>
+          <EntitySet Name="PlayerAudios" EntityType="HomeModel.PlayerAudio" />
           </EntityContainer>
         <EntityType Name="PlayerRank">
           <Key>
@@ -2510,6 +2523,17 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="PlayerAudio">
+          <Key>
+            <PropertyRef Name="PlayerAudioId" />
+          </Key>
+          <Property Name="PlayerAudioId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TruePlayerId" Type="Int32" />
+          <Property Name="PlayerName" Type="String" MaxLength="51" FixedLength="false" Unicode="false" />
+          <Property Name="PlayerNameAudio" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3048,6 +3072,18 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="PlayerAudios">
+            <EntityTypeMapping TypeName="HomeModel.PlayerAudio">
+              <MappingFragment StoreEntitySet="PlayerAudio">
+                <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
+                <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
+                <ScalarProperty Name="PlayerNameAudio" ColumnName="PlayerNameAudio" />
+                <ScalarProperty Name="PlayerName" ColumnName="PlayerName" />
+                <ScalarProperty Name="TruePlayerId" ColumnName="TruePlayerId" />
+                <ScalarProperty Name="PlayerAudioId" ColumnName="PlayerAudioId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -3147,6 +3183,7 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
         <edmx:AssociationConnector Association="HomeModel.FK_PlayerAdjustment_User" />
         <edmx:EntityTypeShape EntityType="HomeModel.AutoImport" Width="1.5" PointX="4" PointY="28.75" />
         <edmx:AssociationConnector Association="HomeModel.FK_Rank_AutoImport" />
+        <edmx:EntityTypeShape EntityType="HomeModel.PlayerAudio" Width="1.5" PointX="9.375" PointY="4.75" />
         </edmx:Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

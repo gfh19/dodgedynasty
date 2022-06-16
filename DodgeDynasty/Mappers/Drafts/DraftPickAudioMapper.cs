@@ -63,7 +63,7 @@ namespace DodgeDynasty.Mappers.Drafts
 				Model = new DraftPickAudio
 				{
 					playerId = lastDraftPick.PlayerId.ToString(),
-					name = GetPlayerName(player),
+					name = GetPlayerName(player, HomeEntity.PlayerAudios.ToList()),
 					pos = GetPositionAudio(position, nflTeam),
 					team = GetTeamNameAudio(position, nflTeam),
 					apiCode = (selectedApi != null) ? selectedApi.AudioApiCode : "",
@@ -157,22 +157,17 @@ namespace DodgeDynasty.Mappers.Drafts
 			return selectedApi;
 		}
 
-		private static string GetPlayerName(Player player)
+		private static string GetPlayerName(Player player, List<PlayerAudio> playerAudios)
 		{
-			string audio = player.PlayerName.Replace("'", "");
-			switch (audio)
+			string playerName = player.PlayerName.Replace("'", "");
+			var playerAudio = playerAudios.FirstOrDefault(pa=>pa.TruePlayerId == player.TruePlayerId);
+			if (playerAudio == null)
 			{
-				case "Ben Roethlisberger":
-					audio = "Alleged Sex Offender Ben Rawthlisberger";
-					break;
-				case "Los Angeles Chargers":
-					audio = "San Diego I Mean Los Angeles Chargers";
-					break;
-                case "San Francisco 49ers":
-					audio = "San Francisco Forty-Niners";
-					break;
+				playerAudio = playerAudios.FirstOrDefault(pa => pa.TruePlayerId == null && pa.PlayerName.Replace("'", "") == playerName);
 			}
-			return audio.ToLower().ToUrlEncodedString();
+			return (playerAudio != null)
+				? playerAudio.PlayerNameAudio.ToLower().ToUrlEncodedString()
+				: playerName.ToLower().ToUrlEncodedString();
 		}
 
 		private static string GetPositionAudio(Position position, NFLTeam nflTeam)

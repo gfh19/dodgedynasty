@@ -670,6 +670,22 @@ namespace DodgeDynasty.Entities
             }
         }
         private ObjectSet<AutoImport> _AutoImports;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<PlayerAudio> PlayerAudios
+        {
+            get
+            {
+                if ((_PlayerAudios == null))
+                {
+                    _PlayerAudios = base.CreateObjectSet<PlayerAudio>("PlayerAudios");
+                }
+                return _PlayerAudios;
+            }
+        }
+        private ObjectSet<PlayerAudio> _PlayerAudios;
 
         #endregion
 
@@ -953,6 +969,14 @@ namespace DodgeDynasty.Entities
         public void AddToAutoImports(AutoImport autoImport)
         {
             base.AddObject("AutoImports", autoImport);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the PlayerAudios EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToPlayerAudios(PlayerAudio playerAudio)
+        {
+            base.AddObject("PlayerAudios", playerAudio);
         }
 
         #endregion
@@ -8955,6 +8979,186 @@ namespace DodgeDynasty.Entities
                 }
             }
         }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="HomeModel", Name="PlayerAudio")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class PlayerAudio : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new PlayerAudio object.
+        /// </summary>
+        /// <param name="playerAudioId">Initial value of the PlayerAudioId property.</param>
+        /// <param name="addTimestamp">Initial value of the AddTimestamp property.</param>
+        /// <param name="lastUpdateTimestamp">Initial value of the LastUpdateTimestamp property.</param>
+        public static PlayerAudio CreatePlayerAudio(global::System.Int32 playerAudioId, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp)
+        {
+            PlayerAudio playerAudio = new PlayerAudio();
+            playerAudio.PlayerAudioId = playerAudioId;
+            playerAudio.AddTimestamp = addTimestamp;
+            playerAudio.LastUpdateTimestamp = lastUpdateTimestamp;
+            return playerAudio;
+        }
+
+        #endregion
+
+        #region Simple Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 PlayerAudioId
+        {
+            get
+            {
+                return _PlayerAudioId;
+            }
+            set
+            {
+                if (_PlayerAudioId != value)
+                {
+                    OnPlayerAudioIdChanging(value);
+                    ReportPropertyChanging("PlayerAudioId");
+                    _PlayerAudioId = StructuralObject.SetValidValue(value, "PlayerAudioId");
+                    ReportPropertyChanged("PlayerAudioId");
+                    OnPlayerAudioIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _PlayerAudioId;
+        partial void OnPlayerAudioIdChanging(global::System.Int32 value);
+        partial void OnPlayerAudioIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> TruePlayerId
+        {
+            get
+            {
+                return _TruePlayerId;
+            }
+            set
+            {
+                OnTruePlayerIdChanging(value);
+                ReportPropertyChanging("TruePlayerId");
+                _TruePlayerId = StructuralObject.SetValidValue(value, "TruePlayerId");
+                ReportPropertyChanged("TruePlayerId");
+                OnTruePlayerIdChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _TruePlayerId;
+        partial void OnTruePlayerIdChanging(Nullable<global::System.Int32> value);
+        partial void OnTruePlayerIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String PlayerName
+        {
+            get
+            {
+                return _PlayerName;
+            }
+            set
+            {
+                OnPlayerNameChanging(value);
+                ReportPropertyChanging("PlayerName");
+                _PlayerName = StructuralObject.SetValidValue(value, true, "PlayerName");
+                ReportPropertyChanged("PlayerName");
+                OnPlayerNameChanged();
+            }
+        }
+        private global::System.String _PlayerName;
+        partial void OnPlayerNameChanging(global::System.String value);
+        partial void OnPlayerNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String PlayerNameAudio
+        {
+            get
+            {
+                return _PlayerNameAudio;
+            }
+            set
+            {
+                OnPlayerNameAudioChanging(value);
+                ReportPropertyChanging("PlayerNameAudio");
+                _PlayerNameAudio = StructuralObject.SetValidValue(value, true, "PlayerNameAudio");
+                ReportPropertyChanged("PlayerNameAudio");
+                OnPlayerNameAudioChanged();
+            }
+        }
+        private global::System.String _PlayerNameAudio;
+        partial void OnPlayerNameAudioChanging(global::System.String value);
+        partial void OnPlayerNameAudioChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime AddTimestamp
+        {
+            get
+            {
+                return _AddTimestamp;
+            }
+            set
+            {
+                OnAddTimestampChanging(value);
+                ReportPropertyChanging("AddTimestamp");
+                _AddTimestamp = StructuralObject.SetValidValue(value, "AddTimestamp");
+                ReportPropertyChanged("AddTimestamp");
+                OnAddTimestampChanged();
+            }
+        }
+        private global::System.DateTime _AddTimestamp;
+        partial void OnAddTimestampChanging(global::System.DateTime value);
+        partial void OnAddTimestampChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime LastUpdateTimestamp
+        {
+            get
+            {
+                return _LastUpdateTimestamp;
+            }
+            set
+            {
+                OnLastUpdateTimestampChanging(value);
+                ReportPropertyChanging("LastUpdateTimestamp");
+                _LastUpdateTimestamp = StructuralObject.SetValidValue(value, "LastUpdateTimestamp");
+                ReportPropertyChanged("LastUpdateTimestamp");
+                OnLastUpdateTimestampChanged();
+            }
+        }
+        private global::System.DateTime _LastUpdateTimestamp;
+        partial void OnLastUpdateTimestampChanging(global::System.DateTime value);
+        partial void OnLastUpdateTimestampChanged();
 
         #endregion
 

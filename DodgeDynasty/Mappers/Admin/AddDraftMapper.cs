@@ -22,7 +22,7 @@ namespace DodgeDynasty.Mappers.Admin
 				HomeEntity.LeagueOwners.Where(o=>o.LeagueId == LeagueId).ToList(),
 				HomeEntity.Users.ToList(), LeagueId).Where(o => o.IsActive).ToList();
 
-			var defaultDraftDate = DateTime.Now.AddDays(1).Date + new TimeSpan(20, 0, 0);
+			var defaultDraftDate = DateTime.Now.Date + new TimeSpan(DateTime.Now.Hour+1, 0, 0);
 			Model.DraftDate = defaultDraftDate.ToString("yyyy-MM-dd");
 			Model.DraftTime = defaultDraftDate.ToString("HH:mm");
 			Model.DraftYear = (short)defaultDraftDate.Year;
