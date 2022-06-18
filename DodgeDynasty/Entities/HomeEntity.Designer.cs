@@ -60,6 +60,7 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerAdjustment_PlayerOld", "Player", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.Player), "PlayerAdjustment", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerAdjustment), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerAdjustment_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.User), "PlayerAdjustment", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerAdjustment), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_Rank_AutoImport", "AutoImport", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.AutoImport), "Rank", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.Rank), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_UserPreferences_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.User), "UserPreference", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.UserPreference), true)]
 
 #endregion
 
@@ -158,38 +159,6 @@ namespace DodgeDynasty.Entities
             }
         }
         private ObjectSet<Position> _Positions;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<UserApplicant> UserApplicants
-        {
-            get
-            {
-                if ((_UserApplicants == null))
-                {
-                    _UserApplicants = base.CreateObjectSet<UserApplicant>("UserApplicants");
-                }
-                return _UserApplicants;
-            }
-        }
-        private ObjectSet<UserApplicant> _UserApplicants;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<UserProfile> UserProfiles
-        {
-            get
-            {
-                if ((_UserProfiles == null))
-                {
-                    _UserProfiles = base.CreateObjectSet<UserProfile>("UserProfiles");
-                }
-                return _UserProfiles;
-            }
-        }
-        private ObjectSet<UserProfile> _UserProfiles;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -686,6 +655,22 @@ namespace DodgeDynasty.Entities
             }
         }
         private ObjectSet<PlayerAudio> _PlayerAudios;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<UserPreference> UserPreferences
+        {
+            get
+            {
+                if ((_UserPreferences == null))
+                {
+                    _UserPreferences = base.CreateObjectSet<UserPreference>("UserPreferences");
+                }
+                return _UserPreferences;
+            }
+        }
+        private ObjectSet<UserPreference> _UserPreferences;
 
         #endregion
 
@@ -713,22 +698,6 @@ namespace DodgeDynasty.Entities
         public void AddToPositions(Position position)
         {
             base.AddObject("Positions", position);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the UserApplicants EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToUserApplicants(UserApplicant userApplicant)
-        {
-            base.AddObject("UserApplicants", userApplicant);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the UserProfiles EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToUserProfiles(UserProfile userProfile)
-        {
-            base.AddObject("UserProfiles", userProfile);
         }
     
         /// <summary>
@@ -977,6 +946,14 @@ namespace DodgeDynasty.Entities
         public void AddToPlayerAudios(PlayerAudio playerAudio)
         {
             base.AddObject("PlayerAudios", playerAudio);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the UserPreferences EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToUserPreferences(UserPreference userPreference)
+        {
+            base.AddObject("UserPreferences", userPreference);
         }
 
         #endregion
@@ -12415,336 +12392,44 @@ namespace DodgeDynasty.Entities
                 }
             }
         }
-
-        #endregion
-
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="HomeModel", Name="UserApplicant")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class UserApplicant : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new UserApplicant object.
-        /// </summary>
-        /// <param name="userId">Initial value of the UserId property.</param>
-        /// <param name="pword">Initial value of the Pword property.</param>
-        /// <param name="firstName">Initial value of the FirstName property.</param>
-        /// <param name="lastName">Initial value of the LastName property.</param>
-        /// <param name="accepted">Initial value of the Accepted property.</param>
-        /// <param name="rejected">Initial value of the Rejected property.</param>
-        public static UserApplicant CreateUserApplicant(global::System.String userId, global::System.String pword, global::System.String firstName, global::System.String lastName, global::System.String accepted, global::System.String rejected)
-        {
-            UserApplicant userApplicant = new UserApplicant();
-            userApplicant.UserId = userId;
-            userApplicant.Pword = pword;
-            userApplicant.FirstName = firstName;
-            userApplicant.LastName = lastName;
-            userApplicant.Accepted = accepted;
-            userApplicant.Rejected = rejected;
-            return userApplicant;
-        }
-
-        #endregion
-
-        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        public global::System.String UserId
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_UserPreferences_User", "UserPreference")]
+        public UserPreference UserPreference
         {
             get
             {
-                return _UserId;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<UserPreference>("HomeModel.FK_UserPreferences_User", "UserPreference").Value;
             }
             set
             {
-                if (_UserId != value)
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<UserPreference>("HomeModel.FK_UserPreferences_User", "UserPreference").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<UserPreference> UserPreferenceReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<UserPreference>("HomeModel.FK_UserPreferences_User", "UserPreference");
+            }
+            set
+            {
+                if ((value != null))
                 {
-                    OnUserIdChanging(value);
-                    ReportPropertyChanging("UserId");
-                    _UserId = StructuralObject.SetValidValue(value, false, "UserId");
-                    ReportPropertyChanged("UserId");
-                    OnUserIdChanged();
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<UserPreference>("HomeModel.FK_UserPreferences_User", "UserPreference", value);
                 }
             }
         }
-        private global::System.String _UserId;
-        partial void OnUserIdChanging(global::System.String value);
-        partial void OnUserIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String Pword
-        {
-            get
-            {
-                return _Pword;
-            }
-            set
-            {
-                OnPwordChanging(value);
-                ReportPropertyChanging("Pword");
-                _Pword = StructuralObject.SetValidValue(value, false, "Pword");
-                ReportPropertyChanged("Pword");
-                OnPwordChanged();
-            }
-        }
-        private global::System.String _Pword;
-        partial void OnPwordChanging(global::System.String value);
-        partial void OnPwordChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String FirstName
-        {
-            get
-            {
-                return _FirstName;
-            }
-            set
-            {
-                OnFirstNameChanging(value);
-                ReportPropertyChanging("FirstName");
-                _FirstName = StructuralObject.SetValidValue(value, false, "FirstName");
-                ReportPropertyChanged("FirstName");
-                OnFirstNameChanged();
-            }
-        }
-        private global::System.String _FirstName;
-        partial void OnFirstNameChanging(global::System.String value);
-        partial void OnFirstNameChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String LastName
-        {
-            get
-            {
-                return _LastName;
-            }
-            set
-            {
-                OnLastNameChanging(value);
-                ReportPropertyChanging("LastName");
-                _LastName = StructuralObject.SetValidValue(value, false, "LastName");
-                ReportPropertyChanged("LastName");
-                OnLastNameChanged();
-            }
-        }
-        private global::System.String _LastName;
-        partial void OnLastNameChanging(global::System.String value);
-        partial void OnLastNameChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String Email
-        {
-            get
-            {
-                return _Email;
-            }
-            set
-            {
-                OnEmailChanging(value);
-                ReportPropertyChanging("Email");
-                _Email = StructuralObject.SetValidValue(value, true, "Email");
-                ReportPropertyChanged("Email");
-                OnEmailChanged();
-            }
-        }
-        private global::System.String _Email;
-        partial void OnEmailChanging(global::System.String value);
-        partial void OnEmailChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String Address1
-        {
-            get
-            {
-                return _Address1;
-            }
-            set
-            {
-                OnAddress1Changing(value);
-                ReportPropertyChanging("Address1");
-                _Address1 = StructuralObject.SetValidValue(value, true, "Address1");
-                ReportPropertyChanged("Address1");
-                OnAddress1Changed();
-            }
-        }
-        private global::System.String _Address1;
-        partial void OnAddress1Changing(global::System.String value);
-        partial void OnAddress1Changed();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String Address2
-        {
-            get
-            {
-                return _Address2;
-            }
-            set
-            {
-                OnAddress2Changing(value);
-                ReportPropertyChanging("Address2");
-                _Address2 = StructuralObject.SetValidValue(value, true, "Address2");
-                ReportPropertyChanged("Address2");
-                OnAddress2Changed();
-            }
-        }
-        private global::System.String _Address2;
-        partial void OnAddress2Changing(global::System.String value);
-        partial void OnAddress2Changed();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String Phone
-        {
-            get
-            {
-                return _Phone;
-            }
-            set
-            {
-                OnPhoneChanging(value);
-                ReportPropertyChanging("Phone");
-                _Phone = StructuralObject.SetValidValue(value, true, "Phone");
-                ReportPropertyChanged("Phone");
-                OnPhoneChanged();
-            }
-        }
-        private global::System.String _Phone;
-        partial void OnPhoneChanging(global::System.String value);
-        partial void OnPhoneChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String Secret
-        {
-            get
-            {
-                return _Secret;
-            }
-            set
-            {
-                OnSecretChanging(value);
-                ReportPropertyChanging("Secret");
-                _Secret = StructuralObject.SetValidValue(value, true, "Secret");
-                ReportPropertyChanged("Secret");
-                OnSecretChanged();
-            }
-        }
-        private global::System.String _Secret;
-        partial void OnSecretChanging(global::System.String value);
-        partial void OnSecretChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String Accepted
-        {
-            get
-            {
-                return _Accepted;
-            }
-            set
-            {
-                OnAcceptedChanging(value);
-                ReportPropertyChanging("Accepted");
-                _Accepted = StructuralObject.SetValidValue(value, false, "Accepted");
-                ReportPropertyChanged("Accepted");
-                OnAcceptedChanged();
-            }
-        }
-        private global::System.String _Accepted;
-        partial void OnAcceptedChanging(global::System.String value);
-        partial void OnAcceptedChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String Rejected
-        {
-            get
-            {
-                return _Rejected;
-            }
-            set
-            {
-                OnRejectedChanging(value);
-                ReportPropertyChanging("Rejected");
-                _Rejected = StructuralObject.SetValidValue(value, false, "Rejected");
-                ReportPropertyChanged("Rejected");
-                OnRejectedChanged();
-            }
-        }
-        private global::System.String _Rejected;
-        partial void OnRejectedChanging(global::System.String value);
-        partial void OnRejectedChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.DateTime> AddDateTime
-        {
-            get
-            {
-                return _AddDateTime;
-            }
-            set
-            {
-                OnAddDateTimeChanging(value);
-                ReportPropertyChanging("AddDateTime");
-                _AddDateTime = StructuralObject.SetValidValue(value, "AddDateTime");
-                ReportPropertyChanged("AddDateTime");
-                OnAddDateTimeChanged();
-            }
-        }
-        private Nullable<global::System.DateTime> _AddDateTime;
-        partial void OnAddDateTimeChanging(Nullable<global::System.DateTime> value);
-        partial void OnAddDateTimeChanged();
 
         #endregion
 
@@ -12753,22 +12438,26 @@ namespace DodgeDynasty.Entities
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="HomeModel", Name="UserProfile")]
+    [EdmEntityTypeAttribute(NamespaceName="HomeModel", Name="UserPreference")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
-    public partial class UserProfile : EntityObject
+    public partial class UserPreference : EntityObject
     {
         #region Factory Method
     
         /// <summary>
-        /// Create a new UserProfile object.
+        /// Create a new UserPreference object.
         /// </summary>
         /// <param name="userId">Initial value of the UserId property.</param>
-        public static UserProfile CreateUserProfile(global::System.Int32 userId)
+        /// <param name="addTimestamp">Initial value of the AddTimestamp property.</param>
+        /// <param name="lastUpdateTimestamp">Initial value of the LastUpdateTimestamp property.</param>
+        public static UserPreference CreateUserPreference(global::System.Int32 userId, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp)
         {
-            UserProfile userProfile = new UserProfile();
-            userProfile.UserId = userId;
-            return userProfile;
+            UserPreference userPreference = new UserPreference();
+            userPreference.UserId = userId;
+            userPreference.AddTimestamp = addTimestamp;
+            userPreference.LastUpdateTimestamp = lastUpdateTimestamp;
+            return userPreference;
         }
 
         #endregion
@@ -12807,24 +12496,138 @@ namespace DodgeDynasty.Entities
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String UserName
+        public global::System.String DraftShowPositionColors
         {
             get
             {
-                return _UserName;
+                return _DraftShowPositionColors;
             }
             set
             {
-                OnUserNameChanging(value);
-                ReportPropertyChanging("UserName");
-                _UserName = StructuralObject.SetValidValue(value, true, "UserName");
-                ReportPropertyChanged("UserName");
-                OnUserNameChanged();
+                OnDraftShowPositionColorsChanging(value);
+                ReportPropertyChanging("DraftShowPositionColors");
+                _DraftShowPositionColors = StructuralObject.SetValidValue(value, true, "DraftShowPositionColors");
+                ReportPropertyChanged("DraftShowPositionColors");
+                OnDraftShowPositionColorsChanged();
             }
         }
-        private global::System.String _UserName;
-        partial void OnUserNameChanging(global::System.String value);
-        partial void OnUserNameChanged();
+        private global::System.String _DraftShowPositionColors;
+        partial void OnDraftShowPositionColorsChanging(global::System.String value);
+        partial void OnDraftShowPositionColorsChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String TeamsShowPositionColors
+        {
+            get
+            {
+                return _TeamsShowPositionColors;
+            }
+            set
+            {
+                OnTeamsShowPositionColorsChanging(value);
+                ReportPropertyChanging("TeamsShowPositionColors");
+                _TeamsShowPositionColors = StructuralObject.SetValidValue(value, true, "TeamsShowPositionColors");
+                ReportPropertyChanged("TeamsShowPositionColors");
+                OnTeamsShowPositionColorsChanged();
+            }
+        }
+        private global::System.String _TeamsShowPositionColors;
+        partial void OnTeamsShowPositionColorsChanging(global::System.String value);
+        partial void OnTeamsShowPositionColorsChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime AddTimestamp
+        {
+            get
+            {
+                return _AddTimestamp;
+            }
+            set
+            {
+                OnAddTimestampChanging(value);
+                ReportPropertyChanging("AddTimestamp");
+                _AddTimestamp = StructuralObject.SetValidValue(value, "AddTimestamp");
+                ReportPropertyChanged("AddTimestamp");
+                OnAddTimestampChanged();
+            }
+        }
+        private global::System.DateTime _AddTimestamp;
+        partial void OnAddTimestampChanging(global::System.DateTime value);
+        partial void OnAddTimestampChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime LastUpdateTimestamp
+        {
+            get
+            {
+                return _LastUpdateTimestamp;
+            }
+            set
+            {
+                OnLastUpdateTimestampChanging(value);
+                ReportPropertyChanging("LastUpdateTimestamp");
+                _LastUpdateTimestamp = StructuralObject.SetValidValue(value, "LastUpdateTimestamp");
+                ReportPropertyChanged("LastUpdateTimestamp");
+                OnLastUpdateTimestampChanged();
+            }
+        }
+        private global::System.DateTime _LastUpdateTimestamp;
+        partial void OnLastUpdateTimestampChanging(global::System.DateTime value);
+        partial void OnLastUpdateTimestampChanged();
+
+        #endregion
+
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_UserPreferences_User", "User")]
+        public User User
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_UserPreferences_User", "User").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_UserPreferences_User", "User").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<User> UserReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_UserPreferences_User", "User");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("HomeModel.FK_UserPreferences_User", "User", value);
+                }
+            }
+        }
 
         #endregion
 

@@ -23,7 +23,7 @@
 		}
 		<label class="team-pos-label" for="team-by-pos">By Position</label>
 	</div>
-	<div class="team-container" data-show-pos-color="@(Model.GetCurrentLeague().ShowPositionColors.ToString().ToLower())">
+	<div class="team-container">
 		<div class="clear-fix team-content">
 			@foreach (var owner in Model.GetTeamDraftOwners())
 			{
@@ -34,8 +34,8 @@
 					{
 						Model.SetCurrentGridPlayer(pick.PlayerId);
 						<div class="draft-pick-outline outline">
-							<div class="team-draft-pick @Model.CurrentGridOwnerUser.CssClass  @Model.GetCurrentGridPlayerClasses()" data-pick-num="@pick.PickNum">
-								<div class="clear-fix draft-pick-meta">
+							<div class="team-draft-pick @Model.CurrentGridOwnerUser.CssClass @Model.GetCurrentGridPlayerClasses("teams", "full")" data-pick-num="@pick.PickNum">
+								<div class="clear-fix draft-pick-meta @Model.GetCurrentGridPlayerClasses("teams", "header")">
 									<span class="pick-info">
 										<span class="pick-num">@pick.PickNum</span>
 										@if (Model.CurrentGridPlayer.ByeWeek != null)

@@ -45,7 +45,7 @@ namespace DodgeDynasty.Models
 		public int CurrentUserId { get; set; }
 		public List<UserRole> UserRoles { get; set; }
 		public List<UserRole> CurrentUserRoles { get; set; }
-
+		public UserPreference UserPreference { get; set; }
 		public PlayerContext CurrentGridPlayer { get; set; }
 		public OwnerUser CurrentGridOwnerUser { get; set; }
 		public int CurrentRoundNum { get; set; }
@@ -134,7 +134,9 @@ namespace DodgeDynasty.Models
 			CurrentUserId = Users.GetLoggedInUserId();
 			UserRoles = HomeEntity.UserRoles.ToList();
 			CurrentUserRoles = UserRoles.Where(o => o.UserId == CurrentUserId).ToList();
-            DraftId = SetCurrentDraft(draftId);
+			UserPreference = HomeEntity.UserPreferences.FirstOrDefault(up => up.UserId == CurrentUserId) ?? new UserPreference();
+
+			DraftId = SetCurrentDraft(draftId);
 
 			DraftPicks = HomeEntity.DraftPicks.Where(d => d.DraftId == DraftId).OrderBy(d => d.PickNum).ToList();
 

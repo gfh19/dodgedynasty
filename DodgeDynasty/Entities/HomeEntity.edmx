@@ -6,7 +6,7 @@
     <edmx:StorageModels>
     <Schema Namespace="HomeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <!--Errors Found During Generation:
-warning 6002: The table/view 'DB_70949_home.dbo._ArchivePlayerHighlight' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'Home.dbo._ArchivePlayerHighlight' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="_ArchivePlayerHighlight">
           <Key>
             <PropertyRef Name="ArchivePlayerHighlightId" />
@@ -487,29 +487,15 @@ warning 6002: The table/view 'DB_70949_home.dbo._ArchivePlayerHighlight' does no
           <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
           <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
         </EntityType>
-        <EntityType Name="UserApplicant">
+        <EntityType Name="UserPreferences">
           <Key>
             <PropertyRef Name="UserId" />
           </Key>
-          <Property Name="UserId" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="Pword" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="FirstName" Type="varchar" MaxLength="30" Nullable="false" />
-          <Property Name="LastName" Type="varchar" MaxLength="30" Nullable="false" />
-          <Property Name="Email" Type="varchar" MaxLength="100" />
-          <Property Name="Address1" Type="varchar" MaxLength="100" />
-          <Property Name="Address2" Type="varchar" MaxLength="100" />
-          <Property Name="Phone" Type="varchar" MaxLength="20" />
-          <Property Name="Secret" Type="varchar" MaxLength="250" />
-          <Property Name="Accepted" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="Rejected" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="AddDateTime" Type="datetime" />
-        </EntityType>
-        <EntityType Name="UserProfile">
-          <Key>
-            <PropertyRef Name="UserId" />
-          </Key>
-          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserName" Type="nvarchar(max)" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="DraftShowPositionColors" Type="varchar" MaxLength="10" />
+          <Property Name="TeamsShowPositionColors" Type="varchar" MaxLength="10" />
+          <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
+          <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="UserRole">
           <Key>
@@ -966,6 +952,18 @@ warning 6002: The table/view 'DB_70949_home.dbo._ArchivePlayerHighlight' does no
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UserPreferences_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserPreferences" Type="Self.UserPreferences" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserPreferences">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserRole_League">
           <End Role="League" Type="Self.League" Multiplicity="0..1" />
           <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
@@ -1048,8 +1046,7 @@ warning 6002: The table/view 'DB_70949_home.dbo._ArchivePlayerHighlight' does no
           <EntitySet Name="Rank" EntityType="Self.Rank" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UserApplicant" EntityType="Self.UserApplicant" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UserProfile" EntityType="Self.UserProfile" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserPreferences" EntityType="Self.UserPreferences" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="_ArchivePlayerHighlight" EntityType="Self._ArchivePlayerHighlight" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -1213,6 +1210,10 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
             <End Role="AutoImport" EntitySet="AutoImport" />
             <End Role="Rank" EntitySet="Rank" />
           </AssociationSet>
+          <AssociationSet Name="FK_UserPreferences_User" Association="Self.FK_UserPreferences_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserPreferences" EntitySet="UserPreferences" />
+          </AssociationSet>
           <AssociationSet Name="FK_UserRole_League" Association="Self.FK_UserRole_League">
             <End Role="League" EntitySet="League" />
             <End Role="UserRole" EntitySet="UserRole" />
@@ -1234,8 +1235,6 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
           <EntitySet Name="PlayerRanks" EntityType="HomeModel.PlayerRank" />
           <EntitySet Name="PlayerRankHistories" EntityType="HomeModel.PlayerRankHistory" />
           <EntitySet Name="Positions" EntityType="HomeModel.Position" />
-          <EntitySet Name="UserApplicants" EntityType="HomeModel.UserApplicant" />
-          <EntitySet Name="UserProfiles" EntityType="HomeModel.UserProfile" />
           <EntitySet Name="Users" EntityType="HomeModel.User" />
           <EntitySet Name="DraftRanks" EntityType="HomeModel.DraftRank" />
           <EntitySet Name="DraftOwners" EntityType="HomeModel.DraftOwner" />
@@ -1444,6 +1443,11 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
             <End Role="Rank" EntitySet="Ranks" />
           </AssociationSet>
           <EntitySet Name="PlayerAudios" EntityType="HomeModel.PlayerAudio" />
+          <EntitySet Name="UserPreferences" EntityType="HomeModel.UserPreference" />
+          <AssociationSet Name="FK_UserPreferences_User" Association="HomeModel.FK_UserPreferences_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserPreference" EntitySet="UserPreferences" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="PlayerRank">
           <Key>
@@ -1482,30 +1486,6 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
           <Property Type="String" Name="PosCode" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="PosDesc" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="UserApplicant">
-          <Key>
-            <PropertyRef Name="UserId" />
-          </Key>
-          <Property Type="String" Name="UserId" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="Pword" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="LastName" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="Email" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="Address1" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="Address2" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="Phone" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="Secret" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="Accepted" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Type="String" Name="Rejected" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Type="DateTime" Name="AddDateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="UserProfile">
-          <Key>
-            <PropertyRef Name="UserId" />
-          </Key>
-          <Property Type="Int32" Name="UserId" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
-          <Property Type="String" Name="UserName" MaxLength="Max" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="UserId" />
@@ -1538,6 +1518,7 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
           <NavigationProperty Name="Drafts" Relationship="HomeModel.FK_Draft_RunnerUp" FromRole="User" ToRole="Draft" />
           <NavigationProperty Name="Drafts1" Relationship="HomeModel.FK_Draft_Winner" FromRole="User" ToRole="Draft" />
           <NavigationProperty Name="PlayerAdjustments" Relationship="HomeModel.FK_PlayerAdjustment_User" FromRole="User" ToRole="PlayerAdjustment" />
+          <NavigationProperty Name="UserPreference" Relationship="HomeModel.FK_UserPreferences_User" FromRole="User" ToRole="UserPreference" />
         </EntityType>
         <EntityType Name="DraftRank">
           <Key>
@@ -2534,6 +2515,29 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
           <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
+        <EntityType Name="UserPreference">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="DraftShowPositionColors" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TeamsShowPositionColors" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="User" Relationship="HomeModel.FK_UserPreferences_User" FromRole="UserPreference" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_UserPreferences_User">
+          <End Type="HomeModel.User" Role="User" Multiplicity="1" />
+          <End Type="HomeModel.UserPreference" Role="UserPreference" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserPreference">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2575,32 +2579,6 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
                 <ScalarProperty Name="PosDesc" ColumnName="PosDesc" />
                 <ScalarProperty Name="PosCode" ColumnName="PosCode" />
                 <ScalarProperty Name="PosId" ColumnName="PosId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserApplicants">
-            <EntityTypeMapping TypeName="HomeModel.UserApplicant">
-              <MappingFragment StoreEntitySet="UserApplicant">
-                <ScalarProperty Name="AddDateTime" ColumnName="AddDateTime" />
-                <ScalarProperty Name="Rejected" ColumnName="Rejected" />
-                <ScalarProperty Name="Accepted" ColumnName="Accepted" />
-                <ScalarProperty Name="Secret" ColumnName="Secret" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="Address2" ColumnName="Address2" />
-                <ScalarProperty Name="Address1" ColumnName="Address1" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="Pword" ColumnName="Pword" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserProfiles">
-            <EntityTypeMapping TypeName="HomeModel.UserProfile">
-              <MappingFragment StoreEntitySet="UserProfile">
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3084,6 +3062,17 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="UserPreferences">
+            <EntityTypeMapping TypeName="HomeModel.UserPreference">
+              <MappingFragment StoreEntitySet="UserPreferences">
+                <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
+                <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
+                <ScalarProperty Name="TeamsShowPositionColors" ColumnName="TeamsShowPositionColors" />
+                <ScalarProperty Name="DraftShowPositionColors" ColumnName="DraftShowPositionColors" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -3110,8 +3099,6 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
         <edmx:EntityTypeShape EntityType="HomeModel.PlayerRank" Width="1.5" PointX="8.25" PointY="8.25" Height="2.9417936197916674" />
         <edmx:EntityTypeShape EntityType="HomeModel.PlayerRankHistory" Width="1.5" PointX="12.75" PointY="14.5" Height="2.7494921875000102" />
         <edmx:EntityTypeShape EntityType="HomeModel.Position" Width="1.5" PointX="0.75" PointY="16.5" Height="1.5956835937500102" />
-        <edmx:EntityTypeShape EntityType="HomeModel.UserApplicant" Width="1.5" PointX="2.75" PointY="16.5" Height="3.326396484374996" />
-        <edmx:EntityTypeShape EntityType="HomeModel.UserProfile" Width="1.5" PointX="4.75" PointY="16.5" Height="1.4033821614583246" />
         <edmx:EntityTypeShape EntityType="HomeModel.User" Width="1.5" PointX="7.75" PointY="13" />
         <edmx:EntityTypeShape EntityType="HomeModel.DraftRank" Width="1.5" PointX="0.75" PointY="0.75" />
         <edmx:EntityTypeShape EntityType="HomeModel.DraftOwner" Width="1.5" PointX="0.75" PointY="13" />
@@ -3184,6 +3171,8 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
         <edmx:EntityTypeShape EntityType="HomeModel.AutoImport" Width="1.5" PointX="4" PointY="28.75" />
         <edmx:AssociationConnector Association="HomeModel.FK_Rank_AutoImport" />
         <edmx:EntityTypeShape EntityType="HomeModel.PlayerAudio" Width="1.5" PointX="9.375" PointY="4.75" />
+        <edmx:EntityTypeShape EntityType="HomeModel.UserPreference" Width="1.5" PointX="10" PointY="20.375" />
+        <edmx:AssociationConnector Association="HomeModel.FK_UserPreferences_User" />
         </edmx:Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

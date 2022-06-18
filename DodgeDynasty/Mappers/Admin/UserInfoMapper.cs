@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using DodgeDynasty.Mappers.Account;
 using DodgeDynasty.Models.Account;
+using DodgeDynasty.WebSockets;
 
 namespace DodgeDynasty.Mappers.Admin
 {
@@ -25,6 +26,7 @@ namespace DodgeDynasty.Mappers.Admin
 		{
 			UserName = model.UserName;
 			base.DoUpdate(model);
+			DraftHubHelper.BroadcastDraftToUser(UserName);
 		}
 	}
 }

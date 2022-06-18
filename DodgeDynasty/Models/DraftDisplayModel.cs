@@ -32,18 +32,19 @@ namespace DodgeDynasty.Models
 			return false;
 		}
 
-		public string GetCurrentGridPlayerClasses()
+		public string GetCurrentGridPlayerClasses(string page, string displayMode)
 		{
 			string cssClasses = "";
 			if (!string.IsNullOrEmpty(CurrentGridPlayer?.PlayerName))
 			{
 				cssClasses += "filled ";
-				if (GetCurrentLeague().ShowPositionColors)
+				var showPosColorsPref = page == "teams" ? UserPreference.TeamsShowPositionColors : UserPreference.DraftShowPositionColors;
+				if (displayMode == showPosColorsPref)
 				{
 					cssClasses += "show-pos-colors ";
 				}
-				cssClasses += (CurrentDraft.CombineWRTE && CurrentGridPlayer.Position == "TE") 
-					? $"dp-wrte " 
+				cssClasses += (CurrentDraft.CombineWRTE && CurrentGridPlayer.Position == "TE")
+					? $"dp-wrte "
 					: $"dp-{CurrentGridPlayer.Position.ToLower()} ";
 			}
 			return cssClasses;

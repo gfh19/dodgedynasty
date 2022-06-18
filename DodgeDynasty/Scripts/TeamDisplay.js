@@ -15,13 +15,6 @@ function pageBroadcastDraftHandler(pickInfo) {
 			$(".player-pos", draftPick).text(pickInfo.pos);
 			$(".player-name", draftPick).text(pickInfo.pname);
 			$(draftPick).addClass("filled");
-			var posSfx = (pickInfo.pos.toLowerCase() === "te") ? "wrte" : pickInfo.pos.toLowerCase();
-			//team-container here, not draft (refactor in future)
-			shouldShowPosColors = $(".team-container").attr("data-show-pos-color");
-			var posColorCss = (shouldShowPosColors === 'true')
-				? "show-pos-colors dp-" + posSfx
-				: "dp-" + posSfx;
-			$(draftPick).addClass(posColorCss);
 		}
 	}, function () {
 		callRefreshPage(getTeamDisplayUrl, '#teamDisplay');

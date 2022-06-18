@@ -1252,20 +1252,19 @@ ul.menu li a.current-page
 	margin-right: 1px;
 }
 
-.draft-pick
-{
+.draft-pick {
 	float: none;
 	border-width: 3px;
 	border-style: solid;
-	padding: 1px;
-	width: 120px;
+	padding: 0px;
+	width: 122px;
 	white-space: normal;
 	overflow: hidden;
 }
 
 .draft-pick.filled, .team-draft-pick.filled
 {
-	height: 49px;
+	height: 51px;
 }
 
 .show-pos-colors.filled.dp-qb {
@@ -1298,6 +1297,7 @@ ul.menu li a.current-page
 	font-weight: normal;
 	line-height: 13px;
 	vertical-align: top;
+	padding: 1px 1px 0px 1px;
 }
 
 .pick-info
@@ -1345,6 +1345,7 @@ ul.menu li a.current-page
 	text-align: left;
     margin-top: 2px;
 	margin-left: 2px;
+	padding: 0px 1px 1px 1px;
 }
 
 /* Draft Team Display
@@ -1375,8 +1376,7 @@ ul.menu li a.current-page
 	float: left;
 	border-width: 3px;
 	border-style: solid;
-	padding: 1px;
-	width: 120px;
+	width: 122px;
 	white-space: normal;
 	overflow: hidden;
 }
@@ -2279,7 +2279,7 @@ span.player-select
 .mi-audio-header, .mi-audio {
 	width: 50px;
 }
-.mi-league, .mi-team-name, .mi-color, .mi-active {
+.mi-league, .mi-team-name, .mi-color, .mi-active, .mi-audio {
 	vertical-align: middle;
 }
 .mi-league-name {
@@ -2299,10 +2299,10 @@ span.player-select
 	display:table;
 	margin:0 auto;
 }
-
-
-		/* --------- Audio ----------*/
-
+.show-pos-colors-prefs label {
+	width: 250px;
+}
+/* --------- Audio ----------*/
 .test-audio {
 	width: 515px;
 	margin-left: auto;
@@ -2313,6 +2313,10 @@ span.player-select
 	-webkit-border-radius: 8px;
 	font-size: 14px;
 	-webkit-text-size-adjust: 100%;
+}
+.test-audio-padding {
+	padding-left: 5px;
+	padding-right: 5px;
 }
 
 .test-audio-note {
@@ -2784,7 +2788,7 @@ span.player-select
 	.draft-pick
 	{
 		float: none;
-		width: 216px;
+		width: 218px;
 	}
 	.draft-pick.filled
 	{
@@ -3006,6 +3010,11 @@ span.player-select
 	}
 	.adminUserInfo .test-audio {
 		min-width: 551px;
+	}
+
+	.mi-leagues {
+		margin-top: 5px;
+		margin-bottom: 5px;
 	}
 
 

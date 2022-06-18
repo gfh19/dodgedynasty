@@ -118,6 +118,17 @@ namespace DodgeDynasty.Shared
 			public const string HubConnections = "HubConnections";
 		}
 
+		public static class ShowPositionColors
+		{
+			public const string Off = "off";
+			public const string Full = "full";
+			public const string Header = "header";
+
+			public const string OffText = "<off>";
+			public const string FullText = "Full Draft Pick Cell";
+			public const string HeaderText = "Header Only";
+		}
+
 		public static class NFLTeamAliases
 		{
 			public static Dictionary<string, string> Dict = new Dictionary<string, string>{

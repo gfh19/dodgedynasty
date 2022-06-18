@@ -7,7 +7,7 @@
 }
 <div id="draftDisplay">
 	@Html.Partial("CurrentDraftPickPartial", Model)
-	<div class="draft-container" data-show-pos-color="@(Model.GetCurrentLeague().ShowPositionColors.ToString().ToLower())">
+	<div class="draft-container">
 		<div class="draft">
 			<div class="round-picks">
 				<span class="draft-round-row">
@@ -31,8 +31,8 @@
 						Model.SetCurrentGridOwnerUser(pick.UserId);
 						Model.SetCurrentGridPlayer(pick.PlayerId);
 						<div class="draft-pick-outline @(Model.IsSnakeRound(pick.RoundNum) ? "snake-pick" : (Model.IsLastPickBeforeSnakeRound(pick) ? "pre-snake-pick" : "")) outline">
-							<div class="draft-pick @Model.CurrentGridOwnerUser.CssClass @Model.GetCurrentGridPlayerClasses()" data-pick-num="@pick.PickNum">
-								<div class="clear-fix draft-pick-meta">
+							<div class="draft-pick @Model.CurrentGridOwnerUser.CssClass @Model.GetCurrentGridPlayerClasses("draft", "full")" data-pick-num="@pick.PickNum">
+								<div class="clear-fix draft-pick-meta @Model.GetCurrentGridPlayerClasses("draft", "header")">
 									<span class="pick-info">
 										<span class="pick-num">@pick.PickNum</span>
 										<span class="player-nickname">@Model.CurrentGridOwnerUser.NickName</span>

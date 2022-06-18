@@ -5,6 +5,7 @@ var isRefreshPage = false;
 var draftActive = false;	//Means ANY draftActive, not necessarily this one (check historyMode)
 							//Currently only ever set to true in DraftChatPartial
 var isUserTurn = false;
+var loggedInUserName = "";
 var currentServerTime = null;
 var clientServerTimeOffset = null;
 var draftHub;
@@ -72,6 +73,7 @@ function initWebSockets() {
 		draftHub.client.broadcastDraft = (typeof broadcastDraft !== "undefined") ? broadcastDraft : function () { };
 		draftHub.client.broadcastChat = (typeof broadcastChat !== "undefined") ? broadcastChat : function () { };
 		draftHub.client.broadcastDisconnect = (typeof broadcastDisconnect !== "undefined") ? broadcastDisconnect : function () { };
+		draftHub.client.broadcastDraftToUser = (typeof broadcastDraftToUser !== "undefined") ? broadcastDraftToUser : function () { };
 		startHubConnection();
 		checkStillSocketConnected(true);
 	}
@@ -160,6 +162,15 @@ function broadcastDraft(pickInfo) {
 		pageBroadcastDraftHandler(pickInfo);
 	}
 	checkUserTurnDialog();
+}
+
+function broadcastDraftToUser(userName) {
+	if (!userName || !loggedInUserName || userName != loggedInUserName) {
+		return;
+	}
+	if (typeof pageBroadcastDraftHandler !== "undefined" && !isHistoryMode()) {
+		pageBroadcastDraftHandler();
+	}
 }
 
 //Server to client:  Broadcast to shutdown all open connections. And close draft.

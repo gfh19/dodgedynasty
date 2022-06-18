@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using DodgeDynasty.Models.Types;
+﻿using DodgeDynasty.Models.Types;
 using Microsoft.AspNet.SignalR;
 
 namespace DodgeDynasty.WebSockets
@@ -14,6 +10,12 @@ namespace DodgeDynasty.WebSockets
 		{
 			var context = GlobalHost.ConnectionManager.GetHubContext<DraftHub>();
 			context.Clients.All.broadcastDraft(pickInfo);
+		}
+
+		public static void BroadcastDraftToUser(string userName)
+		{
+			var context = GlobalHost.ConnectionManager.GetHubContext<DraftHub>();
+			context.Clients.All.broadcastDraftToUser(userName);
 		}
 
 		public static void BroadcastDisconnectToClients()

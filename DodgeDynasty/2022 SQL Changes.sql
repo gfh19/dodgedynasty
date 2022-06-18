@@ -1,4 +1,128 @@
-﻿/* Below run in Production on 6/12/2022 */
+﻿/* Below run in Production on 6/16/2022 */
+
+
+
+SET XACT_ABORT ON
+BEGIN TRANSACTION;
+
+
+/****** Object:  Table [dbo].[UserPreferences]    Script Date: 6/16/2022 8:30:21 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[UserPreferences](
+	[UserId] [int] NOT NULL,
+	[DraftShowPositionColors] [varchar](10) NULL,
+	[TeamsShowPositionColors] [varchar](10) NULL,
+	[AddTimestamp] [datetime] NOT NULL,
+	[LastUpdateTimestamp] [datetime] NOT NULL,
+ CONSTRAINT [PK_UserPreferences] PRIMARY KEY CLUSTERED 
+(
+	[UserId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[UserPreferences]  WITH CHECK ADD  CONSTRAINT [FK_UserPreferences_User] FOREIGN KEY([UserId])
+REFERENCES [dbo].[User] ([UserId])
+GO
+
+ALTER TABLE [dbo].[UserPreferences] CHECK CONSTRAINT [FK_UserPreferences_User]
+GO
+
+
+
+
+/****** Object:  Table [dbo].[UserApplicant]    Script Date: 6/16/2022 8:10:27 PM ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[UserApplicant]') AND type in (N'U'))
+DROP TABLE [dbo].[UserApplicant]
+GO
+
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[UserProfile]') AND type in (N'U'))
+DROP TABLE [dbo].[UserProfile]
+GO
+
+
+
+COMMIT TRANSACTION;
+
+
+
+
+/* For source control history if ever needed these were the table create scripts:
+
+
+
+/****** Object:  Table [dbo].[UserApplicant]    Script Date: 6/16/2022 8:11:18 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[UserApplicant](
+	[UserId] [varchar](20) NOT NULL,
+	[Pword] [varchar](20) NOT NULL,
+	[FirstName] [varchar](30) NOT NULL,
+	[LastName] [varchar](30) NOT NULL,
+	[Email] [varchar](100) NULL,
+	[Address1] [varchar](100) NULL,
+	[Address2] [varchar](100) NULL,
+	[Phone] [varchar](20) NULL,
+	[Secret] [varchar](250) NULL,
+	[Accepted] [char](1) NOT NULL,
+	[Rejected] [char](1) NOT NULL,
+	[AddDateTime] [datetime] NULL,
+ CONSTRAINT [PK_UserApplicant] PRIMARY KEY CLUSTERED 
+(
+	[UserId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[UserApplicant] ADD  CONSTRAINT [DF_UserApplicant_Accepted]  DEFAULT ('N') FOR [Accepted]
+GO
+
+ALTER TABLE [dbo].[UserApplicant] ADD  CONSTRAINT [DF_UserApplicant_Rejected]  DEFAULT ('N') FOR [Rejected]
+GO
+
+
+
+
+/****** Object:  Table [dbo].[UserProfile]    Script Date: 6/16/2022 8:12:00 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[UserProfile](
+	[UserId] [int] IDENTITY(1,1) NOT NULL,
+	[UserName] [nvarchar](max) NULL,
+ CONSTRAINT [PK__UserProf__1788CC4C36B12243] PRIMARY KEY CLUSTERED 
+(
+	[UserId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+
+
+*/
+
+
+
+
+
+
+
+
+
+/* Below run in Production on 6/12/2022 */
 
 
 
@@ -78,6 +202,7 @@ COMMIT TRANSACTION;
 
 
 
+/*********** BELOW NOT RUN YET !!!!! ***********/
 
 /* (Below not revisited yet, revisit in August when ranks available) */
 /* Below run in Production on 7/31/2021 */

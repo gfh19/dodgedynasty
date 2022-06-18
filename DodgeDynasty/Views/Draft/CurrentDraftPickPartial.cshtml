@@ -3,6 +3,7 @@
 <script type="text/javascript">
 	$(function () {
 		isUserTurn = @(Model.IsUserTurn() ? "true" : "false");
+		loggedInUserName = "@Model.CurrentLoggedInOwnerUser.UserName";
 		initRefreshedPage();
 	});
 </script>

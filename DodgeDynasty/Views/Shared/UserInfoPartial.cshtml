@@ -1,6 +1,6 @@
 ﻿@model DodgeDynasty.Models.Account.UserInfoModel
 
-<div id="userInfo"  class="@(Model.AdminMode ? "adminUserInfo" : "")">
+<div id="userInfo" class="@(Model.AdminMode ? "adminUserInfo" : "")">
 	<script type="text/javascript">
 		$(function () {
 			initUserInfo();
@@ -54,7 +54,7 @@
 							<label class="mi-active-header @(!Model.AdminMode?"hide-yo-wives":"")">Active?</label>
 							@if (!DodgeDynasty.Shared.Utilities.GetBoolConfigVal(DodgeDynasty.Shared.Constants.AppSettings.UserEditAudioKillSwitch))
 							{
-							<label class="mi-audio-header">Audio?</label>
+								<label class="mi-audio-header">Audio?</label>
 							}
 						</div>
 					}
@@ -83,21 +83,37 @@
 							</span>
 							@if (!DodgeDynasty.Shared.Utilities.GetBoolConfigVal(DodgeDynasty.Shared.Constants.AppSettings.UserEditAudioKillSwitch))
 							{
-							<span class="mi-audio">
-								@Html.HiddenFor(o => Model.OwnerLeagues[i].AnnouncePrevPick, new { @class = "mi-prevpick-hidden" })
-								@{ var playAudio = Model.OwnerLeagues[i].AnnounceAllPicks || Model.OwnerLeagues[i].AnnouncePrevPick; }
-								@Html.CheckBoxFor(o => playAudio, new { @class = "mi-audio-chkbx" })
-							</span>
+								<span class="mi-audio">
+									@Html.HiddenFor(o => Model.OwnerLeagues[i].AnnouncePrevPick, new { @class = "mi-prevpick-hidden" })
+									@{ var playAudio = Model.OwnerLeagues[i].AnnounceAllPicks || Model.OwnerLeagues[i].AnnouncePrevPick; }
+									@Html.CheckBoxFor(o => playAudio, new { @class = "mi-audio-chkbx" })
+								</span>
 							}
 						</div>
 					}
-					<div class="page-section-small note-text">
-						<input id="chkMIHideUserTurn" class="vert-middle" type="checkbox" /> <span class="note-text">Do not show the "Your Turn" dialog again</span>
-					</div>
+					@if (!Model.AdminMode)
+					{
+						<div class="page-section-small note-text">
+							<input id="chkMIHideUserTurn" class="vert-middle" type="checkbox" /> <span class="note-text">Do not show the "Your Turn" dialog again</span>
+						</div>
+					}
 					@if (!DodgeDynasty.Shared.Utilities.GetBoolConfigVal(DodgeDynasty.Shared.Constants.AppSettings.UserEditAudioKillSwitch))
 					{
 						@Html.Partial(DodgeDynasty.Shared.Constants.Views.TestAudioPartial, true)
 					}
+
+					<div class="test-audio-padding page-section">
+						<div class="show-pos-colors-prefs test-audio">
+							<div class="page-section-small">
+								@Html.LabelFor(m => m.DraftShowPositionColors)
+								@Html.DropDownListFor(m => m.DraftShowPositionColors, Model.GetShowPositionColorsOptions(Model.DraftShowPositionColors), new { id = "dr-show-pos-clr" })
+							</div>
+							<div class="page-section-small">
+								@Html.LabelFor(m => m.TeamsShowPositionColors)
+								@Html.DropDownListFor(m => m.TeamsShowPositionColors, Model.GetShowPositionColorsOptions(Model.TeamsShowPositionColors), new { id = "tm-show-pos-clr" })
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 			<div class="page-section"><button class="submit-info" type="submit">Submit</button></div>
