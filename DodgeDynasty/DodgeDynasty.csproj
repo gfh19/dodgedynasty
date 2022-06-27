@@ -405,6 +405,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="2022 SQL Changes.sql" />
+    <Content Include="Media\tickingclock.mp3" />
     <Content Include="SQL Server\OLD - 2021 SQL Changes.sql" />
     <Content Include="SQL Server\OLD - 2020 SQL Changes.sql" />
     <Content Include="apple-touch-icon.PNG" />

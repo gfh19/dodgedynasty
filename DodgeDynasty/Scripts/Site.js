@@ -18,7 +18,8 @@ var pickAudioBed = null;
 var adminLastPickTime = null;
 var pleaseWaitTimer = 1200;
 var pleaseWaitNeeded = false;
-var shouldShowPosColors = false;
+var tickingClockAudio = null;
+var isTickingClockPlaying = false;
 
 
 /* Init functions */
@@ -156,6 +157,7 @@ function broadcastChatMessage(msg) {
 
 //Server to client:  Draft Pick broadcast-received.  Bound to server-side (C#) hub client handle
 function broadcastDraft(pickInfo) {
+	stopTickingClockAudio();
 	getLastPickAndPlayAudio(pickInfo, isUserTurn);
 	setIsUserTurn(pickInfo);
 	if (typeof pageBroadcastDraftHandler !== "undefined" && !isHistoryMode()) {
@@ -365,6 +367,9 @@ function setPickTimer(recursive) {
 			}
 			else if (timeRemaining > 0) {
 				displayTimeRemaining(timeRemaining);
+				if (timeRemaining <= 15) {
+					playTickingClockAudio();
+				}
 			}
 			else {
 				$(".start-time").text("TIME'S UP!");
@@ -375,6 +380,16 @@ function setPickTimer(recursive) {
 				}, 1000);
 			}
 		}
+	}
+}
+
+function playTickingClockAudio() {
+	if (!isTickingClockPlaying && tickingClockAudio && lastPickAudio && toBool(lastPickAudio.access) && toBool(lastPickAudio.success)) {
+		isTickingClockPlaying = true;
+		tickingClockAudio.play();
+		tickingClockAudio.addEventListener("ended", function () {
+			isTickingClockPlaying = false;
+		});
 	}
 }
 
@@ -906,7 +921,19 @@ function initLastPickAudio() {
 		ajaxGetJson("Draft/GetLastDraftPickAudio", function (pickAudio) {
 			lastPickAudio = pickAudio;
 		});
-	pickAudioBed = new Audio(baseURL + "Media/NFL Draft Tone.mp3");
+		pickAudioBed = new Audio(baseURL + "Media/NFL Draft Tone.mp3");
+		tickingClockAudio = new Audio(baseURL + "Media/tickingclock.mp3");
+	}
+	else {
+		lastPickAudio = null;
+	}
+}
+
+function stopTickingClockAudio() {
+	if (tickingClockAudio) {
+		tickingClockAudio.pause();
+		tickingClockAudio.currentTime = 0;
+		isTickingClockPlaying = false;
 	}
 }
 
@@ -925,6 +952,9 @@ function getLastPickAndPlayAudio(pickInfo, origIsUserTurn) {
 					}
 				}
 			});
+		}
+		else if (pickInfo) {
+			lastPickAudio = null;
 		}
 	}
 }
