@@ -8,17 +8,19 @@ $(function () {
 });
 
 function pageBroadcastDraftHandler(pickInfo) {
-	updatePageWithDraftPickInfo(pickInfo, function (pickInfo) {
-		var draftPick = $(".team-draft-pick[data-pick-num=" + pickInfo.pnum + "]");
-		if (draftPick) {
-			$(".player-nflteam", draftPick).text(pickInfo.team + "-");
-			$(".player-pos", draftPick).text(pickInfo.pos);
-			$(".player-name", draftPick).text(pickInfo.pname);
-			$(draftPick).addClass("filled");
-		}
-	}, function () {
+	if ($("#team-by-pos").is(':checked')) {
 		callRefreshPage(getTeamDisplayUrl, '#teamDisplay');
-	});
+	}
+	else {
+		updatePageWithDraftPickInfo(pickInfo, function (pickInfo) {
+			var draftPick = $(".team-draft-pick[data-pick-num=" + pickInfo.pnum + "]");
+			if (draftPick) {
+				populateWithDraftPickInfo(draftPick, pickInfo, pickInfo.tmshowposcol);
+			}
+		}, function () {
+			callRefreshPage(getTeamDisplayUrl, '#teamDisplay');
+		});
+	}
 }
 
 function getTeamDisplayUrl() {

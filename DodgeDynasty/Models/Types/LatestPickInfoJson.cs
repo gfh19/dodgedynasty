@@ -44,5 +44,11 @@ namespace DodgeDynasty.Models.Types
 		public List<int> auduids { get; set; }
 		//Latest pick get status
 		public string status { get; set; }
+		//Combine WR & TE
+		public string combwrte { get; set; }
+		//Draft Show Position Colors
+		public string drshowposcol { get; set; }
+		//Teams Show Position Colors
+		public string tmshowposcol { get; set; }
 	}
 }

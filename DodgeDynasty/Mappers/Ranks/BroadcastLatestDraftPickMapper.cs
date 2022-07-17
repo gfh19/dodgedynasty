@@ -40,6 +40,9 @@ namespace DodgeDynasty.Mappers.Ranks
 				Model.petime = latestDraftPick.PickEndDateTime.ToDateTimeString();
 				Model.prevtm = prevDraftPick.PickEndDateTime.ToDateTimeString();
 				Model.auduids = new List<int>();
+				Model.combwrte = model.CurrentDraft.CombineWRTE.ToString();
+				Model.drshowposcol = model.UserPreference.DraftShowPositionColors;
+				Model.tmshowposcol = model.UserPreference.TeamsShowPositionColors;
 				foreach (var draftOwner in model.DraftOwnerUsers)
 				{
 					if (draftOwner.AnnounceAllPicks || (draftOwner.AnnouncePrevPick && (draftOwner.UserId == Model.uturnid || !Model.uturnid.HasValue)))

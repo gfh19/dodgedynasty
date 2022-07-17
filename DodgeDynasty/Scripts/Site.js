@@ -716,6 +716,30 @@ function refreshCurrentDraftPickPartial() {
 	callRefreshPage("Draft/CurrentDraftPickPartial", ".draft-info");
 }
 
+function populateWithDraftPickInfo(draftPick, pickInfo, showPosCol) {
+	$(".player-nflteam", draftPick).text(pickInfo.team + "-");
+	$(".player-pos", draftPick).text(pickInfo.pos);
+	$(".player-name", draftPick).text(pickInfo.pname);
+	$(draftPick).addClass("filled");
+	if (showPosCol == "full") {
+		$(draftPick).addClass("show-pos-colors");
+	}
+
+	$(".draft-pick-meta", draftPick).addClass("filled");
+	if (showPosCol == "header") {
+		$(".draft-pick-meta", draftPick).addClass("show-pos-colors");
+	}
+	var posClass = "";
+	if (toBool(pickInfo.combwrte) && pickInfo.pos == "te") {
+		posClass = "dp-wrte";
+	}
+	else {
+		posClass = "dp-" + pickInfo.pos.toLowerCase();
+	}
+	$(draftPick).addClass(posClass);
+	$(".draft-pick-meta", draftPick).addClass(posClass);
+}
+
 /*		--- Draft Chat */
 
 function bindDraftChatWindow() {
