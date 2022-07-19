@@ -8,8 +8,6 @@ $(function () {
 	bindAddMessageDialog();
 	bindDraftChatDisplayLinks();
 	displayLineBreaks();
-	//aloha.dom.query('.editable', document).forEach(aloha);
-	//bindRteButtons();
 });
 
 function bindAddMessageDialog() {
@@ -82,13 +80,3 @@ function displayLineBreaks() {
 		$(msg).html($(msg).html().replace(/\n/g, '<br/>'));
 	})
 }
-
-//function bindRteButtons() {
-//	$('.action-bold').on('click', aloha.ui.command(aloha.ui.commands.bold));
-//	$('.action-italic').on('click', aloha.ui.command(aloha.ui.commands.italic));
-//	$('.action-underline').on('click', aloha.ui.command(aloha.ui.commands.underline));
-//	$('.action-unformat').on('click', aloha.ui.command(aloha.ui.commands.unformat));
-//	$('.action-bold').on('click', aloha.ui.command(aloha.ui.commands.bold));
-//	$('.action-bold').on('click', aloha.ui.command(aloha.ui.commands.bold));
-//	$('.action-bold').on('click', aloha.ui.command(aloha.ui.commands.bold));
-//}

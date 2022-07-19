@@ -528,8 +528,6 @@
     <Content Include="Scripts\AddLeague.js" />
     <Content Include="Scripts\EditLeague.js" />
     <Content Include="Scripts\History.js" />
-    <Content Include="Scripts\lib\aloha.js" />
-    <Content Include="Scripts\lib\aloha.min.js" />
     <Content Include="Scripts\lib\jquery.signalR-2.2.0.js" />
     <Content Include="Scripts\lib\jquery.signalR-2.2.0.min.js" />
     <Content Include="Scripts\LeagueOwnerUser.js" />
