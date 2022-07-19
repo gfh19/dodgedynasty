@@ -611,6 +611,7 @@
     <None Include="Properties\PublishProfiles\WinHost 2013 Local Folder.pubxml" />
     <None Include="Properties\PublishProfiles\WinHost 2015 Local Folder.pubxml" />
     <None Include="Properties\PublishProfiles\WinHost 2019 Local Folder.pubxml" />
+    <None Include="Properties\PublishProfiles\WinHost 2022 Local Folder.pubxml" />
     <None Include="Properties\PublishProfiles\WinHost FTP.pubxml" />
     <None Include="Properties\PublishProfiles\WinHost Local Folder.pubxml" />
     <Content Include="Views\Site\Messages.cshtml" />
