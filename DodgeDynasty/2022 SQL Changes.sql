@@ -1,4 +1,83 @@
-﻿/* Below run in Production on 6/16/2022 */
+﻿/* Below run in Production on 7/22/2022 */
+
+
+
+SET XACT_ABORT ON
+BEGIN TRANSACTION;
+
+
+UPDATE [dbo].[NFLTeam]
+SET TeamName = 'Commanders'
+WHERE TeamId = '32'
+
+
+INSERT INTO [dbo].[NFLTeam]
+           ([TeamAbbr]
+           ,[AbbrDisplay]
+           ,[LocationName]
+           ,[TeamName]
+           ,[Conference]
+           ,[Division]
+           ,[IsActive])
+     VALUES
+           ('WFT'
+           ,'Was'
+           ,'Washington'
+           ,'Football Team'
+           ,'NFC'
+           ,'East'
+           ,0)
+GO
+
+
+UPDATE Player
+SET NFLTeam = 'WFT'
+WHERE NFLTeam = 'WAS'
+
+
+
+UPDATE Player
+SET IsActive = 0
+WHERE PlayerName = 'Washington Football Team'
+
+
+
+INSERT INTO [dbo].[Player]
+           ([TruePlayerId]
+           ,[FirstName]
+           ,[LastName]
+           ,[Position]
+           ,[NFLTeam]
+           ,[DateOfBirth]
+           ,[IsActive]
+           ,[IsDrafted]
+           ,[AddTimestamp]
+           ,[LastUpdateTimestamp])
+     VALUES
+           (333
+           ,'Washington'
+           ,'Commanders'
+           ,'DEF'
+           ,'WAS'
+           ,NULL
+           ,1
+           ,0
+           ,getdate()
+           ,getdate())
+GO
+
+
+
+
+
+COMMIT TRANSACTION;
+
+
+
+
+
+
+/* Below run in Production on 6/16/2022 */
 
 
 

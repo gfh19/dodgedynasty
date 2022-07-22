@@ -80,7 +80,7 @@ function bindActivatePlayerLinks() {
 function bindInactivateAllPlayerButtons() {
 	$(".activate-defs").click(function (e) {
 		e.preventDefault();
-		showConfirmDialog("Are you sure you want to Inactivate all but 32 DEFs? <br/><br/>(This is irreversible)", null, function () {
+		showConfirmDialog("Are you sure you want to Deactivate all but 32 DEFs? <br/><br/>(This is irreversible)", null, function () {
 			ajaxPost({ playerGroup: "def" }, "Admin/InactivatePlayers", function () {
 				window.location.reload();
 			});
