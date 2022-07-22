@@ -558,7 +558,6 @@
     <Content Include="Scripts\lib\moment-with-locales.js" />
     <Content Include="Scripts\lib\moment-with-locales.min.js" />
     <Content Include="Scripts\lib\moment.js" />
-    <Content Include="Scripts\lib\moment.min.js" />
     <Content Include="Scripts\Messages.js" />
     <Content Include="Scripts\MyInfo.js" />
     <Content Include="Scripts\PlayerRanks.js" />
@@ -651,7 +650,6 @@
     <Content Include="Views\Shared\_TestAudioPartial.cshtml" />
     <Content Include="Views\Draft\_HighlightQueueInnerPartial.cshtml" />
     <Content Include="Views\Rank\_BupSectionPartial.cshtml" />
-    <Content Include="Scripts\lib\moment.min.js.map" />
     <None Include="Web.local.config">
       <SubType>Designer</SubType>
     </None>

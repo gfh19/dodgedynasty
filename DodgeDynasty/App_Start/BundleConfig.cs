@@ -19,12 +19,7 @@ namespace DodgeDynasty
 						"~/Scripts/lib/jquery.signalR-{version}.js",
 						"~/Scripts/lib/jquery-ui-{version}.js", //jquery-ui MUST come after bootstrap
 						"~/Scripts/lib/moment.js",
-						"~/Scripts/lib/moment.min.js",
 						"~/Scripts/lib/jQuery-addTouch.js"
-						));
-
-			bundles.Add(new ScriptBundle("~/bundles/moment.min.js.map").Include(
-						"~/Scripts/lib/moment.min.js.map"
 						));
 
 			bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css"));
