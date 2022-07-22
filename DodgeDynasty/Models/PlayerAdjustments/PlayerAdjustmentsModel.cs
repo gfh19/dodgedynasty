@@ -29,7 +29,7 @@ namespace DodgeDynasty.Models.PlayerAdjustments
 		public List<SelectListItem> GetNFLListItems()
 		{
 			return Utilities.GetListItems<NFLTeam>(NFLTeams,
-				t => (string.Format("{0} ({1} {2})", t.AbbrDisplay, t.LocationName, t.TeamName)), t => t.AbbrDisplay);
+				t => (string.Format("{0} ({1} {2})", t.AbbrDisplay, t.LocationName, t.TeamName)), t => t.TeamAbbr);
 		}
 
 		public string GetPlayerHints()

@@ -223,7 +223,7 @@ function setSelectedPlayer(pid, tpid, fname, lname, pos, nfl, active, drafted, p
 	$(fname).val(plyrHint.firstName);
 	$(lname).val(plyrHint.lastName);
 	$(pos).val(plyrHint.pos);
-	$(nfl).val(plyrHint.nflTeamDisplay);
+	$(nfl).val(plyrHint.nflTeam);
 	$(active).prop("checked", toBool(plyrHint.active));
 	$(drafted).prop("checked", toBool(plyrHint.drafted));
 	setTimeout(function () { $("#inputSubmit").focus(); }, 0);
