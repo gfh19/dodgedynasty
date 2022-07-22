@@ -53,7 +53,7 @@ namespace DodgeDynasty.Shared
 
 		public class Defaults
 		{
-			public const int PickTimeSeconds = 120;
+			public const int PickTimeSeconds = 90;
 		}
 
 		public class DraftFormats

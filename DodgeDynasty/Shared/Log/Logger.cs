@@ -23,22 +23,25 @@ namespace DodgeDynasty.Shared.Log
 		{
 			try
 			{
-				var now = Utilities.GetEasternTime();
-				using (var homeEntity = new HomeEntity())
+				if (!isKnownError(message))
 				{
-					homeEntity.ErrorLogs.AddObject(new ErrorLog
+					var now = Utilities.GetEasternTime();
+					using (var homeEntity = new HomeEntity())
 					{
-						ErrorType = logType,
-						MessageText = message.Truncate(1000),
-						StackTrace = stackTrace.Truncate(3000),
-                        Request = requestUrl.Truncate(500),
-						UserName = userName,
-                        DraftId = draftId,
-						AddTimestamp = now,
-						LastUpdateTimestamp = now
-					});
-					homeEntity.SaveChanges();
-                }
+						homeEntity.ErrorLogs.AddObject(new ErrorLog
+						{
+							ErrorType = logType,
+							MessageText = message.Truncate(1000),
+							StackTrace = stackTrace.Truncate(3000),
+							Request = requestUrl.Truncate(500),
+							UserName = userName,
+							DraftId = draftId,
+							AddTimestamp = now,
+							LastUpdateTimestamp = now
+						});
+						homeEntity.SaveChanges();
+					}
+				}
 			}
 			catch { }
 		}
@@ -69,6 +72,21 @@ namespace DodgeDynasty.Shared.Log
 				stackTrace.Append(ex.StackTrace);
 			}
 			return stackTrace.ToString();
+		}
+
+		private static bool isKnownError(string message)
+		{
+			List<string[]> knownErrors = new List<string[]>();
+			knownErrors.Add(new[] { "The controller for path", "/bundles/", "was not found or does not implement IController" });
+
+			foreach (var knownError in knownErrors)
+			{
+				if (knownError.ToList().All(fragment=>message.Contains(fragment)))
+				{
+					return true;
+				}
+			}
+			return false;
 		}
 	}
 }
