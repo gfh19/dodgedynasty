@@ -17,8 +17,9 @@ namespace DodgeDynasty
 						"~/Scripts/lib/jquery.cookie.js",
 						"~/Scripts/lib/jquery.validate*",
 						"~/Scripts/lib/jquery.signalR-{version}.js",
-						"~/Scripts/lib/jquery-ui-{version}.js",	//jquery-ui MUST come after bootstrap
+						"~/Scripts/lib/jquery-ui-{version}.js", //jquery-ui MUST come after bootstrap
 						"~/Scripts/lib/moment.js",
+						"~/Scripts/lib/moment.min.js",
 						"~/Scripts/lib/jQuery-addTouch.js"
 						));
 

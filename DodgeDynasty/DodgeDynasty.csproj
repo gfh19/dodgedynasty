@@ -651,6 +651,7 @@
     <Content Include="Views\Shared\_TestAudioPartial.cshtml" />
     <Content Include="Views\Draft\_HighlightQueueInnerPartial.cshtml" />
     <Content Include="Views\Rank\_BupSectionPartial.cshtml" />
+    <Content Include="Scripts\lib\moment.min.js.map" />
     <None Include="Web.local.config">
       <SubType>Designer</SubType>
     </None>
