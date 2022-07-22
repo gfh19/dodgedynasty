@@ -23,6 +23,10 @@ namespace DodgeDynasty
 						"~/Scripts/lib/jQuery-addTouch.js"
 						));
 
+			bundles.Add(new ScriptBundle("~/bundles/moment.min.js.map").Include(
+						"~/Scripts/lib/moment.min.js.map"
+						));
+
 			bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css"));
 
 			bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
