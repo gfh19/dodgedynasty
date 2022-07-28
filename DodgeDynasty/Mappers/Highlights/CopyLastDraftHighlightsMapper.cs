@@ -12,27 +12,24 @@ using DodgeDynasty.Shared;
 
 namespace DodgeDynasty.Mappers.Highlights
 {
-	public class CopyLastDraftHighlightsMapper : MapperBase<SingleDraftModel>
+	public class CopyLastDraftHighlightsMapper : MapperBase<DraftHighlightModel>
 	{
-		protected override void PopulateModel()
-		{
-			var currentDraft = Factory.Create<SingleDraftMapper>().GetModel();
-			var userId = HomeEntity.Users.GetLoggedInUserId();
-			GetLastHighlightDraft(currentDraft, userId);
-		}
+		public List<DraftHighlightModel> LastHighlightDrafts { get; set; }
 
-		protected override void DoUpdate(SingleDraftModel model)
+		protected override void DoUpdate(DraftHighlightModel model)
 		{
 			var currentDraft = Factory.Create<SingleDraftMapper>().GetModel();
 			var userId = HomeEntity.Users.GetLoggedInUserId();
-			GetLastHighlightDraft(currentDraft, userId);
-			if (Model != null)
+			var dhToCopy = HomeEntity.DraftHighlights
+				.FirstOrDefault(dh => dh.UserId == userId && dh.DraftHighlightId == model.DraftHighlightId);
+			if (dhToCopy != null)
 			{
 				var lastPlayerHighlights = HomeEntity.PlayerHighlights
-					.Where(ph => ph.DraftId == Model.DraftId && ph.UserId == userId).ToList();
-				lastPlayerHighlights.ForEach(ph=>HomeEntity.PlayerHighlights.AddObject(new Entities.PlayerHighlight
+					.Where(ph => ph.DraftHighlightId == dhToCopy.DraftHighlightId && ph.UserId == userId).ToList();
+				lastPlayerHighlights.ForEach(ph => HomeEntity.PlayerHighlights.AddObject(new Entities.PlayerHighlight
 				{
 					DraftId = currentDraft.DraftId,
+					DraftHighlightId = model.NewDraftHighlightId,
 					UserId = userId,
 					PlayerId = ph.PlayerId,
 					HighlightId = ph.HighlightId,
@@ -41,21 +38,32 @@ namespace DodgeDynasty.Mappers.Highlights
 					LastUpdateTimestamp = DateTime.Now
 				}));
 				HomeEntity.SaveChanges();
-            }
+			}
 		}
 
-		private void GetLastHighlightDraft(SingleDraftModel currentDraft, int userId)
+		public List<DraftHighlightModel> GetLastHighlightDrafts()
 		{
-			Model = (from ph in HomeEntity.PlayerHighlights.AsEnumerable()
-					 join d in HomeEntity.Drafts.AsEnumerable() on ph.DraftId equals d.DraftId
-					 where ph.UserId == userId && d.DraftYear == currentDraft.DraftYear
-					 orderby ph.LastUpdateTimestamp descending
-					 select new SingleDraftModel
-					 {
-						 DraftId = ph.DraftId,
-						 DraftYear = d.DraftYear.Value,
-						 LeagueName = d.LeagueName
-					 }).FirstOrDefault();
+			using (HomeEntity = new Entities.HomeEntity())
+			{
+				var currentDraft = Factory.Create<SingleDraftMapper>().GetModel();
+				var userId = HomeEntity.Users.GetLoggedInUserId();
+				var differentDraftHighlights = HomeEntity.DraftHighlights
+					.Where(dh => dh.UserId == userId && dh.DraftYear == currentDraft.DraftYear && dh.DraftId != currentDraft.DraftId
+							&& HomeEntity.PlayerHighlights.Any(ph => ph.DraftHighlightId == dh.DraftHighlightId));
+
+				LastHighlightDrafts = new List<DraftHighlightModel>();
+				differentDraftHighlights.ToList().ForEach(dh =>
+					LastHighlightDrafts.Add(new DraftHighlightModel
+					{
+						DraftHighlightId = dh.DraftHighlightId,
+						UserId = dh.UserId,
+						DraftId = dh.DraftId.Value, //TODO: Can make it required now
+						DraftYear = dh.DraftYear,
+						QueueName = dh.QueueName,
+						LeagueName = currentDraft.LeagueName
+					}));
+				return LastHighlightDrafts;
+			}
 		}
 	}
 }

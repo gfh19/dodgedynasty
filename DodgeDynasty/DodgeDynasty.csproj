@@ -242,6 +242,7 @@
     <Compile Include="Mappers\AdminShared\ActivateDraftMapper.cs" />
     <Compile Include="Mappers\Admin\AddUserMapper.cs" />
     <Compile Include="Mappers\Audio\AudioCountMapper.cs" />
+    <Compile Include="Mappers\Highlights\AddEditHighlightQueueMapper.cs" />
     <Compile Include="Mappers\RankAdjustments\AdminEditRankMapper.cs" />
     <Compile Include="Mappers\RankAdjustments\AdminAddRankMapper.cs" />
     <Compile Include="Mappers\Admin\AdminManageDraftsMapper.cs" />
@@ -326,6 +327,7 @@
     <Compile Include="Models\Highlights\HighlightedPlayer.cs" />
     <Compile Include="Models\Highlights\HighlightModel.cs" />
     <Compile Include="Models\Highlights\HighlightsModel.cs" />
+    <Compile Include="Models\Highlights\DraftHighlightModel.cs" />
     <Compile Include="Models\Highlights\PlayerQueueOrderModel.cs" />
     <Compile Include="Models\IDraftDataModel.cs" />
     <Compile Include="Models\IDraftModel.cs" />
@@ -650,6 +652,7 @@
     <Content Include="Views\Shared\_TestAudioPartial.cshtml" />
     <Content Include="Views\Draft\_HighlightQueueInnerPartial.cshtml" />
     <Content Include="Views\Rank\_BupSectionPartial.cshtml" />
+    <Content Include="Views\Shared\_DialogsPartial.cshtml" />
     <None Include="Web.local.config">
       <SubType>Designer</SubType>
     </None>

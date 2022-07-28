@@ -95,5 +95,16 @@ namespace DodgeDynasty.Controllers
 			});
 			return dodgeDynastyContent;
 		}
-    }
+
+		protected void ExpireCookie(string cookieId)
+		{
+			if (Request.Cookies[cookieId] != null)
+			{
+				HttpCookie cookie = new HttpCookie(cookieId);
+				cookie.Expires = DateTime.Now.AddDays(-1);
+				Response.Cookies.Add(cookie);
+			}
+
+		}
+	}
 }

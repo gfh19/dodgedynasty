@@ -31,9 +31,9 @@ namespace DodgeDynasty.Shared.Log
 						homeEntity.ErrorLogs.AddObject(new ErrorLog
 						{
 							ErrorType = logType,
-							MessageText = message.Truncate(1000),
-							StackTrace = stackTrace.Truncate(3000),
-							Request = requestUrl.Truncate(500),
+							MessageText = message?.Truncate(1000),
+							StackTrace = stackTrace?.Truncate(3000),
+							Request = requestUrl?.Truncate(500),
 							UserName = userName,
 							DraftId = draftId,
 							AddTimestamp = now,

@@ -169,6 +169,18 @@ warning 6002: The table/view 'Home.dbo._ArchivePlayerHighlight' does not have a 
           <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
           <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="DraftHighlight">
+          <Key>
+            <PropertyRef Name="DraftHighlightId" />
+          </Key>
+          <Property Name="DraftHighlightId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="DraftYear" Type="smallint" Nullable="false" />
+          <Property Name="DraftId" Type="int" />
+          <Property Name="QueueName" Type="varchar" MaxLength="25" />
+          <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
+          <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="DraftOwner">
           <Key>
             <PropertyRef Name="DraftOwnerId" />
@@ -367,6 +379,7 @@ warning 6002: The table/view 'Home.dbo._ArchivePlayerHighlight' does not have a 
           <Property Name="RankNum" Type="int" Nullable="false" />
           <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
           <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
+          <Property Name="DraftHighlightId" Type="int" />
         </EntityType>
         <EntityType Name="PlayerRank">
           <Key>
@@ -436,6 +449,7 @@ warning 6002: The table/view 'Home.dbo._ArchivePlayerHighlight' does not have a 
           <Property Name="BUPId" Type="int" />
           <Property Name="AddTimestamp" Type="datetime" />
           <Property Name="LastUpdateTimestamp" Type="datetime" />
+          <Property Name="DraftHighlightId" Type="int" />
         </EntityType>
         <EntityType Name="Position">
           <Key>
@@ -649,6 +663,30 @@ warning 6002: The table/view 'Home.dbo._ArchivePlayerHighlight' does not have a 
             </Principal>
             <Dependent Role="DraftChat">
               <PropertyRef Name="AuthorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DraftHighlight_Draft">
+          <End Role="Draft" Type="Self.Draft" Multiplicity="0..1" />
+          <End Role="DraftHighlight" Type="Self.DraftHighlight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Draft">
+              <PropertyRef Name="DraftId" />
+            </Principal>
+            <Dependent Role="DraftHighlight">
+              <PropertyRef Name="DraftId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DraftHighlight_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="DraftHighlight" Type="Self.DraftHighlight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="DraftHighlight">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -880,6 +918,18 @@ warning 6002: The table/view 'Home.dbo._ArchivePlayerHighlight' does not have a 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PlayerHighlight_DraftHighlight">
+          <End Role="DraftHighlight" Type="Self.DraftHighlight" Multiplicity="0..1" />
+          <End Role="PlayerHighlight" Type="Self.PlayerHighlight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DraftHighlight">
+              <PropertyRef Name="DraftHighlightId" />
+            </Principal>
+            <Dependent Role="PlayerHighlight">
+              <PropertyRef Name="DraftHighlightId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PlayerHighlight_Highlight">
           <End Role="Highlight" Type="Self.Highlight" Multiplicity="1" />
           <End Role="PlayerHighlight" Type="Self.PlayerHighlight" Multiplicity="*" />
@@ -1025,6 +1075,7 @@ warning 6002: The table/view 'Home.dbo._ArchivePlayerHighlight' does not have a 
           <EntitySet Name="CssColor" EntityType="Self.CssColor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Draft" EntityType="Self.Draft" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DraftChat" EntityType="Self.DraftChat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DraftHighlight" EntityType="Self.DraftHighlight" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DraftOwner" EntityType="Self.DraftOwner" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DraftPick" EntityType="Self.DraftPick" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DraftPickHistory" EntityType="Self.DraftPickHistory" Schema="dbo" store:Type="Tables" />
@@ -1110,6 +1161,14 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
             <End Role="User" EntitySet="User" />
             <End Role="DraftChat" EntitySet="DraftChat" />
           </AssociationSet>
+          <AssociationSet Name="FK_DraftHighlight_Draft" Association="Self.FK_DraftHighlight_Draft">
+            <End Role="Draft" EntitySet="Draft" />
+            <End Role="DraftHighlight" EntitySet="DraftHighlight" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DraftHighlight_User" Association="Self.FK_DraftHighlight_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="DraftHighlight" EntitySet="DraftHighlight" />
+          </AssociationSet>
           <AssociationSet Name="FK_DraftOwner_Draft" Association="Self.FK_DraftOwner_Draft">
             <End Role="Draft" EntitySet="Draft" />
             <End Role="DraftOwner" EntitySet="DraftOwner" />
@@ -1184,6 +1243,10 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
           </AssociationSet>
           <AssociationSet Name="FK_PlayerHighlight_Draft" Association="Self.FK_PlayerHighlight_Draft">
             <End Role="Draft" EntitySet="Draft" />
+            <End Role="PlayerHighlight" EntitySet="PlayerHighlight" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlayerHighlight_DraftHighlight" Association="Self.FK_PlayerHighlight_DraftHighlight">
+            <End Role="DraftHighlight" EntitySet="DraftHighlight" />
             <End Role="PlayerHighlight" EntitySet="PlayerHighlight" />
           </AssociationSet>
           <AssociationSet Name="FK_PlayerHighlight_Highlight" Association="Self.FK_PlayerHighlight_Highlight">
@@ -1448,6 +1511,19 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
             <End Role="User" EntitySet="Users" />
             <End Role="UserPreference" EntitySet="UserPreferences" />
           </AssociationSet>
+          <EntitySet Name="DraftHighlights" EntityType="HomeModel.DraftHighlight" />
+          <AssociationSet Name="FK_DraftHighlight_Draft" Association="HomeModel.FK_DraftHighlight_Draft">
+            <End Role="Draft" EntitySet="Drafts" />
+            <End Role="DraftHighlight" EntitySet="DraftHighlights" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DraftHighlight_User" Association="HomeModel.FK_DraftHighlight_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="DraftHighlight" EntitySet="DraftHighlights" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlayerHighlight_DraftHighlight" Association="HomeModel.FK_PlayerHighlight_DraftHighlight">
+            <End Role="DraftHighlight" EntitySet="DraftHighlights" />
+            <End Role="PlayerHighlight" EntitySet="PlayerHighlights" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="PlayerRank">
           <Key>
@@ -1519,6 +1595,7 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
           <NavigationProperty Name="Drafts1" Relationship="HomeModel.FK_Draft_Winner" FromRole="User" ToRole="Draft" />
           <NavigationProperty Name="PlayerAdjustments" Relationship="HomeModel.FK_PlayerAdjustment_User" FromRole="User" ToRole="PlayerAdjustment" />
           <NavigationProperty Name="UserPreference" Relationship="HomeModel.FK_UserPreferences_User" FromRole="User" ToRole="UserPreference" />
+          <NavigationProperty Name="DraftHighlights" Relationship="HomeModel.FK_DraftHighlight_User" FromRole="User" ToRole="DraftHighlight" />
         </EntityType>
         <EntityType Name="DraftRank">
           <Key>
@@ -1832,6 +1909,8 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
           <NavigationProperty Name="Player" Relationship="HomeModel.FK_PlayerHighlight_Player" FromRole="PlayerHighlight" ToRole="Player" />
           <NavigationProperty Name="User" Relationship="HomeModel.FK_PlayerHighlight_User" FromRole="PlayerHighlight" ToRole="User" />
           <NavigationProperty Name="Draft" Relationship="HomeModel.FK_PlayerHighlight_Draft" FromRole="PlayerHighlight" ToRole="Draft" />
+          <Property Name="DraftHighlightId" Type="Int32" />
+          <NavigationProperty Name="DraftHighlight" Relationship="HomeModel.FK_PlayerHighlight_DraftHighlight" FromRole="PlayerHighlight" ToRole="DraftHighlight" />
         </EntityType>
         <Association Name="FK_PlayerHighlight_Highlight">
           <End Type="HomeModel.Highlight" Role="Highlight" Multiplicity="1" />
@@ -2137,6 +2216,7 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
           <NavigationProperty Name="DraftRanks" Relationship="HomeModel.FK_DraftRank_Draft" FromRole="Draft" ToRole="DraftRank" />
           <NavigationProperty Name="PlayerHighlights" Relationship="HomeModel.FK_PlayerHighlight_Draft" FromRole="Draft" ToRole="PlayerHighlight" />
           <NavigationProperty Name="League" Relationship="HomeModel.FK_Draft_League" FromRole="Draft" ToRole="League" />
+          <NavigationProperty Name="DraftHighlights" Relationship="HomeModel.FK_DraftHighlight_Draft" FromRole="Draft" ToRole="DraftHighlight" />
         </EntityType>
         <Association Name="FK_AudioUserCount_Draft">
           <End Type="HomeModel.Draft" Role="Draft" Multiplicity="1" />
@@ -2355,6 +2435,7 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
           <Property Name="HideWR" Type="Boolean" Nullable="false" />
           <Property Name="ExpandTE" Type="Boolean" Nullable="false" />
           <Property Name="HideTE" Type="Boolean" Nullable="false" />
+          <Property Name="DraftHighlightId" Type="Int32" />
         </EntityType>
         <Association Name="FK_DraftRank_Rank">
           <End Type="HomeModel.Rank" Role="Rank" Multiplicity="1" />
@@ -2535,6 +2616,57 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
             </Principal>
             <Dependent Role="UserPreference">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="DraftHighlight">
+          <Key>
+            <PropertyRef Name="DraftHighlightId" />
+          </Key>
+          <Property Name="DraftHighlightId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="DraftYear" Type="Int16" Nullable="false" />
+          <Property Name="DraftId" Type="Int32" />
+          <Property Name="QueueName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Draft" Relationship="HomeModel.FK_DraftHighlight_Draft" FromRole="DraftHighlight" ToRole="Draft" />
+          <NavigationProperty Name="User" Relationship="HomeModel.FK_DraftHighlight_User" FromRole="DraftHighlight" ToRole="User" />
+          <NavigationProperty Name="PlayerHighlights" Relationship="HomeModel.FK_PlayerHighlight_DraftHighlight" FromRole="DraftHighlight" ToRole="PlayerHighlight" />
+          <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <Association Name="FK_DraftHighlight_Draft">
+          <End Type="HomeModel.Draft" Role="Draft" Multiplicity="0..1" />
+          <End Type="HomeModel.DraftHighlight" Role="DraftHighlight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Draft">
+              <PropertyRef Name="DraftId" />
+            </Principal>
+            <Dependent Role="DraftHighlight">
+              <PropertyRef Name="DraftId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DraftHighlight_User">
+          <End Type="HomeModel.User" Role="User" Multiplicity="1" />
+          <End Type="HomeModel.DraftHighlight" Role="DraftHighlight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="DraftHighlight">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlayerHighlight_DraftHighlight">
+          <End Type="HomeModel.DraftHighlight" Role="DraftHighlight" Multiplicity="0..1" />
+          <End Type="HomeModel.PlayerHighlight" Role="PlayerHighlight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DraftHighlight">
+              <PropertyRef Name="DraftHighlightId" />
+            </Principal>
+            <Dependent Role="PlayerHighlight">
+              <PropertyRef Name="DraftHighlightId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2764,6 +2896,7 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
           <EntitySetMapping Name="PlayerHighlights">
             <EntityTypeMapping TypeName="HomeModel.PlayerHighlight">
               <MappingFragment StoreEntitySet="PlayerHighlight">
+                <ScalarProperty Name="DraftHighlightId" ColumnName="DraftHighlightId" />
                 <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
                 <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
                 <ScalarProperty Name="RankNum" ColumnName="RankNum" />
@@ -2929,6 +3062,7 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
           <EntitySetMapping Name="PlayerRankOptions">
             <EntityTypeMapping TypeName="HomeModel.PlayerRankOption">
               <MappingFragment StoreEntitySet="PlayerRankOption">
+                <ScalarProperty Name="DraftHighlightId" ColumnName="DraftHighlightId" />
                 <ScalarProperty Name="HideTE" ColumnName="HideTE" />
                 <ScalarProperty Name="ExpandTE" ColumnName="ExpandTE" />
                 <ScalarProperty Name="HideWR" ColumnName="HideWR" />
@@ -3073,6 +3207,19 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="DraftHighlights">
+            <EntityTypeMapping TypeName="HomeModel.DraftHighlight">
+              <MappingFragment StoreEntitySet="DraftHighlight">
+                <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
+                <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
+                <ScalarProperty Name="QueueName" ColumnName="QueueName" />
+                <ScalarProperty Name="DraftId" ColumnName="DraftId" />
+                <ScalarProperty Name="DraftYear" ColumnName="DraftYear" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="DraftHighlightId" ColumnName="DraftHighlightId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -3173,6 +3320,10 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
         <edmx:EntityTypeShape EntityType="HomeModel.PlayerAudio" Width="1.5" PointX="9.375" PointY="4.75" />
         <edmx:EntityTypeShape EntityType="HomeModel.UserPreference" Width="1.5" PointX="10" PointY="20.375" />
         <edmx:AssociationConnector Association="HomeModel.FK_UserPreferences_User" />
+        <edmx:EntityTypeShape EntityType="HomeModel.DraftHighlight" Width="1.5" PointX="15" PointY="14.875" />
+        <edmx:AssociationConnector Association="HomeModel.FK_DraftHighlight_Draft" />
+        <edmx:AssociationConnector Association="HomeModel.FK_DraftHighlight_User" />
+        <edmx:AssociationConnector Association="HomeModel.FK_PlayerHighlight_DraftHighlight" />
         </edmx:Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using DodgeDynasty.Mappers;
+using DodgeDynasty.Models.Types;
 
 namespace DodgeDynasty.Models
 {
@@ -26,15 +27,15 @@ namespace DodgeDynasty.Models
 			return model;
 		}
 
-		public static PlayerRankModel GetEmptyPlayerRankModel(int? draftId = null)
+		public static PlayerRankModel GetEmptyPlayerRankModel(int? draftId = null, PlayerRankOptions options = null)
 		{
-			PlayerRankModel model = new PlayerRankModel(draftId);
+			PlayerRankModel model = new PlayerRankModel(draftId, options);
 			return model;
 		}
 
-		public static PlayerRankModel GetPlayerRankModel(int rankId, int? draftId = null)
+		public static PlayerRankModel GetPlayerRankModel(int rankId, int? draftId = null, PlayerRankOptions options = null)
 		{
-			PlayerRankModel model = new PlayerRankModel(rankId, draftId);
+			PlayerRankModel model = new PlayerRankModel(draftId, options);
 			model.SetPlayerRanks(rankId);
 			return model;
 		}

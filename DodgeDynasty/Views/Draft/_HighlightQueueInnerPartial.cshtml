@@ -2,11 +2,13 @@
 
 <div id="highlightQueueInnerPartial">
 	<div class="hq-header-section">
-		<label class="ba-header hq-header">Highlighted Queue</label>
+		<label class="ba-header hq-header">@Model.CurrentDraftHighlight.QueueName</label>
+		<input id="btnHQOptions" type="button" value="..." /></span>
+		@Html.HiddenFor(m => m.CurrentDraft.LeagueName, new { @class = "hq-league-name" })
 	</div>
-	<div class="">
+	<div class="hq-display" data-draft-hq-id="@Model.CurrentDraftHighlight.DraftHighlightId">
 		<div class="hq-empty-msg">
-			<p>
+			<p class="hq-inner-empty-msg">
 				Your Queue is empty.
 				<span class="pr-empty-edit-msg">
 					<br /><br />(First: Click '<a href="#" class="pr-empty-edit-link">Unlock Highlighter</a>'
@@ -14,15 +16,20 @@
 				</span>
 				<br /><br />Click on players to Highlight & add them to your Queue!
 				<br /><br />Once in the Queue, to re-sort players just Drag & Drop them.
-				<br />
 				<br /><br />
-				@{var lastHighlightsDraft = Model.GetLastHighlightsDraft();}
-				@if (lastHighlightsDraft != null)
+				@{var lastHighlightsDrafts = Model.GetLastDraftHighlights();}
+				@if (lastHighlightsDrafts != null && lastHighlightsDrafts.Count > 0)
 				{
-					<br />
-					<span class="hq-copy-text">
-						&lt;<a href="#" class="hq-copy-last-draft">Copy @lastHighlightsDraft.LeagueName queue</a>&gt;
-					</span>
+					<div class="hq-view-spacer"></div>
+					foreach (var lastHighlightsDraft in lastHighlightsDrafts)
+					{
+						<br />
+						<span class="hq-copy-text">
+							&lt;<a href="#" class="hq-copy-last-draft" data-hq-dh-id="@lastHighlightsDraft.DraftHighlightId"
+								>Copy @(string.IsNullOrEmpty(lastHighlightsDraft.QueueName) ? lastHighlightsDraft.LeagueName : lastHighlightsDraft.QueueName)
+								@(lastHighlightsDraft.QueueName != null && lastHighlightsDraft.QueueName.ToLower().Trim().EndsWith("queue") ? "" : "queue")</a>&gt;
+						</span>
+					}
 				}
 			</p>
 		</div>
@@ -90,12 +97,28 @@
 				</tr>
 			</tbody>
 		</table>
-		<span class="hq-delete-span">
-			&lt;<a href="#" class="hq-delete-all">Delete All Highlighting</a>&gt;
-			<div id="hqConfirmDelete" class="center hide-yo-kids" title="Delete All Highlighting">
-				<p>WARNING!</p>
-				<p>This will delete all your Player Highlights, and CANNOT be undone.</p>
+		@{var currentHighlightsDrafts = Model.GetCurrentDraftOtherHighlights();}
+		@if (currentHighlightsDrafts != null && currentHighlightsDrafts.Count > 0)
+		{
+		<div class="hq-current-dhs">
+			<div class="hq-view-spacer"></div>
+			@foreach (var currentHighlightsDraft in currentHighlightsDrafts)
+			{
+			<div class="hq-copy-text">
+				&lt;<a href="#" class="hq-view-current-dh" data-hq-dh-id="@currentHighlightsDraft.DraftHighlightId"
+					>View @(string.IsNullOrEmpty(currentHighlightsDraft.QueueName) ? currentHighlightsDraft.LeagueName : currentHighlightsDraft.QueueName)
+					@(currentHighlightsDraft.QueueName != null && currentHighlightsDraft.QueueName.ToLower().Trim().EndsWith("queue") ? "" : "queue")</a>&gt;
 			</div>
-		</span>
+			}
+		</div>
+		}
+
+		<div class="hq-delete-span">
+			&lt;<a href="#" class="hq-delete-all">Delete Highlighting</a>&gt;
+			<div id="hqConfirmDelete" class="center hide-yo-kids" title="Delete Highlighting">
+				<p>WARNING!</p>
+				<p>This will delete this queue's Player Highlights, and CANNOT be undone.</p>
+			</div>
+		</div>
 	</div>
 </div>

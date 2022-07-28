@@ -30,7 +30,6 @@ namespace DodgeDynasty.Models
 		List<League> Leagues { get; set; }
 		List<DraftOwner> AllDraftOwners { get; set; }
 
-		List<PlayerHighlight> CurrentPlayerHighlights { get; set; }
 		Draft CurrentDraft { get; set; }
 		List<LeagueOwner> CurrentLeagueOwners { get; set; }
 		DraftPick CurrentDraftPick { get; set; }

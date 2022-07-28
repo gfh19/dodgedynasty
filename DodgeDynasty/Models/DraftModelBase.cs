@@ -102,12 +102,6 @@ namespace DodgeDynasty.Models
 			set { DraftModel.CurrentLoggedInOwnerUser = value; }
 		}
 
-		public List<PlayerHighlight> CurrentPlayerHighlights
-		{
-			get { return DraftModel.CurrentPlayerHighlights; }
-			set { DraftModel.CurrentPlayerHighlights = value; }
-		}
-
 		public int CurrentRoundNum
 		{
 			get { return DraftModel.CurrentRoundNum; }

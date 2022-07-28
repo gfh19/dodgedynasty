@@ -39,10 +39,8 @@ namespace DodgeDynasty.Controllers
 		public ActionResult SetupRank(int rankId)
 		{
 			GetPlayerRankOptions();
-			PlayerRankModel model = DraftFactory.GetPlayerRankModel(rankId);
-			model.Options = PlayerRankUIHelper.Instance.GetPlayerRankOptions(Request, Response);
+			PlayerRankModel model = DraftFactory.GetPlayerRankModel(rankId, null, PlayerRankUIHelper.Instance.GetPlayerRankOptions(Request, Response));
 			model.GetRankedPlayersAll();
-			//Populate Compare Rank for Best Unranked Players
 			model.SetUnrankedCompareList();
 			model.SetAllHighlightedPlayers();
 			if (ViewData.ContainsKey(Constants.ViewData.RankStatus))
@@ -70,6 +68,8 @@ namespace DodgeDynasty.Controllers
 			return playerRankModel.RankStatus;
 		}
 
+		#region Highlighting
+
 		[HttpPost]
 		public HttpStatusCode AddPlayerHighlight(PlayerHighlightModel model)
 		{
@@ -79,26 +79,26 @@ namespace DodgeDynasty.Controllers
 		}
 
 		[HttpPost]
-		public HttpStatusCode DeletePlayerHighlight(int playerId)
+		public HttpStatusCode DeletePlayerHighlight(PlayerHighlightModel model)
 		{
 			DeletePlayerHighlightMapper mapper = Factory.Create<DeletePlayerHighlightMapper>();
-			mapper.UpdateEntity(new PlayerHighlightModel { PlayerId = playerId });
+			mapper.UpdateEntity(model);
 			return HttpStatusCode.OK;
 		}
 
 		[HttpPost]
-		public HttpStatusCode DeleteAllHighlights()
+		public HttpStatusCode DeleteAllHighlights(int draftHighlightId)
 		{
 			DeleteAllHighlightsMapper mapper = Factory.Create<DeleteAllHighlightsMapper>();
-			mapper.UpdateEntity();
+			mapper.UpdateEntity(new PlayerHighlightModel { DraftHighlightId = draftHighlightId });
 			return HttpStatusCode.OK;
 		}
 		
 		[HttpPost]
-		public HttpStatusCode CopyLastDraftHighlights()
+		public HttpStatusCode CopyLastDraftHighlights(int lastDraftHighlightId, int newDraftHighlightId)
 		{
 			CopyLastDraftHighlightsMapper mapper = Factory.Create<CopyLastDraftHighlightsMapper>();
-			mapper.UpdateEntity();
+			mapper.UpdateEntity(new DraftHighlightModel { DraftHighlightId = lastDraftHighlightId, NewDraftHighlightId = newDraftHighlightId });
 			return HttpStatusCode.OK;
 		}
 
@@ -109,6 +109,23 @@ namespace DodgeDynasty.Controllers
 			mapper.UpdateEntity(model);
 			return HttpStatusCode.OK;
 		}
+
+		[HttpPost]
+		public ActionResult AddEditHighlightQueue(PlayerHighlightModel oldModel, PlayerHighlightModel newModel)
+		{
+			var oldMapper = Factory.Create<AddEditHighlightQueueMapper>();
+			oldMapper.UpdateEntity(oldModel);
+			var responseId = oldMapper.DraftHighlight?.DraftHighlightId;
+
+			if (newModel != null) {
+				var newMapper = Factory.Create<AddEditHighlightQueueMapper>();
+				newMapper.UpdateEntity(newModel);
+				responseId = newMapper.DraftHighlight?.DraftHighlightId;
+			}
+			return Json(new { queueId = responseId });
+		}
+
+		#endregion Highlighting
 
 		//May not be necessary...
 		[HttpGet]
@@ -141,8 +158,7 @@ namespace DodgeDynasty.Controllers
 		public ActionResult BupSectionPartial(int rankId)
 		{
 			GetPlayerRankOptions();
-			PlayerRankModel model = DraftFactory.GetPlayerRankModel(rankId);
-			model.Options = PlayerRankUIHelper.Instance.GetPlayerRankOptions(Request, Response);
+			PlayerRankModel model = DraftFactory.GetPlayerRankModel(rankId, null, PlayerRankUIHelper.Instance.GetPlayerRankOptions(Request, Response));
 			model.SetUnrankedCompareList();
 			return PartialView(Constants.Views.BupSectionPartial, model);
 		}

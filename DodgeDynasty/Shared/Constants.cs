@@ -54,6 +54,7 @@ namespace DodgeDynasty.Shared
 		public class Defaults
 		{
 			public const int PickTimeSeconds = 90;
+			public const string DraftHighlightQueueName = "Highlighted Queue";
 		}
 
 		public class DraftFormats
@@ -199,6 +200,7 @@ namespace DodgeDynasty.Shared
 			public const string HighlightQueueInnerPartial = "_HighlightQueueInnerPartial";
 			public const string TestAudioPartial = "_TestAudioPartial";
 			public const string BupSectionPartial = "_BupSectionPartial";
+			public const string DialogsPartial = "_DialogsPartial";
 		}
 	}
 }

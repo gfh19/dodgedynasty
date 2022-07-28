@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using DodgeDynasty.Entities;
 using DodgeDynasty.Models.Types;
 using DodgeDynasty.Shared;
-using System.Configuration;
-using System.Text;
 using System.Web.Mvc;
 using DodgeDynasty.Mappers.Ranks;
 
@@ -32,8 +29,10 @@ namespace DodgeDynasty.Models
 		public List<Position> Positions { get; set; }
 		public List<League> Leagues { get; set; }
 		public List<DraftOwner> AllDraftOwners { get; set; }
-
+		/*
+		public DraftHighlight CurrentDraftHighlight { get; set; }
 		public List<PlayerHighlight> CurrentPlayerHighlights { get; set; }
+		*/
 		public Draft CurrentDraft { get; set; }
 		public List<LeagueOwner> CurrentLeagueOwners { get; set; }
 		public DraftPick CurrentDraftPick { get; set; }
@@ -149,8 +148,13 @@ namespace DodgeDynasty.Models
 				playerIds.Contains(p.PlayerId)).ToList();
 			CurrentDraftPick = DraftPicks.OrderBy(p => p.PickNum)
 				.FirstOrDefault(p => p.PlayerId == null);
-			CurrentPlayerHighlights = HomeEntity.PlayerHighlights
-				.Where(o => o.DraftId == DraftId && o.UserId == CurrentUserId).OrderBy(o=>o.RankNum).ToList();
+
+
+			/*
+			//TODO: Move these to highlight mapper
+			CurrentDraftHighlight = GetCurrentDraftHighlightQueue();
+			CurrentPlayerHighlights = GetCurrentPlayerHighlights();
+			*/
 
 			if (DraftPicks.Count > 0)
 			{
@@ -379,6 +383,73 @@ namespace DodgeDynasty.Models
 								 select PlayerRankModelHelper.GetDraftRankModel(dr, r);
 			return fullDraftRanks.ToList();
 		}
+
+		/*
+		private DraftHighlight GetCurrentDraftHighlightQueue()
+		{
+			var currentQueue = HomeEntity.DraftHighlights
+				.Where(dh => dh.DraftId == DraftId && dh.UserId == CurrentUserId).OrderByDescending(dh => dh.LastUpdateTimestamp).FirstOrDefault();
+			if (currentQueue == null)
+			{
+				currentQueue = new Entities.DraftHighlight
+				{
+					UserId = CurrentUserId,
+					DraftId = DraftId,
+					DraftYear = CurrentDraft.DraftYear.Value,
+					QueueName = Defaults.DraftHighlightQueueName,
+					AddTimestamp = DateTime.Now,
+					LastUpdateTimestamp = DateTime.Now
+				};
+				HomeEntity.DraftHighlights.AddObject(currentQueue);
+				HomeEntity.SaveChanges();
+			}
+			return currentQueue;
+		}
+
+		private List<PlayerHighlight> GetCurrentPlayerHighlights()
+		{
+			return HomeEntity.PlayerHighlights
+				.Where(h => h.DraftHighlightId == CurrentDraftHighlight.DraftHighlightId).OrderBy(h => h.RankNum).ToList();
+
+			//
+			// CurrentDraftHighlight (created, reviewed against cookie) replaced ALL of this below:
+			//var highlights = HomeEntity.PlayerHighlights
+			//	.Where(o => o.DraftId == DraftId && o.UserId == CurrentUserId).OrderBy(o => o.RankNum).ToList();
+			//if (highlights.Count == 0) return highlights;	//1. If empty return
+
+			//var unnamedHighlights = getUnnamedHighlights(highlights);
+			//if (unnamedHighlights.Count > 0) return unnamedHighlights;	//2. If null draftHighlightId rows exist for some reason, return those (can delete someday)
+
+			//var draftHighlightIds = highlights.Select(h => h.DraftHighlightId).Distinct();
+			//if (draftHighlightIds.Count() <= 1) return highlights;  //3. If only one highlight exists return
+
+			//var draftHighlights = HomeEntity.DraftHighlights
+			//	.Where(dh => draftHighlightIds.Contains(dh.DraftHighlightId)).OrderByDescending(dh => dh.LastUpdateTimestamp);
+			//return highlights.Where(h => h.DraftHighlightId == draftHighlights.First().DraftHighlightId).OrderBy(h => h.RankNum).ToList();	//4. Return most recent queue
+			//
+		}
+
+		private List<PlayerHighlight> getUnnamedHighlights(List<PlayerHighlight> highlights)
+		{
+			var unnamedHighlights = highlights.Where(h => h.DraftHighlightId == null).ToList();
+			if (unnamedHighlights.Count > 0)
+			{
+				try
+				{
+					//TODO:  Legacy only; shouldn't ever exist again.  If any found with null DraftHighlightId, error log info & return
+					var currentUser = Utilities.GetLoggedInUserName();
+					Logger.LogInfo($"Unnamed Highlights Loaded! Draft: {CurrentDraft?.DraftYear} {CurrentDraft?.LeagueName}, User: {currentUser}.",
+						"  DraftModel.GetCurrentPlayerHighlights", HttpContext.Current?.Request?.Url?.AbsoluteUri, currentUser, DraftId);
+				}
+				catch
+				{
+					Logger.LogInfo($"Unnamed Highlights Loaded!", "  DraftModel.GetCurrentPlayerHighlights");
+				}
+			}
+
+			return unnamedHighlights;
+		}
+		*/
 
 		#endregion Methods
 	}

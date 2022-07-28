@@ -1630,16 +1630,20 @@ ul.menu li a.current-page
 .hq-color-span {
 	display: inline-block;
 	width: 100%;
-	padding-top: 2px;
-	padding-bottom: 3px;
+	padding-top: 4px;
+	padding-bottom: 6px;
 	border-bottom: 2px solid darkblue !important;
 	border-radius: 4px;
 	-webkit-border-radius: 4px;
 }
 .hq-header {
+	display: inline-block;
 	font-size: inherit;
 	font-weight: bold;
 	padding-top: 5px;
+	vertical-align: middle;
+	overflow: hidden;
+	max-width: 193px;
 }
 .pr-highlight-section table {
 	margin: 0px;
@@ -1651,21 +1655,47 @@ ul.menu li a.current-page
 	min-width: 110px;
 }
 .hq-delete-span {
-	display: inline-block;
+	display: block;
 	font-size: 11px;
 	padding-top: 4px;
 	padding-bottom: 4px;
+	border-top: 1px solid black;
 }
-.hq-empty-msg {
-	width: 220px;
+.hq-empty-msg, .hq-view-spacer {
+	width: 227px;
 	white-space: normal;
+}
+.hq-view-spacer {
+	height: 0px;
+}
+.hq-inner-empty-msg {
+	padding: 5px;
 }
 .hq-copy-text {
 	font-size: 13px;
+	white-space: normal;
+}
+.queue-table {
+	min-width: 228px;
+}
+#btnHQOptions {
+	font-size: 12px;
+	padding: 2px 5px;
+	margin: 5px 5px 6px 5px
+}
+#txtChangeQueueName, #txtNewQueueName {
+	width: 195px;
+}
+#btnChangeQueueName, #btnAddNewQueue {
+	margin-top: 12px;
+}
+.hq-current-dhs {
+	padding: 5px 1px;
+	width: min-content;
+	margin: 0 auto;
 }
 
-	/*    -------- Compare Ranks */
-
+/*    -------- Compare Ranks */
 .cr-add-compare {
 	padding-top: 30px;
 	text-align: center;
@@ -2863,6 +2893,12 @@ span.player-select
 	}
 	.pr-highlight-section td {
 		padding-right: 3px;
+	}
+	.hq-header {
+		max-width: 186px;
+	}
+	.hq-empty-msg, .hq-view-spacer {
+		width: 220px;
 	}
 		/*    -------- Compare Ranks */
 	.cr-add-compare {

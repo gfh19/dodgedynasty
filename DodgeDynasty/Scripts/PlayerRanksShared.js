@@ -46,7 +46,6 @@ function fullRefreshRanksPage() {
 
 function initPlayerRanksShared() {
 	siteBroadcastDraftDelay = 50;
-	syncCookies();
 	toggleHighlighting();
 	bindToggleAllLinks();
 	bindExpandLinks();
@@ -252,13 +251,6 @@ function toggleExpandTableRows(table, expandRows, linkId) {
 	}
 }
 
-function syncCookies() {
-	if (clientCookieOptions == null) {
-		var cookieOptions = getCookieOptions();
-		clientCookieOptions = cookieOptions;
-	}
-}
-
 function getRankIdUrlPath() {
 	var rankIdAndCompQS = "";
 	var rankId = $(".rank-name").attr("data-rank-id");
@@ -308,6 +300,8 @@ function toggleHighlighting(isQueueRefresh) {
 		bindDeleteAllHighlightingDialog();
 		bindCopyLastDraftHighlights();
 		bindEditHighlighting(".pr-empty-edit-link");
+		bindHighlightQueueOptions();
+		bindViewCurrentOtherDraftHighlights();
 	}
 }
 
@@ -352,6 +346,7 @@ function bindShowHighlightingLink() {
 	$(".pr-toggle-highlight").unbind("click");
 	$(".pr-toggle-highlight").click(function (e) {
 		e.preventDefault();
+		clientCookieOptions["DraftHighlightId"] = getDraftHQId();
 		flipCookieValue("ShowHighlighting");
 		toggleEnableHighlighting();
 	});
@@ -373,6 +368,7 @@ function bindEditHighlighting(link) {
 function toggleEditHighlighting() {
 	var lockHighlighting = clientCookieOptions["LockHighlighting"];
 	$(".hq-color-span").toggle(!lockHighlighting);
+	$("#btnHQOptions").toggle(!lockHighlighting);
 	$(".pr-highlight-section").toggleClass("highlight-locked", lockHighlighting);
 	$(".pr-empty-edit-msg").toggle(lockHighlighting);
 	if (lockHighlighting) {
@@ -453,9 +449,18 @@ function handlePlayerHighlightClick() {
 
 function getPlayerHighlightModel(playerRow) {
 	return {
+		DraftHighlightId: getDraftHQId(),
 		PlayerId: $(playerRow).attr("data-player-id"),
 		HighlightClass: $("#highlight-color").val()
 	};
+}
+
+function getDraftHQId() {
+	return $(".hq-display").attr("data-draft-hq-id");
+}
+
+function setDraftHQId(hqId) {
+	return $(".hq-display").attr("data-draft-hq-id", hqId);
 }
 
 function addPlayerHighlighting(playerRow) {
@@ -540,7 +545,7 @@ function bindDeleteAllHighlightingDialog() {
 						text: "OK",
 						click: function () {
 							addWaitCursor();
-							ajaxPost({}, "Rank/DeleteAllHighlights", function () {
+							ajaxPost({ DraftHighlightId: getDraftHQId() }, "Rank/DeleteAllHighlights", function () {
 								$("#ExpandQueue[data-expand=true]").click();	//Collapse if expanded
 								fullRefreshRanksPage();
 								removeWaitCursor();
@@ -553,6 +558,96 @@ function bindDeleteAllHighlightingDialog() {
 		});
 		return false;
 	});
+}
+
+function bindHighlightQueueOptions() {
+	var defaultQueueName = $(".hq-header").text();
+	if (!defaultQueueName || defaultQueueName == "Highlighted Queue") {
+		defaultQueueName = $(".hq-league-name").val();
+	}
+	$("#txtChangeQueueName").val(defaultQueueName);
+
+	var hqOptionsDlg;
+	$("#btnHQOptions").unbind("click");
+	$("#btnHQOptions").click(function (e) {
+		e.preventDefault();
+		setDefaultNewQueueName();
+
+		hqOptionsDlg = $("#hqOptionsDialog").dialog({
+			resizable: false,
+			height: 'auto',
+			width: '240px',
+			modal: true,
+			buttons: [
+				{ text: "Cancel", click: function () { $(this).dialog("close"); } },
+			]
+		});
+		return false;
+	});
+
+	$("#btnChangeQueueName").unbind("click");
+	$("#btnChangeQueueName").click(function (e) {
+		e.preventDefault();
+		var model = {
+			DraftHighlightId: getDraftHQId(),
+			QueueName: $("#txtChangeQueueName").val()
+		};
+		addEditHighlightQueue(model, null, hqOptionsDlg);
+	});
+
+	$("#btnAddNewQueue").unbind("click");
+	$("#btnAddNewQueue").click(function (e) {
+		e.preventDefault();
+		var oldModel = {
+			DraftHighlightId: getDraftHQId(),
+			QueueName: $("#txtChangeQueueName").val()
+		};
+		var newModel = {
+			QueueName: $("#txtNewQueueName").val()
+		};
+		addEditHighlightQueue(oldModel, newModel, hqOptionsDlg);
+	});
+}
+
+function addEditHighlightQueue(oldModel, newModel, dlg) {
+	addWaitCursor();
+	ajaxPost({ oldModel: oldModel, newModel: newModel }, "Rank/AddEditHighlightQueue", function (data) {
+		var response = JSON.parse(data);
+		if (response.queueId && response.queueId != clientCookieOptions["DraftHighlightId"]) {
+			clientCookieOptions["DraftHighlightId"] = response.queueId;
+			ajaxPost(clientCookieOptions, "Rank/PostPlayerRankOptions", function () {
+				fullRefreshRanksPage();
+			});
+		}
+		else {
+			refreshHighlightQueue();
+		}
+		dlg.dialog("close");
+		removeWaitCursor();
+	}, function () {
+		dlg.dialog("close");
+		removeWaitCursor();
+	});
+}
+
+function setDefaultNewQueueName() {
+	var queueName = $("#txtChangeQueueName").val().trim();
+	var newQueueName = queueName + " 2";
+	if (queueName.length > 0) {
+		if (queueName.lastIndexOf(" ") > 0) {
+			var queueSfx = queueName.substring(queueName.lastIndexOf(" ") + 1, queueName.length);
+			if ($.isNumeric(queueSfx)) {
+				var coreQueueName = queueName.substring(0, queueName.lastIndexOf(" "));
+				newQueueName = coreQueueName + " " + (parseInt(queueSfx) + 1).toString();
+			}
+		}
+		newQueueName = newQueueName.substring(0, 25);
+	}
+	else {
+		newQueueName = "Highlighted Queue";
+	}
+
+	$("#txtNewQueueName").val(newQueueName);
 }
 
 function toggleDeleteHighlightDisplay() {
@@ -570,15 +665,28 @@ function toggleDeleteHighlightDisplay() {
 	toggleDisplay($(".hq-delete-span"), shouldDisplay);
 }
 
-function bindCopyLastDraftHighlights() {
-	$(".hq-copy-last-draft").click(function (e) {
+function bindViewCurrentOtherDraftHighlights() {
+	$(".hq-view-current-dh").click(function (e) {
 		e.preventDefault();
-		copyLastDraftHighlights();
+		addWaitCursor();
+		setDraftHQId($(this).attr("data-hq-dh-id"));
+		clientCookieOptions["DraftHighlightId"] = getDraftHQId();
+		ajaxPost(clientCookieOptions, "Rank/PostPlayerRankOptions", function () {
+			fullRefreshRanksPage();
+			removeWaitCursor();
+		});
 	});
 }
 
-function copyLastDraftHighlights() {
-	ajaxPost({}, "Rank/CopyLastDraftHighlights", fullRefreshRanksPage);
+function bindCopyLastDraftHighlights() {
+	$(".hq-copy-last-draft").click(function (e) {
+		e.preventDefault();
+		copyLastDraftHighlights($(this).attr("data-hq-dh-id"));
+	});
+}
+
+function copyLastDraftHighlights(hqDHId) {
+	ajaxPost({ LastDraftHighlightId: hqDHId, NewDraftHighlightId: getDraftHQId() }, "Rank/CopyLastDraftHighlights", fullRefreshRanksPage);
 }
 
 //jQuery UI Sortable for Drag & drop
@@ -595,6 +703,7 @@ function bindSortableQueue() {
 				prevPlayerId = $(prevRow).attr("data-player-id");
 			}
 			var playerQueueOrderModel = {
+				DraftHighlightId: getDraftHQId(),
 				UpdatedPlayerId: $(ui.item).attr("data-player-id"),
 				PreviousPlayerId: prevPlayerId
 			}

@@ -8,7 +8,7 @@ namespace DodgeDynasty.Mappers.Ranks
 	//TBD:  Probably should've taken the opportunity to call this "UserOptions"...
 	public class PlayerRankOptionsMapper : MapperBase<PlayerRankOptions>
 	{
-		public string PlayerRankOptionId { get; set; }
+		private string PlayerRankOptionId { get; set; }
 		public string UpdatedPlayerRankOptionId { get; set; }
 
 		public PlayerRankOptionsMapper(string playerRankOptionId)
@@ -52,6 +52,7 @@ namespace DodgeDynasty.Mappers.Ranks
 				HideAvg = options.HideAvg,
                 ShowHighlighting = options.ShowHighlighting,
 				LockHighlighting = options.LockHighlighting,
+				DraftHighlightId = options.DraftHighlightId.ToStringFromNullInt(),
 				HighlightColor = options.HighlightColor,
 				IsComparingRanks = options.IsComparingRanks,
 				CompareRankIds = options.CompareRankIds,
@@ -124,6 +125,7 @@ namespace DodgeDynasty.Mappers.Ranks
 			options.HideAvg = model.HideAvg;
 			options.ShowHighlighting = model.ShowHighlighting;
 			options.LockHighlighting = model.LockHighlighting;
+			options.DraftHighlightId = model.DraftHighlightId.ToNullInt();
 			options.HighlightColor = GetSafeHighlightColor(model.HighlightColor);
 			options.IsComparingRanks = model.IsComparingRanks;
 			options.CompareRankIds = model.CompareRankIds;

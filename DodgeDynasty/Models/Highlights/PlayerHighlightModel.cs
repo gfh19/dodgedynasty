@@ -5,6 +5,8 @@ namespace DodgeDynasty.Models.Highlights
 {
 	public class PlayerHighlightModel
 	{
+		public int? DraftHighlightId { get; set; }
+		public string QueueName { get; set; }
 		public int PlayerId { get; set; }
 		public int? RankNum { get; set; }
 		public string HighlightClass { get; set; }

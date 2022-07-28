@@ -24,6 +24,7 @@ namespace DodgeDynasty.Models
 		List<RankedPlayer> KRankedPlayers { get; set; }
 		PlayerRankOptions Options { get; set; }
 		List<RankedPlayer> HighlightedPlayers { get; set; }
+		List<PlayerHighlight> CurrentPlayerHighlights { get; set; }
 		string CategoryRankHeader { get; set; }
 		string CompRankPosition { get; set; }
 	}

@@ -1,0 +1,18 @@
+﻿<div id="dchat-partial" class="hide-yo-kids">
+	<!-- Due to jQuery UI dialog bug losing events like input text box changes made by user typing, have to keep static non-refreshable dialogs always in DOM! -->
+	<div id="hqOptionsDialog" class="center hide-yo-kids" title="Highlight Queue Options">
+		<p style="border-bottom: 2px solid black; padding-bottom: 15px">
+			Change name of current highlighted queue:
+			<input type="text" id="txtChangeQueueName" name="txtChangeQueueName" class="" maxlength="25"
+				   value="Highlighted Queue" />
+			<input id="btnChangeQueueName" type="button" value="Change Name" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" />
+		</p>
+		<p>
+			<strong>- OR -</strong>
+			<br /><br />
+			Add brand new queue:
+			<input type="text" id="txtNewQueueName" name="txtNewQueueName" class="" value="Highlighted Queue 2" maxlength="25" />
+			<input id="btnAddNewQueue" type="button" value="Create New Queue" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" />
+		</p>
+	</div>
+</div>

@@ -17,7 +17,7 @@ namespace DodgeDynasty.Mappers.Highlights
 
 			var highlightId = HomeEntity.Highlights.First(o => o.HighlightClass == model.HighlightClass).HighlightId;
 			var currentPlayerHighlights = HomeEntity.PlayerHighlights.AsEnumerable()
-				.Where(o => o.UserId == userId && o.DraftId == draftModel.DraftId).ToList();
+				.Where(o => o.UserId == userId && o.DraftId == draftModel.DraftId && o.DraftHighlightId == model.DraftHighlightId).ToList();
 			var maxPlayerRankNum = currentPlayerHighlights.Select(o=>o.RankNum).DefaultIfEmpty().Max();
             var playerHighlight = currentPlayerHighlights.FirstOrDefault(o => o.PlayerId == model.PlayerId);
 			if (playerHighlight != null)
@@ -32,6 +32,7 @@ namespace DodgeDynasty.Mappers.Highlights
 				{
 					DraftId = draftModel.DraftId,
 					UserId = userId,
+					DraftHighlightId = model.DraftHighlightId,
 					PlayerId = model.PlayerId,
 					HighlightId = highlightId,
 					RankNum = maxPlayerRankNum + 1,

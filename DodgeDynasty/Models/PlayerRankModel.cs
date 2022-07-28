@@ -13,6 +13,7 @@ using DodgeDynasty.Models.Highlights;
 using DodgeDynasty.Models.Drafts;
 using DodgeDynasty.Mappers.Ranks;
 using DodgeDynasty.Mappers;
+using static DodgeDynasty.Shared.Constants;
 
 namespace DodgeDynasty.Models
 {
@@ -44,16 +45,72 @@ namespace DodgeDynasty.Models
 		public IPlayerRankModel AveragePlayerRank { get; set; }
 		public string CategoryRankHeader { get; set; }
 		public string CompRankPosition { get; set; }
+		public DraftHighlight CurrentDraftHighlight { get; set; }
+		public List<PlayerHighlight> CurrentPlayerHighlights { get; set; }
+		public List<DraftHighlight> CurrentDraftOtherHighlights { get; set; }
 
-		public PlayerRankModel(int rankId, int? draftId = null)
-			: this(draftId)
-		{}
+		public PlayerRankModel(int? draftId = null, PlayerRankOptions options = null)
+		{
+			GetCurrentPlayerRankModelInfo(draftId, options);
+		}
 
-		public PlayerRankModel(int? draftId = null)
+		public void GetCurrentPlayerRankModelInfo(int? draftId = null, PlayerRankOptions options = null)
 		{
 			base.GetCurrentDraft(draftId);
+
 			int window;
 			RanksWindow = int.TryParse(ConfigurationManager.AppSettings["RanksWindow"], out window) ? window : 12;
+			Options = options ?? Options;
+			using (HomeEntity = new HomeEntity())
+			{
+				CurrentDraftHighlight = getCurrentDraftHighlightQueue();
+				CurrentPlayerHighlights = getCurrentPlayerHighlights();
+				CurrentDraftOtherHighlights = getCurrentDraftOtherHighlightQueues();
+			}
+		}
+
+		private DraftHighlight getCurrentDraftHighlightQueue()
+		{
+			DraftHighlight currentQueue = null;
+			if (!string.IsNullOrEmpty(Options?.DraftHighlightId))
+			{
+				var draftHighlightId = Options.DraftHighlightId.ToNullInt();
+				currentQueue = HomeEntity.DraftHighlights
+					.Where(dh => dh.DraftId == DraftId && dh.UserId == CurrentUserId && dh.DraftHighlightId == draftHighlightId)
+					.FirstOrDefault();
+			}
+			if (currentQueue == null)
+			{
+				currentQueue = HomeEntity.DraftHighlights
+					.Where(dh => dh.DraftId == DraftId && dh.UserId == CurrentUserId).OrderByDescending(dh => dh.LastUpdateTimestamp).FirstOrDefault();
+			}
+			if (currentQueue == null)
+			{
+				currentQueue = new Entities.DraftHighlight
+				{
+					UserId = CurrentUserId,
+					DraftId = DraftId,
+					DraftYear = CurrentDraft.DraftYear.Value,
+					QueueName = Defaults.DraftHighlightQueueName,
+					AddTimestamp = DateTime.Now,
+					LastUpdateTimestamp = DateTime.Now
+				};
+				HomeEntity.DraftHighlights.AddObject(currentQueue);
+				HomeEntity.SaveChanges();
+			}
+			return currentQueue;
+		}
+
+		private List<PlayerHighlight> getCurrentPlayerHighlights()
+		{
+			return HomeEntity.PlayerHighlights
+				.Where(h => h.DraftHighlightId == CurrentDraftHighlight.DraftHighlightId).OrderBy(h => h.RankNum).ToList();
+		}
+
+		private List<DraftHighlight> getCurrentDraftOtherHighlightQueues()
+		{
+			return HomeEntity.DraftHighlights
+				.Where(dh => dh.DraftId == DraftId && dh.UserId == CurrentUserId && dh.DraftHighlightId != CurrentDraftHighlight.DraftHighlightId).ToList();
 		}
 
 		public void SetPlayerRanks(int rankId, IPlayerRankModel playerRankModel = null)
@@ -231,11 +288,20 @@ namespace DodgeDynasty.Models
 			return !string.IsNullOrEmpty(Options.HighlightColor) ? Options.HighlightColor : null;
         }
 
-		public SingleDraftModel GetLastHighlightsDraft()
+		public List<DraftHighlightModel> GetLastDraftHighlights()
 		{
 			CopyLastDraftHighlightsMapper mapper = new CopyLastDraftHighlightsMapper();
-			return mapper.GetModel();
-        }
+			return mapper.GetLastHighlightDrafts();
+		}
+
+		public List<DraftHighlightModel> GetCurrentDraftOtherHighlights()
+		{
+			return CurrentDraftOtherHighlights.Select(dh => new DraftHighlightModel
+			{
+				DraftHighlightId = dh.DraftHighlightId, UserId = dh.UserId, DraftId = dh.DraftId.Value, 
+				DraftYear = dh.DraftYear, QueueName = dh.QueueName, LeagueName = CurrentDraft.LeagueName
+			}).ToList();
+		}
 
 		public List<SelectListItem> GetCurrentAvailableDraftRankItems(string rankId)
 		{

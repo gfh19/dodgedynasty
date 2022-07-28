@@ -44,31 +44,31 @@ namespace DodgeDynasty.Mappers.Ranks
 			model.PlayerRanks = homeEntity.PlayerRanks.Where(pr => pr.RankId == rankId).ToList();
 		}
 		
-		public static List<RankedPlayer> GetRankedPlayersAll(List<PlayerRank> playerRanks, DraftModel currentDraftModel)
+		public static List<RankedPlayer> GetRankedPlayersAll(List<PlayerRank> playerRanks, PlayerRankModel currentPlayerRankModel)
 		{
 			var rankedPlayers = (from pr in playerRanks
-								 join p in currentDraftModel.AllPlayers on pr.PlayerId equals p.PlayerId
-								 join t in currentDraftModel.NFLTeams on p.NFLTeam equals t.TeamAbbr
-								 join ph in currentDraftModel.CurrentPlayerHighlights on pr.PlayerId equals ph.PlayerId into phLeft
+								 join p in currentPlayerRankModel.AllPlayers on pr.PlayerId equals p.PlayerId
+								 join t in currentPlayerRankModel.NFLTeams on p.NFLTeam equals t.TeamAbbr
+								 join ph in currentPlayerRankModel.CurrentPlayerHighlights on pr.PlayerId equals ph.PlayerId into phLeft
 								 from ph in phLeft.DefaultIfEmpty()
 								 select GetRankedPlayer(pr, p, t, ph)).OrderBy(p => p.RankNum).ToList();
 			//return GetDraftedTruePlayersFor(rankedPlayers, currentDraftModel);
 			return rankedPlayers;
 		}
 
-		public static List<RankedPlayer> GetRankedPlayersAllWithDraftPickInfo(List<PlayerRank> playerRanks, DraftModel currentDraftModel,
+		public static List<RankedPlayer> GetRankedPlayersAllWithDraftPickInfo(List<PlayerRank> playerRanks, PlayerRankModel currentPlayerRankModel,
             List<RankedPlayer> draftedTruePlayers = null)
 		{
 			var rankedPlayers = (from pr in playerRanks
-								 join p in currentDraftModel.AllPlayers on pr.PlayerId equals p.PlayerId
-								 join t in currentDraftModel.NFLTeams on p.NFLTeam equals t.TeamAbbr
-								 join pick in currentDraftModel.DraftPicks on pr.PlayerId equals pick.PlayerId into dpLeft    //Left Outer Join
+								 join p in currentPlayerRankModel.AllPlayers on pr.PlayerId equals p.PlayerId
+								 join t in currentPlayerRankModel.NFLTeams on p.NFLTeam equals t.TeamAbbr
+								 join pick in currentPlayerRankModel.DraftPicks on pr.PlayerId equals pick.PlayerId into dpLeft    //Left Outer Join
 								 from pick in dpLeft.DefaultIfEmpty()
-								 join u in currentDraftModel.Users on ((pick != null) ? pick.UserId : -1) equals u.UserId into uLeft  //Left Outer Join
+								 join u in currentPlayerRankModel.Users on ((pick != null) ? pick.UserId : -1) equals u.UserId into uLeft  //Left Outer Join
 								 from u in uLeft.DefaultIfEmpty()
-								 join lo in currentDraftModel.CurrentLeagueOwners on ((pick != null) ? pick.UserId : -1) equals lo.UserId into loLeft
+								 join lo in currentPlayerRankModel.CurrentLeagueOwners on ((pick != null) ? pick.UserId : -1) equals lo.UserId into loLeft
 								 from lo in loLeft.DefaultIfEmpty()
-								 join ph in currentDraftModel.CurrentPlayerHighlights on pr.PlayerId equals ph.PlayerId into phLeft
+								 join ph in currentPlayerRankModel.CurrentPlayerHighlights on pr.PlayerId equals ph.PlayerId into phLeft
 								 from ph in phLeft.DefaultIfEmpty()
 								 select GetRankedPlayer(pr, p, t, ph, pick, u, lo)).OrderBy(p => p.RankNum).ToList();
 
@@ -97,19 +97,19 @@ namespace DodgeDynasty.Mappers.Ranks
 		}
 
 		//Don't call on every player ranking; only once per page load
-		public static List<RankedPlayer> GetDraftedTruePlayersFor(List<Player> inactiveDraftedPlayers, DraftModel currentDraftModel)
+		public static List<RankedPlayer> GetDraftedTruePlayersFor(List<Player> inactiveDraftedPlayers, PlayerRankModel currentPlayerRankModel)
 		{
 			if (inactiveDraftedPlayers != null && inactiveDraftedPlayers.Count > 0)
 			{
 				return (from p in inactiveDraftedPlayers
-                        join t in currentDraftModel.NFLTeams on p.NFLTeam equals t.TeamAbbr
-						join pick in currentDraftModel.DraftPicks on p.PlayerId equals pick.PlayerId into dpLeft    //Left Outer Join
+                        join t in currentPlayerRankModel.NFLTeams on p.NFLTeam equals t.TeamAbbr
+						join pick in currentPlayerRankModel.DraftPicks on p.PlayerId equals pick.PlayerId into dpLeft    //Left Outer Join
 						from pick in dpLeft.DefaultIfEmpty()
-						join u in currentDraftModel.Users on ((pick != null) ? pick.UserId : -1) equals u.UserId into uLeft  //Left Outer Join
+						join u in currentPlayerRankModel.Users on ((pick != null) ? pick.UserId : -1) equals u.UserId into uLeft  //Left Outer Join
 						from u in uLeft.DefaultIfEmpty()
-						join lo in currentDraftModel.CurrentLeagueOwners on ((pick != null) ? pick.UserId : -1) equals lo.UserId into loLeft
+						join lo in currentPlayerRankModel.CurrentLeagueOwners on ((pick != null) ? pick.UserId : -1) equals lo.UserId into loLeft
 						from lo in loLeft.DefaultIfEmpty()
-						join ph in currentDraftModel.CurrentPlayerHighlights on p.PlayerId equals ph.PlayerId into phLeft
+						join ph in currentPlayerRankModel.CurrentPlayerHighlights on p.PlayerId equals ph.PlayerId into phLeft
 						from ph in phLeft.DefaultIfEmpty()
 						select GetRankedPlayer(null, p, t, ph, pick, u, lo)).OrderBy(p => p.RankNum).ToList();
 			}

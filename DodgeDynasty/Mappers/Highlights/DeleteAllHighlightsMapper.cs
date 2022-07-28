@@ -15,7 +15,7 @@ namespace DodgeDynasty.Mappers.Highlights
 			var userId = HomeEntity.Users.GetLoggedInUserId();
 
 			var currentPlayerHighlights = HomeEntity.PlayerHighlights.AsEnumerable()
-				.Where(o => o.UserId == userId && o.DraftId == draftModel.DraftId).ToList();
+				.Where(o => o.UserId == userId && o.DraftId == draftModel.DraftId && o.DraftHighlightId == model.DraftHighlightId).ToList();
 			foreach (var playerHighlight in currentPlayerHighlights)
 			{
 				HomeEntity.PlayerHighlights.DeleteObject(playerHighlight);

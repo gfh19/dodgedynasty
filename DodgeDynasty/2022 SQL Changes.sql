@@ -1,4 +1,103 @@
-﻿/* Below run in Production on 7/22/2022 */
+﻿/* Below run in Production on 7/23/2022 */
+
+/*TODO:  Make DraftYear in Draft table NOT NULL */
+/*TODO:  Move existing PlayerHighlights to Archive and delete existing */
+/*TODO:  Convert PlayerRankOptions SQL storage to Json blob (plus ?all? IDs as columns? */
+
+
+
+SET XACT_ABORT ON
+BEGIN TRANSACTION;
+
+
+
+
+/****** Object:  Table [dbo].[DraftHighlight]    Script Date: 7/22/2022 10:40:12 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[DraftHighlight](
+	[DraftHighlightId] [int] IDENTITY(1,1) NOT NULL,
+	[UserId] [int] NOT NULL,
+	[DraftYear] [smallint] NOT NULL,
+	[DraftId] [int] NULL,
+	[QueueName] [varchar](25) NULL,
+	[AddTimestamp] [datetime] NOT NULL,
+	[LastUpdateTimestamp] [datetime] NOT NULL,
+ CONSTRAINT [PK_DraftHighlight] PRIMARY KEY CLUSTERED 
+(
+	[DraftHighlightId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[DraftHighlight]  WITH CHECK ADD  CONSTRAINT [FK_DraftHighlight_Draft] FOREIGN KEY([DraftId])
+REFERENCES [dbo].[Draft] ([DraftId])
+GO
+
+ALTER TABLE [dbo].[DraftHighlight] CHECK CONSTRAINT [FK_DraftHighlight_Draft]
+GO
+
+ALTER TABLE [dbo].[DraftHighlight]  WITH CHECK ADD  CONSTRAINT [FK_DraftHighlight_User] FOREIGN KEY([UserId])
+REFERENCES [dbo].[User] ([UserId])
+GO
+
+ALTER TABLE [dbo].[DraftHighlight] CHECK CONSTRAINT [FK_DraftHighlight_User]
+GO
+
+
+ALTER TABLE [dbo].[DraftHighlight]
+ADD	[AddTimestamp] [datetime] NOT NULL;
+GO
+
+ALTER TABLE [dbo].[DraftHighlight]
+ADD	[LastUpdateTimestamp] [datetime] NOT NULL;
+GO
+
+
+
+
+/****** Object:  Table [dbo].[PlayerHighlight]    Script Date: 7/22/2022 10:55:35 PM ******/
+ALTER TABLE [dbo].[PlayerHighlight]
+ADD [DraftHighlightId] [int] NULL;
+GO
+
+
+/****** Object:  Index [UQ_DraftUserPlayer]    Script Date: 7/22/2022 10:57:11 PM ******/
+ALTER TABLE [dbo].[PlayerHighlight] DROP CONSTRAINT [UQ_DraftUserPlayer]
+GO
+
+/****** Object:  Index [UQ_DraftUserPlayer]    Script Date: 7/22/2022 10:57:11 PM ******/
+ALTER TABLE [dbo].[PlayerHighlight] ADD  CONSTRAINT [UQ_DraftUserPlayer] UNIQUE NONCLUSTERED 
+(
+	[DraftId] ASC,
+	[UserId] ASC,
+	[PlayerId] ASC,
+	[DraftHighlightId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+
+
+ALTER TABLE [dbo].[PlayerHighlight]  WITH CHECK ADD  CONSTRAINT [FK_PlayerHighlight_DraftHighlight] FOREIGN KEY([DraftHighlightId])
+REFERENCES [dbo].[DraftHighlight] ([DraftHighlightId])
+GO
+
+
+
+
+
+COMMIT TRANSACTION;
+
+
+
+
+
+
+
+/* Below run in Production on 7/22/2022 */
 
 
 

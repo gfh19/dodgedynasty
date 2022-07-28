@@ -55,6 +55,8 @@ namespace DodgeDynasty.Models.Types
 		[JsonProperty()]
 		public bool LockHighlighting { get; set; }
 		[JsonProperty()]
+		public string DraftHighlightId { get; set; }
+		[JsonProperty()]
 		public string HighlightColor { get; set; }
 		[JsonProperty()]
 		public bool IsComparingRanks { get; set; }

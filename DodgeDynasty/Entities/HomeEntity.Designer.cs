@@ -61,6 +61,9 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerAdjustment_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.User), "PlayerAdjustment", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerAdjustment), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_Rank_AutoImport", "AutoImport", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.AutoImport), "Rank", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.Rank), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_UserPreferences_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.User), "UserPreference", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.UserPreference), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_DraftHighlight_Draft", "Draft", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.Draft), "DraftHighlight", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.DraftHighlight), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_DraftHighlight_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.User), "DraftHighlight", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.DraftHighlight), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerHighlight_DraftHighlight", "DraftHighlight", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.DraftHighlight), "PlayerHighlight", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerHighlight), true)]
 
 #endregion
 
@@ -671,6 +674,22 @@ namespace DodgeDynasty.Entities
             }
         }
         private ObjectSet<UserPreference> _UserPreferences;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<DraftHighlight> DraftHighlights
+        {
+            get
+            {
+                if ((_DraftHighlights == null))
+                {
+                    _DraftHighlights = base.CreateObjectSet<DraftHighlight>("DraftHighlights");
+                }
+                return _DraftHighlights;
+            }
+        }
+        private ObjectSet<DraftHighlight> _DraftHighlights;
 
         #endregion
 
@@ -954,6 +973,14 @@ namespace DodgeDynasty.Entities
         public void AddToUserPreferences(UserPreference userPreference)
         {
             base.AddObject("UserPreferences", userPreference);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the DraftHighlights EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToDraftHighlights(DraftHighlight draftHighlight)
+        {
+            base.AddObject("DraftHighlights", draftHighlight);
         }
 
         #endregion
@@ -4290,6 +4317,28 @@ namespace DodgeDynasty.Entities
                 }
             }
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_DraftHighlight_Draft", "DraftHighlight")]
+        public EntityCollection<DraftHighlight> DraftHighlights
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<DraftHighlight>("HomeModel.FK_DraftHighlight_Draft", "DraftHighlight");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DraftHighlight>("HomeModel.FK_DraftHighlight_Draft", "DraftHighlight", value);
+                }
+            }
+        }
 
         #endregion
 
@@ -4641,6 +4690,316 @@ namespace DodgeDynasty.Entities
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<League>("HomeModel.FK_DraftChat_League", "League", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="HomeModel", Name="DraftHighlight")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class DraftHighlight : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new DraftHighlight object.
+        /// </summary>
+        /// <param name="draftHighlightId">Initial value of the DraftHighlightId property.</param>
+        /// <param name="userId">Initial value of the UserId property.</param>
+        /// <param name="draftYear">Initial value of the DraftYear property.</param>
+        /// <param name="addTimestamp">Initial value of the AddTimestamp property.</param>
+        /// <param name="lastUpdateTimestamp">Initial value of the LastUpdateTimestamp property.</param>
+        public static DraftHighlight CreateDraftHighlight(global::System.Int32 draftHighlightId, global::System.Int32 userId, global::System.Int16 draftYear, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp)
+        {
+            DraftHighlight draftHighlight = new DraftHighlight();
+            draftHighlight.DraftHighlightId = draftHighlightId;
+            draftHighlight.UserId = userId;
+            draftHighlight.DraftYear = draftYear;
+            draftHighlight.AddTimestamp = addTimestamp;
+            draftHighlight.LastUpdateTimestamp = lastUpdateTimestamp;
+            return draftHighlight;
+        }
+
+        #endregion
+
+        #region Simple Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 DraftHighlightId
+        {
+            get
+            {
+                return _DraftHighlightId;
+            }
+            set
+            {
+                if (_DraftHighlightId != value)
+                {
+                    OnDraftHighlightIdChanging(value);
+                    ReportPropertyChanging("DraftHighlightId");
+                    _DraftHighlightId = StructuralObject.SetValidValue(value, "DraftHighlightId");
+                    ReportPropertyChanged("DraftHighlightId");
+                    OnDraftHighlightIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _DraftHighlightId;
+        partial void OnDraftHighlightIdChanging(global::System.Int32 value);
+        partial void OnDraftHighlightIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 UserId
+        {
+            get
+            {
+                return _UserId;
+            }
+            set
+            {
+                OnUserIdChanging(value);
+                ReportPropertyChanging("UserId");
+                _UserId = StructuralObject.SetValidValue(value, "UserId");
+                ReportPropertyChanged("UserId");
+                OnUserIdChanged();
+            }
+        }
+        private global::System.Int32 _UserId;
+        partial void OnUserIdChanging(global::System.Int32 value);
+        partial void OnUserIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int16 DraftYear
+        {
+            get
+            {
+                return _DraftYear;
+            }
+            set
+            {
+                OnDraftYearChanging(value);
+                ReportPropertyChanging("DraftYear");
+                _DraftYear = StructuralObject.SetValidValue(value, "DraftYear");
+                ReportPropertyChanged("DraftYear");
+                OnDraftYearChanged();
+            }
+        }
+        private global::System.Int16 _DraftYear;
+        partial void OnDraftYearChanging(global::System.Int16 value);
+        partial void OnDraftYearChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> DraftId
+        {
+            get
+            {
+                return _DraftId;
+            }
+            set
+            {
+                OnDraftIdChanging(value);
+                ReportPropertyChanging("DraftId");
+                _DraftId = StructuralObject.SetValidValue(value, "DraftId");
+                ReportPropertyChanged("DraftId");
+                OnDraftIdChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _DraftId;
+        partial void OnDraftIdChanging(Nullable<global::System.Int32> value);
+        partial void OnDraftIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String QueueName
+        {
+            get
+            {
+                return _QueueName;
+            }
+            set
+            {
+                OnQueueNameChanging(value);
+                ReportPropertyChanging("QueueName");
+                _QueueName = StructuralObject.SetValidValue(value, true, "QueueName");
+                ReportPropertyChanged("QueueName");
+                OnQueueNameChanged();
+            }
+        }
+        private global::System.String _QueueName;
+        partial void OnQueueNameChanging(global::System.String value);
+        partial void OnQueueNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime AddTimestamp
+        {
+            get
+            {
+                return _AddTimestamp;
+            }
+            set
+            {
+                OnAddTimestampChanging(value);
+                ReportPropertyChanging("AddTimestamp");
+                _AddTimestamp = StructuralObject.SetValidValue(value, "AddTimestamp");
+                ReportPropertyChanged("AddTimestamp");
+                OnAddTimestampChanged();
+            }
+        }
+        private global::System.DateTime _AddTimestamp;
+        partial void OnAddTimestampChanging(global::System.DateTime value);
+        partial void OnAddTimestampChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime LastUpdateTimestamp
+        {
+            get
+            {
+                return _LastUpdateTimestamp;
+            }
+            set
+            {
+                OnLastUpdateTimestampChanging(value);
+                ReportPropertyChanging("LastUpdateTimestamp");
+                _LastUpdateTimestamp = StructuralObject.SetValidValue(value, "LastUpdateTimestamp");
+                ReportPropertyChanged("LastUpdateTimestamp");
+                OnLastUpdateTimestampChanged();
+            }
+        }
+        private global::System.DateTime _LastUpdateTimestamp;
+        partial void OnLastUpdateTimestampChanging(global::System.DateTime value);
+        partial void OnLastUpdateTimestampChanged();
+
+        #endregion
+
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_DraftHighlight_Draft", "Draft")]
+        public Draft Draft
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Draft>("HomeModel.FK_DraftHighlight_Draft", "Draft").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Draft>("HomeModel.FK_DraftHighlight_Draft", "Draft").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Draft> DraftReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Draft>("HomeModel.FK_DraftHighlight_Draft", "Draft");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Draft>("HomeModel.FK_DraftHighlight_Draft", "Draft", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_DraftHighlight_User", "User")]
+        public User User
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_DraftHighlight_User", "User").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_DraftHighlight_User", "User").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<User> UserReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_DraftHighlight_User", "User");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("HomeModel.FK_DraftHighlight_User", "User", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_PlayerHighlight_DraftHighlight", "PlayerHighlight")]
+        public EntityCollection<PlayerHighlight> PlayerHighlights
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<PlayerHighlight>("HomeModel.FK_PlayerHighlight_DraftHighlight", "PlayerHighlight");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PlayerHighlight>("HomeModel.FK_PlayerHighlight_DraftHighlight", "PlayerHighlight", value);
                 }
             }
         }
@@ -9398,6 +9757,30 @@ namespace DodgeDynasty.Entities
         private global::System.DateTime _LastUpdateTimestamp;
         partial void OnLastUpdateTimestampChanging(global::System.DateTime value);
         partial void OnLastUpdateTimestampChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> DraftHighlightId
+        {
+            get
+            {
+                return _DraftHighlightId;
+            }
+            set
+            {
+                OnDraftHighlightIdChanging(value);
+                ReportPropertyChanging("DraftHighlightId");
+                _DraftHighlightId = StructuralObject.SetValidValue(value, "DraftHighlightId");
+                ReportPropertyChanged("DraftHighlightId");
+                OnDraftHighlightIdChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _DraftHighlightId;
+        partial void OnDraftHighlightIdChanging(Nullable<global::System.Int32> value);
+        partial void OnDraftHighlightIdChanged();
 
         #endregion
 
@@ -9551,6 +9934,44 @@ namespace DodgeDynasty.Entities
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Draft>("HomeModel.FK_PlayerHighlight_Draft", "Draft", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_PlayerHighlight_DraftHighlight", "DraftHighlight")]
+        public DraftHighlight DraftHighlight
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<DraftHighlight>("HomeModel.FK_PlayerHighlight_DraftHighlight", "DraftHighlight").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<DraftHighlight>("HomeModel.FK_PlayerHighlight_DraftHighlight", "DraftHighlight").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<DraftHighlight> DraftHighlightReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<DraftHighlight>("HomeModel.FK_PlayerHighlight_DraftHighlight", "DraftHighlight");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<DraftHighlight>("HomeModel.FK_PlayerHighlight_DraftHighlight", "DraftHighlight", value);
                 }
             }
         }
@@ -11098,6 +11519,30 @@ namespace DodgeDynasty.Entities
         private global::System.Boolean _HideTE;
         partial void OnHideTEChanging(global::System.Boolean value);
         partial void OnHideTEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> DraftHighlightId
+        {
+            get
+            {
+                return _DraftHighlightId;
+            }
+            set
+            {
+                OnDraftHighlightIdChanging(value);
+                ReportPropertyChanging("DraftHighlightId");
+                _DraftHighlightId = StructuralObject.SetValidValue(value, "DraftHighlightId");
+                ReportPropertyChanged("DraftHighlightId");
+                OnDraftHighlightIdChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _DraftHighlightId;
+        partial void OnDraftHighlightIdChanging(Nullable<global::System.Int32> value);
+        partial void OnDraftHighlightIdChanged();
 
         #endregion
 
@@ -12427,6 +12872,28 @@ namespace DodgeDynasty.Entities
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<UserPreference>("HomeModel.FK_UserPreferences_User", "UserPreference", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_DraftHighlight_User", "DraftHighlight")]
+        public EntityCollection<DraftHighlight> DraftHighlights
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<DraftHighlight>("HomeModel.FK_DraftHighlight_User", "DraftHighlight");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DraftHighlight>("HomeModel.FK_DraftHighlight_User", "DraftHighlight", value);
                 }
             }
         }

@@ -161,7 +161,7 @@ namespace DodgeDynasty.UIHelpers
 			{
 				draftIdInt = Convert.ToInt32(draftId);
 			}
-			PlayerRankModel playerRankModel = DraftFactory.GetEmptyPlayerRankModel(draftIdInt);
+			PlayerRankModel playerRankModel = DraftFactory.GetEmptyPlayerRankModel(draftIdInt, options);
 			int rankId = 0;
 			if (!string.IsNullOrEmpty(id))
 			{
