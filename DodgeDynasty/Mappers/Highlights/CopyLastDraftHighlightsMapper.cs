@@ -37,6 +37,7 @@ namespace DodgeDynasty.Mappers.Highlights
 					AddTimestamp = DateTime.Now,
 					LastUpdateTimestamp = DateTime.Now
 				}));
+				HomeEntity.DraftHighlights.FirstOrDefault(dh => dh.DraftHighlightId == model.NewDraftHighlightId).LastUpdateTimestamp = DateTime.Now;
 				HomeEntity.SaveChanges();
 			}
 		}

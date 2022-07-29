@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using DodgeDynasty.Entities;
 using DodgeDynasty.Mappers.Drafts;
 using DodgeDynasty.Models;
@@ -19,8 +20,9 @@ namespace DodgeDynasty.Mappers.Highlights
 			foreach (var playerHighlight in currentPlayerHighlights)
 			{
 				HomeEntity.PlayerHighlights.DeleteObject(playerHighlight);
-				HomeEntity.SaveChanges();
 			}
+			HomeEntity.DraftHighlights.FirstOrDefault(dh => dh.DraftHighlightId == model.DraftHighlightId).LastUpdateTimestamp = DateTime.Now;
+			HomeEntity.SaveChanges();
 		}
 	}
 }

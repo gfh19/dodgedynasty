@@ -11,5 +11,6 @@ namespace DodgeDynasty.Models.Highlights
 		public int DraftHighlightId { get; set; }
 		public int UpdatedPlayerId { get; set; }
 		public int? PreviousPlayerId { get; set; }
+		public int? NextPlayerId { get; set; }
 	}
 }

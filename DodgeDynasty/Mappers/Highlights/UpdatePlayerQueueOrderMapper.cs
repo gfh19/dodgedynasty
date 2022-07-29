@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using DodgeDynasty.Mappers.Drafts;
 using DodgeDynasty.Models;
 using DodgeDynasty.Models.Highlights;
@@ -17,7 +18,22 @@ namespace DodgeDynasty.Mappers.Highlights
 
 			if (playerHighlights != null && playerHighlights.Any())
 			{
-				if (model.PreviousPlayerId != null)
+				if (model.NextPlayerId != null)
+				{
+					var nextRankNum = playerHighlights.FirstOrDefault(o => o.PlayerId == model.NextPlayerId).RankNum;
+					var updatedPlayer = playerHighlights.Where(o => o.PlayerId == model.UpdatedPlayerId).FirstOrDefault();
+					updatedPlayer.RankNum = nextRankNum;
+					var laterPlayers = playerHighlights
+						.Where(o => o.RankNum >= nextRankNum && o.PlayerId != model.UpdatedPlayerId)
+						.OrderBy(o => o.RankNum).ToList();
+					var laterPlayerRankNum = nextRankNum + 1;
+					foreach (var player in laterPlayers)
+					{
+						player.RankNum = laterPlayerRankNum++;
+						player.LastUpdateTimestamp = DateTime.Now;
+					}
+				}
+				else if (model.PreviousPlayerId != null)
 				{
 					var prevRankNum = playerHighlights.FirstOrDefault(o => o.PlayerId == model.PreviousPlayerId).RankNum;
 					var updatedPlayer = playerHighlights.Where(o => o.PlayerId == model.UpdatedPlayerId).FirstOrDefault();
@@ -29,6 +45,7 @@ namespace DodgeDynasty.Mappers.Highlights
 					foreach (var player in laterPlayers)
 					{
 						player.RankNum = laterPlayerRankNum++;
+						player.LastUpdateTimestamp = DateTime.Now;
 					}
 				}
 				else
@@ -41,8 +58,10 @@ namespace DodgeDynasty.Mappers.Highlights
 					foreach (var player in laterPlayers)
 					{
 						player.RankNum = laterPlayerRankNum++;
+						player.LastUpdateTimestamp = DateTime.Now;
 					}
 				}
+				HomeEntity.DraftHighlights.FirstOrDefault(dh => dh.DraftHighlightId == model.DraftHighlightId).LastUpdateTimestamp = DateTime.Now;
 				HomeEntity.SaveChanges();
 			}
 		}

@@ -41,6 +41,7 @@ namespace DodgeDynasty.Mappers.Highlights
 				};
 				HomeEntity.PlayerHighlights.AddObject(playerHighlight);
 			}
+			HomeEntity.DraftHighlights.FirstOrDefault(dh => dh.DraftHighlightId == model.DraftHighlightId).LastUpdateTimestamp = DateTime.Now;
 			HomeEntity.SaveChanges();
 		}
 	}

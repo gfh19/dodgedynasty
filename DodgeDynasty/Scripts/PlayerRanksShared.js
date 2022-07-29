@@ -561,23 +561,20 @@ function bindDeleteAllHighlightingDialog() {
 }
 
 function bindHighlightQueueOptions() {
-	var defaultQueueName = $(".hq-header").text();
-	if (!defaultQueueName || defaultQueueName == "Highlighted Queue") {
-		defaultQueueName = $(".hq-league-name").val();
-	}
-	$("#txtChangeQueueName").val(defaultQueueName);
+	syncHighlightQueueCookie();
 
-	var hqOptionsDlg;
 	$("#btnHQOptions").unbind("click");
 	$("#btnHQOptions").click(function (e) {
 		e.preventDefault();
+		setDefaultQueueName();
 		setDefaultNewQueueName();
 
-		hqOptionsDlg = $("#hqOptionsDialog").dialog({
+		$("#hqOptionsDialog").dialog({
 			resizable: false,
 			height: 'auto',
 			width: '240px',
 			modal: true,
+			autoOpen: true,
 			buttons: [
 				{ text: "Cancel", click: function () { $(this).dialog("close"); } },
 			]
@@ -592,7 +589,7 @@ function bindHighlightQueueOptions() {
 			DraftHighlightId: getDraftHQId(),
 			QueueName: $("#txtChangeQueueName").val()
 		};
-		addEditHighlightQueue(model, null, hqOptionsDlg);
+		addEditHighlightQueue(model, null);
 	});
 
 	$("#btnAddNewQueue").unbind("click");
@@ -605,11 +602,22 @@ function bindHighlightQueueOptions() {
 		var newModel = {
 			QueueName: $("#txtNewQueueName").val()
 		};
-		addEditHighlightQueue(oldModel, newModel, hqOptionsDlg);
+		addEditHighlightQueue(oldModel, newModel);
 	});
 }
 
-function addEditHighlightQueue(oldModel, newModel, dlg) {
+function isHQOptionsDialogOpen() {
+	return $("#hqOptionsDialog").dialog({ autoOpen: false }).dialog("isOpen");
+}
+
+function syncHighlightQueueCookie() {
+	if (getDraftHQId() && getDraftHQId() != clientCookieOptions["DraftHighlightId"]) {
+		clientCookieOptions["DraftHighlightId"] = getDraftHQId();
+		setCookieOptions(clientCookieOptions);
+	}
+}
+
+function addEditHighlightQueue(oldModel, newModel) {
 	addWaitCursor();
 	ajaxPost({ oldModel: oldModel, newModel: newModel }, "Rank/AddEditHighlightQueue", function (data) {
 		var response = JSON.parse(data);
@@ -622,12 +630,24 @@ function addEditHighlightQueue(oldModel, newModel, dlg) {
 		else {
 			refreshHighlightQueue();
 		}
-		dlg.dialog("close");
+		if (isHQOptionsDialogOpen()) {
+			$("#hqOptionsDialog").dialog("close");
+		}
 		removeWaitCursor();
 	}, function () {
-		dlg.dialog("close");
+		if (isHQOptionsDialogOpen()) {
+			$("#hqOptionsDialog").dialog("close");
+		}
 		removeWaitCursor();
 	});
+}
+
+function setDefaultQueueName() {
+	var defaultQueueName = $(".hq-header").text();
+	if (!defaultQueueName || defaultQueueName == "Highlighted Queue") {
+		defaultQueueName = $(".hq-league-name").val();
+	}
+	$("#txtChangeQueueName").val(defaultQueueName);
 }
 
 function setDefaultNewQueueName() {
@@ -698,14 +718,19 @@ function bindSortableQueue() {
 		scrollSensitivity: 25,
 		update: function (event, ui) {
 			var prevRow = $(ui.item).prev("tr[data-player-id]");
-			var prevPlayerId = "";
+			var nextRow = $(ui.item).next("tr[data-player-id]");
+			var prevPlayerId = "", nextPlayerId = "";
 			if (prevRow) {
 				prevPlayerId = $(prevRow).attr("data-player-id");
+			}
+			if (nextRow) {
+				nextPlayerId = $(nextRow).attr("data-player-id");
 			}
 			var playerQueueOrderModel = {
 				DraftHighlightId: getDraftHQId(),
 				UpdatedPlayerId: $(ui.item).attr("data-player-id"),
-				PreviousPlayerId: prevPlayerId
+				PreviousPlayerId: prevPlayerId,
+				NextPlayerId: nextPlayerId
 			}
 			updatePlayerQueueOrder(playerQueueOrderModel);
 		}
