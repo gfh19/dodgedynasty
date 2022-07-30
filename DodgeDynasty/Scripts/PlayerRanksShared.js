@@ -715,7 +715,7 @@ function toggleDeleteHighlightDisplay() {
 		shouldDisplay = false;
 	}
 	toggleDisplay($(".hq-delete-span"), shouldDisplay);
-	toggleDisplay($(".hq-delete-queue-span"), !shouldDisplay);
+	toggleDisplay($(".hq-delete-queue-span"), !anyHighlightedPlayers);
 }
 
 function bindViewCurrentOtherDraftHighlights() {

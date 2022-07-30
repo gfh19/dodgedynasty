@@ -1675,8 +1675,14 @@ ul.menu li a.current-page
 	font-size: 13px;
 	white-space: normal;
 }
+.hq-display {
+	padding-bottom: 0px;
+	margin-bottom: 0px;
+}
 .queue-table {
 	min-width: 228px;
+	padding-bottom: 0px;
+	margin-bottom: 0px;
 }
 #btnHQOptions {
 	font-size: 12px;
