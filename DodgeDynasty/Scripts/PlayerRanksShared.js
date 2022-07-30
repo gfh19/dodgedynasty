@@ -1,7 +1,7 @@
 ﻿var ranksWindow;
 var clientCookieOptions = null;
 var lastQueueUpdate = null;
-var playerRanksBroadcastFn = null;
+var playerRanksRefreshCleanupFn = null;
 
 function loadPlayerRanksShared() {
 	callRefreshPageWithPickTimer(prRefreshPartial + getRankIdUrlPath(), replaceElementId,
@@ -33,14 +33,16 @@ function updateRanksPageWithPick(pickInfo) {
 	}
 }
 
-function fullRefreshRanksPage() {
+function fullRefreshRanksPage(miscCleanupFn) {
 	callRefreshPage(prRefreshPartial + getRankIdUrlPath(), replaceElementId,
 		function () {
-			if (playerRanksBroadcastFn) { playerRanksBroadcastFn(); }
+			if (playerRanksRefreshCleanupFn) { playerRanksRefreshCleanupFn(); }
 			restoreHighlighting();
+			if (miscCleanupFn) { miscCleanupFn(); }
 		}, function () {
-			if (playerRanksBroadcastFn) { playerRanksBroadcastFn(); }
+			if (playerRanksRefreshCleanupFn) { playerRanksRefreshCleanupFn(); }
 			restoreHighlighting();
+			if (miscCleanupFn) { miscCleanupFn(); }
 		}, suspendHighlighting);
 }
 
@@ -251,8 +253,8 @@ function toggleExpandTableRows(table, expandRows, linkId) {
 	}
 }
 
-function getRankIdUrlPath() {
-	var rankIdAndCompQS = "";
+function getRankIdUrlPath(urlString) {
+	var rankIdAndCompQS = urlString || "";
 	var rankId = $(".rank-name").attr("data-rank-id");
 	if (rankId != undefined && rankId.length > 0) {
 		rankIdAndCompQS = addQSValue(rankIdAndCompQS, "rankId=" + rankId);
@@ -485,7 +487,8 @@ function removePlayerHighlighting(playerRow) {
 
 function refreshHighlightQueue(updateId) {
 	var isBestAvailable = isBestAvailablePage();
-	ajaxGet("Draft/HighlightQueueInnerPartial?isBestAvailable=" + isBestAvailable, function (response) {
+	var refreshUrl = "Draft/HighlightQueueInnerPartial?isBestAvailable=" + isBestAvailable;
+	ajaxGet(getRankIdUrlPath(refreshUrl), function (response) {
 		//updateId - For throttling multiple highlight clicks down to only last one
 		if (lastQueueUpdate == updateId || lastQueueUpdate == null) {
 			replaceWith("#highlightQueueInnerPartial", response);
@@ -548,12 +551,11 @@ function bindDeleteAllHighlightingDialog() {
 					{
 						text: "OK",
 						click: function () {
-							addWaitCursor();
+							showPleaseWait();
 							ajaxPost({ DraftHighlightId: getDraftHQId() }, "Rank/DeleteAllHighlights", function () {
 								$("#ExpandQueue[data-expand=true]").click();	//Collapse if expanded
-								fullRefreshRanksPage();
-								removeWaitCursor();
-							}, removeWaitCursor);
+								fullRefreshRanksPage(closePleaseWait);
+							}, closePleaseWait);
 							$(this).dialog("close");
 						}
 					},
@@ -576,12 +578,11 @@ function bindDeleteHighlightQueueDialog() {
 				{
 					text: "OK",
 					click: function () {
-						addWaitCursor();
+						showPleaseWait();
 						ajaxPost({ DraftHighlightId: getDraftHQId() }, "Rank/DeleteHighlightQueue", function () {
 							$("#ExpandQueue[data-expand=true]").click();	//Collapse if expanded
-							fullRefreshRanksPage();
-							removeWaitCursor();
-						}, removeWaitCursor);
+							fullRefreshRanksPage(closePleaseWait);
+						}, closePleaseWait);
 						$(this).dialog("close");
 					}
 				},
@@ -650,27 +651,24 @@ function syncHighlightQueueCookie() {
 }
 
 function addEditHighlightQueue(oldModel, newModel) {
-	addWaitCursor();
+	if (isHQOptionsDialogOpen()) {
+		$("#hqOptionsDialog").dialog("close");
+	}
+	showPleaseWait();
 	ajaxPost({ oldModel: oldModel, newModel: newModel }, "Rank/AddEditHighlightQueue", function (data) {
 		var response = JSON.parse(data);
 		if (response.queueId && response.queueId != clientCookieOptions["DraftHighlightId"]) {
 			clientCookieOptions["DraftHighlightId"] = response.queueId;
 			ajaxPost(clientCookieOptions, "Rank/PostPlayerRankOptions", function () {
-				fullRefreshRanksPage();
+				fullRefreshRanksPage(closePleaseWait);
 			});
 		}
 		else {
 			refreshHighlightQueue();
+			closePleaseWait();
 		}
-		if (isHQOptionsDialogOpen()) {
-			$("#hqOptionsDialog").dialog("close");
-		}
-		removeWaitCursor();
 	}, function () {
-		if (isHQOptionsDialogOpen()) {
-			$("#hqOptionsDialog").dialog("close");
-		}
-		removeWaitCursor();
+		closePleaseWait();
 	});
 }
 
@@ -721,13 +719,12 @@ function toggleDeleteHighlightDisplay() {
 function bindViewCurrentOtherDraftHighlights() {
 	$(".hq-view-current-dh").click(function (e) {
 		e.preventDefault();
-		addWaitCursor();
+		showPleaseWait();
 		setDraftHQId($(this).attr("data-hq-dh-id"));
 		clientCookieOptions["DraftHighlightId"] = getDraftHQId();
 		ajaxPost(clientCookieOptions, "Rank/PostPlayerRankOptions", function () {
-			fullRefreshRanksPage();
-			removeWaitCursor();
-		});
+			fullRefreshRanksPage(closePleaseWait);
+		}, closePleaseWait);
 	});
 }
 
@@ -739,7 +736,10 @@ function bindCopyLastDraftHighlights() {
 }
 
 function copyLastDraftHighlights(hqDHId) {
-	ajaxPost({ LastDraftHighlightId: hqDHId, NewDraftHighlightId: getDraftHQId() }, "Rank/CopyLastDraftHighlights", fullRefreshRanksPage);
+	showPleaseWait();
+	ajaxPost({ LastDraftHighlightId: hqDHId, NewDraftHighlightId: getDraftHQId() }, "Rank/CopyLastDraftHighlights", function () {
+		fullRefreshRanksPage(closePleaseWait);
+	}, closePleaseWait);
 }
 
 //jQuery UI Sortable for Drag & drop
@@ -899,17 +899,17 @@ function bindCompRankPosition(select) {
 	$(select).change(function (e) {
 		var crPosition = $(select).val();
 		$(".rank-name").attr("data-compare-pos", crPosition);
-		playerRanksBroadcastFn = tempPlayerRanksRefreshFn;
+		playerRanksRefreshCleanupFn = tempPlayerRanksRefreshCleanupFn;
 		showPleaseWait();
 		fullRefreshRanksPage();
 	});
 }
 
-function tempPlayerRanksRefreshFn() {
+function tempPlayerRanksRefreshCleanupFn() {
 	closePleaseWait();
-	clearPlayerRanksBroadcastFn();
+	clearPlayerRanksRefreshCleanupFn();
 }
 
-function clearPlayerRanksBroadcastFn() {
-	playerRanksBroadcastFn = null;
+function clearPlayerRanksRefreshCleanupFn() {
+	playerRanksRefreshCleanupFn = null;
 }

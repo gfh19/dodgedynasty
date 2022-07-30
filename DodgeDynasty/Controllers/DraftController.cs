@@ -108,10 +108,10 @@ namespace DodgeDynasty.Controllers
 
 		[HttpGet]
 		[OwnerRankAccess]
-		public ActionResult HighlightQueueInnerPartial(bool isBestAvailable)
+		public ActionResult HighlightQueueInnerPartial(bool isBestAvailable, string rankId)
 		{
 			var helper = PlayerRankUIHelper.Instance;
-			var playerRankModel = helper.GetPlayerRankPartial(null, null, isBestAvailable, Request, Response);
+			var playerRankModel = helper.GetPlayerRankPartial(rankId, null, isBestAvailable, Request, Response);
 			return PartialView(Constants.Views.HighlightQueueInnerPartial, playerRankModel);
 		}
 
