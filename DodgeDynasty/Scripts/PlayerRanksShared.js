@@ -302,6 +302,8 @@ function toggleHighlighting(isQueueRefresh) {
 		bindEditHighlighting(".pr-empty-edit-link");
 		bindHighlightQueueOptions();
 		bindViewCurrentOtherDraftHighlights();
+		bindDeleteHighlightQueueDialog();
+		syncHighlightQueueCookie();
 	}
 }
 
@@ -528,8 +530,10 @@ function changeHighlightColor() {
 	$(colorSpan).removeClass();
 	$(colorSpan).addClass("hq-color-span");
 	$(colorSpan).addClass(newColor);
-	clientCookieOptions["HighlightColor"] = newColor;
-	setCookieOptions(clientCookieOptions);
+	if (clientCookieOptions["HighlightColor"] != newColor) {
+		clientCookieOptions["HighlightColor"] = newColor;
+		setCookieOptions(clientCookieOptions);
+	}
 }
 
 function bindDeleteAllHighlightingDialog() {
@@ -554,6 +558,34 @@ function bindDeleteAllHighlightingDialog() {
 						}
 					},
 					{ text: "Cancel", click: function () { $(this).dialog("close"); } },
+			]
+		});
+		return false;
+	});
+}
+
+function bindDeleteHighlightQueueDialog() {
+	$(".hq-delete-queue-lnk").click(function (e) {
+		e.preventDefault();
+		$("#hqConfirmQueueDelete").dialog({
+			resizable: false,
+			height: 'auto',
+			width: '240px',
+			modal: true,
+			buttons: [
+				{
+					text: "OK",
+					click: function () {
+						addWaitCursor();
+						ajaxPost({ DraftHighlightId: getDraftHQId() }, "Rank/DeleteHighlightQueue", function () {
+							$("#ExpandQueue[data-expand=true]").click();	//Collapse if expanded
+							fullRefreshRanksPage();
+							removeWaitCursor();
+						}, removeWaitCursor);
+						$(this).dialog("close");
+					}
+				},
+				{ text: "Cancel", click: function () { $(this).dialog("close"); } },
 			]
 		});
 		return false;
@@ -683,6 +715,7 @@ function toggleDeleteHighlightDisplay() {
 		shouldDisplay = false;
 	}
 	toggleDisplay($(".hq-delete-span"), shouldDisplay);
+	toggleDisplay($(".hq-delete-queue-span"), !shouldDisplay);
 }
 
 function bindViewCurrentOtherDraftHighlights() {

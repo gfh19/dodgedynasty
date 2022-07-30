@@ -1654,7 +1654,7 @@ ul.menu li a.current-page
 .hq-player-th {
 	min-width: 110px;
 }
-.hq-delete-span {
+.hq-delete-span, .hq-delete-queue-span {
 	display: block;
 	font-size: 11px;
 	padding-top: 4px;

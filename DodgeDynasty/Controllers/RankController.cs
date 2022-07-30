@@ -125,6 +125,14 @@ namespace DodgeDynasty.Controllers
 			return Json(new { queueId = responseId });
 		}
 
+		[HttpPost]
+		public HttpStatusCode DeleteHighlightQueue(int draftHighlightId)
+		{
+			DeleteHighlightQueueMapper mapper = Factory.Create<DeleteHighlightQueueMapper>();
+			mapper.UpdateEntity(new DraftHighlightModel { DraftHighlightId = draftHighlightId });
+			return HttpStatusCode.OK;
+		}
+
 		#endregion Highlighting
 
 		//May not be necessary...

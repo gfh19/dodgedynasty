@@ -243,6 +243,7 @@
     <Compile Include="Mappers\Admin\AddUserMapper.cs" />
     <Compile Include="Mappers\Audio\AudioCountMapper.cs" />
     <Compile Include="Mappers\Highlights\AddEditHighlightQueueMapper.cs" />
+    <Compile Include="Mappers\Highlights\DeleteHighlightQueueMapper.cs" />
     <Compile Include="Mappers\RankAdjustments\AdminEditRankMapper.cs" />
     <Compile Include="Mappers\RankAdjustments\AdminAddRankMapper.cs" />
     <Compile Include="Mappers\Admin\AdminManageDraftsMapper.cs" />
