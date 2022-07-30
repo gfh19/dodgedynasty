@@ -654,7 +654,7 @@ function addEditHighlightQueue(oldModel, newModel) {
 	if (isHQOptionsDialogOpen()) {
 		$("#hqOptionsDialog").dialog("close");
 	}
-	showPleaseWait();
+	showPleaseWait(null, 300);
 	ajaxPost({ oldModel: oldModel, newModel: newModel }, "Rank/AddEditHighlightQueue", function (data) {
 		var response = JSON.parse(data);
 		if (response.queueId && response.queueId != clientCookieOptions["DraftHighlightId"]) {

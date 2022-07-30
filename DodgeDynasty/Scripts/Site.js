@@ -16,7 +16,7 @@ var touchScrollLeft = null;
 var lastPickAudio = null;
 var pickAudioBed = null;
 var adminLastPickTime = null;
-var pleaseWaitTimer = 500;
+var pleaseWaitTimer = 1100;
 var pleaseWaitNeeded = false;
 var tickingClockAudio = null;
 var isTickingClockPlaying = false;
@@ -1248,14 +1248,15 @@ function isNullOrWhitespace(str) {
 
 /* Dialogs */
 
-function showPleaseWait(title) {
+function showPleaseWait(title, timer) {
 	addWaitCursor();
 	pleaseWaitNeeded = true;
+	timer = timer || pleaseWaitTimer;
 	setTimeout(function () {
 		if (pleaseWaitNeeded) {
 			showLoadingDialog(title);
 		}
-	}, pleaseWaitTimer);
+	}, timer);
 }
 
 function showConfirmDialog(dialogText, title, okFn, cancelFn, okText, cancelText) {
