@@ -1617,7 +1617,7 @@ ul.menu li a.current-page
 
 .pr-highlight-section {
 	display: inline-block;
-	min-height: 389.5px;
+	min-height: 399.5px;
 	border: 2px solid darkblue;
 	border-radius: 6px;
 	-webkit-border-radius: 6px;
@@ -1636,11 +1636,14 @@ ul.menu li a.current-page
 	border-radius: 4px;
 	-webkit-border-radius: 4px;
 }
+.hq-header-section {
+	padding-top: 3px;
+}
 .hq-header {
 	display: inline-block;
 	font-size: inherit;
 	font-weight: bold;
-	padding-top: 5px;
+	padding-top: 2px;
 	vertical-align: middle;
 	overflow: hidden;
 	max-width: 193px;
@@ -1662,7 +1665,7 @@ ul.menu li a.current-page
 	border-top: 1px solid black;
 }
 .hq-empty-msg, .hq-view-spacer {
-	width: 227px;
+	width: 229px;
 	white-space: normal;
 }
 .hq-view-spacer {
@@ -1687,7 +1690,7 @@ ul.menu li a.current-page
 #btnHQOptions {
 	font-size: 12px;
 	padding: 2px 5px;
-	margin: 5px 5px 6px 5px
+	margin: 4px 5px 6px 5px
 }
 #txtChangeQueueName, #txtNewQueueName {
 	width: 195px;
@@ -2895,6 +2898,7 @@ span.player-select
 		/*    -------- Highlighting */
 	.pr-highlight-section {
 		display: inline-block;
+		min-height: 389.5px;
 		margin-right: 0px;
 	}
 	.pr-highlight-section td {
@@ -2905,6 +2909,9 @@ span.player-select
 	}
 	.hq-empty-msg, .hq-view-spacer {
 		width: 220px;
+	}
+	.queue-table {
+		min-width: 219px;
 	}
 		/*    -------- Compare Ranks */
 	.cr-add-compare {
