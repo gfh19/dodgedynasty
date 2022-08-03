@@ -1,8 +1,60 @@
-﻿/* Below run in Production on 7/23/2022 */
+﻿
 
 /*TODO:  Make DraftYear in Draft table NOT NULL */
 /*TODO:  Move existing PlayerHighlights to Archive and delete existing */
 /*TODO:  Convert PlayerRankOptions SQL storage to Json blob (plus ?all? IDs as columns? */
+
+
+
+
+/* Below run in Production on 7/30/2022 */
+
+SET XACT_ABORT ON
+BEGIN TRANSACTION;
+
+
+
+INSERT INTO dbo.ByeWeek VALUES ('2022', 'ARI', '13', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2022', 'ATL', '14', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2022', 'BAL', '10', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2022', 'BUF', '7', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2022', 'CAR', '13', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2022', 'CHI', '14', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2022', 'CIN', '10', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2022', 'CLE', '9', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2022', 'DAL', '9', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2022', 'DEN', '9', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2022', 'DET', '6', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2022', 'GB', '14', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2022', 'HOU', '6', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2022', 'IND', '14', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2022', 'JAX', '11', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2022', 'KC', '8', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2022', 'LV', '6', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2022', 'LAC', '8', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2022', 'LAR', '7', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2022', 'MIA', '11', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2022', 'MIN', '7', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2022', 'NE', '10', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2022', 'NO', '14', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2022', 'NYG', '9', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2022', 'NYJ', '10', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2022', 'PHI', '7', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2022', 'PIT', '9', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2022', 'SF', '9', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2022', 'SEA', '11', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2022', 'TB', '11', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2022', 'TEN', '6', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2022', 'WAS', '14', getdate(), getdate());
+
+
+
+
+COMMIT TRANSACTION;
+
+
+
+
 
 
 
@@ -521,6 +573,9 @@ Player names to look out for:
 
   - Deactivate All But 32 DEFs
   - BYE WEEKS!
+        - e.g. \Google Drive\Fantasy Football\2022 Bye Weeks.xlsx
+        - http://www.fantasypros.com/nfl/bye-weeks.php
+           - No more jQuery format, just copy/paste from website to spreadsheet now
   - Also, when AutoImporting ranks, start with a Fantasypros one for better player names
   - Maybe clean out some Archive/History tables?
         7/22/2022:

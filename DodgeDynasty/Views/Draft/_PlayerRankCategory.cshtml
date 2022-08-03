@@ -60,7 +60,7 @@
 				<tr class="@((player.PickNum != null) ? ("ba-selected " + player.CssClass + ((Model.IsLoggedInUser(player.UserId) ? " you " : " "))) : "") @((player.HighlightClass != null ? "highlighted " + player.HighlightClass : " ")) ba-player-row" data-player-id="@player.PlayerId"><td>@player.RankNum</td>
 					@if (Model.AveragePlayerRank != null && !DodgeDynasty.Shared.Utilities.ToBool(historyMode))
 					{
-						<td>@string.Format("{0:0.##}", player.AvgRankNum)</td>
+						<td>@string.Format("{0:0.#}", player.AvgRankNum)</td>
 					}<td class="ba-player-name" data-player-id="@player.PlayerId">
 						@if (Model.IsDraftActive() && Model.IsUserTurn() && player.PickNum == null)
 						{

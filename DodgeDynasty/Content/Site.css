@@ -1348,6 +1348,10 @@ ul.menu li a.current-page
 	padding: 0px 1px 1px 1px;
 }
 
+.mobile-player-bye {
+	display: none;
+}
+
 /* Draft Team Display
 ----------------------------------------------------------*/
 
@@ -1868,7 +1872,7 @@ span.player-select
 	font-size: 14.5px;
 	width: 231px;
 }
-.clear-ranks {
+.clear-ranks, .delete-ranks {
 	display: inline-block;
 	margin-top: 8px;
 	font-size: 13px;
@@ -2877,6 +2881,9 @@ span.player-select
 	}
 	#draftDisplay .player-name {
 		font-size: 16px;
+	}
+	#draftDisplay .mobile-player-bye {
+		display: inline;
 	}
 
 	/* Best Available

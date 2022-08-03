@@ -68,6 +68,15 @@ namespace DodgeDynasty.Controllers
 			return playerRankModel.RankStatus;
 		}
 
+		[HttpGet]
+		[OwnerUpdateRankAccess]
+		public ActionResult DeleteRank(RankSetupModel model)
+		{
+			var mapper = Factory.Create<DeleteRankMapper>();
+			mapper.UpdateEntity(model);
+			return RedirectToAction(Constants.Views.RankingsList, "Draft");
+		}
+
 		#region Highlighting
 
 		[HttpPost]

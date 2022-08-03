@@ -92,7 +92,7 @@ namespace DodgeDynasty.UIHelpers
 				foreach (var compareRankId in options.CompareRankIds.Split(','))
 				{
 					int? rankId = Utilities.ToNullInt(compareRankId);
-					if (rankId == null || !accessModel.CanUserAccessRank(rankId.Value))
+					if (rankId == null || !accessModel.DoesRankExistAndCanUserAccess(rankId.Value))
 					{
 						ClearCompareRankIds(options, response);
 						isValid = false;
@@ -156,6 +156,7 @@ namespace DodgeDynasty.UIHelpers
 		public PlayerRankModel DetermineRankModel(string id, string draftId, PlayerRankOptions options, 
 			HttpResponseBase response, bool setCookie = true)
 		{
+			AccessModel accessModel = Factory.Create<AccessModel>();
 			int? draftIdInt = null;
 			if (!string.IsNullOrEmpty(draftId))
 			{
@@ -166,12 +167,15 @@ namespace DodgeDynasty.UIHelpers
 			if (!string.IsNullOrEmpty(id))
 			{
 				rankId = Convert.ToInt32(id);
-				//Access not checked due to "OwnerRankAccess" attribute check
+				if (!accessModel.DoesRankExistAndCanUserAccess(rankId))
+				{
+					rankId = 0;
+				}
 			}
 			else if (!string.IsNullOrEmpty(options.RankId))
 			{
 				rankId = Convert.ToInt32(options.RankId);
-				if (!new AccessModel().CanUserAccessRank(rankId))
+				if (!accessModel.DoesRankExistAndCanUserAccess(rankId))
 				{
 					rankId = 0;
 				}

@@ -13,17 +13,17 @@ var _playerNameSubs = {
 var toggleUnrankedTimeout = null;
 var changeUnrankedListTimeout = null;
 
- $(function () {
+$(function () {
 	setPickTimer(true);
 	callRefreshPageWithPickTimer("Draft/CurrentDraftPickPartial", ".draft-info");
- });
+});
 
  function pageBroadcastDraftHandler(pickInfo) {
  	updatePageWithDraftPickInfo(pickInfo, null, refreshCurrentDraftPickPartial);
 }
 
- function initSetupRank() {
- 	displayBestUnrankedPlayers();
+function initSetupRank() {
+	displayBestUnrankedPlayers();
 	displaySavedMessage();
 	displayLinks();
 	bindAddPlayerLinks();
@@ -34,6 +34,8 @@ var changeUnrankedListTimeout = null;
 	bindSubmitRankings();
 	bindAddNewPlayerLink();
 	bindClearRankingsLink();
+	bindDeleteRankingsLink();
+	toggleDeleteRanks();
 	bindReplaceWithHighlightedLink();
 	saveCookieRankId();
 	bindPlayerSelectChange($("select.player-select"));
@@ -278,6 +280,7 @@ function bindAddPlayerLink(link) {
 		var playerSelect = $("select", newPlayerRankEntry);
 		bindPlayerSelectChange(playerSelect);
 		$(playerSelect).focus();
+		toggleDeleteRanks();
 	});
 }
 
@@ -314,6 +317,7 @@ function bindRemovePlayerLink(link) {
 			}
 			toggleUnrankedTableEmpty();
 			toggleExpandUnrankedRows(toBool($(".bup-expand-link").attr("data-expand")));
+			toggleDeleteRanks();
 			displayLinks();
 		}
 	});
@@ -480,6 +484,7 @@ function pastePlayerHandler(clipboardData, e, skipPasteTextbox) {
 					}
 					setTimeout(function () {
 						toggleUnrankedPlayers();
+						toggleDeleteRanks();
 					}, 0);
 				}
 				removeWaitCursor();
@@ -746,6 +751,13 @@ function bindClearRankingsLink() {
 	});
 }
 
+function bindDeleteRankingsLink() {
+	$(".delete-ranks").click(function (e) {
+		e.preventDefault();
+		showDeleteRanksDialog();
+	});
+}
+
 function bindReplaceWithHighlightedLink() {
 	$("#replace-queue").click(function (e) {
 		e.preventDefault();
@@ -765,6 +777,12 @@ function getNewPlayer() {
 function clearRanks() {
 	$(".rank-add-player").last().click();
 	$(".rank-remove-player").not(":last").click();
+}
+
+function toggleDeleteRanks() {
+	var areRanksEmpty = $(".player-select").length <= 2;	//Min is one visible and one hidden
+	$(".clear-ranks").toggle(!areRanksEmpty);
+	$(".delete-ranks").toggle(areRanksEmpty);
 }
 
 function replaceWithHighlightedPlayers(highlightedPlayers) {
@@ -829,6 +847,7 @@ function showClearRanksDialog() {
 							showLoadingDialog();
 							setTimeout(function() {
 								clearRanks();
+								toggleDeleteRanks();
 								closePleaseWait();
 							}, 1);
 						}
@@ -839,6 +858,15 @@ function showClearRanksDialog() {
 						}
 					},
 		]
+	});
+}
+
+function showDeleteRanksDialog() {
+	showConfirmDialog("<p>WARNING!</p><p>This will permanently delete this ranking, and CANNOT be undone.</p>", "Delete Ranking", function () {
+		showPleaseWait();
+		location.href = baseURL + "Rank/DeleteRank?rankId=" + $("#setupRank").attr("data-rank-id");
+	}, function () {
+		$(this).dialog("close");
 	});
 }
 

@@ -40,7 +40,17 @@
 									<span class="player-info">
 										@if (!string.IsNullOrEmpty(Model.CurrentGridPlayer.Position))
 										{
-											<span><span class="player-nflteam">@Model.GetNFLTeamDisplay(Model.CurrentGridPlayer.NFLTeam)-</span><span class="player-pos">@Model.CurrentGridPlayer.Position</span></span>
+											<span>
+												@if (Model.CurrentGridPlayer.ByeWeek != null)
+												{
+													<span class="player-nflteam">@Model.GetNFLTeamDisplay(Model.CurrentGridPlayer.NFLTeam)<span class="mobile-player-bye"> (@Model.CurrentGridPlayer.ByeWeek)</span>-</span>
+												}
+												else
+												{
+													<span class="player-nflteam">@Model.GetNFLTeamDisplay(Model.CurrentGridPlayer.NFLTeam)-</span>
+												}
+												<span class="player-pos">@Model.CurrentGridPlayer.Position</span>
+											</span>
 										}
 										else
 										{

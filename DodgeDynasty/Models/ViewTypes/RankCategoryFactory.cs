@@ -58,7 +58,7 @@ namespace DodgeDynasty.Models.ViewTypes
 			result.HideId = "HideQB";
 			result.Header = "QB";
 			result.ShowPos = false;
-			result.ShowByeWeek = false;
+			result.ShowByeWeek = true;
 			result.ExpandValue = playerRankModel.Options.ExpandQB.ToString().ToLower();
 			result.PlayerList = playerRankModel.QBRankedPlayers;
 			return result;
@@ -70,7 +70,7 @@ namespace DodgeDynasty.Models.ViewTypes
 			result.HideId = "HideRB";
 			result.Header = "RB";
 			result.ShowPos = false;
-			result.ShowByeWeek = false;
+			result.ShowByeWeek = true;
 			result.ExpandValue = playerRankModel.Options.ExpandRB.ToString().ToLower();
 			result.PlayerList = playerRankModel.RBRankedPlayers;
 			return result;
@@ -82,7 +82,7 @@ namespace DodgeDynasty.Models.ViewTypes
 			result.HideId = "HideWRTE";
 			result.Header = "WR/TE";
 			result.ShowPos = true;
-			result.ShowByeWeek = false;
+			result.ShowByeWeek = true;
 			result.ExpandValue = playerRankModel.Options.ExpandWRTE.ToString().ToLower();
 			result.PlayerList = playerRankModel.WRTERankedPlayers;
 			return result;
@@ -94,7 +94,7 @@ namespace DodgeDynasty.Models.ViewTypes
 			result.HideId = "HideWR";
 			result.Header = "WR";
 			result.ShowPos = false;
-			result.ShowByeWeek = false;
+			result.ShowByeWeek = true;
 			result.ExpandValue = playerRankModel.Options.ExpandWR.ToString().ToLower();
 			result.PlayerList = playerRankModel.WRRankedPlayers;
 			return result;
@@ -106,7 +106,7 @@ namespace DodgeDynasty.Models.ViewTypes
 			result.HideId = "HideTE";
 			result.Header = "TE";
 			result.ShowPos = false;
-			result.ShowByeWeek = false;
+			result.ShowByeWeek = true;
 			result.ExpandValue = playerRankModel.Options.ExpandTE.ToString().ToLower();
 			result.PlayerList = playerRankModel.TERankedPlayers;
 			return result;
@@ -118,7 +118,7 @@ namespace DodgeDynasty.Models.ViewTypes
 			result.HideId = "HideDEF";
 			result.Header = "DEF";
 			result.ShowPos = false;
-			result.ShowByeWeek = false;
+			result.ShowByeWeek = true;
 			result.ExpandValue = playerRankModel.Options.ExpandDEF.ToString().ToLower();
 			result.PlayerList = playerRankModel.DEFRankedPlayers;
 			return result;
@@ -130,7 +130,7 @@ namespace DodgeDynasty.Models.ViewTypes
 			result.HideId = "HideK";
 			result.Header = "K";
 			result.ShowPos = false;
-			result.ShowByeWeek = false;
+			result.ShowByeWeek = true;
 			result.ExpandValue = playerRankModel.Options.ExpandK.ToString().ToLower();
 			result.PlayerList = playerRankModel.KRankedPlayers;
 			return result;

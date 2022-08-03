@@ -295,7 +295,8 @@ function toggleHighlighting(isQueueRefresh) {
 			bindQueuePlayerLinks();
 		}
 
-		changeHighlightColor();
+		var shouldPostCookie = false;
+		shouldPostCookie = changeHighlightColor(false);
 
 		bindShowHighlightingLink();
 		bindHighlightColorSelect();
@@ -305,7 +306,10 @@ function toggleHighlighting(isQueueRefresh) {
 		bindHighlightQueueOptions();
 		bindViewCurrentOtherDraftHighlights();
 		bindDeleteHighlightQueueDialog();
-		syncHighlightQueueCookie();
+		shouldPostCookie = syncHighlightQueueCookie(false) || shouldPostCookie;
+		if (shouldPostCookie) {
+			setCookieOptions(clientCookieOptions);
+		}
 	}
 }
 
@@ -527,7 +531,8 @@ function bindHighlightColorSelect() {
 	$("#highlight-color").change(changeHighlightColor);
 }
 
-function changeHighlightColor() {
+function changeHighlightColor(shouldPostCookie = true) {
+	var response = false;
 	var colorSpan = $(".hq-color-span");
 	var newColor = $("#highlight-color").val();
 	$(colorSpan).removeClass();
@@ -535,8 +540,12 @@ function changeHighlightColor() {
 	$(colorSpan).addClass(newColor);
 	if (clientCookieOptions["HighlightColor"] != newColor) {
 		clientCookieOptions["HighlightColor"] = newColor;
-		setCookieOptions(clientCookieOptions);
+		if (shouldPostCookie) {
+			setCookieOptions(clientCookieOptions);
+		}
+		response = true;
 	}
+	return response;
 }
 
 function bindDeleteAllHighlightingDialog() {
@@ -594,8 +603,6 @@ function bindDeleteHighlightQueueDialog() {
 }
 
 function bindHighlightQueueOptions() {
-	syncHighlightQueueCookie();
-
 	$("#btnHQOptions").unbind("click");
 	$("#btnHQOptions").click(function (e) {
 		e.preventDefault();
@@ -643,11 +650,15 @@ function isHQOptionsDialogOpen() {
 	return $("#hqOptionsDialog").dialog({ autoOpen: false }).dialog("isOpen");
 }
 
-function syncHighlightQueueCookie() {
+function syncHighlightQueueCookie(shouldPostCookie=true) {
+	var response = false;
 	if (getDraftHQId() && getDraftHQId() != clientCookieOptions["DraftHighlightId"]) {
 		clientCookieOptions["DraftHighlightId"] = getDraftHQId();
-		setCookieOptions(clientCookieOptions);
+		if (shouldPostCookie) {
+			setCookieOptions(clientCookieOptions);
+		}
 	}
+	return response;
 }
 
 function addEditHighlightQueue(oldModel, newModel) {
