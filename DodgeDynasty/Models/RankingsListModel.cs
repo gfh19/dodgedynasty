@@ -70,8 +70,8 @@ namespace DodgeDynasty.Models
 		public List<DraftRankModel> GetAllUserDraftRankings()
 		{
 			List<DraftRankModel> rankings = new List<DraftRankModel>();
-			rankings.AddRange(GetPrivateRankings());
 			rankings.AddRange(GetPublicRankings());
+			rankings.AddRange(GetPrivateRankings());
 			return rankings;
 		}
 	}

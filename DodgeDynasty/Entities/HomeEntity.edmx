@@ -481,6 +481,15 @@ warning 6002: The table/view 'Home.dbo._ArchivePlayerHighlight' does not have a 
           <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
           <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="SiteConfigVar">
+          <Key>
+            <PropertyRef Name="VarName" />
+          </Key>
+          <Property Name="VarName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="VarValue" Type="varchar" MaxLength="1000" />
+          <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
+          <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="UserId" />
@@ -1096,6 +1105,7 @@ warning 6002: The table/view 'Home.dbo._ArchivePlayerHighlight' does not have a 
           <EntitySet Name="Position" EntityType="Self.Position" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rank" EntityType="Self.Rank" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SiteConfigVar" EntityType="Self.SiteConfigVar" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserPreferences" EntityType="Self.UserPreferences" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
@@ -1524,6 +1534,7 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
             <End Role="DraftHighlight" EntitySet="DraftHighlights" />
             <End Role="PlayerHighlight" EntitySet="PlayerHighlights" />
           </AssociationSet>
+          <EntitySet Name="SiteConfigVars" EntityType="HomeModel.SiteConfigVar" />
           </EntityContainer>
         <EntityType Name="PlayerRank">
           <Key>
@@ -2670,6 +2681,15 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="SiteConfigVar">
+          <Key>
+            <PropertyRef Name="VarName" />
+          </Key>
+          <Property Name="VarName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="VarValue" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3220,6 +3240,16 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="SiteConfigVars">
+            <EntityTypeMapping TypeName="HomeModel.SiteConfigVar">
+              <MappingFragment StoreEntitySet="SiteConfigVar">
+                <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
+                <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
+                <ScalarProperty Name="VarValue" ColumnName="VarValue" />
+                <ScalarProperty Name="VarName" ColumnName="VarName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -3324,6 +3354,7 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
         <edmx:AssociationConnector Association="HomeModel.FK_DraftHighlight_Draft" />
         <edmx:AssociationConnector Association="HomeModel.FK_DraftHighlight_User" />
         <edmx:AssociationConnector Association="HomeModel.FK_PlayerHighlight_DraftHighlight" />
+        <edmx:EntityTypeShape EntityType="HomeModel.SiteConfigVar" Width="1.5" PointX="0.75" PointY="4.75" />
         </edmx:Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

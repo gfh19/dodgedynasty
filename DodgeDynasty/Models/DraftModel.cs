@@ -6,6 +6,7 @@ using DodgeDynasty.Models.Types;
 using DodgeDynasty.Shared;
 using System.Web.Mvc;
 using DodgeDynasty.Mappers.Ranks;
+using DodgeDynasty.Models.Shared;
 
 namespace DodgeDynasty.Models
 {
@@ -51,6 +52,7 @@ namespace DodgeDynasty.Models
 
 		public List<DraftRank> DraftRanks { get; set; }
 		public List<Rank> Ranks { get; set; }
+		public List<SiteConfigVarModel> SiteConfigVars { get; set; }
 
 		#endregion Properties
 
@@ -90,6 +92,11 @@ namespace DodgeDynasty.Models
 					AllDraftOwners = HomeEntity.DraftOwners.ToList();
 					DraftRanks = HomeEntity.DraftRanks.ToList();
 					Ranks = HomeEntity.Ranks.ToList();
+
+					//Currently using as SiteConfigVarModel list on CurrentDraftPickPartial.cshtml;  Revisit in future
+					//TBD vars needing draft refresh (i.e. CurrDPP.cshtml) vs not needing any refresh (i.e. _Layout.cshtml)
+					//Then could decide if named js vars are enough or still want dynamic siteConfigVars js var (currently unused)
+					SiteConfigVars = HomeEntity.SiteConfigVars.Select(v => new SiteConfigVarModel { VarName = v.VarName, VarValue = v.VarValue }).ToList();
 
 					SetCurrentDraftInfo(draftId);
 				}

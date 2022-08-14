@@ -231,7 +231,22 @@ namespace DodgeDynasty.Shared
 			{
 				return Int32.Parse(maxCompareRanks);
 			}
-            return 10;
+            return 15;
+		}
+
+		public static string GetSiteConfigValue(DraftModel model, string configKey)
+		{
+			return model.SiteConfigVars.FirstOrDefault(v=>v.VarName == configKey)?.VarValue ?? GetConfigVal(configKey);
+		}
+
+		public static bool GetBoolSiteConfigValue(DraftModel model, string configKey)
+		{
+			var val = GetSiteConfigValue(model, configKey);
+			if (!string.IsNullOrWhiteSpace(val))
+			{
+				return bool.Parse(val);
+			}
+			return false;
 		}
 
 		/* End Config access methods */

@@ -4,6 +4,8 @@
 	$(function () {
 		isUserTurn = @(Model.IsUserTurn() ? "true" : "false");
 		loggedInUserName = "@Model.CurrentLoggedInOwnerUser.UserName";
+		siteConfigVars = JSON.parse('@(Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.SiteConfigVars)))');
+		tickingClockAudioKillSwitch = @(Utilities.GetBoolSiteConfigValue(Model, Constants.AppSettings.TickingClockAudioKillSwitch) ? "true" : "false");
 		initRefreshedPage();
 	});
 </script>

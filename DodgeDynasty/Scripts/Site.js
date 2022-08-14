@@ -20,7 +20,7 @@ var pleaseWaitTimer = 1100;
 var pleaseWaitNeeded = false;
 var tickingClockAudio = null;
 var isTickingClockPlaying = false;
-
+var siteConfigVars = {};
 
 /* Init functions */
 
@@ -384,7 +384,8 @@ function setPickTimer(recursive) {
 }
 
 function playTickingClockAudio() {
-	if (!isTickingClockPlaying && tickingClockAudio && lastPickAudio && toBool(lastPickAudio.access) && toBool(lastPickAudio.success)) {
+	if (!audioKillSwitch && !tickingClockAudioKillSwitch
+		  && !isTickingClockPlaying && tickingClockAudio && lastPickAudio && toBool(lastPickAudio.access) && toBool(lastPickAudio.success)) {
 		isTickingClockPlaying = true;
 		tickingClockAudio.play();
 		tickingClockAudio.addEventListener("ended", function () {

@@ -690,6 +690,22 @@ namespace DodgeDynasty.Entities
             }
         }
         private ObjectSet<DraftHighlight> _DraftHighlights;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<SiteConfigVar> SiteConfigVars
+        {
+            get
+            {
+                if ((_SiteConfigVars == null))
+                {
+                    _SiteConfigVars = base.CreateObjectSet<SiteConfigVar>("SiteConfigVars");
+                }
+                return _SiteConfigVars;
+            }
+        }
+        private ObjectSet<SiteConfigVar> _SiteConfigVars;
 
         #endregion
 
@@ -981,6 +997,14 @@ namespace DodgeDynasty.Entities
         public void AddToDraftHighlights(DraftHighlight draftHighlight)
         {
             base.AddObject("DraftHighlights", draftHighlight);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the SiteConfigVars EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToSiteConfigVars(SiteConfigVar siteConfigVar)
+        {
+            base.AddObject("SiteConfigVars", siteConfigVar);
         }
 
         #endregion
@@ -12131,6 +12155,138 @@ namespace DodgeDynasty.Entities
                 }
             }
         }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="HomeModel", Name="SiteConfigVar")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class SiteConfigVar : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new SiteConfigVar object.
+        /// </summary>
+        /// <param name="varName">Initial value of the VarName property.</param>
+        /// <param name="addTimestamp">Initial value of the AddTimestamp property.</param>
+        /// <param name="lastUpdateTimestamp">Initial value of the LastUpdateTimestamp property.</param>
+        public static SiteConfigVar CreateSiteConfigVar(global::System.String varName, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp)
+        {
+            SiteConfigVar siteConfigVar = new SiteConfigVar();
+            siteConfigVar.VarName = varName;
+            siteConfigVar.AddTimestamp = addTimestamp;
+            siteConfigVar.LastUpdateTimestamp = lastUpdateTimestamp;
+            return siteConfigVar;
+        }
+
+        #endregion
+
+        #region Simple Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String VarName
+        {
+            get
+            {
+                return _VarName;
+            }
+            set
+            {
+                if (_VarName != value)
+                {
+                    OnVarNameChanging(value);
+                    ReportPropertyChanging("VarName");
+                    _VarName = StructuralObject.SetValidValue(value, false, "VarName");
+                    ReportPropertyChanged("VarName");
+                    OnVarNameChanged();
+                }
+            }
+        }
+        private global::System.String _VarName;
+        partial void OnVarNameChanging(global::System.String value);
+        partial void OnVarNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String VarValue
+        {
+            get
+            {
+                return _VarValue;
+            }
+            set
+            {
+                OnVarValueChanging(value);
+                ReportPropertyChanging("VarValue");
+                _VarValue = StructuralObject.SetValidValue(value, true, "VarValue");
+                ReportPropertyChanged("VarValue");
+                OnVarValueChanged();
+            }
+        }
+        private global::System.String _VarValue;
+        partial void OnVarValueChanging(global::System.String value);
+        partial void OnVarValueChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime AddTimestamp
+        {
+            get
+            {
+                return _AddTimestamp;
+            }
+            set
+            {
+                OnAddTimestampChanging(value);
+                ReportPropertyChanging("AddTimestamp");
+                _AddTimestamp = StructuralObject.SetValidValue(value, "AddTimestamp");
+                ReportPropertyChanged("AddTimestamp");
+                OnAddTimestampChanged();
+            }
+        }
+        private global::System.DateTime _AddTimestamp;
+        partial void OnAddTimestampChanging(global::System.DateTime value);
+        partial void OnAddTimestampChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime LastUpdateTimestamp
+        {
+            get
+            {
+                return _LastUpdateTimestamp;
+            }
+            set
+            {
+                OnLastUpdateTimestampChanging(value);
+                ReportPropertyChanging("LastUpdateTimestamp");
+                _LastUpdateTimestamp = StructuralObject.SetValidValue(value, "LastUpdateTimestamp");
+                ReportPropertyChanged("LastUpdateTimestamp");
+                OnLastUpdateTimestampChanged();
+            }
+        }
+        private global::System.DateTime _LastUpdateTimestamp;
+        partial void OnLastUpdateTimestampChanging(global::System.DateTime value);
+        partial void OnLastUpdateTimestampChanged();
 
         #endregion
 

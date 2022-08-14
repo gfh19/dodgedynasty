@@ -25,10 +25,11 @@
 		var audioKillSwitch = System.Configuration.ConfigurationManager.AppSettings[DodgeDynasty.Shared.Constants.AppSettings.AudioKillSwitch];
 		var textToVoiceKillSwitch = System.Configuration.ConfigurationManager.AppSettings[DodgeDynasty.Shared.Constants.AppSettings.TextToVoiceKillSwitch];
 		var userEditAudioKillSwitch = System.Configuration.ConfigurationManager.AppSettings[DodgeDynasty.Shared.Constants.AppSettings.UserEditAudioKillSwitch];
-        if (DodgeDynasty.Shared.Utilities.IsUserLoggedIn() && !DodgeDynasty.Shared.Utilities.ToBool(webSocketsKillSwitch))
+		var tickingClockAudioKillSwitch = "";
+		if (DodgeDynasty.Shared.Utilities.IsUserLoggedIn() && !DodgeDynasty.Shared.Utilities.ToBool(webSocketsKillSwitch))
 		{
-            <script src="@Url.Content("~/signalr/hubs")"></script>
-        }
+			<script src="@Url.Content("~/signalr/hubs")"></script>
+		}
 	}
 	<script type="text/javascript" src="@Url.Script("~/Scripts/Site.js")"></script>
 	@if (DodgeDynasty.Shared.Utilities.IsUserLoggedIn())
@@ -41,7 +42,7 @@
 		<div class="header-top"></div>
 		<div class="content-wrapper">
 			<div class="float-left">
-				<p class="site-logo" ondblclick="javascript:$('<a target=\'_new\' href=\'https://www.youtube.com/watch?v=AqDbb7-dn9A\'/>')[0].click();" >
+				<p class="site-logo" ondblclick="javascript:$('<a target=\'_new\' href=\'https://www.youtube.com/watch?v=DmL12NRE4hQ\'/>')[0].click();" >
 					@if (isStartDrafting)
 					{
 					<img src="@Url.Content("~/Content/images/StartDrafting.png")" class="site-logo-img" />

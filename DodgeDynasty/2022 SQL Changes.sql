@@ -6,6 +6,83 @@
 
 
 
+/* Below run in Production on 8/4/2022 */
+
+
+SET XACT_ABORT ON
+BEGIN TRANSACTION;
+
+
+
+INSERT INTO [dbo].[SiteConfigVar]
+           ([VarName],[VarValue],[AddTimestamp],[LastUpdateTimestamp])
+     VALUES
+           ('TickingClockAudioKillSwitch', 'false', getdate(), getdate())
+GO
+
+/*
+INSERT INTO [dbo].[SiteConfigVar]
+           ([VarName],[VarValue],[AddTimestamp],[LastUpdateTimestamp])
+     VALUES
+           ('AudioKillSwitch', 'false', getdate(), getdate()),
+           ('TextToVoiceKillSwitch', 'false', getdate(), getdate()),
+           ('UserEditAudioKillSwitch', 'false', getdate(), getdate()),
+           ('TickingClockAudioKillSwitch', 'false', getdate(), getdate())
+GO
+*/
+
+
+COMMIT TRANSACTION;
+
+
+
+
+/* Below run in Production on 8/4/2022 */
+
+
+SET XACT_ABORT ON
+BEGIN TRANSACTION;
+
+
+
+
+/****** Object:  Table [dbo].[SiteConfigVar]    Script Date: 8/4/2022 10:14:51 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[SiteConfigVar](
+	[VarName] [varchar](100) NOT NULL,
+	[VarValue] [varchar](1000) NULL,
+	[AddTimestamp] [datetime] NOT NULL,
+	[LastUpdateTimestamp] [datetime] NOT NULL,
+ CONSTRAINT [PK_SiteConfigVar] PRIMARY KEY CLUSTERED 
+(
+	[VarName] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+
+
+
+
+UPDATE [dbo].[AutoImport]
+SET RankName = 'Yahoo!',
+	ImportUrl = 'https://partners.fantasypros.com/api/v1/consensus-rankings.php?sport=NFL&year=2022&week=0&id=1663&position=ALL&type=ST&scoring=STD&filters=7:9:285:747',
+	LastUpdateTimestamp = getdate()
+WHERE AutoImportId = 5
+
+
+
+COMMIT TRANSACTION;
+
+
+
+
+
 
 /* Below run in Production on 7/30/2022 */
 
