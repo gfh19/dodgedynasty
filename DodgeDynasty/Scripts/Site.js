@@ -368,7 +368,7 @@ function setPickTimer(recursive) {
 			else if (timeRemaining > 0) {
 				displayTimeRemaining(timeRemaining);
 				if (timeRemaining <= 16) {
-					setTimeout(playTickingClockAudio, 500);
+					setTimeout(playTickingClockAudio, 900);
 				}
 			}
 			else {

@@ -1,5 +1,6 @@
 ﻿@model DodgeDynasty.Models.PlayerRankModel
 @using DodgeDynasty.UIHelpers;
+@using DodgeDynasty.Shared;
 @{
 	ViewBag.Title = "Update Rankings";
 }
@@ -134,7 +135,7 @@
 				<div class="rank-highlight-section">
 					<div> - OR - </div>
 					<br />
-					<a href="#" id="replace-queue">Replace with Highlighted Queue</a>
+					<a href="#" id="replace-queue">Replace with @Model.CurrentDraftHighlight.QueueName.GetQueueName()</a>
 				</div>
 			}
 		</div>
@@ -155,7 +156,7 @@
 		<p>Are you sure you want to remove all ranked players?</p>
 	</div>
 	<div id="replaceHighlightedDialog" class="center hide-yo-kids" title="Confirm Replace">
-		<p>Are you sure you want to replace all rankings with highlighted queue players?</p>
+		<p>Are you sure you want to replace all rankings with @Model.CurrentDraftHighlight.QueueName.GetQueueName() players?</p>
 	</div>
 	<div id="saveRanksDialog" class="center hide-yo-kids" title="Saving Update">
 		<p>Saving...</p>

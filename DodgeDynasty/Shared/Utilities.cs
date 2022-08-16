@@ -203,6 +203,15 @@ namespace DodgeDynasty.Shared
 				strList.Add(value);
 			}
 		}
+
+		public static string GetQueueName(this string queueName)
+		{
+			if (string.IsNullOrEmpty(queueName))
+			{
+				return Constants.Defaults.DraftHighlightQueueName;
+			}
+			return $"{queueName} {(queueName != null && queueName.ToLower().Trim().EndsWith("queue") ? "queue" : "queue")}";
+		}
 		
 		#endregion String Methods
 
