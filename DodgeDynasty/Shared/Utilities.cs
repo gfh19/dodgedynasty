@@ -210,7 +210,7 @@ namespace DodgeDynasty.Shared
 			{
 				return Constants.Defaults.DraftHighlightQueueName;
 			}
-			return $"{queueName} {(queueName != null && queueName.ToLower().Trim().EndsWith("queue") ? "queue" : "queue")}";
+			return $"{queueName} {(queueName != null && queueName.ToLower().Trim().EndsWith("queue") ? "" : "queue")}";
 		}
 		
 		#endregion String Methods
