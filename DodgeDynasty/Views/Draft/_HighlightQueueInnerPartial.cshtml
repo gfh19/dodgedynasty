@@ -107,8 +107,7 @@
 				{
 					<div class="hq-copy-text">
 						&lt;<a href="#" class="hq-view-current-dh" data-hq-dh-id="@currentHighlightsDraft.DraftHighlightId"
-							>View @(string.IsNullOrEmpty(currentHighlightsDraft.QueueName) ? currentHighlightsDraft.LeagueName : currentHighlightsDraft.QueueName)
-							@(currentHighlightsDraft.QueueName != null && currentHighlightsDraft.QueueName.ToLower().Trim().EndsWith("queue") ? "" : "queue")</a>&gt;
+							>View @(string.IsNullOrEmpty(currentHighlightsDraft.QueueName) ? currentHighlightsDraft.LeagueName : currentHighlightsDraft.QueueName)@(currentHighlightsDraft.QueueName != null && currentHighlightsDraft.QueueName.ToLower().Trim().EndsWith("queue") ? "" : " queue")</a>&gt;
 					</div>
 				}
 			</div>
