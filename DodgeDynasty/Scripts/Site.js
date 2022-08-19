@@ -368,7 +368,7 @@ function setPickTimer(recursive) {
 			else if (timeRemaining > 0) {
 				displayTimeRemaining(timeRemaining);
 				if (timeRemaining <= 16) {
-					setTimeout(playTickingClockAudio, 900);
+					playTickingClockAudio();
 				}
 			}
 			else {
@@ -387,10 +387,15 @@ function playTickingClockAudio() {
 	if (!audioKillSwitch && !tickingClockAudioKillSwitch
 		  && !isTickingClockPlaying && tickingClockAudio && lastPickAudio && toBool(lastPickAudio.access) && toBool(lastPickAudio.success)) {
 		isTickingClockPlaying = true;
-		tickingClockAudio.play();
-		tickingClockAudio.addEventListener("ended", function () {
-			isTickingClockPlaying = false;
-		});
+		setTimeout(function () {
+			//Make sure hasn't been stopped during async wait
+			if (isTickingClockPlaying) {
+				tickingClockAudio.play();
+				tickingClockAudio.addEventListener("ended", function () {
+					isTickingClockPlaying = false;
+				});
+			}
+		}, 900);
 	}
 }
 
