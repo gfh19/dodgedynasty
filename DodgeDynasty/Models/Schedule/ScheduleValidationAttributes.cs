@@ -51,7 +51,8 @@ namespace DodgeDynasty.Models.Schedule
 			var matchups = value as List<Matchup>;
 			if (value is List<Matchup>)
 			{
-				if (matchups != null)
+				valid = true;
+				if (matchups != null && matchups.Any(m => !m.IsEmpty()))
 				{
 					valid = ScheduleValidator.ValidateMatchupsComplete(matchups);
 				}
@@ -99,7 +100,8 @@ namespace DodgeDynasty.Models.Schedule
 			var matchup = value as Matchup;
 			if (value is Matchup)
 			{
-				if (matchup != null)
+				valid = true;
+				if (matchup != null && !matchup.IsEmpty())
 				{
 					valid = ScheduleValidator.ValidateMatchupsComplete(new[] { matchup });
 				}
@@ -142,6 +144,10 @@ namespace DodgeDynasty.Models.Schedule
 				if (matchup != null && !matchup.IsEmpty())
 				{
 					valid &= !string.IsNullOrEmpty(matchup.AwayTeam?.Name) && !string.IsNullOrEmpty(matchup.HomeTeam?.Name);
+				}
+				else
+				{
+					valid = false;
 				}
 			}
 

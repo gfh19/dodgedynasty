@@ -63,7 +63,7 @@ namespace DodgeDynasty.Mappers.Schedule
 			for (int matchupIx = 0; matchupIx < _numWeeklyMatchups; matchupIx++)
 			{
 				var lastWeekMatchup = new Matchup(_numWeeks);
-				if (finalWeekMatchups.Count > 0 && !finalWeekMatchups.Any(m => m == null || m.IsEmpty()))
+				if (finalWeekMatchups.Count > 0)
 				{
 					var selectedMatchup = finalWeekMatchups.First();
 					lastWeekMatchup.AwayTeam = schedule.GetTeam(selectedMatchup.AwayTeam);
@@ -128,7 +128,7 @@ namespace DodgeDynasty.Mappers.Schedule
 			}
 
 			schedule.FullSchedule.Add(lastWeekSchedule);
-			if (schedule.FinalWeekRivalries.Count > 0 && !schedule.FinalWeekRivalries.Any(m => m == null || m.IsEmpty()))
+			if (lastWeekSchedule.Matchups.Count > 0 && !lastWeekSchedule.Matchups.Any(m => m == null || m.IsEmpty()))
 			{
 				lastWeekSchedule.Matchups.ForEach(m =>
 				{

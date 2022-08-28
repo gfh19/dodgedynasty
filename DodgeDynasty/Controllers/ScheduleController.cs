@@ -5,7 +5,7 @@ using System.Web.Mvc;
 
 namespace DodgeDynasty.Controllers
 {
-	public class ScheduleController : Controller
+    public class ScheduleController : Controller
     {
         public static int SuccessCtr = 0;
         public static int FailureCtr = 0;
