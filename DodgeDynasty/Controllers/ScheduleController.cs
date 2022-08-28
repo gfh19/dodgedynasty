@@ -25,11 +25,7 @@ namespace DodgeDynasty.Controllers
             if (ModelState.IsValid)
             {
                 var mapper = new ScheduleMapper();
- //               var schedule = mapper.GenerateFullSchedule(model);
- ScheduleModel schedule = null;       
-for (int t=0; t<1000; t++) { 
-    schedule = mapper.GenerateFullSchedule(model);
-}
+                var schedule = mapper.GenerateFullSchedule(model);
                 return View(Constants.Views.ScheduleIndex, schedule);
             }
             return View(Constants.Views.ScheduleIndex, model);

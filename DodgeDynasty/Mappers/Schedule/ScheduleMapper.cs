@@ -34,8 +34,6 @@ namespace DodgeDynasty.Mappers.Schedule
 				var retryCtr = 0;
 				while (retryCtr++ < _maxScheduleRestarts && _isScheduleAborted)
 				{
-System.Diagnostics.Debug.Write("F ");
-DodgeDynasty.Controllers.ScheduleController.FailureCtr++;
 					_isScheduleAborted = false;
 					_recursiveMatchupAttemptCtr = 0;
 					schedule.ResetScheduleForRetry();
@@ -43,17 +41,6 @@ DodgeDynasty.Controllers.ScheduleController.FailureCtr++;
 				}
 			}
 			response.Success = !_isScheduleAborted;
-
-if (_isScheduleAborted)
-{
-DodgeDynasty.Controllers.ScheduleController.FailureCtr++;
-}
-else
-{
-DodgeDynasty.Controllers.ScheduleController.SuccessCtr++;
-}
-System.Diagnostics.Debug.WriteLine(Environment.NewLine + $"    Current hit rate:  {DodgeDynasty.Controllers.ScheduleController.SuccessCtr} hit(s), {DodgeDynasty.Controllers.ScheduleController.FailureCtr} failure(s) -- {(DodgeDynasty.Controllers.ScheduleController.SuccessCtr * 100) / (DodgeDynasty.Controllers.ScheduleController.SuccessCtr + DodgeDynasty.Controllers.ScheduleController.FailureCtr)}%");
-
 			return response;
 		}
 
