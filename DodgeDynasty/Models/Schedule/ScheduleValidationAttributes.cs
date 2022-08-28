@@ -155,10 +155,10 @@ namespace DodgeDynasty.Models.Schedule
 				.Concat(matchups.Select(m => m.HomeTeam.Name).Where(n => !string.IsNullOrEmpty(n))).Distinct();
 			if (distinctTeams.Count() < (matchups.Count() * 2))
 			{
-				var duplicateTeams = matchups.Where(m => !string.IsNullOrEmpty(m.AwayTeam.Name)).
-					GroupBy(m => m.AwayTeam.Name).Where(group => group.Count() > 1).Select(group => group.Key);
-				duplicateTeams.Concat(matchups.Where(m => !string.IsNullOrEmpty(m.AwayTeam.Name))
-					.GroupBy(m => m.HomeTeam.Name).Where(group => group.Count() > 1).Select(group => group.Key));
+				var allTeams = matchups.Where(m => !string.IsNullOrEmpty(m.AwayTeam.Name)).Select(m => m.AwayTeam.Name)
+					.Concat(matchups.Where(m => !string.IsNullOrEmpty(m.HomeTeam.Name)).Select(m => m.HomeTeam.Name));
+
+				var duplicateTeams = allTeams.GroupBy(m => m).Where(group => group.Count() > 1).Select(group => group.Key);
 
 				duplicateTeams.ForEach(t => dupTeamNames += $"{t}; ");
 			}
