@@ -1,0 +1,144 @@
+﻿@model DodgeDynasty.Models.Schedule.ScheduleModel
+
+@{
+	ViewBag.Title = "Schedule";
+}
+
+@section scripts {
+	<script type="text/javascript" src="@Url.Script("~/Scripts/Schedule/Schedule.js")"></script>
+	<script type="text/javascript">
+		$(function () {
+			initSchedule();
+		});
+	</script>
+}
+
+<style type="text/css">
+	input {
+		width: 150px;
+	}
+
+	.field-validation-error {
+		display: block;
+	}
+</style>
+
+<h2>Schedule for 10 team, 14 week season</h2>
+
+
+@using (Html.BeginForm("Index", "Schedule", FormMethod.Post, new { id = "scheduleForm" }))
+{
+	@Html.AntiForgeryToken()
+	@Html.ValidationSummary(true)
+	@Html.ValidationMessageFor(m => m.DivisionMatchups)
+	@Html.ValidationMessageFor(m => m.FinalWeekRivalries)
+	@Html.ValidationMessageFor(m => m.Week1TitleRematch)
+
+	<div class="form-horizontal">
+		<div style="display: inline-block; float: none; width: 100%">
+			<div style="float: left; padding: 10px 20px 10px 10px;">
+				<h4>Divisions & Extra Interdivisional Matchups</h4>
+				<div>
+					@for (int i = 0; i < Model.DivisionMatchups.Count; i++)
+					{
+						<div class="sched-div-mup">
+							@Html.TextBoxFor(m => Model.DivisionMatchups[i].AwayTeam.Name, new { @class = "sched-div-mup-away", maxLength = "35" }) v
+							@Html.TextBoxFor(m => Model.DivisionMatchups[i].HomeTeam.Name, new { @class = "sched-div-mup-home", maxLength = "35" })
+						</div>
+					}
+				</div>
+			</div>
+			<div style="display: inline; float: left; padding: 10px">
+				<h4>Week 14 Rivalries (optional)</h4>
+				<div>
+					@for (int i = 0; i < Model.FinalWeekRivalries.Count; i++)
+					{
+						<div class="sched-rival-mup">
+							@Html.TextBoxFor(m => Model.FinalWeekRivalries[i].AwayTeam.Name, new { @class = "sched-div-mup-away", maxLength = "35" }) v
+							@Html.TextBoxFor(m => Model.FinalWeekRivalries[i].HomeTeam.Name, new { @class = "sched-div-mup-home", maxLength = "35" })
+						</div>
+					}
+				</div>
+			</div>
+		</div>
+		<div style="display: block; float: none; padding: 2px 10px;">
+			<div style="display: block; float: none">
+				<h4>Week 1 Title Game Rematch (optional)</h4>
+				<div style="display: block; float: none;">
+					<div class="sched-week1-mup">
+						@Html.TextBoxFor(m => Model.Week1TitleRematch.AwayTeam.Name, new { @class = "sched-div-mup-away", maxLength = "35" }) v
+						@Html.TextBoxFor(m => Model.Week1TitleRematch.HomeTeam.Name, new { @class = "sched-div-mup-home", maxLength = "35" })
+					</div>
+				</div>
+			</div>
+		</div>
+		@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+		<div class="form-group" style="padding: 10px;">
+			<div class="col-md-offset-2 col-md-10">
+				<input type="submit" value="Create" class="btn submit-schedule" />
+			</div>
+		</div>
+
+		<div style="padding: 10px;">
+			@if (Model.Submitted && !Model.Success)
+			{
+				<h4>Schedule generation failed.  Please try again.</h4>
+			}
+			else if (Model.FullSchedule != null && Model.FullSchedule.Count > 0)
+			{
+				<h3>New Schedule Generated at @DodgeDynasty.Shared.Utilities.GetEasternTime().ToString("M/d/yyyy h:mm:ss.fff tt")</h3>
+				<div style="float: left; width: 350px">
+					@for (int i = 0; i < Model.FullSchedule.Count && i < 5; i++)
+					{
+						<div>
+							<p>
+								<h4>* Week @Model.FullSchedule[i].WeekNum *</h4>
+								<div>
+									@foreach (var matchup in Model.FullSchedule[i].Matchups)
+									{
+										<div>@matchup.PrintMatchup()</div>
+									}
+								</div>
+							</p>
+						</div>
+					}
+				</div>
+				<div style="float: left; width: 350px">
+					@for (int i = 5; i < Model.FullSchedule.Count && i < 10; i++)
+					{
+						<div>
+							<p>
+								<h4>* Week @Model.FullSchedule[i].WeekNum *</h4>
+								<div>
+									@foreach (var matchup in Model.FullSchedule[i].Matchups)
+									{
+										<div>@matchup.PrintMatchup()</div>
+									}
+								</div>
+							</p>
+						</div>
+					}
+				</div>
+				<div style="float: left; width: 350px">
+					@for (int i = 10; i < Model.FullSchedule.Count; i++)
+					{
+						<div>
+							<p>
+								@{var sfx = (i == 13) ? " - Rivalry Week" : "";}
+								<h4>* Week @Model.FullSchedule[i].WeekNum @sfx *</h4>
+								<div>
+									@foreach (var matchup in Model.FullSchedule[i].Matchups)
+									{
+										<div>@matchup.PrintMatchup()</div>
+									}
+								</div>
+							</p>
+						</div>
+					}
+				</div>
+			}
+		</div>
+	</div>
+}
+
+

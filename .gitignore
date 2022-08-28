@@ -196,3 +196,5 @@ ModelManifest.xml
 /.vs/dodgedynasty/v17/fileList.bin
 /.vs/dodgedynasty/v17
 /.vs/dodgedynasty/FileContentIndex
+
+Web.Release.config

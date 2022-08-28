@@ -202,6 +202,7 @@ namespace DodgeDynasty.Shared
 			public const string TestAudioPartial = "_TestAudioPartial";
 			public const string BupSectionPartial = "_BupSectionPartial";
 			public const string DialogsPartial = "_DialogsPartial";
+			public const string ScheduleIndex = "Index";
 		}
 	}
 }

@@ -231,6 +231,7 @@
     <Compile Include="Controllers\CommishController.cs" />
     <Compile Include="Controllers\DraftController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ScheduleController.cs" />
     <Compile Include="Controllers\SiteController.cs" />
     <Compile Include="Filters\CommishDraftPickAccessAttribute.cs" />
     <Compile Include="Filters\CommishDraftAccessAttribute.cs" />
@@ -296,6 +297,7 @@
     <Compile Include="Mappers\Ranks\DeleteRankMapper.cs" />
     <Compile Include="Mappers\Ranks\PlayerRankModelHelper.cs" />
     <Compile Include="Mappers\Ranks\PlayerRankOptionsMapper.cs" />
+    <Compile Include="Mappers\Schedule\ScheduleMapper.cs" />
     <Compile Include="Mappers\Shared\ColorStylesMapper.cs" />
     <Compile Include="Mappers\Shared\DraftChatMapper.cs" />
     <Compile Include="Mappers\Shared\SharedUserInfoMapper.cs" />
@@ -349,6 +351,8 @@
     <Compile Include="Models\RankAdjustments\ImportRankModel.cs" />
     <Compile Include="Models\RankAdjustments\RankAdjustmentsModel.cs" />
     <Compile Include="Models\PlayerRankingsModel.cs" />
+    <Compile Include="Models\Schedule\ScheduleValidationAttributes.cs" />
+    <Compile Include="Models\Schedule\ScheduleModel.cs" />
     <Compile Include="Models\Shared\AuditPlayerHelper.cs" />
     <Compile Include="Models\Shared\DraftChatModel.cs" />
     <Compile Include="Models\Shared\DraftHelper.cs" />
@@ -506,6 +510,7 @@
     <Content Include="docs\Rankings\FprosDynasty.html" />
     <Content Include="docs\Rankings\FprosStandard.html" />
     <Content Include="Media\tickingclock.mp3" />
+    <Content Include="Scripts\Schedule\Schedule.js" />
     <Content Include="SQL Server\OLD - 2021 SQL Changes.sql" />
     <Content Include="SQL Server\OLD - 2020 SQL Changes.sql" />
     <Content Include="apple-touch-icon.PNG" />
@@ -656,6 +661,7 @@
     <Content Include="Views\Draft\_HighlightQueueInnerPartial.cshtml" />
     <Content Include="Views\Rank\_BupSectionPartial.cshtml" />
     <Content Include="Views\Shared\_DialogsPartial.cshtml" />
+    <Content Include="Views\Schedule\Index.cshtml" />
     <None Include="Web.local.config">
       <SubType>Designer</SubType>
     </None>
