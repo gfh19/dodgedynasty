@@ -77,7 +77,7 @@ namespace DodgeDynasty.Mappers.Schedule
 				}
 				else
 				{
-					//Can't call GenerateMatchup for Week 14 cuz it increments team counters!
+					//Can't call GenerateMatchup for Week 14 cuz it increments team counters & adds to teach schedule!
 					//var matchup = GenerateMatchup(_numWeeks, currentWeekTeams, schedule);
 					var matchup = new Matchup(_numWeeks);
 					var rand = new Random();
@@ -252,11 +252,13 @@ namespace DodgeDynasty.Mappers.Schedule
 
 		private bool isIneligibleMatchup(int weekNum, ScheduleModel schedule, SchedTeam selectedAwayTeam, SchedTeam selectedHomeTeam)
 		{
-			return isIneligibleAwayTeam(selectedAwayTeam)
-				|| (isIneligibleHomeTeam(selectedHomeTeam))
+			return selectedAwayTeam == null || selectedHomeTeam == null
+				|| isIneligibleAwayTeam(selectedAwayTeam)
+				|| isIneligibleHomeTeam(selectedHomeTeam)
 				|| didTeamsJustMatchup(selectedAwayTeam, selectedHomeTeam)
 				|| isMaxedOutMatchups(selectedAwayTeam, selectedHomeTeam, schedule)
-				|| onlyTwoMatchupsLeftAreTheSame(weekNum, selectedAwayTeam, selectedHomeTeam, schedule);
+				|| onlyTwoMatchupsLeftAreTheSame(weekNum, selectedAwayTeam, selectedHomeTeam, schedule)
+				|| week13SameAsFinalWeek(weekNum, selectedAwayTeam, selectedHomeTeam);
 		}
 
 		private bool isIneligibleHomeTeam(SchedTeam team)
@@ -277,17 +279,29 @@ namespace DodgeDynasty.Mappers.Schedule
 			return team.AwayCtr >= (_numWeeks / 2) + 1 || team.AwayStreak >= 3;
 		}
 
+		private bool week13SameAsFinalWeek(int weekNum, SchedTeam selectedAwayTeam, SchedTeam selectedHomeTeam)
+		{
+			var invalid = false;
+			if (weekNum == _numWeeks - 1 
+				&& (selectedAwayTeam.FinalWeekMatchup.ContainsTeam(selectedHomeTeam) || selectedHomeTeam.FinalWeekMatchup.ContainsTeam(selectedAwayTeam)))
+			{
+				//If we got here, schedule is already unsalvageable
+				invalid = true;
+			}
+			return invalid;
+		}
+
 		private static bool onlyTwoMatchupsLeftAreTheSame(int weekNum, SchedTeam awayTeam, SchedTeam homeTeam, ScheduleModel schedule)
 		{
 			var invalid = false;
 			if (weekNum == _numWeeks - 3 || weekNum == _numWeeks - 2)
 			{
 				var awayDoubleOpponents = new List<SchedTeam>();
-				awayDoubleOpponents.AddRange(schedule.AllTeams.Where(t => t.Division == awayTeam.Division));
+				awayDoubleOpponents.AddRange(schedule.AllTeams.Where(t => t.Division == awayTeam.Division && !t.Equals(awayTeam)));
 				awayDoubleOpponents.AddRange(schedule.DivisionMatchups.Where(m => m.AwayTeam.Equals(awayTeam)).Select(m => m.HomeTeam));
 
 				var homeDoubleOpponents = new List<SchedTeam>();
-				homeDoubleOpponents.AddRange(schedule.AllTeams.Where(t => t.Division == homeTeam.Division));
+				homeDoubleOpponents.AddRange(schedule.AllTeams.Where(t => t.Division == homeTeam.Division && !t.Equals(homeTeam)));
 				homeDoubleOpponents.AddRange(schedule.DivisionMatchups.Where(m => m.HomeTeam.Equals(homeTeam)).Select(m => m.AwayTeam));
 
 				//If someone to play twice hasn't been played yet at all (and isn't current selected opponent, or final week opponent), invalid
