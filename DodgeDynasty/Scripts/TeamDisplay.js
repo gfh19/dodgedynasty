@@ -15,7 +15,7 @@ function pageBroadcastDraftHandler(pickInfo) {
 		updatePageWithDraftPickInfo(pickInfo, function (pickInfo) {
 			var draftPick = $(".team-draft-pick[data-pick-num=" + pickInfo.pnum + "]");
 			if (draftPick) {
-				populateWithDraftPickInfo(draftPick, pickInfo, pickInfo.tmshowposcol);
+				populateWithDraftPickInfo(draftPick, pickInfo, teamsShowPosCol);
 			}
 		}, function () {
 			callRefreshPage(getTeamDisplayUrl, '#teamDisplay');

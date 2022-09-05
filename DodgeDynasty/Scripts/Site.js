@@ -21,6 +21,8 @@ var pleaseWaitNeeded = false;
 var tickingClockAudio = null;
 var isTickingClockPlaying = false;
 var siteConfigVars = {};
+var draftShowPosCol = "";
+var teamsShowPosCol = "";
 
 /* Init functions */
 
@@ -384,8 +386,8 @@ function setPickTimer(recursive) {
 }
 
 function playTickingClockAudio() {
-	if (!audioKillSwitch && !tickingClockAudioKillSwitch
-		  && !isTickingClockPlaying && tickingClockAudio && lastPickAudio && toBool(lastPickAudio.access) && toBool(lastPickAudio.success)) {
+	if (!audioKillSwitch && !tickingClockAudioKillSwitch && !isTickingClockPlaying && tickingClockAudio
+			&& lastPickAudio && toBool(lastPickAudio.access) && toBool(lastPickAudio.success) && !toBool(lastPickAudio.final)) {
 		isTickingClockPlaying = true;
 		setTimeout(function () {
 			//Make sure hasn't been stopped during async wait
