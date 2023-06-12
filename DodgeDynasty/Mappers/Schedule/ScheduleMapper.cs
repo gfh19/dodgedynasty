@@ -109,13 +109,22 @@ namespace DodgeDynasty.Mappers.Schedule
 			}
 			while (currentWeekTeams.Any())
 			{
-				firstWeekSchedule.Matchups.Add(GenerateMatchup(1, currentWeekTeams, schedule));
+				var nextMatchup = GenerateMatchup(1, currentWeekTeams, schedule);
+				if (nextMatchup != null)
+				{
+					firstWeekSchedule.Matchups.Add(nextMatchup);
+				}
+				else
+				{
+					_isScheduleAborted = true;
+					return schedule;
+				}
 			}
 			schedule.FullSchedule.Add(firstWeekSchedule);
 
+			//All weeks in between
 			for (int weekNum = 2; weekNum < _numWeeks; weekNum++)
 			{
-				//TODO: Primer logic?
 				currentWeekTeams = new List<SchedTeam>();
 				currentWeekTeams.AddRange(schedule.AllTeams);
 				var currentWeekSchedule = new WeekSchedule(weekNum);
@@ -258,7 +267,8 @@ namespace DodgeDynasty.Mappers.Schedule
 				|| didTeamsJustMatchup(selectedAwayTeam, selectedHomeTeam)
 				|| isMaxedOutMatchups(selectedAwayTeam, selectedHomeTeam, schedule)
 				|| onlyTwoMatchupsLeftAreTheSame(weekNum, selectedAwayTeam, selectedHomeTeam, schedule)
-				|| week13SameAsFinalWeek(weekNum, selectedAwayTeam, selectedHomeTeam);
+				|| week12or13SameAsFinalWeek(weekNum, selectedAwayTeam, selectedHomeTeam)
+				|| week3SameAsWeek1(weekNum, selectedAwayTeam, selectedHomeTeam);
 		}
 
 		private bool isIneligibleHomeTeam(SchedTeam team)
@@ -279,13 +289,25 @@ namespace DodgeDynasty.Mappers.Schedule
 			return team.AwayCtr >= (_numWeeks / 2) + 1 || team.AwayStreak >= 3;
 		}
 
-		private bool week13SameAsFinalWeek(int weekNum, SchedTeam selectedAwayTeam, SchedTeam selectedHomeTeam)
+		private bool week12or13SameAsFinalWeek(int weekNum, SchedTeam selectedAwayTeam, SchedTeam selectedHomeTeam)
 		{
 			var invalid = false;
-			if (weekNum == _numWeeks - 1 
+			if ((weekNum == _numWeeks - 1 || weekNum == _numWeeks - 2)
 				&& (selectedAwayTeam.FinalWeekMatchup.ContainsTeam(selectedHomeTeam) || selectedHomeTeam.FinalWeekMatchup.ContainsTeam(selectedAwayTeam)))
 			{
 				//If we got here, schedule is already unsalvageable
+				_recursiveMatchupAttemptCtr = _maxAttempts;
+				invalid = true;
+			}
+			return invalid;
+		}
+
+		private bool week3SameAsWeek1(int weekNum, SchedTeam selectedAwayTeam, SchedTeam selectedHomeTeam)
+		{
+			var invalid = false;
+			if (weekNum == 3
+				&& (selectedAwayTeam.TeamSchedule[0].ContainsTeam(selectedHomeTeam) || selectedHomeTeam.TeamSchedule[0].ContainsTeam(selectedAwayTeam)))
+			{
 				invalid = true;
 			}
 			return invalid;

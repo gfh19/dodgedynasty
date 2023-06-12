@@ -82,6 +82,10 @@ namespace DodgeDynasty.Models.Schedule
 		{
 			return ContainsTeam(team1) && ContainsTeam(team2);
 		}
+		public bool IsEqual(Matchup matchup)
+		{
+			return ContainsTeam(matchup?.AwayTeam) && ContainsTeam(matchup?.HomeTeam);
+		}
 		public bool IsEmpty()
 		{
 			return string.IsNullOrEmpty(AwayTeam.Name) && string.IsNullOrEmpty(HomeTeam.Name);
