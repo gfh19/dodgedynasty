@@ -481,6 +481,31 @@ warning 6002: The table/view 'Home.dbo._ArchivePlayerHighlight' does not have a 
           <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
           <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="Schedule">
+          <Key>
+            <PropertyRef Name="ScheduleId" />
+          </Key>
+          <Property Name="ScheduleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Year" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
+          <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ScheduleMatchup">
+          <Key>
+            <PropertyRef Name="MatchupId" />
+          </Key>
+          <Property Name="MatchupId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ScheduleId" Type="int" Nullable="false" />
+          <Property Name="MatchupType" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="AwayTeam" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="HomeTeam" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="Year" Type="int" Nullable="false" />
+          <Property Name="Week" Type="int" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
+          <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="SiteConfigVar">
           <Key>
             <PropertyRef Name="VarName" />
@@ -963,6 +988,18 @@ warning 6002: The table/view 'Home.dbo._ArchivePlayerHighlight' does not have a 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PlayerHighlight_PlayerHighlight">
+          <End Role="PlayerHighlight" Type="Self.PlayerHighlight" Multiplicity="1" />
+          <End Role="PlayerHighlight1" Type="Self.PlayerHighlight" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="PlayerHighlight">
+              <PropertyRef Name="PlayerHighlightId" />
+            </Principal>
+            <Dependent Role="PlayerHighlight1">
+              <PropertyRef Name="PlayerHighlightId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PlayerHighlight_User">
           <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="PlayerHighlight" Type="Self.PlayerHighlight" Multiplicity="*" />
@@ -1008,6 +1045,30 @@ warning 6002: The table/view 'Home.dbo._ArchivePlayerHighlight' does not have a 
             </Principal>
             <Dependent Role="Rank">
               <PropertyRef Name="AutoImportId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Schedule_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ScheduleMatchup_Schedule">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="ScheduleMatchup" Type="Self.ScheduleMatchup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="ScheduleMatchup">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1105,6 +1166,8 @@ warning 6002: The table/view 'Home.dbo._ArchivePlayerHighlight' does not have a 
           <EntitySet Name="Position" EntityType="Self.Position" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rank" EntityType="Self.Rank" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Schedule" EntityType="Self.Schedule" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ScheduleMatchup" EntityType="Self.ScheduleMatchup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SiteConfigVar" EntityType="Self.SiteConfigVar" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserPreferences" EntityType="Self.UserPreferences" Schema="dbo" store:Type="Tables" />
@@ -1267,6 +1330,10 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
             <End Role="Player" EntitySet="Player" />
             <End Role="PlayerHighlight" EntitySet="PlayerHighlight" />
           </AssociationSet>
+          <AssociationSet Name="FK_PlayerHighlight_PlayerHighlight" Association="Self.FK_PlayerHighlight_PlayerHighlight">
+            <End Role="PlayerHighlight" EntitySet="PlayerHighlight" />
+            <End Role="PlayerHighlight1" EntitySet="PlayerHighlight" />
+          </AssociationSet>
           <AssociationSet Name="FK_PlayerHighlight_User" Association="Self.FK_PlayerHighlight_User">
             <End Role="User" EntitySet="User" />
             <End Role="PlayerHighlight" EntitySet="PlayerHighlight" />
@@ -1282,6 +1349,14 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
           <AssociationSet Name="FK_Rank_AutoImport" Association="Self.FK_Rank_AutoImport">
             <End Role="AutoImport" EntitySet="AutoImport" />
             <End Role="Rank" EntitySet="Rank" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Schedule_User" Association="Self.FK_Schedule_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Schedule" EntitySet="Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ScheduleMatchup_Schedule" Association="Self.FK_ScheduleMatchup_Schedule">
+            <End Role="User" EntitySet="User" />
+            <End Role="ScheduleMatchup" EntitySet="ScheduleMatchup" />
           </AssociationSet>
           <AssociationSet Name="FK_UserPreferences_User" Association="Self.FK_UserPreferences_User">
             <End Role="User" EntitySet="User" />
@@ -1535,6 +1610,20 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
             <End Role="PlayerHighlight" EntitySet="PlayerHighlights" />
           </AssociationSet>
           <EntitySet Name="SiteConfigVars" EntityType="HomeModel.SiteConfigVar" />
+          <AssociationSet Name="FK_PlayerHighlight_PlayerHighlight" Association="HomeModel.FK_PlayerHighlight_PlayerHighlight">
+            <End Role="PlayerHighlight" EntitySet="PlayerHighlights" />
+            <End Role="PlayerHighlight1" EntitySet="PlayerHighlights" />
+          </AssociationSet>
+          <EntitySet Name="Schedules" EntityType="HomeModel.Schedule" />
+          <EntitySet Name="ScheduleMatchups" EntityType="HomeModel.ScheduleMatchup" />
+          <AssociationSet Name="FK_Schedule_User" Association="HomeModel.FK_Schedule_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Schedule" EntitySet="Schedules" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ScheduleMatchup_Schedule" Association="HomeModel.FK_ScheduleMatchup_Schedule">
+            <End Role="User" EntitySet="Users" />
+            <End Role="ScheduleMatchup" EntitySet="ScheduleMatchups" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="PlayerRank">
           <Key>
@@ -1607,6 +1696,8 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
           <NavigationProperty Name="PlayerAdjustments" Relationship="HomeModel.FK_PlayerAdjustment_User" FromRole="User" ToRole="PlayerAdjustment" />
           <NavigationProperty Name="UserPreference" Relationship="HomeModel.FK_UserPreferences_User" FromRole="User" ToRole="UserPreference" />
           <NavigationProperty Name="DraftHighlights" Relationship="HomeModel.FK_DraftHighlight_User" FromRole="User" ToRole="DraftHighlight" />
+          <NavigationProperty Name="Schedules" Relationship="HomeModel.FK_Schedule_User" FromRole="User" ToRole="Schedule" />
+          <NavigationProperty Name="ScheduleMatchups" Relationship="HomeModel.FK_ScheduleMatchup_Schedule" FromRole="User" ToRole="ScheduleMatchup" />
         </EntityType>
         <EntityType Name="DraftRank">
           <Key>
@@ -1922,6 +2013,8 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
           <NavigationProperty Name="Draft" Relationship="HomeModel.FK_PlayerHighlight_Draft" FromRole="PlayerHighlight" ToRole="Draft" />
           <Property Name="DraftHighlightId" Type="Int32" />
           <NavigationProperty Name="DraftHighlight" Relationship="HomeModel.FK_PlayerHighlight_DraftHighlight" FromRole="PlayerHighlight" ToRole="DraftHighlight" />
+          <NavigationProperty Name="PlayerHighlight1" Relationship="HomeModel.FK_PlayerHighlight_PlayerHighlight" FromRole="PlayerHighlight" ToRole="PlayerHighlight1" />
+          <NavigationProperty Name="PlayerHighlight2" Relationship="HomeModel.FK_PlayerHighlight_PlayerHighlight" FromRole="PlayerHighlight1" ToRole="PlayerHighlight" />
         </EntityType>
         <Association Name="FK_PlayerHighlight_Highlight">
           <End Type="HomeModel.Highlight" Role="Highlight" Multiplicity="1" />
@@ -2690,6 +2783,69 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
           <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
+        <Association Name="FK_PlayerHighlight_PlayerHighlight">
+          <End Type="HomeModel.PlayerHighlight" Role="PlayerHighlight" Multiplicity="1" />
+          <End Type="HomeModel.PlayerHighlight" Role="PlayerHighlight1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="PlayerHighlight">
+              <PropertyRef Name="PlayerHighlightId" />
+            </Principal>
+            <Dependent Role="PlayerHighlight1">
+              <PropertyRef Name="PlayerHighlightId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Schedule">
+          <Key>
+            <PropertyRef Name="ScheduleId" />
+          </Key>
+          <Property Name="ScheduleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="User" Relationship="HomeModel.FK_Schedule_User" FromRole="Schedule" ToRole="User" />
+        </EntityType>
+        <EntityType Name="ScheduleMatchup">
+          <Key>
+            <PropertyRef Name="MatchupId" />
+          </Key>
+          <Property Name="MatchupId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ScheduleId" Type="Int32" Nullable="false" />
+          <Property Name="MatchupType" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="AwayTeam" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="HomeTeam" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="Week" Type="Int32" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="User" Relationship="HomeModel.FK_ScheduleMatchup_Schedule" FromRole="ScheduleMatchup" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Schedule_User">
+          <End Type="HomeModel.User" Role="User" Multiplicity="1" />
+          <End Type="HomeModel.Schedule" Role="Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ScheduleMatchup_Schedule">
+          <End Type="HomeModel.User" Role="User" Multiplicity="1" />
+          <End Type="HomeModel.ScheduleMatchup" Role="ScheduleMatchup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="ScheduleMatchup">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3250,6 +3406,33 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Schedules">
+            <EntityTypeMapping TypeName="HomeModel.Schedule">
+              <MappingFragment StoreEntitySet="Schedule">
+                <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
+                <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="ScheduleId" ColumnName="ScheduleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ScheduleMatchups">
+            <EntityTypeMapping TypeName="HomeModel.ScheduleMatchup">
+              <MappingFragment StoreEntitySet="ScheduleMatchup">
+                <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
+                <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Week" ColumnName="Week" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="HomeTeam" ColumnName="HomeTeam" />
+                <ScalarProperty Name="AwayTeam" ColumnName="AwayTeam" />
+                <ScalarProperty Name="MatchupType" ColumnName="MatchupType" />
+                <ScalarProperty Name="ScheduleId" ColumnName="ScheduleId" />
+                <ScalarProperty Name="MatchupId" ColumnName="MatchupId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -3355,6 +3538,11 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
         <edmx:AssociationConnector Association="HomeModel.FK_DraftHighlight_User" />
         <edmx:AssociationConnector Association="HomeModel.FK_PlayerHighlight_DraftHighlight" />
         <edmx:EntityTypeShape EntityType="HomeModel.SiteConfigVar" Width="1.5" PointX="0.75" PointY="4.75" />
+        <edmx:AssociationConnector Association="HomeModel.FK_PlayerHighlight_PlayerHighlight" />
+        <edmx:EntityTypeShape EntityType="HomeModel.Schedule" Width="1.5" PointX="10" PointY="23.5" />
+        <edmx:EntityTypeShape EntityType="HomeModel.ScheduleMatchup" Width="1.5" PointX="10" PointY="26.5" />
+        <edmx:AssociationConnector Association="HomeModel.FK_Schedule_User" />
+        <edmx:AssociationConnector Association="HomeModel.FK_ScheduleMatchup_Schedule" />
         </edmx:Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

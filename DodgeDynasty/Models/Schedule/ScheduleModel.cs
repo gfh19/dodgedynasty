@@ -24,12 +24,19 @@ namespace DodgeDynasty.Models.Schedule
 		public List<SchedTeam> AllTeams { get; set; }
 		public bool Submitted { get; set; }
 		public bool Success { get; set; }
+		public DateTime AddTimestamp { get; set; }
 		public void InitializeSchedule(int numWeeklyMatchups)
 		{
 			DivisionMatchups = new Matchup[numWeeklyMatchups].ToList();
-			DivisionMatchups.ForEach(m => m = new Matchup());
+			for (int i = 0; i < DivisionMatchups.Count; i++)
+			{
+				DivisionMatchups[i] = new Matchup();
+			}
 			FinalWeekRivalries = new Matchup[numWeeklyMatchups].ToList();
-			FinalWeekRivalries.ForEach(m => m = new Matchup());
+			for (int i = 0; i < FinalWeekRivalries.Count; i++)
+			{
+				FinalWeekRivalries[i] = new Matchup();
+			}
 			Week1TitleRematch = new Matchup();
 			FullSchedule = new List<WeekSchedule>();
 		}
@@ -70,6 +77,12 @@ namespace DodgeDynasty.Models.Schedule
 		}
 		public Matchup(string awayTeam, string homeTeam)
 		{
+			AwayTeam = new SchedTeam(awayTeam);
+			HomeTeam = new SchedTeam(homeTeam);
+		}
+		public Matchup(int weekNum, string awayTeam, string homeTeam)
+		{
+			WeekNum = weekNum;
 			AwayTeam = new SchedTeam(awayTeam);
 			HomeTeam = new SchedTeam(homeTeam);
 		}

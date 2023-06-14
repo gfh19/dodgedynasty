@@ -75,6 +75,14 @@ namespace DodgeDynasty.Shared
 			public const string Info = "Info";
 		}
 
+		public class MatchupTypes
+		{
+			public const string InputDivision = "Division";
+			public const string InputFinalWeek = "FinalWeek";
+			public const string InputWeek1 = "Week1";
+			public const string Results = "Results";
+		}
+
 		public static class Messages
 		{
 			public const string StringLength = "The {0} must be between {2} and {1} characters long.";

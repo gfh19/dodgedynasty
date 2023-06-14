@@ -297,6 +297,7 @@
     <Compile Include="Mappers\Ranks\DeleteRankMapper.cs" />
     <Compile Include="Mappers\Ranks\PlayerRankModelHelper.cs" />
     <Compile Include="Mappers\Ranks\PlayerRankOptionsMapper.cs" />
+    <Compile Include="Mappers\Schedule\ScheduleDBMapper.cs" />
     <Compile Include="Mappers\Schedule\ScheduleMapper.cs" />
     <Compile Include="Mappers\Shared\ColorStylesMapper.cs" />
     <Compile Include="Mappers\Shared\DraftChatMapper.cs" />
@@ -431,7 +432,8 @@
     <Compile Include="WebSockets\DD_SignalR.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="2022 SQL Changes.sql" />
+    <Content Include="2023 SQL Changes.sql" />
+    <Content Include="SQL Server\OLD - 2022 SQL Changes.sql" />
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />

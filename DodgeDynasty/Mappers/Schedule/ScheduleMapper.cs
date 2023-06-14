@@ -20,6 +20,8 @@ namespace DodgeDynasty.Mappers.Schedule
 		{
 			var schedule = new ScheduleModel();
 			schedule.InitializeSchedule(_numWeeklyMatchups);
+			var scheduleDBMapper = new ScheduleDBMapper();
+			scheduleDBMapper.GetModel(schedule);
 			return schedule;
 		}
 
@@ -41,6 +43,8 @@ namespace DodgeDynasty.Mappers.Schedule
 				}
 			}
 			response.Success = !_isScheduleAborted;
+			var scheduleDBMapper = new ScheduleDBMapper();
+			scheduleDBMapper.UpdateEntity(response);
 			return response;
 		}
 
@@ -77,7 +81,7 @@ namespace DodgeDynasty.Mappers.Schedule
 				}
 				else
 				{
-					//Can't call GenerateMatchup for Week 14 cuz it increments team counters & adds to teach schedule!
+					//Can't call GenerateMatchup for Week 14 cuz it increments team counters & adds to team schedule!
 					//var matchup = GenerateMatchup(_numWeeks, currentWeekTeams, schedule);
 					var matchup = new Matchup(_numWeeks);
 					var rand = new Random();
@@ -145,7 +149,6 @@ namespace DodgeDynasty.Mappers.Schedule
 					updateHomeTeamMatchup(m.HomeTeam, m);
 				});
 			}
-
 			return schedule;
 		}
 

@@ -64,6 +64,9 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_DraftHighlight_Draft", "Draft", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.Draft), "DraftHighlight", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.DraftHighlight), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_DraftHighlight_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.User), "DraftHighlight", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.DraftHighlight), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerHighlight_DraftHighlight", "DraftHighlight", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.DraftHighlight), "PlayerHighlight", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerHighlight), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerHighlight_PlayerHighlight", "PlayerHighlight", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.PlayerHighlight), "PlayerHighlight1", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.PlayerHighlight), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_Schedule_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.User), "Schedule", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.Schedule), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_ScheduleMatchup_Schedule", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.User), "ScheduleMatchup", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.ScheduleMatchup), true)]
 
 #endregion
 
@@ -706,6 +709,38 @@ namespace DodgeDynasty.Entities
             }
         }
         private ObjectSet<SiteConfigVar> _SiteConfigVars;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Schedule> Schedules
+        {
+            get
+            {
+                if ((_Schedules == null))
+                {
+                    _Schedules = base.CreateObjectSet<Schedule>("Schedules");
+                }
+                return _Schedules;
+            }
+        }
+        private ObjectSet<Schedule> _Schedules;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<ScheduleMatchup> ScheduleMatchups
+        {
+            get
+            {
+                if ((_ScheduleMatchups == null))
+                {
+                    _ScheduleMatchups = base.CreateObjectSet<ScheduleMatchup>("ScheduleMatchups");
+                }
+                return _ScheduleMatchups;
+            }
+        }
+        private ObjectSet<ScheduleMatchup> _ScheduleMatchups;
 
         #endregion
 
@@ -1005,6 +1040,22 @@ namespace DodgeDynasty.Entities
         public void AddToSiteConfigVars(SiteConfigVar siteConfigVar)
         {
             base.AddObject("SiteConfigVars", siteConfigVar);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Schedules EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToSchedules(Schedule schedule)
+        {
+            base.AddObject("Schedules", schedule);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the ScheduleMatchups EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToScheduleMatchups(ScheduleMatchup scheduleMatchup)
+        {
+            base.AddObject("ScheduleMatchups", scheduleMatchup);
         }
 
         #endregion
@@ -9999,6 +10050,82 @@ namespace DodgeDynasty.Entities
                 }
             }
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_PlayerHighlight_PlayerHighlight", "PlayerHighlight1")]
+        public PlayerHighlight PlayerHighlight1
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PlayerHighlight>("HomeModel.FK_PlayerHighlight_PlayerHighlight", "PlayerHighlight1").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PlayerHighlight>("HomeModel.FK_PlayerHighlight_PlayerHighlight", "PlayerHighlight1").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<PlayerHighlight> PlayerHighlight1Reference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PlayerHighlight>("HomeModel.FK_PlayerHighlight_PlayerHighlight", "PlayerHighlight1");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PlayerHighlight>("HomeModel.FK_PlayerHighlight_PlayerHighlight", "PlayerHighlight1", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_PlayerHighlight_PlayerHighlight", "PlayerHighlight")]
+        public PlayerHighlight PlayerHighlight2
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PlayerHighlight>("HomeModel.FK_PlayerHighlight_PlayerHighlight", "PlayerHighlight").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PlayerHighlight>("HomeModel.FK_PlayerHighlight_PlayerHighlight", "PlayerHighlight").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<PlayerHighlight> PlayerHighlight2Reference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PlayerHighlight>("HomeModel.FK_PlayerHighlight_PlayerHighlight", "PlayerHighlight");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PlayerHighlight>("HomeModel.FK_PlayerHighlight_PlayerHighlight", "PlayerHighlight", value);
+                }
+            }
+        }
 
         #endregion
 
@@ -12163,6 +12290,538 @@ namespace DodgeDynasty.Entities
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="HomeModel", Name="Schedule")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Schedule : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Schedule object.
+        /// </summary>
+        /// <param name="scheduleId">Initial value of the ScheduleId property.</param>
+        /// <param name="year">Initial value of the Year property.</param>
+        /// <param name="userId">Initial value of the UserId property.</param>
+        /// <param name="addTimestamp">Initial value of the AddTimestamp property.</param>
+        /// <param name="lastUpdateTimestamp">Initial value of the LastUpdateTimestamp property.</param>
+        public static Schedule CreateSchedule(global::System.Int32 scheduleId, global::System.Int32 year, global::System.Int32 userId, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp)
+        {
+            Schedule schedule = new Schedule();
+            schedule.ScheduleId = scheduleId;
+            schedule.Year = year;
+            schedule.UserId = userId;
+            schedule.AddTimestamp = addTimestamp;
+            schedule.LastUpdateTimestamp = lastUpdateTimestamp;
+            return schedule;
+        }
+
+        #endregion
+
+        #region Simple Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ScheduleId
+        {
+            get
+            {
+                return _ScheduleId;
+            }
+            set
+            {
+                if (_ScheduleId != value)
+                {
+                    OnScheduleIdChanging(value);
+                    ReportPropertyChanging("ScheduleId");
+                    _ScheduleId = StructuralObject.SetValidValue(value, "ScheduleId");
+                    ReportPropertyChanged("ScheduleId");
+                    OnScheduleIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _ScheduleId;
+        partial void OnScheduleIdChanging(global::System.Int32 value);
+        partial void OnScheduleIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Year
+        {
+            get
+            {
+                return _Year;
+            }
+            set
+            {
+                OnYearChanging(value);
+                ReportPropertyChanging("Year");
+                _Year = StructuralObject.SetValidValue(value, "Year");
+                ReportPropertyChanged("Year");
+                OnYearChanged();
+            }
+        }
+        private global::System.Int32 _Year;
+        partial void OnYearChanging(global::System.Int32 value);
+        partial void OnYearChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 UserId
+        {
+            get
+            {
+                return _UserId;
+            }
+            set
+            {
+                OnUserIdChanging(value);
+                ReportPropertyChanging("UserId");
+                _UserId = StructuralObject.SetValidValue(value, "UserId");
+                ReportPropertyChanged("UserId");
+                OnUserIdChanged();
+            }
+        }
+        private global::System.Int32 _UserId;
+        partial void OnUserIdChanging(global::System.Int32 value);
+        partial void OnUserIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime AddTimestamp
+        {
+            get
+            {
+                return _AddTimestamp;
+            }
+            set
+            {
+                OnAddTimestampChanging(value);
+                ReportPropertyChanging("AddTimestamp");
+                _AddTimestamp = StructuralObject.SetValidValue(value, "AddTimestamp");
+                ReportPropertyChanged("AddTimestamp");
+                OnAddTimestampChanged();
+            }
+        }
+        private global::System.DateTime _AddTimestamp;
+        partial void OnAddTimestampChanging(global::System.DateTime value);
+        partial void OnAddTimestampChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime LastUpdateTimestamp
+        {
+            get
+            {
+                return _LastUpdateTimestamp;
+            }
+            set
+            {
+                OnLastUpdateTimestampChanging(value);
+                ReportPropertyChanging("LastUpdateTimestamp");
+                _LastUpdateTimestamp = StructuralObject.SetValidValue(value, "LastUpdateTimestamp");
+                ReportPropertyChanged("LastUpdateTimestamp");
+                OnLastUpdateTimestampChanged();
+            }
+        }
+        private global::System.DateTime _LastUpdateTimestamp;
+        partial void OnLastUpdateTimestampChanging(global::System.DateTime value);
+        partial void OnLastUpdateTimestampChanged();
+
+        #endregion
+
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_Schedule_User", "User")]
+        public User User
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_Schedule_User", "User").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_Schedule_User", "User").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<User> UserReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_Schedule_User", "User");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("HomeModel.FK_Schedule_User", "User", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="HomeModel", Name="ScheduleMatchup")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class ScheduleMatchup : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new ScheduleMatchup object.
+        /// </summary>
+        /// <param name="matchupId">Initial value of the MatchupId property.</param>
+        /// <param name="scheduleId">Initial value of the ScheduleId property.</param>
+        /// <param name="matchupType">Initial value of the MatchupType property.</param>
+        /// <param name="awayTeam">Initial value of the AwayTeam property.</param>
+        /// <param name="homeTeam">Initial value of the HomeTeam property.</param>
+        /// <param name="year">Initial value of the Year property.</param>
+        /// <param name="userId">Initial value of the UserId property.</param>
+        /// <param name="addTimestamp">Initial value of the AddTimestamp property.</param>
+        /// <param name="lastUpdateTimestamp">Initial value of the LastUpdateTimestamp property.</param>
+        public static ScheduleMatchup CreateScheduleMatchup(global::System.Int32 matchupId, global::System.Int32 scheduleId, global::System.String matchupType, global::System.String awayTeam, global::System.String homeTeam, global::System.Int32 year, global::System.Int32 userId, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp)
+        {
+            ScheduleMatchup scheduleMatchup = new ScheduleMatchup();
+            scheduleMatchup.MatchupId = matchupId;
+            scheduleMatchup.ScheduleId = scheduleId;
+            scheduleMatchup.MatchupType = matchupType;
+            scheduleMatchup.AwayTeam = awayTeam;
+            scheduleMatchup.HomeTeam = homeTeam;
+            scheduleMatchup.Year = year;
+            scheduleMatchup.UserId = userId;
+            scheduleMatchup.AddTimestamp = addTimestamp;
+            scheduleMatchup.LastUpdateTimestamp = lastUpdateTimestamp;
+            return scheduleMatchup;
+        }
+
+        #endregion
+
+        #region Simple Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 MatchupId
+        {
+            get
+            {
+                return _MatchupId;
+            }
+            set
+            {
+                if (_MatchupId != value)
+                {
+                    OnMatchupIdChanging(value);
+                    ReportPropertyChanging("MatchupId");
+                    _MatchupId = StructuralObject.SetValidValue(value, "MatchupId");
+                    ReportPropertyChanged("MatchupId");
+                    OnMatchupIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _MatchupId;
+        partial void OnMatchupIdChanging(global::System.Int32 value);
+        partial void OnMatchupIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ScheduleId
+        {
+            get
+            {
+                return _ScheduleId;
+            }
+            set
+            {
+                OnScheduleIdChanging(value);
+                ReportPropertyChanging("ScheduleId");
+                _ScheduleId = StructuralObject.SetValidValue(value, "ScheduleId");
+                ReportPropertyChanged("ScheduleId");
+                OnScheduleIdChanged();
+            }
+        }
+        private global::System.Int32 _ScheduleId;
+        partial void OnScheduleIdChanging(global::System.Int32 value);
+        partial void OnScheduleIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String MatchupType
+        {
+            get
+            {
+                return _MatchupType;
+            }
+            set
+            {
+                OnMatchupTypeChanging(value);
+                ReportPropertyChanging("MatchupType");
+                _MatchupType = StructuralObject.SetValidValue(value, false, "MatchupType");
+                ReportPropertyChanged("MatchupType");
+                OnMatchupTypeChanged();
+            }
+        }
+        private global::System.String _MatchupType;
+        partial void OnMatchupTypeChanging(global::System.String value);
+        partial void OnMatchupTypeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String AwayTeam
+        {
+            get
+            {
+                return _AwayTeam;
+            }
+            set
+            {
+                OnAwayTeamChanging(value);
+                ReportPropertyChanging("AwayTeam");
+                _AwayTeam = StructuralObject.SetValidValue(value, false, "AwayTeam");
+                ReportPropertyChanged("AwayTeam");
+                OnAwayTeamChanged();
+            }
+        }
+        private global::System.String _AwayTeam;
+        partial void OnAwayTeamChanging(global::System.String value);
+        partial void OnAwayTeamChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String HomeTeam
+        {
+            get
+            {
+                return _HomeTeam;
+            }
+            set
+            {
+                OnHomeTeamChanging(value);
+                ReportPropertyChanging("HomeTeam");
+                _HomeTeam = StructuralObject.SetValidValue(value, false, "HomeTeam");
+                ReportPropertyChanged("HomeTeam");
+                OnHomeTeamChanged();
+            }
+        }
+        private global::System.String _HomeTeam;
+        partial void OnHomeTeamChanging(global::System.String value);
+        partial void OnHomeTeamChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Year
+        {
+            get
+            {
+                return _Year;
+            }
+            set
+            {
+                OnYearChanging(value);
+                ReportPropertyChanging("Year");
+                _Year = StructuralObject.SetValidValue(value, "Year");
+                ReportPropertyChanged("Year");
+                OnYearChanged();
+            }
+        }
+        private global::System.Int32 _Year;
+        partial void OnYearChanging(global::System.Int32 value);
+        partial void OnYearChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> Week
+        {
+            get
+            {
+                return _Week;
+            }
+            set
+            {
+                OnWeekChanging(value);
+                ReportPropertyChanging("Week");
+                _Week = StructuralObject.SetValidValue(value, "Week");
+                ReportPropertyChanged("Week");
+                OnWeekChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _Week;
+        partial void OnWeekChanging(Nullable<global::System.Int32> value);
+        partial void OnWeekChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 UserId
+        {
+            get
+            {
+                return _UserId;
+            }
+            set
+            {
+                OnUserIdChanging(value);
+                ReportPropertyChanging("UserId");
+                _UserId = StructuralObject.SetValidValue(value, "UserId");
+                ReportPropertyChanged("UserId");
+                OnUserIdChanged();
+            }
+        }
+        private global::System.Int32 _UserId;
+        partial void OnUserIdChanging(global::System.Int32 value);
+        partial void OnUserIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime AddTimestamp
+        {
+            get
+            {
+                return _AddTimestamp;
+            }
+            set
+            {
+                OnAddTimestampChanging(value);
+                ReportPropertyChanging("AddTimestamp");
+                _AddTimestamp = StructuralObject.SetValidValue(value, "AddTimestamp");
+                ReportPropertyChanged("AddTimestamp");
+                OnAddTimestampChanged();
+            }
+        }
+        private global::System.DateTime _AddTimestamp;
+        partial void OnAddTimestampChanging(global::System.DateTime value);
+        partial void OnAddTimestampChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime LastUpdateTimestamp
+        {
+            get
+            {
+                return _LastUpdateTimestamp;
+            }
+            set
+            {
+                OnLastUpdateTimestampChanging(value);
+                ReportPropertyChanging("LastUpdateTimestamp");
+                _LastUpdateTimestamp = StructuralObject.SetValidValue(value, "LastUpdateTimestamp");
+                ReportPropertyChanged("LastUpdateTimestamp");
+                OnLastUpdateTimestampChanged();
+            }
+        }
+        private global::System.DateTime _LastUpdateTimestamp;
+        partial void OnLastUpdateTimestampChanging(global::System.DateTime value);
+        partial void OnLastUpdateTimestampChanged();
+
+        #endregion
+
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_ScheduleMatchup_Schedule", "User")]
+        public User User
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_ScheduleMatchup_Schedule", "User").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_ScheduleMatchup_Schedule", "User").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<User> UserReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("HomeModel.FK_ScheduleMatchup_Schedule", "User");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("HomeModel.FK_ScheduleMatchup_Schedule", "User", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="HomeModel", Name="SiteConfigVar")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
@@ -13050,6 +13709,50 @@ namespace DodgeDynasty.Entities
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DraftHighlight>("HomeModel.FK_DraftHighlight_User", "DraftHighlight", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_Schedule_User", "Schedule")]
+        public EntityCollection<Schedule> Schedules
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Schedule>("HomeModel.FK_Schedule_User", "Schedule");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Schedule>("HomeModel.FK_Schedule_User", "Schedule", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_ScheduleMatchup_Schedule", "ScheduleMatchup")]
+        public EntityCollection<ScheduleMatchup> ScheduleMatchups
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<ScheduleMatchup>("HomeModel.FK_ScheduleMatchup_Schedule", "ScheduleMatchup");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<ScheduleMatchup>("HomeModel.FK_ScheduleMatchup_Schedule", "ScheduleMatchup", value);
                 }
             }
         }

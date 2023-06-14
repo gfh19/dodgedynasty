@@ -37,7 +37,7 @@
 	<div class="form-horizontal">
 		<div style="display: inline-block; float: none; width: 100%">
 			<div style="float: left; padding: 10px 20px 10px 10px;">
-				<h4>Divisions & Extra Interdivisional Matchups</h4>
+				<h4>Divisions & Crossover Matchups</h4>
 				<div>
 					@for (int i = 0; i < Model.DivisionMatchups.Count; i++)
 					{
@@ -86,7 +86,7 @@
 			}
 			else if (Model.FullSchedule != null && Model.FullSchedule.Count > 0)
 			{
-				<h3>New Schedule Generated at @DodgeDynasty.Shared.Utilities.GetEasternTime().ToString("M/d/yyyy h:mm:ss.fff tt")</h3>
+				<h3>Schedule Generated at @Model.AddTimestamp.ToString("M/d/yyyy h:mm:ss.fff tt")</h3>
 				<div style="float: left; width: 350px">
 					@for (int i = 0; i < Model.FullSchedule.Count && i < 5; i++)
 					{
