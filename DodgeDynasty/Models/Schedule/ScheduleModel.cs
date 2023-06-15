@@ -192,6 +192,12 @@ namespace DodgeDynasty.Models.Schedule
 		{
 			WeekNum = weekNum;
 		}
+
+		public bool IsValid()
+		{
+			return Matchups != null && Matchups.Count == 5 && !Matchups.Any(m => m.HasNullMatchup());
+		}
+
 		public string PrintWeekSchedule()
 		{
 			var resp = $"Week {WeekNum} Schedule:  ";

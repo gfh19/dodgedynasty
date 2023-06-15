@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.SqlClient;
 using System.Linq;
 using DodgeDynasty.Models.Audio;
 using DodgeDynasty.Models.Schedule;
@@ -13,12 +14,11 @@ namespace DodgeDynasty.Mappers.Schedule
 		{
 			var userId = HomeEntity.Users.GetLoggedInUserId();
 
-			HomeEntity.ScheduleMatchups
-				.Where(sm => sm.UserId == userId && sm.Year == DateTime.Now.Year)
-				.ForEach(sm => HomeEntity.ScheduleMatchups.DeleteObject(sm));
-			HomeEntity.Schedules
-				.Where(s => s.UserId == userId && s.Year == DateTime.Now.Year)
-				.ForEach(s => HomeEntity.Schedules.DeleteObject(s));
+			HomeEntity.ExecuteStoreCommand($"DELETE FROM dbo.[ScheduleMatchup] WHERE [UserId]=@UserId AND [Year]=@Year",
+				new SqlParameter("@UserId", userId), new SqlParameter("@Year", DateTime.Now.Year));
+
+			HomeEntity.ExecuteStoreCommand($"DELETE FROM dbo.[Schedule] WHERE [UserId]=@UserId AND [Year]=@Year",
+				new SqlParameter("@UserId", userId), new SqlParameter("@Year", DateTime.Now.Year));
 
 			model.AddTimestamp = Utilities.GetEasternTime();
 

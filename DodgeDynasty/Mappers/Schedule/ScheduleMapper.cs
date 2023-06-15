@@ -10,11 +10,13 @@ namespace DodgeDynasty.Mappers.Schedule
 		public static readonly int _numWeeks = 14;
 		public static readonly int _numWeeklyMatchups = 5;
 
-		private static readonly int _maxAttempts = 400;
-		private static readonly int _removeVenueRestrictThreshold = 200;
-		private static readonly int _maxScheduleRestarts = 200;
+		private static readonly int _maxAttempts = 250;
+		private static readonly int _removeVenueRestrictThreshold = 150;
+		private static readonly int _maxScheduleRestarts = 150;
 		private bool _isScheduleAborted = false;
 		private int _recursiveMatchupAttemptCtr = 0;
+		private int _retryCtr = 0;
+		private Random _rand = new Random(DateTime.Now.Millisecond);
 
 		public ScheduleModel PopulateModel()
 		{
@@ -33,8 +35,8 @@ namespace DodgeDynasty.Mappers.Schedule
 			var response = generateFullScheduleAttempt(schedule);
 			if (_isScheduleAborted)
 			{
-				var retryCtr = 0;
-				while (retryCtr++ < _maxScheduleRestarts && _isScheduleAborted)
+				_retryCtr = 0;
+				while (_retryCtr++ < _maxScheduleRestarts && _isScheduleAborted)
 				{
 					_isScheduleAborted = false;
 					_recursiveMatchupAttemptCtr = 0;
@@ -207,8 +209,7 @@ namespace DodgeDynasty.Mappers.Schedule
 
 			while (maxRandomAttempts-- > 0 && eligibleAwayTeams.Count > 0 && eligibleHomeTeams.Count > 0)
 			{
-				var rand = new Random(DateTime.Now.Millisecond - maxRandomAttempts + weekNum);
-				var selectedAwayTeam = eligibleAwayTeams.ElementAt(rand.Next(0, eligibleAwayTeams.Count));
+				var selectedAwayTeam = eligibleAwayTeams.ElementAt(_rand.Next(0, eligibleAwayTeams.Count));
 				if (isIneligibleAwayTeam(selectedAwayTeam))
 				{
 					continue;
@@ -221,7 +222,7 @@ namespace DodgeDynasty.Mappers.Schedule
 				var fullyEligibleHomeTeams = eligibleHomeTeams.Where(t => !t.Equals(selectedAwayTeam) && !ineligibleWeeklyMatchups.Any(m => m.ContainsBothTeams(selectedAwayTeam, t))).ToList();
 				if (fullyEligibleHomeTeams.Count > 0)
 				{
-					selectedHomeTeam = fullyEligibleHomeTeams.ElementAt(rand.Next(0, fullyEligibleHomeTeams.Count));
+					selectedHomeTeam = fullyEligibleHomeTeams.ElementAt(_rand.Next(0, fullyEligibleHomeTeams.Count));
 				}
 				else
 				{
@@ -238,7 +239,7 @@ namespace DodgeDynasty.Mappers.Schedule
 					{
 						ineligibleWeeklyMatchups.Add(new Matchup(selectedAwayTeam.Name, selectedHomeTeam.Name));
 					}
-					selectedHomeTeam = currentWeekTeams.ElementAt(rand.Next(0, currentWeekTeams.Count));
+					selectedHomeTeam = currentWeekTeams.ElementAt(_rand.Next(0, currentWeekTeams.Count));
 				}
 				matchup.HomeTeam = schedule.GetTeam(selectedHomeTeam);
 				if (isIneligibleMatchup(weekNum, schedule, selectedAwayTeam, selectedHomeTeam) && (currentWeekTeams.Count <= 1 || maxRandomAttempts <= 0))
@@ -308,7 +309,7 @@ namespace DodgeDynasty.Mappers.Schedule
 		private bool week3SameAsWeek1(int weekNum, SchedTeam selectedAwayTeam, SchedTeam selectedHomeTeam)
 		{
 			var invalid = false;
-			if (weekNum == 3
+			if (weekNum == 3 && selectedAwayTeam.TeamSchedule.Count > 0
 				&& (selectedAwayTeam.TeamSchedule[0].ContainsTeam(selectedHomeTeam) || selectedHomeTeam.TeamSchedule[0].ContainsTeam(selectedAwayTeam)))
 			{
 				invalid = true;

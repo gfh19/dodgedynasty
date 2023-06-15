@@ -114,6 +114,10 @@ Player names to look out for:
 
 
   NEXT YEAR:
+  6/13/2023
+  Just hit up Trophy World in Mentor
+
+  OLD:
   Don't forget to re-order champion nameplate!
   www.trophypartner.com
   #NP100, Silver, 2" x 0.75"
