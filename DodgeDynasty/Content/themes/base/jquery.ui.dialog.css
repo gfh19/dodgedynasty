@@ -45,17 +45,17 @@
 	overflow: auto;
 }
 .ui-dialog .ui-dialog-buttonpane {
-	text-align: center;
+	text-align: left;
 	border-width: 1px 0 0 0;
 	background-image: none;
 	margin-top: .5em;
 	padding: .3em 1em .5em .4em;
 }
 .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
-	float: none;
+	float: right;
 }
 .ui-dialog .ui-dialog-buttonpane button {
-	margin: .5em .4em .5em .4em;
+	margin: .5em .4em .5em 0;
 	cursor: pointer;
 }
 .ui-dialog .ui-resizable-se {
