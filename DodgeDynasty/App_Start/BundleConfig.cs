@@ -14,12 +14,12 @@ namespace DodgeDynasty
 
 			bundles.Add(new ScriptBundle("~/bundles/lib").Include(
 						"~/Scripts/lib/jquery-{version}.js",
-						"~/Scripts/lib/jquery.cookie.js",
-						"~/Scripts/lib/jquery.validate*",
-						"~/Scripts/lib/jquery.signalR-{version}.js",
+						"~/Scripts/jquery.cookie.js",
+						"~/Scripts/jquery.validate*",
+						"~/Scripts/jquery.signalR-{version}.js",
 						"~/Scripts/lib/jquery-ui-{version}.js", //jquery-ui MUST come after bootstrap
-						"~/Scripts/lib/moment.js",
-						"~/Scripts/lib/jQuery-addTouch.js"
+						"~/Scripts/moment.js",
+						"~/Scripts/jQuery-addTouch.js"
 						));
 
 			bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css"));
