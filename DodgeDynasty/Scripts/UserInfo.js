@@ -9,21 +9,18 @@
 	bindTestAudio();
 	toggleDisableBrowserAudio();
 
-	$("#chkMIPushNotifications").click(enablePushNotifications);
+	$("#chkMIPushNotifications").click(function (e) {
+		if ($("#chkMIPushNotifications").is(':checked')) {
+			enablePushNotifications();
+		}
+		else {
+			unsubscribe();
+		}
+	});
 
 	$("#btnSimulateTurn").click(function (e) {
 		e.preventDefault();
-		broadcastNotification();
-		//if ('Notification' in window) {
-		//	if (window.Notification.permission === 'granted') {
-		//		new window.Notification('Time is over!');
-		//	}
-		//}
-	});
-	$("#btnUnsubscribeNotif").click(function (e) {
-		e.preventDefault();
-		unsubscribe();
-alert('Unsubscribed.');
+		simulateNotification();
 		//if ('Notification' in window) {
 		//	if (window.Notification.permission === 'granted') {
 		//		new window.Notification('Time is over!');
@@ -32,40 +29,16 @@ alert('Unsubscribed.');
 	});
 }
 
-async function enablePushNotifications(e) {
-	subscribe();
+async function enablePushNotifications() {
 	if ('Notification' in window) {
 		window.Notification.requestPermission().then((permission) => {
-			navigator.serviceWorker.register('/sw.js', { scope: '/' }).then((reg) => {
-				window.myRegistration = reg;
-				window.myRegistration.showNotification("Hello World", {
-					body: "My first notification on iOS",
-				}).then(() => {
-					alert('much success!');
-				});
-			});
+			if (permission === 'granted') {
+				subscribe();
+			}
+			else {
+				setSubscribeStatus(permission);
+			}
 		});
-		/*
-		const result = window.Notification.requestPermission(); 
-		if (result === "granted") {
-			// You must use the service worker notification to show the notification
-			// Using new Notification("Hello World", { body: "My first notification on iOS"}) does not work on iOS
-			// despite working on other platforms
-			await window.myRegistration.showNotification("Hello World", {
-				body: "My first notification on iOS",
-			});
-		}
-		*/
-	}
-	else if (typeof window.Notification !== undefined) {
-		//Safari requires promise/doesn't return promise
-		window.Notification.requestPermission((permission) => {
-			alert('iOS Permission ' + window.Notification.permission + '!');
-//Never used, can delete next checkin
-		});
-	}
-	else {
-		alert("Notification NOT found!");
 	}
 }
 

@@ -33,39 +33,14 @@ namespace DodgeDynasty.Controllers
 		[HttpGet]
 		public HttpStatusCode Broadcast()
 		{
-			try
+			var webPushClient = new WebPushClient();
+//TODO:  Replace with proper user broadcast logic
+			var s = Subscriptions.LastOrDefault();
+			if (s != null)
 			{
-				var webPushClient = new WebPushClient();
-				//Subscriptions.ForEach(s =>
-				//{
-				var s = Subscriptions.LastOrDefault();
-				if (s != null)
-				{
-					Dictionary<string, object> options = new Dictionary<string, object>();
-					//Dictionary<string, object> headers = new Dictionary<string, object>();
-					//headers.Add("Content-Encoding", "aesgcm");
-					//options.Add("headers", headers);
-					var pushSubscription = new PushSubscription(s.EndPoint, s.Keys["p256dh"], s.Keys["auth"]);
-					var vapidDetails = new VapidDetails(Constants.Notifications.Email, Constants.Notifications.PublicKey, Constants.Notifications.PrivateKey);
-					webPushClient.SetVapidDetails(vapidDetails);
-					//var reqDetails = webPushClient.GenerateRequestDetails(pushSubscription, "{\"body\":\"Draft notification! \"}", options);
-					var reqDetails = webPushClient.GenerateRequestDetails(pushSubscription, "", options);
-					Logger.Log(Constants.LogTypes.Info, $"Headers: {reqDetails.Headers.ToString()}; ContentHeaders: {reqDetails.Content.Headers.ToString()}", "");
-					//webPushClient.SendNotification(pushSubscription, "", vapidDetails);
-					//webPushClient.SendNotification(pushSubscription, "", options);
-					webPushClient.SendNotification(pushSubscription, "", vapidDetails);
-				}
-				//});
-			}
-			catch (WebPushException ex)
-			{
-				Logger.Log(Constants.LogTypes.Error, $"StatusCode: {ex.StatusCode}; Error: {ex.Message}", ex.StackTrace);
-				throw;
-			}
-			catch (Exception ex)
-			{
-				Logger.Log(Constants.LogTypes.Error, $"Error: {ex.Message}; Inside Error: {ex.InnerException?.Message}", ex.StackTrace);
-				throw;
+				var pushSubscription = new PushSubscription(s.EndPoint, s.Keys["p256dh"], s.Keys["auth"]);
+				var vapidDetails = new VapidDetails(Constants.Notifications.Email, Constants.Notifications.PublicKey, Constants.Notifications.PrivateKey);
+				webPushClient.SendNotification(pushSubscription, "", vapidDetails);
 			}
 			return HttpStatusCode.OK;
 		}

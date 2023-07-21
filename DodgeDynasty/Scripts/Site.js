@@ -3,7 +3,7 @@ var playerHints = [];
 var hasModelErrors = false;
 var isRefreshPage = false;
 var draftActive = false;	//Means ANY draftActive, not necessarily this one (check historyMode)
-							//Currently only ever set to true in DraftChatPartial
+//Currently only ever set to true in DraftChatPartial
 var isUserTurn = false;
 var loggedInUserName = "";
 var currentServerTime = null;
@@ -328,6 +328,7 @@ function updateCurrentDraftPickPartial(pickInfo) {
 
 /*		--- End WebSockets */
 
+/*		Push Notifications		*/
 /*		--- Service Worker ---	*/
 
 async function initServiceWorker() {
@@ -335,25 +336,28 @@ async function initServiceWorker() {
 
 	if (draftActive && !pushNotificationsKillSwitch) {
 		if ('serviceWorker' in navigator) {
-			window.myRegistration = await navigator.serviceWorker.register('/sw.js', { scope: '/' });
+			await navigator.serviceWorker.register('/sw.js');
 		}
 
 		window.unsubscribe = async () => {
 			if (!('serviceWorker' in navigator)) {
-alert("serviceWorker NOT found!");
 				return;
 			}
 
+			setSubscribeStatus("Unsubscribing...");
 			navigator.serviceWorker.ready.then((reg) => {
 				reg.pushManager.getSubscription().then((subscription) => {
 					if (subscription) {
 						subscription.unsubscribe()
 							.then((successful) => {
-								// You've successfully unsubscribed
+								setSubscribeStatus("Unsubcribed");
 							})
 							.catch((e) => {
-								// Unsubscribing failed
+								setSubscribeStatus("Error");
 							});
+					}
+					else {
+						setSubscribeStatus("Error");
 					}
 				});
 			});
@@ -361,41 +365,79 @@ alert("serviceWorker NOT found!");
 
 		window.subscribe = async () => {
 			if (!('serviceWorker' in navigator)) {
-alert("serviceWorker NOT found!");
 				return;
 			}
 
+			setSubscribeStatus("Subscribing...");
 			const registration = await navigator.serviceWorker.ready;
 
 			// Subscribe to push notifications
-			var subscription = await window.myRegistration.pushManager.subscribe({
+			registration.pushManager.subscribe({
 				userVisibleOnly: true,
 				//applicationServerKey: urlBase64ToUint8Array(publicVapidKey),
 				applicationServerKey: publicVapidKey
-			});
-
-			await fetch('/notification/subscribe', {
-				method: 'POST',
-				body: JSON.stringify(subscription),
-				headers: {
-					'content-type': 'application/json',
-				},
-			});
-//.then(response => {
-//	alert("push notifications subscribed, server.");
-//});
-		};
-
-		window.broadcastNotification = async () => {
-			await fetch('/notification/broadcast', {
-				method: 'GET',
-				headers: {
-					'content-type': 'application/json',
-				},
-			}).then(response => {
-//alert("response: " + response.statusText);
+			}).then((subscription) => {
+				fetch('/notification/subscribe', {
+					method: 'POST',
+					body: JSON.stringify(subscription),
+					headers: {
+						'content-type': 'application/json',
+					},
+				}).then((response) => {
+					if (response?.ok) {
+						setSubscribeStatus("Subscribed");
+					}
+					else {
+						setSubscribeStatus("Error");
+					}
+				})
+					.catch((e) => {
+						setSubscribeStatus("Error");
+					});
 			});
 		};
+
+		window.simulateNotification = async () => {
+			if ('Notification' in window) {
+				window.Notification.requestPermission().then((permission) => {
+					if (permission === 'granted') {
+						navigator.serviceWorker.ready.then((reg) => {
+							reg.pushManager.getSubscription().then((subscription) => {
+								if (subscription) {
+									fetch('/notification/broadcast', {
+										method: 'GET',
+										headers: {
+											'content-type': 'application/json',
+										},
+									}).catch((e) => {
+										setSubscribeStatus("Error");
+									});
+								}
+								else {
+									setSubscribeStatus("No subscription");
+								}
+							});
+						});
+					}
+					else {
+						setSubscribeStatus(permission);
+					}
+				});
+			}
+		};
+	}
+}
+
+function setSubscribeStatus(statusText) {
+	$("#miSubscribeStatus").text(statusText);
+	if (statusText.includes("Subscribed")) {
+		$("#miSubscribeStatus").css("color", "green");
+	}
+	else if (statusText.includes("Subscribing") || statusText.includes("Unsubscribing")) {
+		$("#miSubscribeStatus").css("color", "#CCCC00");
+	}
+	else {
+		$("#miSubscribeStatus").css("color", "red");
 	}
 }
 
@@ -476,7 +518,7 @@ function setPickTimer(recursive) {
 
 function playTickingClockAudio() {
 	if (!audioKillSwitch && !tickingClockAudioKillSwitch && !isTickingClockPlaying && tickingClockAudio
-			&& lastPickAudio && toBool(lastPickAudio.access) && toBool(lastPickAudio.success) && !toBool(lastPickAudio.final)) {
+		&& lastPickAudio && toBool(lastPickAudio.access) && toBool(lastPickAudio.success) && !toBool(lastPickAudio.final)) {
 		isTickingClockPlaying = true;
 		setTimeout(function () {
 			//Make sure hasn't been stopped during async wait
@@ -521,7 +563,7 @@ function refreshPageWithPickTimer(url, elementId, timer, successFn, errorFn, pre
 			callRefreshPageWithPickTimer(url, elementId, successFn, errorFn, preRefreshFn);
 			console.log("Refreshed page at " + new Date());
 		},
-		timer);
+			timer);
 	}
 };
 
@@ -562,8 +604,7 @@ function getDynamicUrl(url) {
 	return returnUrl;
 }
 
-function saveTouchScrollPos()
-{
+function saveTouchScrollPos() {
 	if ($(".possible-touch").length > 0 && touchScrollDiv != null) {
 		touchScrollLeft = $(touchScrollDiv, ".possible-touch").scrollLeft();
 	}
@@ -619,11 +660,10 @@ function setIsUserTurn(pickInfo) {
 }
 
 function checkUserTurnDialog() {
-	if (draftActive)
-	{
+	if (draftActive) {
 		if (!isRefreshPage		//Either user turn is unknown, i.e. not on refreshed page  
-		|| isHistoryMode()		//Or on refresh page in historyMode (doesn't get refreshed) 
-		|| isUserTurn)			//Or we know is user turn on refreshed page
+			|| isHistoryMode()		//Or on refresh page in historyMode (doesn't get refreshed) 
+			|| isUserTurn)			//Or we know is user turn on refreshed page
 		{
 			tryShowUserTurnDialog();
 		}
@@ -641,8 +681,7 @@ function tryShowUserTurnDialog() {
 			showUserTurnDialog();
 		}
 		//else if open and not user turn, close it
-		else if (isUserTurnDialogOpen())
-		{
+		else if (isUserTurnDialogOpen()) {
 			ajaxGetJson("Draft/GetUserTurnPickInfo", function (pickInfo) {
 				if (pickInfo && !pickInfo.turn) {
 					closeUserTurnDialog();
@@ -665,20 +704,20 @@ function showUserTurnDialog() {
 				modal: false,
 				autoOpen: true,
 				buttons: [
-							{
-								id: "btnUserMakePick",
-								text: "Make Pick", click: function () {
-									setHideUserTurn("#chkHideUserTurn");
-									location.href = baseURL + "Draft/Pick";
-									$(this).dialog("close");
-								}
-							},
-							{
-								text: "Close", click: function () {
-									setHideUserTurn("#chkHideUserTurn");
-									$(this).dialog("close");
-								}
-							},
+					{
+						id: "btnUserMakePick",
+						text: "Make Pick", click: function () {
+							setHideUserTurn("#chkHideUserTurn");
+							location.href = baseURL + "Draft/Pick";
+							$(this).dialog("close");
+						}
+					},
+					{
+						text: "Close", click: function () {
+							setHideUserTurn("#chkHideUserTurn");
+							$(this).dialog("close");
+						}
+					},
 				],
 				open: function () {
 					$("#btnUserMakePick").focus();
@@ -732,7 +771,7 @@ function setUserTurnCookie(shown, neverShowAgain) {
 }
 
 function isUserTurnDialogOpen() {
-	return $("#userTurnDialog").dialog({autoOpen: false}).dialog("isOpen");
+	return $("#userTurnDialog").dialog({ autoOpen: false }).dialog("isOpen");
 }
 
 function setHideUserTurn(chkId) {
@@ -804,9 +843,9 @@ function easeHideToggleMsgs() {
 
 function showStaleDraftDialog() {
 	showConfirmDialog("The draft has been updated, and the page you're viewing may be stale. <br/><br/>Would you like to refresh this page?",
-			"Draft Updated", function () {
-				location.reload(true);
-			}, null, "Refresh", "Cancel");
+		"Draft Updated", function () {
+			location.reload(true);
+		}, null, "Refresh", "Cancel");
 }
 
 function refreshCurrentDraftPickPartial() {
@@ -887,7 +926,7 @@ var siteLinkPattern = /(^|[\s\n]|<[A-Za-z]*\/?>)((((?:https?):\/\/)|(www.))[\-A-
 
 (function () {
 	var autoLink,
-	  slice = [].slice;
+		slice = [].slice;
 
 	autoLink = function () {
 		var callback, k, linkAttributes, option, options, v;
@@ -1186,7 +1225,7 @@ function ajaxPost(model, url, successFn, errorFn, dataType, makeSync) {
 };
 
 function ajaxGetReplace(url, elementId, successFn, errorFn) {
-//For refreshed page functnlty use "callRefreshPage" instead
+	//For refreshed page functnlty use "callRefreshPage" instead
 	ajaxGet(url, function (response) {
 		replaceWith(elementId, response);
 		if (successFn) {
@@ -1196,7 +1235,7 @@ function ajaxGetReplace(url, elementId, successFn, errorFn) {
 }
 
 function ajaxPostReplace(model, url, elementId, successFn, errorFn, dataType, makeSync) {
-//Going to default to refreshed page functnlty (i.e. setPickTimer, restoreTouchScroll)
+	//Going to default to refreshed page functnlty (i.e. setPickTimer, restoreTouchScroll)
 	saveTouchScrollPos();
 	ajaxPost(model, url, function (response) {
 		replaceWith(elementId, response);
@@ -1221,11 +1260,11 @@ function isElementInView(el) {
 	}
 	var rect = el.getBoundingClientRect();
 	return (
-        rect.top >= 0 &&
-        rect.left >= 0 &&
-        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && /*or $(window).height() */
-        rect.right <= (window.innerWidth || document.documentElement.clientWidth) /*or $(window).width() */
-    );
+		rect.top >= 0 &&
+		rect.left >= 0 &&
+		rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && /*or $(window).height() */
+		rect.right <= (window.innerWidth || document.documentElement.clientWidth) /*or $(window).width() */
+	);
 }
 
 function preventBackspaceNav(e) {
@@ -1327,8 +1366,8 @@ function changeViewport(minScale, maxScale, initScale, width) {
 	}
 	maxScale = maxScale || "1.2";
 
-	$('head').append('<meta name="viewport" content="width=' + width + 
-		', initial-scale=' + initScale + 
+	$('head').append('<meta name="viewport" content="width=' + width +
+		', initial-scale=' + initScale +
 		', minimum-scale=' + minScale +
 		', maximum-scale=' + maxScale + '">');
 }
@@ -1370,12 +1409,12 @@ function showConfirmDialog(dialogText, title, okFn, cancelFn, okText, cancelText
 		width: '295px',
 		modal: true,
 		buttons: [
-					{
-						text: okText, click: okFn
-					},
-					{
-						text: cancelText, click: cancelFn
-					},
+			{
+				text: okText, click: okFn
+			},
+			{
+				text: cancelText, click: cancelFn
+			},
 		]
 	});
 }
@@ -1391,9 +1430,9 @@ function showAlertDialog(dialogText, title, okFn) {
 		width: '295px',
 		modal: true,
 		buttons: [
-					{
-						text: "OK", click: okFn
-					},
+			{
+				text: "OK", click: okFn
+			},
 		]
 	});
 }

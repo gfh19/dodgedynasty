@@ -97,13 +97,18 @@
 							<input id="chkMIHideUserTurn" class="vert-middle" type="checkbox" /> <span class="note-text">Do not show the "Your Turn" dialog again</span>
 						</div>
 					}
-					<div class="page-section-small note-text">
-						<input id="chkMIPushNotifications" class="vert-middle" type="checkbox" /> <span class="note-text">*NEW* Enable "Your Turn" push notifications to your phone!</span>
+
+					<div class="push-notif-prefs test-audio">
+						<div class="note-text">
+							<input id="chkMIPushNotifications" class="vert-middle" type="checkbox" />
+							<span class="note-text">*NEW* Subscribe to "Your Turn" push notifications!</span>
+							<span id="miSubscribeStatus"></span>
+						</div>
+						<div class="page-section-small note-text">
+							<button id="btnSimulateTurn">Simulate Turn Notification</button>
+						</div>
 					</div>
-					<div class="page-section-small note-text">
-						<button id="btnSimulateTurn">Simulate Turn Notification</button>
-						<button id="btnUnsubscribeNotif">(Unsubscribe)</button>
-					</div>
+
 					@if (!DodgeDynasty.Shared.Utilities.GetBoolConfigVal(DodgeDynasty.Shared.Constants.AppSettings.UserEditAudioKillSwitch))
 					{
 						@Html.Partial(DodgeDynasty.Shared.Constants.Views.TestAudioPartial, true)
