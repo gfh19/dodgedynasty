@@ -10,7 +10,6 @@ using DodgeDynasty.Mappers.Drafts;
 using DodgeDynasty.Mappers.Audio;
 using DodgeDynasty.Models.Audio;
 using System.Net;
-using DodgeDynasty.Mappers.Ranks;
 
 namespace DodgeDynasty.Controllers
 {

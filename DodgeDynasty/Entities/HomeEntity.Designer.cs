@@ -741,6 +741,22 @@ namespace DodgeDynasty.Entities
             }
         }
         private ObjectSet<ScheduleMatchup> _ScheduleMatchups;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Notification> Notifications
+        {
+            get
+            {
+                if ((_Notifications == null))
+                {
+                    _Notifications = base.CreateObjectSet<Notification>("Notifications");
+                }
+                return _Notifications;
+            }
+        }
+        private ObjectSet<Notification> _Notifications;
 
         #endregion
 
@@ -1056,6 +1072,14 @@ namespace DodgeDynasty.Entities
         public void AddToScheduleMatchups(ScheduleMatchup scheduleMatchup)
         {
             base.AddObject("ScheduleMatchups", scheduleMatchup);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Notifications EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToNotifications(Notification notification)
+        {
+            base.AddObject("Notifications", notification);
         }
 
         #endregion
@@ -8312,6 +8336,242 @@ namespace DodgeDynasty.Entities
                 }
             }
         }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="HomeModel", Name="Notification")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Notification : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Notification object.
+        /// </summary>
+        /// <param name="notificationId">Initial value of the NotificationId property.</param>
+        /// <param name="userId">Initial value of the UserId property.</param>
+        /// <param name="endPoint">Initial value of the EndPoint property.</param>
+        /// <param name="p256dh">Initial value of the P256dh property.</param>
+        /// <param name="auth">Initial value of the Auth property.</param>
+        /// <param name="addTimestamp">Initial value of the AddTimestamp property.</param>
+        /// <param name="lastUpdateTimestamp">Initial value of the LastUpdateTimestamp property.</param>
+        public static Notification CreateNotification(global::System.Int32 notificationId, global::System.Int32 userId, global::System.String endPoint, global::System.String p256dh, global::System.String auth, global::System.DateTime addTimestamp, global::System.DateTime lastUpdateTimestamp)
+        {
+            Notification notification = new Notification();
+            notification.NotificationId = notificationId;
+            notification.UserId = userId;
+            notification.EndPoint = endPoint;
+            notification.P256dh = p256dh;
+            notification.Auth = auth;
+            notification.AddTimestamp = addTimestamp;
+            notification.LastUpdateTimestamp = lastUpdateTimestamp;
+            return notification;
+        }
+
+        #endregion
+
+        #region Simple Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 NotificationId
+        {
+            get
+            {
+                return _NotificationId;
+            }
+            set
+            {
+                if (_NotificationId != value)
+                {
+                    OnNotificationIdChanging(value);
+                    ReportPropertyChanging("NotificationId");
+                    _NotificationId = StructuralObject.SetValidValue(value, "NotificationId");
+                    ReportPropertyChanged("NotificationId");
+                    OnNotificationIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _NotificationId;
+        partial void OnNotificationIdChanging(global::System.Int32 value);
+        partial void OnNotificationIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 UserId
+        {
+            get
+            {
+                return _UserId;
+            }
+            set
+            {
+                OnUserIdChanging(value);
+                ReportPropertyChanging("UserId");
+                _UserId = StructuralObject.SetValidValue(value, "UserId");
+                ReportPropertyChanged("UserId");
+                OnUserIdChanged();
+            }
+        }
+        private global::System.Int32 _UserId;
+        partial void OnUserIdChanging(global::System.Int32 value);
+        partial void OnUserIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String EndPoint
+        {
+            get
+            {
+                return _EndPoint;
+            }
+            set
+            {
+                OnEndPointChanging(value);
+                ReportPropertyChanging("EndPoint");
+                _EndPoint = StructuralObject.SetValidValue(value, false, "EndPoint");
+                ReportPropertyChanged("EndPoint");
+                OnEndPointChanged();
+            }
+        }
+        private global::System.String _EndPoint;
+        partial void OnEndPointChanging(global::System.String value);
+        partial void OnEndPointChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String P256dh
+        {
+            get
+            {
+                return _P256dh;
+            }
+            set
+            {
+                OnP256dhChanging(value);
+                ReportPropertyChanging("P256dh");
+                _P256dh = StructuralObject.SetValidValue(value, false, "P256dh");
+                ReportPropertyChanged("P256dh");
+                OnP256dhChanged();
+            }
+        }
+        private global::System.String _P256dh;
+        partial void OnP256dhChanging(global::System.String value);
+        partial void OnP256dhChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Auth
+        {
+            get
+            {
+                return _Auth;
+            }
+            set
+            {
+                OnAuthChanging(value);
+                ReportPropertyChanging("Auth");
+                _Auth = StructuralObject.SetValidValue(value, false, "Auth");
+                ReportPropertyChanged("Auth");
+                OnAuthChanged();
+            }
+        }
+        private global::System.String _Auth;
+        partial void OnAuthChanging(global::System.String value);
+        partial void OnAuthChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime AddTimestamp
+        {
+            get
+            {
+                return _AddTimestamp;
+            }
+            set
+            {
+                OnAddTimestampChanging(value);
+                ReportPropertyChanging("AddTimestamp");
+                _AddTimestamp = StructuralObject.SetValidValue(value, "AddTimestamp");
+                ReportPropertyChanged("AddTimestamp");
+                OnAddTimestampChanged();
+            }
+        }
+        private global::System.DateTime _AddTimestamp;
+        partial void OnAddTimestampChanging(global::System.DateTime value);
+        partial void OnAddTimestampChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime LastUpdateTimestamp
+        {
+            get
+            {
+                return _LastUpdateTimestamp;
+            }
+            set
+            {
+                OnLastUpdateTimestampChanging(value);
+                ReportPropertyChanging("LastUpdateTimestamp");
+                _LastUpdateTimestamp = StructuralObject.SetValidValue(value, "LastUpdateTimestamp");
+                ReportPropertyChanged("LastUpdateTimestamp");
+                OnLastUpdateTimestampChanged();
+            }
+        }
+        private global::System.DateTime _LastUpdateTimestamp;
+        partial void OnLastUpdateTimestampChanging(global::System.DateTime value);
+        partial void OnLastUpdateTimestampChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String JsonBody
+        {
+            get
+            {
+                return _JsonBody;
+            }
+            set
+            {
+                OnJsonBodyChanging(value);
+                ReportPropertyChanging("JsonBody");
+                _JsonBody = StructuralObject.SetValidValue(value, true, "JsonBody");
+                ReportPropertyChanged("JsonBody");
+                OnJsonBodyChanged();
+            }
+        }
+        private global::System.String _JsonBody;
+        partial void OnJsonBodyChanging(global::System.String value);
+        partial void OnJsonBodyChanged();
 
         #endregion
 

@@ -18,6 +18,7 @@ namespace DodgeDynasty.Mappers.Account
 			Model.AllUsers = HomeEntity.Users.ToList();
 			var userName = UserName ?? Utilities.GetLoggedInUserName();
 			var user = Model.AllUsers.FirstOrDefault(u => u.UserName == userName);
+			Model.UserId = user.UserId;
 			Model.UserName = user.UserName;
 			Model.FirstName = user.FirstName;
 			Model.LastName = user.LastName;

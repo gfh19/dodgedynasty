@@ -1,8 +1,58 @@
 ﻿
-
 /*TODO:  Make DraftYear in Draft table NOT NULL */
 /*TODO:  Move existing PlayerHighlights to Archive and delete existing */
 /*TODO:  Convert PlayerRankOptions SQL storage to Json blob (plus ?all? IDs as columns? */
+
+
+
+/* Below run in Production on 7/19/2023 */
+
+
+SET XACT_ABORT ON
+BEGIN TRANSACTION;
+
+ALTER TABLE [dbo].[Notification]
+ADD [JsonBody] [varchar](2000) NULL;
+GO
+
+
+COMMIT TRANSACTION;
+
+
+SET XACT_ABORT ON
+BEGIN TRANSACTION;
+
+
+
+/****** Object:  Table [dbo].[Notification]    Script Date: 7/19/2023 8:47:13 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Notification](
+	[NotificationId] [int] IDENTITY(1,1) NOT NULL,
+	[UserId] [int] NOT NULL,
+	[EndPoint] [varchar](1000) NOT NULL,
+	[P256dh] [varchar](1000) NOT NULL,
+	[Auth] [varchar](1000) NOT NULL,
+	[AddTimestamp] [datetime] NOT NULL,
+	[LastUpdateTimestamp] [datetime] NOT NULL,
+ CONSTRAINT [PK_Notification] PRIMARY KEY CLUSTERED 
+(
+	[NotificationId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+
+
+
+COMMIT TRANSACTION;
+
+
+
 
 
 

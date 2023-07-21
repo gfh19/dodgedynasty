@@ -160,6 +160,16 @@ namespace DodgeDynasty.Shared
 			};
         }
 
+		public static class Notifications
+		{
+			public const string Email = "mailto:postmaster@startdrafting.com";
+			public const string PublicKey = "BLskLP1Grs2nQtyeun42hYRMJJZmkmgacSqqCAO9bi4kfDXD1lSUuUvq2IUNKCF-qXYLO8ceRP9KgLQwAKCR4-8";
+			public const string PrivateKey = "ABagmPMfQUxgZilVygmg9UyaHA0hC8TrW3RbN9pcy3U";
+
+			public const string Auth = "auth";
+			public const string P256dh = "p256dh";
+		}
+
 		public static class Test
 		{
 			public const int ExampleLeagueId = 7;

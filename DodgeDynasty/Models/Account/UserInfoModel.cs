@@ -12,6 +12,7 @@ namespace DodgeDynasty.Models.Account
 {
 	public class UserInfoModel
 	{
+		public int UserId { get; set; }
 		[Display(Name = "User Name")]
 		public string UserName { get; set; }
 		[Display(Name = "First Name")]

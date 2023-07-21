@@ -23,6 +23,7 @@ var isTickingClockPlaying = false;
 var siteConfigVars = {};
 var draftShowPosCol = "";
 var teamsShowPosCol = "";
+var pushNotificationsKillSwitch = false;
 
 /* Init functions */
 
@@ -34,6 +35,7 @@ $(function () {
 	highlightCurrentPageLink();
 	bindMenuLinks();
 	initWebSockets();
+	initServiceWorker();
 	if (!draftChatKillSwitch) {
 		bindDraftChatWindow();
 	}
@@ -326,6 +328,93 @@ function updateCurrentDraftPickPartial(pickInfo) {
 
 /*		--- End WebSockets */
 
+/*		--- Service Worker ---	*/
+
+async function initServiceWorker() {
+	const publicVapidKey = 'BLskLP1Grs2nQtyeun42hYRMJJZmkmgacSqqCAO9bi4kfDXD1lSUuUvq2IUNKCF-qXYLO8ceRP9KgLQwAKCR4-8';
+
+	if (draftActive && !pushNotificationsKillSwitch) {
+		if ('serviceWorker' in navigator) {
+			window.myRegistration = await navigator.serviceWorker.register('/sw.js', { scope: '/' });
+		}
+
+		window.unsubscribe = async () => {
+			if (!('serviceWorker' in navigator)) {
+alert("serviceWorker NOT found!");
+				return;
+			}
+
+			navigator.serviceWorker.ready.then((reg) => {
+				reg.pushManager.getSubscription().then((subscription) => {
+					if (subscription) {
+						subscription.unsubscribe()
+							.then((successful) => {
+								// You've successfully unsubscribed
+							})
+							.catch((e) => {
+								// Unsubscribing failed
+							});
+					}
+				});
+			});
+		}
+
+		window.subscribe = async () => {
+			if (!('serviceWorker' in navigator)) {
+alert("serviceWorker NOT found!");
+				return;
+			}
+
+			const registration = await navigator.serviceWorker.ready;
+
+			// Subscribe to push notifications
+			var subscription = await window.myRegistration.pushManager.subscribe({
+				userVisibleOnly: true,
+				//applicationServerKey: urlBase64ToUint8Array(publicVapidKey),
+				applicationServerKey: publicVapidKey
+			});
+
+			await fetch('/notification/subscribe', {
+				method: 'POST',
+				body: JSON.stringify(subscription),
+				headers: {
+					'content-type': 'application/json',
+				},
+			});
+//.then(response => {
+//	alert("push notifications subscribed, server.");
+//});
+		};
+
+		window.broadcastNotification = async () => {
+			await fetch('/notification/broadcast', {
+				method: 'GET',
+				headers: {
+					'content-type': 'application/json',
+				},
+			}).then(response => {
+//alert("response: " + response.statusText);
+			});
+		};
+	}
+}
+
+function urlBase64ToUint8Array(base64String) {
+	var padding = '='.repeat((4 - base64String.length % 4) % 4);
+	var base64 = (base64String + padding)
+		.replace(/\-/g, '+')
+		.replace(/_/g, '/');
+
+	var rawData = window.atob(base64);
+	var outputArray = new Uint8Array(rawData.length);
+
+	for (var i = 0; i < rawData.length; ++i) {
+		outputArray[i] = rawData.charCodeAt(i);
+	}
+	return outputArray;
+}
+
+/*		--- End Service Worker */
 
 function isHistoryMode() {
 	return window.location.search.indexOf("historyMode=true") > 0;

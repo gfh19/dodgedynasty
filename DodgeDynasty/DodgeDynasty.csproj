@@ -267,6 +267,9 @@
     <Reference Include="WebMatrix.WebData, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.WebData.3.2.9\lib\net45\WebMatrix.WebData.dll</HintPath>
     </Reference>
+    <Reference Include="WebPush, Version=1.0.11.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebPush.1.0.12\lib\net48\WebPush.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AuthConfig.cs" />
@@ -280,6 +283,7 @@
     <Compile Include="Controllers\CommishController.cs" />
     <Compile Include="Controllers\DraftController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\ScheduleController.cs" />
     <Compile Include="Controllers\SiteController.cs" />
     <Compile Include="Filters\CommishDraftPickAccessAttribute.cs" />
@@ -294,6 +298,7 @@
     <Compile Include="Mappers\Audio\AudioCountMapper.cs" />
     <Compile Include="Mappers\Highlights\AddEditHighlightQueueMapper.cs" />
     <Compile Include="Mappers\Highlights\DeleteHighlightQueueMapper.cs" />
+    <Compile Include="Mappers\Notifications\NotificationMapper.cs" />
     <Compile Include="Mappers\RankAdjustments\AdminEditRankMapper.cs" />
     <Compile Include="Mappers\RankAdjustments\AdminAddRankMapper.cs" />
     <Compile Include="Mappers\Admin\AdminManageDraftsMapper.cs" />
@@ -393,6 +398,7 @@
     <Compile Include="Models\ManageLeaguesModel.cs" />
     <Compile Include="Mappers\OwnerUserMapper.cs" />
     <Compile Include="Models\Highlights\PlayerHighlightModel.cs" />
+    <Compile Include="Models\Notification\PushSub.cs" />
     <Compile Include="Models\PlayerAdjustments\AdminPlayerModel.cs" />
     <Compile Include="Models\PlayerAdjustments\DraftsRanksTextModel.cs" />
     <Compile Include="Models\PlayerAdjustments\InactivatePlayersModel.cs" />
@@ -476,12 +482,28 @@
     <Compile Include="Controllers\RankController.cs" />
     <Compile Include="UIHelpers\PlayerRankUIHelper.cs" />
     <Compile Include="UIHelpers\UIHelper.cs" />
+    <Compile Include="WebPush\IWebPushClient.cs" />
+    <Compile Include="WebPush\Model\EncryptionResult.cs" />
+    <Compile Include="WebPush\Model\InvalidEncryptionDetailsException.cs" />
+    <Compile Include="WebPush\Model\PushSubscription.cs" />
+    <Compile Include="WebPush\Model\VapidDetails.cs" />
+    <Compile Include="WebPush\Model\WebPushException.cs" />
+    <Compile Include="WebPush\Util\ECKeyHelper.cs" />
+    <Compile Include="WebPush\Util\Encryptor.cs" />
+    <Compile Include="WebPush\Util\JwsSigner.cs" />
+    <Compile Include="WebPush\Util\UrlBase64.cs" />
+    <Compile Include="WebPush\VapidHelper.cs" />
+    <Compile Include="WebPush\WebPushClient.cs" />
     <Compile Include="WebSockets\DraftHub.cs" />
     <Compile Include="WebSockets\DraftHubHelper.cs" />
     <Compile Include="WebSockets\DD_SignalR.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="2023 SQL Changes.sql" />
+    <Content Include="docs\2021 Dodge Dynasty Champion - Dave Nickelsen.docx" />
+    <Content Include="docs\2021 Dodge Dynasty Champion - Dave Nickelsen.pdf" />
+    <Content Include="docs\2022 Dodge Dynasty Champion - George Hayek.docx" />
+    <Content Include="docs\2022 Dodge Dynasty Champion - George Hayek.pdf" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
@@ -550,6 +572,7 @@
     <Content Include="Scripts\moment-with-locales.min.js" />
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\ServiceWorker\sw.js" />
     <Content Include="SQL Server\OLD - 2022 SQL Changes.sql" />
     <Content Include="docs\2017 Dodge Dynasty Champion - Jen Hayek.docx" />
     <Content Include="docs\2017 Meat Trophy.JPG" />
@@ -656,6 +679,7 @@
     <Content Include="SQL Server\usp_LoadPastDraftRosters.sql" />
     <Content Include="SQL Server\usp_LoadPastDrafts.sql" />
     <Content Include="SQL Server\usp_LoadPlayerRanks_V2.sql" />
+    <Content Include="sw.js" />
     <Content Include="Views\Admin\Input.cshtml" />
     <Content Include="Views\Admin\ManageDrafts.cshtml" />
     <Content Include="Views\Admin\ManageLeagues.cshtml" />
@@ -755,6 +779,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Notification\" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="Entities\HomeEntity.edmx">
