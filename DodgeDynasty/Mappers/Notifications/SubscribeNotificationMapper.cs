@@ -1,13 +1,9 @@
 ﻿using DodgeDynasty.Models.Notification;
 using DodgeDynasty.Shared;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace DodgeDynasty.Mappers.Notifications
 {
-	public class NotificationMapper : MapperBase<PushSub>
+	public class SubscribeNotificationMapper : MapperBase<PushSub>
 	{
 		protected override void DoUpdate(PushSub model)
 		{
@@ -20,8 +16,7 @@ namespace DodgeDynasty.Mappers.Notifications
 				P256dh = model.Keys[Constants.Notifications.P256dh],
 				Auth = model.Keys[Constants.Notifications.Auth],
 				AddTimestamp = now,
-				LastUpdateTimestamp = now,
-				JsonBody = model.JsonBody
+				LastUpdateTimestamp = now
 			};
 			HomeEntity.Notifications.AddObject(newNotification);
 			HomeEntity.SaveChanges();

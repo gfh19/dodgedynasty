@@ -168,6 +168,7 @@ namespace DodgeDynasty.Shared
 
 			public const string Auth = "auth";
 			public const string P256dh = "p256dh";
+			public const string IconUrl = "https://startdrafting.com/Content/images/icon.png";
 		}
 
 		public static class Test

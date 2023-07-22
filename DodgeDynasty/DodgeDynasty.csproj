@@ -298,7 +298,8 @@
     <Compile Include="Mappers\Audio\AudioCountMapper.cs" />
     <Compile Include="Mappers\Highlights\AddEditHighlightQueueMapper.cs" />
     <Compile Include="Mappers\Highlights\DeleteHighlightQueueMapper.cs" />
-    <Compile Include="Mappers\Notifications\NotificationMapper.cs" />
+    <Compile Include="Mappers\Notifications\BroadcastNotificationMapper.cs" />
+    <Compile Include="Mappers\Notifications\SubscribeNotificationMapper.cs" />
     <Compile Include="Mappers\RankAdjustments\AdminEditRankMapper.cs" />
     <Compile Include="Mappers\RankAdjustments\AdminAddRankMapper.cs" />
     <Compile Include="Mappers\Admin\AdminManageDraftsMapper.cs" />
@@ -398,6 +399,7 @@
     <Compile Include="Models\ManageLeaguesModel.cs" />
     <Compile Include="Mappers\OwnerUserMapper.cs" />
     <Compile Include="Models\Highlights\PlayerHighlightModel.cs" />
+    <Compile Include="Models\Notification\BroadcastNotificationModel.cs" />
     <Compile Include="Models\Notification\PushSub.cs" />
     <Compile Include="Models\PlayerAdjustments\AdminPlayerModel.cs" />
     <Compile Include="Models\PlayerAdjustments\DraftsRanksTextModel.cs" />
@@ -500,6 +502,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="2023 SQL Changes.sql" />
+    <Content Include="Content\images\icon.png" />
     <Content Include="docs\2021 Dodge Dynasty Champion - Dave Nickelsen.docx" />
     <Content Include="docs\2021 Dodge Dynasty Champion - Dave Nickelsen.pdf" />
     <Content Include="docs\2022 Dodge Dynasty Champion - George Hayek.docx" />

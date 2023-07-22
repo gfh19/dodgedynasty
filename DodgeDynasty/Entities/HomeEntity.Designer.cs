@@ -8548,30 +8548,6 @@ namespace DodgeDynasty.Entities
         private global::System.DateTime _LastUpdateTimestamp;
         partial void OnLastUpdateTimestampChanging(global::System.DateTime value);
         partial void OnLastUpdateTimestampChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String JsonBody
-        {
-            get
-            {
-                return _JsonBody;
-            }
-            set
-            {
-                OnJsonBodyChanging(value);
-                ReportPropertyChanging("JsonBody");
-                _JsonBody = StructuralObject.SetValidValue(value, true, "JsonBody");
-                ReportPropertyChanged("JsonBody");
-                OnJsonBodyChanged();
-            }
-        }
-        private global::System.String _JsonBody;
-        partial void OnJsonBodyChanging(global::System.String value);
-        partial void OnJsonBodyChanged();
 
         #endregion
 

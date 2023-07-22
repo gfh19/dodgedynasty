@@ -330,7 +330,6 @@ warning 6002: The table/view 'Home.dbo._ArchivePlayerHighlight' does not have a 
           <Property Name="Auth" Type="varchar" MaxLength="1000" Nullable="false" />
           <Property Name="AddTimestamp" Type="datetime" Nullable="false" />
           <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
-          <Property Name="JsonBody" Type="varchar" MaxLength="2000" />
         </EntityType>
         <EntityType Name="Player">
           <Key>
@@ -2872,7 +2871,6 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
           <Property Name="Auth" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="JsonBody" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -3464,7 +3462,6 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
           <EntitySetMapping Name="Notifications">
             <EntityTypeMapping TypeName="HomeModel.Notification">
               <MappingFragment StoreEntitySet="Notification">
-                <ScalarProperty Name="JsonBody" ColumnName="JsonBody" />
                 <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
                 <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
                 <ScalarProperty Name="Auth" ColumnName="Auth" />

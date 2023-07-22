@@ -14,6 +14,7 @@ using DodgeDynasty.Models.Types;
 using DodgeDynasty.WebSockets;
 using DodgeDynasty.Mappers.Shared;
 using DodgeDynasty.Mappers.Ranks;
+using System.Threading.Tasks;
 
 namespace DodgeDynasty.Models
 {
@@ -147,7 +148,8 @@ namespace DodgeDynasty.Models
 			}
 			var mapper = new BroadcastLatestDraftPickMapper();
 			LatestPickInfoJson pickInfo = mapper.GetModel();
-			DraftHubHelper.BroadcastDraftToClients(pickInfo);
+			Task.Run(() => DraftHubHelper.BroadcastDraftToClients(pickInfo));
+			Task.Run(() => DraftHubHelper.BroadcastNotification(pickInfo));
 		}
 
 		public string GetTeamName(int userId)

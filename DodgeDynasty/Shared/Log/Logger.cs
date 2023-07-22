@@ -13,6 +13,10 @@ namespace DodgeDynasty.Shared.Log
 		{
 			Log(Constants.LogTypes.Error, GetMessage(ex), GetStackTrace(ex), requestUrl, userName, draftId);
 		}
+		public static void LogErrorPrefix(string messagePrefix, Exception ex, string requestUrl = null, string userName = null, int? draftId = null)
+		{
+			Log(Constants.LogTypes.Error, GetMessage(ex, messagePrefix), GetStackTrace(ex), requestUrl, userName, draftId);
+		}
 
 		public static void LogInfo(string message, string stackTrace, string requestUrl = null, string userName = null, int? draftId = null)
 		{
@@ -46,11 +50,12 @@ namespace DodgeDynasty.Shared.Log
 			catch { }
 		}
 
-		public static string GetMessage(Exception ex)
+		public static string GetMessage(Exception ex, string messagePrefix = null)
 		{
 			var message = new StringBuilder();
 			if (ex != null)
 			{
+				message.Append(messagePrefix ?? "");
 				message.Append(ex.Message);
 				if (ex.InnerException != null)
 				{

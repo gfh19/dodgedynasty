@@ -350,14 +350,15 @@ async function initServiceWorker() {
 					if (subscription) {
 						subscription.unsubscribe()
 							.then((successful) => {
-								setSubscribeStatus("Unsubcribed");
+								setSubscribeStatus("Unsubscribed");
 							})
 							.catch((e) => {
 								setSubscribeStatus("Error");
 							});
 					}
 					else {
-						setSubscribeStatus("Error");
+						setSubscribeStatus(window.Notification.permission == 'denied'
+							? window.Notification.permission : "No subscription");
 					}
 				});
 			});
@@ -404,7 +405,7 @@ async function initServiceWorker() {
 						navigator.serviceWorker.ready.then((reg) => {
 							reg.pushManager.getSubscription().then((subscription) => {
 								if (subscription) {
-									fetch('/notification/broadcast', {
+									fetch('/notification/simulate', {
 										method: 'GET',
 										headers: {
 											'content-type': 'application/json',

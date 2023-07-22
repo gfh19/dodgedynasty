@@ -1,17 +1,30 @@
 ﻿self.addEventListener("push", function (e) {
-    const data = e.data;
-    e.waitUntil(
-        self.registration.showNotification('Push Title', {
-            body: 'Push Body'
-        })
-    );
+	try {
+		if (e && e.data) {
+			const payload = e.data.json();
+			e.waitUntil(
+				self.registration.showNotification(payload.title, payload)
+			);
+		}
+	}
+	catch { }
 });
 
-self.addEventListener("message", function (e) {
-    //const data = e.data.json();
-    e.waitUntil(
-        self.registration.showNotification('Msg Title', {
-            body: 'Msg Body'
-        })
-    );
+self.addEventListener('notificationclick', function (e) {
+	try {
+		e.notification.close();
+		e.waitUntil(
+			clients.matchAll({ type: 'window' }).then(windowClients => {
+				if (windowClients && windowClients.length > 0) {
+					var client = windowClients[0];
+					client.navigate(client.url);
+				}
+				// If not, then open the target URL in a new window/tab.
+				else if (clients.openWindow) {
+					return clients.openWindow(url);
+				}
+			})
+		);
+	}
+	catch { }
 });

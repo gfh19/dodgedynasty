@@ -11,17 +11,6 @@
 SET XACT_ABORT ON
 BEGIN TRANSACTION;
 
-ALTER TABLE [dbo].[Notification]
-ADD [JsonBody] [varchar](2000) NULL;
-GO
-
-
-COMMIT TRANSACTION;
-
-
-SET XACT_ABORT ON
-BEGIN TRANSACTION;
-
 
 
 /****** Object:  Table [dbo].[Notification]    Script Date: 7/19/2023 8:47:13 PM ******/
