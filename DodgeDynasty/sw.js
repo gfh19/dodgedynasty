@@ -19,10 +19,6 @@ self.addEventListener('notificationclick', function (e) {
 					var client = windowClients[0];
 					client.navigate(client.url);
 				}
-				// If not, then open the target URL in a new window/tab.
-				else if (clients.openWindow) {
-					return clients.openWindow(url);
-				}
 			})
 		);
 	}

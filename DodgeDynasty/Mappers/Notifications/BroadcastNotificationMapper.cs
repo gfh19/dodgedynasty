@@ -28,13 +28,13 @@ namespace DodgeDynasty.Mappers.Notifications
 						Subscription = new PushSubscription(notification.EndPoint, notification.P256dh, notification.Auth),
 						VapidDetails = new VapidDetails(Constants.Notifications.Email, Constants.Notifications.PublicKey, Constants.Notifications.PrivateKey)
 					});
-					Model.Payload = JsonConvert.SerializeObject(new NotificationData
-					{
-						title = "Your Turn!",
-						body = $"Last pick: {LatestPickInfo.pname}",
-						icon = Constants.Notifications.IconUrl
-					});
 				}
+				Model.Payload = JsonConvert.SerializeObject(new NotificationData
+				{
+					title = "Your Turn!",
+					body = $"Last pick: {LatestPickInfo.pname}",
+					icon = Constants.Notifications.IconUrl
+				});
 			}
 		}
 	}

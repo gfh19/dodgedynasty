@@ -42,6 +42,26 @@ $(function () {
 	checkUserTurnDialog();
 	initLastPickAudio();
 	refreshDraftChat();
+
+	/* Worked in Chrome, not on iPhone */
+	/*
+	var pageEvent = isiPhoneiPad() ? 'popstate' : 'pageshow';
+	$(window).on(pageEvent, function (event) {
+alert(pageEvent === 'popstate' ? "iOS, popstate" : "Other, pageshow");
+		if (event.persisted) {
+alert("Cached page displayed, refreshing!");
+			if (typeof pageBroadcastDraftHandler !== "undefined") {
+				pageBroadcastDraftHandler();
+			}
+		}
+	});
+	*/
+
+	window.onpageshow = function (event) {
+		if (event.persisted) {
+			checkStillSocketConnected(false);
+		}
+	};
 });
 
 
@@ -210,11 +230,14 @@ function checkStillSocketConnected(recursive) {
 			if (draftActive && connectionAttempted && !connectionStopped && $.connection.hub.state == $.signalR.connectionState.disconnected) {
 				console.log("Disconnect detected.  Manual Reconnect Attempted.");
 				startHubConnection(function () {
+					if (typeof pageBroadcastDraftHandler !== "undefined") {
+						pageBroadcastDraftHandler();
+					}
 					checkUserTurnDialog();
 					refreshDraftChat();
 				});
 			}
-		}, 1000);
+		}, 500);
 		if (recursive) {
 			setTimeout(function () {
 				if (draftActive) {
@@ -557,6 +580,7 @@ function highlightCurrentPageLink() {
 	return;
 }
 
+//Example to one-time dynamically refresh any page is "pageBroadcastDraftHandler"
 function refreshPageWithPickTimer(url, elementId, timer, successFn, errorFn, preRefreshFn) {
 	timer = timer || refreshTimer;
 	if (draftActive) {
@@ -1309,6 +1333,10 @@ function isMobileBrowser() {
 
 function isBrowserIE() {
 	return (/Trident|MSIE |Edge/i.test(window.navigator.userAgent));
+}
+
+function isiPhoneiPad() {
+	return (/iPhone|iPad/i.test(window.navigator.userAgent));
 }
 
 function addWaitCursor() {
