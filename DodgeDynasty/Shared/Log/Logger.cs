@@ -55,7 +55,8 @@ namespace DodgeDynasty.Shared.Log
 			var message = new StringBuilder();
 			if (ex != null)
 			{
-				message.Append(messagePrefix ?? "");
+				message.Append((!string.IsNullOrEmpty(messagePrefix) && !messagePrefix.EndsWith(" ")) 
+					? $"{messagePrefix} " : messagePrefix ?? "");
 				message.Append(ex.Message);
 				if (ex.InnerException != null)
 				{

@@ -1,10 +1,12 @@
 ﻿using DodgeDynasty.Mappers.Notifications;
+using DodgeDynasty.Models.Notification;
 using DodgeDynasty.Models.Types;
 using DodgeDynasty.Shared;
 using DodgeDynasty.Shared.Log;
 using DodgeDynasty.WebPush;
 using Microsoft.AspNet.SignalR;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 
@@ -48,8 +50,18 @@ namespace DodgeDynasty.WebSockets
 					{
 						if (new[] { HttpStatusCode.NotFound, HttpStatusCode.Gone }.Contains(ex.StatusCode))
 						{
-//TODO: User subscription expired; unsubscribe/delete from DB, and continue loop
-							Logger.LogErrorPrefix($"Subscription gone - {ex.StatusCode}", ex);
+							//User subscription expired; unsubscribe/delete from DB, and continue loop
+							var mapper = new SubscribeNotificationMapper(true);
+							mapper.UpdateEntity(new PushSub
+							{
+								UserId = pickInfo.uturnid?.ToString(),
+								EndPoint = notification.Subscription.Endpoint,
+								Keys = new Dictionary<string, string> {
+									{ Constants.Notifications.P256dh, notification.Subscription.P256DH },
+									{ Constants.Notifications.Auth, notification.Subscription.Auth },
+								}
+							});
+							Logger.LogErrorPrefix($"Subscription gone - {ex.StatusCode}; ", ex);
 						}
 						else
 						{
@@ -62,6 +74,6 @@ namespace DodgeDynasty.WebSockets
 			{
 				Logger.LogErrorPrefix("Notification failed - ", ex);
 			}
-		}		
+		}
 	}
 }

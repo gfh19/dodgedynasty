@@ -42,26 +42,7 @@ $(function () {
 	checkUserTurnDialog();
 	initLastPickAudio();
 	refreshDraftChat();
-
-	/* Worked in Chrome, not on iPhone */
-	/*
-	var pageEvent = isiPhoneiPad() ? 'popstate' : 'pageshow';
-	$(window).on(pageEvent, function (event) {
-alert(pageEvent === 'popstate' ? "iOS, popstate" : "Other, pageshow");
-		if (event.persisted) {
-alert("Cached page displayed, refreshing!");
-			if (typeof pageBroadcastDraftHandler !== "undefined") {
-				pageBroadcastDraftHandler();
-			}
-		}
-	});
-	*/
-
-	window.onpageshow = function (event) {
-		if (event.persisted) {
-			checkStillSocketConnected(false);
-		}
-	};
+	refreshStalePage();
 });
 
 
@@ -248,6 +229,14 @@ function checkStillSocketConnected(recursive) {
 	}
 }
 
+function refreshStalePage() {
+	window.onpageshow = function (event) {
+		if (event.persisted && draftActive) {
+			checkStillSocketConnected(false);
+		}
+	};
+}
+
 function refreshDraftChat() {
 	if (!draftChatKillSwitch && draftActive) {
 		ajaxGetReplace("Site/DraftChatPartial", "#dchat-partial", function () {
@@ -348,116 +337,99 @@ function updateCurrentDraftPickPartial(pickInfo) {
 }
 
 /* End Broadcast draft perf opt helper functions */
-
 /*		--- End WebSockets */
 
 /*		Push Notifications		*/
 /*		--- Service Worker ---	*/
 
 async function initServiceWorker() {
-	const publicVapidKey = 'BLskLP1Grs2nQtyeun42hYRMJJZmkmgacSqqCAO9bi4kfDXD1lSUuUvq2IUNKCF-qXYLO8ceRP9KgLQwAKCR4-8';
-
-	if (draftActive && !pushNotificationsKillSwitch) {
+	if (!pushNotificationsKillSwitch) {
 		if ('serviceWorker' in navigator) {
 			await navigator.serviceWorker.register('/sw.js');
 		}
+	}
+}
 
-		window.unsubscribe = async () => {
-			if (!('serviceWorker' in navigator)) {
-				return;
-			}
+window.unsubscribe = async () => {
+	if (!('serviceWorker' in navigator) || pushNotificationsKillSwitch) {
+		return;
+	}
 
-			setSubscribeStatus("Unsubscribing...");
-			navigator.serviceWorker.ready.then((reg) => {
-				reg.pushManager.getSubscription().then((subscription) => {
-					if (subscription) {
-						subscription.unsubscribe()
-							.then((successful) => {
+	setSubscribeStatus("Unsubscribing...");
+	navigator.serviceWorker.ready.then((reg) => {
+		reg.pushManager.getSubscription().then((subscription) => {
+			if (subscription) {
+				subscription.unsubscribe()
+					.then((successful) => {
+						fetch('/notification/unsubscribe', {
+							method: 'POST',
+							body: JSON.stringify(subscription),
+							headers: {
+								'content-type': 'application/json',
+							},
+						}).then((response) => {
+							if (response?.ok) {
 								setSubscribeStatus("Unsubscribed");
-							})
-							.catch((e) => {
+							}
+							else {
 								setSubscribeStatus("Error");
-							});
-					}
-					else {
-						setSubscribeStatus(window.Notification.permission == 'denied'
-							? window.Notification.permission : "No subscription");
-					}
-				});
-			});
-		}
-
-		window.subscribe = async () => {
-			if (!('serviceWorker' in navigator)) {
-				return;
-			}
-
-			setSubscribeStatus("Subscribing...");
-			const registration = await navigator.serviceWorker.ready;
-
-			// Subscribe to push notifications
-			registration.pushManager.subscribe({
-				userVisibleOnly: true,
-				//applicationServerKey: urlBase64ToUint8Array(publicVapidKey),
-				applicationServerKey: publicVapidKey
-			}).then((subscription) => {
-				fetch('/notification/subscribe', {
-					method: 'POST',
-					body: JSON.stringify(subscription),
-					headers: {
-						'content-type': 'application/json',
-					},
-				}).then((response) => {
-					if (response?.ok) {
-						setSubscribeStatus("Subscribed");
-					}
-					else {
-						setSubscribeStatus("Error");
-					}
-				})
+							}
+						}).catch((e) => {
+							setSubscribeStatus("Error");
+						});
+					})
 					.catch((e) => {
 						setSubscribeStatus("Error");
 					});
-			});
-		};
-
-		window.simulateNotification = async () => {
-			if ('Notification' in window) {
-				window.Notification.requestPermission().then((permission) => {
-					if (permission === 'granted') {
-						navigator.serviceWorker.ready.then((reg) => {
-							reg.pushManager.getSubscription().then((subscription) => {
-								if (subscription) {
-									fetch('/notification/simulate', {
-										method: 'GET',
-										headers: {
-											'content-type': 'application/json',
-										},
-									}).catch((e) => {
-										setSubscribeStatus("Error");
-									});
-								}
-								else {
-									setSubscribeStatus("No subscription");
-								}
-							});
-						});
-					}
-					else {
-						setSubscribeStatus(permission);
-					}
-				});
 			}
-		};
+			else {
+				setSubscribeStatus(window.Notification.permission == 'denied'
+					? window.Notification.permission : "No subscription");
+			}
+		});
+	});
+}
+
+window.subscribe = async () => {
+	if (!('serviceWorker' in navigator || pushNotificationsKillSwitch)) {
+		return;
 	}
+	const publicVapidKey = 'BLskLP1Grs2nQtyeun42hYRMJJZmkmgacSqqCAO9bi4kfDXD1lSUuUvq2IUNKCF-qXYLO8ceRP9KgLQwAKCR4-8';
+
+	setSubscribeStatus("Subscribing...");
+	const registration = await navigator.serviceWorker.ready;
+
+	// Subscribe to push notifications
+	registration.pushManager.subscribe({
+		userVisibleOnly: true,
+		//applicationServerKey: urlBase64ToUint8Array(publicVapidKey),
+		applicationServerKey: publicVapidKey
+	}).then((subscription) => {
+		fetch('/notification/subscribe', {
+			method: 'POST',
+			body: JSON.stringify(subscription),
+			headers: {
+				'content-type': 'application/json',
+			},
+		}).then((response) => {
+			if (response?.ok) {
+				setSubscribeStatus("Subscribed");
+			}
+			else {
+				setSubscribeStatus("Error");
+			}
+		}).catch((e) => {
+			setSubscribeStatus("Error");
+		});
+	});
 }
 
 function setSubscribeStatus(statusText) {
 	$("#miSubscribeStatus").text(statusText);
-	if (statusText.includes("Subscribed")) {
+	if (statusText.startsWith("Subscribed")) {
 		$("#miSubscribeStatus").css("color", "green");
 	}
-	else if (statusText.includes("Subscribing") || statusText.includes("Unsubscribing")) {
+	else if (statusText.startsWith("Subscribing") || statusText.startsWith("Unsubscribing")) {
 		$("#miSubscribeStatus").css("color", "#CCCC00");
 	}
 	else {
@@ -580,15 +552,13 @@ function highlightCurrentPageLink() {
 	return;
 }
 
-//Example to one-time dynamically refresh any page is "pageBroadcastDraftHandler"
 function refreshPageWithPickTimer(url, elementId, timer, successFn, errorFn, preRefreshFn) {
 	timer = timer || refreshTimer;
 	if (draftActive) {
 		setTimeout(function () {
 			callRefreshPageWithPickTimer(url, elementId, successFn, errorFn, preRefreshFn);
 			console.log("Refreshed page at " + new Date());
-		},
-			timer);
+		}, timer);
 	}
 };
 
@@ -620,6 +590,7 @@ function callRefreshPage(url, elementId, successFn, errorFn, preRefreshFn) {
 		}
 	});
 }
+//Example to one-time dynamically refresh any page is "pageBroadcastDraftHandler"
 
 function getDynamicUrl(url) {
 	var returnUrl = url;

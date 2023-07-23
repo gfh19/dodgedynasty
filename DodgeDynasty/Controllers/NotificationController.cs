@@ -16,18 +16,24 @@ namespace DodgeDynasty.Controllers
 {
 	public class NotificationController : Controller
 	{
-		public static List<PushSub> Subscriptions { get; set; } = new List<PushSub>();
+public static List<PushSub> Subscriptions { get; set; } = new List<PushSub>();
 
 		[HttpPost]
 		public HttpStatusCode Subscribe(PushSub request)
 		{
-			Subscriptions.Add(request);
+Subscriptions.Add(request);
 			var mapper = new SubscribeNotificationMapper();
 			mapper.UpdateEntity(request);
 			return HttpStatusCode.OK;
 		}
 
-//TODO:  Unsubscribe & Update Subscription
+		[HttpPost]
+		public HttpStatusCode Unsubscribe(PushSub request)
+		{
+			var mapper = new SubscribeNotificationMapper(true);
+			mapper.UpdateEntity(request);
+			return HttpStatusCode.OK;
+		}
 
 		[HttpGet]
 		public HttpStatusCode Simulate()

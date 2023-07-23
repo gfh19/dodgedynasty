@@ -8,6 +8,7 @@
 	bindHideUserTurnCheckbox();
 	bindTestAudio();
 	toggleDisableBrowserAudio();
+	toggleSubscribeNotifications();
 
 	$("#chkMIPushNotifications").click(function (e) {
 		if ($("#chkMIPushNotifications").is(':checked')) {
@@ -21,16 +22,11 @@
 	$("#btnSimulateTurn").click(function (e) {
 		e.preventDefault();
 		simulateNotification();
-		//if ('Notification' in window) {
-		//	if (window.Notification.permission === 'granted') {
-		//		new window.Notification('Time is over!');
-		//	}
-		//}
 	});
 }
 
 async function enablePushNotifications() {
-	if ('Notification' in window) {
+	if ('Notification' in window || pushNotificationsKillSwitch) {
 		window.Notification.requestPermission().then((permission) => {
 			if (permission === 'granted') {
 				subscribe();
@@ -40,6 +36,60 @@ async function enablePushNotifications() {
 			}
 		});
 	}
+}
+
+async function simulateNotification() {
+	if ('Notification' in window || pushNotificationsKillSwitch) {
+		window.Notification.requestPermission().then((permission) => {
+			if (permission === 'granted') {
+				navigator.serviceWorker.ready.then((reg) => {
+					reg.pushManager.getSubscription().then((subscription) => {
+						if (subscription) {
+							fetch('/notification/simulate', {
+								method: 'GET',
+								headers: {
+									'content-type': 'application/json',
+								},
+							}).catch((e) => {
+								setSubscribeStatus("Error");
+							});
+						}
+						else {
+							setSubscribeStatus("No subscription");
+						}
+					});
+				});
+			}
+			else {
+				setSubscribeStatus(permission);
+			}
+		});
+	}
+}
+
+/*  Option 1  */
+/*
+async function checkServiceWorkerSubscribed() {
+	navigator.serviceWorker.ready.then((reg) => {
+		reg.pushManager.getSubscription().then((sub) => {
+			swSubscription = sub;
+		});
+	});
+}
+*/
+
+/*  Option 2  */
+async function checkServiceWorkerSubscribed() {
+	let reg = await navigator.serviceWorker.ready;
+	let sub = await reg.pushManager.getSubscription();
+	return sub;
+}
+
+async function toggleSubscribeNotifications() {
+	const sub = await checkServiceWorkerSubscribed();
+	const isSubscribed = sub != null
+	$("#chkMIPushNotifications").prop('checked', isSubscribed);
+	setSubscribeStatus(isSubscribed ? "Subscribed" : "Unsubscribed");
 }
 
 function bindColorSelects() {
