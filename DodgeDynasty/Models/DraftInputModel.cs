@@ -67,8 +67,12 @@ namespace DodgeDynasty.Models
 
 		public void SelectPlayer(PlayerModel playerModel)
 		{
+			int loggedInUserId;
+			bool isUserAdmin;
 			using (HomeEntity = new HomeEntity())
 			{
+				loggedInUserId = HomeEntity.Users.GetLoggedInUserId();
+				isUserAdmin = DBUtilities.IsUserAdmin();
 				var now = Utilities.GetEasternTime();
 				int? inactiveTruePlayerId = null;
 				bool justActivated = false;
@@ -149,7 +153,7 @@ namespace DodgeDynasty.Models
 			var mapper = new BroadcastLatestDraftPickMapper();
 			LatestPickInfoJson pickInfo = mapper.GetModel();
 			Task.Run(() => DraftHubHelper.BroadcastDraftToClients(pickInfo));
-			Task.Run(() => DraftHubHelper.BroadcastNotification(pickInfo));
+			Task.Run(() => DraftHubHelper.BroadcastNotification(pickInfo, loggedInUserId, isUserAdmin));
 		}
 
 		public string GetTeamName(int userId)

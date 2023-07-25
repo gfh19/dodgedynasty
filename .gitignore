@@ -198,6 +198,8 @@ ModelManifest.xml
 /.vs/dodgedynasty/v17/fileList.bin
 /.vs/dodgedynasty/v17
 /.vs/dodgedynasty/FileContentIndex
-/.vs/dodgedynasty/DesignTimeBuild/*
+/.vs/dodgedynasty/DesignTimeBuild
+/.vs/dodgedynasty/
 
 Web.Release.config
+/DodgeDynasty/Web.Release.config

@@ -8,17 +8,23 @@ namespace DodgeDynasty.Mappers.Notifications
 	public class SubscribeNotificationMapper : MapperBase<PushSub>
 	{
 		public bool Unsubscribe { get; set; }
+		public int? LoggedInUserId { get; set; }
+		public bool? IsUserAdmin { get; set; }
 
 		public SubscribeNotificationMapper() { }
-		public SubscribeNotificationMapper(bool unsubscribe)
+		public SubscribeNotificationMapper(bool unsubscribe, int? loggedInUserId = null, bool? isUserAdmin = null)
 		{
 			Unsubscribe = unsubscribe;
+			LoggedInUserId = loggedInUserId;
+			IsUserAdmin = isUserAdmin;
 		}
 
 		protected override void DoUpdate(PushSub model)
 		{
-			var userId = (!string.IsNullOrEmpty(model.UserId) && DBUtilities.IsUserAdmin())
-				? int.Parse(model.UserId) : HomeEntity.Users.GetLoggedInUserId();
+			LoggedInUserId = LoggedInUserId ?? HomeEntity.Users.GetLoggedInUserId();
+			IsUserAdmin = IsUserAdmin ?? DBUtilities.IsUserAdmin();
+			var userId = (!string.IsNullOrEmpty(model.UserId) && IsUserAdmin.Value)
+				? int.Parse(model.UserId) : LoggedInUserId.Value;
 			var now = Utilities.GetEasternTime();
 			var request = new Entities.Notification
 			{

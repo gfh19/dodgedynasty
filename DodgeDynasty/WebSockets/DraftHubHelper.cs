@@ -34,7 +34,7 @@ namespace DodgeDynasty.WebSockets
 		}
 
 		/* ServiceWorker - Push Notifications */
-		public static void BroadcastNotification(LatestPickInfoJson pickInfo)
+		public static void BroadcastNotification(LatestPickInfoJson pickInfo, int loggedInUserId, bool isUserAdmin)
 		{
 			try
 			{
@@ -51,7 +51,7 @@ namespace DodgeDynasty.WebSockets
 						if (new[] { HttpStatusCode.NotFound, HttpStatusCode.Gone }.Contains(ex.StatusCode))
 						{
 							//User subscription expired; unsubscribe/delete from DB, and continue loop
-							var mapper = new SubscribeNotificationMapper(true);
+							var mapper = new SubscribeNotificationMapper(true, loggedInUserId, isUserAdmin);
 							mapper.UpdateEntity(new PushSub
 							{
 								UserId = pickInfo.uturnid?.ToString(),

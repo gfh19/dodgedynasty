@@ -286,6 +286,7 @@
     <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\ScheduleController.cs" />
     <Compile Include="Controllers\SiteController.cs" />
+    <Compile Include="Filters\UserLoggedInRedirectAttribute.cs" />
     <Compile Include="Filters\CommishDraftPickAccessAttribute.cs" />
     <Compile Include="Filters\CommishDraftAccessAttribute.cs" />
     <Compile Include="Filters\CommishLeagueAccessAttribute.cs" />
@@ -570,6 +571,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\knockout-3.5.1.debug.js" />
     <Content Include="Scripts\knockout-3.5.1.js" />
+    <Content Include="Scripts\Login\Login.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\moment-with-locales.js" />
     <Content Include="Scripts\moment-with-locales.min.js" />

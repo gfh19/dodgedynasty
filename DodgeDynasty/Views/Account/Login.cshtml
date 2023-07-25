@@ -3,33 +3,40 @@
 @{
 	ViewBag.Title = (DodgeDynasty.Shared.Utilities.IsStartDraftingDomain(Request)) ? "StartDrafting.com Login" : "Dodge Dynasty Login";
 }
+@section scripts {
+	<script type="text/javascript">
+		var baseURL = '@Url.Content("~")';
+	</script>
+	<script type="text/javascript" src="@Url.Script("~/Scripts/Login/Login.js")"></script>
+}
 
 <hgroup class="title">
-    <h1>@ViewBag.Title</h1>
+	<h1>@ViewBag.Title</h1>
 </hgroup>
 
 <section id="loginForm">
-<h2>Please enter your user name and password.</h2>
-@using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl })) {
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
+	<h2>Please enter your user name and password.</h2>
+	@using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
+	{
+		@Html.AntiForgeryToken()
+		@Html.ValidationSummary(true)
 
-    <fieldset>
-        <legend>Log in Form</legend>
-        <ol>
-            <li>
-                @Html.LabelFor(m => m.UserName)
-                @Html.TextBoxFor(m => m.UserName, new { autofocus = "autofocus" })
-                @Html.ValidationMessageFor(m => m.UserName)
-            </li>
-            <li>
-                @Html.LabelFor(m => m.Password)
-                @Html.PasswordFor(m => m.Password)
-                @Html.ValidationMessageFor(m => m.Password)
-            </li>
-        </ol>
-        <input type="submit" value="Log in" />
-    </fieldset>
-}
+<fieldset>
+	<legend>Log in Form</legend>
+	<ol>
+		<li>
+			@Html.LabelFor(m => m.UserName)
+			@Html.TextBoxFor(m => m.UserName, new { autofocus = "autofocus" })
+			@Html.ValidationMessageFor(m => m.UserName)
+		</li>
+		<li>
+			@Html.LabelFor(m => m.Password)
+			@Html.PasswordFor(m => m.Password)
+			@Html.ValidationMessageFor(m => m.Password)
+		</li>
+	</ol>
+	<input id="btnLoginSubmit" type="submit" value="Log in" />
+</fieldset>
+	}
 </section>
 

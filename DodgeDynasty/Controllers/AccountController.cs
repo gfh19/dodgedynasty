@@ -137,6 +137,13 @@ namespace DodgeDynasty.Controllers
 			return View(mapper.GetModel());
 		}
 
+		[HttpGet]
+		[AllowAnonymous]
+		public JsonResult UserSync()
+		{
+			return Json(new { success = Utilities.IsUserLoggedIn() }, JsonRequestBehavior.AllowGet);
+		}
+
 		#region Helpers
 		private ActionResult RedirectToLocal(string returnUrl)
 		{
