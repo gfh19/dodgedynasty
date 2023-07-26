@@ -143,16 +143,6 @@ namespace DodgeDynasty.Shared
 				new RouteValueDictionary(new { controller = "Shared", action = "Unauthorized" }));
 		}
 
-		public static ActionResult GetHomeRedirect(string returnUrl)
-		{
-			if (!string.IsNullOrEmpty(returnUrl))
-			{
-				return new RedirectResult(returnUrl);
-			}
-			return new RedirectToRouteResult(
-				new RouteValueDictionary(new { controller = "Home", action = "Index" }));
-		}
-
 		public static bool HasNumber(this string input)
 		{
 			return input.Where(x => Char.IsDigit(x)).Any();

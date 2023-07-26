@@ -286,7 +286,6 @@
     <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\ScheduleController.cs" />
     <Compile Include="Controllers\SiteController.cs" />
-    <Compile Include="Filters\UserLoggedInRedirectAttribute.cs" />
     <Compile Include="Filters\CommishDraftPickAccessAttribute.cs" />
     <Compile Include="Filters\CommishDraftAccessAttribute.cs" />
     <Compile Include="Filters\CommishLeagueAccessAttribute.cs" />

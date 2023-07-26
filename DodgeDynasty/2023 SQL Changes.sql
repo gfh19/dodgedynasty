@@ -5,6 +5,84 @@
 
 
 
+
+/* Below run in Production on 7/25/2023 */
+
+
+SET XACT_ABORT ON
+BEGIN TRANSACTION;
+
+
+
+INSERT INTO dbo.ByeWeek VALUES ('2023', 'ARI', '14', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2023', 'ATL', '11', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2023', 'BAL', '13', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2023', 'BUF', '13', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2023', 'CAR', '7', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2023', 'CHI', '13', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2023', 'CIN', '7', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2023', 'CLE', '5', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2023', 'DAL', '7', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2023', 'DEN', '9', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2023', 'DET', '9', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2023', 'GB', '6', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2023', 'HOU', '7', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2023', 'IND', '11', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2023', 'JAX', '9', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2023', 'KC', '10', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2023', 'LV', '13', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2023', 'LAC', '5', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2023', 'LAR', '10', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2023', 'MIA', '10', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2023', 'MIN', '13', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2023', 'NE', '11', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2023', 'NO', '11', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2023', 'NYG', '13', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2023', 'NYJ', '7', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2023', 'PHI', '10', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2023', 'PIT', '6', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2023', 'SF', '9', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2023', 'SEA', '5', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2023', 'TB', '5', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2023', 'TEN', '7', getdate(), getdate());
+INSERT INTO dbo.ByeWeek VALUES ('2023', 'WAS', '14', getdate(), getdate());
+
+
+
+
+
+COMMIT TRANSACTION;
+
+
+
+
+
+
+SET XACT_ABORT ON
+BEGIN TRANSACTION;
+
+UPDATE [dbo].[AutoImport]
+SET RankName = 'ESPN Top 300',
+	ImportUrl = 'https://g.espncdn.com/s/ffldraftkit/23/NFL23_CS_Non300.pdf?adddata=2023CS_Non300',
+	LastUpdateTimestamp = getdate()
+WHERE AutoImportId = 1
+
+
+UPDATE [dbo].[AutoImport]
+SET RankName = 'Yahoo!',
+	ImportUrl = 'https://partners.fantasypros.com/api/v1/consensus-rankings.php?sport=NFL&year=2023&week=0&id=1054&position=ALL&type=ST&scoring=STD&filters=7%3A9%3A285%3A747',
+	LastUpdateTimestamp = getdate()
+WHERE AutoImportId = 5
+
+
+
+COMMIT TRANSACTION;
+
+
+
+
+
+
 /* Below run in Production on 7/19/2023 */
 
 
@@ -134,6 +212,16 @@ COMMIT TRANSACTION;
 
 /*
 TODO:
+
+7/25/23
+Darrell Henderson Jr
+Melvin Gordon III
+Mecole Hardman Jr.
+Jeff Wilson Jr.
+Nathaniel Dell / * Tank Dell *
+Kenneth Walker / Ken Walker III / * Kenneth Walker III *
+
+
 7/22/2022
 Player names to look out for:
 - Demetric Felton Jr - RB
