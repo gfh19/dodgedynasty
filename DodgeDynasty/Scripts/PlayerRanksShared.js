@@ -89,7 +89,6 @@ function bindToggleExpandHdrLink(link) {
 		e.preventDefault();
 		var expandLink = $(".expand-link", $(link).parents("table"));
 		if (expandLink) {
-			$(link).text(toBool($(expandLink).attr("data-expand")) ? "Expand" : "Collapse");
 			expandLink.click();
 		}
 	});
