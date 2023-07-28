@@ -9,13 +9,17 @@
 		@{var historyMode = Request.QueryString[DodgeDynasty.Shared.Constants.QS.HistoryMode]; }
 		@if (Model.CompareRank != null && !DodgeDynasty.Shared.Utilities.ToBool(historyMode))
 		{
-            <div class="bold center">
+			<div class="bold center">
 				@Html.DropDownList("ComparedRank",
 				Model.GetCurrentAvailableDraftRankItems(Model.CompareRank.RankId.ToString()),
 				new { @class = "cr-rank-select" })
 			</div>
 			<div class="bold center">@Model.CompareRank.CategoryRankHeader</div>
-			<caption class="ba-header">@Model.CurrentRankCategory.Header
+			<caption class="ba-header">
+				<span class="ba-hide-cat-text">
+					(<a class="ba-expand-hdr-link" id="ExpandHdr-@Model.CurrentRankCategory.ExpandId" data-expand="@Model.CurrentRankCategory.ExpandValue">Expand</a>)
+				</span>
+				@Model.CurrentRankCategory.Header
 				<span class="ba-hide-cat-text">
 					(<a class="cr-remove-link" data-rank-id="@Model.CompareRank.RankId" data-rank-guid="@System.Guid.NewGuid()">Remove</a>)
 				</span>
@@ -27,7 +31,9 @@
 			{
 				<div class="cr-avg-ranks bold center">Average Selected Rankings</div>
 			}
-			<caption class="ba-header">@Model.CurrentRankCategory.Header
+			<caption class="ba-header">
+				<span class="ba-hide-cat-text">(<a class="ba-expand-hdr-link" id="ExpandHdr-@Model.CurrentRankCategory.ExpandId" data-expand="@Model.CurrentRankCategory.ExpandValue">Expand</a>)</span>
+				@Model.CurrentRankCategory.Header
 				<span class="ba-hide-cat-text">(<a class="ba-hide-cat-link" data-hide-id="@Model.CurrentRankCategory.HideId">Hide</a>)</span>
 			</caption>
 		}
@@ -51,17 +57,20 @@
 				{
 					<th>Tm</th>
 				}
-				@if (showPos) {
+				@if (showPos)
+				{
 					<th>Pos</th>
 				}
 			</tr>
 			@foreach (var player in Model.CurrentRankCategory.PlayerList)
 			{
-				<tr class="@((player.PickNum != null) ? ("ba-selected " + player.CssClass + ((Model.IsLoggedInUser(player.UserId) ? " you " : " "))) : "") @((player.HighlightClass != null ? "highlighted " + player.HighlightClass : " ")) ba-player-row" data-player-id="@player.PlayerId"><td>@player.RankNum</td>
+				<tr class="@((player.PickNum != null) ? ("ba-selected " + player.CssClass + ((Model.IsLoggedInUser(player.UserId) ? " you " : " "))) : "") @((player.HighlightClass != null ? "highlighted " + player.HighlightClass : " ")) ba-player-row" data-player-id="@player.PlayerId">
+					<td>@player.RankNum</td>
 					@if (Model.AveragePlayerRank != null && !DodgeDynasty.Shared.Utilities.ToBool(historyMode))
 					{
 						<td>@string.Format("{0:0.#}", player.AvgRankNum)</td>
-					}<td class="ba-player-name" data-player-id="@player.PlayerId">
+					}
+					<td class="ba-player-name" data-player-id="@player.PlayerId">
 						@if (Model.IsDraftActive() && Model.IsUserTurn() && player.PickNum == null)
 						{
 							<span class="pr-name-span anchor player-link">@player.PlayerName</span>
@@ -82,11 +91,11 @@
 							var byeWeek = Model.GetNFLTeamByeWeek(player.NFLTeam);
 							if (byeWeek != null)
 							{
-							<td class="pr-team nowrap">@player.NFLTeamDisplay<span class="ba-bye-week"> (@byeWeek)</span></td>
+								<td class="pr-team nowrap">@player.NFLTeamDisplay<span class="ba-bye-week"> (@byeWeek)</span></td>
 							}
 							else
 							{
-							<td class="pr-team nowrap">@player.NFLTeamDisplay</td>
+								<td class="pr-team nowrap">@player.NFLTeamDisplay</td>
 							}
 						}
 						else

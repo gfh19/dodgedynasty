@@ -1558,12 +1558,13 @@ ul.menu li a.current-page
 	background-color: #DFDFDF;
 }
 
-.ba-hide-cat-link, .cr-remove-link {
+.ba-hide-cat-link, .ba-expand-hdr-link, .cr-remove-link {
 	cursor: pointer;
 }
 
 .ba-header:not(.hq-header) {
-    margin-bottom: -3px;
+	margin-bottom: -3px;
+	font-size: 16px;
 }
 
 .ba-hide-cat-text, .bup-hide-text {
@@ -1597,7 +1598,7 @@ ul.menu li a.current-page
 	margin-top: 10px;
 }
 .pr-toggle-links {
-	font-size: 10px;
+	font-size: 11px;
 }
 .ba-bye-week {
 	font-size: 10px;

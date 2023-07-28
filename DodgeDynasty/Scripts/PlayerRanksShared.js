@@ -63,6 +63,10 @@ function bindExpandLinks() {
 	$.each(expandLinks, function (index, link) {
 		bindToggleExpandLink(link);
 	});
+	var expandHdrLinks = $(".ba-expand-hdr-link");
+	$.each(expandHdrLinks, function (index, link) {
+		bindToggleExpandHdrLink(link);
+	});
 }
 
 function bindToggleExpandLink(link) {
@@ -76,6 +80,18 @@ function bindToggleExpandLink(link) {
 		var expandRows = flipCookieValue(linkId);
 
 		toggleExpandTableRows(table, expandRows, linkId);
+	});
+}
+
+function bindToggleExpandHdrLink(link) {
+	$(link).unbind("click");
+	$(link).click(function (e) {
+		e.preventDefault();
+		var expandLink = $(".expand-link", $(link).parents("table"));
+		if (expandLink) {
+			$(link).text(toBool($(expandLink).attr("data-expand")) ? "Expand" : "Collapse");
+			expandLink.click();
+		}
 	});
 }
 
@@ -240,13 +256,16 @@ function getCompRankExpanded(rankId) {
 
 function toggleExpandTableRows(table, expandRows, linkId) {
 	$("tr", table).show();
+	var expandHdrLink = $(".ba-expand-hdr-link", $("#" + linkId).parents("table"));
 	if (expandRows) {
 		$("#" + linkId).text("Less...");
+		$(expandHdrLink).text("Collapse");
 	}
 	else {
 		$("tr:gt(" + ranksWindow + ")", table).hide();
 		$("tr:last", table).show();
 		$("#" + linkId).text("More...");
+		$(expandHdrLink).text("Expand");
 	}
 	if (linkId == "ExpandQueue") {
 		toggleDeleteHighlightDisplay();
