@@ -8,6 +8,7 @@ namespace DodgeDynasty.Models.Notification
 {
 	public class BroadcastNotificationModel
 	{
+		public int UserId { get; set; }
 		public List<BroadcastNotification> Notifications { get; set; } = new List<BroadcastNotification>();
 		public string Payload { get; set; }
 	}

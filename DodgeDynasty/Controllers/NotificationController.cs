@@ -11,17 +11,16 @@ using System.Web;
 using System.Web.Mvc;
 using DodgeDynasty.WebPush;
 using Newtonsoft.Json;
+using DodgeDynasty.WebSockets;
 
 namespace DodgeDynasty.Controllers
 {
 	public class NotificationController : Controller
 	{
-public static List<PushSub> Subscriptions { get; set; } = new List<PushSub>();
 
 		[HttpPost]
 		public HttpStatusCode Subscribe(PushSub request)
 		{
-Subscriptions.Add(request);
 			var mapper = new SubscribeNotificationMapper();
 			mapper.UpdateEntity(request);
 			return HttpStatusCode.OK;
@@ -38,20 +37,14 @@ Subscriptions.Add(request);
 		[HttpGet]
 		public HttpStatusCode Simulate()
 		{
-//TODO:  Replace with proper user broadcast logic
-			var s = Subscriptions.LastOrDefault();
-			if (s != null)
+			var model = new BroadcastNotificationMapper() { GetAllSubsForUser = true }.GetModel();
+			model.Payload = JsonConvert.SerializeObject(new NotificationData
 			{
-				var webPushClient = new WebPushClient();
-				var pushSubscription = new PushSubscription(s.EndPoint, s.Keys["p256dh"], s.Keys["auth"]);
-				var vapidDetails = new VapidDetails(Constants.Notifications.Email, Constants.Notifications.PublicKey, Constants.Notifications.PrivateKey);
-				webPushClient.SendNotification(pushSubscription, JsonConvert.SerializeObject(new NotificationData
-				{
-					title = "Test Turn",
-					body = "Notification stimulated & simulated",
-					icon = Constants.Notifications.IconUrl
-				}), vapidDetails);				
-			}
+				title = "Test Turn",
+				body = "Notification stimulated & simulated",
+				icon = Constants.Notifications.IconUrl
+			});
+			DraftHubHelper.SendNotifications(model);
 			return HttpStatusCode.OK;
 		}
 	}

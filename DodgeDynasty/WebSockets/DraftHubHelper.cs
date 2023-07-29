@@ -39,40 +39,45 @@ namespace DodgeDynasty.WebSockets
 			try
 			{
 				var model = new BroadcastNotificationMapper { LatestPickInfo = pickInfo }.GetModel();
-				var webPushClient = new WebPushClient();
-				foreach (var notification in model.Notifications)
-				{
-					try
-					{
-						webPushClient.SendNotification(notification.Subscription, model.Payload, notification.VapidDetails);
-					}
-					catch (WebPushException ex)
-					{
-						if (new[] { HttpStatusCode.NotFound, HttpStatusCode.Gone }.Contains(ex.StatusCode))
-						{
-							//User subscription expired; unsubscribe/delete from DB, and continue loop
-							var mapper = new SubscribeNotificationMapper(true, loggedInUserId, isUserAdmin);
-							mapper.UpdateEntity(new PushSub
-							{
-								UserId = pickInfo.uturnid?.ToString(),
-								EndPoint = notification.Subscription.Endpoint,
-								Keys = new Dictionary<string, string> {
-									{ Constants.Notifications.P256dh, notification.Subscription.P256DH },
-									{ Constants.Notifications.Auth, notification.Subscription.Auth },
-								}
-							});
-							Logger.LogErrorPrefix($"Subscription gone - {ex.StatusCode}; ", ex);
-						}
-						else
-						{
-							throw;
-						}
-					}
-				}
+				SendNotifications(model, loggedInUserId, isUserAdmin);
 			}
 			catch (Exception ex)
 			{
 				Logger.LogErrorPrefix("Notification failed - ", ex);
+			}
+		}
+
+		public static void SendNotifications(BroadcastNotificationModel model, int? loggedInUserId = null, bool? isUserAdmin = null)
+		{
+			var webPushClient = new WebPushClient();
+			foreach (var notification in model.Notifications)
+			{
+				try
+				{
+					webPushClient.SendNotification(notification.Subscription, model.Payload, notification.VapidDetails);
+				}
+				catch (WebPushException ex)
+				{
+					if (new[] { HttpStatusCode.NotFound, HttpStatusCode.Gone }.Contains(ex.StatusCode))
+					{
+						//User subscription expired; unsubscribe/delete from DB, and continue loop
+						var mapper = new SubscribeNotificationMapper(true, loggedInUserId, isUserAdmin);
+						mapper.UpdateEntity(new PushSub
+						{
+							UserId = model.UserId.ToString(),
+							EndPoint = notification.Subscription.Endpoint,
+							Keys = new Dictionary<string, string> {
+									{ Constants.Notifications.P256dh, notification.Subscription.P256DH },
+									{ Constants.Notifications.Auth, notification.Subscription.Auth },
+								}
+						});
+						Logger.LogErrorPrefix($"Subscription gone - {ex.StatusCode}; ", ex);
+					}
+					else
+					{
+						throw;
+					}
+				}
 			}
 		}
 	}

@@ -18,6 +18,7 @@ self.addEventListener('notificationclick', function (e) {
 				if (windowClients && windowClients.length > 0) {
 					var client = windowClients[0];
 					client.navigate(client.url);
+					if ("focus" in client) return client.focus();
 				}
 			})
 		);
