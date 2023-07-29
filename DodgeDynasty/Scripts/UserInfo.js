@@ -26,7 +26,7 @@
 }
 
 async function enablePushNotifications() {
-	if ('Notification' in window || pushNotificationsKillSwitch) {
+	if ('Notification' in window && !pushNotificationsKillSwitch) {
 		window.Notification.requestPermission().then((permission) => {
 			if (permission === 'granted') {
 				subscribe();
@@ -39,7 +39,7 @@ async function enablePushNotifications() {
 }
 
 async function simulateNotification() {
-	if ('Notification' in window || pushNotificationsKillSwitch) {
+	if ('Notification' in window && !pushNotificationsKillSwitch) {
 		window.Notification.requestPermission().then((permission) => {
 			if (permission === 'granted') {
 				navigator.serviceWorker.ready.then((reg) => {

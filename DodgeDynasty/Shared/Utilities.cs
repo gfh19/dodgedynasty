@@ -243,21 +243,6 @@ namespace DodgeDynasty.Shared
             return 15;
 		}
 
-		public static string GetSiteConfigValue(DraftModel model, string configKey)
-		{
-			return model.SiteConfigVars.FirstOrDefault(v=>v.VarName == configKey)?.VarValue ?? GetConfigVal(configKey);
-		}
-
-		public static bool GetBoolSiteConfigValue(DraftModel model, string configKey)
-		{
-			var val = GetSiteConfigValue(model, configKey);
-			if (!string.IsNullOrWhiteSpace(val))
-			{
-				return bool.Parse(val);
-			}
-			return false;
-		}
-
 		/* End Config access methods */
 		#endregion Config Access Methods
 

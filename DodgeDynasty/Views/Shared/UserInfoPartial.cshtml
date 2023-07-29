@@ -98,6 +98,8 @@
 						</div>
 					}
 
+					@if (!DodgeDynasty.Shared.DBUtilities.GetBoolSiteConfigValue(DodgeDynasty.Shared.Constants.AppSettings.PushNotificationsKillSwitch))
+					{
 					<div class="push-notif-prefs test-audio">
 						<div class="note-text">
 							<input id="chkMIPushNotifications" class="vert-middle" type="checkbox" />
@@ -108,6 +110,7 @@
 							<button id="btnSimulateTurn">Simulate Turn Notification</button>
 						</div>
 					</div>
+					}
 
 					@if (!DodgeDynasty.Shared.Utilities.GetBoolConfigVal(DodgeDynasty.Shared.Constants.AppSettings.UserEditAudioKillSwitch))
 					{

@@ -216,5 +216,22 @@ namespace DodgeDynasty.Shared
 			var draftViewModel = mapper.GetModel();
 			return draftViewModel.DraftPicks.Any(o=>o.DraftPickId == draftPickId);
 		}
+
+		public static string GetSiteConfigValue(string configKey, List<SiteConfigVarModel> siteConfigVars = null)
+		{
+			var configVars = siteConfigVars ?? new SiteConfigVarMapper().GetModel().List;
+			return configVars.FirstOrDefault(v => v.VarName == configKey)?.VarValue ?? Utilities.GetConfigVal(configKey);
+		}
+
+		public static bool GetBoolSiteConfigValue(string configKey, List<SiteConfigVarModel> siteConfigVars = null)
+		{
+			var val = GetSiteConfigValue(configKey, siteConfigVars);
+			if (!string.IsNullOrWhiteSpace(val))
+			{
+				return bool.Parse(val);
+			}
+			return false;
+		}
+
 	}
 }

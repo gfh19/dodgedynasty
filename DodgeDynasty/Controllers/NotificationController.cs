@@ -41,7 +41,7 @@ namespace DodgeDynasty.Controllers
 			model.Payload = JsonConvert.SerializeObject(new NotificationData
 			{
 				title = "Test Turn",
-				body = "Notification stimulated & simulated",
+				body = "Notifications are on!",
 				icon = Constants.Notifications.IconUrl
 			});
 			DraftHubHelper.SendNotifications(model);

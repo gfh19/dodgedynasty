@@ -16,20 +16,24 @@ namespace DodgeDynasty.Mappers.Notifications
 
 		protected override void PopulateModel()
 		{
-			if (GetAllSubsForUser)
+			var killSwitch = DBUtilities.GetBoolSiteConfigValue(Constants.AppSettings.PushNotificationsKillSwitch);
+			if (!killSwitch)
 			{
-				var userId = (GetAllSubsUserId != null && DBUtilities.IsUserAdmin()) ? GetAllSubsUserId.Value : HomeEntity.Users.GetLoggedInUserId();
-				PopulateUserSubscriptions(userId);
-			}
-			else if (LatestPickInfo?.uturnid != null && LatestPickInfo?.puid != null && LatestPickInfo?.uturnid != LatestPickInfo?.puid)
-			{
-				PopulateUserSubscriptions(LatestPickInfo.uturnid.Value);
-				Model.Payload = JsonConvert.SerializeObject(new NotificationData
+				if (GetAllSubsForUser)
 				{
-					title = "Your Turn!",
-					body = $"Last pick: {LatestPickInfo.pname}",
-					icon = Constants.Notifications.IconUrl
-				});
+					var userId = (GetAllSubsUserId != null && DBUtilities.IsUserAdmin()) ? GetAllSubsUserId.Value : HomeEntity.Users.GetLoggedInUserId();
+					PopulateUserSubscriptions(userId);
+				}
+				else if (LatestPickInfo?.uturnid != null && LatestPickInfo?.puid != null && LatestPickInfo?.uturnid != LatestPickInfo?.puid)
+				{
+					PopulateUserSubscriptions(LatestPickInfo.uturnid.Value);
+					Model.Payload = JsonConvert.SerializeObject(new NotificationData
+					{
+						title = "Your Turn!",
+						body = $"Last pick: {LatestPickInfo.pname}",
+						icon = Constants.Notifications.IconUrl
+					});
+				}
 			}
 		}
 

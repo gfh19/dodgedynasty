@@ -23,7 +23,6 @@ var isTickingClockPlaying = false;
 var siteConfigVars = {};
 var draftShowPosCol = "";
 var teamsShowPosCol = "";
-var pushNotificationsKillSwitch = false;
 
 /* Init functions */
 

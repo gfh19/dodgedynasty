@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace DodgeDynasty.Models.Shared
+namespace DodgeDynasty.Models.Site
 {
 	public class SiteConfigVarModel
 	{
@@ -14,4 +14,10 @@ namespace DodgeDynasty.Models.Shared
 		[JsonProperty()]
 		public string VarValue { get; set; }
 	}
+
+	public class SiteConfigVarListModel
+	{
+		public List<SiteConfigVarModel> List { get; set; }
+	}
+
 }

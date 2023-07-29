@@ -4,6 +4,22 @@
 /*TODO:  Convert PlayerRankOptions SQL storage to Json blob (plus ?all? IDs as columns? */
 
 
+/* Below run in Production on 7/29/2023 */
+
+
+SET XACT_ABORT ON
+BEGIN TRANSACTION;
+
+
+INSERT INTO [dbo].[SiteConfigVar]
+           ([VarName],[VarValue],[AddTimestamp],[LastUpdateTimestamp])
+     VALUES
+           ('PushNotificationsKillSwitch', 'false', getdate(), getdate())
+GO
+
+
+COMMIT TRANSACTION;
+
 
 
 /* Below run in Production on 7/25/2023 */

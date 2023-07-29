@@ -17,11 +17,11 @@
 			<div class="bold center">@Model.CompareRank.CategoryRankHeader</div>
 			<caption class="ba-header">
 				<span class="ba-hide-cat-text">
-					(<a class="ba-expand-hdr-link" id="ExpandHdr-@Model.CurrentRankCategory.ExpandId" data-expand="@Model.CurrentRankCategory.ExpandValue">Expand</a>)
+					(<a class="cr-remove-link" data-rank-id="@Model.CompareRank.RankId" data-rank-guid="@System.Guid.NewGuid()">Remove</a>)
 				</span>
 				@Model.CurrentRankCategory.Header
 				<span class="ba-hide-cat-text">
-					(<a class="cr-remove-link" data-rank-id="@Model.CompareRank.RankId" data-rank-guid="@System.Guid.NewGuid()">Remove</a>)
+					(<a class="ba-expand-hdr-link" id="ExpandHdr-@Model.CurrentRankCategory.ExpandId" data-expand="@Model.CurrentRankCategory.ExpandValue">Expand</a>)
 				</span>
 			</caption>
 		}
@@ -32,9 +32,9 @@
 				<div class="cr-avg-ranks bold center">Average Selected Rankings</div>
 			}
 			<caption class="ba-header">
-				<span class="ba-hide-cat-text">(<a class="ba-expand-hdr-link" id="ExpandHdr-@Model.CurrentRankCategory.ExpandId" data-expand="@Model.CurrentRankCategory.ExpandValue">Expand</a>)</span>
-				@Model.CurrentRankCategory.Header
 				<span class="ba-hide-cat-text">(<a class="ba-hide-cat-link" data-hide-id="@Model.CurrentRankCategory.HideId">Hide</a>)</span>
+				@Model.CurrentRankCategory.Header
+				<span class="ba-hide-cat-text">(<a class="ba-expand-hdr-link" id="ExpandHdr-@Model.CurrentRankCategory.ExpandId" data-expand="@Model.CurrentRankCategory.ExpandValue">Expand</a>)</span>
 			</caption>
 		}
 		<tbody>

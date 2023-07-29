@@ -7,6 +7,7 @@ using DodgeDynasty.Shared;
 using System.Web.Mvc;
 using DodgeDynasty.Mappers.Ranks;
 using DodgeDynasty.Models.Shared;
+using DodgeDynasty.Models.Site;
 
 namespace DodgeDynasty.Models
 {

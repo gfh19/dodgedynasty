@@ -29,7 +29,8 @@
 		var audioKillSwitch = System.Configuration.ConfigurationManager.AppSettings[DodgeDynasty.Shared.Constants.AppSettings.AudioKillSwitch];
 		var textToVoiceKillSwitch = System.Configuration.ConfigurationManager.AppSettings[DodgeDynasty.Shared.Constants.AppSettings.TextToVoiceKillSwitch];
 		var userEditAudioKillSwitch = System.Configuration.ConfigurationManager.AppSettings[DodgeDynasty.Shared.Constants.AppSettings.UserEditAudioKillSwitch];
-		var tickingClockAudioKillSwitch = "";
+		var tickingClockAudioKillSwitch = false;
+		var pushNotificationsKillSwitch = DodgeDynasty.Shared.DBUtilities.GetBoolSiteConfigValue(DodgeDynasty.Shared.Constants.AppSettings.PushNotificationsKillSwitch) ? "true" : "false";
 		if (DodgeDynasty.Shared.Utilities.IsUserLoggedIn() && !DodgeDynasty.Shared.Utilities.ToBool(webSocketsKillSwitch))
 		{
 			<script src="@Url.Content("~/signalr/hubs")"></script>
@@ -235,6 +236,7 @@
 		var audioKillSwitch = @audioKillSwitch;
 		var textToVoiceKillSwitch = @textToVoiceKillSwitch;
 		var userEditAudioKillSwitch = @userEditAudioKillSwitch;
+		var pushNotificationsKillSwitch = @pushNotificationsKillSwitch;
 		var defaultRefreshTimer = @System.Configuration.ConfigurationManager.AppSettings[DodgeDynasty.Shared.Constants.AppSettings.RefreshTimer];
 		var fastRefreshTimer = @System.Configuration.ConfigurationManager.AppSettings[DodgeDynasty.Shared.Constants.AppSettings.FastRefreshTimer];
 		var refreshTimer = webSocketsKillSwitch ? fastRefreshTimer : defaultRefreshTimer;

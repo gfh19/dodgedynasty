@@ -362,6 +362,7 @@
     </Compile>
     <Compile Include="Mappers\Site\MessagesHelper.cs" />
     <Compile Include="Mappers\Site\MessagesMapper.cs" />
+    <Compile Include="Mappers\Site\SiteConfigVarMapper.cs" />
     <Compile Include="Models\Account\RoleAccessModel.cs" />
     <Compile Include="Models\Account\UserInfoModel.cs" />
     <Compile Include="Models\AddEditDraftModel.cs" />
@@ -414,7 +415,7 @@
     <Compile Include="Models\Shared\AuditPlayerHelper.cs" />
     <Compile Include="Models\Shared\DraftChatModel.cs" />
     <Compile Include="Models\Shared\DraftHelper.cs" />
-    <Compile Include="Models\Shared\SiteConfigVarModel.cs" />
+    <Compile Include="Models\Site\SiteConfigVarModel.cs" />
     <Compile Include="Models\Site\MessagesCountModel.cs" />
     <Compile Include="Models\Site\MessagesModel.cs" />
     <Compile Include="Models\RankIdModel.cs" />
