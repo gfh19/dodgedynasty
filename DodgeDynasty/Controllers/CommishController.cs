@@ -153,7 +153,9 @@ namespace DodgeDynasty.Controllers
 		public ActionResult SetDraftStatus(string id)
 		{
 			var mapper = new DraftStatusMapper(id,
-				Request.QueryString[Constants.QS.IsActive], Request.QueryString[Constants.QS.IsComplete]);
+				Request.QueryString[Constants.QS.IsActive],
+				Request.QueryString[Constants.QS.IsComplete],
+				Request.QueryString[Constants.QS.IsPaused]);
 			mapper.UpdateEntity(mapper.Model);
 			return RedirectToAction(Constants.Views.ActivateDraft);
 		}

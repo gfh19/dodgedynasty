@@ -11,6 +11,18 @@ SET XACT_ABORT ON
 BEGIN TRANSACTION;
 
 
+ALTER TABLE [dbo].[Draft]
+ADD [IsPaused] bit NOT NULL DEFAULT(0);
+GO
+
+
+COMMIT TRANSACTION;
+
+
+
+SET XACT_ABORT ON
+BEGIN TRANSACTION;
+
 INSERT INTO [dbo].[SiteConfigVar]
            ([VarName],[VarValue],[AddTimestamp],[LastUpdateTimestamp])
      VALUES

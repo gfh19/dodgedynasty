@@ -499,7 +499,7 @@ function setPickTimer(recursive) {
 					playTickingClockAudio();
 				}
 			}
-			else {
+			else if ($(".start-time").text() != "TIME'S UP!") {
 				$(".start-time").text("TIME'S UP!");
 			}
 			if (recursive) {

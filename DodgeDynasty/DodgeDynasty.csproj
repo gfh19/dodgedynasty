@@ -474,6 +474,7 @@
     <Compile Include="Parsers\YahooParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shared\DBUtilities.cs" />
+    <Compile Include="Shared\Exceptions\PausedDraftException.cs" />
     <Compile Include="Shared\Extensions\UrlHelperExtensions.cs" />
     <Compile Include="Shared\Log\Logger.cs" />
     <Compile Include="Shared\Security\EncryptUtil.cs" />

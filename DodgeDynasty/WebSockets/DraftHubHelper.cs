@@ -15,6 +15,7 @@ namespace DodgeDynasty.WebSockets
 	//Methods in this class called from the server
 	public static class DraftHubHelper
 	{
+		//A null pickInfo input parm means broadcast draft refresh
 		public static void BroadcastDraftToClients(LatestPickInfoJson pickInfo)
 		{
 			var context = GlobalHost.ConnectionManager.GetHubContext<DraftHub>();

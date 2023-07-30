@@ -11,5 +11,6 @@ namespace DodgeDynasty.Models
 		public int DraftId { get; set; }
 		public bool? IsActive { get; set; }
 		public bool? IsComplete { get; set; }
+		public bool? IsPaused { get; set; }
 	}
 }

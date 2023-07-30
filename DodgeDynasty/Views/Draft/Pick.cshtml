@@ -45,6 +45,10 @@
 			{
 				<div class="your-pick-status">Please check back in when the draft is active.</div>
 			}
+			else if (Model.GetCurrentDraft().IsPaused)
+			{
+				<div class="your-pick-status">Draft paused.  Please check back in when the draft is active.</div>
+			}
 			else
 			{
 				<div class="your-draft-pick">You're up! Please enter your draft pick:</div>

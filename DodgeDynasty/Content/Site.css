@@ -2228,13 +2228,15 @@ span.player-select
 	margin-left: 5px;
 }
 
-.act-draft-links .activate {
+.act-draft-links .activate, .act-draft-links .mark-unpaused {
 	color: #10B910;	/* green */
 }
 .act-draft-links .deactivate {
 	color: #FF0000;	/* red */
 }
-
+.act-draft-links .mark-paused {
+	color: #AAAA00;	/* mustard */
+}
 
 /* Draft History
 ----------------------------------------------------------*/

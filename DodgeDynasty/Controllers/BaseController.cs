@@ -48,6 +48,13 @@ namespace DodgeDynasty.Controllers
 				nextDraftInputModel = DraftFactory.GetCurrentDraftInputModel(draftInputModel.DraftId);
 				return View(nextDraftInputModel);
 			}
+			catch (PausedDraftException)
+			{
+				ModelState.Clear();
+				ModelState.AddModelError("", "Error - Draft has been paused");
+				nextDraftInputModel = DraftFactory.GetCurrentDraftInputModel(draftInputModel.DraftId);
+				return View(nextDraftInputModel);
+			}
 
 			ModelState.Clear();
 			nextDraftInputModel = DraftFactory.GetCurrentDraftInputModel(draftInputModel.DraftId);

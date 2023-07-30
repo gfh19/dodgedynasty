@@ -73,6 +73,11 @@ namespace DodgeDynasty.Models
 			{
 				loggedInUserId = HomeEntity.Users.GetLoggedInUserId();
 				isUserAdmin = DBUtilities.IsUserAdmin();
+				if (CurrentDraft.IsPaused && !isUserAdmin)
+				{
+					throw new PausedDraftException();
+				}
+
 				var now = Utilities.GetEasternTime();
 				int? inactiveTruePlayerId = null;
 				bool justActivated = false;

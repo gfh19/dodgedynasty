@@ -289,7 +289,8 @@ namespace DodgeDynasty.Models
 		public string GetCurrentDraftName()
 		{
 			var league = GetCurrentLeague();
-			return string.Format("{0} {1}", CurrentDraft.DraftYear, league.LeagueName);
+			var draftName = $"{CurrentDraft.DraftYear} {league.LeagueName}";
+			return CurrentDraft.IsPaused ? $"{draftName} (paused)" : draftName;
 		}
 
 		public League GetCurrentLeague()

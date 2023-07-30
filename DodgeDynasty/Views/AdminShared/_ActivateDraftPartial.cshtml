@@ -7,9 +7,17 @@
 			@foreach (var draft in Model.ActiveDrafts)
 			{
 				<div class="page-entry">
-					<div class="act-draft">@draft.DraftYear @draft.LeagueName</div>
+					<div class="act-draft">@draft.DraftYear @draft.LeagueName@(draft.IsPaused ? " (paused)" : "")</div>
 					<div class="act-draft-links">
 						<a class="deactivate" href="SetDraftStatus/@draft.DraftId?isActive=false">&lt;Deactivate&gt;</a>
+						@if (draft.IsPaused)
+						{
+							<a class="mark-unpaused" href="SetDraftStatus/@draft.DraftId?isPaused=false">&lt;Unpause&gt;</a>
+						}
+						else
+						{
+							<a class="mark-paused" href="SetDraftStatus/@draft.DraftId?isPaused=true">&lt;Pause&gt;</a>
+						}
 					</div>
 				</div>
 			}
@@ -22,7 +30,7 @@
 					<div class="act-draft">@draft.DraftYear @draft.LeagueName</div>
 					<div class="act-draft-links">
 						<a class="activate" href="SetDraftStatus/@draft.DraftId?isActive=true">&lt;Activate&gt;</a>
-						<a class ="mark-complete" href="SetDraftStatus/@draft.DraftId?isComplete=true">&lt;Mark Complete&gt;</a>
+						<a class="mark-complete" href="SetDraftStatus/@draft.DraftId?isComplete=true">&lt;Mark Complete&gt;</a>
 					</div>
 				</div>
 			}

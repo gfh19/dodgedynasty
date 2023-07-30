@@ -155,6 +155,7 @@ warning 6002: The table/view 'Home.dbo._ArchivePlayerHighlight' does not have a 
           <Property Name="LastUpdateTimestamp" Type="datetime" Nullable="false" />
           <Property Name="PickTimeSeconds" Type="smallint" Nullable="false" />
           <Property Name="CombineWRTE" Type="bit" Nullable="false" />
+          <Property Name="IsPaused" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="DraftChat">
           <Key>
@@ -1523,44 +1524,7 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
             <End Role="AudioUserCount" EntitySet="AudioUserCounts" />
           </AssociationSet>
           <EntitySet Name="ErrorLogs" EntityType="HomeModel.ErrorLog" />
-          <EntitySet Name="Drafts" EntityType="HomeModel.Draft" />
-          <AssociationSet Name="FK_AudioUserCount_Draft" Association="HomeModel.FK_AudioUserCount_Draft">
-            <End Role="Draft" EntitySet="Drafts" />
-            <End Role="AudioUserCount" EntitySet="AudioUserCounts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Draft_RunnerUp" Association="HomeModel.FK_Draft_RunnerUp">
-            <End Role="User" EntitySet="Users" />
-            <End Role="Draft" EntitySet="Drafts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Draft_Winner" Association="HomeModel.FK_Draft_Winner">
-            <End Role="User" EntitySet="Users" />
-            <End Role="Draft" EntitySet="Drafts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DraftChat_Draft" Association="HomeModel.FK_DraftChat_Draft">
-            <End Role="Draft" EntitySet="Drafts" />
-            <End Role="DraftChat" EntitySet="DraftChats" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DraftOwner_Draft" Association="HomeModel.FK_DraftOwner_Draft">
-            <End Role="Draft" EntitySet="Drafts" />
-            <End Role="DraftOwner" EntitySet="DraftOwners" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DraftPick_Draft" Association="HomeModel.FK_DraftPick_Draft">
-            <End Role="Draft" EntitySet="Drafts" />
-            <End Role="DraftPick" EntitySet="DraftPicks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DraftRank_Draft" Association="HomeModel.FK_DraftRank_Draft">
-            <End Role="Draft" EntitySet="Drafts" />
-            <End Role="DraftRank" EntitySet="DraftRanks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PlayerHighlight_Draft" Association="HomeModel.FK_PlayerHighlight_Draft">
-            <End Role="Draft" EntitySet="Drafts" />
-            <End Role="PlayerHighlight" EntitySet="PlayerHighlights" />
-          </AssociationSet>
           <EntitySet Name="Leagues" EntityType="HomeModel.League" />
-          <AssociationSet Name="FK_Draft_League" Association="HomeModel.FK_Draft_League">
-            <End Role="League" EntitySet="Leagues" />
-            <End Role="Draft" EntitySet="Drafts" />
-          </AssociationSet>
           <AssociationSet Name="FK_DraftChat_League" Association="HomeModel.FK_DraftChat_League">
             <End Role="League" EntitySet="Leagues" />
             <End Role="DraftChat" EntitySet="DraftChats" />
@@ -1610,10 +1574,6 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
             <End Role="UserPreference" EntitySet="UserPreferences" />
           </AssociationSet>
           <EntitySet Name="DraftHighlights" EntityType="HomeModel.DraftHighlight" />
-          <AssociationSet Name="FK_DraftHighlight_Draft" Association="HomeModel.FK_DraftHighlight_Draft">
-            <End Role="Draft" EntitySet="Drafts" />
-            <End Role="DraftHighlight" EntitySet="DraftHighlights" />
-          </AssociationSet>
           <AssociationSet Name="FK_DraftHighlight_User" Association="HomeModel.FK_DraftHighlight_User">
             <End Role="User" EntitySet="Users" />
             <End Role="DraftHighlight" EntitySet="DraftHighlights" />
@@ -1638,6 +1598,47 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
             <End Role="ScheduleMatchup" EntitySet="ScheduleMatchups" />
           </AssociationSet>
           <EntitySet Name="Notifications" EntityType="HomeModel.Notification" />
+          <EntitySet Name="Drafts" EntityType="HomeModel.Draft" />
+          <AssociationSet Name="FK_AudioUserCount_Draft" Association="HomeModel.FK_AudioUserCount_Draft">
+            <End Role="Draft" EntitySet="Drafts" />
+            <End Role="AudioUserCount" EntitySet="AudioUserCounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Draft_League" Association="HomeModel.FK_Draft_League">
+            <End Role="League" EntitySet="Leagues" />
+            <End Role="Draft" EntitySet="Drafts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Draft_RunnerUp" Association="HomeModel.FK_Draft_RunnerUp">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Draft" EntitySet="Drafts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Draft_Winner" Association="HomeModel.FK_Draft_Winner">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Draft" EntitySet="Drafts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DraftChat_Draft" Association="HomeModel.FK_DraftChat_Draft">
+            <End Role="Draft" EntitySet="Drafts" />
+            <End Role="DraftChat" EntitySet="DraftChats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DraftHighlight_Draft" Association="HomeModel.FK_DraftHighlight_Draft">
+            <End Role="Draft" EntitySet="Drafts" />
+            <End Role="DraftHighlight" EntitySet="DraftHighlights" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DraftOwner_Draft" Association="HomeModel.FK_DraftOwner_Draft">
+            <End Role="Draft" EntitySet="Drafts" />
+            <End Role="DraftOwner" EntitySet="DraftOwners" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DraftPick_Draft" Association="HomeModel.FK_DraftPick_Draft">
+            <End Role="Draft" EntitySet="Drafts" />
+            <End Role="DraftPick" EntitySet="DraftPicks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DraftRank_Draft" Association="HomeModel.FK_DraftRank_Draft">
+            <End Role="Draft" EntitySet="Drafts" />
+            <End Role="DraftRank" EntitySet="DraftRanks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlayerHighlight_Draft" Association="HomeModel.FK_PlayerHighlight_Draft">
+            <End Role="Draft" EntitySet="Drafts" />
+            <End Role="PlayerHighlight" EntitySet="PlayerHighlights" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="PlayerRank">
           <Key>
@@ -1705,13 +1706,13 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
           <NavigationProperty Name="AudioUserCounts" Relationship="HomeModel.FK_AudioUserCount_User" FromRole="User" ToRole="AudioUserCount" />
           <Property Name="LoginUserAgent" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
           <Property Name="LoginDomain" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Drafts" Relationship="HomeModel.FK_Draft_RunnerUp" FromRole="User" ToRole="Draft" />
-          <NavigationProperty Name="Drafts1" Relationship="HomeModel.FK_Draft_Winner" FromRole="User" ToRole="Draft" />
           <NavigationProperty Name="PlayerAdjustments" Relationship="HomeModel.FK_PlayerAdjustment_User" FromRole="User" ToRole="PlayerAdjustment" />
           <NavigationProperty Name="UserPreference" Relationship="HomeModel.FK_UserPreferences_User" FromRole="User" ToRole="UserPreference" />
           <NavigationProperty Name="DraftHighlights" Relationship="HomeModel.FK_DraftHighlight_User" FromRole="User" ToRole="DraftHighlight" />
           <NavigationProperty Name="Schedules" Relationship="HomeModel.FK_Schedule_User" FromRole="User" ToRole="Schedule" />
           <NavigationProperty Name="ScheduleMatchups" Relationship="HomeModel.FK_ScheduleMatchup_Schedule" FromRole="User" ToRole="ScheduleMatchup" />
+          <NavigationProperty Name="Drafts" Relationship="HomeModel.FK_Draft_RunnerUp" FromRole="User" ToRole="Draft" />
+          <NavigationProperty Name="Drafts1" Relationship="HomeModel.FK_Draft_Winner" FromRole="User" ToRole="Draft" />
         </EntityType>
         <EntityType Name="DraftRank">
           <Key>
@@ -1725,8 +1726,8 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
           <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="User" Relationship="HomeModel.FK_DraftRank_User" FromRole="DraftRank" ToRole="User" />
-          <NavigationProperty Name="Draft" Relationship="HomeModel.FK_DraftRank_Draft" FromRole="DraftRank" ToRole="Draft" />
           <NavigationProperty Name="Rank" Relationship="HomeModel.FK_DraftRank_Rank" FromRole="DraftRank" ToRole="Rank" />
+          <NavigationProperty Name="Draft" Relationship="HomeModel.FK_DraftRank_Draft" FromRole="DraftRank" ToRole="Draft" />
         </EntityType>
         <EntityType Name="DraftOwner">
           <Key>
@@ -1842,8 +1843,8 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
           <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="User" Relationship="HomeModel.FK_DraftChat_User" FromRole="DraftChat" ToRole="User" />
-          <NavigationProperty Name="Draft" Relationship="HomeModel.FK_DraftChat_Draft" FromRole="DraftChat" ToRole="Draft" />
           <NavigationProperty Name="League" Relationship="HomeModel.FK_DraftChat_League" FromRole="DraftChat" ToRole="League" />
+          <NavigationProperty Name="Draft" Relationship="HomeModel.FK_DraftChat_Draft" FromRole="DraftChat" ToRole="Draft" />
         </EntityType>
         <Association Name="FK_DraftChat_User">
           <End Type="HomeModel.User" Role="User" Multiplicity="1" />
@@ -2024,11 +2025,11 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
           <NavigationProperty Name="Highlight" Relationship="HomeModel.FK_PlayerHighlight_Highlight" FromRole="PlayerHighlight" ToRole="Highlight" />
           <NavigationProperty Name="Player" Relationship="HomeModel.FK_PlayerHighlight_Player" FromRole="PlayerHighlight" ToRole="Player" />
           <NavigationProperty Name="User" Relationship="HomeModel.FK_PlayerHighlight_User" FromRole="PlayerHighlight" ToRole="User" />
-          <NavigationProperty Name="Draft" Relationship="HomeModel.FK_PlayerHighlight_Draft" FromRole="PlayerHighlight" ToRole="Draft" />
           <Property Name="DraftHighlightId" Type="Int32" />
           <NavigationProperty Name="DraftHighlight" Relationship="HomeModel.FK_PlayerHighlight_DraftHighlight" FromRole="PlayerHighlight" ToRole="DraftHighlight" />
           <NavigationProperty Name="PlayerHighlight1" Relationship="HomeModel.FK_PlayerHighlight_PlayerHighlight" FromRole="PlayerHighlight" ToRole="PlayerHighlight1" />
           <NavigationProperty Name="PlayerHighlight2" Relationship="HomeModel.FK_PlayerHighlight_PlayerHighlight" FromRole="PlayerHighlight1" ToRole="PlayerHighlight" />
+          <NavigationProperty Name="Draft" Relationship="HomeModel.FK_PlayerHighlight_Draft" FromRole="PlayerHighlight" ToRole="Draft" />
         </EntityType>
         <Association Name="FK_PlayerHighlight_Highlight">
           <End Type="HomeModel.Highlight" Role="Highlight" Multiplicity="1" />
@@ -2303,135 +2304,6 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
           <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
-        <EntityType Name="Draft">
-          <Key>
-            <PropertyRef Name="DraftId" />
-          </Key>
-          <Property Name="DraftId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="LeagueId" Type="Int32" Nullable="false" />
-          <Property Name="LeagueName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="DraftDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="DraftLocation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="DraftYear" Type="Int16" />
-          <Property Name="NumRounds" Type="Int16" Nullable="false" />
-          <Property Name="NumKeepers" Type="Int16" Nullable="false" />
-          <Property Name="Format" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="IsComplete" Type="Boolean" Nullable="false" />
-          <Property Name="WinnerId" Type="Int32" />
-          <Property Name="RunnerUpId" Type="Int32" />
-          <Property Name="HasCoWinners" Type="Boolean" />
-          <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="PickTimeSeconds" Type="Int16" Nullable="false" />
-          <Property Name="CombineWRTE" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="AudioUserCounts" Relationship="HomeModel.FK_AudioUserCount_Draft" FromRole="Draft" ToRole="AudioUserCount" />
-          <NavigationProperty Name="User" Relationship="HomeModel.FK_Draft_RunnerUp" FromRole="Draft" ToRole="User" />
-          <NavigationProperty Name="User1" Relationship="HomeModel.FK_Draft_Winner" FromRole="Draft" ToRole="User" />
-          <NavigationProperty Name="DraftChats" Relationship="HomeModel.FK_DraftChat_Draft" FromRole="Draft" ToRole="DraftChat" />
-          <NavigationProperty Name="DraftOwners" Relationship="HomeModel.FK_DraftOwner_Draft" FromRole="Draft" ToRole="DraftOwner" />
-          <NavigationProperty Name="DraftPicks" Relationship="HomeModel.FK_DraftPick_Draft" FromRole="Draft" ToRole="DraftPick" />
-          <NavigationProperty Name="DraftRanks" Relationship="HomeModel.FK_DraftRank_Draft" FromRole="Draft" ToRole="DraftRank" />
-          <NavigationProperty Name="PlayerHighlights" Relationship="HomeModel.FK_PlayerHighlight_Draft" FromRole="Draft" ToRole="PlayerHighlight" />
-          <NavigationProperty Name="League" Relationship="HomeModel.FK_Draft_League" FromRole="Draft" ToRole="League" />
-          <NavigationProperty Name="DraftHighlights" Relationship="HomeModel.FK_DraftHighlight_Draft" FromRole="Draft" ToRole="DraftHighlight" />
-        </EntityType>
-        <Association Name="FK_AudioUserCount_Draft">
-          <End Type="HomeModel.Draft" Role="Draft" Multiplicity="1" />
-          <End Type="HomeModel.AudioUserCount" Role="AudioUserCount" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Draft">
-              <PropertyRef Name="DraftId" />
-            </Principal>
-            <Dependent Role="AudioUserCount">
-              <PropertyRef Name="DraftId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Draft_RunnerUp">
-          <End Type="HomeModel.User" Role="User" Multiplicity="0..1" />
-          <End Type="HomeModel.Draft" Role="Draft" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="Draft">
-              <PropertyRef Name="RunnerUpId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Draft_Winner">
-          <End Type="HomeModel.User" Role="User" Multiplicity="0..1" />
-          <End Type="HomeModel.Draft" Role="Draft" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="Draft">
-              <PropertyRef Name="WinnerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DraftChat_Draft">
-          <End Type="HomeModel.Draft" Role="Draft" Multiplicity="1" />
-          <End Type="HomeModel.DraftChat" Role="DraftChat" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Draft">
-              <PropertyRef Name="DraftId" />
-            </Principal>
-            <Dependent Role="DraftChat">
-              <PropertyRef Name="DraftId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DraftOwner_Draft">
-          <End Type="HomeModel.Draft" Role="Draft" Multiplicity="1" />
-          <End Type="HomeModel.DraftOwner" Role="DraftOwner" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Draft">
-              <PropertyRef Name="DraftId" />
-            </Principal>
-            <Dependent Role="DraftOwner">
-              <PropertyRef Name="DraftId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DraftPick_Draft">
-          <End Type="HomeModel.Draft" Role="Draft" Multiplicity="1" />
-          <End Type="HomeModel.DraftPick" Role="DraftPick" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Draft">
-              <PropertyRef Name="DraftId" />
-            </Principal>
-            <Dependent Role="DraftPick">
-              <PropertyRef Name="DraftId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DraftRank_Draft">
-          <End Type="HomeModel.Draft" Role="Draft" Multiplicity="0..1" />
-          <End Type="HomeModel.DraftRank" Role="DraftRank" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Draft">
-              <PropertyRef Name="DraftId" />
-            </Principal>
-            <Dependent Role="DraftRank">
-              <PropertyRef Name="DraftId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PlayerHighlight_Draft">
-          <End Type="HomeModel.Draft" Role="Draft" Multiplicity="1" />
-          <End Type="HomeModel.PlayerHighlight" Role="PlayerHighlight" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Draft">
-              <PropertyRef Name="DraftId" />
-            </Principal>
-            <Dependent Role="PlayerHighlight">
-              <PropertyRef Name="DraftId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="League">
           <Key>
             <PropertyRef Name="LeagueId" />
@@ -2445,25 +2317,13 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
           <Property Name="Format" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="PickTimeSeconds" Type="Int16" Nullable="false" />
           <Property Name="CombineWRTE" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Drafts" Relationship="HomeModel.FK_Draft_League" FromRole="League" ToRole="Draft" />
           <NavigationProperty Name="DraftChats" Relationship="HomeModel.FK_DraftChat_League" FromRole="League" ToRole="DraftChat" />
           <NavigationProperty Name="LeagueOwners" Relationship="HomeModel.FK_LeagueOwner_League" FromRole="League" ToRole="LeagueOwner" />
           <NavigationProperty Name="Messages" Relationship="HomeModel.FK_Message_League" FromRole="League" ToRole="Message" />
           <NavigationProperty Name="UserRoles" Relationship="HomeModel.FK_UserRole_League" FromRole="League" ToRole="UserRole" />
           <Property Name="ShowPositionColors" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Drafts" Relationship="HomeModel.FK_Draft_League" FromRole="League" ToRole="Draft" />
         </EntityType>
-        <Association Name="FK_Draft_League">
-          <End Type="HomeModel.League" Role="League" Multiplicity="1" />
-          <End Type="HomeModel.Draft" Role="Draft" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="League">
-              <PropertyRef Name="LeagueId" />
-            </Principal>
-            <Dependent Role="Draft">
-              <PropertyRef Name="LeagueId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_DraftChat_League">
           <End Type="HomeModel.League" Role="League" Multiplicity="1" />
           <End Type="HomeModel.DraftChat" Role="DraftChat" Multiplicity="*" />
@@ -2746,24 +2606,12 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
           <Property Name="DraftYear" Type="Int16" Nullable="false" />
           <Property Name="DraftId" Type="Int32" />
           <Property Name="QueueName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Draft" Relationship="HomeModel.FK_DraftHighlight_Draft" FromRole="DraftHighlight" ToRole="Draft" />
           <NavigationProperty Name="User" Relationship="HomeModel.FK_DraftHighlight_User" FromRole="DraftHighlight" ToRole="User" />
           <NavigationProperty Name="PlayerHighlights" Relationship="HomeModel.FK_PlayerHighlight_DraftHighlight" FromRole="DraftHighlight" ToRole="PlayerHighlight" />
           <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Draft" Relationship="HomeModel.FK_DraftHighlight_Draft" FromRole="DraftHighlight" ToRole="Draft" />
         </EntityType>
-        <Association Name="FK_DraftHighlight_Draft">
-          <End Type="HomeModel.Draft" Role="Draft" Multiplicity="0..1" />
-          <End Type="HomeModel.DraftHighlight" Role="DraftHighlight" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Draft">
-              <PropertyRef Name="DraftId" />
-            </Principal>
-            <Dependent Role="DraftHighlight">
-              <PropertyRef Name="DraftId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_DraftHighlight_User">
           <End Type="HomeModel.User" Role="User" Multiplicity="1" />
           <End Type="HomeModel.DraftHighlight" Role="DraftHighlight" Multiplicity="*" />
@@ -2872,6 +2720,160 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
           <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
+        <EntityType Name="Draft">
+          <Key>
+            <PropertyRef Name="DraftId" />
+          </Key>
+          <Property Name="DraftId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LeagueId" Type="Int32" Nullable="false" />
+          <Property Name="LeagueName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="DraftDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DraftLocation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DraftYear" Type="Int16" />
+          <Property Name="NumRounds" Type="Int16" Nullable="false" />
+          <Property Name="NumKeepers" Type="Int16" Nullable="false" />
+          <Property Name="Format" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="IsComplete" Type="Boolean" Nullable="false" />
+          <Property Name="WinnerId" Type="Int32" />
+          <Property Name="RunnerUpId" Type="Int32" />
+          <Property Name="HasCoWinners" Type="Boolean" />
+          <Property Name="AddTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastUpdateTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PickTimeSeconds" Type="Int16" Nullable="false" />
+          <Property Name="CombineWRTE" Type="Boolean" Nullable="false" />
+          <Property Name="IsPaused" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="AudioUserCounts" Relationship="HomeModel.FK_AudioUserCount_Draft" FromRole="Draft" ToRole="AudioUserCount" />
+          <NavigationProperty Name="League" Relationship="HomeModel.FK_Draft_League" FromRole="Draft" ToRole="League" />
+          <NavigationProperty Name="User" Relationship="HomeModel.FK_Draft_RunnerUp" FromRole="Draft" ToRole="User" />
+          <NavigationProperty Name="User1" Relationship="HomeModel.FK_Draft_Winner" FromRole="Draft" ToRole="User" />
+          <NavigationProperty Name="DraftChats" Relationship="HomeModel.FK_DraftChat_Draft" FromRole="Draft" ToRole="DraftChat" />
+          <NavigationProperty Name="DraftHighlights" Relationship="HomeModel.FK_DraftHighlight_Draft" FromRole="Draft" ToRole="DraftHighlight" />
+          <NavigationProperty Name="DraftOwners" Relationship="HomeModel.FK_DraftOwner_Draft" FromRole="Draft" ToRole="DraftOwner" />
+          <NavigationProperty Name="DraftPicks" Relationship="HomeModel.FK_DraftPick_Draft" FromRole="Draft" ToRole="DraftPick" />
+          <NavigationProperty Name="DraftRanks" Relationship="HomeModel.FK_DraftRank_Draft" FromRole="Draft" ToRole="DraftRank" />
+          <NavigationProperty Name="PlayerHighlights" Relationship="HomeModel.FK_PlayerHighlight_Draft" FromRole="Draft" ToRole="PlayerHighlight" />
+        </EntityType>
+        <Association Name="FK_AudioUserCount_Draft">
+          <End Type="HomeModel.Draft" Role="Draft" Multiplicity="1" />
+          <End Type="HomeModel.AudioUserCount" Role="AudioUserCount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Draft">
+              <PropertyRef Name="DraftId" />
+            </Principal>
+            <Dependent Role="AudioUserCount">
+              <PropertyRef Name="DraftId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Draft_League">
+          <End Type="HomeModel.League" Role="League" Multiplicity="1" />
+          <End Type="HomeModel.Draft" Role="Draft" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="League">
+              <PropertyRef Name="LeagueId" />
+            </Principal>
+            <Dependent Role="Draft">
+              <PropertyRef Name="LeagueId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Draft_RunnerUp">
+          <End Type="HomeModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="HomeModel.Draft" Role="Draft" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Draft">
+              <PropertyRef Name="RunnerUpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Draft_Winner">
+          <End Type="HomeModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="HomeModel.Draft" Role="Draft" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Draft">
+              <PropertyRef Name="WinnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DraftChat_Draft">
+          <End Type="HomeModel.Draft" Role="Draft" Multiplicity="1" />
+          <End Type="HomeModel.DraftChat" Role="DraftChat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Draft">
+              <PropertyRef Name="DraftId" />
+            </Principal>
+            <Dependent Role="DraftChat">
+              <PropertyRef Name="DraftId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DraftHighlight_Draft">
+          <End Type="HomeModel.Draft" Role="Draft" Multiplicity="0..1" />
+          <End Type="HomeModel.DraftHighlight" Role="DraftHighlight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Draft">
+              <PropertyRef Name="DraftId" />
+            </Principal>
+            <Dependent Role="DraftHighlight">
+              <PropertyRef Name="DraftId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DraftOwner_Draft">
+          <End Type="HomeModel.Draft" Role="Draft" Multiplicity="1" />
+          <End Type="HomeModel.DraftOwner" Role="DraftOwner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Draft">
+              <PropertyRef Name="DraftId" />
+            </Principal>
+            <Dependent Role="DraftOwner">
+              <PropertyRef Name="DraftId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DraftPick_Draft">
+          <End Type="HomeModel.Draft" Role="Draft" Multiplicity="1" />
+          <End Type="HomeModel.DraftPick" Role="DraftPick" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Draft">
+              <PropertyRef Name="DraftId" />
+            </Principal>
+            <Dependent Role="DraftPick">
+              <PropertyRef Name="DraftId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DraftRank_Draft">
+          <End Type="HomeModel.Draft" Role="Draft" Multiplicity="0..1" />
+          <End Type="HomeModel.DraftRank" Role="DraftRank" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Draft">
+              <PropertyRef Name="DraftId" />
+            </Principal>
+            <Dependent Role="DraftRank">
+              <PropertyRef Name="DraftId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlayerHighlight_Draft">
+          <End Type="HomeModel.Draft" Role="Draft" Multiplicity="1" />
+          <End Type="HomeModel.PlayerHighlight" Role="PlayerHighlight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Draft">
+              <PropertyRef Name="DraftId" />
+            </Principal>
+            <Dependent Role="PlayerHighlight">
+              <PropertyRef Name="DraftId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3221,30 +3223,6 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Drafts">
-            <EntityTypeMapping TypeName="HomeModel.Draft">
-              <MappingFragment StoreEntitySet="Draft">
-                <ScalarProperty Name="CombineWRTE" ColumnName="CombineWRTE" />
-                <ScalarProperty Name="PickTimeSeconds" ColumnName="PickTimeSeconds" />
-                <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
-                <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
-                <ScalarProperty Name="HasCoWinners" ColumnName="HasCoWinners" />
-                <ScalarProperty Name="RunnerUpId" ColumnName="RunnerUpId" />
-                <ScalarProperty Name="WinnerId" ColumnName="WinnerId" />
-                <ScalarProperty Name="IsComplete" ColumnName="IsComplete" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="Format" ColumnName="Format" />
-                <ScalarProperty Name="NumKeepers" ColumnName="NumKeepers" />
-                <ScalarProperty Name="NumRounds" ColumnName="NumRounds" />
-                <ScalarProperty Name="DraftYear" ColumnName="DraftYear" />
-                <ScalarProperty Name="DraftLocation" ColumnName="DraftLocation" />
-                <ScalarProperty Name="DraftDate" ColumnName="DraftDate" />
-                <ScalarProperty Name="LeagueName" ColumnName="LeagueName" />
-                <ScalarProperty Name="LeagueId" ColumnName="LeagueId" />
-                <ScalarProperty Name="DraftId" ColumnName="DraftId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Leagues">
             <EntityTypeMapping TypeName="HomeModel.League">
               <MappingFragment StoreEntitySet="League">
@@ -3472,6 +3450,31 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Drafts">
+            <EntityTypeMapping TypeName="HomeModel.Draft">
+              <MappingFragment StoreEntitySet="Draft">
+                <ScalarProperty Name="IsPaused" ColumnName="IsPaused" />
+                <ScalarProperty Name="CombineWRTE" ColumnName="CombineWRTE" />
+                <ScalarProperty Name="PickTimeSeconds" ColumnName="PickTimeSeconds" />
+                <ScalarProperty Name="LastUpdateTimestamp" ColumnName="LastUpdateTimestamp" />
+                <ScalarProperty Name="AddTimestamp" ColumnName="AddTimestamp" />
+                <ScalarProperty Name="HasCoWinners" ColumnName="HasCoWinners" />
+                <ScalarProperty Name="RunnerUpId" ColumnName="RunnerUpId" />
+                <ScalarProperty Name="WinnerId" ColumnName="WinnerId" />
+                <ScalarProperty Name="IsComplete" ColumnName="IsComplete" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Format" ColumnName="Format" />
+                <ScalarProperty Name="NumKeepers" ColumnName="NumKeepers" />
+                <ScalarProperty Name="NumRounds" ColumnName="NumRounds" />
+                <ScalarProperty Name="DraftYear" ColumnName="DraftYear" />
+                <ScalarProperty Name="DraftLocation" ColumnName="DraftLocation" />
+                <ScalarProperty Name="DraftDate" ColumnName="DraftDate" />
+                <ScalarProperty Name="LeagueName" ColumnName="LeagueName" />
+                <ScalarProperty Name="LeagueId" ColumnName="LeagueId" />
+                <ScalarProperty Name="DraftId" ColumnName="DraftId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -3543,17 +3546,7 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
         <edmx:AssociationConnector Association="HomeModel.FK_AudioUserCount_Player" />
         <edmx:AssociationConnector Association="HomeModel.FK_AudioUserCount_User" />
         <edmx:EntityTypeShape EntityType="HomeModel.ErrorLog" Width="1.5" PointX="5.375" PointY="0.875" />
-        <edmx:EntityTypeShape EntityType="HomeModel.Draft" Width="1.5" PointX="3.125" PointY="0.5" />
-        <edmx:AssociationConnector Association="HomeModel.FK_AudioUserCount_Draft" />
-        <edmx:AssociationConnector Association="HomeModel.FK_Draft_RunnerUp" />
-        <edmx:AssociationConnector Association="HomeModel.FK_Draft_Winner" />
-        <edmx:AssociationConnector Association="HomeModel.FK_DraftChat_Draft" />
-        <edmx:AssociationConnector Association="HomeModel.FK_DraftOwner_Draft" />
-        <edmx:AssociationConnector Association="HomeModel.FK_DraftPick_Draft" />
-        <edmx:AssociationConnector Association="HomeModel.FK_DraftRank_Draft" />
-        <edmx:AssociationConnector Association="HomeModel.FK_PlayerHighlight_Draft" />
         <edmx:EntityTypeShape EntityType="HomeModel.League" Width="1.5" PointX="7.375" PointY="1" />
-        <edmx:AssociationConnector Association="HomeModel.FK_Draft_League" />
         <edmx:AssociationConnector Association="HomeModel.FK_DraftChat_League" />
         <edmx:AssociationConnector Association="HomeModel.FK_LeagueOwner_League" />
         <edmx:AssociationConnector Association="HomeModel.FK_Message_League" />
@@ -3573,7 +3566,6 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
         <edmx:EntityTypeShape EntityType="HomeModel.UserPreference" Width="1.5" PointX="10" PointY="20.375" />
         <edmx:AssociationConnector Association="HomeModel.FK_UserPreferences_User" />
         <edmx:EntityTypeShape EntityType="HomeModel.DraftHighlight" Width="1.5" PointX="15" PointY="14.875" />
-        <edmx:AssociationConnector Association="HomeModel.FK_DraftHighlight_Draft" />
         <edmx:AssociationConnector Association="HomeModel.FK_DraftHighlight_User" />
         <edmx:AssociationConnector Association="HomeModel.FK_PlayerHighlight_DraftHighlight" />
         <edmx:EntityTypeShape EntityType="HomeModel.SiteConfigVar" Width="1.5" PointX="0.75" PointY="4.75" />
@@ -3583,6 +3575,17 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
         <edmx:AssociationConnector Association="HomeModel.FK_Schedule_User" />
         <edmx:AssociationConnector Association="HomeModel.FK_ScheduleMatchup_Schedule" />
         <edmx:EntityTypeShape EntityType="HomeModel.Notification" Width="1.5" PointX="3.375" PointY="13.75" />
+        <edmx:EntityTypeShape EntityType="HomeModel.Draft" Width="1.5" PointX="3.125" PointY="0.5" />
+        <edmx:AssociationConnector Association="HomeModel.FK_AudioUserCount_Draft" />
+        <edmx:AssociationConnector Association="HomeModel.FK_Draft_League" />
+        <edmx:AssociationConnector Association="HomeModel.FK_Draft_RunnerUp" />
+        <edmx:AssociationConnector Association="HomeModel.FK_Draft_Winner" />
+        <edmx:AssociationConnector Association="HomeModel.FK_DraftChat_Draft" />
+        <edmx:AssociationConnector Association="HomeModel.FK_DraftHighlight_Draft" />
+        <edmx:AssociationConnector Association="HomeModel.FK_DraftOwner_Draft" />
+        <edmx:AssociationConnector Association="HomeModel.FK_DraftPick_Draft" />
+        <edmx:AssociationConnector Association="HomeModel.FK_DraftRank_Draft" />
+        <edmx:AssociationConnector Association="HomeModel.FK_PlayerHighlight_Draft" />
         </edmx:Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
