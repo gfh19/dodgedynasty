@@ -2290,6 +2290,9 @@ span.player-select
 #userInfo label, #userInfo span {
 	display: inline-block;
 }
+.mi-add-user-errors .field-validation-error {
+	display: block !important;
+}
 
 .mi-user-name {
 	font-size: 14px;
@@ -3034,8 +3037,11 @@ span.player-select
 		height: 28px;
 		margin-top: 2px;
 	}
-	.mi-user-entry-name input{
+	.mi-user-entry-name input {
 		margin-top: 0px;
+	}
+	.mi-user-entry-name .mi-active-chkbx {
+		width: auto;
 	}
 	.mi-league-entry-section {
 		display: block;

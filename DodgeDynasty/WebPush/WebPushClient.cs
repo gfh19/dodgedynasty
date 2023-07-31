@@ -16,7 +16,8 @@ namespace DodgeDynasty.WebPush
     public class WebPushClient : IWebPushClient
     {
         // default TTL is 4 weeks.
-        private const int DefaultTtl = 2419200;
+        //private const int DefaultTtl = 2419200;
+        private const int DefaultTtl = 500000;
         private readonly HttpClientHandler _httpClientHandler;
 
         private string _gcmApiKey;
@@ -242,7 +243,7 @@ namespace DodgeDynasty.WebPush
                 }
                 else
                 {
-                    cryptoKeyHeader += @"; " + vapidHeaders["Crypto-Key"];
+                    cryptoKeyHeader += @";" + vapidHeaders["Crypto-Key"];
                 }
             }
             else if (isFcm && !string.IsNullOrEmpty(currentGcmApiKey))

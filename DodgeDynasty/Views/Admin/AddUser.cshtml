@@ -16,26 +16,38 @@
 		<div class="page-section">
 			@using (Html.BeginForm("AddUser", "Admin", FormMethod.Post, new { id = "userInfoForm" }))
 			{
-				<div class="mi-user-entry-header">
-					@Html.LabelFor(m => m.UserName, new { @class = "mi-user-header" })
-					@Html.LabelFor(m => m.FirstName, new { @class = "mi-first-header" })
-					@Html.LabelFor(m => m.LastName, new { @class = "mi-last-header" })
-					@Html.LabelFor(m => m.NickName, new { @class = "mi-nick-header" })
-					@Html.LabelFor(m => m.IsActive, new { @class = "mi-active-header" })
+				<div class="mi-user-entry">
+					<div class="mi-user-entry-header">
+						@Html.LabelFor(m => m.UserName, new { @class = "mi-user-header" })
+						@Html.LabelFor(m => m.FirstName, new { @class = "mi-first-header" })
+						@Html.LabelFor(m => m.LastName, new { @class = "mi-last-header" })
+						@Html.LabelFor(m => m.NickName, new { @class = "mi-nick-header" })
+						@Html.LabelFor(m => m.IsActive, new { @class = "mi-active-header" })
+					</div>
+					<div class="mi-user-entry-name">
+						@Html.TextBoxFor(m => m.UserName, new { @class = "mi-user-name", maxLength = "20", autofocus = "autofocus" })
+						@Html.TextBoxFor(m => m.FirstName, new { @class = "mi-first-name", maxLength = "15" })
+						@Html.TextBoxFor(m => m.LastName, new { @class = "mi-last-name", maxLength = "25" })
+						@Html.TextBoxFor(m => m.NickName, new { @class = "mi-nick-name", maxLength = "10" })
+						<span class="mi-active">@Html.CheckBoxFor(m => m.IsActive, new { @class = "mi-active-chkbx" })</span>
+					</div>
+					<span class="mi-add-user-errors">
+						@Html.ValidationMessageFor(m => m.UserName)
+						@Html.ValidationMessageFor(m => m.FirstName)
+						@Html.ValidationMessageFor(m => m.LastName)
+						@Html.ValidationMessageFor(m => m.NickName)
+					</span>
 				</div>
-				<div>
-					@Html.TextBoxFor(m => m.UserName, new { @class = "mi-user-name", maxLength = "20", autofocus = "autofocus" })
-					@Html.TextBoxFor(m => m.FirstName, new { @class = "mi-first-name", maxLength = "15" })
-					@Html.TextBoxFor(m => m.LastName, new { @class = "mi-last-name", maxLength = "25" })
-					@Html.TextBoxFor(m => m.NickName, new { @class = "mi-nick-name", maxLength = "10" })
-					<span class="mi-active">@Html.CheckBoxFor(m => m.IsActive, new { @class = "mi-active-chkbx" })</span>
-					<div>@Html.ValidationMessageFor(m => m.UserName)</div>
-					<div>@Html.ValidationMessageFor(m => m.FirstName)</div>
-					<div>@Html.ValidationMessageFor(m => m.LastName)</div>
-					<div>@Html.ValidationMessageFor(m => m.NickName)</div>
+				<div class="page-section">
+					<h3>New User Steps:</h3>
+					<ol style="display: inline-grid; text-align: left" type="1">
+						<li>Add new user</li>
+						<li>Change user password:  <a href="@Url.Content("~/Admin/ChangePassword")">here</a></li>
+						<li>Add user to league/draft:  <a href="@Url.Content("~/Admin/ManageLeagues")">here</a></li>
+					</ol>
 				</div>
 				<div class="page-section"><button class="submit-info" type="submit">Submit</button></div>
 			}
 		</div>
+		</div>
 	</div>
-</div>

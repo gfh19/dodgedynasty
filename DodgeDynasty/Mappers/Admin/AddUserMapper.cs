@@ -5,6 +5,7 @@ using System.Web;
 using DodgeDynasty.Entities;
 using DodgeDynasty.Models.Account;
 using DodgeDynasty.Models.Admin;
+using DodgeDynasty.Shared;
 
 namespace DodgeDynasty.Mappers.Admin
 {
@@ -39,6 +40,16 @@ namespace DodgeDynasty.Mappers.Admin
 				LastUpdateTimestamp = DateTime.Now
 			};
 			HomeEntity.Users.AddObject(newUser);
+			HomeEntity.SaveChanges();
+
+			var userPreference = new UserPreference {
+				UserId = newUser.UserId,
+				DraftShowPositionColors = Constants.ShowPositionColors.Off,
+				TeamsShowPositionColors = Constants.ShowPositionColors.Full,
+				AddTimestamp = DateTime.Now,
+				LastUpdateTimestamp = DateTime.Now
+			};
+			HomeEntity.UserPreferences.AddObject(userPreference);
 			HomeEntity.SaveChanges();
 		}
 	}
