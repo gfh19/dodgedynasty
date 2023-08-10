@@ -437,7 +437,7 @@ function pastePlayerHandler(clipboardData, e, skipPasteTextbox) {
 		if (onPlayerSelect || onPasteTextbox) {
 			var destSelect = document.activeElement;
 			addWaitCursor();
-			showLoadingDialog();
+			showPasteRanksDialog();
 			setTimeout(function () {
 				if (onPasteTextbox) {
 					if ($(".player-select").length <= 2 && $(".player-select").eq(1).val() === "") {
@@ -489,7 +489,7 @@ function pastePlayerHandler(clipboardData, e, skipPasteTextbox) {
 				}
 				removeWaitCursor();
 				closeAllDialogs();
-			}, 0);
+			}, 50);
 		}
 	}
 }
@@ -714,6 +714,16 @@ function markInvalidPlayerId(playerId) {
 function showSavingDialog() {
 	$("body").css("cursor", "progress");
 	$("#saveRanksDialog").dialog({
+		resizable: false,
+		height: 'auto',
+		width: '200px',
+		modal: true
+	});
+}
+
+function showPasteRanksDialog() {
+	$("body").css("cursor", "progress");
+	$("#pasteRanksDialog").dialog({
 		resizable: false,
 		height: 'auto',
 		width: '200px',
