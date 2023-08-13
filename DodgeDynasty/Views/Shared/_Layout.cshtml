@@ -165,15 +165,15 @@
 										<li>@Html.ActionLink("Activate Draft", "ActivateDraft", "Admin")</li>
 										<li>@Html.ActionLink("Enter Draft Pick", "Input", "Admin")</li>
 										<li><a href="#" class="menu-broadcast-draft">Broadcast Draft Pick</a></li>
+										<li>@Html.ActionLink("Rank Adjustments", "RankAdjustments", "Admin")</li>
 										@if (userRoleAccessModel.NewPlayerAdjExists)
 										{
-											<li>@Html.ActionLink("Player Adjustments", "PlayerAdjustments", "Admin", null, new { @class="invalid-border" })</li>
+											<li>@Html.ActionLink("Player Adjustments", "PlayerAdjustments", "Admin", null, new { @class = "invalid-border" })</li>
 										}
 										else
 										{
 											<li>@Html.ActionLink("Player Adjustments", "PlayerAdjustments", "Admin")</li>
 										}
-										<li>@Html.ActionLink("Rank Adjustments", "RankAdjustments", "Admin")</li>
 										<!--<li class="divider"></li>-->
 									</ul>
 								</li>
