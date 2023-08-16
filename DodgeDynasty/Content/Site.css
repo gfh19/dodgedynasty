@@ -767,10 +767,9 @@ aside ul li
 
 /* login page */
 
-#loginForm .validation-error
-{
+#loginForm .validation-error, #loginForm .field-validation-error {
 	display: block;
-	margin-left: 15px;
+	margin-left: 10px;
 }
 
 #loginForm .validation-summary-errors ul

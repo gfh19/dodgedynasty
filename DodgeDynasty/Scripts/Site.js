@@ -26,6 +26,17 @@ var teamsShowPosCol = "";
 
 /* Init functions */
 
+/*
+window.onunhandledrejection = function (event) {
+	alert('Unhandled error: ' + event);
+	return true;
+}
+window.onerror = function (msg, url, linenumber) {
+	alert('Error message: ' + msg + '\nURL: ' + url + '\nLine Number: ' + linenumber);
+	return true;
+}
+*/
+
 $(function () {
 	$.ajaxSetup({
 		cache: false
@@ -75,12 +86,17 @@ function bindGotoPickNum() {
 function initWebSockets() {
 	if (draftActive && !webSocketsKillSwitch) {
 		draftHub = $.connection.draftHub;
+		startHubConnection(setupDraftHubAssignments);
+		checkStillSocketConnected(true);
+	}
+}
+
+function setupDraftHubAssignments() {
+	if (draftHub !== undefined && draftHub.client !== undefined) {
 		draftHub.client.broadcastDraft = (typeof broadcastDraft !== "undefined") ? broadcastDraft : function () { };
 		draftHub.client.broadcastChat = (typeof broadcastChat !== "undefined") ? broadcastChat : function () { };
 		draftHub.client.broadcastDisconnect = (typeof broadcastDisconnect !== "undefined") ? broadcastDisconnect : function () { };
 		draftHub.client.broadcastDraftToUser = (typeof broadcastDraftToUser !== "undefined") ? broadcastDraftToUser : function () { };
-		startHubConnection();
-		checkStillSocketConnected(true);
 	}
 }
 
