@@ -26,17 +26,6 @@ var teamsShowPosCol = "";
 
 /* Init functions */
 
-/*
-window.onunhandledrejection = function (event) {
-	alert('Unhandled error: ' + event);
-	return true;
-}
-window.onerror = function (msg, url, linenumber) {
-	alert('Error message: ' + msg + '\nURL: ' + url + '\nLine Number: ' + linenumber);
-	return true;
-}
-*/
-
 $(function () {
 	$.ajaxSetup({
 		cache: false
