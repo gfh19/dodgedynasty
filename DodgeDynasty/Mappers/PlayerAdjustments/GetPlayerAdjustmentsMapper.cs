@@ -109,12 +109,14 @@ namespace DodgeDynasty.Mappers.PlayerAdjustments
 		private List<AdjustedPlayer> GetNonUniquePlayers()
 		{
 			List<AdjustedPlayer> players = new List<AdjustedPlayer>();
-			var auditPlayers = from p1 in HomeEntity.Players
-							   from p2 in HomeEntity.Players.Where(p2 =>
-								  p1.FirstName == p2.FirstName && p1.LastName == p2.LastName && p1.Position == p2.Position &&
-								  p1.NFLTeam == p2.NFLTeam && p1.PlayerId != p2.PlayerId && p1.TruePlayerId != p2.TruePlayerId)
-							   orderby p2.PlayerName, p2.AddTimestamp descending
-							   select p2;
+			var plyrs = HomeEntity.Players.ToList();
+			var auditPlayers = plyrs.Where(p1 => plyrs.Any(p2 => p1.FirstName == p2.FirstName 
+								&& Utilities.TrimSuffix(p1.LastName) == Utilities.TrimSuffix(p2.LastName) 
+								&& p1.Position == p2.Position 
+								&& p1.NFLTeam == p2.NFLTeam 
+								&& p1.PlayerId != p2.PlayerId 
+								&& p1.TruePlayerId != p2.TruePlayerId));
+
 			foreach (var auditPlayer in auditPlayers)
 			{
 				players.Add(AuditPlayerHelper.GetAuditedPlayer(auditPlayer,
