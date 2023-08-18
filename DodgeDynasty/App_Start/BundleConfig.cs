@@ -13,7 +13,6 @@ namespace DodgeDynasty
 						"~/Scripts/lib/bootstrap/js/bootstrap.js")); //jquery MUST come before bootstrap, & before jquery-ui
 
 			bundles.Add(new ScriptBundle("~/bundles/lib").Include(
-						"~/Scripts/lib/jquery-{version}.js",
 						"~/Scripts/jquery.cookie.js",
 						"~/Scripts/jquery.validate*",
 						"~/Scripts/jquery.signalR-{version}.js",

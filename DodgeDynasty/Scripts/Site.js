@@ -1621,7 +1621,8 @@ String.prototype.escapeRegEx = function () {
 									continue;
 								}
 
-								subscriptionMethod.call(hub, memberKey, makeProxyCallback(hub, memberValue));
+								// Use the actual user-provided callback as the "identity" value for the registration.
+								subscriptionMethod.call(hub, memberKey, makeProxyCallback(hub, memberValue), memberValue);
 							}
 						}
 					}
