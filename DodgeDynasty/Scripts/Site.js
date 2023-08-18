@@ -1577,7 +1577,7 @@ String.prototype.escapeRegEx = function () {
 	/// <param name="$" type="jQuery" />
 	"use strict";
 	setTimeout(function () {
-		if ($.connection.draftHub === undefined) {
+		if (draftActive && !webSocketsKillSwitch && $.connection.draftHub === undefined) {
 			if (typeof ($.signalR) !== "function") {
 				throw new Error("SignalR: SignalR is not loaded. Please ensure jquery.signalR-x.js is referenced before ~/signalr/js.");
 			}
