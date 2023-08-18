@@ -248,6 +248,12 @@ function refreshStalePage() {
 			checkStillSocketConnected(false);
 		}
 	};
+
+	window.onpopstate = function (event) {
+		if (event.persisted && draftActive) {
+			checkStillSocketConnected(false);
+		}
+	};
 }
 
 function refreshDraftChat() {
