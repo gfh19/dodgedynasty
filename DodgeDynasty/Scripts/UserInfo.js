@@ -9,20 +9,27 @@
 	bindTestAudio();
 	toggleDisableBrowserAudio();
 	toggleSubscribeNotifications();
+	bindPushNotifications();
+}
 
-	$("#chkMIPushNotifications").click(function (e) {
-		if ($("#chkMIPushNotifications").is(':checked')) {
-			enablePushNotifications();
-		}
-		else {
-			unsubscribe();
-		}
-	});
+function bindPushNotifications() {
+    if (isiPhoneiPad()) {
+        $(".push-ios-msg").removeClass("hide-yo-kids");
+    }
 
-	$("#btnSimulateTurn").click(function (e) {
-		e.preventDefault();
-		simulateNotification();
-	});
+    $("#chkMIPushNotifications").click(function(e) {
+        if ($("#chkMIPushNotifications").is(':checked')) {
+            enablePushNotifications();
+        }
+        else {
+            unsubscribe();
+        }
+    });
+
+    $("#btnSimulateTurn").click(function(e) {
+        e.preventDefault();
+        simulateNotification();
+    });
 }
 
 async function enablePushNotifications() {
