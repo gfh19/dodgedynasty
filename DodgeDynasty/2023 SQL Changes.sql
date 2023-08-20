@@ -4,6 +4,28 @@
 /*TODO:  Convert PlayerRankOptions SQL storage to Json blob (plus ?all? IDs as columns? */
 
 
+
+
+/* Below run in Production on 8/19/2023 */
+
+
+
+SET XACT_ABORT ON
+BEGIN TRANSACTION;
+
+
+
+ALTER TABLE [dbo].[PlayerHighlight] DROP CONSTRAINT [FK_PlayerHighlight_PlayerHighlight]
+GO
+
+
+
+COMMIT TRANSACTION;
+
+
+
+
+
 /* Below run in Production on 7/29/2023 */
 
 

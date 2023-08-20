@@ -29,9 +29,6 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_DraftPick_Player", "Player", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.Player), "DraftPick", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.DraftPick), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_Player_Player", "Player", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Player), "Player1", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.Player), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerRank_Player", "Player", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Player), "PlayerRank", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerRank), true)]
-[assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerHighlight_Highlight", "Highlight", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Highlight), "PlayerHighlight", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerHighlight), true)]
-[assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerHighlight_Player", "Player", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Player), "PlayerHighlight", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerHighlight), true)]
-[assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerHighlight_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.User), "PlayerHighlight", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerHighlight), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_UserRole_Role", "Role", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Role), "UserRole", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.UserRole), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_UserRole_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.User), "UserRole", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.UserRole), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_AdminStatus_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.User), "AdminStatu", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.AdminStatu), true)]
@@ -53,8 +50,6 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_Rank_AutoImport", "AutoImport", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.AutoImport), "Rank", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.Rank), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_UserPreferences_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.User), "UserPreference", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.UserPreference), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_DraftHighlight_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.User), "DraftHighlight", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.DraftHighlight), true)]
-[assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerHighlight_DraftHighlight", "DraftHighlight", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.DraftHighlight), "PlayerHighlight", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerHighlight), true)]
-[assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerHighlight_PlayerHighlight", "PlayerHighlight", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.PlayerHighlight), "PlayerHighlight1", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.PlayerHighlight), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_Schedule_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.User), "Schedule", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.Schedule), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_ScheduleMatchup_Schedule", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.User), "ScheduleMatchup", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.ScheduleMatchup), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_AudioUserCount_Draft", "Draft", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Draft), "AudioUserCount", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.AudioUserCount), true)]
@@ -67,6 +62,10 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_DraftPick_Draft", "Draft", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Draft), "DraftPick", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.DraftPick), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_DraftRank_Draft", "Draft", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.Draft), "DraftRank", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.DraftRank), true)]
 [assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerHighlight_Draft", "Draft", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Draft), "PlayerHighlight", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerHighlight), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerHighlight_DraftHighlight", "DraftHighlight", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DodgeDynasty.Entities.DraftHighlight), "PlayerHighlight", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerHighlight), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerHighlight_Highlight", "Highlight", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Highlight), "PlayerHighlight", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerHighlight), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerHighlight_Player", "Player", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.Player), "PlayerHighlight", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerHighlight), true)]
+[assembly: EdmRelationshipAttribute("HomeModel", "FK_PlayerHighlight_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DodgeDynasty.Entities.User), "PlayerHighlight", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DodgeDynasty.Entities.PlayerHighlight), true)]
 
 #endregion
 
@@ -357,22 +356,6 @@ namespace DodgeDynasty.Entities
             }
         }
         private ObjectSet<DraftPickHistory> _DraftPickHistories;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<PlayerHighlight> PlayerHighlights
-        {
-            get
-            {
-                if ((_PlayerHighlights == null))
-                {
-                    _PlayerHighlights = base.CreateObjectSet<PlayerHighlight>("PlayerHighlights");
-                }
-                return _PlayerHighlights;
-            }
-        }
-        private ObjectSet<PlayerHighlight> _PlayerHighlights;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -757,6 +740,22 @@ namespace DodgeDynasty.Entities
             }
         }
         private ObjectSet<Draft> _Drafts;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<PlayerHighlight> PlayerHighlights
+        {
+            get
+            {
+                if ((_PlayerHighlights == null))
+                {
+                    _PlayerHighlights = base.CreateObjectSet<PlayerHighlight>("PlayerHighlights");
+                }
+                return _PlayerHighlights;
+            }
+        }
+        private ObjectSet<PlayerHighlight> _PlayerHighlights;
 
         #endregion
 
@@ -880,14 +879,6 @@ namespace DodgeDynasty.Entities
         public void AddToDraftPickHistories(DraftPickHistory draftPickHistory)
         {
             base.AddObject("DraftPickHistories", draftPickHistory);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the PlayerHighlights EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToPlayerHighlights(PlayerHighlight playerHighlight)
-        {
-            base.AddObject("PlayerHighlights", playerHighlight);
         }
     
         /// <summary>
@@ -1080,6 +1071,14 @@ namespace DodgeDynasty.Entities
         public void AddToDrafts(Draft draft)
         {
             base.AddObject("Drafts", draft);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the PlayerHighlights EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToPlayerHighlights(PlayerHighlight playerHighlight)
+        {
+            base.AddObject("PlayerHighlights", playerHighlight);
         }
 
         #endregion
@@ -5075,28 +5074,6 @@ namespace DodgeDynasty.Entities
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_PlayerHighlight_DraftHighlight", "PlayerHighlight")]
-        public EntityCollection<PlayerHighlight> PlayerHighlights
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<PlayerHighlight>("HomeModel.FK_PlayerHighlight_DraftHighlight", "PlayerHighlight");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PlayerHighlight>("HomeModel.FK_PlayerHighlight_DraftHighlight", "PlayerHighlight", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_DraftHighlight_Draft", "Draft")]
         public Draft Draft
         {
@@ -5125,6 +5102,28 @@ namespace DodgeDynasty.Entities
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Draft>("HomeModel.FK_DraftHighlight_Draft", "Draft", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_PlayerHighlight_DraftHighlight", "PlayerHighlight")]
+        public EntityCollection<PlayerHighlight> PlayerHighlights
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<PlayerHighlight>("HomeModel.FK_PlayerHighlight_DraftHighlight", "PlayerHighlight");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PlayerHighlight>("HomeModel.FK_PlayerHighlight_DraftHighlight", "PlayerHighlight", value);
                 }
             }
         }
@@ -9041,28 +9040,6 @@ namespace DodgeDynasty.Entities
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_PlayerHighlight_Player", "PlayerHighlight")]
-        public EntityCollection<PlayerHighlight> PlayerHighlights
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<PlayerHighlight>("HomeModel.FK_PlayerHighlight_Player", "PlayerHighlight");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PlayerHighlight>("HomeModel.FK_PlayerHighlight_Player", "PlayerHighlight", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_Player_NFLTeam", "NFLTeam")]
         public NFLTeam NFLTeam1
         {
@@ -9157,6 +9134,28 @@ namespace DodgeDynasty.Entities
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PlayerAdjustment>("HomeModel.FK_PlayerAdjustment_PlayerOld", "PlayerAdjustment", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_PlayerHighlight_Player", "PlayerHighlight")]
+        public EntityCollection<PlayerHighlight> PlayerHighlights
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<PlayerHighlight>("HomeModel.FK_PlayerHighlight_Player", "PlayerHighlight");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PlayerHighlight>("HomeModel.FK_PlayerHighlight_Player", "PlayerHighlight", value);
                 }
             }
         }
@@ -10129,6 +10128,82 @@ namespace DodgeDynasty.Entities
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_PlayerHighlight_Draft", "Draft")]
+        public Draft Draft
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Draft>("HomeModel.FK_PlayerHighlight_Draft", "Draft").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Draft>("HomeModel.FK_PlayerHighlight_Draft", "Draft").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Draft> DraftReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Draft>("HomeModel.FK_PlayerHighlight_Draft", "Draft");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Draft>("HomeModel.FK_PlayerHighlight_Draft", "Draft", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_PlayerHighlight_DraftHighlight", "DraftHighlight")]
+        public DraftHighlight DraftHighlight
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<DraftHighlight>("HomeModel.FK_PlayerHighlight_DraftHighlight", "DraftHighlight").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<DraftHighlight>("HomeModel.FK_PlayerHighlight_DraftHighlight", "DraftHighlight").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<DraftHighlight> DraftHighlightReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<DraftHighlight>("HomeModel.FK_PlayerHighlight_DraftHighlight", "DraftHighlight");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<DraftHighlight>("HomeModel.FK_PlayerHighlight_DraftHighlight", "DraftHighlight", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_PlayerHighlight_Highlight", "Highlight")]
         public Highlight Highlight
         {
@@ -10233,158 +10308,6 @@ namespace DodgeDynasty.Entities
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("HomeModel.FK_PlayerHighlight_User", "User", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_PlayerHighlight_DraftHighlight", "DraftHighlight")]
-        public DraftHighlight DraftHighlight
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<DraftHighlight>("HomeModel.FK_PlayerHighlight_DraftHighlight", "DraftHighlight").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<DraftHighlight>("HomeModel.FK_PlayerHighlight_DraftHighlight", "DraftHighlight").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<DraftHighlight> DraftHighlightReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<DraftHighlight>("HomeModel.FK_PlayerHighlight_DraftHighlight", "DraftHighlight");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<DraftHighlight>("HomeModel.FK_PlayerHighlight_DraftHighlight", "DraftHighlight", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_PlayerHighlight_PlayerHighlight", "PlayerHighlight1")]
-        public PlayerHighlight PlayerHighlight1
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PlayerHighlight>("HomeModel.FK_PlayerHighlight_PlayerHighlight", "PlayerHighlight1").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PlayerHighlight>("HomeModel.FK_PlayerHighlight_PlayerHighlight", "PlayerHighlight1").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<PlayerHighlight> PlayerHighlight1Reference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PlayerHighlight>("HomeModel.FK_PlayerHighlight_PlayerHighlight", "PlayerHighlight1");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PlayerHighlight>("HomeModel.FK_PlayerHighlight_PlayerHighlight", "PlayerHighlight1", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_PlayerHighlight_PlayerHighlight", "PlayerHighlight")]
-        public PlayerHighlight PlayerHighlight2
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PlayerHighlight>("HomeModel.FK_PlayerHighlight_PlayerHighlight", "PlayerHighlight").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PlayerHighlight>("HomeModel.FK_PlayerHighlight_PlayerHighlight", "PlayerHighlight").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<PlayerHighlight> PlayerHighlight2Reference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PlayerHighlight>("HomeModel.FK_PlayerHighlight_PlayerHighlight", "PlayerHighlight");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PlayerHighlight>("HomeModel.FK_PlayerHighlight_PlayerHighlight", "PlayerHighlight", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_PlayerHighlight_Draft", "Draft")]
-        public Draft Draft
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Draft>("HomeModel.FK_PlayerHighlight_Draft", "Draft").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Draft>("HomeModel.FK_PlayerHighlight_Draft", "Draft").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<Draft> DraftReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Draft>("HomeModel.FK_PlayerHighlight_Draft", "Draft");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Draft>("HomeModel.FK_PlayerHighlight_Draft", "Draft", value);
                 }
             }
         }
@@ -13751,28 +13674,6 @@ namespace DodgeDynasty.Entities
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_PlayerHighlight_User", "PlayerHighlight")]
-        public EntityCollection<PlayerHighlight> PlayerHighlights
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<PlayerHighlight>("HomeModel.FK_PlayerHighlight_User", "PlayerHighlight");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PlayerHighlight>("HomeModel.FK_PlayerHighlight_User", "PlayerHighlight", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_UserRole_User", "UserRole")]
         public EntityCollection<UserRole> UserRoles
         {
@@ -14015,6 +13916,28 @@ namespace DodgeDynasty.Entities
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Draft>("HomeModel.FK_Draft_Winner", "Draft", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HomeModel", "FK_PlayerHighlight_User", "PlayerHighlight")]
+        public EntityCollection<PlayerHighlight> PlayerHighlights
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<PlayerHighlight>("HomeModel.FK_PlayerHighlight_User", "PlayerHighlight");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PlayerHighlight>("HomeModel.FK_PlayerHighlight_User", "PlayerHighlight", value);
                 }
             }
         }
