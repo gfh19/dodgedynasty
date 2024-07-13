@@ -16,5 +16,8 @@ namespace DodgeDynasty.Models.Account
 		public bool IsUserCommish { get; set; }
 		public DateTime LastPlayerAdjView { get; set; }
 		public bool NewPlayerAdjExists { get; set; }
+		public int PrivilegedDraftId { get; internal set; }
+		public bool IsPrivilegedDraftActive { get; set; }
+		public bool IsActivePrivilegedDraftPaused { get; set; }
 	}
 }

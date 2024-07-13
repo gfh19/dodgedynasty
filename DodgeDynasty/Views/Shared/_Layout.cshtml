@@ -163,6 +163,12 @@
 										<li>@Html.ActionLink("Manage Leagues/Drafts", "ManageLeagues", "Admin")</li>
 										<li>@Html.ActionLink("Setup Draft Picks", "SetupDraft", "Admin")</li>
 										<li>@Html.ActionLink("Activate Draft", "ActivateDraft", "Admin")</li>
+										@if (userRoleAccessModel.IsPrivilegedDraftActive)
+										{
+										<li><a href="/Admin/SetDraftStatus/@userRoleAccessModel.PrivilegedDraftId?isPaused=@((userRoleAccessModel.IsActivePrivilegedDraftPaused) ? "false" : "true")" class="menu-pause-draft">
+											@((userRoleAccessModel.IsActivePrivilegedDraftPaused) ? "Unpause Draft" : "Pause Draft")
+										</a></li>
+										}
 										<li>@Html.ActionLink("Enter Draft Pick", "Input", "Admin")</li>
 										<li><a href="#" class="menu-broadcast-draft">Broadcast Draft Pick</a></li>
 										<li>@Html.ActionLink("Rank Adjustments", "RankAdjustments", "Admin")</li>
@@ -188,6 +194,14 @@
 										<li>@Html.ActionLink("Manage Drafts", "ManageDrafts", "Commish")</li>
 										<li>@Html.ActionLink("Setup Draft Picks", "SetupDraft", "Commish")</li>
 										<li>@Html.ActionLink("Activate Draft", "ActivateDraft", "Commish")</li>
+										@if (userRoleAccessModel.IsPrivilegedDraftActive)
+										{
+											<li>
+												<a href="/Commish/SetDraftStatus/@userRoleAccessModel.PrivilegedDraftId?isPaused=@((userRoleAccessModel.IsActivePrivilegedDraftPaused) ? "false" : "true")" class="menu-pause-draft">
+													@((userRoleAccessModel.IsActivePrivilegedDraftPaused) ? "Unpause Draft" : "Pause Draft")
+												</a>
+											</li>
+										}
 										<li>@Html.ActionLink("Enter Draft Pick", "Input", "Commish")</li>
 									</ul>
 								</li>

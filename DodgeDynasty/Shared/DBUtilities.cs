@@ -163,6 +163,11 @@ namespace DodgeDynasty.Shared
 		public static List<int> GetCommishLeagueIds()
 		{
 			var userRoles = Factory.Create<RoleAccessMapper>().GetModel().UserRoles;
+			return GetCommishLeagueIds(userRoles);
+		}
+
+		public static List<int> GetCommishLeagueIds(List<UserRole> userRoles)
+		{
 			return userRoles.Where(o => o.RoleId == Constants.Roles.Commish && o.LeagueId != null)
 				.Select(o => o.LeagueId.Value).ToList();
 		}

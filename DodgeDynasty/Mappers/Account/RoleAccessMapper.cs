@@ -23,22 +23,38 @@ namespace DodgeDynasty.Mappers.Account
 			{
 				Model.IsUserCommish = Model.UserRoles.Any(o => o.RoleId == Constants.Roles.Commish);
 			}
-			if (Model.IsUserAdmin)
+			if (Model.IsUserAdmin || Model.IsUserCommish)
 			{
-				var adminStatus = HomeEntity.AdminStatus.FirstOrDefault(o => o.UserId == userId);
-				if (adminStatus != null && adminStatus.LastPlayerAdjView.HasValue)
-				{
-					Model.LastPlayerAdjView = adminStatus.LastPlayerAdjView.Value;
+				var privilegedDrafts = HomeEntity.Drafts.AsEnumerable();
+                if (Model.IsUserCommish)
+                {
+					var commishLeagueIds = DBUtilities.GetCommishLeagueIds(Model.UserRoles);
+					privilegedDrafts = privilegedDrafts.Where(d => commishLeagueIds.Contains(d.LeagueId)).AsEnumerable();
 				}
-				else
+				var activePrivilegedDraft = privilegedDrafts.Where(d => d.IsActive).OrderBy(d => d.DraftDate).FirstOrDefault();
+				if (activePrivilegedDraft != null)
 				{
-					Model.LastPlayerAdjView = DateTime.MinValue;
+					Model.PrivilegedDraftId = activePrivilegedDraft.DraftId;
+					Model.IsPrivilegedDraftActive = activePrivilegedDraft.IsActive;
+					Model.IsActivePrivilegedDraftPaused = activePrivilegedDraft.IsPaused;
 				}
-				var latestPlayerAdjDT = HomeEntity.PlayerAdjustments.Where(o=>!o.HideReporting).OrderByDescending(o => o.AddTimestamp)
-					.Select(o=>o.AddTimestamp).FirstOrDefault();
-				if (latestPlayerAdjDT != null)
+				if (Model.IsUserAdmin)
 				{
-					Model.NewPlayerAdjExists = latestPlayerAdjDT.CompareTo(Model.LastPlayerAdjView) > 0;
+					var adminStatus = HomeEntity.AdminStatus.FirstOrDefault(o => o.UserId == userId);
+					if (adminStatus != null && adminStatus.LastPlayerAdjView.HasValue)
+					{
+						Model.LastPlayerAdjView = adminStatus.LastPlayerAdjView.Value;
+					}
+					else
+					{
+						Model.LastPlayerAdjView = DateTime.MinValue;
+					}
+					var latestPlayerAdjDT = HomeEntity.PlayerAdjustments.Where(o => !o.HideReporting).OrderByDescending(o => o.AddTimestamp)
+						.Select(o => o.AddTimestamp).FirstOrDefault();
+					if (latestPlayerAdjDT != null)
+					{
+						Model.NewPlayerAdjExists = latestPlayerAdjDT.CompareTo(Model.LastPlayerAdjView) > 0;
+					}
 				}
 			}
 		}
