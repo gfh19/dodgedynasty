@@ -17,7 +17,7 @@ namespace DodgeDynasty.Mappers.PlayerAdjustments
 		protected override void PopulateModel()
 		{
 			var adjustments = HomeEntity.PlayerAdjustments.OrderByDescending(o => o.AddTimestamp).ToList();
-			var mostRecentYear = adjustments.OrderByDescending(o=>o.AddTimestamp).Select(o=>o.AddTimestamp.Year).Distinct().FirstOrDefault();
+			var mostRecentYear = adjustments.OrderByDescending(o => o.AddTimestamp).Select(o => o.AddTimestamp.Year).Distinct().FirstOrDefault();
 
 			Model.AddedPlayers = GetAddedPlayers(adjustments, mostRecentYear);
 			Model.OtherAdjPlayers = GetOtherAdjPlayers(adjustments, mostRecentYear);
@@ -25,7 +25,7 @@ namespace DodgeDynasty.Mappers.PlayerAdjustments
 			Model.DuplicateActivePlayers = GetDuplicateActivePlayers();
 			Model.NFLTeams = HomeEntity.NFLTeams.ToList();
 			Model.Positions = HomeEntity.Positions.ToList();
-			Model.AllPlayers = HomeEntity.Players.OrderBy(o=>o.PlayerName).ToList();
+			Model.AllPlayers = HomeEntity.Players.OrderBy(o => o.PlayerName).ToList();
 			Model.ActivePlayerCount = Model.AllPlayers.Count(o => o.IsActive);
 			Model.InactivePlayerCount = Model.AllPlayers.Count(o => !o.IsActive);
 
@@ -35,7 +35,7 @@ namespace DodgeDynasty.Mappers.PlayerAdjustments
 			if (adminStatus != null)
 			{
 				var lastPlayerAdjView = adminStatus.LastPlayerAdjView.HasValue ? adminStatus.LastPlayerAdjView : DateTime.MinValue;
-                Model.NewAdjustmentIds = adjustments.Where(o => o.AddTimestamp.CompareTo(adminStatus.LastPlayerAdjView) > 0)
+				Model.NewAdjustmentIds = adjustments.Where(o => o.AddTimestamp.CompareTo(adminStatus.LastPlayerAdjView) > 0)
 					.Select(o => o.AdjustmentId).ToList();
 				adminStatus.LastPlayerAdjView = currentDateTime;
 			}
@@ -43,7 +43,7 @@ namespace DodgeDynasty.Mappers.PlayerAdjustments
 			{
 				Model.NewAdjustmentIds = adjustments.Select(o => o.AdjustmentId).ToList();
 				HomeEntity.AdminStatus.AddObject(new AdminStatu { UserId = userId, LastPlayerAdjView = currentDateTime });
-            }
+			}
 			HomeEntity.SaveChanges();
 		}
 
@@ -53,7 +53,7 @@ namespace DodgeDynasty.Mappers.PlayerAdjustments
 				.OrderByDescending(o => o.AddTimestamp).ToList();
 			if (addedPlayerAdjs.Count < _playerAdjWindow)
 			{
-				addedPlayerAdjs = adjustments.Where(o => o.Action.Contains(_addPlayerActionText) && o.AddTimestamp.Year >= mostRecentYear-1)
+				addedPlayerAdjs = adjustments.Where(o => o.Action.Contains(_addPlayerActionText) && o.AddTimestamp.Year >= mostRecentYear - 1)
 					.OrderByDescending(o => o.AddTimestamp).ToList();
 			}
 			return GetAdjustedPlayers(addedPlayerAdjs);
@@ -83,14 +83,14 @@ namespace DodgeDynasty.Mappers.PlayerAdjustments
 							 select GetAdjustedPlayer(ap, p, t, u, GetMatchingDrafts(p), GetMatchingRanks(p), HomeEntity.DraftRanks));
 			return players;
 		}
-		
-		private AdjustedPlayer GetAdjustedPlayer(PlayerAdjustment ap, Player p, NFLTeam t, User u, List<Draft> drafts, List<Rank> ranks, 
+
+		private AdjustedPlayer GetAdjustedPlayer(PlayerAdjustment ap, Player p, NFLTeam t, User u, List<Draft> drafts, List<Rank> ranks,
 			IEnumerable<DraftRank> draftRanks)
 		{
 			return new AdjustedPlayer
 			{
 				AdjustmentId = ap.AdjustmentId,
-                PlayerId = p.PlayerId,
+				PlayerId = p.PlayerId,
 				TruePlayerId = p.TruePlayerId.Value,
 				PlayerName = ap.NewPlayerName,
 				NFLTeam = ap.NewNFLTeam,
@@ -110,19 +110,45 @@ namespace DodgeDynasty.Mappers.PlayerAdjustments
 		{
 			List<AdjustedPlayer> players = new List<AdjustedPlayer>();
 			var plyrs = HomeEntity.Players.ToList();
-			var auditPlayers = plyrs.Where(p1 => plyrs.Any(p2 => p1.FirstName == p2.FirstName 
-								&& Utilities.TrimSuffix(p1.LastName) == Utilities.TrimSuffix(p2.LastName) 
-								&& p1.Position == p2.Position 
-								&& p1.NFLTeam == p2.NFLTeam 
-								&& p1.PlayerId != p2.PlayerId 
+			var auditPlayers = plyrs.Where(p1 => plyrs.Any(p2 => p1.FirstName == p2.FirstName
+								&& Utilities.TrimSuffix(p1.LastName) == Utilities.TrimSuffix(p2.LastName)
+								&& p1.Position == p2.Position
+								&& p1.NFLTeam == p2.NFLTeam
+								&& p1.PlayerId != p2.PlayerId
 								&& p1.TruePlayerId != p2.TruePlayerId));
-
+			auditPlayers = removeUniquePlayerExceptions(auditPlayers);
 			foreach (var auditPlayer in auditPlayers)
 			{
 				players.Add(AuditPlayerHelper.GetAuditedPlayer(auditPlayer,
 					GetMatchingDrafts(auditPlayer), GetMatchingRanks(auditPlayer), HomeEntity.DraftRanks));
 			}
 			return players;
+		}
+
+		private IEnumerable<Player> removeUniquePlayerExceptions(IEnumerable<Player> auditPlayers)
+		{
+			if (auditPlayers.Count() == 0)
+				return auditPlayers;
+
+			var returnList = auditPlayers.ToList();
+			//Well the new generation is here
+			var uniquePlayerBypasses = new List<UniquePlayerBypass>()
+			{
+				new UniquePlayerBypass("Marvin", "Harrison", 673, 2938),
+				new UniquePlayerBypass("Frank", "Gore", 41, 2939),
+			};
+			foreach (var playerBypass in uniquePlayerBypasses)
+			{
+				var nameMatches = returnList.Where(p =>
+					Utilities.IsPlayerNameMatch(p.FirstName, p.LastName, playerBypass.FirstName, playerBypass.LastName)).ToList();
+				if (nameMatches.Count() == 2
+					&& nameMatches.Any(p => p.TruePlayerId == playerBypass.TruePlayerId1)
+					&& nameMatches.Any(p => p.TruePlayerId == playerBypass.TruePlayerId2))
+				{
+					returnList.RemoveAll(i => nameMatches.Contains(i));
+				}
+			}
+			return returnList;
 		}
 
 		private List<AdjustedPlayer> GetDuplicateActivePlayers()
@@ -144,7 +170,7 @@ namespace DodgeDynasty.Mappers.PlayerAdjustments
 			}
 			return players;
 		}
-		
+
 		private List<Draft> GetMatchingDrafts(Player p)
 		{
 			return (from d in HomeEntity.Drafts
@@ -160,6 +186,22 @@ namespace DodgeDynasty.Mappers.PlayerAdjustments
 					join pr in HomeEntity.PlayerRanks on r.RankId equals pr.RankId
 					where pr.PlayerId == p.PlayerId
 					select r).ToList();
+		}
+	}
+
+	public class UniquePlayerBypass
+	{
+		public string FirstName { get; set; }
+		public string LastName { get; set; }
+		public int TruePlayerId1 { get; set; }
+		public int TruePlayerId2 { get; set; }
+
+		public UniquePlayerBypass(string firstName, string lastName, int truePlayerId1, int truePlayerId2)
+		{
+			FirstName = firstName;
+			LastName = lastName;
+			TruePlayerId1 = truePlayerId1;
+			TruePlayerId2 = truePlayerId2;
 		}
 	}
 }

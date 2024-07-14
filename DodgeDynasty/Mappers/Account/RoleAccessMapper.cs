@@ -26,7 +26,7 @@ namespace DodgeDynasty.Mappers.Account
 			if (Model.IsUserAdmin || Model.IsUserCommish)
 			{
 				var privilegedDrafts = HomeEntity.Drafts.AsEnumerable();
-                if (Model.IsUserCommish)
+                if (!Model.IsUserAdmin)
                 {
 					var commishLeagueIds = DBUtilities.GetCommishLeagueIds(Model.UserRoles);
 					privilegedDrafts = privilegedDrafts.Where(d => commishLeagueIds.Contains(d.LeagueId)).AsEnumerable();

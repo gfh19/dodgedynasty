@@ -503,7 +503,8 @@
     <Compile Include="WebSockets\DD_SignalR.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="2023 SQL Changes.sql" />
+    <Content Include="2024 SQL Changes.sql" />
+    <Content Include="SQL Server\OLD - 2023 SQL Changes.sql" />
     <Content Include="Content\images\icon.png" />
     <Content Include="docs\2021 Dodge Dynasty Champion - Dave Nickelsen.docx" />
     <Content Include="docs\2021 Dodge Dynasty Champion - Dave Nickelsen.pdf" />

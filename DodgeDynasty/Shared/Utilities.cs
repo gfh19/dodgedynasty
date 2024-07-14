@@ -40,6 +40,7 @@ namespace DodgeDynasty.Shared
 		}
 
 		//May want to delete this in future if two truly different Jr/non-Jr players collide
+		//7/13/24 AHA! Comment from 2017 finally came true! Frank Gore & Frank Gore Jr Buffalo
 		public static string TrimSuffix(string playerName)
 		{
 			var suffixes = new string[] { "Sr.", "Sr", "Jr.", "Jr", "II", "III", "IV", "V" };
@@ -53,6 +54,11 @@ namespace DodgeDynasty.Shared
 			}
 			return playerName;
         }
+
+		public static bool IsPlayerNameMatch(string firstName1, string lastName1, string firstName2, string lastName2)
+		{
+			firstName1 == firstName2 && Utilities.TrimSuffix(lastName1) == Utilities.TrimSuffix(lastName2);
+		}
 
 		public static bool CheckStartsWith(string dbName, string inputName)
 		{
