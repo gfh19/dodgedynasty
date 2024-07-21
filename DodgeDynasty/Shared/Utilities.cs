@@ -57,7 +57,7 @@ namespace DodgeDynasty.Shared
 
 		public static bool IsPlayerNameMatch(string firstName1, string lastName1, string firstName2, string lastName2)
 		{
-			firstName1 == firstName2 && Utilities.TrimSuffix(lastName1) == Utilities.TrimSuffix(lastName2);
+			return firstName1 == firstName2 && Utilities.TrimSuffix(lastName1) == Utilities.TrimSuffix(lastName2);
 		}
 
 		public static bool CheckStartsWith(string dbName, string inputName)
