@@ -6,7 +6,7 @@
 
 
 
-/* Below run in Production on  */
+/* Below run in Production on 8/9/24 */
 
 
 
@@ -14,6 +14,18 @@ SET XACT_ABORT ON
 BEGIN TRANSACTION;
 
 
+INSERT INTO [dbo].[PlayerAudio]
+           ([TruePlayerId],[PlayerName],[PlayerNameAudio],[AddTimestamp],[LastUpdateTimestamp])
+     VALUES
+           (NULL, 'Cleveland Browns', 'Brook Park Browns', getdate(), getdate())
+GO
+
+
+INSERT INTO [dbo].[PlayerAudio]
+           ([TruePlayerId],[PlayerName],[PlayerNameAudio],[AddTimestamp],[LastUpdateTimestamp])
+     VALUES
+           (NULL, 'Amon-Ra St. Brown', 'Amon-Rah Saint Brown', getdate(), getdate())
+GO
 
 
 COMMIT TRANSACTION;
@@ -86,15 +98,36 @@ SET RankName = 'ESPN Top 300',
 WHERE AutoImportId = 1
 
 
+/* Yahoo replaced below */
+/*
 UPDATE [dbo].[AutoImport]
 SET RankName = 'Yahoo!',
 	ImportUrl = 'https://partners.fantasypros.com/api/v1/consensus-rankings.php?sport=NFL&year=2024&week=0&position=ALL&type=ST&scoring=HALF&filters=7%3A9%3A285%3A747',
 	LastUpdateTimestamp = getdate()
 WHERE AutoImportId = 5
+*/
 
 
 
 COMMIT TRANSACTION;
+
+
+
+/* Below run in Production on 8/17/24 */
+
+SET XACT_ABORT ON
+BEGIN TRANSACTION;
+
+/* Correct HALF call matching Yahoo web page */
+UPDATE [dbo].[AutoImport]
+SET RankName = 'Yahoo!',
+	ImportUrl = 'https://partners.fantasypros.com/api/v1/consensus-rankings.php?position=ALL&sport=NFL&year=2024&week=0&experts=show&id=1663&type=ST&scoring=HALF&filters=7%3A9%3A285%3A747%3A4338&widget=ST',
+	LastUpdateTimestamp = getdate()
+WHERE AutoImportId = 5
+
+
+COMMIT TRANSACTION;
+
 
 
 
