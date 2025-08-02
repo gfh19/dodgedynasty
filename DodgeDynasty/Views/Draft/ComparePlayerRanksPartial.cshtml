@@ -59,7 +59,7 @@
 				else
 				{
 				<div class="center cr-show-avg">
-					<p>@Html.CheckBoxFor(m => m.Options.ShowAvgCompRanks, new { @class = "cr-chk-show-avg" }) @Html.LabelFor(m => m.Options.ShowAvgCompRanks, "Show Averages?", new { @class = "cr-lbl-show-avg" })</p>
+					<p>@Html.CheckBoxFor(m => m.Options.ShowAvgCompRanks, new { @class = "cr-chk-show-avg" }) @Html.LabelFor(m => m.Options.ShowAvgCompRanks, "Show Average", new { @class = "cr-lbl-show-avg" })</p>
 					<p>@Html.LabelFor(m => m.CompRankPosition, "Position:", new { @class = "cr-lbl-show-avg" }) @Html.DropDownListFor(m => m.CompRankPosition, Model.GetPositions(Model.CompRankPosition), new { id = "crPosition" })</p>
 				</div>
 				}

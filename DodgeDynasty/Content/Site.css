@@ -1207,7 +1207,7 @@ ul.menu li a.current-page
 .round
 {
 	clear: both;
-	padding: 2px 1px 1px 8px;
+	padding: 1px 1px 0px 8px;
 	font-size: 10px;
 	text-align: left;
 }

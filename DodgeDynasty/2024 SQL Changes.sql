@@ -6,8 +6,12 @@
 
 
 
-/* Below run in Production on 8/9/24 */
 
+
+
+
+
+/* Below run in Production on 8/9/24 */
 
 
 SET XACT_ABORT ON
@@ -26,6 +30,21 @@ INSERT INTO [dbo].[PlayerAudio]
      VALUES
            (NULL, 'Amon-Ra St. Brown', 'Amon-Rah Saint Brown', getdate(), getdate())
 GO
+
+
+INSERT INTO [dbo].[PlayerAudio]
+           ([TruePlayerId],[PlayerName],[PlayerNameAudio],[AddTimestamp],[LastUpdateTimestamp])
+     VALUES
+           (NULL, 'Tua Tagovailoa', 'Tua Nigamanuole-pola Tagovie-lo a', getdate(), getdate())
+GO
+
+
+INSERT INTO [dbo].[PlayerAudio]
+           ([TruePlayerId],[PlayerName],[PlayerNameAudio],[AddTimestamp],[LastUpdateTimestamp])
+     VALUES
+           (NULL, 'Ka''imi Fairbairn', 'John Christian Kaa e-mi Noeau-loameka-ikeoke-kumupa-ah Fairbairn', getdate(), getdate())
+GO
+
 
 
 COMMIT TRANSACTION;
