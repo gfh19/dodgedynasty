@@ -203,3 +203,6 @@ ModelManifest.xml
 
 Web.Release.config
 /DodgeDynasty/Web.Release.config
+/.vs/ProjectEvaluation/dodgedynasty.metadata.v9.bin
+/DodgeDynasty/.vs/DodgeDynasty.csproj.dtbcache.json
+/.vs/dodgedynasty/DesignTimeBuild/.dtbcache.v2
