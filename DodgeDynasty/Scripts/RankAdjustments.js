@@ -56,7 +56,7 @@ function getNewRank() {
 	rank.RankName = $("#raf-rank-rname").val();
 	rank.Year = $("#raf-rank-year").val();
 	rank.Url = $("#raf-rank-url").val();
-	rank.DraftId = $("#raf-rank-draft-id").val();
+	rank.DraftIdList = $("#raf-rank-draft-id").val();
 	rank.PrimaryDraftRanking = $("#raf-rank-primary").prop('checked');
 	rank.AutoImportId = $("#raf-rank-import").val();
 	return rank;

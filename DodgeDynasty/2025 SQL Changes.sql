@@ -53,7 +53,7 @@ INSERT INTO [dbo].[AutoImport]
            ,[IsPdf])
      VALUES
            ('FantasyPros (PPR)'
-           ,'https://www.fantasypros.com/nfl/rankings/ppr-cheatsheets.php'
+           ,'http://startdrafting.com/docs/Rankings/FprosPPR.html'
            ,0
            ,getdate()
            ,getdate()

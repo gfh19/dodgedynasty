@@ -43,7 +43,7 @@
 							<input type="hidden" class="ra-edit-rname" value="@rank.RankName" />
 							<input type="hidden" class="ra-edit-year" value="@rank.Year" />
 							<input type="hidden" class="ra-edit-url" value="@rank.Url" />
-							<input type="hidden" class="ra-edit-draft-id" value="@rank.DraftId" />
+							<input type="hidden" class="ra-edit-draft-id" value="@rank.DraftIdList" />
 							<input type="hidden" class="ra-edit-primary" value="@(rank.PrimaryDraftRanking?"true":"")" />
 							<input type="hidden" class="ra-edit-import" value="@rank.AutoImportId" />
 							@if (!string.IsNullOrEmpty(rank.Url))
@@ -95,7 +95,7 @@
 								<input type="hidden" class="ra-edit-rname" value="@rank.RankName" />
 								<input type="hidden" class="ra-edit-year" value="@rank.Year" />
 								<input type="hidden" class="ra-edit-url" value="@rank.Url" />
-								<input type="hidden" class="ra-edit-draft-id" value="@rank.DraftId" />
+								<input type="hidden" class="ra-edit-draft-id" value="@rank.DraftIdList" />
 								<input type="hidden" class="ra-edit-primary" value="@(rank.PrimaryDraftRanking?"true":"")" />
 								<input type="hidden" class="ra-edit-import" value="@rank.AutoImportId" />
 								@if (!string.IsNullOrEmpty(rank.Url))
@@ -214,9 +214,9 @@
 					@Html.ValidationMessageFor(m => m.Rank.Url)
 				</span>
 				<span class="inline-block mid-hrz-margin">
-					@Html.LabelFor(m => m.Rank.DraftId, new { @class = "inline-label" })
-					@Html.TextBoxFor(m => m.Rank.DraftId, new { id = "raf-rank-draft-id" })
-					@Html.ValidationMessageFor(m => m.Rank.DraftId)
+					@Html.LabelFor(m => m.Rank.DraftIdList, new { @class = "inline-label" })
+					@Html.TextBoxFor(m => m.Rank.DraftIdList, new { id = "raf-rank-draft-id" })
+					@Html.ValidationMessageFor(m => m.Rank.DraftIdList)
 				</span>
 				<span class="inline-block mid-hrz-margin">
 					@Html.LabelFor(m => m.Rank.PrimaryDraftRanking, new { @class = "inline-label" })

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DodgeDynasty.Models.RankAdjustments;
 using DodgeDynasty.Shared;
+using Microsoft.Ajax.Utilities;
 
 namespace DodgeDynasty.Mappers.RankAdjustments
 {
@@ -20,12 +21,41 @@ namespace DodgeDynasty.Mappers.RankAdjustments
 			rank.AutoImportId = rankModel.AutoImportId;
 			HomeEntity.SaveChanges();
 
-			var draftRank = HomeEntity.DraftRanks.First(o => o.RankId == rankModel.RankId);
-			draftRank.RankId = rank.RankId;
-			draftRank.DraftId = rankModel.DraftId;
-			draftRank.PrimaryDraftRanking = rankModel.PrimaryDraftRanking;
-			draftRank.LastUpdateTimestamp = now;
+			HomeEntity.DraftRanks.Where(o => o.RankId == rankModel.RankId).ForEach(o => HomeEntity.DraftRanks.DeleteObject(o));
 			HomeEntity.SaveChanges();
+
+			if (!string.IsNullOrWhiteSpace(rankModel.DraftIdList))
+			{
+				var draftIdList = rankModel.DraftIdList.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+					.Select(s =>
+					{
+						int id;
+						return int.TryParse(s.Trim(), out id) ? (int?)id : null;
+					})
+					.ToList();
+				foreach (var draftId in draftIdList)
+				{
+					HomeEntity.DraftRanks.AddObject(addDraftRank(rankModel, rank, draftId));
+				}
+			}
+			else
+			{
+				HomeEntity.DraftRanks.AddObject(addDraftRank(rankModel, rank, null));
+			}
+			HomeEntity.SaveChanges();
+		}
+
+		private static Entities.DraftRank addDraftRank(AdminRankModel rankModel, Entities.Rank rank, int? draftId)
+		{
+			var now = Utilities.GetEasternTime();
+			return new Entities.DraftRank
+			{
+				RankId = rank.RankId,
+				DraftId = draftId,
+				PrimaryDraftRanking = rankModel.PrimaryDraftRanking,
+				AddTimestamp = now,
+				LastUpdateTimestamp = now
+			};
 		}
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Objects.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using DodgeDynasty.Models.RankAdjustments;
 using DodgeDynasty.Models.Shared;
 using DodgeDynasty.Models.Types;
 using DodgeDynasty.Shared;
+using Microsoft.Ajax.Utilities;
 
 namespace DodgeDynasty.Mappers.RankAdjustments
 {
@@ -32,12 +34,22 @@ namespace DodgeDynasty.Mappers.RankAdjustments
 									 RankDate = r.RankDate,
 									 Url = r.Url,
 									 DraftId = dr.DraftId,
+									 DraftIdList = (dr.DraftId == null ? "" : SqlFunctions.StringConvert((double)dr.DraftId).Trim()),
 									 PrimaryDraftRanking = dr.PrimaryDraftRanking.Value,
 									 AutoImportId = r.AutoImportId,
 									 AddTimestamp = r.AddTimestamp,
 									 LastUpdateTimestamp = r.LastUpdateTimestamp,
-									 PlayerCount = HomeEntity.PlayerRanks.Where(o => o.RankId == r.RankId).Count()
-								 }).OrderByDescending(o=>o.LastUpdateTimestamp).ToList();
+									 PlayerCount = HomeEntity.PlayerRanks.Where(o => o.RankId == r.RankId).Count(),
+									 DraftIdCount = HomeEntity.DraftRanks.Where(o => o.RankId == r.RankId).Count(),
+								 })
+								 .DistinctBy(o=>o.RankId)
+								 .OrderByDescending(o=>o.LastUpdateTimestamp).ToList();
+			foreach (var multiDraftRank in Model.PublicRanks.Where(o => o.DraftIdCount > 1))
+			{
+				multiDraftRank.DraftIdList = string.Join(", ", HomeEntity.DraftRanks
+					.Where(o => o.RankId == multiDraftRank.RankId)
+					.Select(o => (o.DraftId == null ? "" : SqlFunctions.StringConvert((double)o.DraftId)).Trim()));
+			}
 			Model.AutoImports = HomeEntity.AutoImports.ToList();
 
 			Model.InactiveRankedPlayers = GetInactiveRankedPlayers();

@@ -19,7 +19,8 @@ namespace DodgeDynasty.Models.RankAdjustments
 		public DateTime RankDate { get; set; }
 		[Display(Name = "Url (Optional)")]
 		public string Url { get; set; }
-		[Display(Name = "Draft (Optional)")]
+		[Display(Name = "Draft(s) (Optional)")]
+		public string DraftIdList { get; set; }
 		public int? DraftId { get; set; }
 		[Display(Name = "Primary Draft Rank?")]
 		public bool PrimaryDraftRanking { get; set; }
@@ -28,5 +29,6 @@ namespace DodgeDynasty.Models.RankAdjustments
 		public DateTime AddTimestamp { get; set; }
 		public DateTime LastUpdateTimestamp { get; set; }
 		public int PlayerCount { get; set; }
+		public int DraftIdCount { get; set; }
 	}
 }

@@ -36,9 +36,10 @@ namespace DodgeDynasty.Mappers.Ranks
 				foreach (var compareRankId in compRankIds)
 				{
 					var rankId = Convert.ToInt32(compareRankId);
-					var draftRank = HomeEntity.DraftRanks.FirstOrDefault(o => o.RankId == rankId);
+					var currentDraftId = PlayerRankModel.GetCurrentDraftId();
+					var draftRank = HomeEntity.DraftRanks.FirstOrDefault(o => o.RankId == rankId && (o.DraftId == null || o.DraftId == currentDraftId));
 					//If Comp Rank Id is draft-specific and no longer the current draft, abort
-					if (draftRank == null || (draftRank.DraftId != null && draftRank.DraftId != PlayerRankModel.GetCurrentDraftId()))
+					if (draftRank == null)
 					{
 						WrongDraftCompRankFound = true;
                         PlayerRankModel.CompareRankModels.Clear();
