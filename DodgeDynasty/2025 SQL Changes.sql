@@ -13,14 +13,14 @@ SET XACT_ABORT ON
 BEGIN TRANSACTION;
 
 UPDATE [dbo].[AutoImport]
-SET RankName = 'ESPN Top 300 (Non-PPR)',
+SET RankName = 'ESPN Top 300 Standard',
 	ImportUrl = 'https://g.espncdn.com/s/ffldraftkit/25/NFL25_CS_Non300.pdf?adddata=2025CS_Non300',
 	LastUpdateTimestamp = getdate()
 WHERE AutoImportId = 1
 
 
 UPDATE [dbo].[AutoImport]
-SET RankName = 'FantasyPros (Non-PPR)',
+SET RankName = 'FantasyPros Standard',
 	LastUpdateTimestamp = getdate()
 WHERE AutoImportId = 2
 
