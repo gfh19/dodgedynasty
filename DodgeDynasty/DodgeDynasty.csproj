@@ -505,6 +505,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="2025 SQL Changes.sql" />
+    <Content Include="docs\Rankings\FprosPPR.html" />
     <Content Include="SQL Server\OLD - 2024 SQL Changes.sql" />
     <Content Include="SQL Server\OLD - 2023 SQL Changes.sql" />
     <Content Include="Content\images\icon.png" />
@@ -514,6 +515,8 @@
     <Content Include="docs\2022 Dodge Dynasty Champion - George Hayek.pdf" />
     <Content Include="docs\2023 Dodge Dynasty Champion - Matt Robson.docx" />
     <Content Include="docs\2023 Dodge Dynasty Champion - Matt Robson.pdf" />
+    <Content Include="docs\2024 Dodge Dynasty Champion - Jeremiah Yugulis.docx" />
+    <Content Include="docs\2024 Dodge Dynasty Champion - Jeremiah Yugulis.pdf" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />

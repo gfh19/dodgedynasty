@@ -33,6 +33,11 @@ namespace DodgeDynasty.Models.Account
 		[Display(Name = "Teams page - Show Position Colors:")]
 		public string TeamsShowPositionColors { get; set; }
 
+		public bool IsUserAdmin { get; set; }
+
+		[Display(Name = "Admin - Only Show My Drafts?")]
+		public bool OnlyShowMyDrafts { get; set; }
+
 		public List<LeagueOwner> OwnerLeagues { get; set; }
 
 		public bool AdminMode { get; set; }

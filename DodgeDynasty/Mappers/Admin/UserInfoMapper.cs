@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
+using DodgeDynasty.Entities;
 using DodgeDynasty.Mappers.Account;
 using DodgeDynasty.Models.Account;
+using DodgeDynasty.Shared;
 using DodgeDynasty.WebSockets;
 
 namespace DodgeDynasty.Mappers.Admin
@@ -13,6 +12,17 @@ namespace DodgeDynasty.Mappers.Admin
 		protected override void PopulateModel()
 		{
 			Model.AdminMode = true;
+			var userName = UserName ?? Utilities.GetLoggedInUserName();
+			var user = HomeEntity.Users.FirstOrDefault(u => u.UserName == userName);
+			Model.IsUserAdmin = HomeEntity.UserRoles.Any(o => o.UserId == user.UserId && o.RoleId == Constants.Roles.Admin);
+			if (Model.IsUserAdmin)
+			{
+				var adminStatus = HomeEntity.AdminStatus.FirstOrDefault(o => o.UserId == user.UserId);
+				if (adminStatus != null)
+				{
+					Model.OnlyShowMyDrafts = adminStatus.OnlyShowMyDrafts;
+				}
+			}
 			base.PopulateModel();
 		}
 		
@@ -26,6 +36,17 @@ namespace DodgeDynasty.Mappers.Admin
 		{
 			UserName = model.UserName;
 			base.DoUpdate(model);
+			var user = HomeEntity.Users.FirstOrDefault(u => u.UserName == UserName);
+			var isUserAdmin = HomeEntity.UserRoles.Any(o => o.UserId == user.UserId && o.RoleId == Constants.Roles.Admin);
+			if (isUserAdmin)
+			{
+				var adminStatus = HomeEntity.AdminStatus.FirstOrDefault(o => o.UserId == user.UserId);
+				if (adminStatus != null)
+				{
+					adminStatus.OnlyShowMyDrafts = model.OnlyShowMyDrafts;
+				}
+				HomeEntity.SaveChanges();
+			}
 			DraftHubHelper.BroadcastDraftToUser(UserName);
 		}
 	}

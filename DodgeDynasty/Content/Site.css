@@ -2379,7 +2379,10 @@ span.player-select
 	vertical-align: bottom;
 }
 
-
+.mi-only-my-drafts {
+	display: inline-block;
+	margin: 10px;
+}
 /* Messages (menu & tab)
 ----------------------------------------------------------*/
 /* Menu */

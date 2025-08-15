@@ -121,7 +121,7 @@ namespace DodgeDynasty.Mappers.Shared
 		{
 			var userId = HomeEntity.Users.FirstOrDefault(u => u.UserName == userName).UserId;
 			var drafts = HomeEntity.Drafts.ToList();
-			var currentUserDraftId = Utilities.GetLatestUserDraftId(userId, drafts, 
+			var currentUserDraftId = DBUtilities.GetLatestUserDraftId(userId, drafts, 
 				HomeEntity.DraftOwners.ToList(), HomeEntity.UserRoles.Where(o => o.UserId == userId).ToList());
 			var currentDraft = drafts.First(d => d.DraftId == currentUserDraftId);
 			return currentDraft;

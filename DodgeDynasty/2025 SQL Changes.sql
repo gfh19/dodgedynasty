@@ -7,6 +7,29 @@
 
 
 
+/* Below run in Production on 8/14/25 */
+
+SET XACT_ABORT ON
+BEGIN TRANSACTION;
+
+
+
+ALTER TABLE [dbo].[AdminStatus]
+ADD [OnlyShowMyDrafts] bit NOT NULL DEFAULT(0);
+GO
+
+
+
+
+COMMIT TRANSACTION;
+
+
+
+
+
+
+
+
 /* Below run in Production on 8/4/25 */
 
 SET XACT_ABORT ON

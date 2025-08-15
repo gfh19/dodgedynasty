@@ -238,5 +238,84 @@ namespace DodgeDynasty.Shared
 			return false;
 		}
 
+		public static int GetLatestUserDraftId(int userId, List<Draft> drafts, List<DraftOwner> draftOwners, List<UserRole> currentUserRoles)
+		{
+			return GetLatestUserDraft(userId, drafts, draftOwners, currentUserRoles).DraftId;
+		}
+
+		public static Draft GetLatestUserDraft(int userId, List<Draft> drafts, List<DraftOwner> allDraftOwners, List<UserRole> currentUserRoles)
+		{
+			List<Draft> ownerDrafts = GetAllUserDrafts(userId, drafts, allDraftOwners, currentUserRoles);
+			if (ownerDrafts.Any(o => o.IsActive || !o.IsComplete))
+			{
+				return ownerDrafts.FirstOrDefault();
+			}
+			return ownerDrafts.Last();
+		}
+
+		public static List<Draft> GetAllUserDrafts(int userId, List<Draft> drafts, List<DraftOwner> draftOwners, List<UserRole> currentUserRoles)
+		{
+			if (HasGlobalDraftViewRole(currentUserRoles))
+			{
+				return drafts.OrderByDescending(o => o.IsActive).ThenBy(o => o.IsComplete).ThenBy(o => o.DraftDate).ToList();
+			}
+			var ownerDraftIds = draftOwners.Where(o => o.UserId == userId).Select(o => o.DraftId).ToList();
+			var ownerDrafts = drafts.Where(d => ownerDraftIds.Contains(d.DraftId))
+				.OrderByDescending(o => o.IsActive).ThenBy(o => o.IsComplete).ThenBy(o => o.DraftDate).ToList();
+			return ownerDrafts;
+		}
+
+		public static bool ValidateUserDraftId(int? draftId, int userId, List<Draft> drafts, List<DraftOwner> allDraftOwners,
+			List<int> currentUserLeagueIds, List<UserRole> currentUserRoles)
+		{
+			if (!draftId.HasValue)
+			{
+				return false;
+			}
+			if (HasGlobalDraftViewRole(currentUserRoles))
+			{
+				return true;
+			}
+			var ownerDraftIds = allDraftOwners.Where(o => o.UserId == userId).Select(o => o.DraftId).ToList();
+			var draftLeagueId = drafts.FirstOrDefault(o => o.DraftId == draftId.Value).LeagueId;
+			if (!ownerDraftIds.Contains(draftId.Value) && !currentUserLeagueIds.Contains(draftLeagueId))
+			{
+				throw new UnauthorizedAccessException("User does not have access to this draft or league, draftId: " + draftId.Value);
+			}
+			return true;
+		}
+
+		public static bool HasGlobalDraftViewRole(List<UserRole> currentUserRoles)
+		{
+			if (currentUserRoles != null)
+			{
+				var currentUserRoleIds = currentUserRoles.Select(o => o.RoleId);
+				if (currentUserRoleIds.Contains(Constants.Roles.Guest) || ShowAdminGlobalDraftView(currentUserRoleIds))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+
+		public static bool ShowAdminGlobalDraftView(IEnumerable<int> currentUserRoleIds)
+		{
+			var adminGlobalView = currentUserRoleIds.Contains(Constants.Roles.Admin);
+			if (adminGlobalView)
+			{
+				//TODO: Rewrite to parm, DI, or just rewrite the whole application
+				using (var homeEntity = new HomeEntity())
+				{
+					var userId = homeEntity.Users.GetLoggedInUserId();
+					var adminStatus = homeEntity.AdminStatus.FirstOrDefault(o => o.UserId == userId);
+					if (adminStatus != null)
+					{
+						adminGlobalView = !adminStatus.OnlyShowMyDrafts;
+					}
+				}
+			}
+			return adminGlobalView;
+		}
+
 	}
 }

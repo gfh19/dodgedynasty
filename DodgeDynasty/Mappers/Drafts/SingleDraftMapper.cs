@@ -22,7 +22,7 @@ namespace DodgeDynasty.Mappers.Drafts
 			else
 			{
 				var userId = HomeEntity.Users.GetLoggedInUserId();
-                draft = Utilities.GetLatestUserDraft(userId, HomeEntity.Drafts.ToList(), 
+                draft = DBUtilities.GetLatestUserDraft(userId, HomeEntity.Drafts.ToList(), 
 					HomeEntity.DraftOwners.ToList(), HomeEntity.UserRoles.Where(o => o.UserId == userId).ToList());
 			}
 			Model.DraftId = draft.DraftId;

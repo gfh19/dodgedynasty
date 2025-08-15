@@ -129,11 +129,11 @@ namespace DodgeDynasty.Models
 		public int GetCurrentDraftId(User user, int? draftId=null)
 		{
 			var currentUserLeagueIds = LeagueOwners.Where(o => o.UserId == CurrentUserId).Select(o => o.LeagueId).ToList();
-            if (Utilities.ValidateUserDraftId(draftId, user.UserId, Drafts, AllDraftOwners, currentUserLeagueIds, CurrentUserRoles))
+            if (DBUtilities.ValidateUserDraftId(draftId, user.UserId, Drafts, AllDraftOwners, currentUserLeagueIds, CurrentUserRoles))
 			{
 				return draftId.Value;
 			}
-			return Utilities.GetLatestUserDraftId(user.UserId, Drafts, AllDraftOwners, CurrentUserRoles);
+			return DBUtilities.GetLatestUserDraftId(user.UserId, Drafts, AllDraftOwners, CurrentUserRoles);
 		}
 
 		private void SetCurrentDraftInfo(int? draftId = null)

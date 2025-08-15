@@ -18,6 +18,11 @@
 		}
 		@using (Html.BeginForm(actionName, controllerName, FormMethod.Post, new { id = "userInfoForm" }))
 		{
+			if (Model.IsUserAdmin)
+			{
+				@Html.LabelFor(m => Model.OnlyShowMyDrafts, new { @class = "mi-only-my-drafts" })
+				@Html.CheckBoxFor(o => Model.OnlyShowMyDrafts, new { id = "userInfoOnlyMyDrafts", @class = "mi-active-chkbx" })
+			}
 			<div class="mi-user-entry">
 				<div class="mi-user-entry-header">
 					@if (Model.AdminMode)
@@ -100,17 +105,17 @@
 
 					@if (!DodgeDynasty.Shared.DBUtilities.GetBoolSiteConfigValue(DodgeDynasty.Shared.Constants.AppSettings.PushNotificationsKillSwitch))
 					{
-					<div class="push-notif-prefs test-audio">
-						<div class="note-text">
-							<input id="chkMIPushNotifications" class="vert-middle" type="checkbox" />
-							<span class="note-text">*NEW* Your Turn push notifications!</span>
-							<span id="miSubscribeStatus"></span>
+						<div class="push-notif-prefs test-audio">
+							<div class="note-text">
+								<input id="chkMIPushNotifications" class="vert-middle" type="checkbox" />
+								<span class="note-text">*NEW* Your Turn push notifications!</span>
+								<span id="miSubscribeStatus"></span>
+							</div>
+							<div class="page-section-small note-text">
+								<button id="btnSimulateTurn">Simulate Turn Notification</button>
+							</div>
+							<div class="page-section push-ios-msg note-text hide-yo-kids">iOS:  Must add web app to Home Screen </div>
 						</div>
-						<div class="page-section-small note-text">
-							<button id="btnSimulateTurn">Simulate Turn Notification</button>
-						</div>
-						<div class="page-section push-ios-msg note-text hide-yo-kids">iOS:  Must add web app to Home Screen </div>
-					</div>
 					}
 
 					@if (!DodgeDynasty.Shared.Utilities.GetBoolConfigVal(DodgeDynasty.Shared.Constants.AppSettings.UserEditAudioKillSwitch))

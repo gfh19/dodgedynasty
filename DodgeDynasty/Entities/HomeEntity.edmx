@@ -6,7 +6,7 @@
     <edmx:StorageModels>
     <Schema Namespace="HomeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <!--Errors Found During Generation:
-warning 6002: The table/view 'DB_70949_home.dbo._ArchivePlayerHighlight' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'Home.dbo._ArchivePlayerHighlight' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="_ArchivePlayerHighlight">
           <Key>
             <PropertyRef Name="ArchivePlayerHighlightId" />
@@ -66,6 +66,7 @@ warning 6002: The table/view 'DB_70949_home.dbo._ArchivePlayerHighlight' does no
           </Key>
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="LastPlayerAdjView" Type="datetime" />
+          <Property Name="OnlyShowMyDrafts" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="AudioApi">
           <Key>
@@ -1443,11 +1444,6 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
             <End Role="User" EntitySet="Users" />
             <End Role="UserRole" EntitySet="UserRoles" />
           </AssociationSet>
-          <EntitySet Name="AdminStatus" EntityType="HomeModel.AdminStatu" />
-          <AssociationSet Name="FK_AdminStatus_User" Association="HomeModel.FK_AdminStatus_User">
-            <End Role="User" EntitySet="Users" />
-            <End Role="AdminStatu" EntitySet="AdminStatus" />
-          </AssociationSet>
           <FunctionImport Name="usp_LoadPlayerRanks_V2">
             <Parameter Name="FirstName" Mode="In" Type="String" />
             <Parameter Name="LastName" Mode="In" Type="String" />
@@ -1619,6 +1615,11 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
             <End Role="User" EntitySet="Users" />
             <End Role="PlayerHighlight" EntitySet="PlayerHighlights" />
           </AssociationSet>
+          <EntitySet Name="AdminStatus" EntityType="HomeModel.AdminStatu" />
+          <AssociationSet Name="FK_AdminStatus_User" Association="HomeModel.FK_AdminStatus_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="AdminStatu" EntitySet="AdminStatus" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="PlayerRank">
           <Key>
@@ -1681,7 +1682,6 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
           <NavigationProperty Name="DraftRanks" Relationship="HomeModel.FK_DraftRank_User" FromRole="User" ToRole="DraftRank" />
           <NavigationProperty Name="LeagueOwners" Relationship="HomeModel.FK_LeagueOwner_User" FromRole="User" ToRole="LeagueOwner" />
           <NavigationProperty Name="UserRoles" Relationship="HomeModel.FK_UserRole_User" FromRole="User" ToRole="UserRole" />
-          <NavigationProperty Name="AdminStatu" Relationship="HomeModel.FK_AdminStatus_User" FromRole="User" ToRole="AdminStatu" />
           <NavigationProperty Name="AudioUserCounts" Relationship="HomeModel.FK_AudioUserCount_User" FromRole="User" ToRole="AudioUserCount" />
           <Property Name="LoginUserAgent" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
           <Property Name="LoginDomain" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
@@ -1693,6 +1693,7 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
           <NavigationProperty Name="Drafts" Relationship="HomeModel.FK_Draft_RunnerUp" FromRole="User" ToRole="Draft" />
           <NavigationProperty Name="Drafts1" Relationship="HomeModel.FK_Draft_Winner" FromRole="User" ToRole="Draft" />
           <NavigationProperty Name="PlayerHighlights" Relationship="HomeModel.FK_PlayerHighlight_User" FromRole="User" ToRole="PlayerHighlight" />
+          <NavigationProperty Name="AdminStatu" Relationship="HomeModel.FK_AdminStatus_User" FromRole="User" ToRole="AdminStatu" />
         </EntityType>
         <EntityType Name="DraftRank">
           <Key>
@@ -2033,26 +2034,6 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
               <PropertyRef Name="UserId" />
             </Principal>
             <Dependent Role="UserRole">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="AdminStatu">
-          <Key>
-            <PropertyRef Name="UserId" />
-          </Key>
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="LastPlayerAdjView" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="User" Relationship="HomeModel.FK_AdminStatus_User" FromRole="AdminStatu" ToRole="User" />
-        </EntityType>
-        <Association Name="FK_AdminStatus_User">
-          <End Type="HomeModel.User" Role="User" Multiplicity="1" />
-          <End Type="HomeModel.AdminStatu" Role="AdminStatu" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="AdminStatu">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
@@ -2840,6 +2821,27 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="AdminStatu">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="LastPlayerAdjView" Type="DateTime" Precision="3" />
+          <Property Name="OnlyShowMyDrafts" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="HomeModel.FK_AdminStatus_User" FromRole="AdminStatu" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_AdminStatus_User">
+          <End Type="HomeModel.User" Role="User" Multiplicity="1" />
+          <End Type="HomeModel.AdminStatu" Role="AdminStatu" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="AdminStatu">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3082,14 +3084,6 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="UserRoleId" ColumnName="UserRoleId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AdminStatus">
-            <EntityTypeMapping TypeName="HomeModel.AdminStatu">
-              <MappingFragment StoreEntitySet="AdminStatus">
-                <ScalarProperty Name="LastPlayerAdjView" ColumnName="LastPlayerAdjView" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3441,6 +3435,15 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="AdminStatus">
+            <EntityTypeMapping TypeName="HomeModel.AdminStatu">
+              <MappingFragment StoreEntitySet="AdminStatus">
+                <ScalarProperty Name="OnlyShowMyDrafts" ColumnName="OnlyShowMyDrafts" />
+                <ScalarProperty Name="LastPlayerAdjView" ColumnName="LastPlayerAdjView" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -3493,8 +3496,6 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
         <edmx:EntityTypeShape EntityType="HomeModel.UserRole" Width="1.5" PointX="17.625" PointY="14.875" />
         <edmx:AssociationConnector Association="HomeModel.FK_UserRole_Role" />
         <edmx:AssociationConnector Association="HomeModel.FK_UserRole_User" />
-        <edmx:EntityTypeShape EntityType="HomeModel.AdminStatu" Width="1.5" PointX="10" PointY="14.125" />
-        <edmx:AssociationConnector Association="HomeModel.FK_AdminStatus_User" />
         <edmx:EntityTypeShape EntityType="HomeModel.Rank" Width="1.5" PointX="6" PointY="28.375" />
         <edmx:AssociationConnector Association="HomeModel.FK_PlayerRank_Rank" />
         <edmx:EntityTypeShape EntityType="HomeModel.NFLTeam" Width="1.5" PointX="0.75" PointY="13.875" />
@@ -3551,6 +3552,8 @@ FROM [dbo].[_ArchivePlayerHighlight] AS [_ArchivePlayerHighlight]</DefiningQuery
         <edmx:AssociationConnector Association="HomeModel.FK_PlayerHighlight_Highlight" />
         <edmx:AssociationConnector Association="HomeModel.FK_PlayerHighlight_Player" />
         <edmx:AssociationConnector Association="HomeModel.FK_PlayerHighlight_User" />
+        <edmx:EntityTypeShape EntityType="HomeModel.AdminStatu" Width="1.5" PointX="10" PointY="13.75" />
+        <edmx:AssociationConnector Association="HomeModel.FK_AdminStatus_User" />
         </edmx:Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
