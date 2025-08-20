@@ -7,6 +7,34 @@
 
 
 
+
+
+
+
+
+
+/* Below run in Production on 8/14/25 */
+
+SET XACT_ABORT ON
+BEGIN TRANSACTION;
+
+
+
+ALTER TABLE [dbo].[AdminStatus]
+ADD [OnlyShowMyDrafts] bit NOT NULL DEFAULT(0);
+GO
+
+
+
+
+COMMIT TRANSACTION;
+
+
+
+
+
+
+
 /* Below run in Production on 8/14/25 */
 
 SET XACT_ABORT ON
@@ -122,8 +150,10 @@ TODO:
   - Deactivate All But 32 DEFs
   - BYE WEEKS!
         - e.g. \Google Drive\Fantasy Football\2022 Bye Weeks.xlsx
-        - http://www.fantasypros.com/nfl/bye-weeks.php
-           - No more jQuery format, just copy/paste from website to spreadsheet now
+        - 8/18/25:  Now use https://www.footballguys.com/article/2025-nfl-schedule-bye-weeks
+
+        (- OLD: http://www.fantasypros.com/nfl/bye-weeks.php
+           - No more jQuery format, just copy/paste from website to spreadsheet now)
   - Also, when AutoImporting ranks, start with a Fantasypros one for better player names
   - Maybe clean out some Archive/History tables?
         7/22/2022:

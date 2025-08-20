@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
-using System.Web.Mvc;
 using DodgeDynasty.Mappers;
 using DodgeDynasty.Mappers.Ranks;
 using DodgeDynasty.Models;
@@ -75,8 +71,14 @@ namespace DodgeDynasty.UIHelpers
 			if (compareRankMapper.WrongDraftCompRankFound)
 			{
 				ClearCompareRankIds(options, response);
+				RankingsListModel rankingsListModel = DraftFactory.GetRankingsListModel(playerRankModel);
+				var rankId = rankingsListModel.GetPrimaryRankId();				
+				playerRankModel.SetPlayerRanks(rankId);
 			}
-			playerRankModel = compareRankMapper.PlayerRankModel;
+			else
+			{
+				playerRankModel = compareRankMapper.PlayerRankModel;
+			}
 			playerRankModel.HighlightedPlayers = (showBestAvailable)
 				? playerRankModel.GetBestAvailHighlightedPlayers()
 				: playerRankModel.GetAllHighlightedPlayers();
