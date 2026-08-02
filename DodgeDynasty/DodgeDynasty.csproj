@@ -504,8 +504,10 @@
     <Compile Include="WebSockets\DD_SignalR.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="2025 SQL Changes.sql" />
+    <Content Include="2026 SQL Changes.sql" />
+    <Content Include="docs\Rankings\FprosADP.html" />
     <Content Include="docs\Rankings\FprosPPR.html" />
+    <Content Include="SQL Server\OLD - 2025 SQL Changes.sql" />
     <Content Include="SQL Server\OLD - 2024 SQL Changes.sql" />
     <Content Include="SQL Server\OLD - 2023 SQL Changes.sql" />
     <Content Include="Content\images\icon.png" />

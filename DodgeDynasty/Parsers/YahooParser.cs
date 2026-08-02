@@ -10,16 +10,15 @@ namespace DodgeDynasty.Parsers
 {
 	public class FproRank
 	{
-		public string sport { get; set; }
 		public FproPlayer[] players { get; set; }
 	}
 
 	public class FproPlayer
 	{
-		public string player_name { get; set; }
-		public string player_team_id { get; set; }
-		public string player_position_id { get; set; }
-		public int rank_ecr { get; set; }
+		public string name { get; set; }
+		public string team { get; set; }
+		public string position { get; set; }
+		public int rank { get; set; }
 	}
 
 	public class YahooParser : RankParser
@@ -37,10 +36,10 @@ namespace DodgeDynasty.Parsers
 			{
 				yield return new RankedPlayer
 				{
-					RankNum = player.rank_ecr,
-					PlayerName = player.player_name?.Trim(),
-					NFLTeam = player.player_team_id,
-					Position = player.player_position_id
+					RankNum = player.rank,
+					PlayerName = player.name?.Trim(),
+					NFLTeam = player.team,
+					Position = player.position
 				};
 			}
 		}

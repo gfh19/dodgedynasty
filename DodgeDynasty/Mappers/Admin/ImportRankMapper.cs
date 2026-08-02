@@ -228,11 +228,20 @@ namespace DodgeDynasty.Mappers.Admin
 
 		private static string GetRankData(AutoImport autoImport)
 		{
-			HttpClient http = new HttpClient();
-			var task = http.GetByteArrayAsync(autoImport.ImportUrl);
-			task.Wait();
-			var response = task.Result;
-			return Encoding.GetEncoding("utf-8").GetString(response, 0, response.Length);
+			var origProtocol = ServicePointManager.SecurityProtocol;
+			ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+			try
+			{
+				HttpClient http = new HttpClient();
+				var task = http.GetByteArrayAsync(autoImport.ImportUrl);
+				task.Wait();
+				var response = task.Result;
+				return Encoding.GetEncoding("utf-8").GetString(response, 0, response.Length);
+			}
+			finally
+			{
+				ServicePointManager.SecurityProtocol = origProtocol;
+			}
 		}
 
 		private void AddPlayerRank(RankedPlayer rankedPlayer)
