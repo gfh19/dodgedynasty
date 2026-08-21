@@ -23,10 +23,10 @@ WHERE AutoImportId = 1
 
 UPDATE [dbo].[AutoImport]
 SET RankName = 'Yahoo! (Half-PPR)',
-	ImportUrl = 'https://sports.yahoo.com/api/fanPro/?sport=NFL&position=ALL&filters=9%3A317%3A747%3A7604&experts=show&expert=7261&scoring=HALF&type=ST&week=0&wtype=ST&year=2026',
+	ImportUrl = 'https://sports.yahoo.com/api/fanPro/?sport=NFL&position=ALL&filters=9%3A317%3A747%3A1408%3A7604%3A7666&experts=show&expert=1663&scoring=HALF&type=ST&week=0&wtype=ST&year=2026',
 	LastUpdateTimestamp = getdate()
 WHERE AutoImportId = 5
-
+/* Filtered network tab to "fanPro" to get correct yahoo api url */
 
 UPDATE [dbo].[AutoImport]
 SET RankName = 'FantasyPros ADP',

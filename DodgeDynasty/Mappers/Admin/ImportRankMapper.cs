@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -236,7 +237,21 @@ namespace DodgeDynasty.Mappers.Admin
 				var task = http.GetByteArrayAsync(autoImport.ImportUrl);
 				task.Wait();
 				var response = task.Result;
-				return Encoding.GetEncoding("utf-8").GetString(response, 0, response.Length);
+				var gzipPrefix = "\u001f�\b\0\0\0\0\0\0\u0003";
+
+				if (response.Length < gzipPrefix.Length || Encoding.UTF8.GetString(response, 0, gzipPrefix.Length) != gzipPrefix)
+				{
+					return Encoding.UTF8.GetString(response);
+				}
+				else
+				{
+					using (var compressedStream = new MemoryStream(response))
+					using (var gzipStream = new System.IO.Compression.GZipStream(compressedStream, System.IO.Compression.CompressionMode.Decompress))
+					using (var reader = new StreamReader(gzipStream, Encoding.UTF8))
+					{
+						return reader.ReadToEnd();
+					}
+				}
 			}
 			finally
 			{
